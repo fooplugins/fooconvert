@@ -1,0 +1,38 @@
+=== FooConvert – WordPress Sales and Conversion Plugin ===
+Contributors: bradvin, steveush, fooplugins
+Tags: sales-optimization,conversion-tools,lead-generation,marketing-plugin,wordpress-ecommerce,customer-engagement
+Requires at least: 5.0
+Tested up to: 6.4
+Requires PHP: 5.6
+Stable tag: 0.0.1
+License: GPLv3 or later
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
+
+Turn clicks into conversions, visitors into customers – FooConvert is the ultimate catalyst for online success!
+
+== Description ==
+
+Transform visitors into customers, leads into loyal advocates – FooConvert, where every click is a step closer to a sale, and every interaction is a conversion waiting to happen!
+
+== Installation ==
+
+1. Upload `fooconvert` folder to the `/wp-content/plugins/` directory
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Visit the settings page to change any of the settings
+4. Enjoy the plugin!
+
+== Frequently Asked Questions ==
+
+= Question 1 =
+
+An answer goes here.
+
+== Screenshots ==
+
+1. Screenshot 1
+2. Screenshot 2
+
+== Changelog ==
+
+= 0.0.1 =
+* first version!

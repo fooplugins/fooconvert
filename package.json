@@ -1,0 +1,35 @@
+{
+  "name": "fooconvert",
+  "version": "0.0.1",
+  "license": "GPL-3.0-or-later",
+  "title": "FooConvert",
+  "description": "Turning clicks into conversions, visitors into customers – the ultimate catalyst for online success!",
+  "repository": "https://github.com/fooplugins/fooconvert",
+  "bugs": "https://github.com/fooplugins/fooconvert/issues",
+  "author": "FooPlugins <info@fooplugins.com> (https://fooplugins.com)",
+  "browserslist": [
+    "defaults"
+  ],
+  "devDependencies": {
+    "@wordpress/block-editor": "^12.16.0",
+    "@wordpress/blocks": "^12.25.0",
+    "@wordpress/components": "^25.14.0",
+    "@wordpress/element": "^5.25.0",
+    "@wordpress/i18n": "^4.48.0",
+    "@wordpress/icons": "^9.39.0",
+    "@wordpress/scripts": "^26.19.0",
+    "raw-loader": "^4.0.2",
+    "gulp": "^4.0.2",
+    "gulp-freemius-deploy": "^1.0.11",
+    "gulp-wp-pot": "^2.5.0",
+    "gulp-zip": "^5.1.0"
+  },
+  "scripts": {
+    "develop": "rollup -c -w",
+    "build": "rollup -c --environment BUILD:production",
+    "gulp": "gulp",
+    "package": "npm run build && gulp",
+    "composer": "composer install --prefer-dist --optimize-autoloader --no-dev",
+    "deploy": "gulp freemius-deploy"
+  }
+}

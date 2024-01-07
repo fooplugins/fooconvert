@@ -1,0 +1,11 @@
+*~
+apigen
+documentation
+vendor
+node_modules
+.DS_Store
+fs-config.json
+releases
+dist
+.test-pages
+package-lock.json
