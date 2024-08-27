@@ -1,0 +1,1044 @@
+# Copyright (C) 2024 FooPlugins
+# This file is distributed under the GPL-3.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: FooConvert – WordPress Sales and Conversion Plugin 0.0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/fooconvert\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-08-27T16:06:46+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: fooconvert\n"
+
+#. Plugin Name of the plugin
+#: fooconvert.php
+msgid "FooConvert – WordPress Sales and Conversion Plugin"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: fooconvert.php
+msgid "https://fooplugins.com/fooconvert-wordpress-sales-conversion/"
+msgstr ""
+
+#. Description of the plugin
+#: fooconvert.php
+msgid "Turn clicks into conversions, visitors into customers – FooConvert is the ultimate catalyst for online success!"
+msgstr ""
+
+#. Author of the plugin
+#: fooconvert.php
+msgid "FooPlugins"
+msgstr ""
+
+#. Author URI of the plugin
+#: fooconvert.php
+msgid "https://fooplugins.com/"
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:35
+msgid "Display rules for FooConvert."
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:158
+#: includes/class-fooconvert-display-rules.php:229
+msgid "General"
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:162
+msgid "Entire Site"
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:166
+msgid "Front Page"
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:170
+msgid "Blog"
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:174
+msgid "Search Results"
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:178
+msgid "No Search Results"
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:182
+msgid "404 Template"
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:188
+msgid "Specific"
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:192
+msgid "Page"
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:196
+msgid "Post"
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:200
+msgid "Category"
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:204
+msgid "Tag"
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:233
+msgid "All Users"
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:237
+msgid "Logged In"
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:241
+msgid "Logged Out"
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:247
+msgid "Roles"
+msgstr ""
+
+#: includes/class-fooconvert.php:150
+#: includes/class-fooconvert.php:151
+msgid "FooConvert"
+msgstr ""
+
+#. translators: %1$s = Plugin name; %2$s = Minimum PHP version; %3$s = Current PHP version
+#: includes/startup-checks.php:18
+msgid "%1$s could not be initialized because you need to be running at least PHP version %2$s, and you are running version %3$s"
+msgstr ""
+
+#. translators: %1$s = Plugin name; %2$s = Minimum WP version; %3$s = Current WP version
+#: includes/startup-checks.php:42
+msgid "%1$s could not be initialized because you need WordPress to be at least version %2$s, and you are running version %3$s"
+msgstr ""
+
+#: includes/startup-checks.php:48
+msgid "Update WordPress now."
+msgstr ""
+
+#: includes/widgets/class-bar.php:68
+msgid "Bars"
+msgstr ""
+
+#: includes/widgets/class-bar.php:69
+msgid "Bar"
+msgstr ""
+
+#: includes/widgets/class-bar.php:92
+#: includes/widgets/class-bar.php:93
+msgid "Empty"
+msgstr ""
+
+#: includes/widgets/class-bar.php:111
+msgid "Basic"
+msgstr ""
+
+#: includes/widgets/class-bar.php:112
+msgid "A basic bar with minimal styling."
+msgstr ""
+
+#: assets/blocks/example-block/editor/index.js:1
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: assets/widgets/bar/editor/index.js:1
+#: src/blocks/example-block/editor/Settings.js:43
+#: src/widgets/bar/editor/button/EditSettings.js:65
+#: src/widgets/bar/editor/EditSettings.js:57
+msgid "Background"
+msgstr ""
+
+#: assets/blocks/example-block/editor/index.js:1
+#: assets/widgets/bar/editor/index.js:1
+#: src/blocks/example-block/editor/Settings.js:49
+#: src/widgets/bar/editor/EditSettings.js:62
+msgid "Text"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/border-radius-control/Component.js:27
+msgid "Top left"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/border-radius-control/Component.js:28
+msgid "Top right"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/border-radius-control/Component.js:29
+msgid "Bottom right"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/border-radius-control/Component.js:30
+msgid "Bottom left"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/border-radius-control/Component.js:96
+msgid "Link corners"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/border-radius-control/Component.js:96
+msgid "Unlink corners"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/border-radius-control/Component.js:117
+msgid "All corners"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/border-radius-control/Component.js:118
+#: src/editor/components/box-units-control/Component.js:117
+msgid "Mixed"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/border-tools-panel/Component.js:43
+#: src/editor/components/border-tools-panel/Component.js:51
+#: src/editor/components/border-tools-panel/Component.js:56
+msgid "Border"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/border-tools-panel/Component.js:70
+#: src/editor/components/border-tools-panel/Component.js:75
+msgid "Radius"
+msgstr ""
+
+#: assets/editor.js:1
+#: assets/widgets/bar/editor/index.js:1
+#: src/editor/components/box-units-control/Component.js:27
+#: src/widgets/bar/editor/EditSettings.js:67
+msgid "Top"
+msgstr ""
+
+#: assets/editor.js:1
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/editor/components/box-units-control/Component.js:28
+#: src/widgets/bar/editor/button/EditSettings.js:59
+msgid "Right"
+msgstr ""
+
+#: assets/editor.js:1
+#: assets/widgets/bar/editor/index.js:1
+#: src/editor/components/box-units-control/Component.js:29
+#: src/widgets/bar/editor/EditSettings.js:70
+msgid "Bottom"
+msgstr ""
+
+#: assets/editor.js:1
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/editor/components/box-units-control/Component.js:30
+#: src/widgets/bar/editor/button/EditSettings.js:56
+msgid "Left"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/box-units-control/Component.js:95
+msgid "Link sides"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/box-units-control/Component.js:95
+msgid "Unlink sides"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/box-units-control/Component.js:116
+msgid "All sides"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/hooks/use-icon-sets/hook.js:21
+msgid "WordPress"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/color-tools-panel/Component.js:91
+msgid "Color"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/size-control/Component.js:53
+msgid "Custom"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/size-control/Component.js:64
+msgid "Set custom size"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/size-control/Component.js:64
+msgid "Select a size"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/size-control/Component.js:91
+msgid "Sizes"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/dimension-tools-panel/Component.js:47
+msgid "Dimensions"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/dimension-tools-panel/Component.js:56
+#: src/editor/components/dimension-tools-panel/Component.js:60
+msgid "Padding"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/dimension-tools-panel/Component.js:70
+#: src/editor/components/dimension-tools-panel/Component.js:74
+msgid "Margin"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/dimension-tools-panel/Component.js:84
+#: src/editor/components/dimension-tools-panel/Component.js:88
+msgid "Gap"
+msgstr ""
+
+#: assets/editor.js:1
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/editor/components/dimension-tools-panel/Component.js:93
+#: src/editor/components/typography-tools-panel/Component.js:32
+#: src/widgets/bar/editor/button/components/IconToolsPanel.js:68
+msgid "S"
+msgstr ""
+
+#: assets/editor.js:1
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/editor/components/dimension-tools-panel/Component.js:94
+#: src/editor/components/typography-tools-panel/Component.js:33
+#: src/widgets/bar/editor/button/components/IconToolsPanel.js:69
+msgid "Small"
+msgstr ""
+
+#: assets/editor.js:1
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/editor/components/dimension-tools-panel/Component.js:99
+#: src/editor/components/typography-tools-panel/Component.js:38
+#: src/widgets/bar/editor/button/components/IconToolsPanel.js:72
+msgid "M"
+msgstr ""
+
+#: assets/editor.js:1
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/editor/components/dimension-tools-panel/Component.js:100
+#: src/editor/components/font-appearance-control/Component.js:28
+#: src/editor/components/typography-tools-panel/Component.js:39
+#: src/widgets/bar/editor/button/components/IconToolsPanel.js:73
+msgid "Medium"
+msgstr ""
+
+#: assets/editor.js:1
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/editor/components/dimension-tools-panel/Component.js:105
+#: src/editor/components/typography-tools-panel/Component.js:44
+#: src/widgets/bar/editor/button/components/IconToolsPanel.js:76
+msgid "L"
+msgstr ""
+
+#: assets/editor.js:1
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/editor/components/dimension-tools-panel/Component.js:106
+#: src/editor/components/typography-tools-panel/Component.js:45
+#: src/widgets/bar/editor/button/components/IconToolsPanel.js:77
+msgid "Large"
+msgstr ""
+
+#: assets/editor.js:1
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/editor/components/dimension-tools-panel/Component.js:111
+#: src/editor/components/typography-tools-panel/Component.js:50
+#: src/widgets/bar/editor/button/components/IconToolsPanel.js:80
+msgid "XL"
+msgstr ""
+
+#: assets/editor.js:1
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/editor/components/dimension-tools-panel/Component.js:112
+#: src/editor/components/typography-tools-panel/Component.js:51
+#: src/widgets/bar/editor/button/components/IconToolsPanel.js:81
+msgid "Extra Large"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/display-rules-button/components/locations-control/location-control/Component.js:108
+#: src/editor/components/display-rules-button/components/roles-control/role-control/Component.js:46
+msgid "Select type"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/display-rules-button/components/locations-control/location-control/Component.js:67
+msgid "Type to choose page..."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/display-rules-button/components/locations-control/location-control/Component.js:77
+msgid "Type to choose post..."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/display-rules-button/components/locations-control/location-control/Component.js:88
+msgid "Type to choose category..."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/display-rules-button/components/locations-control/location-control/Component.js:98
+msgid "Type to choose tag..."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/repeater-control/Component.js:52
+msgid "No items."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/repeater-control/Component.js:53
+msgid "Add item"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/display-rules-button/components/locations-control/Component.js:63
+msgid "No location rules are set."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/display-rules-button/components/locations-control/Component.js:64
+#: src/editor/components/display-rules-button/components/roles-control/Component.js:61
+msgid "Add rule"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/display-rules-button/components/roles-control/Component.js:60
+msgid "No roles rules are set."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/display-rules-button/Component.js:77
+msgid "Location"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/display-rules-button/Component.js:82
+msgid "Exclude"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/display-rules-button/Component.js:87
+msgid "Users"
+msgstr ""
+
+#: assets/editor.js:1
+#: assets/widgets/bar/editor/index.js:1
+#: src/editor/components/display-rules-button/Component.js:138
+#: src/widgets/bar/editor/EditSettings.js:181
+msgid "Display Rules"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/display-rules-button/Component.js:97
+msgid "Choose where you want to display the modal."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/display-rules-button/Component.js:108
+msgid "Choose where you do not want to display the modal."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/display-rules-button/Component.js:119
+msgid "Choose which users will see this modal."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/display-rules-button/Component.js:148
+msgid "Cancel"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/display-rules-button/Component.js:151
+msgid "Save"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-appearance-control/Component.js:9
+#: src/editor/components/font-family-control/Component.js:9
+msgid "Default"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-appearance-control/Component.js:12
+msgid "Thin"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-appearance-control/Component.js:16
+msgid "Extra Light"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-appearance-control/Component.js:20
+msgid "Light"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-appearance-control/Component.js:24
+msgid "Regular"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-appearance-control/Component.js:32
+msgid "Semi Bold"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-appearance-control/Component.js:36
+msgid "Bold"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-appearance-control/Component.js:40
+msgid "Extra Bold"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-appearance-control/Component.js:44
+msgid "Black"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-appearance-control/Component.js:48
+msgid "Thin Italic"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-appearance-control/Component.js:52
+msgid "Extra Light Italic"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-appearance-control/Component.js:56
+msgid "Light Italic"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-appearance-control/Component.js:60
+msgid "Regular Italic"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-appearance-control/Component.js:64
+msgid "Medium Italic"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-appearance-control/Component.js:68
+msgid "Semi Bold Italic"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-appearance-control/Component.js:72
+msgid "Bold Italic"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-appearance-control/Component.js:76
+msgid "Extra Bold Italic"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-appearance-control/Component.js:80
+msgid "Black Italic"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-appearance-control/Component.js:106
+#: src/editor/components/typography-tools-panel/Component.js:153
+#: src/editor/components/typography-tools-panel/Component.js:157
+msgid "Appearance"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-family-control/Component.js:13
+msgid "System Font"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-family-control/Component.js:18
+msgid "Source Serif Pro"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/font-family-control/Component.js:44
+#: src/editor/components/typography-tools-panel/Component.js:126
+#: src/editor/components/typography-tools-panel/Component.js:130
+msgid "Font"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/grouped-select-control/Component.js:35
+msgid "Select..."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/icon-sets-dropdown/Component.js:106
+#: src/editor/components/toolbar-variation-menu/Component.js:8
+msgid "Reset"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/inner-blocks-button/Component.js:69
+msgid "JSON"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/inner-blocks-button/Component.js:74
+msgid "PHP"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/inner-blocks-button/Component.js:86
+msgid "Inner Blocks"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/inner-blocks-button/Component.js:90
+#: src/editor/plugins/custom-editor/Plugin.js:16
+msgid "Title"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/inner-blocks-button/Component.js:95
+msgid "Description"
+msgstr ""
+
+#: assets/editor.js:1
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/editor/components/inner-blocks-button/Component.js:124
+#: src/widgets/bar/editor/button/components/IconToolsPanel.js:92
+#: src/widgets/bar/editor/button/components/IconToolsPanel.js:97
+#: src/widgets/bar/editor/button/EditSettings.js:48
+msgid "Close"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:19
+msgid "On page load"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:20
+msgid "Open immediately on page load."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:23
+msgid "On anchor click"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:24
+msgid "Open when an anchor is clicked."
+msgstr ""
+
+#: assets/editor.js:1
+#: assets/widgets/bar/editor/index.js:1
+#: src/editor/components/open-trigger-panel/Component.js:25
+#: src/editor/components/open-trigger-panel/Component.js:31
+#: src/widgets/bar/editor/EditSettings.js:131
+msgid "Anchor"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:26
+#: src/editor/components/open-trigger-panel/Component.js:32
+msgid "Add an anchor to a block and then insert the same value here."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:29
+msgid "On anchor visible"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:30
+msgid "Open when an anchor becomes visible within the window."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:35
+msgid "On exit intent"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:36
+msgid "Open when the mouse exits the top of the window."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:37
+#: src/editor/components/open-trigger-panel/Component.js:49
+msgid "Wait time in seconds"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:38
+msgid "Only detect after the a user has been on the page for the specified amount of time."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:41
+msgid "On page scroll"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:42
+msgid "Open after the page has been scrolled."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:43
+msgid "Scroll percent"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:44
+msgid "The percentage of the page to scroll before opening."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:47
+msgid "On timer elapsed"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:48
+msgid "Open after a specified amount of time."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:50
+msgid "The amount of time to wait before opening."
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:146
+msgid "Open Trigger"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/open-trigger-panel/Component.js:87
+#: src/editor/components/open-trigger-panel/Component.js:100
+msgid "Type"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/variation-picker/Component.js:90
+msgid "List View"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/variation-picker/Component.js:91
+msgid "Grid View"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/typography-tools-panel/Component.js:117
+msgid "Typography"
+msgstr ""
+
+#: assets/editor.js:1
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/editor/components/typography-tools-panel/Component.js:138
+#: src/editor/components/typography-tools-panel/Component.js:143
+#: src/widgets/bar/editor/button/components/IconToolsPanel.js:57
+#: src/widgets/bar/editor/button/components/IconToolsPanel.js:63
+msgid "Size"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/typography-tools-panel/Component.js:166
+#: src/editor/components/typography-tools-panel/Component.js:170
+msgid "Line height"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/typography-tools-panel/Component.js:182
+#: src/editor/components/typography-tools-panel/Component.js:186
+msgid "Letter spacing"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/typography-tools-panel/Component.js:203
+#: src/editor/components/typography-tools-panel/Component.js:207
+msgid "Decoration"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/typography-tools-panel/Component.js:217
+#: src/editor/components/typography-tools-panel/Component.js:250
+msgid "None"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/typography-tools-panel/Component.js:223
+msgid "Underline"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/typography-tools-panel/Component.js:229
+msgid "Strikethrough"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/typography-tools-panel/Component.js:237
+#: src/editor/components/typography-tools-panel/Component.js:241
+msgid "Letter case"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/typography-tools-panel/Component.js:256
+msgid "Uppercase"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/typography-tools-panel/Component.js:262
+msgid "Lowercase"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/components/typography-tools-panel/Component.js:268
+msgid "Capitalize"
+msgstr ""
+
+#: assets/editor.js:1
+#: src/editor/plugins/custom-editor/Plugin.js:21
+msgid "Set the post title"
+msgstr ""
+
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/widgets/bar/editor/button/components/IconToolsPanel.js:52
+#: src/widgets/bar/editor/button/EditSettings.js:71
+msgid "Icon"
+msgstr ""
+
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/widgets/bar/editor/button/components/IconToolsPanel.js:101
+msgid "The icon displayed when clicking the button will close the bar."
+msgstr ""
+
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/widgets/bar/editor/button/components/IconToolsPanel.js:107
+#: src/widgets/bar/editor/button/components/IconToolsPanel.js:112
+msgid "Open"
+msgstr ""
+
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/widgets/bar/editor/button/components/IconToolsPanel.js:116
+msgid "The icon displayed when clicking the button will open the bar."
+msgstr ""
+
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/widgets/bar/editor/button/EditSettings.js:51
+msgid "Toggle"
+msgstr ""
+
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: assets/widgets/bar/editor/index.js:1
+#: src/widgets/bar/editor/button/EditSettings.js:78
+#: src/widgets/bar/editor/button/EditSettings.js:81
+#: src/widgets/bar/editor/EditSettings.js:76
+#: src/widgets/bar/editor/EditSettings.js:79
+msgid "Position"
+msgstr ""
+
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/widgets/bar/editor/button/EditSettings.js:86
+msgid "Choose where to display the button within the bar."
+msgstr ""
+
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: assets/widgets/bar/editor/index.js:1
+#: src/widgets/bar/editor/button/EditSettings.js:90
+#: src/widgets/bar/editor/EditSettings.js:88
+msgid "Behavior"
+msgstr ""
+
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/widgets/bar/editor/button/EditSettings.js:93
+msgid "Action"
+msgstr ""
+
+#: assets/widgets/bar/editor/button/index.js:1
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/widgets/bar/editor/button/EditSettings.js:97
+msgid "Choose the action to perform when the button is clicked."
+msgstr ""
+
+#: assets/widgets/bar/editor/content/index.js:1
+#: src/widgets/bar/editor/content/ContentAppender.js:21
+msgid "Add block"
+msgstr ""
+
+#: assets/widgets/bar/editor/index.js:1
+#: src/widgets/bar/editor/EditSettings.js:84
+msgid "Choose where to display the bar within the page."
+msgstr ""
+
+#: assets/widgets/bar/editor/index.js:1
+#: src/widgets/bar/editor/EditSettings.js:91
+msgid "Enable transitions"
+msgstr ""
+
+#: assets/widgets/bar/editor/index.js:1
+#: src/widgets/bar/editor/EditSettings.js:92
+msgid "Choose if transitions are used when toggling the bar."
+msgstr ""
+
+#: assets/widgets/bar/editor/index.js:1
+#: src/widgets/bar/editor/EditSettings.js:99
+msgid "Enable page push"
+msgstr ""
+
+#: assets/widgets/bar/editor/index.js:1
+#: src/widgets/bar/editor/EditSettings.js:100
+msgid "Choose if the page is \"pushed\", either up or down, based on the bar height and position."
+msgstr ""
+
+#: assets/widgets/bar/editor/index.js:1
+#: src/widgets/bar/editor/EditSettings.js:111
+msgid "Close Trigger"
+msgstr ""
+
+#: assets/widgets/bar/editor/index.js:1
+#: src/widgets/bar/editor/EditSettings.js:114
+msgid "Hide close button"
+msgstr ""
+
+#: assets/widgets/bar/editor/index.js:1
+#: src/widgets/bar/editor/EditSettings.js:115
+msgid "Hide the default close button."
+msgstr ""
+
+#: assets/widgets/bar/editor/index.js:1
+#: src/widgets/bar/editor/EditSettings.js:122
+msgid "Close on anchor click"
+msgstr ""
+
+#: assets/widgets/bar/editor/index.js:1
+#: src/widgets/bar/editor/EditSettings.js:123
+msgid "Clicking specific anchors closes the notification."
+msgstr ""
+
+#: assets/widgets/bar/editor/index.js:1
+#: src/widgets/bar/editor/EditSettings.js:132
+msgid "Add an anchor to a button block and then insert the same value here to close the notification on click."
+msgstr ""
+
+#: assets/widgets/bar/editor/index.js:1
+#: src/widgets/bar/editor/EditSettings.js:149
+msgid "Make Variation"
+msgstr ""
+
+#: assets/widgets/bar/editor/index.js:1
+#: src/widgets/bar/editor/EditSettings.js:183
+msgid "Edit Rules"
+msgstr ""
+
+#: assets/widgets/bar/editor/index.js:1
+#: src/widgets/bar/editor/Edit.js:80
+msgid "Choose a template"
+msgstr ""
+
+#: assets/widgets/bar/editor/index.js:1
+#: src/widgets/bar/editor/Edit.js:81
+msgid "Select a template to start with."
+msgstr ""
+
+#: assets/blocks/example-block/block.json
+#: src/blocks/example-block/block.json
+msgctxt "block title"
+msgid "FooConvert - Example Block"
+msgstr ""
+
+#: assets/blocks/example-block/block.json
+#: src/blocks/example-block/block.json
+msgctxt "block description"
+msgid "This block serves no purpose other than to be an example."
+msgstr ""
+
+#: assets/widgets/bar/block.json
+#: src/widgets/bar/block.json
+msgctxt "block title"
+msgid "Bar"
+msgstr ""
+
+#: assets/widgets/bar/block.json
+#: src/widgets/bar/block.json
+msgctxt "block description"
+msgid "A bar to capture your visitors attention."
+msgstr ""
+
+#: assets/widgets/bar/editor/button/block.json
+#: src/widgets/bar/editor/button/block.json
+msgctxt "block title"
+msgid "Bar Button"
+msgstr ""
+
+#: assets/widgets/bar/editor/button/block.json
+#: src/widgets/bar/editor/button/block.json
+msgctxt "block description"
+msgid "The primary button used to toggle the visibility of the bar."
+msgstr ""
+
+#: assets/widgets/bar/editor/content/block.json
+#: src/widgets/bar/editor/content/block.json
+msgctxt "block title"
+msgid "Bar Content"
+msgstr ""
+
+#: assets/widgets/bar/editor/content/block.json
+#: src/widgets/bar/editor/content/block.json
+msgctxt "block description"
+msgid "The primary content container of the bar."
+msgstr ""
