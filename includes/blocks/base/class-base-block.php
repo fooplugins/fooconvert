@@ -323,14 +323,15 @@ abstract class Base_Block {
 
             ob_start();
             // @formatter:off
-            // PHPCS ignore:
-            //  1. $tag_name - defined by the block in PHP and is not exposed to user alteration
-            //  2. do_blocks - it's up to the blocks to escape themselves
 ?>
-<<?php echo $tag_name; // phpcs:ignore WordPress.Security.EscapeOutput ?> id="<?php echo esc_attr( $instance_id ) ?>" <?php echo wp_kses_data( get_block_wrapper_attributes( $frontend_attributes ) ); ?>>
+<<?php echo esc_html( $tag_name ); ?> id="<?php echo esc_attr( $instance_id ) ?>" <?php echo wp_kses_data( get_block_wrapper_attributes( $frontend_attributes ) ); ?>>
     <?php $this->render_frontend_icons( $instance_id, $frontend_icons ); ?>
-    <?php echo do_blocks( $content ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-</<?php echo $tag_name; // phpcs:ignore WordPress.Security.EscapeOutput ?>>
+    <?php
+            // not sure if the output of do_blocks should be encoded
+            // phpcs:ignore WordPress.Security.EscapeOutput
+            echo do_blocks( $content );
+    ?>
+</<?php echo esc_html( $tag_name ); ?>>
 <?php
             // @formatter:on
             return ob_get_clean();

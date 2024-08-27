@@ -40,18 +40,6 @@ if ( ! defined( 'FOOCONVERT_SLUG' ) ) {
 // Include other essential FooConvert constants.
 require_once FOOCONVERT_INCLUDES_PATH . 'constants.php';
 
-//// Include common global FooConvert functions.
-//require_once FOOCONVERT_INCLUDES_PATH . 'functions.php';
-//
-//// Do a check to see if either free/pro version of the plugin is already running.
-//if ( function_exists( 'fooconvert_fs' ) ) {
-//    fooconvert_fs()->set_basename( true, FOOCONVERT_FILE );
-//} else {
-//	if ( ! function_exists( 'fooconvert_fs' ) ) {
-//		require_once FOOCONVERT_INCLUDES_PATH . 'freemius.php';
-//	}
-//}
-
 // Check minimum requirements before loading the plugin.
 if ( require_once FOOCONVERT_INCLUDES_PATH . 'startup-checks.php' ) {
 

@@ -11,7 +11,7 @@ use WP_User;
 class FooConvert_Display_Rules extends Base_Component {
     public function __construct() {
         parent::__construct();
-        add_option( 'fooconvert_display_rules', array(), '', true );
+
         add_action( 'wp_after_insert_post', array( $this, 'after_insert_should_compile' ), 10, 4 );
         add_action( 'template_redirect', array( $this, 'enqueue_required' ), 5 );
         add_action( 'wp_footer', array( $this, 'render_enqueued' ), 5 );
@@ -60,7 +60,7 @@ class FooConvert_Display_Rules extends Base_Component {
     public function defaults() : array {
         return array(
             'location' => array(),
-            // false positive
+            // false positive - this array is not used to query posts
             // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams
             'exclude' => array(),
             'users' => array()
@@ -98,7 +98,7 @@ class FooConvert_Display_Rules extends Base_Component {
                         )
                     )
                 ),
-                // false positive
+                // false positive - this array is not used to query posts
                 // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams
                 'exclude' => array(
                     'type' => 'array',
@@ -144,7 +144,7 @@ class FooConvert_Display_Rules extends Base_Component {
                 'defaults' => $this->defaults()
             ),
             'location' => $this->get_component_locations(),
-            // false positive
+            // false positive - this array is not used to query posts
             // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams
             'exclude' => $this->get_component_locations( 'exclude' ),
             'users' => $this->get_component_users()
@@ -311,7 +311,7 @@ class FooConvert_Display_Rules extends Base_Component {
                 $updated[] = $compiled;
             }
         }
-        update_option( 'fooconvert_display_rules', $updated );
+        update_option( 'fooconvert_display_rules', $updated, true );
     }
 
     /**
@@ -342,7 +342,7 @@ class FooConvert_Display_Rules extends Base_Component {
                     return array(
                         'post_id' => $post_id,
                         'include' => $include,
-                        // false positive
+                        // false positive - this array is not used to query posts
                         // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams
                         'exclude' => $this->compile_locations( $rules['exclude'] ),
                         'users' => $rules['users']
@@ -556,8 +556,10 @@ class FooConvert_Display_Rules extends Base_Component {
      * @since 1.0.0
      */
     public function render_enqueued() {
+        wp_kses();
+
         foreach ( $this->enqueued as $widget ) {
-            // content is output by do_blocks
+            // content is output by do_blocks in the below enqueue_required function
             // phpcs:ignore WordPress.Security.EscapeOutput
             echo $widget['content'];
         }
