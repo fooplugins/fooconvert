@@ -1,0 +1,75 @@
+:root {
+  --fc--grouped-select-control--color: var(--fc--input--color);
+  --fc--grouped-select-control--background: var(--fc--input--background);
+  --fc--grouped-select-control--border: var(--fc--input--border);
+  --fc--grouped-select-control--box-shadow: var(--fc--input--box-shadow);
+  --fc--grouped-select-control--text-shadow: var(--fc--input--text-shadow);
+  --fc--grouped-select-control--outline: var(--fc--input--outline);
+  --fc--grouped-select-control--caret: currentColor;
+  --fc--grouped-select-control--disabled--color: var(--fc--input--disabled--color);
+  --fc--grouped-select-control--disabled--background: var(--fc--input--disabled--background);
+  --fc--grouped-select-control--disabled--border: var(--fc--input--disabled--border);
+  --fc--grouped-select-control--disabled--box-shadow: var(--fc--input--disabled--box-shadow);
+  --fc--grouped-select-control--disabled--text-shadow: var(--fc--input--disabled--text-shadow);
+  --fc--grouped-select-control--disabled--outline: var(--fc--input--disabled--outline);
+  --fc--grouped-select-control--disabled--caret: currentColor;
+}
+
+.fc-grouped-select-control {
+  --color: var(--fc--grouped-select-control--color);
+  --background: var(--fc--grouped-select-control--background);
+  --border: var(--fc--grouped-select-control--border);
+  --box-shadow: var(--fc--grouped-select-control--box-shadow);
+  --text-shadow: var(--fc--grouped-select-control--text-shadow);
+  --outline: var(--fc--grouped-select-control--outline);
+  --caret: var(--fc--grouped-select-control--caret);
+  --disabled--color: var(--fc--grouped-select-control--disabled--color);
+  --disabled--background: var(--fc--grouped-select-control--disabled--background);
+  --disabled--border: var(--fc--grouped-select-control--disabled--border);
+  --disabled--box-shadow: var(--fc--grouped-select-control--disabled--box-shadow);
+  --disabled--text-shadow: var(--fc--grouped-select-control--disabled--text-shadow);
+  --disabled--outline: var(--fc--grouped-select-control--disabled--outline);
+  --disabled--caret: var(--fc--grouped-select-control--disabled--caret);
+
+  .components-input-control__container {
+    color: var(--color);
+    background: var(--background);
+  }
+
+  .components-select-control__input {
+    color: var(--color);
+    text-shadow: var(--text-shadow);
+    outline: var(--outline);
+  }
+
+  .components-input-control__suffix svg {
+    fill: var(--caret);
+  }
+
+  .components-input-control__backdrop {
+    box-shadow: var(--box-shadow);
+    border: var(--border);
+  }
+
+  &:has(select:disabled) {
+    .components-input-control__container {
+      color: var(--disabled--color);
+      background: var(--disabled--background);
+    }
+
+    .components-select-control__input {
+      color: var(--disabled--color);
+      text-shadow: var(--disabled--text-shadow);
+      outline: var(--disabled--outline);
+    }
+
+    .components-input-control__suffix svg {
+      fill: var(--disabled--caret);
+    }
+
+    .components-input-control__backdrop {
+      box-shadow: var(--disabled--box-shadow);
+      border: var(--disabled--border);
+    }
+  }
+}

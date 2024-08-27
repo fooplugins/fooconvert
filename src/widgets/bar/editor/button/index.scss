@@ -1,0 +1,30 @@
+.fc--bar-button {
+  position: absolute!important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: fit-content;
+  font-size: 32px;
+  padding: 16px;
+  margin: 16px;
+  background: none;
+  color: inherit;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+  right: 0;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  svg {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+  }
+}

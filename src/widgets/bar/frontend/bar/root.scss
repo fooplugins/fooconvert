@@ -1,0 +1,9 @@
+:root {
+
+}
+
+.fc-bar__page-push-transition {
+  transition-property: margin-top, margin-bottom;
+  transition-timing-function: ease-in-out;
+  transition-duration: .3s;
+}

@@ -1,0 +1,19 @@
+.fc--color-tools-panel {
+  .fc--color-tools-panel__inner {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0px, 1fr));
+    gap: calc(16px) calc(8px);
+    grid-column: 1 / -1;
+    row-gap: 0;
+
+    .block-editor-tools-panel-color-gradient-settings__item {
+      &.first {
+        margin-top: 0;
+      }
+      &.last {
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+      }
+    }
+  }
+}

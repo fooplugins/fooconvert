@@ -1,0 +1,24 @@
+{
+  "apiVersion": 3,
+  "name": "fc/bar-content",
+  "title": "Bar Content",
+  "description": "The primary content container of the bar.",
+  "category": "fooconvert",
+  "parent": [ "fc/bar" ],
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "supports": {
+    "lock": false,
+    "multiple": false,
+    "reusable": false,
+    "className": false,
+    "html": false
+  },
+  "attributes": {},
+  "usesContext": [
+    "fc-bar/clientId",
+    "fc-bar/button",
+    "fc-bar/styles",
+    "fc-bar/hideButton"
+  ]
+}

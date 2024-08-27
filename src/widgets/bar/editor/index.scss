@@ -1,0 +1,44 @@
+@use "../../../mixins";
+
+.fc--bar__editor {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  padding: 0;
+
+  @include mixins.background-transparency-grid();
+}
+
+.fc--bar {
+  box-sizing: border-box;
+  position: absolute!important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: unset;
+  width: 100%;
+  height: fit-content;
+  padding: 0;
+  margin: 0;
+
+  &.position-bottom {
+    top: unset;
+    bottom: 0;
+  }
+
+  .fc--bar__container {
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: fit-content;
+  }
+}

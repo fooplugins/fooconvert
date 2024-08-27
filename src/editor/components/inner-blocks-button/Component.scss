@@ -1,0 +1,77 @@
+.fc--inner-blocks-button__modal {
+  .components-modal__content {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 88px;
+    margin-bottom: 68px;
+
+    .components-modal__header {
+      padding-bottom: 24px;
+      height: 88px;
+    }
+  }
+}
+
+.fc--inner-blocks-button__modal-tabs {
+  width: 100%;
+
+  .fc--inner-blocks-button__input {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-top: 1px solid #ddd;
+    margin: 0 -32px 16px;
+    padding: 0 32px;
+  }
+
+  .components-tab-panel__tabs {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    margin: 0 -32px 16px;
+    padding: 0 32px;
+  }
+}
+
+.fc--inner-blocks-button__modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+
+.fc--inner-blocks-button__json-output,
+.fc--inner-blocks-button__php-output {
+  display: block;
+  font-family: inherit;
+  font-size: inherit;
+  width: 100%;
+  min-width: 400px;
+  resize: both;
+  padding: 8px;
+  margin: 0;
+  white-space: pre;
+}
+
+
+.fc--inner-blocks-button__modal-footer {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 8px;
+  justify-content: right;
+  width: 100%;
+  height: 68px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 16px 24px;
+  border-top: 1px solid #0000;
+
+  .has-scrolled-content & {
+    border-top-color: #ddd;
+  }
+}

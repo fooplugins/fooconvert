@@ -1,0 +1,10 @@
+.fc-display-rules-summary {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  list-style: none;
+
+  > li {
+    list-style: none;
+  }
+}

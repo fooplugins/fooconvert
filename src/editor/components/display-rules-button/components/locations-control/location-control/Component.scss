@@ -1,0 +1,41 @@
+.fc-display-rules-location-control {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  padding: 4px;
+
+  &:disabled {
+    text-decoration: line-through;
+  }
+
+  .fc-display-rules-locations-control & {
+    border-top: solid 1px #ddd;
+    &:first-child {
+      border-top: none;
+    }
+    &:nth-child(even) {
+      background: #f6f7f7;
+    }
+  }
+
+  .fc-display-rules-location-control__data-controls {
+    display: block;
+    max-height: 100%;
+    max-width: 100%;
+    min-height: 0;
+    min-width: 0;
+    flex: 1 1 0;
+  }
+  .fc-display-rules-location-control__entire-site {
+
+  }
+
+  .fc-display-rules-location-control__remove-button {
+    padding: 0;
+    min-width: 32px;
+    height: 32px;
+  }
+}

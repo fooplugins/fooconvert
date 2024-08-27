@@ -1,0 +1,36 @@
+.fc-repeater-control {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0;
+  justify-content: stretch;
+  height: 100%;
+  margin: 1em 0;
+  min-width: 500px;
+  border: solid 1px #ddd;
+  border-radius: 2px;
+
+  .fc-repeater-control__empty {
+    padding: 16px;
+  }
+
+  .fc-repeater-control__items {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0;
+    justify-content: stretch;
+    width: 100%;
+  }
+
+  .fc-repeater-control__buttons {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding: 8px;
+    gap: 8px;
+    justify-content: right;
+    width: 100%;
+    border-top: solid 1px #ddd;
+  }
+}

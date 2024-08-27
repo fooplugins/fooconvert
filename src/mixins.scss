@@ -1,0 +1,74 @@
+@use "sass:math";
+
+@mixin background-transparency-grid($color1: #e0e0e0, $color2: #ffffff, $size: 48px) {
+  $half-size: math.div($size, 2);
+  background-image:
+          repeating-linear-gradient(45deg, transparent 25%, transparent 0, transparent 75%, $color2 0, $color2),
+          repeating-linear-gradient(45deg, transparent 25%, $color1 0, $color1 75%, $color2 0, $color2);
+  background-position: 0 0, $half-size $half-size;
+  background-size: $size $size;
+}
+
+@mixin typography-vars(
+  $name,
+  $inherits,
+  $fontFamily: inherit,
+  $fontSize: inherit,
+  $fontStyle: inherit,
+  $fontWeight: inherit,
+  $lineHeight: inherit,
+  $letterSpacing: inherit,
+  $textDecoration: inherit,
+  $textTransform: inherit) {
+  #{$name}font-family: var(#{$inherits}font-family, $fontFamily);
+  #{$name}font-size: var(#{$inherits}font-size, $fontSize);
+  #{$name}font-style: var(#{$inherits}font-style, $fontStyle);
+  #{$name}font-weight: var(#{$inherits}font-weight, $fontWeight);
+  #{$name}line-height: var(#{$inherits}line-height, $lineHeight);
+  #{$name}letter-spacing: var(#{$inherits}letter-spacing, $letterSpacing);
+  #{$name}text-decoration: var(#{$inherits}text-decoration, $textDecoration);
+  #{$name}text-transform: var(#{$inherits}text-transform, $textTransform);
+}
+
+@mixin typography-props( $name ) {
+  font-family: var(#{$name}font-family);
+  font-size: var(#{$name}font-size);
+  font-style: var(#{$name}font-style);
+  font-weight: var(#{$name}font-weight);
+  line-height: var(#{$name}line-height);
+  letter-spacing: var(#{$name}letter-spacing);
+  text-decoration: var(#{$name}text-decoration);
+  text-transform: var(#{$name}text-transform);
+}
+
+@mixin border-vars($name, $inherits, $default: none, $radius: 0) {
+  #{$name}: var(#{$inherits}, $default);
+  #{$name}-top: var(#{$inherits}-top, var(#{$name}));
+  #{$name}-right: var(#{$inherits}-right, var(#{$name}));
+  #{$name}-bottom: var(#{$inherits}-bottom, var(#{$name}));
+  #{$name}-left: var(#{$inherits}-left, var(#{$name}));
+  #{$name}-radius: var(#{$inherits}-radius, $radius);
+}
+
+@mixin border-props($name) {
+  border-top: var(#{$name}-top);
+  border-right: var(#{$name}-right);
+  border-bottom: var(#{$name}-bottom);
+  border-left: var(#{$name}-left);
+  border-radius: var(#{$name}-radius);
+}
+
+@mixin box-units-vars($varName, $inherits, $all: 0px, $top: 0px, $right: 0px, $bottom: 0px, $left: 0px) {
+  #{$varName}: var(#{$inherits}, $all);
+  #{$varName}-top: var(#{$inherits}-top, $top);
+  #{$varName}-right: var(#{$inherits}-right, $right);
+  #{$varName}-bottom: var(#{$inherits}-bottom, $bottom);
+  #{$varName}-left: var(#{$inherits}-left, $left);
+}
+
+@mixin box-units-props($propName, $varName) {
+  #{$propName}-top: var(#{$varName}-top);
+  #{$propName}-right: var(#{$varName}-right);
+  #{$propName}-bottom: var(#{$varName}-bottom);
+  #{$propName}-left: var(#{$varName}-left);
+}

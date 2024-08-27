@@ -1,0 +1,19 @@
+.fc--text-content-control {
+  display: block;
+  font-size: 13px;
+  line-height: normal;
+  margin: 0;
+  padding: 4px 6px;
+  min-height: 32px;
+  border: solid 3px transparent;
+  overflow: hidden;
+  white-space: wrap;
+  text-overflow: ellipsis;
+
+  // only calc the max-height if the --max-lines variable was supplied
+  &.is-line-clamped {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: max(var(--line-clamp, 0), 1);
+  }
+}

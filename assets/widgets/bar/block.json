@@ -1,0 +1,69 @@
+{
+  "apiVersion": 3,
+  "name": "fc/bar",
+  "title": "Bar",
+  "description": "A bar to capture your visitors attention.",
+  "category": "fooconvert",
+  "editorScript": "file:./editor/index.js",
+  "editorStyle": "file:./editor/index.css",
+  "viewScript": "file:./frontend/index.js",
+  "viewStyle": "file:./frontend/index.css",
+  "supports": {
+    "lock": false,
+    "multiple": false,
+    "reusable": false,
+    "className": false,
+    "html": false
+  },
+  "attributes": {
+    "clientId": {
+      "type": "string"
+    },
+    "postId": {
+      "type": "number"
+    },
+    "styles": {
+      "type": "object"
+    },
+    "button": {
+      "type": "object"
+    },
+    "position": {
+      "type": "string"
+    },
+    "trigger": {
+      "type": "object",
+      "default": {
+        "type": "immediate"
+      }
+    },
+    "lockTrigger": {
+      "type": "boolean",
+      "default": false
+    },
+    "closeAnchor": {
+      "type": "string"
+    },
+    "hideButton": {
+      "type": "boolean"
+    },
+    "transitions": {
+      "type": "boolean"
+    },
+    "pagePush": {
+      "type": "boolean"
+    }
+  },
+  "usesContext": [
+    "postId"
+  ],
+  "providesContext": {
+    "fc-bar/clientId": "clientId",
+    "fc-bar/styles": "styles",
+    "fc-bar/button": "button",
+    "fc-bar/closeAnchor": "closeAnchor",
+    "fc-bar/hideButton": "hideButton",
+    "fc-bar/transitions": "transitions",
+    "fc-bar/pagePush": "pagePush"
+  }
+}
