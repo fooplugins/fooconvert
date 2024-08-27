@@ -22,9 +22,23 @@
     "check-updates": "npx npm-check-updates",
     "composer": "composer install --prefer-dist --optimize-autoloader --no-dev",
     "gulp": "gulp",
-    "package": "npm run build && gulp",
+    "package": "npm run build && npm run make-pot && gulp",
     "deploy": "gulp freemius-deploy"
   },
+  "files": [
+    "**/*",
+    "!{node_modules,node_modules/**,node_modules/**/*}",
+    "!{dist,dist/**,dist/**/*}",
+    "!{src,src/**,src/**/*}",
+    "!.gitignore",
+    "!composer.json",
+    "!composer.lock",
+    "!fs-config.json",
+    "!gulpfile.js",
+    "!package.json",
+    "!package-lock.json",
+    "!webpack.config.js"
+  ],
   "devDependencies": {
     "@steveush/utils": "^0.0.2",
     "@wordpress/block-editor": "^14.1.0",
