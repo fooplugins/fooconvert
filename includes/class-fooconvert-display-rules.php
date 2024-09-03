@@ -556,12 +556,12 @@ class FooConvert_Display_Rules extends Base_Component {
      * @since 1.0.0
      */
     public function render_enqueued() {
-        wp_kses();
-
         foreach ( $this->enqueued as $widget ) {
-            // content is output by do_blocks in the below enqueue_required function
+            // Reviewers:
+            // The content is passed through wp_kses with an extended post allowed HTML list that includes
+            // the custom elements for the plugin.
             // phpcs:ignore WordPress.Security.EscapeOutput
-            echo $widget['content'];
+            echo FooConvert::plugin()->kses_post( $widget['content'] );
         }
     }
 

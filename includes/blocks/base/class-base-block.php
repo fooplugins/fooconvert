@@ -2,6 +2,7 @@
 
 namespace FooPlugins\FooConvert\Blocks\Base;
 
+use FooPlugins\FooConvert\FooConvert;
 use FooPlugins\FooConvert\Utils;
 use WP_Block;
 use WP_Block_Type;
@@ -327,9 +328,11 @@ abstract class Base_Block {
 <<?php echo esc_html( $tag_name ); ?> id="<?php echo esc_attr( $instance_id ) ?>" <?php echo wp_kses_data( get_block_wrapper_attributes( $frontend_attributes ) ); ?>>
     <?php $this->render_frontend_icons( $instance_id, $frontend_icons ); ?>
     <?php
-            // not sure if the output of do_blocks should be encoded
+            // Reviewers:
+            // The do_blocks() output is passed through wp_kses with an extended post allowed HTML list that includes
+            // the custom elements for the plugin.
             // phpcs:ignore WordPress.Security.EscapeOutput
-            echo do_blocks( $content );
+            echo FooConvert::plugin()->kses_post( do_blocks( $content ) );
     ?>
 </<?php echo esc_html( $tag_name ); ?>>
 <?php
@@ -345,7 +348,11 @@ abstract class Base_Block {
 
     function render_content( array $attributes, string $content ) {
         ob_start();
-        echo do_blocks( $content ); // phpcs:ignore WordPress.Security.EscapeOutput
+        // Reviewers:
+        // The do_blocks() output is passed through wp_kses with an extended post allowed HTML list that includes
+        // the custom elements for the plugin.
+        // phpcs:ignore WordPress.Security.EscapeOutput
+        echo do_blocks( $content );
         return ob_get_clean();
     }
 
@@ -366,9 +373,11 @@ abstract class Base_Block {
         if ( ! empty( $icons ) ) {
             foreach ( $icons as $icon ) {
                 if ( Utils::is_string( $icon, true ) && false !== strpos( $icon, 'slot=' ) ) {
-                    // this is the rendered output of an SVG from @wordpress/icons
+                    // Reviewers:
+                    // This is the rendered output of an SVG from '@wordpress/icons' and is passed to
+                    // wp_kses with an allowed HTML list that includes SVG elements.
                     // phpcs:ignore WordPress.Security.EscapeOutput
-                    echo $icon;
+                    echo FooConvert::plugin()->kses_svg( $icon );
                 }
             }
         }

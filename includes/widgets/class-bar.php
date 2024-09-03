@@ -15,13 +15,14 @@ class Bar extends Base_Widget {
                 'id' => true,
                 'class' => true,
                 'open' => true,
-                'position' => true,
+                'transitions' => true,
+                'page-push' => true,
+                'top' => true,
+                'bottom' => true,
                 'button-toggle' => true,
                 'button-none' => true,
                 'button-left' => true,
                 'button-right' => true,
-                'page-push' => true,
-                'transitions' => true
             )
         );
     }
@@ -85,7 +86,6 @@ class Bar extends Base_Widget {
      * @inheritDoc
      */
     function get_editor_variations() : array {
-//        return array();
         return array(
             array(
                 'name' => 'empty',

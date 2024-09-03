@@ -67,6 +67,17 @@ class FooConvert_Widgets extends Base_Component {
         return null;
     }
 
+    function get_kses_definitions() : array {
+        $defs = array();
+        foreach ( $this->instances as $instance ) {
+            $def = $instance->kses_definition();
+            if ( !empty( $def ) ) {
+                $defs = array_merge( $defs, $def );
+            }
+        }
+        return $defs;
+    }
+
     /**
      * Check if the current page is the editor for any of the widget custom post types.
      *

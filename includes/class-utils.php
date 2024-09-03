@@ -711,29 +711,5 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
             }
             return false;
         }
-
-//        private static array $kses_post_with_custom_element_attributes = array();
-//
-//        static function get_kses_post_with_custom_element_attributes() : array {
-//            if ( !empty( self::$kses_post_with_custom_element_attributes ) ) {
-//                return self::$kses_post_with_custom_element_attributes;
-//            }
-//
-//            $kses_extended = wp_kses_allowed_html( 'post' );
-//
-//            foreach ( $kses_extended as $tag => $attr ) {
-//                $kses_extended[$tag]['is'] = true;
-//                $kses_extended[$tag]['slot'] = true;
-//            }
-//
-//            return self::$kses_post_with_custom_element_attributes = $kses_extended;
-//        }
-//
-//        static function kses_svg() {
-//            $definition = array(
-//
-//            );
-//        }
     }
-
 }

@@ -88,6 +88,8 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             $this->widgets = new FooConvert_Widgets();
         }
 
+        //region Properties
+
         /**
          * Utility classes and methods for custom element dynamic blocks.
          *
@@ -136,6 +138,122 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          */
         public FooConvert_Widgets $widgets;
 
+        //endregion
+
+        //region KSES
+
+        /**
+         * A wrapper around the `wp_kses` method that extends both the allowed HTML elements and CSS properties
+         * to include the plugin custom elements and SVG elements.
+         *
+         * @param string $content Text content to filter.
+         * @return string Filtered content containing only the allowed HTML.
+         */
+        public function kses_post( string $content ) : string {
+            $allowed_html = wp_kses_allowed_html( 'post' );
+            // merge the plugin elements into the allowed list
+            $allowed_html = array_merge(
+                $allowed_html,
+                $this->blocks->get_kses_definitions(),
+                $this->widgets->get_kses_definitions()
+            );
+            return $this->kses_with_svg( $content, $allowed_html );
+        }
+
+        /**
+         * A wrapper around the `wp_kses` method that extends both the allowed HTML elements and CSS properties
+         * to include SVG elements.
+         *
+         * @param string $content Text content to filter.
+         * @return string Filtered content containing only the allowed HTML.
+         */
+        public function kses_svg( string $content ) : string {
+            return $this->kses_with_svg( $content, array() );
+        }
+
+        /**
+         * A wrapper around the `wp_kses` method that extends both the allowed HTML elements and CSS properties
+         * to include SVG elements and the custom element 'slot' and 'is' attributes.
+         *
+         * @param string $content Text content to filter.
+         * @param array $allowed_html An array of allowed HTML elements and attributes.
+         * @return string Filtered content containing only the allowed HTML.
+         */
+        private function kses_with_svg( string $content, array $allowed_html ) : string {
+            // merge the SVG elements into the allowed list
+            $allowed_html = $this->merge_allowed_svg_html( $allowed_html );
+            // extend all elements with the 'slot' and 'is' global attributes for custom elements
+            $allowed_html = $this->add_custom_element_attributes( $allowed_html );
+            // hook into the safe_style_css filter, so we can include the SVG presentation attributes for only this call to wp_kses
+            add_filter( 'safe_style_css', array( $this, 'safe_style_css_svg_presentation_attributes' ) );
+            $result = wp_kses( $content, $allowed_html );
+            remove_filter( 'safe_style_css', array( $this, 'safe_style_css_svg_presentation_attributes' ) );
+            return $result;
+        }
+
+        /**
+         * Iterates the supplied allowed HTML elements list and adds the 'slot' and 'is' attributes to each element.
+         *
+         * @param array $allowed_html An array of allowed HTML elements and attributes.
+         * @return array An array of allowed HTML elements and attributes with the 'slot' and 'is' attributes.
+         */
+        private function add_custom_element_attributes( array $allowed_html ): array {
+            foreach ( $allowed_html as $_ => $attributes ) {
+                if ( !isset( $attributes['slot'] ) ) {
+                    $attributes['slot'] = true;
+                }
+                if ( !isset( $attributes['is'] ) ) {
+                    $attributes['is'] = true;
+                }
+            }
+            return $allowed_html;
+        }
+
+        /**
+         * Merges the allowed SVG elements into the given allowed HTML elements array.
+         *
+         * Any pre-existing elements (<a/>) will have there attributes merged with those of the SVG specific element.
+         *
+         * @param array $allowed_html An array of allowed HTML elements and attributes.
+         * @return array
+         */
+        private function merge_allowed_svg_html( array $allowed_html ) : array {
+            if ( empty( $allowed_html ) ) {
+                $allowed_html = FOOCONVERT_SVG_ALLOWED_HTML;
+            } else {
+                foreach ( FOOCONVERT_SVG_ALLOWED_HTML as $tag_name => $attributes ) {
+                    if ( isset( $allowed_html[ $tag_name ] ) && is_array( $allowed_html[ $tag_name ] ) && is_array( FOOCONVERT_SVG_ALLOWED_HTML[ $tag_name ] ) ) {
+                        // if the tag already exists and both it and the SVG values are an array, merge them
+                        $allowed_html[ $tag_name ] = array_merge( $allowed_html[ $tag_name ], FOOCONVERT_SVG_ALLOWED_HTML[ $tag_name ] );
+                    } else {
+                        // otherwise simply set the tag
+                        $allowed_html[ $tag_name ] = FOOCONVERT_SVG_ALLOWED_HTML[ $tag_name ];
+                    }
+                }
+            }
+            return $allowed_html;
+        }
+
+        /**
+         * Callback for the `safe_style_css` filter.
+         *
+         * This callback extends the allowed CSS properties with the SVG presentation attributes.
+         *
+         * This filter is only hooked and then immediately unhooked when using the `FooConvert->kses_*()` functions.
+         *
+         * @param string[] $attr The allowed CSS attributes.
+         * @return string[] The SVG extended CSS attributes.
+         *
+         * @see https://developer.wordpress.org/reference/hooks/safe_style_css/
+         */
+        public function safe_style_css_svg_presentation_attributes( array $attr ) : array {
+            return array_merge( $attr, FOOCONVERT_SVG_SAFE_CSS );
+        }
+
+        //endregion
+
+        //region Hooks
+
         /**
          * Callback for the `admin_menu` action.
          *
@@ -144,7 +262,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @access public
          * @since 1.0.0
          */
-        function register_menu() {
+        public function register_menu() {
             /** @noinspection PhpUndefinedFunctionInspection - shows as unresolvable in my IDE - see https://developer.wordpress.org/reference/functions/add_menu_page/ */
             add_menu_page(
                 __( 'FooConvert', 'fooconvert' ),
@@ -244,5 +362,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             ) );
             return $categories;
         }
+
+        //endregion
     }
 }

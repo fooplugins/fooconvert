@@ -27,4 +27,15 @@ class FooConvert_Blocks {
     function get_instances() : array {
         return $this->instances;
     }
+
+    function get_kses_definitions() : array {
+        $defs = array();
+        foreach ( $this->instances as $instance ) {
+            $def = $instance->kses_definition();
+            if ( !empty( $def ) ) {
+                $defs = array_merge( $defs, $def );
+            }
+        }
+        return $defs;
+    }
 }
