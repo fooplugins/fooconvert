@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('fc-editor'), 'version' => 'f35459d72d50c3074d61');
+<?php return array('dependencies' => array('fc-editor'), 'version' => '14c5fc75f4049564412d');

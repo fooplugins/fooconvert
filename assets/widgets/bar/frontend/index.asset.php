@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('fc-frontend'), 'version' => '58143bf86965877d8fd1');
+<?php return array('dependencies' => array('fc-frontend'), 'version' => '331833ab380dc9c723bc');
