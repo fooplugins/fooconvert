@@ -1,7 +1,7 @@
 const gulp = require( "gulp" );
 const gulpZip = import( "gulp-zip" );
 const gulpFreemius = require( "gulp-freemius-deploy" );
-const del = require( "del" );
+const rm = require( "node:fs/promises" ).rm;
 const pkg = require( "./package.json" );
 const freemiusConfig = require( "./fs-config.json" );
 
@@ -15,12 +15,13 @@ gulpFreemius( gulp, {
 
 // clean up the files created by the tasks
 function clean() {
-    return del( [ `./dist/${ pkg.name }.v${ pkg.version }.zip` ] );
+    return rm( `./dist/${ pkg.name }.v${ pkg.version }.zip`, { force: true } );
 }
 
 // create a .zip containing just the production code for the plugin
 function zip() {
     return gulpZip.then( module => {
+        // file list is in the package.json
         return gulp.src( pkg.files )
             .pipe( module?.default(`${ pkg.name }.v${ pkg.version }.zip`) )
             .pipe( gulp.dest( "./dist" ) );

@@ -15,20 +15,25 @@
     "defaults"
   ],
   "scripts": {
+    "check-updates": "npx npm-check-updates",
     "build": "wp-scripts build --output-path=assets",
     "start": "wp-scripts start --output-path=assets",
     "develop": "wp-scripts start --no-watch --output-path=assets",
-    "make-pot": "wp i18n make-pot ./ languages/fooconvert.pot",
-    "check-updates": "npx npm-check-updates",
-    "composer": "composer install --prefer-dist --optimize-autoloader --no-dev",
-    "gulp": "gulp",
-    "package": "npm run build && npm run make-pot && gulp",
-    "deploy": "gulp freemius-deploy"
+    "i18n": "npm run i18n:make-pot && npm run i18n:make-po && npm run i18n:make-mo && npm run i18n:make-json",
+    "i18n:make-pot": "wp i18n make-pot ./ languages/fooconvert.pot --exclude=src",
+    "i18n:make-po": "cp ./languages/fooconvert.pot ./languages/fooconvert.po",
+    "i18n:make-mo": "wp i18n make-mo ./languages/fooconvert.po ./languages/fooconvert.mo",
+    "i18n:make-json": "wp i18n make-json languages/fooconvert.po --no-purge",
+    "composer:install": "composer install --prefer-dist --optimize-autoloader --no-dev",
+    "composer:update": "composer update --optimize-autoloader",
+    "composer:refresh": "composer dump-autoload --optimize",
+    "package:create-zip": "npm run build && npm run i18n && npm run composer:refresh && gulp",
+    "package:deploy": "gulp freemius-deploy"
   },
   "files": [
     "**/*",
-    "!{node_modules,node_modules/**,node_modules/**/*}",
     "!{dist,dist/**,dist/**/*}",
+    "!{node_modules,node_modules/**,node_modules/**/*}",
     "!{src,src/**,src/**/*}",
     "!.gitignore",
     "!composer.json",

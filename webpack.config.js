@@ -10,25 +10,33 @@ const CopyPlugin = require( 'copy-webpack-plugin' );
  * @type {import('webpack').EntryFunc}
  */
 const entry = () => {
+    // get the default config entries
     const defaultEntries = defaultConfig.entry();
+    // create our custom entry points to match the `pkg.imports` values
+    const entries = {
+        "editor": "./src/editor/index.js",
+        "frontend": "./src/frontend/index.js"
+    };
+    // iterate the default entries and add them to our new entries object
     return Object.entries( defaultEntries ).reduce( ( acc, [ key, value ] ) => {
-        // if the current entry path includes /frontend/ then add it as a dependency.
         if ( key.includes( "/frontend/" ) ) {
+            // if the current entry path includes /frontend/ then add it as a dependency.
             acc[ key ] = {
                 import: value,
                 dependOn: [ "frontend" ]
             };
-        } else { // all other JS files are associated with the editor so add it
+        } else if ( key.includes( "/editor/" ) ) {
+            // if the current entry path includes /editor/ then add it as a dependency.
             acc[ key ] = {
                 import: value,
                 dependOn: [ "editor" ]
             };
+        } else {
+            // otherwise leave it as is
+            acc[ key ] = value;
         }
         return acc;
-    }, {
-        "editor": "./src/editor/index.js",
-        "frontend": "./src/frontend/index.js"
-    } );
+    }, entries );
 };
 
 /**
@@ -49,12 +57,12 @@ const dependencyExtractionWebpackPluginOptions = {
     requestToExternal( request ) {
         // handle requests like `import { CustomElement } from '#frontend';`
         if ( request.startsWith( "#frontend" ) ) {
-            // expect to find `#frontend` as `FooConvert` in the global scope.
+            // expect to find `#frontend` as `FooConvert` in the global scope. See 'src/frontend/index.js' for the definition.
             return [ "FooConvert" ];
         }
         // handle requests like `import { UnitsControl } from '#editor';`
         if ( request.startsWith( "#editor" ) ) {
-            // expect to find `#editor` as `FooConvert.editor` in the global scope.
+            // expect to find `#editor` as `FooConvert.editor` in the global scope. See 'src/editor/index.js' for the definition.
             return [ "FooConvert", "editor" ];
         }
     },
@@ -106,7 +114,8 @@ module.exports = {
             patterns: [ {
                 context: './src/media',
                 from: '*.*',
-                to: 'media/[name][ext]'
+                to: 'media/[name][ext]',
+                noErrorOnMissing: true
             } ]
         } )
     ].filter( Boolean )
