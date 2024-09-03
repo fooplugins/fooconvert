@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   bottom: unset;
-  display: none;
+  display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -29,12 +29,14 @@
   }
 
   &::part(button) {
-    pointer-events: auto;
     box-sizing: border-box;
     position: absolute;
     top: 0;
     right: 0;
     display: flex;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -79,6 +81,10 @@
     background: #fff;
     margin: 0;
     padding: 16px;
+
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-100%);
   }
 }
 
@@ -86,17 +92,44 @@
   top: unset;
   bottom: 0;
 
+  &::part(content) {
+    transform: translateY(100%);
+  }
   &::part(button) {
     top: unset;
     bottom: 0;
   }
 }
 
-:host([button-left]) {
-  &::part(button) {
-    right: unset;
-    left: 0;
+:host([open]),
+:host([bottom][open]) {
+  &::part(content) {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0%);
   }
+}
+
+:host([open]),
+:host([button-toggle]) {
+  &::part(button) {
+    pointer-events: auto;
+    visibility: visible;
+    opacity: 1;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
+
+:host([button-left])::part(button) {
+  right: unset;
+  left: 0;
+}
+
+:host([button-none])::part(button) {
+  display: none;
 }
 
 :host {
@@ -127,44 +160,12 @@
   }
 }
 
-:host([open]),
-:host([button-toggle]) {
-  display: flex;
-}
-
-:host([button-toggle]) {
-  &::part(content) {
-    visibility: hidden;
-    opacity: 0;
-    transform: translateY(-100%);
-  }
-}
-
-:host([button-toggle][open]) {
-  &::part(content) {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0%);
-  }
-}
-
-:host([button-toggle][bottom]) {
-  &::part(content) {
-    transform: translateY(100%);
-  }
-}
-
-:host([button-toggle][bottom][open]) {
-  &::part(content) {
-    transform: translateY(0%);
-  }
-}
-
-:host([button-none])::part(button) {
-  display: none;
-}
-
 :host([transitions]) {
+  &::part(button) {
+    transition-property: visibility, opacity;
+    transition-duration: .3s;
+    transition-timing-function: ease-in-out;
+  }
   &::part(content) {
     transition-property: transform, visibility, opacity;
     transition-duration: .3s;

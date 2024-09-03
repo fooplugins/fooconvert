@@ -2,7 +2,7 @@ import { TriggeredElement } from "#frontend";
 import "./root.scss";
 import cssText from '!!css-loader?{"sourceMap":false,"exportType":"string"}!postcss-loader!sass-loader!./host.scss';
 import markup from "./template.html";
-import { isBoolean } from "@steveush/utils";
+import { isBoolean, isFunction, isString, strim } from "@steveush/utils";
 
 const styles = new CSSStyleSheet();
 styles.replaceSync( cssText );
@@ -92,6 +92,38 @@ class BarElement extends TriggeredElement {
             }
         }
         this.buttonElement.addEventListener( "click", this.onButtonClicked );
+        this.#closeAnchor = this.initCloseAnchor( this.config?.closeAnchor );
+    }
+
+    /**
+     *
+     * @type {?function}
+     */
+    #closeAnchor = null;
+
+    /**
+     *
+     * @param {string} target
+     * @returns {?function}
+     */
+    initCloseAnchor( target ) {
+        if ( isString( target, true ) ) {
+            const listener = event => {
+                event.preventDefault();
+                this.open = false;
+            };
+            const targets = [];
+            strim( target, "," ).forEach( id => {
+                const element = this.ownerDocument.getElementById( id );
+                if ( element instanceof HTMLElement ) {
+                    element.addEventListener( "click", listener );
+                    targets.push( element );
+                }
+            } );
+            return () => {
+                targets.forEach( element => element.removeEventListener( "click", listener ) );
+            };
+        }
     }
 
     disconnected() {
@@ -101,6 +133,10 @@ class BarElement extends TriggeredElement {
             this.updatePagePush( false );
         }
         this.buttonElement.removeEventListener( "click", this.onButtonClicked );
+        if ( isFunction( this.#closeAnchor ) ) {
+            this.#closeAnchor();
+            this.#closeAnchor = null;
+        }
     }
 
     triggeredCallback( type, ...args ) {

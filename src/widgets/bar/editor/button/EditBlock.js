@@ -10,6 +10,7 @@ const EditBlock = props => {
     const {
         isHidden,
         attributes: {
+            position = 'right',
             icon,
             styles
         },
@@ -22,7 +23,10 @@ const EditBlock = props => {
         icon: 'color'
     } );
     const buttonProps = useBlockProps( {
-        className: classnames( CLASS_NAME, { 'is-hidden': isHidden } ),
+        className: classnames( CLASS_NAME, {
+            'is-hidden': isHidden,
+            [`position-${ position }`]: position !== defaults?.position
+        } ),
         style: {
             ...buttonStyles,
             fontSize: icon?.size ?? defaults?.size

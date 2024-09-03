@@ -13,6 +13,7 @@
   border: none;
   cursor: pointer;
   z-index: 1;
+  top: 0;
   right: 0;
 
   &:hover {
@@ -27,4 +28,14 @@
     stroke: currentColor;
     fill: currentColor;
   }
+}
+
+.position-bottom .fc--bar-button {
+  top: unset;
+  bottom: 0;
+}
+
+.fc--bar-button.position-left {
+  right: unset;
+  left: 0;
 }
