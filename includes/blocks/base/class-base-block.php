@@ -352,7 +352,7 @@ abstract class Base_Block {
         // The do_blocks() output is passed through wp_kses with an extended post allowed HTML list that includes
         // the custom elements for the plugin.
         // phpcs:ignore WordPress.Security.EscapeOutput
-        echo do_blocks( $content );
+        echo FooConvert::plugin()->kses_post( do_blocks( $content ) );
         return ob_get_clean();
     }
 
