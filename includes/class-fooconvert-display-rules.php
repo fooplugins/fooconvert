@@ -500,8 +500,6 @@ class FooConvert_Display_Rules extends Base_Component {
             return $this->current_user_roles;
         }
 
-        $result = array('general:all_users');
-
         if ( is_user_logged_in() ) {
             $result[] = 'general:logged_in';
         } else {
@@ -637,11 +635,17 @@ class FooConvert_Display_Rules extends Base_Component {
     }
 
     public function match_compiled_locations( array $compiled_locations, array $current_location ) : bool {
+        if ( array_key_exists( 'general:entire_site', $compiled_locations ) ) {
+            return true;
+        }
         list( 'type' => $type, 'data' => $data ) = $current_location;
         return array_key_exists( $type, $compiled_locations ) && ( ! is_int( $data ) || in_array( $data, $compiled_locations[ $type ], true ) );
     }
 
     public function match_compiled_user_roles( array $compiled_user_roles, array $current_user_roles ) : bool {
+        if ( in_array( 'general:all_users', $compiled_user_roles ) ) {
+            return true;
+        }
         return count( array_intersect( $compiled_user_roles, $current_user_roles ) ) > 0;
     }
 
