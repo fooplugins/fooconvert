@@ -4,6 +4,7 @@ namespace FooPlugins\FooConvert;
 
 use FooPlugins\FooConvert\Components\Base\Base_Component;
 use WP_Post;
+use WP_Post_Type;
 use WP_Query;
 use WP_Term;
 use WP_User;
@@ -207,12 +208,39 @@ class FooConvert_Display_Rules extends Base_Component {
             )
         );
 
+        $archives = $this->get_component_location_archives();
+        if ( ! empty( $archives ) ) {
+            $locations[] = $archives;
+        }
+
         if ( $context === 'exclude' ) {
             // remove 'general:entire_site' from the exclude locations
             array_shift( $locations[0]['options'] );
         }
 
         return $locations;
+    }
+
+    private array $component_location_archives = array();
+    private function get_component_location_archives() : array {
+        if ( ! empty( $this->component_location_archives ) ) {
+            return $this->component_location_archives;
+        }
+        $post_types = get_post_types( array( 'public' => true ), 'objects' );
+        $archives = array(
+            'group' => 'archive',
+            'label' => __( 'Post Archives', 'fooconvert' ),
+            'options' => array()
+        );
+        foreach ( $post_types as $post_type ) {
+            if ( $post_type instanceof WP_Post_Type && $post_type->has_archive !== false ) {
+                $archives['options'][] = array(
+                    'value' => 'archive:' . $post_type->name,
+                    'label' => $post_type->label,
+                );
+            }
+        }
+        return $this->component_location_archives = empty( $archives['options'] ) ? array() : $archives;
     }
 
     function get_component_users() : array {
@@ -307,7 +335,7 @@ class FooConvert_Display_Rules extends Base_Component {
         // then go about compiling the rules again if currently published
         if ( $is_published ) {
             $compiled = $this->get_compiled( $post_id );
-            if ( !empty( $compiled ) ) {
+            if ( ! empty( $compiled ) ) {
                 $updated[] = $compiled;
             }
         }
@@ -324,7 +352,7 @@ class FooConvert_Display_Rules extends Base_Component {
      */
     public function get_compiled( int $post_id ) : array {
         $rules = get_post_meta( $post_id, FOOCONVERT_DISPLAY_RULES_META_KEY, true );
-        if ( !empty( $rules ) ) {
+        if ( ! empty( $rules ) ) {
             // make sure at a minimum the rules are the expected types and that at least 1 location and user
             // have been set before compiling
             $should_compile = Utils::has_keys( $rules, array_keys( $this->defaults() ), function ( $value, $key ) {
@@ -367,6 +395,10 @@ class FooConvert_Display_Rules extends Base_Component {
      *          'data' => null
      *      ),
      *      array(
+     *          'type' => 'archive:*',
+     *          'data' => null
+     *      ),
+     *      array(
      *          'type' => 'specific:*',
      *          'data' => array(
      *              array( 'id' => 1, 'label' => 'Abc' ),
@@ -377,6 +409,7 @@ class FooConvert_Display_Rules extends Base_Component {
      * $output = compile_locations( $input );
      * $output = array(
      *      'general:*' => true,
+     *      'archive:*' => true,
      *      'specific:*' => array( 1, 2 )
      * );
      *
@@ -393,8 +426,8 @@ class FooConvert_Display_Rules extends Base_Component {
             // otherwise go through the locations and 'flatten' them
             return array_reduce( $locations, function ( $result, $location ) {
                 $type = Utils::get_string( $location, 'type' );
-                if ( str_starts_with( $type, 'general:' ) ) {
-                    // general locations have no additional checks, they are static
+                if ( str_starts_with( $type, 'general:' ) || str_starts_with( $type, 'archive:' ) ) {
+                    // general & archive locations have no additional checks, they are static
                     $result[ $type ] = true;
                 } elseif ( str_starts_with( $type, 'specific:' ) ) {
                     // specific locations require post_ids that must be matched, so extract them out
@@ -458,6 +491,8 @@ class FooConvert_Display_Rules extends Base_Component {
             }
         } elseif ( is_404() ) {
             $result = array( 'type' => 'general:404', 'data' => null );
+        } elseif ( is_post_type_archive() ) {
+            $result = array( 'type' => 'archive:' . $wp_query->get( 'post_type' ), 'data' => null );
         }
 
         // visibility => Specific
