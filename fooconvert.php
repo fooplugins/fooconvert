@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: FooConvert – WordPress Sales and Conversion Plugin
+Plugin Name: FooConvert
 Description: Turn clicks into conversions, visitors into customers – FooConvert is the ultimate catalyst for online success!
 Version:     0.0.3
 Author:      FooPlugins
