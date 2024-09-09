@@ -64,7 +64,7 @@ class FooConvert_Display_Rules extends Base_Component {
             // false positive - this array is not used to query posts
             // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams
             'exclude' => array(),
-            'users' => array()
+            'users' => array( 'general:all_users' )
         );
     }
 
