@@ -12,10 +12,7 @@
   flex-direction: column;
   height: 100%!important;
   width: 100%!important;
-  padding-top: 0!important;
-  padding-right: 0!important;
-  padding-bottom: 0!important;
-  padding-left: 0!important;
+  padding: 0 !important;
 
   .edit-post-visual-editor__post-title-wrapper {
     display: none;
@@ -23,10 +20,8 @@
 
   .wp-block-post-content {
     height: 100%!important;
-    padding-top: 0!important;
-    padding-right: 0!important;
-    padding-bottom: 0!important;
-    padding-left: 0!important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
 
   .edit-post-visual-editor__post-title-wrapper,
