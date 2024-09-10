@@ -2,13 +2,15 @@
 /*
 Plugin Name: FooConvert
 Description: Turn clicks into conversions, visitors into customers – FooConvert is the ultimate catalyst for online success!
-Version:     0.0.3
+Version:     0.0.5
 Author:      FooPlugins
 Plugin URI:  https://fooplugins.com/fooconvert-wordpress-sales-conversion/
 Author URI:  https://fooplugins.com/
 Text Domain: fooconvert
 License:     GPL-3.0+
 Domain Path: /languages
+Requires at least: 6.5
+Requires PHP: 7.4
 
 @fs_premium_only /pro/
 
@@ -32,7 +34,7 @@ if ( ! defined( 'FOOCONVERT_SLUG' ) ) {
     define( 'FOOCONVERT_ASSETS_PATH', FOOCONVERT_PATH . 'assets/' );
     define( 'FOOCONVERT_ASSETS_URL', FOOCONVERT_URL . 'assets/' );
     define( 'FOOCONVERT_FILE', __FILE__ );
-    define( 'FOOCONVERT_VERSION', '0.0.1' );
+    define( 'FOOCONVERT_VERSION', '0.0.5' );
     define( 'FOOCONVERT_MIN_PHP', '7.4.0' );
     define( 'FOOCONVERT_MIN_WP', '6.5.0' );
 }

@@ -643,7 +643,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
             return false;
         }
 
-        static function make_identifier( string $name ): string {
+        static function make_identifier( string $name ) : string {
             $name = preg_replace( '/\W/', '_', $name );
             $name = preg_replace( '/^(\d)/', '$$1', $name );
             return strtoupper( $name );
