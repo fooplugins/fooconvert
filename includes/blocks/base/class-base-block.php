@@ -38,6 +38,11 @@ abstract class Base_Block {
         $block_types = $this->register_blocks();
         if ( ! empty( $block_types ) ) {
             $this->block_types = $block_types;
+            foreach ( $this->block_types as $block_type ) {
+                foreach ( $block_type->editor_script_handles as $editor_script_handle ) {
+                    wp_set_script_translations( $editor_script_handle, 'fooconvert' );
+                }
+            }
         }
     }
 

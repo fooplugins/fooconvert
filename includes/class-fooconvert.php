@@ -285,8 +285,6 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         public function load_translations() {
             $plugin_rel_path = dirname( plugin_basename( FOOCONVERT_FILE ) ) . '/languages/';
             load_plugin_textdomain( FOOCONVERT_SLUG, false, $plugin_rel_path );
-            // load translations for the editor JS
-            wp_set_script_translations( FOOCONVERT_EDITOR_ASSET_HANDLE, 'fooconvert' );
         }
 
         /**
@@ -330,6 +328,8 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
                 if ( Utils::has_keys( $editor, array( 'dependencies', 'version' ) ) ) {
                     wp_enqueue_style( FOOCONVERT_EDITOR_ASSET_HANDLE, FOOCONVERT_ASSETS_URL . 'editor.css', array(), $editor['version'] );
                     wp_enqueue_script( FOOCONVERT_EDITOR_ASSET_HANDLE, FOOCONVERT_ASSETS_URL . 'editor.js', $editor['dependencies'], $editor['version'], true );
+                    // load translations for the editor JS
+                    wp_set_script_translations( FOOCONVERT_EDITOR_ASSET_HANDLE, 'fooconvert' );
                     /**
                      * This action allows for additional assets to be enqueued after the editor assets are enqueued.
                      *
