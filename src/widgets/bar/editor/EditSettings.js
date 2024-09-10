@@ -171,13 +171,6 @@ const EditSettings = props => {
                     defaults={ defaults?.styles?.dimensions }
                 />
             </InspectorControls>
-            <BlockControls group="block">
-                <ToolbarVariationMenu
-                    icon={ update }
-                    clientId={ clientId }
-                    reset={ { variation: undefined } }
-                />
-            </BlockControls>
             <PluginDocumentSettingPanel name="fooconvert-display-rules" title={ __( 'Display Rules', 'fooconvert' ) }  >
                 <PanelRow>
                     <DisplayRulesButton variant="secondary" label={ __( 'Edit Rules', 'fooconvert' ) }/>
