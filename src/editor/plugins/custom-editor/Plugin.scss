@@ -14,6 +14,10 @@
   width: 100%!important;
   padding: 0 !important;
 
+  &::after {
+    display: none!important;
+  }
+
   .edit-post-visual-editor__post-title-wrapper {
     display: none;
   }
