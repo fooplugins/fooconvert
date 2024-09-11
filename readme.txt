@@ -1,6 +1,6 @@
-=== FooConvert – WordPress Sales and Conversion Plugin ===
+=== FooConvert ===
 Contributors: bradvin, steveush, fooplugins
-Tags: sales-optimization,conversion-tools,lead-generation,marketing-plugin,wordpress-ecommerce,customer-engagement
+Tags: sales-optimization,conversion-tools,lead-generation,marketing-plugin,wordpress-ecommerce
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 6.6.1

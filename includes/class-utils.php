@@ -506,13 +506,17 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
             if ( is_admin() ) {
                 $current_post_type = null;
                 global $pagenow;
-                if ( $pagenow == "post-new.php" && isset( $_GET['post_type'] ) ) {
-                    $current_post_type = $_GET['post_type'];
+                // Reviewers: there is no nonce, we do not own post-new.php
+                // See https://github.com/WordPress/plugin-check/issues/549
+                if ( $pagenow == "post-new.php" && isset( $_GET['post_type'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                    $current_post_type = sanitize_key( $_GET['post_type'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 }
                 if ( $pagenow == "post.php" ) {
                     $post_id = null;
-                    if ( isset( $_GET['post'] ) ) $post_id = (int) $_GET['post'];
-                    elseif ( isset( $_GET['post_ID'] ) ) $post_id = (int) $_GET['post_ID'];
+                    // Reviewers: there is no nonce, we do not own post.php
+                    // See https://github.com/WordPress/plugin-check/issues/549
+                    if ( isset( $_GET['post'] ) ) $post_id = (int) $_GET['post']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                    elseif ( isset( $_GET['post_ID'] ) ) $post_id = (int) $_GET['post_ID']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                     if ( is_int( $post_id ) ) {
                         $post_obj = get_post( $post_id );
                         if ( $post_obj instanceof WP_Post ) {
