@@ -3,8 +3,8 @@ Contributors: bradvin, steveush, fooplugins
 Tags: sales-optimization,conversion-tools,lead-generation,marketing-plugin,wordpress-ecommerce
 Requires at least: 6.5
 Requires PHP: 7.4
-Tested up to: 6.6.1
-Stable tag: 0.0.5
+Tested up to: 6.6.2
+Stable tag: 0.0.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
