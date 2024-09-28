@@ -32,6 +32,10 @@ An answer goes here.
 1. Screenshot 1
 2. Screenshot 2
 
+== Repository ==
+
+The source code for this plugin is available publicly on GitHub [here](https://github.com/fooplugins/fooconvert).
+
 == Changelog ==
 
 = 0.0.x =
