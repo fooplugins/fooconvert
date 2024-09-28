@@ -1,9 +1,9 @@
 import CustomElement from "./CustomElement";
 import { isFunction, isNumber, isString, isUndefined, strim } from "@steveush/utils";
-import { getDocumentScrollPercent, hasAdBlock } from "../utils";
+import { getDocumentScrollPercent } from "../utils";
 
 /**
- * @typedef {"immediate"|"adblock"|"anchor"|"exit-intent"|"scroll"|"timer"|"visible"} TriggerType
+ * @typedef {"immediate"|"anchor"|"exit-intent"|"scroll"|"timer"|"visible"} TriggerType
  */
 
 /**
@@ -13,7 +13,7 @@ class TriggeredElement extends CustomElement {
 
     // noinspection JSUnusedGlobalSymbols
 
-    static #triggerTypes = [ "immediate", "adblock", "anchor", "scroll", "timer", "visible", "exit-intent" ];
+    static #triggerTypes = [ "immediate", "anchor", "scroll", "timer", "visible", "exit-intent" ];
     /**
      *
      * @returns {TriggerType[]}
@@ -55,7 +55,6 @@ class TriggeredElement extends CustomElement {
                 case "anchor":
                 case "visible":
                     return isString( data, true ) ? data : null;
-                case "adblock":
                 case "exit-intent":
                 case "timer":
                 case "scroll":
@@ -96,9 +95,6 @@ class TriggeredElement extends CustomElement {
                 break;
             case "anchor":
                 this.#destroyTrigger = this.initAnchorTrigger( this.triggerData );
-                break;
-            case "adblock":
-                this.#destroyTrigger = this.initAdBlockTrigger( this.triggerData );
                 break;
             case "exit-intent":
                 this.#destroyTrigger = this.initExitIntentTrigger( this.triggerData );
@@ -159,36 +155,6 @@ class TriggeredElement extends CustomElement {
             return () => {
                 targets.forEach( element => element.removeEventListener( "click", listener ) );
             };
-        }
-    }
-
-    /**
-     *
-     * @param {number} percent
-     * @returns {?function}
-     */
-    initAdBlockTrigger( percent ) {
-        if ( isNumber( percent ) ) {
-            const listener = () => {
-                if ( getDocumentScrollPercent() > percent ) {
-                    this.ownerDocument.removeEventListener( "scroll", listener );
-                    this.triggeredCallback( "adblock", percent );
-                }
-            };
-            const destroy = () => {
-                this.ownerDocument.removeEventListener( "scroll", listener );
-            };
-            hasAdBlock().then( result => {
-                console.log( "adblock", result, this.isConnected, this.#destroyTrigger === destroy );
-                if ( result && this.isConnected && this.#destroyTrigger === destroy ) {
-                    if ( getDocumentScrollPercent() > percent ) {
-                        this.triggeredCallback( "adblock", percent );
-                    } else {
-                        this.ownerDocument.addEventListener( "scroll", listener, { passive: true } );
-                    }
-                }
-            } );
-            return destroy;
         }
     }
 

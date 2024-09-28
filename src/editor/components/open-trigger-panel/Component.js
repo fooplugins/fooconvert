@@ -3,7 +3,7 @@ import { __ } from "@wordpress/i18n";
 import { cleanObject, isNumberWithin, isString } from "@steveush/utils";
 
 /**
- * @typedef {"immediate"|"adblock"|"anchor"|"exit-intent"|"scroll"|"timer"|"visible"} TriggerType
+ * @typedef {"immediate"|"anchor"|"exit-intent"|"scroll"|"timer"|"visible"} TriggerType
  */
 
 /**
