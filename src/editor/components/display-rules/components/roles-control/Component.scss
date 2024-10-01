@@ -1,0 +1,13 @@
+.fc--display-rules__roles-control {
+  .fc--repeater-control__label {
+    svg {
+      fill: #f0b849;
+      display: block;
+      transform: rotate(180deg);
+    }
+  }
+
+  .fc--repeater-control__no-items {
+    font-style: italic;
+  }
+}

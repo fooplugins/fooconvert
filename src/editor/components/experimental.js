@@ -23,7 +23,9 @@ import {
     __experimentalColorGradientSettingsDropdown,
     ColorGradientSettingsDropdown as stableColorGradientSettingsDropdown,
     __experimentalUseMultipleOriginColorsAndGradients,
-    useMultipleOriginColorsAndGradients as stableUseMultipleOriginColorsAndGradients
+    useMultipleOriginColorsAndGradients as stableUseMultipleOriginColorsAndGradients,
+    __experimentalInspectorPopoverHeader,
+    InspectorPopoverHeader as stableInspectorPopoverHeader
 } from "@wordpress/block-editor";
 
 /**
@@ -110,5 +112,11 @@ export const ColorGradientSettingsDropdown = import_x(
 export const useMultipleOriginColorsAndGradients = import_x(
     __experimentalUseMultipleOriginColorsAndGradients, '__experimentalUseMultipleOriginColorsAndGradients',
     stableUseMultipleOriginColorsAndGradients, 'useMultipleOriginColorsAndGradients',
+    '@wordpress/block-editor'
+);
+
+export const InspectorPopoverHeader = import_x(
+    __experimentalInspectorPopoverHeader, '__experimentalInspectorPopoverHeader',
+    stableInspectorPopoverHeader, 'InspectorPopoverHeader',
     '@wordpress/block-editor'
 );

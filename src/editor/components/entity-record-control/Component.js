@@ -84,6 +84,7 @@ const EntityRecordControl = ( {
                                   onChange,
                                   minSearchChars = 2,
                                   maxSuggestions = 5,
+                                  __next40pxDefaultSize = true,
                                   className
                               } ) => {
 
@@ -103,7 +104,7 @@ const EntityRecordControl = ( {
     let suggestions = [];
     const searchArgs = makeSearchArgs( queryArgs, search, minSearchChars, maxSuggestions );
     const query = useEntityRecords( kind, name, searchArgs );
-    if ( query.hasResolved ) {
+    if ( query.hasResolved && Array.isArray( query.records ) ) {
         suggestions = query.records.reduce( ( acc, record ) => {
             const token = createEntityRecordToken( kind, name, record );
             return tokenToJsonReducer( acc, token );
@@ -111,7 +112,7 @@ const EntityRecordControl = ( {
     }
 
     return (
-        <div className={ classnames( rootClass, className ) }>
+        <div className={ classnames( rootClass, className, { 'is-next-40px-default-size': __next40pxDefaultSize } ) }>
             <FormTokenField
                 hideLabelFromVision
                 placeholder={ placeholder }

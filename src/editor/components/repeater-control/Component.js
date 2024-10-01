@@ -1,6 +1,5 @@
-import { Button } from "@wordpress/components";
+import { BaseControl, Button } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import { create } from "@wordpress/icons";
 import classNames from "classnames";
 import { isArray } from "@steveush/utils";
 
@@ -23,7 +22,7 @@ import "./Component.scss";
  * @returns {JSX.Element} The rendered item.
  */
 
-const rootClass = 'fc-repeater-control';
+const rootClass = 'fc--repeater-control';
 
 /**
  * @template T
@@ -44,13 +43,15 @@ const rootClass = 'fc-repeater-control';
  * @return {JSX.Element}
  */
 const RepeaterControl = ( {
+                              label,
+                              help,
                               items,
                               itemRenderer,
                               onChange,
                               onRequestNewItem,
                               className,
                               noItemsLabel = __( 'No items.', 'fooconvert' ),
-                              addItemLabel = __( 'Add item', 'fooconvert' )
+                              addItemLabel = __( 'Add item', 'fooconvert' ),
                           } ) => {
 
     if ( !isArray( items ) ) {
@@ -78,39 +79,44 @@ const RepeaterControl = ( {
 
     const isEmpty = items.length === 0;
 
-    const renderItems = () => {
-        if ( isEmpty ) {
-            return ( <label className={ `${ rootClass }__empty` }>{ noItemsLabel }</label> );
-        }
-        return (
-            <div className={ `${ rootClass }__items` }>
-                { items.map( ( item, index ) => {
-                    return itemRenderer( {
-                        item,
-                        index,
-                        items,
-                        onChange: value => onNotifyChange( index, value ),
-                        onRequestRemove: () => onRequestRemove( index )
-                    } );
-                } ) }
-            </div>
-        );
-    };
-
     return (
-        <div className={ classNames( rootClass, className, { 'is-empty': isEmpty } ) }>
-            { renderItems() }
-            <div className={ `${ rootClass }__buttons` }>
-                <Button
-                    icon={ create }
-                    size="compact"
-                    variant="tertiary"
-                    onClick={ addNewItem }
-                >
-                    { addItemLabel }
-                </Button>
+        <BaseControl
+            className={ classNames( rootClass, className, { 'is-empty': isEmpty } ) }
+            help={ help }
+            __nextHasNoMarginBottom
+        >
+            { label && (
+                <BaseControl.VisualLabel className={ `${ rootClass }__label` }>
+                    { label }
+                </BaseControl.VisualLabel>
+            ) }
+            <div className={ `${ rootClass }__container` }>
+                <div className={ `${ rootClass }__items` }>
+                    { isEmpty && (
+                        <div className={ `${ rootClass }__no-items` }>
+                            { noItemsLabel }
+                        </div>
+                    ) }
+                    { items.map( ( item, index ) => {
+                        return itemRenderer( {
+                            item,
+                            index,
+                            items,
+                            onChange: value => onNotifyChange( index, value ),
+                            onRequestRemove: () => onRequestRemove( index )
+                        } );
+                    } ) }
+                </div>
+                <div className={ `${ rootClass }__controls` }>
+                    <Button
+                        className={ `${ rootClass }__add-button` }
+                        variant="link"
+                        onClick={ addNewItem }
+                        text={ addItemLabel }
+                    />
+                </div>
             </div>
-        </div>
+        </BaseControl>
     );
 };
 

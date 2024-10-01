@@ -1,0 +1,1 @@
+export { default as DisplayRulesPrePublishPanel } from './Component';
