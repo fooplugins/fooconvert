@@ -368,6 +368,10 @@ abstract class Base_Block {
         if ( ! empty( $js_script ) ) {
             $handle = $this->get_asset_handle( 'editor_script_handles' );
             if ( ! empty( $handle ) ) {
+                // Reviewers:
+                // The $js_script is built up from settings required by our plugins' blocks and is both
+                // HTML decoded and JSON encoded by the to_js_script method.
+                // phpcs:ignore WordPress.Security.EscapeOutput
                 return wp_add_inline_script( $handle, $js_script, 'before' );
             }
         }
@@ -393,7 +397,7 @@ abstract class Base_Block {
         if ( ! empty( $css_text ) ) {
             $handle = $this->get_asset_handle( 'view_style_handles' );
             if ( ! empty( $handle ) ) {
-                return wp_add_inline_style( $handle, $css_text );
+                return wp_add_inline_style( $handle, esc_html( $css_text ) );
             }
         }
         return false;
@@ -404,6 +408,10 @@ abstract class Base_Block {
         if ( ! empty( $js_script ) ) {
             $handle = $this->get_asset_handle( 'view_script_handles' );
             if ( ! empty( $handle ) ) {
+                // Reviewers:
+                // The $js_script is built up from the $data array created by our plugins' blocks and is both
+                // HTML decoded and JSON encoded by the to_js_script method.
+                // phpcs:ignore WordPress.Security.EscapeOutput
                 return wp_add_inline_script( $handle, $js_script, 'before' );
             }
         }
