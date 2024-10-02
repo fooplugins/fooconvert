@@ -33,11 +33,7 @@ Contains various commands to build and publish the project.
     "build": "wp-scripts build --output-path=assets",
     "start": "wp-scripts start --output-path=assets",
     "develop": "wp-scripts start --no-watch --output-path=assets",
-    "i18n": "npm run i18n:make-pot && npm run i18n:make-po && npm run i18n:make-mo && npm run i18n:make-json",
-    "i18n:make-pot": "wp i18n make-pot ./ languages/fooconvert.pot --exclude=src",
-    "i18n:make-po": "cp ./languages/fooconvert.pot ./languages/fooconvert.po",
-    "i18n:make-mo": "wp i18n make-mo ./languages/fooconvert.po ./languages/fooconvert.mo",
-    "i18n:make-json": "wp i18n make-json languages/fooconvert.po --no-purge",
+    "i18n": "node make-pot.mjs",
     "composer:install": "composer install --prefer-dist --optimize-autoloader --no-dev",
     "composer:update": "composer update --optimize-autoloader",
     "composer:refresh": "composer dump-autoload --optimize",
@@ -60,13 +56,12 @@ builds the development version of the plugin without starting a file watcher.
 **_Note:_** The default `@wordpress/scripts/config/webpack.config` is being extended by the projects 
 `webpack.config.js` file.
 
-#### `i18n` and `i18n:make-*`
+#### `i18n`
 
-These scripts are wrappers around the [wp-cli](https://developer.wordpress.org/cli/commands/i18n/) `make-pot`, 
-`make-mo` and `make-json` commands. The `i18n` script simply runs all the `i18n:make-*` scripts in series.
-
-At present the `make-po` script simply copies the `.pot` file output by `make-pot` and changes the extension 
-to `.po`.
+The `make-pot.mjs` file is a wrapper around the [wp-cli](https://developer.wordpress.org/cli/commands/i18n/) `make-pot` 
+command. The reason this exists in a separate file is that regardless of the format supplied, the `--headers` option 
+for the `make-pot` command does not seem to work. The code in this file simply emulates that option and configures
+the headers in the `.pot` file.
 
 #### `composer:*`
 

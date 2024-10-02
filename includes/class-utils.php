@@ -647,6 +647,21 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
             return false;
         }
 
+        /**
+         * Make a valid JS identifier from the given name.
+         *
+         * This method performs three mutations on the string:
+         *
+         *  1. Converts all non-word characters to underscores.
+         *  2. Converts the string to uppercase.
+         *  3. Prepends a dollar sign if the string starts with a digit.
+         *
+         * @param string $name The name to make an identifier from.
+         *
+         * @return string The name converted to a valid JS identifier.
+         *
+         * @since 1.0.0
+         */
         static function make_identifier( string $name ) : string {
             $name = preg_replace( '/\W/', '_', $name );
             $name = preg_replace( '/^(\d)/', '$$1', $name );
