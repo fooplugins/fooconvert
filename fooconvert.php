@@ -2,7 +2,7 @@
 /*
 Plugin Name: FooConvert
 Description: Turn clicks into conversions, visitors into customers – FooConvert is the ultimate catalyst for online success!
-Version:     0.0.6
+Version:     0.0.7
 Author:      FooPlugins
 Plugin URI:  https://fooplugins.com/fooconvert-wordpress-sales-conversion/
 Author URI:  https://fooplugins.com/
