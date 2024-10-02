@@ -51,7 +51,12 @@ class CustomElement extends HTMLElement {
     // noinspection JSUnusedGlobalSymbols
     connectedCallback(){
         if ( !this.isInitialized ) {
-            this.#config = getElementConfiguration( this.id );
+            const config = getElementConfiguration( this.id );
+            if ( isPlainObject( config ) ) {
+                this.#config = config;
+            } else {
+                console.warn( `[FooConvert] No configuration found for element ID '${ this.id }'. Falling back to defaults.` );
+            }
             this.initialize();
             this.#isInitialized = true;
         }
