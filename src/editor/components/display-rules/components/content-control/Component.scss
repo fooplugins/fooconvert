@@ -1,0 +1,15 @@
+.fc--display-rules__content-control {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .fc--repeater-control {
+    .fc--repeater-control__label {
+      svg {
+        fill: #f0b849;
+        display: block;
+        transform: rotate(180deg);
+      }
+    }
+  }
+}

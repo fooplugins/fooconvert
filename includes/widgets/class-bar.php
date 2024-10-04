@@ -65,9 +65,18 @@ class Bar extends Base_Widget {
      */
     function register_post_type() {
         return register_post_type( $this->get_post_type(), array(
-            'labels' => array(
-                'name' => __( 'Bars', 'fooconvert' ),
-                'singular_name' => __( 'Bar', 'fooconvert' )
+            'labels'        => array(
+                'name'               => __( 'Bars', 'foobar' ),
+                'singular_name'      => __( 'Bar', 'foobar' ),
+                'add_new'            => __( 'Add Bar', 'foobar' ),
+                'add_new_item'       => __( 'Add New Bar', 'foobar' ),
+                'edit_item'          => __( 'Edit Bar', 'foobar' ),
+                'new_item'           => __( 'New Bar', 'foobar' ),
+                'view_item'          => __( 'View Bars', 'foobar' ),
+                'search_items'       => __( 'Search Bars', 'foobar' ),
+                'not_found'          => __( 'No Bars found', 'foobar' ),
+                'not_found_in_trash' => __( 'No Bars found in Trash', 'foobar' ),
+                'all_items'          => __( 'Bars', 'foobar' )
             ),
             'has_archive' => false,
             'public' => false,

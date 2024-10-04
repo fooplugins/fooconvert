@@ -5,6 +5,34 @@
   align-items: flex-end;
 }
 
+.fc-display-rules-button__summary {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 16px 0;
+
+  .fc-display-rules-button__summary-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.fc-display-rules-button__invalid {
+    .fc-display-rules-button__summary-icon {
+      svg {
+        fill: #cc1818;
+      }
+    }
+  }
+
+  .fc-display-rules-button__summary-messages {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+}
+
 .fc-display-rules__modal {
   .components-modal__content {
     padding-top: 0;
@@ -13,6 +41,16 @@
     .components-modal__header {
       padding-bottom: 24px;
       height: 88px;
+
+      .components-modal__header-heading-container {
+        gap: 0.4em;
+
+        .components-modal__icon-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
     }
   }
 }
@@ -23,6 +61,13 @@
     border-bottom: 1px solid #ddd;
     margin: 0 -32px;
     padding: 0 32px;
+  }
+  .fc-display-rules__modal-tab {
+    gap: 4px;
+
+    svg {
+      fill: #cc1818;
+    }
   }
 }
 

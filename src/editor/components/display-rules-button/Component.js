@@ -4,6 +4,7 @@ import {
 } from "@wordpress/components";
 import { useState } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
+import { Icon, seen, unseen, warning } from "@wordpress/icons";
 
 // Internal Imports
 import "./Component.scss";
@@ -14,6 +15,7 @@ import { useDisplayRulesMeta } from "./hooks";
 import noop from "../../utils/noop";
 import classnames from "classnames";
 import { clone } from "@steveush/utils";
+import compileDisplayRules from "./utils/compileDisplayRules";
 
 const rootClass = 'fc-display-rules-button';
 
@@ -45,6 +47,9 @@ const DisplayRulesButton = ( {
     const [ meta, setMeta ] = useDisplayRulesMeta();
     const [ rules, setRules ] = useState( clone( meta ) );
 
+    const compiledMeta = compileDisplayRules( meta );
+    const compiledRules = compileDisplayRules( rules );
+
     const openModal = () => {
         setOpen( true );
         onOpen();
@@ -71,21 +76,34 @@ const DisplayRulesButton = ( {
         onChange( newValue, rules );
     };
 
+    const renderTabTitle = ( name, title ) => {
+        if ( compiledRules.reasons.some( r => r.source === name ) ? warning : undefined ) {
+            return (
+                <>
+                    <span>{ title }</span>
+                    <Icon icon={ warning }/>
+                </>
+            );
+        } else {
+            return title;
+        }
+    };
+
     const tabs = [
         {
             name: 'location',
-            title: __( 'Location', 'fooconvert' ),
-            className: 'fc-display-rules__modal-tab-location'
+            title: renderTabTitle( 'location', __( 'Location', 'fooconvert' ) ),
+            className: 'fc-display-rules__modal-tab fc-display-rules__modal-tab-location'
         },
         {
             name: 'exclude',
-            title: __( 'Exclude', 'fooconvert' ),
-            className: 'fc-display-rules__modal-tab-exclude'
+            title: renderTabTitle( 'exclude', __( 'Exclude', 'fooconvert' ) ),
+            className: 'fc-display-rules__modal-tab fc-display-rules__modal-tab-exclude'
         },
         {
             name: 'users',
-            title: __( 'Users', 'fooconvert' ),
-            className: 'fc-display-rules__modal-tab-users'
+            title: renderTabTitle( 'users', __( 'Users', 'fooconvert' ) ),
+            className: 'fc-display-rules__modal-tab fc-display-rules__modal-tab-users'
         }
     ];
 
@@ -127,15 +145,38 @@ const DisplayRulesButton = ( {
         }
     };
 
+    const renderSummary = () => {
+        let icon = warning;
+        let messages = compiledMeta.reasons.map( r => r.message );
+        if ( compiledMeta.success ) {
+            icon = seen;
+            messages = [ __( 'Configured', 'fooconvert' ) ];
+        }
+        return (
+            <div className={ classnames( `${ rootClass }__summary`, { [`${ rootClass }__invalid`]: !compiledMeta.success } ) }>
+                <div className={ `${ rootClass }__summary-icon` }>
+                    <Icon icon={ icon }/>
+                </div>
+                <div className={ `${ rootClass }__summary-messages` }>
+                    { messages.map( ( m, i ) => (
+                        <span key={ i }>{ m }</span>
+                    ) ) }
+                </div>
+            </div>
+        );
+    };
+
     return (
         <div className={ classnames( rootClass ) }>
-            <DisplayRulesSummary rules={ rules }/>
+            { renderSummary() }
             <Button className={ `${ rootClass }__button` } { ...buttonProps } isPressed={ isOpen }
                     onClick={ openModal }>
                 { label }
             </Button>
             { isOpen && (
-                <Modal className="fc-display-rules__modal" title={ __( 'Display Rules', 'fooconvert' ) }
+                <Modal className="fc-display-rules__modal"
+                       title={ __( 'Display Rules', 'fooconvert' ) }
+                       icon={ ( <Icon icon={ compiledRules.success ? seen : unseen }/> ) }
                        onRequestClose={ closeModal }>
                     <TabPanel
                         className="fc-display-rules__modal-tabs"
