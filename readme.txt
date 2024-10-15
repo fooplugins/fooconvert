@@ -4,7 +4,7 @@ Tags: sales-optimization,conversion-tools,lead-generation,marketing-plugin,wordp
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 6.6.2
-Stable tag: 0.0.7
+Stable tag: 0.0.8
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
