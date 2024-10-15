@@ -3,8 +3,9 @@
 namespace FooPlugins\FooConvert;
 
 use FooPlugins\FooConvert\Components\Base\Base_Component;
-use FooPlugins\FooConvert\Widgets\Bar;
 use FooPlugins\FooConvert\Widgets\Base\Base_Widget;
+use FooPlugins\FooConvert\Widgets\Bar;
+use FooPlugins\FooConvert\Widgets\Popup;
 use WP_Query;
 
 /**
@@ -25,7 +26,8 @@ class FooConvert_Widgets extends Base_Component {
     function __construct() {
         parent::__construct();
         $this->instances = array(
-            new Bar()
+            new Bar(),
+            new Popup()
         );
     }
 

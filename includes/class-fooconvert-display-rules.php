@@ -42,9 +42,18 @@ class FooConvert_Display_Rules extends Base_Component {
     }
 
     public function register_column( string $post_type ) : void {
-        add_filter( "manage_{$post_type}_posts_columns", array( $this, 'create_column' ) );
-        add_filter( "manage_edit-{$post_type}_sortable_columns", array( $this, 'sortable_column' ) );
-        add_action( "manage_{$post_type}_posts_custom_column", array( $this, 'create_column_content' ), 10, 2 );
+        add_filter( "manage_{$post_type}_posts_columns", function( $columns ) use ( $post_type ) {
+            return $this->create_column( $post_type, $columns );
+        } );
+
+        add_filter( "manage_edit-{$post_type}_sortable_columns", function( $columns ) use ( $post_type ) {
+            return $this->sortable_column( $post_type, $columns );
+        } );
+
+        add_action( "manage_{$post_type}_posts_custom_column", function( $column_name, $post_id ) use ( $post_type ) {
+            $this->create_column_content( $post_type, $column_name, $post_id );
+        }, 10, 2 );
+
         add_action( 'admin_enqueue_scripts', function( $hook_suffix ) use ( $post_type ) {
             if ( $hook_suffix === 'edit.php' && isset( $_GET['post_type'] ) ) {
                 $current_post_type = sanitize_key( $_GET['post_type'] );
@@ -55,31 +64,28 @@ class FooConvert_Display_Rules extends Base_Component {
         } );
     }
 
-    public function create_column( $columns ) : array {
-        global $post;
-
+    public function create_column( $post_type, $columns ) : array {
         // add the column after the default title column
         $updated = array();
         $inserted = false;
         foreach ( $columns as $column_name => $column_display_name ) {
             $updated[ $column_name ] = $column_display_name;
             if ( $column_name === 'title' ) {
-                $updated["{$post->post_type}_display_rules"] = __( 'Display Rules', 'fooconvert' );
+                $updated["{$post_type}_display_rules"] = __( 'Display Rules', 'fooconvert' );
                 $inserted = true;
             }
         }
 
         // if for some reason the column was not inserted, add it
         if ( !$inserted ) {
-            $updated["{$post->post_type}_display_rules"] = __( 'Display Rules', 'fooconvert' );
+            $updated["{$post_type}_display_rules"] = __( 'Display Rules', 'fooconvert' );
         }
         return $updated;
     }
 
-    public function sortable_column( $columns ) {
-        global $post;
-        $columns["{$post->post_type}_display_rules"] = array(
-            "{$post->post_type}_display_rules",
+    public function sortable_column( $post_type, $columns ) {
+        $columns["{$post_type}_display_rules"] = array(
+            "{$post_type}_display_rules",
             false,
             __( 'Display Rules', 'fooconvert' ),
             __( 'Table ordered by display rules.', 'fooconvert' ),
@@ -88,13 +94,13 @@ class FooConvert_Display_Rules extends Base_Component {
     }
 
     /**
+     * @param $post_type
      * @param $column_name
      * @param $post_id
      * @return void
      */
-    public function create_column_content( $column_name, $post_id ) : void {
-        global $post;
-        if ( $column_name === "{$post->post_type}_display_rules" ) {
+    public function create_column_content( $post_type, $column_name, $post_id ) : void {
+        if ( $column_name === "{$post_type}_display_rules" ) {
             // the fooconvert_display_rules option contains all widgets with valid display rules, so we just need to
             // check if the current post_id exists within it
             $rules = get_option( 'fooconvert_display_rules', array() );

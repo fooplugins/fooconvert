@@ -1,0 +1,24 @@
+{
+  "apiVersion": 3,
+  "name": "fc/popup-button",
+  "title": "Popup Button",
+  "description": "The primary button used to toggle the visibility of the popup.",
+  "category": "fooconvert",
+  "parent": [ "fc/popup" ],
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "supports": {
+    "lock": false,
+    "multiple": false,
+    "reusable": false,
+    "className": false,
+    "html": false
+  },
+  "attributes": {},
+  "usesContext": [
+    "fc-popup/clientId",
+    "fc-popup/button",
+    "fc-popup/hideButton",
+    "fc-popup/styles"
+  ]
+}

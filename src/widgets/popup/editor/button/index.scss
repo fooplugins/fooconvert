@@ -1,0 +1,52 @@
+.fc--popup-button {
+  position: absolute!important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: fit-content;
+  font-size: 24px;
+  padding: 6px;
+  margin: 0;
+  background: none;
+  color: inherit;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+  top: 0;
+  right: 0;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &.alignment-outside {
+    transform: translateX(100%) translateY(-100%);
+  }
+
+  &.alignment-corner {
+    transform: translateX(50%) translateY(-50%);
+  }
+
+  svg {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+  }
+}
+
+.fc--popup-button.position-left {
+  right: unset;
+  left: 0;
+
+  &.alignment-outside {
+    transform: translateX(-100%) translateY(-100%);
+  }
+
+  &.alignment-corner {
+    transform: translateX(-50%) translateY(-50%);
+  }
+}
