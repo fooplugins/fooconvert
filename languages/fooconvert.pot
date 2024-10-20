@@ -2,42 +2,37 @@
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: FooConvert 0.0.7\n"
+"Project-Id-Version: FooConvert 0.0.8\n"
 "Report-Msgid-Bugs-To: https://github.com/fooplugins/fooconvert/issues\n"
 "Last-Translator: FooPlugins <info@fooplugins.com>\n"
 "Language-Team: FooPlugins <info@fooplugins.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-10-02T08:35:37+00:00\n"
+"POT-Creation-Date: 2024-10-20T13:32:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: fooconvert\n"
 
 #. Plugin Name of the plugin
-#: fooconvert.php
 #: includes/class-fooconvert.php:268
 #: includes/class-fooconvert.php:269
 msgid "FooConvert"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: fooconvert.php
 msgid "https://fooplugins.com/fooconvert-wordpress-sales-conversion/"
 msgstr ""
 
 #. Description of the plugin
-#: fooconvert.php
 msgid "Turn clicks into conversions, visitors into customers – FooConvert is the ultimate catalyst for online success!"
 msgstr ""
 
 #. Author of the plugin
-#: fooconvert.php
 msgid "FooPlugins"
 msgstr ""
 
 #. Author URI of the plugin
-#: fooconvert.php
 msgid "https://fooplugins.com/"
 msgstr ""
 
