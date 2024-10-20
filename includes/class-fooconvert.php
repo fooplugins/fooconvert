@@ -267,10 +267,28 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             add_menu_page(
                 __( 'FooConvert', 'fooconvert' ),
                 __( 'FooConvert', 'fooconvert' ),
-                'edit_posts',
+                'manage_options',
                 FOOCONVERT_MENU_SLUG,
                 '',
-                'dashicons-admin-plugins'
+                'dashicons-chart-bar'
+            );
+
+            add_submenu_page(
+                FOOCONVERT_MENU_SLUG,    // Parent slug (top-level menu slug)
+                __( 'Help', 'fooconvert' ),        // Page title
+                __( 'Help', 'fooconvert' ),        // Submenu title
+                'manage_options',         // Capability required
+                FOOCONVERT_MENU_SLUG,     // Submenu slug (unique identifier)
+                'fooconvert_welcome_page'  // Function to display the content
+            );
+
+            add_submenu_page(
+                FOOCONVERT_MENU_SLUG,    // Parent slug (top-level menu slug)
+                __( 'Bars', 'fooconvert' ),        // Page title
+                __( 'Bars', 'fooconvert' ),        // Submenu title
+                'manage_options',         // Capability required
+                'edit.php?post_type=fc-bar',     // Submenu slug (unique identifier)
+                null  // No custom callback (uses default CPT screen)
             );
         }
 
