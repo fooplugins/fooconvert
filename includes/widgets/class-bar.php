@@ -172,6 +172,219 @@ class Bar extends Base_Widget {
                 'scope' => array(
                     'block'
                 )
+            ),
+            array(
+                'slug' => 'black_friday',
+                'title' => __( 'Black', 'fooconvert' ),' Friday',
+                'description' => __( 'Bright top bar for Black Friday, with rounded corners and border. Pushed page content down.', 'fooconvert' ),
+                'icon' => '',
+                'attributes' => array(
+                    'trigger' => array(
+                        'type' => 'timer',
+                        'data' => 3
+                    ),
+                    'lockTrigger' => false,
+                    'styles' => array(
+                        'color' => array(
+                            'background' => 'linear-gradient(145deg,rgb(0,55,255) 0%,rgb(255,0,60) 100%)',
+                            'text' => '#ffffff'
+                        ),
+                        'border' => array(
+                            'radius' => '21px',
+                            'color' => '#111111',
+                            'style' => 'solid',
+                            'width' => '4px'
+                        ),
+                        'dimensions' => array(
+                            'margin' => '10px',
+                            'padding' => '0px',
+                            'gap' => '16px'
+                        )
+                    ),
+                    'button' => array(
+                        'styles' => array(
+                            'dimensions' => array(
+                                'margin' => '3px'
+                            ),
+                            'color' => array(
+                                'icon' => '#111111'
+                            ),
+                            'border' => array(
+                                'radius' => '0px',
+                                'style' => 'none',
+                                'width' => '0px'
+                            )
+                        ),
+                        'icon' => array(
+                            'size' => '32px',
+                            'close' => array(
+                                'slug' => 'wordpress-closeSmall',
+                                'svg' => '<svg xmlns="http => //www.w3.org/2000/svg" viewBox="0 0 24 24" slot="button-icon" width="32px" height="32px" class="button-icon button-icon--close" aria-hidden="true"><path d="M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z"></path></svg>'
+                            )
+                        )
+                    ),
+                    'transitions' => true,
+                    'pagePush' => true,
+                    'variation' => 'black_friday'
+                ),
+                'innerBlocks' => array(
+                    array(
+                        'fc/bar-button',
+                        array(),
+                        array()
+                    ),
+                    array(
+                        'fc/bar-content',
+                        array(),
+                        array(
+                            array(
+                                'core/paragraph',
+                                array(
+                                    'content' => '<strong>🔥 Black Friday deals are finally here - LIMITED STOCK – act fast!</strong>',
+                                    'dropCap' => false
+                                ),
+                                array()
+                            ),
+                            array(
+                                'core/buttons',
+                                array(),
+                                array(
+                                    array(
+                                        'core/button',
+                                        array(
+                                            'tagName' => 'a',
+                                            'type' => 'button',
+                                            'url' => '#shop',
+                                            'text' => 'Save 70%!'
+                                        ),
+                                        array()
+                                    )
+                                )
+                            )
+                        )
+                    )
+                ),
+                'scope' => array(
+                    'block'
+                )
+            ),
+            array(
+                'slug' => 'cookie_consent',
+                'title' => __( 'Cookie Consent', 'fooconvert' ),
+                'description' => __( 'Cookie consent bottom bar with Accept button.', 'fooconvert' ),
+                'icon' => '',
+                'attributes' => array(
+                    'trigger' => array(
+                        'type' => 'timer',
+                        'data' => 5
+                    ),
+                    'lockTrigger' => false,
+                    'styles' => array(
+                        'color' => array(
+                            'background' => 'linear-gradient(90deg,rgb(0,166,166) 0%,rgb(41,17,81) 100%)',
+                            'text' => '#ffffff'
+                        ),
+                        'border' => array(
+                            'radius' => '0px',
+                            'top' => array(
+                                'color' => '#291151',
+                                'style' => 'solid',
+                                'width' => '2px'
+                            ),
+                            'right' => array(
+                                'width' => '4px'
+                            ),
+                            'bottom' => array(
+                                'width' => '4px'
+                            ),
+                            'left' => array(
+                                'width' => '4px'
+                            )
+                        ),
+                        'dimensions' => array(
+                            'margin' => '0px',
+                            'padding' => '1px',
+                            'gap' => '16px'
+                        )
+                    ),
+                    'button' => array(
+                        'styles' => array(
+                            'dimensions' => array(
+                                'margin' => '3px'
+                            ),
+                            'color' => array(
+                                'icon' => '#111111'
+                            ),
+                            'border' => array(
+                                'radius' => '0px',
+                                'style' => 'none',
+                                'width' => '0px'
+                            )
+                        ),
+                        'icon' => array(
+                            'size' => '32px',
+                            'close' => array(
+                                'slug' => 'wordpress-closeSmall',
+                                'svg' => '<svg xmlns="http => //www.w3.org/2000/svg" viewBox="0 0 24 24" slot="button-icon" width="32px" height="32px" class="button-icon button-icon--close" aria-hidden="true"><path d="M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z"></path></svg>'
+                            )
+                        )
+                    ),
+                    'transitions' => true,
+                    'variation' => 'cookie_consent',
+                    'position' => 'bottom',
+                    'closeAnchor' => 'accept',
+                    'hideButton' => true
+                ),
+                'innerBlocks' => array(
+                    array(
+                        'fc/bar-button',
+                        array(),
+                        array()
+                    ),
+                    array(
+                        'fc/bar-content',
+                        array(),
+                        array(
+                            array(
+                                'core/paragraph',
+                                array(
+                                    'content' => '🍪 by continuing, you consent to our use of cookies',
+                                    'dropCap' => false
+                                ),
+                                array()
+                            ),
+                            array(
+                                'core/buttons',
+                                array(),
+                                array(
+                                    array(
+                                        'core/button',
+                                        array(
+                                            'tagName' => 'a',
+                                            'type' => 'button',
+                                            'url' => '#accept',
+                                            'text' => 'Accept All',
+                                            'anchor' => 'accept',
+                                            'className' => 'is-style-outline',
+                                            'style' => array(
+                                                'spacing' => array(
+                                                    'padding' => array(
+                                                        'top' => '5px',
+                                                        'bottom' => '5px'
+                                                    )
+                                                )
+                                            )
+                                        ),
+                                        array()
+                                    )
+                                )
+                            )
+                        )
+                    )
+                ),
+                'scope' => array(
+                    'block'
+                )
             )
         );
     }
