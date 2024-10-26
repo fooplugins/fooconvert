@@ -15,6 +15,8 @@ import {
     ToggleGroupControl as stableToggleGroupControl,
     __experimentalToggleGroupControlOption,
     ToggleGroupControlOption as stableToggleGroupControlOption,
+    __experimentalToggleGroupControlOptionIcon,
+    ToggleGroupControlOptionIcon as stableToggleGroupControlOptionIcon,
     __experimentalNumberControl,
     NumberControl as stableNumberControl,
 } from "@wordpress/components";
@@ -94,6 +96,12 @@ export const ToggleGroupControl = import_x(
 export const ToggleGroupControlOption = import_x(
     __experimentalToggleGroupControlOption, '__experimentalToggleGroupControlOption',
     stableToggleGroupControlOption, 'ToggleGroupControlOption',
+    '@wordpress/components'
+);
+
+export const ToggleGroupControlOptionIcon = import_x(
+    __experimentalToggleGroupControlOptionIcon, '__experimentalToggleGroupControlOptionIcon',
+    stableToggleGroupControlOptionIcon, 'ToggleGroupControlOptionIcon',
     '@wordpress/components'
 );
 

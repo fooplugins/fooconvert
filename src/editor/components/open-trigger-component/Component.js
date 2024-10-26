@@ -1,6 +1,8 @@
-import { BaseControl, PanelBody, PanelRow, RangeControl, SelectControl, TextControl } from "@wordpress/components";
+import { BaseControl, RangeControl, SelectControl, TextControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import { cleanObject, isFunction, isNumberWithin, isString } from "@steveush/utils";
+import { cleanObject, isNumberWithin, isString } from "@steveush/utils";
+
+import "./Component.scss";
 
 /**
  * @typedef {"immediate"|"anchor"|"exit-intent"|"scroll"|"timer"|"visible"} TriggerType
@@ -15,6 +17,9 @@ import { cleanObject, isFunction, isNumberWithin, isString } from "@steveush/uti
  * @type {Trigger[]}
  */
 const TRIGGERS = [ {
+    value: '',
+    label: __( 'None', 'fooconvert' )
+}, {
     value: 'immediate',
     label: __( 'On page load', 'fooconvert' ),
     help: __( 'Open immediately on page load.', 'fooconvert' )
@@ -50,20 +55,24 @@ const TRIGGERS = [ {
     dataHelp: __( 'The amount of time to wait before opening.', 'fooconvert' )
 } ];
 
-const OpenTriggerPanel = ( props ) => {
+const OpenTriggerComponent = ( props ) => {
     const {
         value,
         onChange,
         locked = false,
-        rowRenderer,
-        ...restProps
+        allowEmpty = false,
+        label = __( 'Open Trigger', 'fooconvert' ),
+        hideLabelFromVision
     } = props;
-
-    const hasRowRenderer = isFunction( rowRenderer );
 
     const { type, data } = value ?? {};
 
-    const selected = TRIGGERS.find( o => o.value === type ) ?? TRIGGERS.at( 0 );
+    let options = [ ...TRIGGERS ];
+    if ( !allowEmpty ) {
+        options = options.slice( 1 );
+    }
+
+    const selected = options.find( o => o.value === type ) ?? options.at( 0 );
 
     const setTrigger = ( type, data ) => {
         switch ( type ) {
@@ -85,29 +94,25 @@ const OpenTriggerPanel = ( props ) => {
     const renderType = () => {
         if ( locked ) {
             return (
-                <PanelRow>
-                    <BaseControl
-                        label={ __( 'Type', 'fooconvert' ) }
-                        help={ selected.help }
-                        hideLabelFromVision={ true }
-                        __nextHasNoMarginBottom
-                    >
-                        <p>{ selected.label }</p>
-                    </BaseControl>
-                </PanelRow>
+                <BaseControl
+                    label={ label }
+                    help={ selected?.help }
+                    hideLabelFromVision={ hideLabelFromVision }
+                    __nextHasNoMarginBottom
+                >
+                    <p>{ selected.label }</p>
+                </BaseControl>
             );
         }
         return (
-            <PanelRow>
-                <SelectControl
-                    label={ __( 'Type', 'fooconvert' ) }
-                    hideLabelFromVision={ true }
-                    help={ selected.help }
-                    value={ selected.value }
-                    options={ TRIGGERS }
-                    onChange={ nextValue => setTrigger( nextValue ) }
-                />
-            </PanelRow>
+            <SelectControl
+                label={ label }
+                hideLabelFromVision={ hideLabelFromVision }
+                help={ selected?.help }
+                value={ selected.value }
+                options={ options }
+                onChange={ nextValue => setTrigger( nextValue ) }
+            />
         );
     };
 
@@ -116,42 +121,37 @@ const OpenTriggerPanel = ( props ) => {
             case "anchor":
             case "visible":
                 return (
-                    <PanelRow>
-                        <TextControl
-                            label={ selected.dataLabel }
-                            help={ selected.dataHelp }
-                            value={ data ?? "" }
-                            onChange={ value => setTrigger( selected.value, value ) }
-                        />
-                    </PanelRow>
+                    <TextControl
+                        label={ selected.dataLabel }
+                        help={ selected?.dataHelp }
+                        value={ data ?? "" }
+                        onChange={ value => setTrigger( selected.value, value ) }
+                    />
                 );
             case "scroll":
             case "timer":
             case "exit-intent":
                 return (
-                    <PanelRow>
-                        <RangeControl
-                            label={ selected.dataLabel }
-                            help={ selected.dataHelp }
-                            value={ data }
-                            initialPosition={ selected.value === 'scroll' ? 20 : 15 }
-                            min={ selected.value === 'scroll' ? 1 : 0 }
-                            max={ 100 }
-                            onChange={ value => setTrigger( selected.value, value ) }
-                        />
-                    </PanelRow>
+                    <RangeControl
+                        label={ selected.dataLabel }
+                        help={ selected?.dataHelp }
+                        value={ data }
+                        initialPosition={ selected.value === 'scroll' ? 20 : 15 }
+                        min={ selected.value === 'scroll' ? 1 : 0 }
+                        max={ 100 }
+                        onChange={ value => setTrigger( selected.value, value ) }
+                    />
                 );
         }
         return null;
     };
 
     return (
-        <PanelBody title={ __( 'Open Trigger', 'fooconvert' ) }>
+        <div className="fc--open-trigger-component">
             { renderType() }
             { renderData() }
-            { hasRowRenderer && rowRenderer() }
-        </PanelBody>
+        </div>
     );
 };
 
-export default OpenTriggerPanel;
+export default OpenTriggerComponent;

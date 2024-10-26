@@ -1,0 +1,32 @@
+.fc--flyout__position-control {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 8px;
+  margin-bottom: 8px;
+
+  .fc--flyout__position-control__fields {
+    box-sizing: inherit;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+
+    .components-base-control,
+    .components-base-control:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .fc--flyout__position-control__help {
+    box-sizing: inherit;
+    margin-top: calc(8px);
+    margin-bottom: 0;
+    font-size: 12px;
+    font-style: normal;
+    color: rgb(117, 117, 117);
+  }
+}

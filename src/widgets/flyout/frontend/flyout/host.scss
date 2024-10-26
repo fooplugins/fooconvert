@@ -1,0 +1,258 @@
+:host {
+  box-sizing: border-box;
+  position: fixed;
+  top: var(--wp-admin--admin-bar--height, 0px);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  pointer-events: none;
+  flex-direction: row;
+  width: 100%;
+  max-width: 100%!important;
+  height: calc(100% - var(--wp-admin--admin-bar--height, 0px));
+  max-height: calc(100% - var(--wp-admin--admin-bar--height, 0px))!important;
+  margin: 0;
+  padding: 32px;
+  z-index: 99998;
+  color: #000;
+
+  &::part(inner) {
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  &::part(open-button) {
+    box-sizing: border-box;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+    background: #FFFFFF;
+    color: #000000;
+    font-size: 32px;
+    padding: 6px;
+    margin: 0;
+    cursor: pointer;
+    z-index: 2;
+    border: solid 1px #DDDDDD;
+    border-radius: 4px;
+    outline: none;
+
+    pointer-events: auto;
+    visibility: visible;
+    opacity: 1;
+
+    &:hover,
+    &:focus,
+    &:active {
+      outline: none;
+    }
+  }
+
+  &::part(container) {
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    height: fit-content;
+    max-width: 100%;
+    max-height: 100%;
+    z-index: 2;
+
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  &::part(close-button) {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+    background: none;
+    color: inherit;
+    font-size: 32px;
+    padding: 6px;
+    margin: 0;
+    cursor: pointer;
+    z-index: 2;
+    border: none;
+    outline: none;
+
+    &:hover,
+    &:focus,
+    &:active {
+      outline: none;
+    }
+  }
+
+  &::part(content) {
+    display: block;
+    box-sizing: border-box;
+    z-index: 1;
+    width: 480px;
+    height: fit-content;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+    background: #FFFFFF;
+    color: #000000;
+    border: solid 1px #DDDDDD;
+    border-radius: 4px;
+    margin: 0;
+    padding: 16px;
+  }
+}
+
+:host(:not([position],[open])) {
+  &::part(container) {
+    transform: translateX(100%);
+  }
+}
+
+:host([position^=right-]:not([open])) {
+  &::part(container) {
+    transform: translateX(100%);
+  }
+}
+
+:host([position^=left-]:not([open])) {
+  &::part(container) {
+    transform: translateX(-100%);
+  }
+}
+
+:host([open]) {
+  &::part(open-button) {
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+  }
+  &::part(container) {
+    pointer-events: auto;
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+:host(:not([position])) {
+  &::part(inner) {
+    align-items: center;
+    justify-content: flex-end;
+  }
+  &::part(open-button) {
+    right: 0;
+  }
+}
+
+:host([position^=right-]) {
+  &::part(inner) {
+    justify-content: flex-end;
+  }
+  &::part(open-button) {
+    right: 0;
+    left: unset;
+  }
+}
+
+:host([position^=left-]) {
+  &::part(inner) {
+    justify-content: flex-start;
+  }
+  &::part(open-button) {
+    right: unset;
+    left: 0;
+  }
+}
+
+:host([position$=-top]) {
+  &::part(inner) {
+    align-items: flex-start;
+  }
+  &::part(open-button) {
+    top: 0;
+    bottom: unset;
+  }
+}
+
+:host([position$=-center]) {
+  &::part(inner) {
+    align-items: center;
+  }
+  &::part(open-button) {
+    top: 50%;
+    bottom: unset;
+  }
+}
+
+:host([position$=-bottom]) {
+  &::part(inner) {
+    align-items: flex-end;
+  }
+  &::part(open-button) {
+    top: unset;
+    bottom: 0;
+  }
+}
+
+:host([button-left])::part(close-button) {
+  right: unset;
+  left: 0;
+}
+
+:host([button-none])::part(close-button) {
+  display: none;
+}
+
+:host {
+  .button-icon,
+  ::slotted(.button-icon) {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+  }
+}
+
+:host([transitions]) {
+  &::part(open-button),
+  &::part(container) {
+    transition-property: transform, visibility, opacity;
+    transition-duration: .3s;
+    transition-timing-function: ease-in-out;
+  }
+}
+
+@media (max-width: 600px) {
+  :host {
+    padding: 16px;
+  }
+  :host([max-on-mobile]) {
+    &::part(container),
+    &::part(content) {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
