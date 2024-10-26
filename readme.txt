@@ -4,7 +4,7 @@ Tags: sales-optimization,conversion-tools,lead-generation,marketing,wordpress-ec
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 6.6.2
-Stable tag: 0.0.8
+Stable tag: 0.0.9
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -20,7 +20,7 @@ FooConvert is a powerful WordPress plugin designed to help you optimize your web
   - Exit-Intent Coupon Popups
   - Countdown FOMO Bar
   - CTA Flyout
-- Track widget analytics and conversions.
+- Track widget analytics and conversions. (coming soon!)
 - Advanced Analytics Dashboard (coming soon!)
 - WooCommerce Integration (coming soon!)
 - A/B Testing (coming soon!)
@@ -72,5 +72,5 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 
 == Changelog ==
 
-= 0.0.x =
-* dev versions
+= 0.0.9 =
+* First public release!
