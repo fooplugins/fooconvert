@@ -18,9 +18,8 @@ class Flyout extends Base_Widget {
                 'transitions' => true,
                 'position' => true,
                 'max-on-mobile' => true,
-                'button-none' => true,
-                'button-left' => true,
-                'button-right' => true
+                'close-button' => true,
+                'open-button' => true
             )
         );
     }
@@ -166,12 +165,23 @@ class Flyout extends Base_Widget {
             if ( ! empty( $close_button_settings ) ) {
                 $close_button_hidden = Utils::get_bool( $close_button_settings, 'hidden' );
                 if ( $close_button_hidden ) {
-                    $attr['button-none'] = '';
+                    $attr['close-button'] = 'none';
                 } else {
                     $close_button_position = Utils::get_string( $close_button_settings, 'position', 'right' );
                     if ( $close_button_position !== 'right' ) {
-                        $attr["button-$close_button_position"] = '';
+                        $attr['close-button'] = $close_button_position;
                     }
+                }
+            }
+        }
+
+        $open_button = Utils::get_array( $attributes, 'openButton' );
+        if ( ! empty( $open_button ) ) {
+            $open_button_settings = Utils::get_array( $open_button, 'settings' );
+            if ( ! empty( $open_button_settings ) ) {
+                $open_button_hidden = Utils::get_bool( $open_button_settings, 'hidden' );
+                if ( $open_button_hidden ) {
+                    $attr['open-button'] = 'none';
                 }
             }
         }
@@ -186,17 +196,20 @@ class Flyout extends Base_Widget {
             $data['postId'] = $post_id;
         }
 
-        $trigger = Utils::get_array( $attributes, 'trigger' );
-        if ( ! empty( $trigger ) ) {
-            $data = array_merge(
-                $data,
-                FooConvert::plugin()->components->open_trigger_panel->get_data( $trigger )
-            );
-        }
+        $settings = Utils::get_array( $attributes, 'settings' );
+        if ( ! empty( $settings ) ) {
+            $trigger = Utils::get_array( $settings, 'trigger' );
+            if ( ! empty( $trigger ) ) {
+                $data = array_merge(
+                    $data,
+                    FooConvert::plugin()->components->open_trigger_panel->get_data( $trigger )
+                );
+            }
 
-        $close_anchor = Utils::get_string( $attributes, 'closeAnchor' );
-        if ( ! empty( $close_anchor ) ) {
-            $data['closeAnchor'] = $close_anchor;
+            $close_anchor = Utils::get_string( $settings, 'closeAnchor' );
+            if ( ! empty( $close_anchor ) ) {
+                $data['closeAnchor'] = $close_anchor;
+            }
         }
 
         return $data;

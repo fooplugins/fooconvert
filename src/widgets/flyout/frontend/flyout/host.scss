@@ -214,12 +214,21 @@
   }
 }
 
-:host([button-left])::part(close-button) {
+:host([close-button=right])::part(close-button) {
+  right: 0;
+  left: unset;
+}
+
+:host([close-button=left])::part(close-button) {
   right: unset;
   left: 0;
 }
 
-:host([button-none])::part(close-button) {
+:host([close-button=none])::part(close-button) {
+  display: none;
+}
+
+:host([open-button=none])::part(open-button) {
   display: none;
 }
 
