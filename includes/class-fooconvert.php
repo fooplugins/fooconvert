@@ -79,13 +79,16 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             add_action( 'init', array( $this, 'load_translations' ) );
             add_action( 'init', array( $this, 'register_frontend_assets' ) );
             add_action( 'enqueue_block_assets', array( $this, 'enqueue_editor_assets' ) );
-            add_action( 'admin_menu', array( $this, 'register_menu' ) );
             add_filter( 'block_categories_all', array( $this, 'register_block_category' ) );
 
             $this->components = new FooConvert_Components();
             $this->display_rules = new FooConvert_Display_Rules();
             $this->blocks = new FooConvert_Blocks();
             $this->widgets = new FooConvert_Widgets();
+
+            if ( is_admin() ) {
+                new Admin\Init();
+            }
         }
 
         //region Properties
@@ -253,44 +256,6 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         //endregion
 
         //region Hooks
-
-        /**
-         * Callback for the `admin_menu` action.
-         *
-         * This hook registers the root FooConvert menu for the plugin.
-         *
-         * @access public
-         * @since 1.0.0
-         */
-        public function register_menu() {
-            /** @noinspection PhpUndefinedFunctionInspection - shows as unresolvable in my IDE - see https://developer.wordpress.org/reference/functions/add_menu_page/ */
-            add_menu_page(
-                __( 'FooConvert', 'fooconvert' ),
-                __( 'FooConvert', 'fooconvert' ),
-                'manage_options',
-                FOOCONVERT_MENU_SLUG,
-                '',
-                'dashicons-chart-bar'
-            );
-
-            add_submenu_page(
-                FOOCONVERT_MENU_SLUG,    // Parent slug (top-level menu slug)
-                __( 'Help', 'fooconvert' ),        // Page title
-                __( 'Help', 'fooconvert' ),        // Submenu title
-                'manage_options',         // Capability required
-                FOOCONVERT_MENU_SLUG,     // Submenu slug (unique identifier)
-                'fooconvert_welcome_page'  // Function to display the content
-            );
-
-            add_submenu_page(
-                FOOCONVERT_MENU_SLUG,    // Parent slug (top-level menu slug)
-                __( 'Bars', 'fooconvert' ),        // Page title
-                __( 'Bars', 'fooconvert' ),        // Submenu title
-                'manage_options',         // Capability required
-                'edit.php?post_type=fc-bar',     // Submenu slug (unique identifier)
-                null  // No custom callback (uses default CPT screen)
-            );
-        }
 
         /**
          * Callback for the `init` action.

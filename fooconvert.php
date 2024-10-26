@@ -65,8 +65,4 @@ if ( require_once FOOCONVERT_INCLUDES_PATH . 'startup-checks.php' ) {
 
 	// Start the plugin!
     FooPlugins\FooConvert\FooConvert::plugin();
-
-    if ( is_admin() ) {
-        new FooPlugins\FooConvert\Admin\Init();
-    }
 }
