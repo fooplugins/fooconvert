@@ -116,7 +116,7 @@ class Bar extends Base_Widget {
                 'scope' => array( 'block' )
             ),
             array(
-                'slug' => 'basic',
+                'name' => 'basic',
                 'title' => __( 'Basic', 'fooconvert' ),
                 'description' => __( 'A basic bar with minimal styling.', 'fooconvert' ),
                 'icon' => '',
@@ -183,8 +183,8 @@ class Bar extends Base_Widget {
                 )
             ),
             array(
-                'slug' => 'black_friday',
-                'title' => __( 'Black', 'fooconvert' ),' Friday',
+                'name' => 'black_friday',
+                'title' => __( 'Black Friday', 'fooconvert' ),
                 'description' => __( 'Bright top bar for Black Friday, with rounded corners and border. Pushed page content down.', 'fooconvert' ),
                 'icon' => '',
                 'attributes' => array(
@@ -228,7 +228,7 @@ class Bar extends Base_Widget {
                             'size' => '32px',
                             'close' => array(
                                 'slug' => 'wordpress-closeSmall',
-                                'svg' => '<svg xmlns="http => //www.w3.org/2000/svg" viewBox="0 0 24 24" slot="button-icon" width="32px" height="32px" class="button-icon button-icon--close" aria-hidden="true"><path d="M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z"></path></svg>'
+                                'svg' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" slot="button-icon" width="32px" height="32px" class="button-icon button-icon--close" aria-hidden="true"><path d="M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z"></path></svg>'
                             )
                         )
                     ),
@@ -278,7 +278,7 @@ class Bar extends Base_Widget {
                 )
             ),
             array(
-                'slug' => 'cookie_consent',
+                'name' => 'cookie_consent',
                 'title' => __( 'Cookie Consent', 'fooconvert' ),
                 'description' => __( 'Cookie consent bottom bar with Accept button.', 'fooconvert' ),
                 'icon' => '',
@@ -334,7 +334,7 @@ class Bar extends Base_Widget {
                             'size' => '32px',
                             'close' => array(
                                 'slug' => 'wordpress-closeSmall',
-                                'svg' => '<svg xmlns="http => //www.w3.org/2000/svg" viewBox="0 0 24 24" slot="button-icon" width="32px" height="32px" class="button-icon button-icon--close" aria-hidden="true"><path d="M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z"></path></svg>'
+                                'svg' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" slot="button-icon" width="32px" height="32px" class="button-icon button-icon--close" aria-hidden="true"><path d="M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z"></path></svg>'
                             )
                         )
                     ),
