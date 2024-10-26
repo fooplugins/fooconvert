@@ -1,31 +1,23 @@
-.fc--popup-button {
+.fc--popup-close-button {
   position: absolute!important;
   display: flex;
   align-items: center;
   justify-content: center;
   width: fit-content;
   height: fit-content;
-  font-size: 24px;
+  font-size: 32px;
   padding: 6px;
   margin: 0;
   background: none;
-  color: inherit;
+  color: #000000;
   border: none;
   cursor: pointer;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   right: 0;
 
   &:hover {
     opacity: 0.9;
-  }
-
-  &.alignment-outside {
-    transform: translateX(100%) translateY(-100%);
-  }
-
-  &.alignment-corner {
-    transform: translateX(50%) translateY(-50%);
   }
 
   svg {
@@ -38,15 +30,7 @@
   }
 }
 
-.fc--popup-button.position-left {
+.fc--popup-close-button.position-left {
   right: unset;
   left: 0;
-
-  &.alignment-outside {
-    transform: translateX(-100%) translateY(-100%);
-  }
-
-  &.alignment-corner {
-    transform: translateX(-50%) translateY(-50%);
-  }
 }

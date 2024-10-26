@@ -1,10 +1,10 @@
 {
   "apiVersion": 3,
   "name": "fc/popup-content",
-  "title": "Popup Content",
+  "title": "Content",
   "description": "The primary content container of the popup.",
   "category": "fooconvert",
-  "parent": [ "fc/popup" ],
+  "parent": [ "fc/popup-container" ],
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "supports": {
@@ -16,9 +16,6 @@
   },
   "attributes": {},
   "usesContext": [
-    "fc-popup/clientId",
-    "fc-popup/button",
-    "fc-popup/styles",
-    "fc-popup/hideButton"
+    "fc-popup/clientId"
   ]
 }

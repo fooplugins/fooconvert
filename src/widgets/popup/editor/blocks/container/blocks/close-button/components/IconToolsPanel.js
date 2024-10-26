@@ -39,8 +39,8 @@ const IconToolsPanel = props => {
         setIcon( { [ key ]: nextValue } );
     };
 
-    const iconClose = getIconSetsIcon( iconSets, value?.close?.slug ?? defaults?.close?.slug ?? 'wordpress-close' );
-    const setIconClose = selectedIcon => setIconState( 'close', selectedIcon, { slot: 'button-icon', className: 'button-icon button-icon--close' } );
+    const iconClose = getIconSetsIcon( iconSets, value?.close?.slug ?? defaults?.close?.slug ?? 'wordpress-closeSmall' );
+    const setIconClose = selectedIcon => setIconState( 'close', selectedIcon, { slot: 'close-button__icon', className: 'button-icon button-icon__close' } );
 
     return (
         <ToolsPanel
@@ -48,6 +48,22 @@ const IconToolsPanel = props => {
             label={ __( "Icon", "fooconvert" ) }
             resetAll={ () => setIcon( undefined ) }
         >
+            <ToolsPanelItem
+                panelId={ panelId }
+                label={ __( 'Icon', 'fooconvert' ) }
+                hasValue={ () => isString( value?.close?.slug, true ) }
+                onDeselect={ () => setIconClose( undefined ) }
+                isShownByDefault={ true }
+            >
+                <IconPickerControl
+                    label={ __( 'Icon', 'fooconvert' ) }
+                    hideLabelFromVision={ true }
+                    value={ iconClose }
+                    onChange={ setIconClose }
+                    iconSets={ iconSets }
+                    help={ __( 'The icon for the button.', 'fooconvert' ) }
+                />
+            </ToolsPanelItem>
             <ToolsPanelItem
                 panelId={ panelId }
                 label={ __( 'Size', 'fooconvert' ) }
@@ -81,20 +97,6 @@ const IconToolsPanel = props => {
                         { value: 'em', label: 'em', default: 1, step: 0.1, min: 1, max: 16 },
                         { value: 'rem', label: 'rem', default: 1, step: 0.1, min: 1, max: 16 }
                     ] }
-                />
-            </ToolsPanelItem>
-            <ToolsPanelItem
-                panelId={ panelId }
-                label={ __( 'Close', 'fooconvert' ) }
-                hasValue={ () => isString( value?.close?.slug, true ) }
-                onDeselect={ () => setIconClose( undefined ) }
-            >
-                <IconPickerControl
-                    label={ __( 'Close', 'fooconvert' ) }
-                    value={ iconClose }
-                    onChange={ setIconClose }
-                    iconSets={ iconSets }
-                    help={ __( 'The icon displayed when clicking the button will close the bar.', 'fooconvert' ) }
                 />
             </ToolsPanelItem>
         </ToolsPanel>

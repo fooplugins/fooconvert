@@ -14,8 +14,6 @@ const ContentAppender = ( { rootClientId, disable } ) => {
             renderToggle={ ( { onToggle, ...props } ) => {
                 return (
                     <Button
-                        variant="secondary"
-                        size="small"
                         className="fc--popup-content--button-block-appender"
                         onClick={ onToggle }
                         label={ __( 'Add block', 'fooconvert' ) }

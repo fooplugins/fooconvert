@@ -1,32 +1,73 @@
 import {
+    ToggleSelectControl,
     useInnerBlocks,
-    VariationPicker
+    VariationPicker,
+    $object
 } from "#editor";
+import { BlockControls, InspectorControls } from "@wordpress/block-editor";
+import { seen, unseen, check } from "@wordpress/icons";
 import { __ } from "@wordpress/i18n";
 import { useEffect } from "@wordpress/element";
 import EditBlock from "./EditBlock";
 import EditSettings from "./EditSettings";
+import {
+    MenuGroup,
+    MenuItem, PanelBody,
+    PanelRow,
+    ToolbarDropdownMenu
+} from "@wordpress/components";
 
 export const POPUP_CLASS_NAME = 'fc--popup';
 
 export const POPUP_DEFAULTS = {
-    styles: {
-        color: {
-            background: '#ffffff',
-            text: '#000000',
-            backdrop: '#000000b3'
+    settings: {
+        trigger: {
+            type: 'anchor'
         },
+        transitions: false,
+        maxOnMobile: false
+    },
+    styles: {
         dimensions: {
-            padding: '16px'
+            padding: '32px'
+        },
+        color: {
+            backdrop: '#00000059'
         }
     },
-    position: 'top',
-    hideButton: false,
-    hideScrollbar: false,
-    backdropIgnore: false,
-    transitions: false,
-    lockTrigger: false,
-    closeAnchor: ''
+    closeButton: {
+        settings: {
+            hidden: false,
+            position: 'right',
+            icon: {
+                size: '32px',
+                close: { slug: 'wordpress-closeSmall' }
+            }
+        },
+        styles: {
+            dimensions: {
+                padding: '6px'
+            }
+        }
+    },
+    content: {
+        styles: {
+            width: '720px',
+            color: {
+                background: '#FFFFFF',
+                text: '#000000'
+            },
+            border: {
+                radius: '4px',
+                color: '#DDDDDD',
+                style: 'solid',
+                width: '1px'
+            },
+            dimensions: {
+                padding: '16px'
+            }
+        }
+    }
 };
 
 /**
@@ -44,9 +85,29 @@ const Edit = props => {
         },
         attributes: {
             clientId: storedClientId,
-            postId: storedPostId
+            postId: storedPostId,
+            viewState,
+            settings,
+            styles,
+            closeButton
         }
     } = props;
+
+    const setSettings = value => {
+        setAttributes( { settings: $object( settings, value ) } );
+    };
+    const settingsDefaults = { ...( POPUP_DEFAULTS?.settings ?? {} ) };
+
+    const setStyles = value => {
+        setAttributes( { styles: $object( styles, value ) } );
+    };
+    const stylesDefaults = { ...( POPUP_DEFAULTS?.styles ?? {} ) };
+
+    const setCloseButton = value => {
+        setAttributes( {
+            closeButton: $object( closeButton, value )
+        } );
+    };
 
     // ensure the clientId attribute is always current
     useEffect( () => {
@@ -64,6 +125,15 @@ const Edit = props => {
 
     const customProps = {
         ...props,
+        viewState,
+        settings,
+        setSettings,
+        settingsDefaults,
+        styles,
+        setStyles,
+        stylesDefaults,
+        closeButton,
+        setCloseButton,
         defaults: POPUP_DEFAULTS
     };
 

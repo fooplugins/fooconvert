@@ -2,7 +2,7 @@
   "apiVersion": 3,
   "name": "fc/popup",
   "title": "Popup",
-  "description": "A popup to capture your visitors attention.",
+  "description": "A popup element to display content to visitors.",
   "category": "fooconvert",
   "editorScript": "file:./editor/index.js",
   "editorStyle": "file:./editor/index.css",
@@ -16,56 +16,31 @@
     "html": false
   },
   "attributes": {
-    "clientId": {
-      "type": "string"
-    },
     "postId": {
       "type": "number"
+    },
+    "clientId": {
+      "type": "string"
     },
     "styles": {
       "type": "object"
     },
-    "button": {
+    "settings": {
       "type": "object"
     },
-    "position": {
-      "type": "string"
+    "closeButton": {
+      "type": "object"
     },
-    "trigger": {
-      "type": "object",
-      "default": {
-        "type": "immediate"
-      }
-    },
-    "lockTrigger": {
-      "type": "boolean",
-      "default": false
-    },
-    "closeAnchor": {
-      "type": "string"
-    },
-    "hideButton": {
-      "type": "boolean"
-    },
-    "hideScrollbar": {
-      "type": "boolean"
-    },
-    "backdropIgnore": {
-      "type": "boolean"
-    },
-    "transitions": {
-      "type": "boolean"
+    "content": {
+      "type": "object"
     }
   },
   "usesContext": [ "postId" ],
   "providesContext": {
     "fc-popup/clientId": "clientId",
+    "fc-popup/settings": "settings",
     "fc-popup/styles": "styles",
-    "fc-popup/button": "button",
-    "fc-popup/closeAnchor": "closeAnchor",
-    "fc-popup/hideButton": "hideButton",
-    "fc-popup/hideScrollbar": "hideScrollbar",
-    "fc-popup/backdropIgnore": "backdropIgnore",
-    "fc-popup/transitions": "transitions"
+    "fc-popup/closeButton": "closeButton",
+    "fc-popup/content": "content"
   }
 }

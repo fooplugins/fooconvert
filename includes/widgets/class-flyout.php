@@ -18,18 +18,9 @@ class Flyout extends Base_Widget {
                 'transitions' => true,
                 'position' => true,
                 'max-on-mobile' => true,
-//                'left-top' => true,
-//                'left-center' => true,
-//                'left-bottom' => true,
-//                'right-top' => true,
-//                'right-center' => true,
-//                'right-bottom' => true,
                 'button-none' => true,
                 'button-left' => true,
-                'button-right' => true,
-                'button-inside' => true,
-                'button-corner' => true,
-                'button-outside' => true,
+                'button-right' => true
             )
         );
     }
@@ -171,13 +162,17 @@ class Flyout extends Base_Widget {
 
         $close_button = Utils::get_array( $attributes, 'closeButton' );
         if ( ! empty( $close_button ) ) {
-            $close_button_position = Utils::get_string( $close_button, 'position', 'right' );
-            if ( $close_button_position !== 'right' ) {
-                $attr["button-$close_button_position"] = '';
-            }
-            $close_button_alignment = Utils::get_string( $close_button, 'alignment', 'inside' );
-            if ( $close_button_alignment !== 'inside' ) {
-                $attr["button-$close_button_alignment"] = '';
+            $close_button_settings = Utils::get_array( $close_button, 'settings' );
+            if ( ! empty( $close_button_settings ) ) {
+                $close_button_hidden = Utils::get_bool( $close_button_settings, 'hidden' );
+                if ( $close_button_hidden ) {
+                    $attr['button-none'] = '';
+                } else {
+                    $close_button_position = Utils::get_string( $close_button_settings, 'position', 'right' );
+                    if ( $close_button_position !== 'right' ) {
+                        $attr["button-$close_button_position"] = '';
+                    }
+                }
             }
         }
 
