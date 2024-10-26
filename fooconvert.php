@@ -2,7 +2,7 @@
 /*
 Plugin Name: FooConvert
 Description: Turn clicks into conversions, visitors into customers – FooConvert is the ultimate catalyst for online success!
-Version:     0.0.7
+Version:     0.0.8
 Author:      FooPlugins
 Plugin URI:  https://fooplugins.com/fooconvert-wordpress-sales-conversion/
 Author URI:  https://fooplugins.com/
@@ -34,13 +34,22 @@ if ( ! defined( 'FOOCONVERT_SLUG' ) ) {
     define( 'FOOCONVERT_ASSETS_PATH', FOOCONVERT_PATH . 'assets/' );
     define( 'FOOCONVERT_ASSETS_URL', FOOCONVERT_URL . 'assets/' );
     define( 'FOOCONVERT_FILE', __FILE__ );
-    define( 'FOOCONVERT_VERSION', '0.0.6' );
+    define( 'FOOCONVERT_VERSION', '0.0.8' );
     define( 'FOOCONVERT_MIN_PHP', '7.4.0' );
     define( 'FOOCONVERT_MIN_WP', '6.5.0' );
 }
 
 // Include other essential FooConvert constants.
 require_once FOOCONVERT_INCLUDES_PATH . 'constants.php';
+
+// Do a check to see if either free/pro version of the plugin is already running.
+if ( function_exists( 'fooconvert_fs' ) ) {
+    fooconvert_fs()->set_basename( true, __FILE__ );
+} else {
+    if ( ! function_exists( 'fooconvert_fs' ) ) {
+        require_once FOOCONVERT_INCLUDES_PATH . 'freemius.php';
+    }
+}
 
 // Check minimum requirements before loading the plugin.
 if ( require_once FOOCONVERT_INCLUDES_PATH . 'startup-checks.php' ) {
@@ -56,4 +65,8 @@ if ( require_once FOOCONVERT_INCLUDES_PATH . 'startup-checks.php' ) {
 
 	// Start the plugin!
     FooPlugins\FooConvert\FooConvert::plugin();
+
+    if ( is_admin() ) {
+        new FooPlugins\FooConvert\Admin\Init();
+    }
 }

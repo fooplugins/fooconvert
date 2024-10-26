@@ -24,8 +24,6 @@ const files = [
     "!{node_modules,node_modules/**,node_modules/**/*}",
     "!{src,src/**,src/**/*}",
     "!.gitignore",
-    "!composer.json",
-    "!composer.lock",
     "!fs-config.json",
     "!gulpfile.js",
     "!make-pot.mjs",

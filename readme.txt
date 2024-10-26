@@ -1,10 +1,10 @@
-=== FooConvert ===
+=== FooConvert - Boost Conversions & Lead Generation ===
 Contributors: bradvin, steveush, fooplugins
-Tags: sales-optimization,conversion-tools,lead-generation,marketing-plugin,wordpress-ecommerce
+Tags: sales-optimization,conversion-tools,lead-generation,marketing,wordpress-ecommerce
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 6.6.2
-Stable tag: 0.0.7
+Stable tag: 0.0.8
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -12,7 +12,27 @@ Turn clicks into conversions, visitors into customers – FooConvert is the ulti
 
 == Description ==
 
-Transform visitors into customers, leads into loyal advocates – FooConvert, where every click is a step closer to a sale, and every interaction is a conversion waiting to happen!
+FooConvert is a powerful WordPress plugin designed to help you optimize your website for maximum conversions. With high-converting widgets and advanced analytics, FooConvert helps you generate more leads, boost sales, and enhance customer engagement effortlessly.
+
+= Key Features =
+
+- Add high converting widgets to your pages, including:
+  - Exit-Intent Coupon Popups
+  - Countdown FOMO Bar
+  - CTA Flyout
+- Track widget analytics and conversions.
+- Advanced Analytics Dashboard (coming soon!)
+- WooCommerce Integration (coming soon!)
+- A/B Testing (coming soon!)
+- Personalized User Journey Mapping (coming soon!)
+
+= Benefits =
+
+- Increase Conversion Rates: Turn more visitors into paying customers!
+- Boost Lead Generation: Capture more qualified leads for your business!
+- Optimize Sales Funnel: Streamline your sales process for better results!
+- Enhance User Experience: Create personalized journeys for your visitors!
+- Data-Driven Decisions: Make informed choices based on real-time analytics!
 
 == Installation ==
 
@@ -23,9 +43,23 @@ Transform visitors into customers, leads into loyal advocates – FooConvert, wh
 
 == Frequently Asked Questions ==
 
-= Question 1 =
+= Are there any limitations? (Number of widgets or views?)=
 
-An answer goes here.
+No! There is no limit to the number of widgets you can create.
+There is also no limit to the number of views each widget can have.
+Most alternative conversion solutions limit how many widgets you can create or limit how many times each widget is displayed. Not FooConvert!
+
+= Is FooConvert compatible with my theme? =
+
+FooConvert is designed to work with most WordPress themes. If you encounter any compatibility issues, please contact our support team.
+
+= Can I use FooConvert with other e-commerce plugins? =
+
+Yes, FooConvert integrates seamlessly with the popular e-commerce plugin WooCommerce.
+
+= Does FooConvert slow down my website? =
+
+No, FooConvert is optimized for performance and has minimal impact on your website's loading speed.
 
 == Screenshots ==
 
