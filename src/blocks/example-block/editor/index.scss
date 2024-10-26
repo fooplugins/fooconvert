@@ -1,0 +1,11 @@
+.fc--example-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .rich-text {
+    padding: 24px 32px;
+    margin: 0;
+    font-size: 24px;
+  }
+}

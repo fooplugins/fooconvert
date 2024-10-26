@@ -1,0 +1,179 @@
+:host {
+  box-sizing: border-box;
+  position: fixed;
+  top: var(--wp-admin--admin-bar--height, 0px);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  pointer-events: none;
+  flex-direction: row;
+  width: 100%;
+  max-width: 100%!important;
+  height: calc(100% - var(--wp-admin--admin-bar--height, 0px));
+  max-height: calc(100% - var(--wp-admin--admin-bar--height, 0px))!important;
+  margin: 0;
+  padding: 32px;
+  z-index: 99998;
+  background: #00000059;
+  visibility: hidden;
+  opacity: 0;
+
+  &::part(backdrop) {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    z-index: 1;
+  }
+
+  &::part(inner) {
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  &::part(container) {
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    height: fit-content;
+    max-width: 100%;
+    max-height: 100%;
+    z-index: 2;
+
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  &::part(close-button) {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+    background: none;
+    color: inherit;
+    font-size: 32px;
+    padding: 6px;
+    margin: 0;
+    cursor: pointer;
+    z-index: 2;
+    border: none;
+    outline: none;
+
+    &:hover,
+    &:focus,
+    &:active {
+      outline: none;
+    }
+  }
+
+  &::part(content) {
+    display: block;
+    box-sizing: border-box;
+    z-index: 1;
+    width: 720px;
+    height: fit-content;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+    background: #FFFFFF;
+    color: #000000;
+    border: solid 1px #DDDDDD;
+    border-radius: 4px;
+    margin: 0;
+    padding: 16px;
+  }
+}
+
+:host([open]) {
+  pointer-events: auto;
+  visibility: visible;
+  opacity: 1;
+
+  &::part(container) {
+    pointer-events: auto;
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+:host([close-button=right])::part(close-button) {
+  right: 0;
+  left: unset;
+}
+
+:host([close-button=left])::part(close-button) {
+  right: unset;
+  left: 0;
+}
+
+:host([close-button=none])::part(close-button) {
+  display: none;
+}
+
+:host {
+  .button-icon,
+  ::slotted(.button-icon) {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+  }
+}
+
+:host([transitions][open]) {
+  transition-property: transform, visibility, opacity;
+  transition-duration: .3s;
+  transition-timing-function: ease-in-out;
+}
+
+:host([transitions]) {
+  &::part(container) {
+    transition-property: transform, visibility, opacity;
+    transition-duration: .3s;
+    transition-timing-function: ease-in-out;
+  }
+}
+
+@media (max-width: 600px) {
+  :host {
+    padding: 16px;
+  }
+  :host([max-on-mobile]) {
+    &::part(container),
+    &::part(content) {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

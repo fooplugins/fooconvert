@@ -1,0 +1,1 @@
+This directory stores media required by the plugin itself, any files will be copied to the `assets/media` folder.

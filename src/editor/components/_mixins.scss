@@ -1,0 +1,20 @@
+@mixin control-fieldset {
+  box-sizing: border-box;
+  display: block;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  max-width: 100%;
+  width: 100%;
+}
+
+@mixin control-legend {
+  box-sizing: border-box;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-transform: uppercase;
+  margin-bottom: var(--fc--spacing-50);
+  padding: 0;
+}

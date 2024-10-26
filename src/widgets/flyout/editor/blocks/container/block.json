@@ -1,0 +1,22 @@
+{
+  "apiVersion": 3,
+  "name": "fc/flyout-container",
+  "title": "Container",
+  "description": "Wraps the flyout content and close button and positions it within the viewport.",
+  "category": "fooconvert",
+  "parent": [ "fc/flyout" ],
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "supports": {
+    "lock": false,
+    "multiple": false,
+    "reusable": false,
+    "className": false,
+    "html": false,
+    "inserter": false
+  },
+  "attributes": {},
+  "usesContext": [
+    "fc-flyout/clientId"
+  ]
+}

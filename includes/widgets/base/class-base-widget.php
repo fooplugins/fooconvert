@@ -1,0 +1,44 @@
+<?php
+
+namespace FooPlugins\FooConvert\Widgets\Base;
+
+use FooPlugins\FooConvert\Blocks\Base\Base_Block;
+use FooPlugins\FooConvert\FooConvert;
+use WP_Error;
+use WP_Post_Type;
+
+abstract class Base_Widget extends Base_Block {
+
+    public array $supported = array( 'shortcode', 'display-rules' );
+
+    function init() {
+        $post_type = $this->register_post_type();
+        if ( $post_type instanceof WP_Post_Type ) {
+            if ( $this->supports( 'display-rules' ) ) {
+                FooConvert::plugin()->display_rules->register( $post_type->name );
+            }
+            if ( $this->supports( 'shortcode' ) ) {
+                FooConvert::plugin()->widgets->register_shortcode( $post_type->name );
+            }
+            parent::init();
+        }
+    }
+
+    /**
+     * Get the widget post type name.
+     *
+     * @return string
+     *
+     * @since 1.0.0
+     */
+    abstract function get_post_type() : string;
+
+    /**
+     * Register the widget post type.
+     *
+     * @return WP_Error|WP_Post_Type
+     *
+     * @since 1.0.0
+     */
+    abstract function register_post_type();
+}

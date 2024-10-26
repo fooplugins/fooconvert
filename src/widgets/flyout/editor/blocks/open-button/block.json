@@ -1,0 +1,21 @@
+{
+  "apiVersion": 3,
+  "name": "fc/flyout-open-button",
+  "title": "Open Button",
+  "description": "The button displayed when the flyout is closed.",
+  "category": "fooconvert",
+  "parent": [ "fc/flyout" ],
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "supports": {
+    "lock": false,
+    "multiple": false,
+    "reusable": false,
+    "className": false,
+    "html": false
+  },
+  "attributes": {},
+  "usesContext": [
+    "fc-flyout/clientId"
+  ]
+}

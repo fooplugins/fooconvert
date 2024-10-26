@@ -1,0 +1,15 @@
+<div part="container">
+    <button part="button" type="button" tabindex="0">
+        <slot name="button-icon" part="button-icon">
+            <svg class="button-icon button-icon--close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32px" height="32px" aria-hidden="true" focusable="false">
+                <path d="M7 11.5h10V13H7z"></path>
+            </svg>
+            <svg class="button-icon button-icon--open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+                <path d="M16 11.2h-3.2V8h-1.6v3.2H8v1.6h3.2V16h1.6v-3.2H16z"></path>
+            </svg>
+        </slot>
+    </button>
+    <div part="content">
+        <slot></slot>
+    </div>
+</div>

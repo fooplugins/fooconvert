@@ -1,0 +1,1 @@
+export { default as isFontAppearance } from "./isFontAppearance";

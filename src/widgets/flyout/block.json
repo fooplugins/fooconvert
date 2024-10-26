@@ -1,0 +1,54 @@
+{
+  "apiVersion": 3,
+  "name": "fc/flyout",
+  "title": "Flyout",
+  "description": "A flyout element to display content to visitors.",
+  "category": "fooconvert",
+  "editorScript": "file:./editor/index.js",
+  "editorStyle": "file:./editor/index.css",
+  "viewScript": "file:./frontend/index.js",
+  "viewStyle": "file:./frontend/index.css",
+  "supports": {
+    "lock": false,
+    "multiple": false,
+    "reusable": false,
+    "className": false,
+    "html": false
+  },
+  "attributes": {
+    "postId": {
+      "type": "number"
+    },
+    "clientId": {
+      "type": "string"
+    },
+    "viewState": {
+      "type": "string",
+      "default": "open"
+    },
+    "styles": {
+      "type": "object"
+    },
+    "settings": {
+      "type": "object"
+    },
+    "openButton": {
+      "type": "object"
+    },
+    "closeButton": {
+      "type": "object"
+    },
+    "content": {
+      "type": "object"
+    }
+  },
+  "usesContext": [ "postId" ],
+  "providesContext": {
+    "fc-flyout/clientId": "clientId",
+    "fc-flyout/viewState": "viewState",
+    "fc-flyout/settings": "settings",
+    "fc-flyout/styles": "styles",
+    "fc-flyout/openButton": "openButton",
+    "fc-flyout/closeButton": "closeButton"
+  }
+}

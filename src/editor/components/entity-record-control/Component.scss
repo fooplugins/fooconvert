@@ -1,0 +1,91 @@
+.fc--entity-record-control {
+  display: block;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+
+  .components-form-token-field__label {
+    display: none;
+  }
+  .components-form-token-field__input-container {
+    position: relative;
+    background: #fff;
+
+    &:has(input:disabled) {
+      background: rgba(255, 255, 255, 0.5);
+      border-color: rgba(220, 220, 222, 0.75);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+      outline: none;
+
+      .input[type=text].components-form-token-field__input {
+        color: rgba(44, 51, 56, 0.5);
+        text-decoration: inherit;
+      }
+    }
+
+    > .components-flex {
+      padding: 2px 7px;
+    }
+
+    .components-form-token-field__suggestions-list {
+      position: absolute;
+      top: calc(100% + 2px);
+      left: 0;
+      background: #fff;
+      border: 1px solid #949494;
+      border-radius: 2px;
+      box-shadow: 0 0 6px 1px #949494;
+      overflow: hidden;
+      z-index: 99999;
+    }
+  }
+
+  &.is-next-40px-default-size {
+    .components-form-token-field__input-container {
+      > .components-flex {
+        padding: 5px 8px;
+
+        .components-form-token-field__token {
+          display: grid;
+          grid-template-columns: 1fr 28px;
+          grid-auto-rows: auto;
+          gap: 0;
+          border-radius: 2px;
+          background: #f0f0f1;
+          border: solid 1px #ddd;
+
+          .components-form-token-field__token-text {
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            line-height: 1.4;
+            white-space: normal;
+            padding: 4px 0 4px 8px;
+            background: none;
+            border-radius: 0;
+          }
+          .components-form-token-field__remove-token {
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+          }
+        }
+
+        input[type=text].components-form-token-field__input {
+          height: 28px;
+          line-height: 28px;
+          margin: 0;
+        }
+      }
+    }
+  }
+}

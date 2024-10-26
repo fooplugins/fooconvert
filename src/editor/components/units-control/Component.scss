@@ -1,0 +1,45 @@
+.fc--units-control {
+  width: 100%;
+
+  .fc--units-control__inner {
+    .components-base-control {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.fc--units-control__inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: var(--fc--spacing-75);
+}
+
+.fc--units-control__inputs-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  gap: var(--fc--spacing-100);
+  flex: 1;
+}
+
+.fc--units-control__unit-control {
+  min-width: 116px;
+  width: 116px;
+  margin: 0;
+}
+
+.fc--units-control__range-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  .components-base-control__field {
+    width: 100%;
+  }
+}

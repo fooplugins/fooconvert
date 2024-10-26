@@ -1,0 +1,52 @@
+.fc--repeater-control {
+
+  .fc--repeater-control__label {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 24px;
+  }
+
+  .fc--repeater-control__container {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: stretch;
+    height: 100%;
+    margin: 0;
+    width: 100%;
+    min-width: 248px;
+    max-width: 100%;
+
+    .fc--repeater-control__items {
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 4px;
+      justify-content: stretch;
+      width: 100%;
+      max-width: 100%;
+
+      .fc--repeater-control__no-items {
+        display: flex;
+        min-height: 32px;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0 8px;
+      }
+    }
+
+    .fc--repeater-control__controls {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: right;
+      width: 100%;
+      gap: 8px;
+      height: 32px;
+    }
+  }
+}

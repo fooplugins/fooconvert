@@ -1,0 +1,1 @@
+export { default as isDisplayRulesLocation } from "./isDisplayRulesLocation"

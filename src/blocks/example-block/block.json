@@ -1,0 +1,26 @@
+{
+  "apiVersion": 3,
+  "name": "fc/example-block",
+  "title": "FooConvert - Example Block",
+  "description": "This block serves no purpose other than to be an example.",
+  "category": "fooconvert",
+  "editorScript": "file:./editor/index.js",
+  "editorStyle": "file:./editor/index.css",
+  "viewScript": "file:./frontend/index.js",
+  "viewStyle": "file:./frontend/index.css",
+  "supports": {
+    "lock": false,
+    "multiple": false,
+    "reusable": false,
+    "className": false,
+    "html": false
+  },
+  "attributes": {
+    "styles": {
+      "type": "object"
+    },
+    "content": {
+      "type": "string"
+    }
+  }
+}

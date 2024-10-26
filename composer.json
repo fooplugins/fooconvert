@@ -1,0 +1,33 @@
+{
+    "name": "fooplugins/fooconvert",
+    "description": "Turning clicks into conversions, visitors into customers – the ultimate catalyst for online success!",
+    "type": "wordpress-plugin",
+    "autoload"    : {
+        "psr-4" : {
+            "FooPlugins\\FooConvert\\" : "includes"
+        },
+	  	"classmap": [ "includes" ]
+    },
+    "extra": {
+        "installer-paths": {
+            "vendor/{$name}/": ["type:wordpress-plugin"]
+        }
+    },
+    "license": "GPL-3.0-only",
+    "authors": [
+        {
+            "name": "Brad Vincent"
+        },
+        {
+            "name": "Steve Usher"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    },
+    "require": {
+        "composer/installers": "v1.12.0"
+    }
+}

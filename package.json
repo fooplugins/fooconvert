@@ -1,0 +1,55 @@
+{
+  "name": "fooconvert",
+  "version": "0.0.9",
+  "license": "GPL-3.0-or-later",
+  "title": "FooConvert",
+  "description": "Turning clicks into conversions, visitors into customers – the ultimate catalyst for online success!",
+  "repository": "https://github.com/fooplugins/fooconvert",
+  "bugs": "https://github.com/fooplugins/fooconvert/issues",
+  "author": "FooPlugins <info@fooplugins.com>",
+  "imports": {
+    "#editor": "./src/editor/index.js",
+    "#frontend": "./src/frontend/index.js"
+  },
+  "browserslist": [
+    "defaults"
+  ],
+  "scripts": {
+    "check-updates": "npx npm-check-updates",
+    "build": "wp-scripts build --output-path=assets",
+    "start": "wp-scripts start --output-path=assets",
+    "develop": "wp-scripts start --no-watch --output-path=assets",
+    "i18n": "node make-pot.mjs",
+    "composer:install": "composer install --prefer-dist --optimize-autoloader --no-dev",
+    "composer:update": "composer update --optimize-autoloader",
+    "composer:refresh": "composer dump-autoload --optimize",
+    "package:create-zip": "npm run build && npm run i18n && npm run composer:refresh && gulp",
+    "package:deploy": "gulp freemius-deploy"
+  },
+  "devDependencies": {
+    "@steveush/utils": "^0.0.2",
+    "@wordpress/block-editor": "^14.2.0",
+    "@wordpress/blocks": "^13.7.0",
+    "@wordpress/components": "^28.7.0",
+    "@wordpress/compose": "^7.7.0",
+    "@wordpress/core-data": "^7.7.0",
+    "@wordpress/data": "^10.7.0",
+    "@wordpress/dependency-extraction-webpack-plugin": "^6.7.0",
+    "@wordpress/dom-ready": "^4.7.0",
+    "@wordpress/edit-post": "^8.7.0",
+    "@wordpress/editor": "^14.7.0",
+    "@wordpress/element": "^6.7.0",
+    "@wordpress/hooks": "^4.7.0",
+    "@wordpress/i18n": "^5.7.0",
+    "@wordpress/icons": "^10.7.0",
+    "@wordpress/plugins": "^7.7.0",
+    "@wordpress/primitives": "^4.7.0",
+    "@wordpress/scripts": "^29.0.0",
+    "classnames": "^2.5.1",
+    "copy-webpack-plugin": "^12.0.2",
+    "raw-loader": "^4.0.2",
+    "gulp": "^5.0.0",
+    "gulp-freemius-deploy": "^1.0.11",
+    "gulp-zip": "^6.0.0"
+  }
+}
