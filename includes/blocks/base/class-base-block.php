@@ -213,7 +213,7 @@ abstract class Base_Block {
      * @since 1.0.0
      */
     function create_instance_id() : string {
-        return wp_unique_id( $this->get_tag_name() . '-' );
+        return wp_unique_prefixed_id( $this->get_tag_name() . '-' );
     }
 
     /**

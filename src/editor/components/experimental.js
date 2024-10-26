@@ -15,6 +15,8 @@ import {
     ToggleGroupControl as stableToggleGroupControl,
     __experimentalToggleGroupControlOption,
     ToggleGroupControlOption as stableToggleGroupControlOption,
+    __experimentalToggleGroupControlOptionIcon,
+    ToggleGroupControlOptionIcon as stableToggleGroupControlOptionIcon,
     __experimentalNumberControl,
     NumberControl as stableNumberControl,
 } from "@wordpress/components";
@@ -23,7 +25,9 @@ import {
     __experimentalColorGradientSettingsDropdown,
     ColorGradientSettingsDropdown as stableColorGradientSettingsDropdown,
     __experimentalUseMultipleOriginColorsAndGradients,
-    useMultipleOriginColorsAndGradients as stableUseMultipleOriginColorsAndGradients
+    useMultipleOriginColorsAndGradients as stableUseMultipleOriginColorsAndGradients,
+    __experimentalInspectorPopoverHeader,
+    InspectorPopoverHeader as stableInspectorPopoverHeader
 } from "@wordpress/block-editor";
 
 /**
@@ -95,6 +99,12 @@ export const ToggleGroupControlOption = import_x(
     '@wordpress/components'
 );
 
+export const ToggleGroupControlOptionIcon = import_x(
+    __experimentalToggleGroupControlOptionIcon, '__experimentalToggleGroupControlOptionIcon',
+    stableToggleGroupControlOptionIcon, 'ToggleGroupControlOptionIcon',
+    '@wordpress/components'
+);
+
 export const NumberControl = import_x(
     __experimentalNumberControl, '__experimentalNumberControl',
     stableNumberControl, 'NumberControl',
@@ -110,5 +120,11 @@ export const ColorGradientSettingsDropdown = import_x(
 export const useMultipleOriginColorsAndGradients = import_x(
     __experimentalUseMultipleOriginColorsAndGradients, '__experimentalUseMultipleOriginColorsAndGradients',
     stableUseMultipleOriginColorsAndGradients, 'useMultipleOriginColorsAndGradients',
+    '@wordpress/block-editor'
+);
+
+export const InspectorPopoverHeader = import_x(
+    __experimentalInspectorPopoverHeader, '__experimentalInspectorPopoverHeader',
+    stableInspectorPopoverHeader, 'InspectorPopoverHeader',
     '@wordpress/block-editor'
 );

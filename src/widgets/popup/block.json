@@ -1,0 +1,46 @@
+{
+  "apiVersion": 3,
+  "name": "fc/popup",
+  "title": "Popup",
+  "description": "A popup element to display content to visitors.",
+  "category": "fooconvert",
+  "editorScript": "file:./editor/index.js",
+  "editorStyle": "file:./editor/index.css",
+  "viewScript": "file:./frontend/index.js",
+  "viewStyle": "file:./frontend/index.css",
+  "supports": {
+    "lock": false,
+    "multiple": false,
+    "reusable": false,
+    "className": false,
+    "html": false
+  },
+  "attributes": {
+    "postId": {
+      "type": "number"
+    },
+    "clientId": {
+      "type": "string"
+    },
+    "styles": {
+      "type": "object"
+    },
+    "settings": {
+      "type": "object"
+    },
+    "closeButton": {
+      "type": "object"
+    },
+    "content": {
+      "type": "object"
+    }
+  },
+  "usesContext": [ "postId" ],
+  "providesContext": {
+    "fc-popup/clientId": "clientId",
+    "fc-popup/settings": "settings",
+    "fc-popup/styles": "styles",
+    "fc-popup/closeButton": "closeButton",
+    "fc-popup/content": "content"
+  }
+}

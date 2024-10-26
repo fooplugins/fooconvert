@@ -4,7 +4,7 @@ import { __ } from "@wordpress/i18n";
 import {
     BorderToolsPanel,
     ColorToolsPanel, DimensionToolsPanel,
-    DisplayRulesButton,
+    // DisplayRulesButton,
     InnerBlocksButton,
     OpenTriggerPanel, ToggleSelectControl,
     ToolbarVariationMenu
@@ -171,11 +171,11 @@ const EditSettings = props => {
                     defaults={ defaults?.styles?.dimensions }
                 />
             </InspectorControls>
-            <PluginDocumentSettingPanel name="fooconvert-display-rules" title={ __( 'Display Rules', 'fooconvert' ) }  >
-                <PanelRow>
-                    <DisplayRulesButton variant="secondary" label={ __( 'Edit Rules', 'fooconvert' ) }/>
-                </PanelRow>
-            </PluginDocumentSettingPanel>
+            {/*<PluginDocumentSettingPanel name="fooconvert-display-rules" title={ __( 'Display Rules', 'fooconvert' ) }  >*/}
+            {/*    <PanelRow>*/}
+            {/*        <DisplayRulesButton variant="secondary" label={ __( 'Edit Rules', 'fooconvert' ) }/>*/}
+            {/*    </PanelRow>*/}
+            {/*</PluginDocumentSettingPanel>*/}
         </>
     );
 };

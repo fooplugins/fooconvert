@@ -1,0 +1,23 @@
+.fc--display-rules__pre-publish-panel {
+  .components-panel__body-toggle {
+    .components-panel__icon {
+      fill: #4ab866;
+      width: 24px;
+      height: 24px;
+      margin: -3px 0 -4px 4px;
+    }
+    .fc--display-rules__pre-publish-panel__status {
+      padding-left: 4px;
+      font-weight: normal;
+    }
+  }
+
+  &.is-not-set {
+    .components-panel__body-toggle {
+      .components-panel__icon {
+        transform: rotate(180deg);
+        fill: #f0b849;
+      }
+    }
+  }
+}

@@ -103,7 +103,7 @@ class CustomElement extends HTMLElement {
                 if ( Object.hasOwn( options, "detail" ) ) {
                     return this.dispatchEvent( new CustomEvent( type, options ) )
                 } else {
-                    return this.dispatchEvent( new Event( type ) );
+                    return this.dispatchEvent( new Event( type, options ) );
                 }
             }
             return this.dispatchEvent( new Event( type ) );

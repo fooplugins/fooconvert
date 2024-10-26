@@ -10,12 +10,13 @@ import { BorderRadiusControl, isBorderRadius } from "../border-radius-control";
  */
 
 
-const BorderToolsPanel = ( { value, onChange, panelId, title, ...props } ) => {
+const BorderToolsPanel = ( { value, onChange, panelId, title, defaults = {}, ...props } ) => {
     const {} = props;
 
     const colorGradientSettings = useMultipleOriginColorsAndGradients();
 
     const { radius, ...border } = value ?? {};
+    const { radius: defaultRadius, ...defaultBorder } = defaults ?? {};
     const hasBorder = isPossibleBorderValue( border ) || isPossibleBorderBox( border );
     const hasBorderRadius = isBorderRadius( radius );
 
@@ -28,7 +29,7 @@ const BorderToolsPanel = ( { value, onChange, panelId, title, ...props } ) => {
     };
 
     const setBorderRadius = radius => {
-        const prev = { ...(border ?? {}) };
+        const prev = { ...( border ?? {} ) };
         const newValue = isBorderRadius( radius ) ? { radius, ...prev } : prev;
         const keys = Object.keys( newValue );
         onChange( keys.length === 0 ? undefined : newValue );
@@ -55,7 +56,7 @@ const BorderToolsPanel = ( { value, onChange, panelId, title, ...props } ) => {
                 <BorderBoxControl
                     label={ __( "Border", "fooconvert" ) }
                     hideLabelFromVision={ true }
-                    value={ border }
+                    value={ Object.keys( border ).length > 0 ? border : defaultBorder }
                     onChange={ setBorder }
                     size={ "__unstable-large" }
                     popoverOffset={ 40 }
@@ -73,7 +74,7 @@ const BorderToolsPanel = ( { value, onChange, panelId, title, ...props } ) => {
             >
                 <BorderRadiusControl
                     label={ __( "Radius", "fooconvert" ) }
-                    value={ radius }
+                    value={ radius ?? defaultRadius }
                     onChange={ setBorderRadius }
                 />
             </ToolsPanelItem>

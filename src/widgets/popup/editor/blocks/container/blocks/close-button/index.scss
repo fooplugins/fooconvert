@@ -1,0 +1,36 @@
+.fc--popup-close-button {
+  position: absolute!important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: fit-content;
+  font-size: 32px;
+  padding: 6px;
+  margin: 0;
+  background: none;
+  color: #000000;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+  top: 0;
+  right: 0;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  svg {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+  }
+}
+
+.fc--popup-close-button.position-left {
+  right: unset;
+  left: 0;
+}

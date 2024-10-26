@@ -29,13 +29,14 @@ const renderPlaceholder = placeholder => {
 };
 
 const GroupedSelectControl = ( {
-                                       value,
-                                       onChange,
-                                       options = [],
-                                       placeholder = __( 'Select...', 'fooconvert' ),
-    className,
-                                       ...props
-                                   } ) => {
+                                   value,
+                                   onChange,
+                                   options = [],
+                                   placeholder = __( 'Select...', 'fooconvert' ),
+                                   size = "__unstable-large",
+                                   className,
+                                   ...props
+                               } ) => {
 
     if ( !isGroupedSelectOptions( options ) ) {
         options = [];
@@ -46,6 +47,7 @@ const GroupedSelectControl = ( {
             className={ classnames( 'fc-grouped-select-control', className ) }
             value={ value }
             onChange={ onChange }
+            size={ size }
             { ...props }
         >
             { renderPlaceholder( placeholder ) }
