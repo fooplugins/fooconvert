@@ -7,4 +7,6 @@ export { default as usePostMetaKey } from "./usePostMetaKey";
 export { default as usePostTypeLabels } from "./usePostTypeLabels";
 export { default as useStyles } from "./useStyles";
 export { default as useIsInnerBlockSelected } from "./useIsInnerBlockSelected";
+export { default as useBlockObjectAttribute } from "./useBlockObjectAttribute";
+export { default as useBlockAttributes } from "./useBlockAttributes";
 export * from "./use-icon-sets";

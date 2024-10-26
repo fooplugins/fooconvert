@@ -6,12 +6,14 @@ import { __, sprintf } from "@wordpress/i18n";
 import "./Plugin.scss";
 import usePostTypeLabels from "../../hooks/usePostTypeLabels";
 
-const PluginCustomEditor = () => {
+const PluginCustomEditor = ( ...args ) => {
+    console.log( args );
+
     const title = useSelect( select => {
         return select( editorStore )?.getEditedPostAttribute( 'title' );
     }, [] );
 
-    const labels = usePostTypeLabels() ?? { singular_name: '' };
+    const labels = usePostTypeLabels({ singular_name: '' });
     const help = sprintf( __( 'Set the title for the %s', 'fooconvert' ), labels.singular_name );
 
     const { editPost } = useDispatch( editorStore );

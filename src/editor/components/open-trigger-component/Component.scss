@@ -1,0 +1,12 @@
+.fc--open-trigger-component {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 8px;
+
+  .components-base-control,
+  .components-base-control:last-child {
+    margin-bottom: 0;
+  }
+}

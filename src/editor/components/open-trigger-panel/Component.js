@@ -1,6 +1,6 @@
 import { BaseControl, PanelBody, PanelRow, RangeControl, SelectControl, TextControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import { cleanObject, isNumberWithin, isString } from "@steveush/utils";
+import { cleanObject, isFunction, isNumberWithin, isString } from "@steveush/utils";
 
 /**
  * @typedef {"immediate"|"anchor"|"exit-intent"|"scroll"|"timer"|"visible"} TriggerType
@@ -55,8 +55,11 @@ const OpenTriggerPanel = ( props ) => {
         value,
         onChange,
         locked = false,
+        rowRenderer,
         ...restProps
     } = props;
+
+    const hasRowRenderer = isFunction( rowRenderer );
 
     const { type, data } = value ?? {};
 
@@ -146,6 +149,7 @@ const OpenTriggerPanel = ( props ) => {
         <PanelBody title={ __( 'Open Trigger', 'fooconvert' ) }>
             { renderType() }
             { renderData() }
+            { hasRowRenderer && rowRenderer() }
         </PanelBody>
     );
 };
