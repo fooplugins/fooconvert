@@ -101,17 +101,13 @@ class FooConvert_Display_Rules extends Base_Component {
      */
     public function create_column_content( $post_type, $column_name, $post_id ) : void {
         if ( $column_name === "{$post_type}_display_rules" ) {
-            // the fooconvert_display_rules option contains all widgets with valid display rules, so we just need to
-            // check if the current post_id exists within it
-            $rules = get_option( 'fooconvert_display_rules', array() );
-            $is_set = Utils::array_some( $rules, function( $rule ) use ( $post_id ) {
-                return $rule['post_id'] === $post_id;
-            } );
+            $display_rules = get_post_meta( $post_id, FOOCONVERT_DISPLAY_RULES_META_KEY, true );
+            $is_set = !empty( $display_rules ) && !empty( $display_rules['location'] );
 
             if ( $is_set ) {
-                echo 'Set';
+                echo __( 'Set', 'fooconvert' );
             } else {
-                echo 'Not set';
+                echo __( 'Not set!', 'fooconvert' );
             }
         }
     }

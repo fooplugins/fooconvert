@@ -40,7 +40,7 @@ if ( ! function_exists( 'fooconvert_fs' ) ) {
 				//	'is_require_payment' => true,
 				//),
 				'menu'                => array(
-					'slug'       => 'edit.php?post_type=fooconvert',
+					'slug'       => 'edit.php?post_type=fc-bar',
 					//'first-path' => 'edit.php?post_type=' . FOOBAR_CPT_NOTIFICATION . '&page=' . FOOBAR_ADMIN_MENU_HELP_SLUG,
 					'account'    => $pro_available || $has_addons,
 					'contact'    => false,

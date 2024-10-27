@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: FooConvert 0.0.9\n"
+"Project-Id-Version: FooConvert 0.0.10\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/fooconvert\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-10-26T13:48:56+00:00\n"
+"POT-Creation-Date: 2024-10-27T16:25:28+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: fooconvert\n"
@@ -50,72 +50,81 @@ msgstr ""
 msgid "Table ordered by display rules."
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:235
-#: includes/class-fooconvert-display-rules.php:333
+#: includes/class-fooconvert-display-rules.php:108
+#: assets/editor.js:1
+msgid "Set"
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:110
+msgid "Not set!"
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:231
+#: includes/class-fooconvert-display-rules.php:329
 msgid "General"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:239
+#: includes/class-fooconvert-display-rules.php:235
 msgid "Entire Site"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:243
+#: includes/class-fooconvert-display-rules.php:239
 msgid "Front Page"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:247
+#: includes/class-fooconvert-display-rules.php:243
 msgid "Blog"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:251
+#: includes/class-fooconvert-display-rules.php:247
 msgid "Search Results"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:255
+#: includes/class-fooconvert-display-rules.php:251
 msgid "No Search Results"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:259
+#: includes/class-fooconvert-display-rules.php:255
 msgid "404 Template"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:265
+#: includes/class-fooconvert-display-rules.php:261
 msgid "Specific"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:269
+#: includes/class-fooconvert-display-rules.php:265
 msgid "Page"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:273
+#: includes/class-fooconvert-display-rules.php:269
 msgid "Post"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:277
+#: includes/class-fooconvert-display-rules.php:273
 msgid "Category"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:281
+#: includes/class-fooconvert-display-rules.php:277
 msgid "Tag"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:308
+#: includes/class-fooconvert-display-rules.php:304
 msgid "Post Archives"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:337
+#: includes/class-fooconvert-display-rules.php:333
 msgid "All Users"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:341
+#: includes/class-fooconvert-display-rules.php:337
 msgid "Logged In"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:345
+#: includes/class-fooconvert-display-rules.php:341
 msgid "Logged Out"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:351
+#: includes/class-fooconvert-display-rules.php:347
 msgid "Roles"
 msgstr ""
 
@@ -791,10 +800,6 @@ msgstr ""
 
 #: assets/editor.js:1
 msgid "Display rules"
-msgstr ""
-
-#: assets/editor.js:1
-msgid "Set"
 msgstr ""
 
 #: assets/editor.js:1

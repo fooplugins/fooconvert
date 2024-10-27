@@ -1,6 +1,6 @@
 {
   "name": "fooconvert",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "license": "GPL-3.0-or-later",
   "title": "FooConvert",
   "description": "Turning clicks into conversions, visitors into customers – the ultimate catalyst for online success!",
@@ -24,6 +24,7 @@
     "composer:update": "composer update --optimize-autoloader",
     "composer:refresh": "composer dump-autoload --optimize",
     "package:create-zip": "npm run build && npm run i18n && npm run composer:refresh && gulp",
+    "package:gulp": "gulp",
     "package:deploy": "gulp freemius-deploy"
   },
   "devDependencies": {
