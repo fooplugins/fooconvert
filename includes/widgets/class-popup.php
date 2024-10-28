@@ -83,7 +83,7 @@ class Popup extends Base_Widget {
             'public' => false,
             'show_ui' => true,
             'show_in_rest' => true,
-            'show_in_menu' => FOOCONVERT_MENU_SLUG,
+            'show_in_menu' => false,
             'supports' => [ 'title', 'editor', 'author', 'custom-fields' ],
             'template' => array(
                 array( $this->get_block_name() )
