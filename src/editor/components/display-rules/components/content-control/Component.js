@@ -56,7 +56,11 @@ const DisplayRulesContentControl = ( props ) => {
     );
 
     const labels = usePostTypeLabels() ?? { singular_name: '' };
-    const description = sprintf( __( 'Set where and to whom this %s will be visible.', 'fooconvert' ), labels.singular_name );
+    const description = sprintf(
+        // translators: %s: post singular_label
+        __( 'Set where and to whom this %s will be visible.', 'fooconvert' ),
+        labels.singular_name
+    );
 
     return (
         <div className={ classnames( rootClass, className ) }>
