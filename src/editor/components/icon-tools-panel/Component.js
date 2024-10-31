@@ -1,24 +1,27 @@
 import { __ } from "@wordpress/i18n";
 import {
-    getIconSetsIcon,
-    IconPickerControl,
-    renderIconSetIconToString,
+    IconsPickerControl,
     SizeControl,
     ToolsPanel,
     ToolsPanelItem
-} from "#editor";
+} from "../../components";
 import { cleanObject, isString } from "@steveush/utils";
 
 const IconToolsPanel = props => {
     const {
         value,
         onChange,
-        defaults = {},
-        iconSets,
-        panelId
+        defaults,
+        panelId,
+        title = __( "Icon", "fooconvert" ),
+        iconLabel = __( "Icon", "fooconvert" ),
+        iconHelp = __( "Choose the icon to display.", "fooconvert" ),
+        sizeLabel = __( "Size", "fooconvert" ),
+        sizeHelp = __( "Set the size of the icon.", "fooconvert" ),
+        hideIconLabelFromVision = true,
     } = props;
 
-    const setIcon = ( newValue ) => {
+    const setValue = ( newValue ) => {
         const previousValue = value ?? {};
         const nextValue = typeof newValue === 'object' ? {
             ...previousValue,
@@ -27,54 +30,42 @@ const IconToolsPanel = props => {
         onChange( cleanObject( nextValue ) );
     };
 
-    const setIconSize = nextValue => setIcon( { size: nextValue } );
-    const setIconState = ( key, selectedIcon, extra ) => {
-        let nextValue = undefined;
-        if ( typeof selectedIcon === 'object' ) {
-            const svg = renderIconSetIconToString( selectedIcon, value?.size ?? defaults?.icon?.size, extra );
-            if ( svg ) {
-                nextValue = { slug: selectedIcon.slug, svg };
-            }
-        }
-        setIcon( { [ key ]: nextValue } );
-    };
-
-    const iconOpen = getIconSetsIcon( iconSets, value?.open?.slug ?? defaults?.open?.slug ?? 'wordpress-plus' );
-    const setIconOpen = selectedIcon => setIconState( 'open', selectedIcon, { slot: 'open-button__icon', className: 'button-icon open-button__icon' } );
+    const setSize = nextValue => setValue( { size: nextValue } );
+    const setSlug = nextValue => setValue( { slug: nextValue } );
 
     return (
         <ToolsPanel
             panelId={ panelId }
-            label={ __( "Icon", "fooconvert" ) }
+            label={ title }
             resetAll={ () => setIcon( undefined ) }
         >
             <ToolsPanelItem
                 panelId={ panelId }
-                label={ __( 'Icon', 'fooconvert' ) }
-                hasValue={ () => isString( value?.open?.slug, true ) }
-                onDeselect={ () => setIconOpen( undefined ) }
+                label={ iconLabel }
+                hasValue={ () => isString( value?.slug, true ) }
+                onDeselect={ () => setSlug( undefined ) }
                 isShownByDefault={ true }
             >
-                <IconPickerControl
-                    label={ __( 'Icon', 'fooconvert' ) }
-                    hideLabelFromVision={ true }
-                    value={ iconOpen }
-                    onChange={ setIconOpen }
-                    iconSets={ iconSets }
-                    help={ __( 'The icon for the button.', 'fooconvert' ) }
+                <IconsPickerControl
+                    label={ iconLabel }
+                    hideLabelFromVision={ hideIconLabelFromVision }
+                    value={ value?.slug ?? defaults?.slug }
+                    onChange={ setSlug }
+                    help={ iconHelp }
                 />
             </ToolsPanelItem>
             <ToolsPanelItem
                 panelId={ panelId }
-                label={ __( 'Size', 'fooconvert' ) }
+                label={ sizeLabel }
                 hasValue={ () => isString( value?.size, true ) }
-                onDeselect={ () => setIconSize( undefined ) }
+                onDeselect={ () => setSize( undefined ) }
                 isShownByDefault={ true }
             >
                 <SizeControl
-                    label={ __( 'Size', 'fooconvert' ) }
+                    label={ sizeLabel }
+                    help={ sizeHelp }
                     value={ value?.size ?? defaults?.size }
-                    onChange={ setIconSize }
+                    onChange={ setSize }
                     sizes={ [{
                         value: '16px',
                         abbr: __( 'S', 'fooconvert' ),

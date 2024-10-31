@@ -19,9 +19,6 @@
     "postId": {
       "type": "number"
     },
-    "clientId": {
-      "type": "string"
-    },
     "styles": {
       "type": "object"
     },

@@ -3,9 +3,9 @@ import { InspectorControls } from "@wordpress/block-editor";
 import { PanelBody, PanelRow } from "@wordpress/components";
 
 import {
-    ToggleSelectControl
+    ToggleSelectControl,
+    IconToolsPanel
 } from "#editor";
-import { IconToolsPanel } from "./components";
 
 const EditSettings = props => {
 
@@ -13,11 +13,10 @@ const EditSettings = props => {
         clientId,
         settings,
         setSettings,
-        defaultSettings,
-        iconSets
+        settingsDefaults
     } = props;
 
-    const setPosition = value => setSettings( { position: value !== defaultSettings?.position ? value : undefined } );
+    const setPosition = value => setSettings( { position: value !== settingsDefaults?.position ? value : undefined } );
     const setIcon = value => setSettings( { icon: value } );
 
     const positions = [{
@@ -35,7 +34,7 @@ const EditSettings = props => {
                     <ToggleSelectControl
                         label={ __( 'Position', 'fooconvert' ) }
                         hideLabelFromVision={ true }
-                        value={ settings?.position ?? defaultSettings?.position }
+                        value={ settings?.position ?? settingsDefaults?.position }
                         onChange={ setPosition }
                         options={ positions }
                         help={ __( 'Choose which side the button is displayed.', 'fooconvert' ) }
@@ -46,8 +45,7 @@ const EditSettings = props => {
                 panelId={ clientId }
                 value={ settings?.icon }
                 onChange={ setIcon }
-                defaults={ defaultSettings?.icon }
-                iconSets={ iconSets }
+                defaults={ settingsDefaults?.icon }
             />
         </InspectorControls>
     );

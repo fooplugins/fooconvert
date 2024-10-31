@@ -16,9 +16,10 @@
   ],
   "scripts": {
     "check-updates": "npx npm-check-updates",
-    "build": "wp-scripts build --output-path=assets",
+    "build": "wp-scripts build --output-path=assets && npm run copy",
     "start": "wp-scripts start --output-path=assets",
-    "develop": "wp-scripts start --no-watch --output-path=assets",
+    "develop": "wp-scripts start --no-watch --output-path=assets && npm run copy",
+    "copy": "node copy-media.mjs",
     "i18n": "node make-pot.mjs",
     "composer:install": "composer install --prefer-dist --optimize-autoloader --no-dev",
     "composer:update": "composer update --optimize-autoloader",
@@ -47,9 +48,10 @@
     "@wordpress/scripts": "^29.0.0",
     "classnames": "^2.5.1",
     "copy-webpack-plugin": "^12.0.2",
-    "raw-loader": "^4.0.2",
+    "globby": "^14.0.2",
     "gulp": "^5.0.0",
     "gulp-freemius-deploy": "^1.0.11",
-    "gulp-zip": "^6.0.0"
+    "gulp-zip": "^6.0.0",
+    "raw-loader": "^4.0.2"
   }
 }

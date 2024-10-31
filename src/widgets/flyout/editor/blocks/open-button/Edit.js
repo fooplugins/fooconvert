@@ -1,19 +1,15 @@
 import { useEffect } from "@wordpress/element";
-import { $object, useBlockAttributes, useIconSets } from "#editor";
+import { $object, useRootAttributes } from "#editor";
 
 import { FLYOUT_DEFAULTS } from "../../Edit";
 
 import EditBlock from "./EditBlock";
 import EditSettings from "./EditSettings";
 import EditStyles from "./EditStyles";
+import ViewStateControls from "../../components/view-state-controls";
 
 const Edit = props => {
-    const {
-        isSelected,
-        context: {
-            'fc-flyout/clientId': parentClientId
-        }
-    } = props;
+    const { isSelected } = props;
 
     const {
         attributes: _attributes,
@@ -21,9 +17,7 @@ const Edit = props => {
         ...restProps
     } = props;
 
-    const iconSets = useIconSets();
-
-    const [ parentAttributes, setParentAttributes ] = useBlockAttributes( parentClientId );
+    const [ parentAttributes, setParentAttributes ] = useRootAttributes( 'fc/flyout' );
 
     const attributes = parentAttributes?.openButton ?? {};
     const setAttributes = value => setParentAttributes( { openButton: $object( attributes, value ) } );
@@ -51,7 +45,6 @@ const Edit = props => {
 
     const customProps = {
         ...restProps,
-        parentClientId,
         parentAttributes,
         setParentAttributes,
         attributes,
@@ -62,12 +55,12 @@ const Edit = props => {
         setStyles,
         attributesDefaults,
         settingsDefaults,
-        stylesDefaults,
-        iconSets
+        stylesDefaults
     };
 
     return (
         <>
+            <ViewStateControls/>
             <EditBlock { ...customProps }/>
             <EditSettings { ...customProps }/>
             <EditStyles { ...customProps }/>

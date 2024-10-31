@@ -1,21 +1,14 @@
 import {
-    ToggleSelectControl,
     useInnerBlocks,
     VariationPicker,
     $object
 } from "#editor";
-import { BlockControls, InspectorControls } from "@wordpress/block-editor";
-import { seen, unseen, check } from "@wordpress/icons";
 import { __ } from "@wordpress/i18n";
 import { useEffect } from "@wordpress/element";
 import EditBlock from "./EditBlock";
 import EditSettings from "./EditSettings";
-import {
-    MenuGroup,
-    MenuItem, PanelBody,
-    PanelRow,
-    ToolbarDropdownMenu
-} from "@wordpress/components";
+import ViewStateControls from "./components/view-state-controls";
+import TriggerControls from "./components/trigger-controls/Component";
 
 export const FLYOUT_CLASS_NAME = 'fc--flyout';
 
@@ -35,7 +28,7 @@ export const FLYOUT_DEFAULTS = {
             hidden: false,
             icon: {
                 size: '32px',
-                open: { slug: 'wordpress-plus' }
+                slug: 'default__plus'
             }
         },
         styles: {
@@ -60,7 +53,7 @@ export const FLYOUT_DEFAULTS = {
             position: 'right',
             icon: {
                 size: '32px',
-                close: { slug: 'wordpress-closeSmall' }
+                slug: 'default__close-small'
             }
         },
         styles: {
@@ -97,48 +90,17 @@ export const FLYOUT_DEFAULTS = {
 const Edit = props => {
     // extract the various values used to render the block
     const {
-        clientId,
         setAttributes,
         context: {
             postId
         },
         attributes: {
-            clientId: storedClientId,
             postId: storedPostId,
             viewState,
             settings,
-            styles,
-            openButton,
-            closeButton
+            styles
         }
     } = props;
-
-    const setSettings = value => {
-        setAttributes( { settings: $object( settings, value ) } );
-    };
-
-    const setStyles = value => {
-        setAttributes( { styles: $object( styles, value ) } );
-    };
-
-    const setOpenButton = value => {
-        setAttributes( {
-            openButton: $object( openButton, value )
-        } );
-    };
-
-    const setCloseButton = value => {
-        setAttributes( {
-            closeButton: $object( closeButton, value )
-        } );
-    };
-
-    // ensure the clientId attribute is always current
-    useEffect( () => {
-        if ( clientId !== storedClientId ) {
-            setAttributes( { clientId } );
-        }
-    }, [ clientId, storedClientId ] );
 
     // ensure the postId attribute is always current
     useEffect( () => {
@@ -147,83 +109,33 @@ const Edit = props => {
         }
     }, [ postId, storedPostId ] );
 
+    const attributesDefaults = { ...FLYOUT_DEFAULTS };
+
+    const setSettings = value => setAttributes( { settings: $object( settings, value ) } );
+    const settingsDefaults = { ...( attributesDefaults?.settings ?? {} ) };
+
+    const setStyles = value => setAttributes( { styles: $object( styles, value ) } );
+    const stylesDefaults = { ...( attributesDefaults?.styles ?? {} ) };
+
     const setViewState = value => setAttributes( { viewState: value } );
-
-    // const { selectBlock } = useDispatch( blockEditorStore );
-    // const isInnerBlockSelected = useIsInnerBlockSelected( clientId, true );
-    // const isAnySelected = isSelected || isInnerBlockSelected;
-    // useEffect( () => {
-    //     if ( !isAnySelected ) {
-    //         selectBlock( clientId );
-    //     }
-    // }, [ isAnySelected ] );
-
-    const viewStates = [ {
-        value: 'open',
-        label: __( 'Open', 'fooconvert' )
-    }, {
-        value: 'closed',
-        label: __( 'Closed', 'fooconvert' )
-    } ];
 
     const customProps = {
         ...props,
+        attributesDefaults,
         viewState,
         setViewState,
         settings,
         setSettings,
+        settingsDefaults,
         styles,
         setStyles,
-        openButton,
-        setOpenButton,
-        closeButton,
-        setCloseButton,
-        defaults: FLYOUT_DEFAULTS
+        stylesDefaults
     };
-
-    const viewStateHelp = __( 'Switch between the different flyout view states.', 'fooconvert' );
-    const viewStateText = viewState === 'closed' ? __( 'Closed', 'fooconvert' ) : __( 'Open', 'fooconvert' );
 
     return (
         <>
-            <InspectorControls group="settings">
-                <PanelBody title={ __( 'View', 'fooconvert' ) } isOpen={ true }>
-                    <PanelRow>
-                        <ToggleSelectControl
-                            label={ __( 'View', 'fooconvert' ) }
-                            hideLabelFromVision={ true }
-                            value={ viewState }
-                            onChange={ setViewState }
-                            options={ viewStates }
-                            help={ viewStateHelp }
-                        />
-                    </PanelRow>
-                </PanelBody>
-            </InspectorControls>
-            <BlockControls group="block">
-                <ToolbarDropdownMenu
-                    icon={ viewState === 'closed' ? unseen : seen }
-                    label={ __( 'View state', 'fooconvert' ) }
-                    text={ viewStateText }
-                >
-                    { ( { onClose } ) => (
-                        <MenuGroup>
-                            { viewStates.map( ( vs, i ) => (
-                                <MenuItem
-                                    key={ vs.value }
-                                    icon={ vs.value === viewState ? check : undefined }
-                                    onClick={ () => {
-                                        setViewState( vs.value );
-                                        onClose();
-                                    } }
-                                >
-                                    { vs.label }
-                                </MenuItem>
-                            ) ) }
-                        </MenuGroup>
-                    ) }
-                </ToolbarDropdownMenu>
-            </BlockControls>
+            <ViewStateControls/>
+            <TriggerControls/>
             <EditBlock { ...customProps }/>
             <EditSettings { ...customProps }/>
         </>

@@ -3,7 +3,6 @@ import classnames from "classnames";
 
 import { FLYOUT_CLASS_NAME } from "./Edit";
 import { useDispatch } from "@wordpress/data";
-import { useEffect } from "@wordpress/element";
 import { useDimensionStyle } from "#editor";
 
 /**
@@ -18,16 +17,15 @@ const EditBlock = props => {
         clientId,
         styles,
         settings,
-        defaults,
-        viewState
+        settingsDefaults
     } = props;
 
-    const position = settings?.position ?? defaults?.settings?.position;
+    const position = settings?.position ?? settingsDefaults?.position;
     const paddingStyle = useDimensionStyle( styles?.dimensions, ['padding'] );
 
     const blockProps = useBlockProps( {
-        className: classnames( FLYOUT_CLASS_NAME, `view-state__${ viewState }`, {
-            [ `position-${ position }` ]: position !== defaults?.settings?.position
+        className: classnames( FLYOUT_CLASS_NAME, {
+            [ `position-${ position }` ]: position !== settingsDefaults?.position
         } ),
         style: {
             ...paddingStyle
@@ -40,7 +38,6 @@ const EditBlock = props => {
     } );
 
     const { selectBlock } = useDispatch( blockEditorStore );
-
 
     return (
         <>

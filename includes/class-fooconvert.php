@@ -175,6 +175,22 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         }
 
         /**
+         * A wrapper around the `wp_kses` method that allows SPAN and SVG elements.
+         *
+         * @param string $content Text content to filter.
+         * @return string Filtered content containing only the allowed HTML.
+         */
+        public function kses_icon( string $content ) : string {
+            return $this->kses_with_svg( $content, array(
+                'span' => array(
+                    'class' => true,
+                    'role' => true,
+                    'aria-hidden' => true,
+                )
+            ) );
+        }
+
+        /**
          * A wrapper around the `wp_kses` method that extends both the allowed HTML elements and CSS properties
          * to include SVG elements and the custom element 'slot' and 'is' attributes.
          *
@@ -201,7 +217,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @return array An array of allowed HTML elements and attributes with the 'slot' and 'is' attributes.
          */
         private function add_custom_element_attributes( array $allowed_html ): array {
-            foreach ( $allowed_html as $_ => $attributes ) {
+            foreach ( $allowed_html as $_ => &$attributes ) {
                 if ( !isset( $attributes['slot'] ) ) {
                     $attributes['slot'] = true;
                 }

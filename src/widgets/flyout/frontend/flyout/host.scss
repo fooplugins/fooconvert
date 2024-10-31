@@ -233,14 +233,19 @@
 }
 
 :host {
-  .button-icon,
-  ::slotted(.button-icon) {
+  span[role=img],
+  ::slotted(span[role=img]) {
     display: inline-block;
     width: 1em;
     height: 1em;
-    stroke-width: 0;
-    stroke: currentColor;
-    fill: currentColor;
+    > svg {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      stroke-width: 0;
+      stroke: currentColor;
+      fill: currentColor;
+    }
   }
 }
 

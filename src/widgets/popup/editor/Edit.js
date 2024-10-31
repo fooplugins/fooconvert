@@ -1,21 +1,13 @@
 import {
-    ToggleSelectControl,
     useInnerBlocks,
     VariationPicker,
     $object
 } from "#editor";
-import { BlockControls, InspectorControls } from "@wordpress/block-editor";
-import { seen, unseen, check } from "@wordpress/icons";
 import { __ } from "@wordpress/i18n";
 import { useEffect } from "@wordpress/element";
 import EditBlock from "./EditBlock";
 import EditSettings from "./EditSettings";
-import {
-    MenuGroup,
-    MenuItem, PanelBody,
-    PanelRow,
-    ToolbarDropdownMenu
-} from "@wordpress/components";
+import { TriggerControls } from "./components/trigger-controls";
 
 export const POPUP_CLASS_NAME = 'fc--popup';
 
@@ -41,7 +33,7 @@ export const POPUP_DEFAULTS = {
             position: 'right',
             icon: {
                 size: '32px',
-                close: { slug: 'wordpress-closeSmall' }
+                slug: 'default__close-small'
             }
         },
         styles: {
@@ -78,43 +70,16 @@ export const POPUP_DEFAULTS = {
 const Edit = props => {
     // extract the various values used to render the block
     const {
-        clientId,
         setAttributes,
         context: {
             postId
         },
         attributes: {
-            clientId: storedClientId,
             postId: storedPostId,
-            viewState,
             settings,
-            styles,
-            closeButton
+            styles
         }
     } = props;
-
-    const setSettings = value => {
-        setAttributes( { settings: $object( settings, value ) } );
-    };
-    const settingsDefaults = { ...( POPUP_DEFAULTS?.settings ?? {} ) };
-
-    const setStyles = value => {
-        setAttributes( { styles: $object( styles, value ) } );
-    };
-    const stylesDefaults = { ...( POPUP_DEFAULTS?.styles ?? {} ) };
-
-    const setCloseButton = value => {
-        setAttributes( {
-            closeButton: $object( closeButton, value )
-        } );
-    };
-
-    // ensure the clientId attribute is always current
-    useEffect( () => {
-        if ( clientId !== storedClientId ) {
-            setAttributes( { clientId } );
-        }
-    }, [ clientId, storedClientId ] );
 
     // ensure the postId attribute is always current
     useEffect( () => {
@@ -123,22 +88,28 @@ const Edit = props => {
         }
     }, [ postId, storedPostId ] );
 
+    const attributesDefaults = { ...POPUP_DEFAULTS };
+
+    const setSettings = value => setAttributes( { settings: $object( settings, value ) } );
+    const settingsDefaults = { ...( attributesDefaults?.settings ?? {} ) };
+
+    const setStyles = value => setAttributes( { styles: $object( styles, value ) } );
+    const stylesDefaults = { ...( attributesDefaults?.styles ?? {} ) };
+
     const customProps = {
         ...props,
-        viewState,
+        attributesDefaults,
         settings,
         setSettings,
         settingsDefaults,
         styles,
         setStyles,
-        stylesDefaults,
-        closeButton,
-        setCloseButton,
-        defaults: POPUP_DEFAULTS
+        stylesDefaults
     };
 
     return (
         <>
+            <TriggerControls/>
             <EditBlock { ...customProps }/>
             <EditSettings { ...customProps }/>
         </>

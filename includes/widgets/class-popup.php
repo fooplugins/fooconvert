@@ -270,20 +270,11 @@ class Popup extends Base_Widget {
 
     public function get_frontend_icons( string $instance_id, array $attributes, WP_Block $block ) : array {
         $icons = [];
-        $close_button = Utils::get_array( $attributes, 'closeButton' );
-        if ( ! empty( $close_button ) ) {
-            $close_button_settings = Utils::get_array( $close_button, 'settings' );
-            if ( ! empty( $close_button_settings ) ) {
-                $close_button_icon = Utils::get_array( $close_button_settings, 'icon' );
-                if ( ! empty( $close_button_icon ) ) {
-                    $close_button_icon_close = Utils::get_array( $close_button_icon, 'close' );
-                    if ( ! empty( $close_button_icon_close ) ) {
-                        $close_button_icon_close_svg = Utils::get_string( $close_button_icon_close, 'svg' );
-                        if ( ! empty( $close_button_icon_close_svg ) ) {
-                            $icons[] = $close_button_icon_close_svg;
-                        }
-                    }
-                }
+        $close_icon_slug = Utils::get_key_path( $attributes, 'closeButton.settings.icon.slug' );
+        if ( ! empty( $close_icon_slug ) ) {
+            $close_icon = $this->get_frontend_icon( $close_icon_slug, 'close-button__icon' );
+            if ( ! empty( $close_icon ) ) {
+                $icons[] = $close_icon;
             }
         }
         return $icons;
