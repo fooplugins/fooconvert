@@ -67,7 +67,7 @@ class Popup extends Base_Widget {
     function register_post_type() {
         return register_post_type( $this->get_post_type(), array(
             'labels' => array(
-                'name' => __( 'Popup', 'foobar' ),
+                'name' => __( 'Popups', 'foobar' ),
                 'singular_name' => __( 'Popup', 'foobar' ),
                 'add_new' => __( 'Add Popup', 'foobar' ),
                 'add_new_item' => __( 'Add New Popup', 'foobar' ),

@@ -41,6 +41,9 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             if ( $save_data ) {
                 update_site_option( FOOCONVERT_OPTION_DATA, $plugin_data );
             }
+
+            $demo_content = new Admin\DemoContent();
+            $demo_content->run();
         }
 
         /**
