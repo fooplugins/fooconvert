@@ -115,13 +115,7 @@ class Flyout extends Base_Widget {
                         array(),
                         array(
                             array( 'fc/flyout-close-button' ),
-                            array(
-                                'fc/flyout-content',
-                                array(),
-                                array(
-                                    array( 'core/paragraph' )
-                                )
-                            )
+                            array( 'fc/flyout-content' )
                         )
                     )
                 ),

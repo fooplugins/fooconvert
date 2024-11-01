@@ -1,0 +1,35 @@
+.fc--bar-open-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: fit-content;
+  font-size: 32px;
+  padding: 6px;
+  margin: 24px;
+  background: #FFFFFF;
+  color: #000000;
+  border: solid 1px #DDDDDD;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 1;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  svg {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+  }
+}
+
+.fc--bar-open-button.position-left {
+  right: unset;
+  left: 0;
+}

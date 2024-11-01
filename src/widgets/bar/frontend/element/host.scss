@@ -7,21 +7,20 @@
   bottom: 0;
   display: flex;
   pointer-events: none;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   max-width: 100%!important;
   height: calc(100% - var(--wp-admin--admin-bar--height, 0px));
   max-height: calc(100% - var(--wp-admin--admin-bar--height, 0px))!important;
   margin: 0;
-  padding: 32px;
+  padding: 0;
   z-index: 99998;
-  color: #000;
 
   &::part(inner) {
     box-sizing: border-box;
     position: relative;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
     height: 100%;
     max-width: 100%;
@@ -41,7 +40,7 @@
     color: #000000;
     font-size: 32px;
     padding: 6px;
-    margin: 0;
+    margin: 24px;
     cursor: pointer;
     z-index: 2;
     border: solid 1px #DDDDDD;
@@ -63,8 +62,8 @@
     box-sizing: border-box;
     position: relative;
     display: flex;
-    flex-direction: column;
-    width: fit-content;
+    flex-direction: row-reverse;
+    width: 100%;
     height: fit-content;
     max-width: 100%;
     max-height: 100%;
@@ -104,10 +103,13 @@
   }
 
   &::part(content) {
-    display: block;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     z-index: 1;
-    width: 480px;
+    width: 100%;
     height: fit-content;
     max-width: 100%;
     max-height: 100%;
@@ -119,24 +121,25 @@
     border-radius: 4px;
     margin: 0;
     padding: 16px;
+    gap: 16px;
   }
 }
 
 :host(:not([position],[open])) {
   &::part(container) {
-    transform: translateX(100%);
+    transform: translateY(-100%);
   }
 }
 
-:host([position^=right-]:not([open])) {
+:host([position=top]:not([open])) {
   &::part(container) {
-    transform: translateX(100%);
+    transform: translateY(-100%);
   }
 }
 
-:host([position^=left-]:not([open])) {
+:host([position=bottom]:not([open])) {
   &::part(container) {
-    transform: translateX(-100%);
+    transform: translateY(100%);
   }
 }
 
@@ -150,63 +153,25 @@
     pointer-events: auto;
     visibility: visible;
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
   }
 }
 
-:host(:not([position])) {
-  &::part(inner) {
-    align-items: center;
-    justify-content: flex-end;
-  }
-  &::part(open-button) {
-    right: 0;
-  }
-}
-
-:host([position^=right-]) {
-  &::part(inner) {
-    justify-content: flex-end;
-  }
-  &::part(open-button) {
-    right: 0;
-    left: unset;
-  }
-}
-
-:host([position^=left-]) {
+:host(:not([position])),
+:host([position=top]) {
   &::part(inner) {
     justify-content: flex-start;
   }
-  &::part(open-button) {
-    right: unset;
-    left: 0;
-  }
-}
-
-:host([position$=-top]) {
-  &::part(inner) {
-    align-items: flex-start;
-  }
-  &::part(open-button) {
+  &::part(open-button),
+  &::part(close-button) {
     top: 0;
     bottom: unset;
   }
 }
 
-:host([position$=-center]) {
+:host([position=bottom]) {
   &::part(inner) {
-    align-items: center;
-  }
-  &::part(open-button) {
-    top: 50%;
-    bottom: unset;
-  }
-}
-
-:host([position$=-bottom]) {
-  &::part(inner) {
-    align-items: flex-end;
+    justify-content: flex-end;
   }
   &::part(open-button) {
     top: unset;
@@ -214,14 +179,46 @@
   }
 }
 
-:host([close-button=right])::part(close-button) {
-  right: 0;
-  left: unset;
+:host(:not([open-button])),
+:host([open-button=right]) {
+  &::part(inner) {
+    align-items: flex-end;
+  }
+  &::part(open-button) {
+    right: 0;
+    left: unset;
+  }
 }
 
-:host([close-button=left])::part(close-button) {
-  right: unset;
-  left: 0;
+:host([open-button=left]) {
+  &::part(inner) {
+    align-items: flex-start;
+  }
+  &::part(open-button) {
+    right: unset;
+    left: 0;
+  }
+}
+
+:host(:not([close-button])),
+:host([close-button=right]) {
+  &::part(container) {
+    flex-direction: row-reverse;
+  }
+  &::part(close-button) {
+    right: 0;
+    left: unset;
+  }
+}
+
+:host([close-button=left]) {
+  &::part(container) {
+    flex-direction: row;
+  }
+  &::part(close-button) {
+    right: unset;
+    left: 0;
+  }
 }
 
 :host([close-button=none])::part(close-button) {
@@ -260,13 +257,6 @@
 
 @media (max-width: 600px) {
   :host {
-    padding: 16px;
-  }
-  :host([max-on-mobile]) {
-    &::part(container),
-    &::part(content) {
-      width: 100%;
-      height: 100%;
-    }
+    padding: 0;
   }
 }

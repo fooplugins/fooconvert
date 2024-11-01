@@ -288,7 +288,7 @@ abstract class Base_Block {
         $file_path = FOOCONVERT_ASSETS_PATH . "/media/icons/$set_name/$icon_name.svg";
         $file_contents = file_get_contents( $file_path );
         if ( ! empty( $file_contents ) ) {
-            return "<span slot=\"$slot\" role=\"img\" aria-hidden=\"true\">$file_contents</span>";
+            return "<span class=\"fc-icon\" slot=\"$slot\" role=\"img\" aria-hidden=\"true\">$file_contents</span>";
         }
         return false;
     }

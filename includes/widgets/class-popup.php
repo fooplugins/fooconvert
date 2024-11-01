@@ -110,13 +110,7 @@ class Popup extends Base_Widget {
                         array(),
                         array(
                             array( 'fc/popup-close-button' ),
-                            array(
-                                'fc/popup-content',
-                                array(),
-                                array(
-                                    array( 'core/paragraph' )
-                                )
-                            )
+                            array( 'fc/popup-content' )
                         )
                     )
                 ),

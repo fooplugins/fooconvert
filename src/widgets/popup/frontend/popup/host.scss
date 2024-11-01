@@ -140,11 +140,11 @@
 }
 
 :host {
-  span[role=img],
-  ::slotted(span[role=img]) {
+  span[role=img] {
     display: inline-block;
     width: 1em;
     height: 1em;
+    color: inherit;
     > svg {
       display: inline-block;
       width: 1em;

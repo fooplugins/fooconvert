@@ -5,8 +5,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: flex-start;
   width: 100%;
   height: 100%;
   max-width: 100%;
@@ -14,31 +14,67 @@
   padding: 0;
 
   @include mixins.background-transparency-grid();
+
+  &:has(.fc-variation-picker) {
+    align-items: center;
+    justify-content: center;
+  }
+
+  &:has(.position-top) {
+    justify-content: flex-start;
+  }
+
+  &:has(.position-bottom) {
+    justify-content: flex-end;
+  }
+
+  .fc--bar__backdrop {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .fc--bar {
   box-sizing: border-box;
-  position: absolute!important;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: unset;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-end;
   width: 100%;
   height: fit-content;
+  max-width: 100%;
+  max-height: 100%;
   padding: 0;
-  margin: 0;
 
-  &.position-bottom {
-    top: unset;
-    bottom: 0;
+
+  &.position-top {
+    align-items: flex-start;
   }
 
-  .fc--bar__container {
-    box-sizing: border-box;
-    position: relative;
-    display: flex;
+  &.position-bottom {
+    align-items: flex-end;
+  }
+
+  &:has(.open-button-position-right) {
     flex-direction: row;
+  }
+
+  &:has(.open-button-position-left) {
+    flex-direction: row-reverse;
+  }
+}
+
+@media (max-width: 600px) {
+  .fc--bar {
     width: 100%;
-    height: fit-content;
+    height: 100%;
   }
 }
