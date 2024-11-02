@@ -79,7 +79,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                     'post_status' => 'draft',
                     'post_type' => 'fc-bar',
                     'meta_input' => [
-                        '_fooconvert_display_rules_metafield' => [
+                        FOOCONVERT_META_KEY_DISPLAY_RULES => [
                             'location' => [
                                 [
                                     'type' => 'general:front_page',
@@ -110,7 +110,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                     'post_status' => 'draft',
                     'post_type' => 'fc-bar',
                     'meta_input' => [
-                        '_fooconvert_display_rules_metafield' => [
+                        FOOCONVERT_META_KEY_DISPLAY_RULES => [
                             'location' => [
                                 [
                                     'type' => 'general:entire_site',
