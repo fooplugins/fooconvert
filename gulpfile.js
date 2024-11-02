@@ -27,6 +27,7 @@ const files = [
     "!fs-config.json",
     "!gulpfile.js",
     "!make-pot.mjs",
+    "!copy-media.mjs",
     "!package.json",
     "!package-lock.json",
     "!webpack.config.js"
