@@ -9,6 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 //options
 define( 'FOOCONVERT_DISPLAY_RULES_META_KEY', '_fooconvert_display_rules_metafield' );
 define( 'FOOCONVERT_OPTION_DATA', 'fooconvert-settings' );
+define( 'FOOCONVERT_OPTION_VERSION_CREATE_TABLE', 'fooconvert-version-create-table' );
 
 //other
 define( 'FOOCONVERT_EDITOR_ASSET_HANDLE', 'fc-editor' );
