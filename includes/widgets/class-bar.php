@@ -120,6 +120,226 @@ class Bar extends Base_Widget {
                     )
                 ),
                 'scope' => array( 'block' )
+            ),
+            array(
+                'name' => 'black_friday_bar',
+                'title' => __( 'Black Friday Bar', 'fooconvert' ),
+                'description' => __( 'A typical Black Friday bar to help drive sales.', 'fooconvert' ),
+                'icon' => '',
+                'attributes' => array(
+                    'viewState' => 'open',
+                    'settings' => array(
+                        'trigger' => array(
+                            'type' => 'timer',
+                            'data' => 3
+                        ),
+                        'transitions' => true
+                    ),
+                    'openButton' => array(
+                        'settings' => array(
+                            'hidden' => true
+                        )
+                    ),
+                    'closeButton' => array(
+                        'settings' => array(
+                            'icon' => array(
+                                'slug' => 'default__close-small',
+                                'size' => '48px'
+                            )
+                        )
+                    ),
+                    'content' => array(
+                        'styles' => array(
+                            'color' => array(
+                                'background' => 'linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)'
+                            ),
+                            'border' => array(
+                                'radius' => '18px',
+                                'color' => '#111111',
+                                'style' => 'solid',
+                                'width' => '3px'
+                            ),
+                            'dimensions' => array(
+                                'margin' => '5px',
+                                'padding' => '3px',
+                                'gap' => '16px'
+                            )
+                        )
+                    ),
+                    'variation' => 'black_friday_bar'
+                ),
+                'innerBlocks' => array(
+                    array(
+                        'fc/bar-open-button',
+                        array(),
+                        array()
+                    ),
+                    array(
+                        'fc/bar-container',
+                        array(),
+                        array(
+                            array(
+                                'fc/bar-close-button',
+                                array(),
+                                array()
+                            ),
+                            array(
+                                'fc/bar-content',
+                                array(),
+                                array(
+                                    array(
+                                        'core/paragraph',
+                                        array(
+                                            'content' => '<strong>🔥Black Friday deals are finally here - LIMITED STOCK - act fast!</strong>⚡',
+                                            'dropCap' => false
+                                        ),
+                                        array()
+                                    ),
+                                    array(
+                                        'core/buttons',
+                                        array(),
+                                        array(
+                                            array(
+                                                'core/button',
+                                                array(
+                                                    'tagName' => 'a',
+                                                    'type' => 'button',
+                                                    'url' => '/shop',
+                                                    'text' => 'Save 70%',
+                                                    'style' => array(
+                                                        'border' => array(
+                                                            'radius' => '54px'
+                                                        )
+                                                    ),
+                                                    'anchor' => 'cta'
+                                                ),
+                                                array()
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                ),
+                'scope' => array(
+                    'block'
+                )
+            ),
+            array(
+                'name' => 'cookie_consent_bar',
+                'title' => __( 'Cookie Consent Bar', 'fooconvert' ),
+                'description' => __( 'A simple bottom bar that is dismissed when the button is clicked.', 'fooconvert' ),
+                'icon' => '',
+                'attributes' => array(
+                    'viewState' => 'open',
+                    'variation' => 'cookie_consent_bar',
+                    'settings' => array(
+                        'position' => 'bottom',
+                        'transitions' => true,
+                        'trigger' => array(
+                            'type' => 'immediate'
+                        ),
+                        'closeAnchor' => 'accept'
+                    ),
+                    'openButton' => array(
+                        'settings' => array(
+                            'hidden' => true
+                        )
+                    ),
+                    'closeButton' => array(
+                        'settings' => array(
+                            'hidden' => true
+                        )
+                    ),
+                    'content' => array(
+                        'styles' => array(
+                            'color' => array(
+                                'background' => '#76736e',
+                                'text' => '#ffffff'
+                            ),
+                            'border' => array(
+                                'radius' => '0px',
+                                'style' => 'none',
+                                'width' => '0px'
+                            ),
+                            'dimensions' => array(
+                                'margin' => '0px',
+                                'gap' => '16px',
+                                'padding' => '0px'
+                            )
+                        )
+                    ),
+                    'styles' => array(
+                        'dimensions' => array(
+                            'padding' => '0px'
+                        )
+                    )
+                ),
+                'innerBlocks' => array(
+                    array(
+                        'fc/bar-open-button',
+                        array(),
+                        array()
+                    ),
+                    array(
+                        'fc/bar-container',
+                        array(),
+                        array(
+                            array(
+                                'fc/bar-close-button',
+                                array(),
+                                array()
+                            ),
+                            array(
+                                'fc/bar-content',
+                                array(),
+                                array(
+                                    array(
+                                        'core/paragraph',
+                                        array(
+                                            'content' => '🍪 by continuing, you consent to our use of cookies',
+                                            'dropCap' => false
+                                        ),
+                                        array()
+                                    ),
+                                    array(
+                                        'core/buttons',
+                                        array(),
+                                        array(
+                                            array(
+                                                'core/button',
+                                                array(
+                                                    'tagName' => 'a',
+                                                    'type' => 'button',
+                                                    'text' => 'Accept',
+                                                    'className' => 'is-style-outline',
+                                                    'fontSize' => 'small',
+                                                    'anchor' => 'accept',
+                                                    'style' => array(
+                                                        'border' => array(
+                                                            'width' => '2px'
+                                                        ),
+                                                        'spacing' => array(
+                                                            'padding' => array(
+                                                                'top' => '3px',
+                                                                'bottom' => '3px'
+                                                            )
+                                                        )
+                                                    )
+                                                ),
+                                                array()
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                ),
+                'scope' => array(
+                    'block'
+                )
             )
         );
     }
