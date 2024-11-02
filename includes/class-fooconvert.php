@@ -81,6 +81,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         private function __construct() {
             add_action( 'init', array( $this, 'load_translations' ) );
             add_action( 'init', array( $this, 'register_frontend_assets' ) );
+            add_action( 'wp_enqueue_scripts', array( $this, 'ensure_frontend_css_enqueued' ) );
             add_action( 'enqueue_block_assets', array( $this, 'enqueue_editor_assets' ) );
             add_filter( 'block_categories_all', array( $this, 'register_block_category' ) );
 
@@ -91,6 +92,14 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
 
             if ( is_admin() ) {
                 new Admin\Init();
+            }
+        }
+
+        function ensure_frontend_css_enqueued() {
+            $is_frontend_js_enqueued = wp_script_is( FOOCONVERT_FRONTEND_ASSET_HANDLE );
+            $is_frontend_css_enqueued = wp_style_is( FOOCONVERT_FRONTEND_ASSET_HANDLE );
+            if ( $is_frontend_js_enqueued && !$is_frontend_css_enqueued ) {
+                wp_enqueue_style( FOOCONVERT_FRONTEND_ASSET_HANDLE );
             }
         }
 
@@ -178,6 +187,22 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         }
 
         /**
+         * A wrapper around the `wp_kses` method that allows SPAN and SVG elements.
+         *
+         * @param string $content Text content to filter.
+         * @return string Filtered content containing only the allowed HTML.
+         */
+        public function kses_icon( string $content ) : string {
+            return $this->kses_with_svg( $content, array(
+                'span' => array(
+                    'class' => true,
+                    'role' => true,
+                    'aria-hidden' => true,
+                )
+            ) );
+        }
+
+        /**
          * A wrapper around the `wp_kses` method that extends both the allowed HTML elements and CSS properties
          * to include SVG elements and the custom element 'slot' and 'is' attributes.
          *
@@ -204,7 +229,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @return array An array of allowed HTML elements and attributes with the 'slot' and 'is' attributes.
          */
         private function add_custom_element_attributes( array $allowed_html ): array {
-            foreach ( $allowed_html as $_ => $attributes ) {
+            foreach ( $allowed_html as $_ => &$attributes ) {
                 if ( !isset( $attributes['slot'] ) ) {
                     $attributes['slot'] = true;
                 }

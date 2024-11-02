@@ -14,7 +14,11 @@ const PluginCustomEditor = ( ...args ) => {
     }, [] );
 
     const labels = usePostTypeLabels({ singular_name: '' });
-    const help = sprintf( __( 'Set the title for the %s', 'fooconvert' ), labels.singular_name );
+    const help = sprintf(
+        // translators: %s: post singular_label
+        __( 'Set the title for the %s', 'fooconvert' ),
+        labels.singular_name
+    );
 
     const { editPost } = useDispatch( editorStore );
 

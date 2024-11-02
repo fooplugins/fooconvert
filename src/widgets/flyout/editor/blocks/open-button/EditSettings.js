@@ -1,6 +1,5 @@
 import { InspectorControls } from "@wordpress/block-editor";
-
-import { IconToolsPanel } from "./components";
+import { IconToolsPanel } from "#editor";
 
 const EditSettings = props => {
 
@@ -9,7 +8,6 @@ const EditSettings = props => {
         settings,
         setSettings,
         settingsDefaults,
-        iconSets
     } = props;
 
     const setIcon = value => setSettings( { icon: value } );
@@ -21,7 +19,6 @@ const EditSettings = props => {
                 value={ settings?.icon }
                 onChange={ setIcon }
                 defaults={ settingsDefaults?.icon }
-                iconSets={ iconSets }
             />
         </InspectorControls>
     );

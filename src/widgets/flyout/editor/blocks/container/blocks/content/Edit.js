@@ -1,17 +1,12 @@
 import EditBlock from "./EditBlock";
-import { $object, useBlockAttributes} from "#editor";
+import { $object, useRootAttributes } from "#editor";
 import { FLYOUT_DEFAULTS } from "../../../../Edit";
 import EditStyles from "./EditStyles";
+import ViewStateControls from "../../../../components/view-state-controls";
 
 export const CONTENT_CLASS_NAME = 'fc--flyout-content';
 
 const Edit = props => {
-
-    const {
-        context: {
-            'fc-flyout/clientId': parentClientId
-        }
-    } = props;
 
     // strip out the original attributes and setAttributes as we store the values on the parent
     const {
@@ -20,7 +15,7 @@ const Edit = props => {
         ...restProps
     } = props;
 
-    const [ parentAttributes, setParentAttributes ] = useBlockAttributes( parentClientId );
+    const [ parentAttributes, setParentAttributes ] = useRootAttributes( 'fc/flyout' );
 
     const attributes = parentAttributes?.content ?? {};
     const setAttributes = value => setParentAttributes( { content: $object( attributes, value ) } );
@@ -36,22 +31,22 @@ const Edit = props => {
 
     const customProps = {
         ...restProps,
-        parentClientId,
         parentAttributes,
         setParentAttributes,
         attributes,
         setAttributes,
+        attributesDefaults,
         settings,
         setSettings,
+        settingsDefaults,
         styles,
         setStyles,
-        attributesDefaults,
-        settingsDefaults,
         stylesDefaults,
     };
 
     return (
         <>
+            <ViewStateControls/>
             <EditBlock { ...customProps }/>
             <EditStyles { ...customProps }/>
         </>

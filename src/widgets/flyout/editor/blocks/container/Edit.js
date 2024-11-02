@@ -1,8 +1,9 @@
-import { useBlockAttributes, useIsInnerBlockSelected } from "#editor";
+import { useIsInnerBlockSelected, useRootAttributes } from "#editor";
 import { useEffect } from "@wordpress/element";
 import EditBlock from "./EditBlock";
 import EditSettings from "./EditSettings";
 import { FLYOUT_DEFAULTS } from "../../Edit";
+import ViewStateControls from "../../components/view-state-controls";
 
 export const CONTAINER_CLASS_NAME = 'fc--flyout-container';
 
@@ -10,13 +11,11 @@ const Edit = props => {
 
     const {
         clientId,
-        isSelected,
-        context: {
-            'fc-flyout/clientId': parentClientId
-        }
+        isSelected
     } = props;
 
-    const [ parentAttributes, setParentAttributes ] = useBlockAttributes( parentClientId );
+    const [ parentAttributes, setParentAttributes ] = useRootAttributes( 'fc/flyout' );
+
     const isInnerBlockSelected = useIsInnerBlockSelected( clientId, true );
 
     const { viewState: parentViewState } = parentAttributes;
@@ -33,7 +32,6 @@ const Edit = props => {
 
     const customProps = {
         ...props,
-        parentClientId,
         parentAttributes,
         setParentAttributes,
         parentAttributesDefaults: {
@@ -43,6 +41,7 @@ const Edit = props => {
 
     return (
         <>
+            <ViewStateControls/>
             <EditBlock { ...customProps }/>
             <EditSettings { ...customProps }/>
         </>

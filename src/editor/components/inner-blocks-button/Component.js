@@ -16,7 +16,7 @@ const slugify = value => {
     return '';
 }
 
-const InnerBlocksButton = ( { children, targetClientId, prepareAttributes = (attr, slug) => attr, ...buttonProps } ) => {
+const InnerBlocksButton = ( { children, targetClientId, prepareAttributes = (attr, variationName) => attr, ...buttonProps } ) => {
     const [ isOpen, setOpen ] = useState( false );
     const [ title, setTitle ] = useState( '' );
     const [ description, setDescription ] = useState( '' );
@@ -38,10 +38,10 @@ const InnerBlocksButton = ( { children, targetClientId, prepareAttributes = (att
     const getInnerBlocksJSON = () => {
         if ( target && target?.innerBlocks?.length ) {
             const innerBlocks = getInnerBlocks( target?.innerBlocks ?? [] );
-            const slug = slugify( title );
-            const attr = prepareAttributes( target?.attributes ?? {}, slug );
+            const name = slugify( title );
+            const attr = prepareAttributes( target?.attributes ?? {}, name );
             const output = {
-                slug,
+                name,
                 title,
                 description,
                 icon: '',

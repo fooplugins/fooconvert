@@ -16,13 +16,10 @@ class Bar extends Base_Widget {
                 'class' => true,
                 'open' => true,
                 'transitions' => true,
-                'page-push' => true,
-                'top' => true,
-                'bottom' => true,
-                'button-toggle' => true,
-                'button-none' => true,
-                'button-left' => true,
-                'button-right' => true,
+                'position' => true,
+                'button-position' => true,
+                'close-button' => true,
+                'open-button' => true
             )
         );
     }
@@ -50,11 +47,19 @@ class Bar extends Base_Widget {
                 'args' => array( 'render_callback' => array( $this, 'render' ) )
             ),
             array(
-                'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'widgets/bar/editor/button/block.json',
+                'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'widgets/bar/editor/blocks/open-button/block.json',
                 'args' => array( 'render_callback' => array( $this, 'render_empty' ) )
             ),
             array(
-                'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'widgets/bar/editor/content/block.json',
+                'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'widgets/bar/editor/blocks/container/block.json',
+                'args' => array( 'render_callback' => array( $this, 'render_content' ) )
+            ),
+            array(
+                'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'widgets/bar/editor/blocks/container/blocks/close-button/block.json',
+                'args' => array( 'render_callback' => array( $this, 'render_empty' ) )
+            ),
+            array(
+                'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'widgets/bar/editor/blocks/container/blocks/content/block.json',
                 'args' => array( 'render_callback' => array( $this, 'render_content' ) )
             )
         ) );
@@ -65,18 +70,18 @@ class Bar extends Base_Widget {
      */
     function register_post_type() {
         return register_post_type( $this->get_post_type(), array(
-            'labels'        => array(
-                'name'               => __( 'Bars', 'foobar' ),
-                'singular_name'      => __( 'Bar', 'foobar' ),
-                'add_new'            => __( 'Add Bar', 'foobar' ),
-                'add_new_item'       => __( 'Add New Bar', 'foobar' ),
-                'edit_item'          => __( 'Edit Bar', 'foobar' ),
-                'new_item'           => __( 'New Bar', 'foobar' ),
-                'view_item'          => __( 'View Bars', 'foobar' ),
-                'search_items'       => __( 'Search Bars', 'foobar' ),
-                'not_found'          => __( 'No Bars found', 'foobar' ),
+            'labels' => array(
+                'name' => __( 'Bars', 'foobar' ),
+                'singular_name' => __( 'Bar', 'foobar' ),
+                'add_new' => __( 'Add Bar', 'foobar' ),
+                'add_new_item' => __( 'Add New Bar', 'foobar' ),
+                'edit_item' => __( 'Edit Bar', 'foobar' ),
+                'new_item' => __( 'New Bar', 'foobar' ),
+                'view_item' => __( 'View Bars', 'foobar' ),
+                'search_items' => __( 'Search Bars', 'foobar' ),
+                'not_found' => __( 'No Bars found', 'foobar' ),
                 'not_found_in_trash' => __( 'No Bars found in Trash', 'foobar' ),
-                'all_items'          => __( 'Bars', 'foobar' )
+                'all_items' => __( 'Bars', 'foobar' )
             ),
             'has_archive' => false,
             'public' => false,
@@ -104,169 +109,113 @@ class Bar extends Base_Widget {
                     'variation' => 'empty'
                 ),
                 'innerBlocks' => array(
-                    array( 'fc/bar-button' ),
+                    array( 'fc/bar-open-button' ),
                     array(
-                        'fc/bar-content',
+                        'fc/bar-container',
                         array(),
                         array(
-                            array( 'core/paragraph' )
+                            array( 'fc/bar-close-button' ),
+                            array( 'fc/bar-content' )
                         )
                     )
                 ),
                 'scope' => array( 'block' )
             ),
             array(
-                'name' => 'basic',
-                'title' => __( 'Basic', 'fooconvert' ),
-                'description' => __( 'A basic bar with minimal styling.', 'fooconvert' ),
+                'name' => 'black_friday_bar',
+                'title' => __( 'Black Friday Bar', 'fooconvert' ),
+                'description' => __( 'A typical Black Friday bar to help drive sales.', 'fooconvert' ),
                 'icon' => '',
                 'attributes' => array(
-                    'styles' => array(
-                        'color' => array(
-                            'background' => 'linear-gradient(335deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%)'
+                    'viewState' => 'open',
+                    'settings' => array(
+                        'trigger' => array(
+                            'type' => 'timer',
+                            'data' => 3
                         ),
-                        'border' => array(
-                            'top' => array(
-                                'style' => 'none',
-                                'width' => '0px'
-                            ),
-                            'right' => array(
-                                'style' => 'none',
-                                'width' => '0px'
-                            ),
-                            'bottom' => array(
-                                'color' => '#abb8c3',
-                                'style' => 'solid',
-                                'width' => '2px'
-                            ),
-                            'left' => array(
-                                'style' => 'none',
-                                'width' => '0px'
+                        'transitions' => true
+                    ),
+                    'openButton' => array(
+                        'settings' => array(
+                            'hidden' => true
+                        )
+                    ),
+                    'closeButton' => array(
+                        'settings' => array(
+                            'icon' => array(
+                                'slug' => 'default__close-small',
+                                'size' => '48px'
                             )
                         )
                     ),
-                    'button' => array(
+                    'content' => array(
                         'styles' => array(
-                            'dimensions' => array(
-                                'margin' => '16px'
-                            )
-                        )
-                    ),
-                    'trigger' => array(
-                        'type' => 'immediate'
-                    ),
-                    'lockTrigger' => false
-                ),
-                'innerBlocks' => array(
-                    array(
-                        'fc/bar-button',
-                        array(),
-                        array()
-                    ),
-                    array(
-                        'fc/bar-content',
-                        array(),
-                        array(
-                            array(
-                                'core/paragraph',
-                                array(
-                                    'content' => 'Enter your message here!',
-                                    'dropCap' => false
-                                ),
-                                array()
-                            )
-                        )
-                    )
-                ),
-                'scope' => array(
-                    'block'
-                )
-            ),
-            array(
-                'name' => 'black_friday',
-                'title' => __( 'Black Friday', 'fooconvert' ),
-                'description' => __( 'Bright top bar for Black Friday, with rounded corners and border. Pushed page content down.', 'fooconvert' ),
-                'icon' => '',
-                'attributes' => array(
-                    'trigger' => array(
-                        'type' => 'timer',
-                        'data' => 3
-                    ),
-                    'lockTrigger' => false,
-                    'styles' => array(
-                        'color' => array(
-                            'background' => 'linear-gradient(145deg,rgb(0,55,255) 0%,rgb(255,0,60) 100%)',
-                            'text' => '#ffffff'
-                        ),
-                        'border' => array(
-                            'radius' => '21px',
-                            'color' => '#111111',
-                            'style' => 'solid',
-                            'width' => '4px'
-                        ),
-                        'dimensions' => array(
-                            'margin' => '10px',
-                            'padding' => '0px',
-                            'gap' => '16px'
-                        )
-                    ),
-                    'button' => array(
-                        'styles' => array(
-                            'dimensions' => array(
-                                'margin' => '3px'
-                            ),
                             'color' => array(
-                                'icon' => '#111111'
+                                'background' => 'linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)'
                             ),
                             'border' => array(
-                                'radius' => '0px',
-                                'style' => 'none',
-                                'width' => '0px'
-                            )
-                        ),
-                        'icon' => array(
-                            'size' => '32px',
-                            'close' => array(
-                                'slug' => 'wordpress-closeSmall',
-                                'svg' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" slot="button-icon" width="32px" height="32px" class="button-icon button-icon--close" aria-hidden="true"><path d="M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z"></path></svg>'
+                                'radius' => '18px',
+                                'color' => '#111111',
+                                'style' => 'solid',
+                                'width' => '3px'
+                            ),
+                            'dimensions' => array(
+                                'margin' => '5px',
+                                'padding' => '3px',
+                                'gap' => '16px'
                             )
                         )
                     ),
-                    'transitions' => true,
-                    'pagePush' => true,
-                    'variation' => 'black_friday'
+                    'variation' => 'black_friday_bar'
                 ),
                 'innerBlocks' => array(
                     array(
-                        'fc/bar-button',
+                        'fc/bar-open-button',
                         array(),
                         array()
                     ),
                     array(
-                        'fc/bar-content',
+                        'fc/bar-container',
                         array(),
                         array(
                             array(
-                                'core/paragraph',
-                                array(
-                                    'content' => '<strong>🔥 Black Friday deals are finally here - LIMITED STOCK – act fast!</strong>',
-                                    'dropCap' => false
-                                ),
+                                'fc/bar-close-button',
+                                array(),
                                 array()
                             ),
                             array(
-                                'core/buttons',
+                                'fc/bar-content',
                                 array(),
                                 array(
                                     array(
-                                        'core/button',
+                                        'core/paragraph',
                                         array(
-                                            'tagName' => 'a',
-                                            'type' => 'button',
-                                            'url' => '#shop',
-                                            'text' => 'Save 70%!'
+                                            'content' => '<strong>🔥Black Friday deals are finally here - LIMITED STOCK - act fast!</strong>⚡',
+                                            'dropCap' => false
                                         ),
                                         array()
+                                    ),
+                                    array(
+                                        'core/buttons',
+                                        array(),
+                                        array(
+                                            array(
+                                                'core/button',
+                                                array(
+                                                    'tagName' => 'a',
+                                                    'type' => 'button',
+                                                    'url' => '/shop',
+                                                    'text' => 'Save 70%',
+                                                    'style' => array(
+                                                        'border' => array(
+                                                            'radius' => '54px'
+                                                        )
+                                                    ),
+                                                    'anchor' => 'cta'
+                                                ),
+                                                array()
+                                            )
+                                        )
                                     )
                                 )
                             )
@@ -278,113 +227,110 @@ class Bar extends Base_Widget {
                 )
             ),
             array(
-                'name' => 'cookie_consent',
-                'title' => __( 'Cookie Consent', 'fooconvert' ),
-                'description' => __( 'Cookie consent bottom bar with Accept button.', 'fooconvert' ),
+                'name' => 'cookie_consent_bar',
+                'title' => __( 'Cookie Consent Bar', 'fooconvert' ),
+                'description' => __( 'A simple bottom bar that is dismissed when the button is clicked.', 'fooconvert' ),
                 'icon' => '',
                 'attributes' => array(
-                    'trigger' => array(
-                        'type' => 'timer',
-                        'data' => 5
+                    'viewState' => 'open',
+                    'variation' => 'cookie_consent_bar',
+                    'settings' => array(
+                        'position' => 'bottom',
+                        'transitions' => true,
+                        'trigger' => array(
+                            'type' => 'immediate'
+                        ),
+                        'closeAnchor' => 'accept'
                     ),
-                    'lockTrigger' => false,
-                    'styles' => array(
-                        'color' => array(
-                            'background' => 'linear-gradient(90deg,rgb(0,166,166) 0%,rgb(41,17,81) 100%)',
-                            'text' => '#ffffff'
-                        ),
-                        'border' => array(
-                            'radius' => '0px',
-                            'top' => array(
-                                'color' => '#291151',
-                                'style' => 'solid',
-                                'width' => '2px'
-                            ),
-                            'right' => array(
-                                'width' => '4px'
-                            ),
-                            'bottom' => array(
-                                'width' => '4px'
-                            ),
-                            'left' => array(
-                                'width' => '4px'
-                            )
-                        ),
-                        'dimensions' => array(
-                            'margin' => '0px',
-                            'padding' => '1px',
-                            'gap' => '16px'
+                    'openButton' => array(
+                        'settings' => array(
+                            'hidden' => true
                         )
                     ),
-                    'button' => array(
+                    'closeButton' => array(
+                        'settings' => array(
+                            'hidden' => true
+                        )
+                    ),
+                    'content' => array(
                         'styles' => array(
-                            'dimensions' => array(
-                                'margin' => '3px'
-                            ),
                             'color' => array(
-                                'icon' => '#111111'
+                                'background' => '#76736e',
+                                'text' => '#ffffff'
                             ),
                             'border' => array(
                                 'radius' => '0px',
                                 'style' => 'none',
                                 'width' => '0px'
-                            )
-                        ),
-                        'icon' => array(
-                            'size' => '32px',
-                            'close' => array(
-                                'slug' => 'wordpress-closeSmall',
-                                'svg' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" slot="button-icon" width="32px" height="32px" class="button-icon button-icon--close" aria-hidden="true"><path d="M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z"></path></svg>'
+                            ),
+                            'dimensions' => array(
+                                'margin' => '0px',
+                                'gap' => '16px',
+                                'padding' => '0px'
                             )
                         )
                     ),
-                    'transitions' => true,
-                    'variation' => 'cookie_consent',
-                    'position' => 'bottom',
-                    'closeAnchor' => 'accept',
-                    'hideButton' => true
+                    'styles' => array(
+                        'dimensions' => array(
+                            'padding' => '0px'
+                        )
+                    )
                 ),
                 'innerBlocks' => array(
                     array(
-                        'fc/bar-button',
+                        'fc/bar-open-button',
                         array(),
                         array()
                     ),
                     array(
-                        'fc/bar-content',
+                        'fc/bar-container',
                         array(),
                         array(
                             array(
-                                'core/paragraph',
-                                array(
-                                    'content' => '🍪 by continuing, you consent to our use of cookies',
-                                    'dropCap' => false
-                                ),
+                                'fc/bar-close-button',
+                                array(),
                                 array()
                             ),
                             array(
-                                'core/buttons',
+                                'fc/bar-content',
                                 array(),
                                 array(
                                     array(
-                                        'core/button',
+                                        'core/paragraph',
                                         array(
-                                            'tagName' => 'a',
-                                            'type' => 'button',
-                                            'url' => '#accept',
-                                            'text' => 'Accept All',
-                                            'anchor' => 'accept',
-                                            'className' => 'is-style-outline',
-                                            'style' => array(
-                                                'spacing' => array(
-                                                    'padding' => array(
-                                                        'top' => '5px',
-                                                        'bottom' => '5px'
-                                                    )
-                                                )
-                                            )
+                                            'content' => '🍪 by continuing, you consent to our use of cookies',
+                                            'dropCap' => false
                                         ),
                                         array()
+                                    ),
+                                    array(
+                                        'core/buttons',
+                                        array(),
+                                        array(
+                                            array(
+                                                'core/button',
+                                                array(
+                                                    'tagName' => 'a',
+                                                    'type' => 'button',
+                                                    'text' => 'Accept',
+                                                    'className' => 'is-style-outline',
+                                                    'fontSize' => 'small',
+                                                    'anchor' => 'accept',
+                                                    'style' => array(
+                                                        'border' => array(
+                                                            'width' => '2px'
+                                                        ),
+                                                        'spacing' => array(
+                                                            'padding' => array(
+                                                                'top' => '3px',
+                                                                'bottom' => '3px'
+                                                            )
+                                                        )
+                                                    )
+                                                ),
+                                                array()
+                                            )
+                                        )
                                     )
                                 )
                             )
@@ -401,42 +347,55 @@ class Bar extends Base_Widget {
     public function get_frontend_attributes( string $instance_id, array $attributes, WP_Block $block ) : array {
         $attr = array();
 
-        $trigger = Utils::get_array( $attributes, 'trigger' );
-        if ( ! empty( $trigger ) ) {
-            $trigger_type = Utils::get_string( $trigger, 'type' );
-            if ( $trigger_type === 'immediate' ) {
-                $attr['open'] = '';
+        $settings = Utils::get_array( $attributes, 'settings' );
+        if ( ! empty( $settings ) ) {
+            $trigger = Utils::get_array( $settings, 'trigger' );
+            if ( ! empty( $trigger ) ) {
+                $trigger_type = Utils::get_string( $trigger, 'type' );
+                if ( $trigger_type === 'immediate' ) {
+                    $attr['open'] = '';
+                }
+            }
+
+            $transitions = Utils::get_bool( $settings, 'transitions' );
+            if ( ! empty( $transitions ) ) {
+                $attr['transitions'] = '';
+            }
+
+            $position = Utils::get_string( $settings, 'position', 'top' );
+            if ( $position !== 'top' ) {
+                $attr['position'] = $position;
             }
         }
 
-        $transitions = Utils::get_bool( $attributes, 'transitions' );
-        if ( ! empty( $transitions ) ) {
-            $attr['transitions'] = '';
-        }
-
-        $page_push = Utils::get_bool( $attributes, 'pagePush' );
-        if ( ! empty( $page_push ) ) {
-            $attr['page-push'] = '';
-        }
-
-        $position = Utils::get_string( $attributes, 'position', 'top' );
-        if ( $position !== 'top' ) {
-            $attr[ $position ] = '';
-        }
-
-        $hide_button = Utils::get_bool( $attributes, 'hideButton' );
-        if ( $hide_button ) {
-            $attr['button-none'] = '';
-        } else {
-            $button = Utils::get_array( $attributes, 'button' );
-            if ( ! empty( $button ) ) {
-                $button_position = Utils::get_string( $button, 'position', 'right' );
-                if ( $button_position !== 'right' ) {
-                    $attr["button-$button_position"] = '';
+        $close_button = Utils::get_array( $attributes, 'closeButton' );
+        if ( ! empty( $close_button ) ) {
+            $close_button_settings = Utils::get_array( $close_button, 'settings' );
+            if ( ! empty( $close_button_settings ) ) {
+                $close_button_hidden = Utils::get_bool( $close_button_settings, 'hidden' );
+                if ( $close_button_hidden ) {
+                    $attr['close-button'] = 'none';
+                } else {
+                    $close_button_position = Utils::get_string( $close_button_settings, 'position', 'right' );
+                    if ( $close_button_position !== 'right' ) {
+                        $attr['close-button'] = $close_button_position;
+                    }
                 }
-                $button_action = Utils::get_string( $button, 'action', 'close' );
-                if ( $button_action === 'toggle' ) {
-                    $attr['button-toggle'] = '';
+            }
+        }
+
+        $open_button = Utils::get_array( $attributes, 'openButton' );
+        if ( ! empty( $open_button ) ) {
+            $open_button_settings = Utils::get_array( $open_button, 'settings' );
+            if ( ! empty( $open_button_settings ) ) {
+                $open_button_hidden = Utils::get_bool( $open_button_settings, 'hidden' );
+                if ( $open_button_hidden ) {
+                    $attr['open-button'] = 'none';
+                } else {
+                    $open_button_position = Utils::get_string( $open_button_settings, 'position', 'right' );
+                    if ( $open_button_position !== 'right' ) {
+                        $attr['open-button'] = $open_button_position;
+                    }
                 }
             }
         }
@@ -451,17 +410,20 @@ class Bar extends Base_Widget {
             $data['postId'] = $post_id;
         }
 
-        $trigger = Utils::get_array( $attributes, 'trigger' );
-        if ( ! empty( $trigger ) ) {
-            $data = array_merge(
-                $data,
-                FooConvert::plugin()->components->open_trigger_panel->get_data( $trigger )
-            );
-        }
+        $settings = Utils::get_array( $attributes, 'settings' );
+        if ( ! empty( $settings ) ) {
+            $trigger = Utils::get_array( $settings, 'trigger' );
+            if ( ! empty( $trigger ) ) {
+                $data = array_merge(
+                    $data,
+                    FooConvert::plugin()->components->open_trigger_panel->get_data( $trigger )
+                );
+            }
 
-        $close_anchor = Utils::get_string( $attributes, 'closeAnchor' );
-        if ( ! empty( $close_anchor ) ) {
-            $data['closeAnchor'] = $close_anchor;
+            $close_anchor = Utils::get_string( $settings, 'closeAnchor' );
+            if ( ! empty( $close_anchor ) ) {
+                $data['closeAnchor'] = $close_anchor;
+            }
         }
 
         return $data;
@@ -472,62 +434,74 @@ class Bar extends Base_Widget {
         $components = FooConvert::plugin()->components;
 
         $root = array();
-        $content = array();
         $styles_attribute = Utils::get_array( $attributes, 'styles' );
         if ( ! empty( $styles_attribute ) ) {
-            $border = Utils::get_array( $styles_attribute, 'border' );
-            if ( ! empty( $border ) ) {
-                $content = array_merge( $content, $components->border_tools_panel->get_styles( $border ) );
-            }
-            $color = Utils::get_array( $styles_attribute, 'color' );
-            if ( ! empty( $color ) ) {
-                $root = array_merge( $root, $components->color_tools_panel->get_styles( $color, array(
-                    'text' => 'color'
-                ) ) );
-                $content = array_merge( $content, $components->color_tools_panel->get_styles( $color, array(
-                    'background' => 'background'
-                ) ) );
-            }
-            $dimensions = Utils::get_array( $styles_attribute, 'dimensions' );
-            if ( ! empty( $dimensions ) ) {
-                $content = array_merge(
-                    $content,
-                    $components->dimensions_tools_panel->get_padding_styles( $dimensions ),
-                    $components->dimensions_tools_panel->get_gap_styles( $dimensions )
-                );
+            $root = array_merge( $root, $components->get_styles( $styles_attribute ) );
+        }
 
-                list( 'left' => $margin_left, 'right' => $margin_right ) = $components->dimensions_tools_panel->get_margin_sizes( $dimensions );
-                $root = array_merge(
-                    $root,
-                    $components->dimensions_tools_panel->get_margin_styles( $dimensions ),
-                    array(
-                        'width' => "calc(100% - $margin_left - $margin_right)",
-                    )
-                );
-
-            }
-            $typography = Utils::get_array( $styles_attribute, 'typography' );
-            if ( ! empty( $typography ) ) {
-                $root = array_merge( $root, $components->typography_tools_panel->get_styles( $typography ) );
+        $container = array();
+        $container_attribute = Utils::get_array( $attributes, 'container' );
+        if ( ! empty( $container_attribute ) ) {
+            $container_styles_attribute = Utils::get_array( $container_attribute, 'styles' );
+            if ( ! empty( $container_styles_attribute ) ) {
+                $container = array_merge( $container, $components->get_styles( $container_styles_attribute ) );
             }
         }
 
-        $button = array();
-        $button_attribute = Utils::get_array( $attributes, 'button' );
-        if ( ! empty( $button_attribute ) ) {
-            $button_styles_attribute = Utils::get_array( $button_attribute, 'styles' );
-            if ( ! empty( $button_styles_attribute ) ) {
-                $button = array_merge( $button, $components->get_styles( $button_styles_attribute, '', array(
+        $content = array();
+        $content_attribute = Utils::get_array( $attributes, 'content' );
+        if ( ! empty( $content_attribute ) ) {
+            $content_styles_attribute = Utils::get_array( $content_attribute, 'styles' );
+            if ( ! empty( $content_styles_attribute ) ) {
+                $content = array_merge( $content, $components->get_styles( $content_styles_attribute, '', array(
+                    'background' => 'background',
+                    'text' => 'color'
+                ) ) );
+            }
+        }
+
+        $close_button = array();
+        $close_button_attribute = Utils::get_array( $attributes, 'closeButton' );
+        if ( ! empty( $close_button_attribute ) ) {
+            $close_button_styles_attribute = Utils::get_array( $close_button_attribute, 'styles' );
+            if ( ! empty( $close_button_styles_attribute ) ) {
+                $close_button = array_merge( $close_button, $components->get_styles( $close_button_styles_attribute, '', array(
                     'background' => 'background',
                     'icon' => 'color'
                 ) ) );
             }
 
-            $button_icon = Utils::get_array( $button_attribute, 'icon' );
-            if ( ! empty( $button_icon ) ) {
-                $icon_size = Utils::get_string( $button_icon, 'size' );
-                if ( ! empty( $icon_size ) ) {
-                    $button['font-size'] = $icon_size;
+            $close_button_settings = Utils::get_array( $close_button_attribute, 'settings' );
+            if ( ! empty( $close_button_settings ) ) {
+                $close_button_icon = Utils::get_array( $close_button_settings, 'icon' );
+                if ( ! empty( $close_button_icon ) ) {
+                    $close_button_icon_size = Utils::get_string( $close_button_icon, 'size' );
+                    if ( ! empty( $close_button_icon_size ) ) {
+                        $close_button['font-size'] = $close_button_icon_size;
+                    }
+                }
+            }
+        }
+
+        $open_button = array();
+        $open_button_attribute = Utils::get_array( $attributes, 'openButton' );
+        if ( ! empty( $open_button_attribute ) ) {
+            $open_button_styles_attribute = Utils::get_array( $open_button_attribute, 'styles' );
+            if ( ! empty( $open_button_styles_attribute ) ) {
+                $open_button = array_merge( $open_button, $components->get_styles( $open_button_styles_attribute, '', array(
+                    'background' => 'background',
+                    'icon' => 'color'
+                ) ) );
+            }
+
+            $open_button_settings = Utils::get_array( $open_button_attribute, 'settings' );
+            if ( ! empty( $open_button_settings ) ) {
+                $open_button_icon = Utils::get_array( $open_button_settings, 'icon' );
+                if ( ! empty( $open_button_icon ) ) {
+                    $open_button_icon_size = Utils::get_string( $open_button_icon, 'size' );
+                    if ( ! empty( $open_button_icon_size ) ) {
+                        $open_button['font-size'] = $open_button_icon_size;
+                    }
                 }
             }
         }
@@ -536,36 +510,35 @@ class Bar extends Base_Widget {
         if ( count( $root ) > 0 ) {
             $styles["#$instance_id"] = $root;
         }
+        if ( count( $container ) > 0 ) {
+            $styles["#$instance_id::part(container)"] = $container;
+        }
         if ( count( $content ) > 0 ) {
             $styles["#$instance_id::part(content)"] = $content;
         }
-        if ( count( $button ) > 0 ) {
-            $styles["#$instance_id::part(button)"] = $button;
+        if ( count( $close_button ) > 0 ) {
+            $styles["#$instance_id::part(close-button)"] = $close_button;
+        }
+        if ( count( $open_button ) > 0 ) {
+            $styles["#$instance_id::part(open-button)"] = $open_button;
         }
         return $styles;
     }
 
     public function get_frontend_icons( string $instance_id, array $attributes, WP_Block $block ) : array {
         $icons = [];
-        $button = Utils::get_array( $attributes, 'button' );
-        if ( !empty( $button ) ) {
-            $icon = Utils::get_array( $button, 'icon' );
-            if ( !empty( $icon ) ) {
-                $icon_close  = Utils::get_array( $icon, 'close' );
-                if ( !empty( $icon_close ) ) {
-                    $icon_close_svg = Utils::get_string( $icon_close, 'svg' );
-                    if ( ! empty( $icon_close_svg ) ) {
-                        $icons[] = $icon_close_svg;
-                    }
-                }
-
-                $icon_open  = Utils::get_array( $icon, 'open' );
-                if ( !empty( $icon_open ) ) {
-                    $icon_open_svg = Utils::get_string( $icon_open, 'svg' );
-                    if ( ! empty( $icon_open_svg ) ) {
-                        $icons[] = $icon_open_svg;
-                    }
-                }
+        $close_icon_slug = Utils::get_key_path( $attributes, 'closeButton.settings.icon.slug' );
+        if ( ! empty( $close_icon_slug ) ) {
+            $close_icon = $this->get_frontend_icon( $close_icon_slug, 'close-button__icon' );
+            if ( ! empty( $close_icon ) ) {
+                $icons[] = $close_icon;
+            }
+        }
+        $open_icon_slug = Utils::get_key_path( $attributes, 'openButton.settings.icon.slug' );
+        if ( ! empty( $open_icon_slug ) ) {
+            $open_icon = $this->get_frontend_icon( $open_icon_slug, 'open-button__icon' );
+            if ( ! empty( $open_icon ) ) {
+                $icons[] = $open_icon;
             }
         }
         return $icons;

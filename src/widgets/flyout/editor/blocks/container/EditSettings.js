@@ -27,10 +27,6 @@ const EditSettings = props => {
                         onChange={ setPosition }
                     />
                 </PanelRow>
-                <PanelRow>
-                    <ToggleControl
-                    />
-                </PanelRow>
             </PanelBody>
         </InspectorControls>
     );

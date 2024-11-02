@@ -9,4 +9,6 @@ export { default as useStyles } from "./useStyles";
 export { default as useIsInnerBlockSelected } from "./useIsInnerBlockSelected";
 export { default as useBlockObjectAttribute } from "./useBlockObjectAttribute";
 export { default as useBlockAttributes } from "./useBlockAttributes";
+export { default as useParentAttributes } from "./useParentAttributes";
+export { default as useRootAttributes } from "./useRootAttributes";
 export * from "./use-icon-sets";

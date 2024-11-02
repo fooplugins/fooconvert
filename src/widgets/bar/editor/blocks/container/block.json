@@ -1,0 +1,18 @@
+{
+  "apiVersion": 3,
+  "name": "fc/bar-container",
+  "title": "Container",
+  "description": "Wraps the bar content and close button and positions it within the viewport.",
+  "category": "fooconvert",
+  "parent": [ "fc/bar" ],
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "supports": {
+    "lock": false,
+    "multiple": false,
+    "reusable": false,
+    "className": false,
+    "html": false,
+    "inserter": false
+  }
+}

@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: FooConvert 0.0.10\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/fooconvert\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Project-Id-Version: FooConvert 0.0.11\n"
+"Report-Msgid-Bugs-To: https://github.com/fooplugins/fooconvert/issues\n"
+"Last-Translator: FooPlugins <info@fooplugins.com>\n"
+"Language-Team: FooPlugins <info@fooplugins.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-10-27T16:25:28+00:00\n"
+"POT-Creation-Date: 2024-11-02T14:53:35+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: fooconvert\n"
@@ -51,7 +51,7 @@ msgid "Table ordered by display rules."
 msgstr ""
 
 #: includes/class-fooconvert-display-rules.php:108
-#: assets/editor.js:1
+#: assets/editor.js:4
 msgid "Set"
 msgstr ""
 
@@ -142,8 +142,8 @@ msgstr ""
 msgid "Update WordPress now."
 msgstr ""
 
-#: includes/widgets/class-bar.php:101
-#: includes/widgets/class-bar.php:102
+#: includes/widgets/class-bar.php:106
+#: includes/widgets/class-bar.php:107
 #: includes/widgets/class-flyout.php:106
 #: includes/widgets/class-flyout.php:107
 #: includes/widgets/class-popup.php:102
@@ -151,34 +151,26 @@ msgstr ""
 msgid "Empty"
 msgstr ""
 
-#: includes/widgets/class-bar.php:120
-msgid "Basic"
+#: includes/widgets/class-bar.php:126
+msgid "Black Friday Bar"
 msgstr ""
 
-#: includes/widgets/class-bar.php:121
-msgid "A basic bar with minimal styling."
+#: includes/widgets/class-bar.php:127
+msgid "A typical Black Friday bar to help drive sales."
 msgstr ""
 
-#: includes/widgets/class-bar.php:187
-msgid "Black Friday"
+#: includes/widgets/class-bar.php:231
+msgid "Cookie Consent Bar"
 msgstr ""
 
-#: includes/widgets/class-bar.php:188
-msgid "Bright top bar for Black Friday, with rounded corners and border. Pushed page content down."
-msgstr ""
-
-#: includes/widgets/class-bar.php:282
-msgid "Cookie Consent"
-msgstr ""
-
-#: includes/widgets/class-bar.php:283
-msgid "Cookie consent bottom bar with Accept button."
+#: includes/widgets/class-bar.php:232
+msgid "A simple bottom bar that is dismissed when the button is clicked."
 msgstr ""
 
 #: assets/blocks/example-block/editor/index.js:1
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
-#: assets/widgets/bar/editor/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
 #: assets/widgets/flyout/editor/blocks/open-button/index.js:1
@@ -188,7 +180,7 @@ msgid "Background"
 msgstr ""
 
 #: assets/blocks/example-block/editor/index.js:1
-#: assets/widgets/bar/editor/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 msgid "Text"
@@ -235,6 +227,10 @@ msgid "Radius"
 msgstr ""
 
 #: assets/editor.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
 #: assets/widgets/bar/editor/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
@@ -245,8 +241,8 @@ msgid "Top"
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/index.js:1
@@ -257,6 +253,10 @@ msgid "Right"
 msgstr ""
 
 #: assets/editor.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
 #: assets/widgets/bar/editor/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
@@ -267,8 +267,8 @@ msgid "Bottom"
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/index.js:1
@@ -331,94 +331,63 @@ msgid "Gap"
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/editor.js:4
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 msgid "S"
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/editor.js:4
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 msgid "Small"
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/editor.js:4
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 msgid "M"
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/editor.js:4
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 msgid "Medium"
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/editor.js:4
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 msgid "L"
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/editor.js:4
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 msgid "Large"
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/editor.js:4
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 msgid "XL"
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/editor.js:4
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 msgid "Extra Large"
 msgstr ""
 
 #: assets/editor.js:1
+#: assets/editor.js:4
 msgid "Default"
 msgstr ""
 
@@ -511,6 +480,7 @@ msgid "Select..."
 msgstr ""
 
 #: assets/editor.js:1
+#: assets/editor.js:4
 msgid "Reset"
 msgstr ""
 
@@ -527,6 +497,7 @@ msgid "Inner Blocks"
 msgstr ""
 
 #: assets/editor.js:1
+#: assets/editor.js:7
 msgid "Title"
 msgstr ""
 
@@ -535,12 +506,12 @@ msgid "Description"
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
+#: assets/editor.js:4
 msgid "Close"
 msgstr ""
 
 #: assets/editor.js:1
+#: assets/editor.js:4
 msgid "None"
 msgstr ""
 
@@ -561,6 +532,10 @@ msgid "Open when an anchor is clicked."
 msgstr ""
 
 #: assets/editor.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
 #: assets/widgets/bar/editor/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
@@ -630,6 +605,11 @@ msgid "The amount of time to wait before opening."
 msgstr ""
 
 #: assets/editor.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
+#: assets/widgets/bar/editor/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/index.js:1
@@ -666,11 +646,7 @@ msgid "Typography"
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/editor.js:4
 msgid "Size"
 msgstr ""
 
@@ -738,113 +714,157 @@ msgstr ""
 msgid "Select role"
 msgstr ""
 
-#: assets/editor.js:1
+#. translators: %s: post singular_label
+#: assets/editor.js:4
 msgid "Set where and to whom this %s will be visible."
 msgstr ""
 
-#: assets/editor.js:1
+#: assets/editor.js:4
 msgid "Locations"
 msgstr ""
 
-#: assets/editor.js:1
+#: assets/editor.js:4
 msgid "Add at least one location"
 msgstr ""
 
-#: assets/editor.js:1
+#: assets/editor.js:4
 msgid "Add location"
 msgstr ""
 
-#: assets/editor.js:1
+#: assets/editor.js:4
 msgid "Remove location"
 msgstr ""
 
-#: assets/editor.js:1
+#: assets/editor.js:4
 msgid "Exclusions"
 msgstr ""
 
-#: assets/editor.js:1
+#: assets/editor.js:4
 msgid "Add exclusion"
 msgstr ""
 
-#: assets/editor.js:1
+#: assets/editor.js:4
 msgid "Remove exclusion"
 msgstr ""
 
-#: assets/editor.js:1
+#: assets/editor.js:4
 msgid "Users"
 msgstr ""
 
-#: assets/editor.js:1
+#: assets/editor.js:4
 msgid "Add at least one role"
 msgstr ""
 
-#: assets/editor.js:1
+#: assets/editor.js:4
 msgid "Add role"
 msgstr ""
 
-#: assets/editor.js:1
+#: assets/editor.js:4
 msgid "Remove role"
 msgstr ""
 
-#: assets/editor.js:1
+#: assets/editor.js:4
 msgid "No locations configured."
 msgstr ""
 
-#: assets/editor.js:1
+#: assets/editor.js:4
 msgid "No users configured."
 msgstr ""
 
-#: assets/editor.js:1
+#: assets/editor.js:4
 msgid "Invalid rules object."
 msgstr ""
 
-#: assets/editor.js:1
+#: assets/editor.js:4
 msgid "Display rules"
 msgstr ""
 
-#: assets/editor.js:1
+#: assets/editor.js:4
 msgid "Not set"
 msgstr ""
 
-#: assets/editor.js:1
-msgid "Set the title for the %s"
+#: assets/editor.js:4
+msgid "Arrow Down"
 msgstr ""
 
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
+#: assets/editor.js:4
+msgid "Arrow Left"
+msgstr ""
+
+#: assets/editor.js:4
+msgid "Arrow Right"
+msgstr ""
+
+#: assets/editor.js:4
+msgid "Arrow Up"
+msgstr ""
+
+#: assets/editor.js:4
+msgid "Cancel Circle Filled"
+msgstr ""
+
+#: assets/editor.js:4
+msgid "Chevron Down"
+msgstr ""
+
+#: assets/editor.js:4
+msgid "Chevron Left"
+msgstr ""
+
+#: assets/editor.js:4
+msgid "Chevron Right"
+msgstr ""
+
+#: assets/editor.js:4
+msgid "Chevron Up"
+msgstr ""
+
+#: assets/editor.js:4
+msgid "Close Small"
+msgstr ""
+
+#: assets/editor.js:4
+msgid "Plus"
+msgstr ""
+
+#: assets/editor.js:4
+msgid "Plus Circle"
+msgstr ""
+
+#: assets/editor.js:4
+msgid "Plus Circle Filled"
+msgstr ""
+
+#: assets/editor.js:4
+msgid "Plus Small"
+msgstr ""
+
+#: assets/editor.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/flyout/editor/blocks/open-button/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
 msgid "Icon"
 msgstr ""
 
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
-msgid "The icon displayed when clicking the button will close the bar."
+#: assets/editor.js:4
+msgid "Choose the icon to display."
 msgstr ""
 
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-msgid "Open"
+#: assets/editor.js:4
+msgid "Set the size of the icon."
 msgstr ""
 
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
-msgid "The icon displayed when clicking the button will open the bar."
+#. translators: %s: post singular_label
+#: assets/editor.js:7
+msgid "Set the title for the %s"
 msgstr ""
 
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
-msgid "Toggle"
-msgstr ""
-
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
 #: assets/widgets/bar/editor/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
@@ -855,13 +875,10 @@ msgstr ""
 msgid "Position"
 msgstr ""
 
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
-msgid "Choose where to display the button within the bar."
-msgstr ""
-
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
 #: assets/widgets/bar/editor/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
@@ -874,26 +891,10 @@ msgstr ""
 msgid "Behavior"
 msgstr ""
 
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
-msgid "Action"
-msgstr ""
-
-#: assets/widgets/bar/editor/button/index.js:1
-#: assets/widgets/bar/editor/content/index.js:1
-msgid "Choose the action to perform when the button is clicked."
-msgstr ""
-
-#: assets/widgets/bar/editor/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
-msgid "Add block"
-msgstr ""
-
-#: assets/widgets/bar/editor/index.js:1
-msgid "Choose where to display the bar within the page."
-msgstr ""
-
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
 #: assets/widgets/bar/editor/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
@@ -906,6 +907,10 @@ msgstr ""
 msgid "Enable transitions"
 msgstr ""
 
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
 #: assets/widgets/bar/editor/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
@@ -915,83 +920,10 @@ msgstr ""
 msgid "Choose if transitions are used when toggling the bar."
 msgstr ""
 
-#: assets/widgets/bar/editor/index.js:1
-msgid "Enable page push"
-msgstr ""
-
-#: assets/widgets/bar/editor/index.js:1
-msgid "Choose if the page is \"pushed\", either up or down, based on the bar height and position."
-msgstr ""
-
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/popup/editor/index.js:1
-msgid "Close Trigger"
-msgstr ""
-
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/popup/editor/index.js:1
-msgid "Hide close button"
-msgstr ""
-
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/popup/editor/index.js:1
-msgid "Hide the default close button."
-msgstr ""
-
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/popup/editor/index.js:1
-msgid "Close on anchor click"
-msgstr ""
-
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-msgid "Clicking specific anchors closes the notification."
-msgstr ""
-
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/popup/editor/index.js:1
-msgid "Add an anchor to a button block and then insert the same value here to close the notification on click."
-msgstr ""
-
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
 #: assets/widgets/bar/editor/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
@@ -1004,6 +936,10 @@ msgstr ""
 msgid "Make Variation"
 msgstr ""
 
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
 #: assets/widgets/bar/editor/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
@@ -1016,6 +952,10 @@ msgstr ""
 msgid "Choose a template"
 msgstr ""
 
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
 #: assets/widgets/bar/editor/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
@@ -1026,6 +966,197 @@ msgstr ""
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 #: assets/widgets/popup/editor/index.js:1
 msgid "Select a template to start with."
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/index.js:1
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
+#: assets/widgets/flyout/editor/index.js:1
+msgid "Horizontal"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+msgid "Choose which side of the bar to display the button."
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
+#: assets/widgets/bar/editor/index.js:1
+msgid "Choose where to display the bar within the page."
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
+#: assets/widgets/bar/editor/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/index.js:1
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
+#: assets/widgets/flyout/editor/index.js:1
+msgid "Hide open button"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
+#: assets/widgets/bar/editor/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/index.js:1
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
+#: assets/widgets/flyout/editor/index.js:1
+msgid "Hide the default open button."
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
+#: assets/widgets/bar/editor/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/index.js:1
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
+#: assets/widgets/flyout/editor/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/popup/editor/index.js:1
+msgid "Close Trigger"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
+#: assets/widgets/bar/editor/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/index.js:1
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
+#: assets/widgets/flyout/editor/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/popup/editor/index.js:1
+msgid "Hide close button"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
+#: assets/widgets/bar/editor/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/index.js:1
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
+#: assets/widgets/flyout/editor/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/popup/editor/index.js:1
+msgid "Hide the default close button."
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
+#: assets/widgets/bar/editor/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/index.js:1
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
+#: assets/widgets/flyout/editor/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/popup/editor/index.js:1
+msgid "Close on anchor click"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
+#: assets/widgets/bar/editor/index.js:1
+msgid "Clicking specific anchors closes the bar."
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
+#: assets/widgets/bar/editor/index.js:1
+msgid "Add an anchor to a button block and then insert the same value here to close the bar on click."
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
+#: assets/widgets/bar/editor/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/index.js:1
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
+#: assets/widgets/flyout/editor/index.js:1
+msgid "Closed"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:1
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
+#: assets/widgets/bar/editor/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/index.js:1
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
+#: assets/widgets/flyout/editor/index.js:1
+msgid "Open"
+msgstr ""
+
+#. translators: %s: Open/Closed State
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
+msgid "%s View"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
+msgid "Toggle View"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+msgid "Add block"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/open-button/index.js:1
+msgid "Choose which side of the viewport to display the button."
 msgstr ""
 
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
@@ -1052,7 +1183,7 @@ msgstr ""
 #: assets/widgets/flyout/editor/blocks/container/index.js:1
 #: assets/widgets/flyout/editor/blocks/open-button/index.js:1
 #: assets/widgets/flyout/editor/index.js:1
-msgid "Hide open button"
+msgid "Clicking specific anchors closes the flyout."
 msgstr ""
 
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
@@ -1060,45 +1191,10 @@ msgstr ""
 #: assets/widgets/flyout/editor/blocks/container/index.js:1
 #: assets/widgets/flyout/editor/blocks/open-button/index.js:1
 #: assets/widgets/flyout/editor/index.js:1
-msgid "Hide the default open button."
-msgstr ""
-
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-msgid "Closed"
-msgstr ""
-
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-msgid "Switch between the different flyout view states."
-msgstr ""
-
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-msgid "View"
-msgstr ""
-
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-msgid "View state"
-msgstr ""
-
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-msgid "The icon for the button."
+#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/popup/editor/index.js:1
+msgid "Add an anchor to a button block and then insert the same value here to close the flyout on click."
 msgstr ""
 
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
@@ -1120,14 +1216,6 @@ msgstr ""
 #: assets/widgets/flyout/editor/blocks/open-button/index.js:1
 #: assets/widgets/flyout/editor/index.js:1
 msgid "Center"
-msgstr ""
-
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-msgid "Horizontal"
 msgstr ""
 
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
@@ -1162,24 +1250,6 @@ msgstr ""
 #: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 #: assets/widgets/popup/editor/index.js:1
-msgid "Ignore backdrop click"
-msgstr ""
-
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/popup/editor/index.js:1
-msgid "Do not close the popup when the backdrop is clicked."
-msgstr ""
-
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/popup/editor/index.js:1
-msgid "Clicking specific anchors closes the popup."
-msgstr ""
-
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/popup/editor/index.js:1
 msgid "Expand the popup on mobile to use all available screen space."
 msgstr ""
 
@@ -1201,6 +1271,24 @@ msgstr ""
 msgid "Hide the page scrollbar when open."
 msgstr ""
 
+#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/popup/editor/index.js:1
+msgid "Ignore backdrop click"
+msgstr ""
+
+#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/popup/editor/index.js:1
+msgid "Do not close the popup when the backdrop is clicked."
+msgstr ""
+
+#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/popup/editor/index.js:1
+msgid "Clicking specific anchors closes the popup."
+msgstr ""
+
 #: assets/blocks/example-block/block.json
 msgctxt "block title"
 msgid "FooConvert - Example Block"
@@ -1217,44 +1305,61 @@ msgid "Bar"
 msgstr ""
 
 #: assets/widgets/bar/block.json
-msgctxt "block description"
-msgid "A bar to capture your visitors attention."
-msgstr ""
-
-#: assets/widgets/bar/editor/button/block.json
-msgctxt "block title"
-msgid "Bar Button"
-msgstr ""
-
-#: assets/widgets/bar/editor/button/block.json
-msgctxt "block description"
-msgid "The primary button used to toggle the visibility of the bar."
-msgstr ""
-
-#: assets/widgets/bar/editor/content/block.json
-msgctxt "block title"
-msgid "Bar Content"
-msgstr ""
-
-#: assets/widgets/bar/editor/content/block.json
-msgctxt "block description"
-msgid "The primary content container of the bar."
-msgstr ""
-
-#: assets/widgets/flyout/block.json
-msgctxt "block title"
-msgid "Flyout"
-msgstr ""
-
 #: assets/widgets/flyout/block.json
 msgctxt "block description"
 msgid "A flyout element to display content to visitors."
 msgstr ""
 
+#: assets/widgets/bar/editor/blocks/container/block.json
 #: assets/widgets/flyout/editor/blocks/container/block.json
 #: assets/widgets/popup/editor/blocks/container/block.json
 msgctxt "block title"
 msgid "Container"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/block.json
+msgctxt "block description"
+msgid "Wraps the bar content and close button and positions it within the viewport."
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/block.json
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/block.json
+#: assets/widgets/popup/editor/blocks/container/blocks/close-button/block.json
+msgctxt "block title"
+msgid "Close Button"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/block.json
+msgctxt "block description"
+msgid "The button used to close the bar."
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/content/block.json
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/block.json
+#: assets/widgets/popup/editor/blocks/container/blocks/content/block.json
+msgctxt "block title"
+msgid "Content"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/content/block.json
+msgctxt "block description"
+msgid "The primary content container of the bar."
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/open-button/block.json
+#: assets/widgets/flyout/editor/blocks/open-button/block.json
+msgctxt "block title"
+msgid "Open Button"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/open-button/block.json
+msgctxt "block description"
+msgid "The button displayed when the bar is closed."
+msgstr ""
+
+#: assets/widgets/flyout/block.json
+msgctxt "block title"
+msgid "Flyout"
 msgstr ""
 
 #: assets/widgets/flyout/editor/blocks/container/block.json
@@ -1263,30 +1368,13 @@ msgid "Wraps the flyout content and close button and positions it within the vie
 msgstr ""
 
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/block.json
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/block.json
-msgctxt "block title"
-msgid "Close Button"
-msgstr ""
-
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/block.json
 msgctxt "block description"
 msgid "The button used to close the flyout."
 msgstr ""
 
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/block.json
-#: assets/widgets/popup/editor/blocks/container/blocks/content/block.json
-msgctxt "block title"
-msgid "Content"
-msgstr ""
-
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/block.json
 msgctxt "block description"
 msgid "The primary content container of the flyout."
-msgstr ""
-
-#: assets/widgets/flyout/editor/blocks/open-button/block.json
-msgctxt "block title"
-msgid "Open Button"
 msgstr ""
 
 #: assets/widgets/flyout/editor/blocks/open-button/block.json

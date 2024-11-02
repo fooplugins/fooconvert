@@ -30,7 +30,7 @@ class FooConvert_Display_Rules extends Base_Component {
      */
     public function register( string $post_type ) : bool {
         $this->register_column( $post_type );
-        return register_meta( 'post', FOOCONVERT_DISPLAY_RULES_META_KEY, array(
+        return register_meta( 'post', FOOCONVERT_META_KEY_DISPLAY_RULES, array(
             'object_subtype' => $post_type,
             'single' => true,
             'type' => 'object',
@@ -101,7 +101,7 @@ class FooConvert_Display_Rules extends Base_Component {
      */
     public function create_column_content( $post_type, $column_name, $post_id ) : void {
         if ( $column_name === "{$post_type}_display_rules" ) {
-            $display_rules = get_post_meta( $post_id, FOOCONVERT_DISPLAY_RULES_META_KEY, true );
+            $display_rules = get_post_meta( $post_id, FOOCONVERT_META_KEY_DISPLAY_RULES, true );
             $is_set = !empty( $display_rules ) && !empty( $display_rules['location'] );
 
             if ( $is_set ) {
@@ -213,7 +213,7 @@ class FooConvert_Display_Rules extends Base_Component {
     function get_component_data() : array {
         return array(
             'meta' => array(
-                'key' => FOOCONVERT_DISPLAY_RULES_META_KEY,
+                'key' => FOOCONVERT_META_KEY_DISPLAY_RULES,
                 'defaults' => $this->defaults()
             ),
             'location' => $this->get_component_locations(),
@@ -423,7 +423,7 @@ class FooConvert_Display_Rules extends Base_Component {
      * @since 1.0.0
      */
     public function get_compiled( int $post_id ) : array {
-        $rules = get_post_meta( $post_id, FOOCONVERT_DISPLAY_RULES_META_KEY, true );
+        $rules = get_post_meta( $post_id, FOOCONVERT_META_KEY_DISPLAY_RULES, true );
         if ( ! empty( $rules ) ) {
             // make sure at a minimum the rules are the expected types and that at least 1 location and user
             // have been set before compiling

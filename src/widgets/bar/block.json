@@ -2,7 +2,7 @@
   "apiVersion": 3,
   "name": "fc/bar",
   "title": "Bar",
-  "description": "A bar to capture your visitors attention.",
+  "description": "A flyout element to display content to visitors.",
   "category": "fooconvert",
   "editorScript": "file:./editor/index.js",
   "editorStyle": "file:./editor/index.css",
@@ -16,52 +16,35 @@
     "html": false
   },
   "attributes": {
-    "clientId": {
-      "type": "string"
-    },
     "postId": {
       "type": "number"
+    },
+    "viewState": {
+      "type": "string",
+      "default": "open"
     },
     "styles": {
       "type": "object"
     },
-    "button": {
+    "settings": {
       "type": "object"
     },
-    "position": {
-      "type": "string"
+    "openButton": {
+      "type": "object"
     },
-    "trigger": {
-      "type": "object",
-      "default": {
-        "type": "immediate"
-      }
+    "closeButton": {
+      "type": "object"
     },
-    "lockTrigger": {
-      "type": "boolean",
-      "default": false
-    },
-    "closeAnchor": {
-      "type": "string"
-    },
-    "hideButton": {
-      "type": "boolean"
-    },
-    "transitions": {
-      "type": "boolean"
-    },
-    "pagePush": {
-      "type": "boolean"
+    "content": {
+      "type": "object"
     }
   },
   "usesContext": [ "postId" ],
   "providesContext": {
-    "fc-bar/clientId": "clientId",
+    "fc-bar/viewState": "viewState",
+    "fc-bar/settings": "settings",
     "fc-bar/styles": "styles",
-    "fc-bar/button": "button",
-    "fc-bar/closeAnchor": "closeAnchor",
-    "fc-bar/hideButton": "hideButton",
-    "fc-bar/transitions": "transitions",
-    "fc-bar/pagePush": "pagePush"
+    "fc-bar/openButton": "openButton",
+    "fc-bar/closeButton": "closeButton"
   }
 }

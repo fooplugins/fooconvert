@@ -13,7 +13,7 @@ const EditStyles = props => {
         clientId,
         styles,
         setStyles,
-        defaultStyles,
+        stylesDefaults,
     } = props;
 
     const setColor = newValue => setStyles( { color: newValue } );
@@ -40,19 +40,19 @@ const EditStyles = props => {
                 onChange={ setColor }
                 panelId={ clientId }
                 options={ colors }
-                defaults={ defaultStyles?.color }
+                defaults={ stylesDefaults?.color }
             />
             <BorderToolsPanel
                 panelId={ clientId }
                 value={ styles?.border }
                 onChange={ setBorder }
-                defaults={ defaultStyles?.border }
+                defaults={ stylesDefaults?.border }
             />
             <DimensionToolsPanel
                 panelId={ clientId }
                 value={ styles?.dimensions }
                 onChange={ setDimensions }
-                defaults={ defaultStyles?.dimensions }
+                defaults={ stylesDefaults?.dimensions }
                 controls={ [ 'margin', 'padding' ] }
             />
         </InspectorControls>

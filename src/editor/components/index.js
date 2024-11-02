@@ -25,3 +25,7 @@ export * from "./units-control";
 export * from "./variation-picker";
 export * from "./experimental";
 export * from "./display-rules";
+
+export * from "./icons-picker-control";
+export * from "./icons-dropdown";
+export * from "./icon-tools-panel";
