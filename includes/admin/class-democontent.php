@@ -20,18 +20,42 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
         }
 
+        function cleanup_old_demo_content( $widget_post_types ) {
+            // Check if old demo content already exists
+            $old_demo_content = get_posts( [
+                'meta_key' => FOOCONVERT_META_KEY_DEMO_CONTENT_V1,
+                'meta_value' => '1',
+                'post_type' => $widget_post_types,
+                'post_status' => 'any',
+                'numberposts' => -1
+            ] );
+
+            if ( !empty( $old_demo_content ) ) {
+                // Old demo content exists; Delete it all!
+                foreach ( $old_demo_content as $post ) {
+                    wp_delete_post( $post->ID, true );
+                }
+            }
+        }
+
         function run() {
+            $widget_post_types = [];
+
             // We need to make sure the CPT's are registered.
             $widgets = FooConvert::plugin()->widgets->get_instances();
-
             foreach ( $widgets as $widget ) {
+                $widget_post_types[] = $widget->get_post_type();
                 $widget->register_post_type();
             }
 
+            // Cleanup old demo content
+            $this->cleanup_old_demo_content( $widget_post_types );
+
             // Check if demo content already exists
             $existing_posts = get_posts( [
-                'post_status' => 'draft',
-                'meta_key' => '_fooconvert_demo_content',
+                'meta_key' => FOOCONVERT_META_KEY_DEMO_CONTENT,
+                'post_type' => $widget_post_types,
+                'post_status' => 'any',
                 'meta_value' => '1',
                 'posts_per_page' => 1,
             ] );
@@ -52,9 +76,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                     $content_for_insert['meta_input'] = [];
                 }
 
-                $content_for_insert['meta_input'][] = [
-                    '_fooconvert_demo_content' => '1' // Mark as demo content
-                ];
+                $content_for_insert['meta_input'][FOOCONVERT_META_KEY_DEMO_CONTENT] = '1'; // Mark as demo content
 
                 // We first need to insert the post, and get back a post ID
                 $post_id = wp_insert_post( $content_for_insert );
@@ -91,18 +113,24 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                         ]
                     ],
                     'post_content' =>
-'<!-- wp:fc/bar {"clientId":"","postId":||POST_ID||,"styles":{"color":{"background":"linear-gradient(90deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%)","text":"#ffffff"},"border":{"radius":"21px","color":"#111111","style":"solid","width":"4px"},"dimensions":{"margin":"10px","padding":"0px","gap":"16px"}},"button":{"styles":{"dimensions":{"margin":"3px"},"color":{"icon":"#111111"},"border":{"radius":"0px","style":"none","width":"0px"}},"icon":{"size":"32px","close":{"slug":"wordpress-closeSmall","svg":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 viewBox=\u00220 0 24 24\u0022 slot=\u0022button-icon\u0022 width=\u002232px\u0022 height=\u002232px\u0022 class=\u0022button-icon button-icon\u002d\u002dclose\u0022 aria-hidden=\u0022true\u0022\u003e\u003cpath d=\u0022M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e"}}},"trigger":{"type":"timer","data":3},"transitions":true,"pagePush":true} -->
-<!-- wp:fc/bar-button /-->
+'<!-- wp:fc/bar {"postId":||POST_ID||,"settings":{"trigger":{"type":"timer","data":3},"transitions":true},"openButton":{"settings":{"hidden":true}},"closeButton":{"settings":{"icon":{"slug":"default__close-small","size":"48px"}}},"content":{"styles":{"color":{"background":"linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)"},"border":{"radius":"18px","color":"#111111","style":"solid","width":"3px"},"dimensions":{"margin":"5px","padding":"3px","gap":"16px"}}}} -->
+<!-- wp:fc/bar-open-button /-->
+
+<!-- wp:fc/bar-container -->
+<!-- wp:fc/bar-close-button /-->
+
 <!-- wp:fc/bar-content -->
 <!-- wp:paragraph -->
-<p><strong>Black Friday deals are finally here - LIMITED STOCK – act fast!</strong></p>
+<p><strong>🔥Black Friday deals are finally here - LIMITED STOCK - act fast!</strong>⚡</p>
 <!-- /wp:paragraph -->
+
 <!-- wp:buttons -->
-<div class="wp-block-buttons"><!-- wp:button -->
-<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="#shop">Save 70%!</a></div>
+<div class="wp-block-buttons"><!-- wp:button {"style":{"border":{"radius":"54px"}}} -->
+<div class="wp-block-button" id="cta"><a class="wp-block-button__link wp-element-button" href="/shop" style="border-radius:54px">Save 70%</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons -->
 <!-- /wp:fc/bar-content -->
+<!-- /wp:fc/bar-container -->
 <!-- /wp:fc/bar -->'
                 ],
                 [
@@ -122,18 +150,24 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                         ]
                     ],
                     'post_content' =>
-                        '<!-- wp:fc/bar {"clientId":"","postId":||POST_ID||,"styles":{"color":{"background":"linear-gradient(90deg,rgb(0,166,166) 0%,rgb(41,17,81) 100%)","text":"#ffffff"},"border":{"radius":"0px","top":{"color":"#291151","style":"solid","width":"2px"},"right":{"width":"4px"},"bottom":{"width":"4px"},"left":{"width":"4px"}},"dimensions":{"margin":"0px","padding":"1px","gap":"16px"}},"button":{"styles":{"dimensions":{"margin":"3px"},"color":{"icon":"#111111"},"border":{"radius":"0px","style":"none","width":"0px"}},"icon":{"size":"32px","close":{"slug":"wordpress-closeSmall","svg":"\u003csvg xmlns=\u0022http =\u003e //www.w3.org/2000/svg\u0022 viewBox=\u00220 0 24 24\u0022 slot=\u0022button-icon\u0022 width=\u002232px\u0022 height=\u002232px\u0022 class=\u0022button-icon button-icon\u002d\u002dclose\u0022 aria-hidden=\u0022true\u0022\u003e\u003cpath d=\u0022M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e"}}},"position":"bottom","trigger":{"type":"timer","data":5},"closeAnchor":"accept","hideButton":true,"transitions":true} -->
-<!-- wp:fc/bar-button /-->
+                        '<!-- wp:fc/bar {"postId":||POST_ID||,"styles":{"dimensions":{"padding":"0px"}},"settings":{"position":"bottom","transitions":true,"trigger":{"type":"immediate"},"closeAnchor":"accept"},"openButton":{"settings":{"hidden":true}},"closeButton":{"settings":{"hidden":true}},"content":{"styles":{"color":{"background":"#76736e","text":"#ffffff"},"border":{"radius":"0px","style":"none","width":"0px"},"dimensions":{"margin":"0px","gap":"16px","padding":"0px"}}}} -->
+<!-- wp:fc/bar-open-button /-->
+
+<!-- wp:fc/bar-container -->
+<!-- wp:fc/bar-close-button /-->
+
 <!-- wp:fc/bar-content -->
 <!-- wp:paragraph -->
 <p>🍪 by continuing, you consent to our use of cookies</p>
 <!-- /wp:paragraph -->
+
 <!-- wp:buttons -->
-<div class="wp-block-buttons"><!-- wp:button {"className":"is-style-outline","style":{"spacing":{"padding":{"top":"5px","bottom":"5px"}}}} -->
-<div class="wp-block-button is-style-outline" id="accept"><a class="wp-block-button__link wp-element-button" href="#accept" style="padding-top:5px;padding-bottom:5px">Accept All</a></div>
+<div class="wp-block-buttons"><!-- wp:button {"className":"is-style-outline","style":{"border":{"width":"2px"},"spacing":{"padding":{"top":"3px","bottom":"3px"}}},"fontSize":"small"} -->
+<div class="wp-block-button has-custom-font-size is-style-outline has-small-font-size" id="accept"><a class="wp-block-button__link wp-element-button" style="border-width:2px;padding-top:3px;padding-bottom:3px">Accept</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons -->
 <!-- /wp:fc/bar-content -->
+<!-- /wp:fc/bar-container -->
 <!-- /wp:fc/bar -->'
                 ],
             ];
