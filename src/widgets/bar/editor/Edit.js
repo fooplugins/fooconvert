@@ -1,31 +1,81 @@
 import {
     useInnerBlocks,
-    VariationPicker
+    VariationPicker,
+    $object
 } from "#editor";
 import { __ } from "@wordpress/i18n";
 import { useEffect } from "@wordpress/element";
 import EditBlock from "./EditBlock";
 import EditSettings from "./EditSettings";
+import ViewStateControls from "./components/view-state-controls";
+import TriggerControls from "./components/trigger-controls/Component";
 
-const CLASS_NAME = 'fc--bar';
+export const BAR_CLASS_NAME = 'fc--bar';
 
 export const BAR_DEFAULTS = {
-    styles: {
-        color: {
-            background: '#ffffff',
-            text: '#000000'
+    settings: {
+        position: 'top',
+        transitions: false
+    },
+    openButton: {
+        settings: {
+            hidden: false,
+            position: 'right',
+            icon: {
+                size: '32px',
+                slug: 'default__plus'
+            }
         },
-        dimensions: {
-            padding: '16px',
-            gap: '16px'
+        styles: {
+            dimensions: {
+                padding: '6px',
+                margin: '24px'
+            },
+            color: {
+                background: '#FFFFFF',
+                icon: '#000000'
+            },
+            border: {
+                radius: '4px',
+                color: '#DDDDDD',
+                style: 'solid',
+                width: '1px'
+            }
         }
     },
-    position: 'top',
-    hideButton: false,
-    transitions: false,
-    pagePush: false,
-    lockTrigger: false,
-    closeAnchor: ''
+    closeButton: {
+        settings: {
+            hidden: false,
+            position: 'right',
+            icon: {
+                size: '32px',
+                slug: 'default__close-small'
+            }
+        },
+        styles: {
+            dimensions: {
+                padding: '6px'
+            }
+        }
+    },
+    content: {
+        styles: {
+            color: {
+                background: '#FFFFFF',
+                text: '#000000'
+            },
+            border: {
+                radius: '4px',
+                color: '#DDDDDD',
+                style: 'solid',
+                width: '1px'
+            },
+            dimensions: {
+                padding: '16px',
+                gap: '16px'
+            }
+        }
+    }
 };
 
 /**
@@ -36,23 +86,17 @@ export const BAR_DEFAULTS = {
 const Edit = props => {
     // extract the various values used to render the block
     const {
-        clientId,
         setAttributes,
         context: {
             postId
         },
         attributes: {
-            clientId: storedClientId,
-            postId: storedPostId
+            postId: storedPostId,
+            viewState,
+            settings,
+            styles
         }
     } = props;
-
-    // ensure the clientId attribute is always current
-    useEffect( () => {
-        if ( clientId !== storedClientId ) {
-            setAttributes( { clientId } );
-        }
-    }, [ clientId, storedClientId ] );
 
     // ensure the postId attribute is always current
     useEffect( () => {
@@ -61,13 +105,33 @@ const Edit = props => {
         }
     }, [ postId, storedPostId ] );
 
+    const attributesDefaults = { ...BAR_DEFAULTS };
+
+    const setSettings = value => setAttributes( { settings: $object( settings, value ) } );
+    const settingsDefaults = { ...( attributesDefaults?.settings ?? {} ) };
+
+    const setStyles = value => setAttributes( { styles: $object( styles, value ) } );
+    const stylesDefaults = { ...( attributesDefaults?.styles ?? {} ) };
+
+    const setViewState = value => setAttributes( { viewState: value } );
+
     const customProps = {
         ...props,
-        defaults: BAR_DEFAULTS
+        attributesDefaults,
+        viewState,
+        setViewState,
+        settings,
+        setSettings,
+        settingsDefaults,
+        styles,
+        setStyles,
+        stylesDefaults
     };
 
     return (
         <>
+            <ViewStateControls/>
+            <TriggerControls/>
             <EditBlock { ...customProps }/>
             <EditSettings { ...customProps }/>
         </>
@@ -91,7 +155,7 @@ const EditWrapper = props => {
     const { hasInnerBlocks, innerBlocks } = useInnerBlocks( clientId );
     const Component = hasInnerBlocks ? Edit : EditPlaceholder;
     return (
-        <div className={ `${ CLASS_NAME }__editor` }>
+        <div className={ `${ BAR_CLASS_NAME }__editor` }>
             <Component { ...{ ...props, hasInnerBlocks, innerBlocks } } />
         </div>
     );

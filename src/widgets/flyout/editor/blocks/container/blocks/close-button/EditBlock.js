@@ -1,18 +1,21 @@
 import { useBlockProps } from "@wordpress/block-editor";
 import classnames from "classnames";
-import { getBorderSizes, getIconSetsIcon, useStyles } from "#editor";
-import { Icon } from "@wordpress/icons";
-import getButtonTransform from "./utils/getButtonTransform";
+import { SlugIcon, useStyles } from "#editor";
 
 export const BUTTON_CLASS_NAME = 'fc--flyout-close-button';
 
 const EditBlock = props => {
 
     const {
-        settings,
-        defaultSettings,
-        styles,
-        iconSets
+        settings: {
+            position,
+            icon
+        },
+        settingsDefaults: {
+            position: positionDefault,
+            icon: iconDefault
+        },
+        styles
     } = props;
 
     const buttonStyles = useStyles( styles, {
@@ -22,19 +25,17 @@ const EditBlock = props => {
 
     const buttonProps = useBlockProps( {
         className: classnames( BUTTON_CLASS_NAME, {
-            [`position-${ settings?.position ?? defaultSettings?.position }`]: settings?.position !== defaultSettings?.position
+            [`position-${ position ?? positionDefault }`]: position !== positionDefault
         } ),
         style: {
             ...buttonStyles,
-            // ...buttonTransform,
-            fontSize: settings?.icon?.size ?? defaultSettings?.icon?.size
+            fontSize: icon?.size ?? iconDefault?.size
         }
     } );
 
-    const iconClose = getIconSetsIcon( iconSets, settings?.icon?.close?.slug ?? defaultSettings?.icon?.close?.slug ?? 'wordpress-closeSmall' );
     return (
         <button { ...buttonProps }>
-            <Icon icon={ iconClose.svg } size={ settings?.icon?.size ?? defaultSettings?.icon?.size } />
+            <SlugIcon slug={ icon?.slug ?? iconDefault?.slug }/>
         </button>
     );
 };

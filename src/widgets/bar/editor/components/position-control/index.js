@@ -1,0 +1,1 @@
+export { default as PositionControl } from "./Component";

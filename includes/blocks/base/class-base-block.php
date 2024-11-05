@@ -283,6 +283,16 @@ abstract class Base_Block {
         return array();
     }
 
+    function get_frontend_icon( string $slug, string $slot ) {
+        list( $set_name, $icon_name ) = explode( '__', $slug );
+        $file_path = FOOCONVERT_ASSETS_PATH . "/media/icons/$set_name/$icon_name.svg";
+        $file_contents = file_get_contents( $file_path );
+        if ( ! empty( $file_contents ) ) {
+            return "<span class=\"fc-icon\" slot=\"$slot\" role=\"img\" aria-hidden=\"true\">$file_contents</span>";
+        }
+        return false;
+    }
+
     /**
      * Get custom SVG icons for the block when displayed in the frontend.
      *
@@ -386,7 +396,7 @@ abstract class Base_Block {
                     // This is the rendered output of an SVG from '@wordpress/icons' and is passed to
                     // wp_kses with an allowed HTML list that includes SVG elements.
                     // phpcs:ignore WordPress.Security.EscapeOutput
-                    echo FooConvert::plugin()->kses_svg( $icon );
+                    echo FooConvert::plugin()->kses_icon( $icon );
                 }
             }
         }

@@ -1,4 +1,4 @@
-import { BarElement } from "./bar";
+import { BarElement } from "./element";
 
 import "./index.scss";
 

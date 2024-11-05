@@ -13,9 +13,5 @@
     "reusable": false,
     "className": false,
     "html": false
-  },
-  "attributes": {},
-  "usesContext": [
-    "fc-popup/clientId"
-  ]
+  }
 }

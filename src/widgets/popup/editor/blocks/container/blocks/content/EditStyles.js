@@ -51,7 +51,7 @@ const EditStyles = props => {
                 panelId={ clientId }
                 value={ styles?.dimensions }
                 onChange={ setDimensions }
-                controls={ [ 'padding', 'margin', 'gap' ] }
+                controls={ [ 'padding', 'margin' ] }
                 defaults={ stylesDefaults?.dimensions }
                 itemRenderer={ () => (
                     <ToolsPanelItem

@@ -1,0 +1,17 @@
+{
+  "apiVersion": 3,
+  "name": "fc/bar-open-button",
+  "title": "Open Button",
+  "description": "The button displayed when the bar is closed.",
+  "category": "fooconvert",
+  "parent": [ "fc/bar" ],
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "supports": {
+    "lock": false,
+    "multiple": false,
+    "reusable": false,
+    "className": false,
+    "html": false
+  }
+}

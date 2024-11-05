@@ -14,9 +14,5 @@
     "className": false,
     "html": false,
     "inserter": false
-  },
-  "attributes": {},
-  "usesContext": [
-    "fc-flyout/clientId"
-  ]
+  }
 }

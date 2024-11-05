@@ -1,12 +1,9 @@
-import {
-    getBoxUnitSizes, useColorStyle,
-    useDimensionStyle
-} from "#editor";
-import { useBlockProps, useInnerBlocksProps } from "@wordpress/block-editor";
-import useIsInnerBlockSelected from "../../../editor/hooks/useIsInnerBlockSelected";
+import { useBlockProps, useInnerBlocksProps, store as blockEditorStore } from "@wordpress/block-editor";
 import classnames from "classnames";
 
-const CLASS_NAME = 'fc--bar';
+import { BAR_CLASS_NAME } from "./Edit";
+import { useDispatch } from "@wordpress/data";
+import { useDimensionStyle } from "#editor";
 
 /**
  *
@@ -17,45 +14,38 @@ const EditBlock = props => {
 
     // extract the various values used to render the block
     const {
-        isSelected,
         clientId,
-        attributes: {
-            styles = {},
-            position
-        },
-        defaults
+        styles,
+        settings,
+        settingsDefaults
     } = props;
 
-    const isInnerSelected = useIsInnerBlockSelected( clientId );
-    const showInserter = isSelected || isInnerSelected;
+    const position = settings?.position ?? settingsDefaults?.position;
+    const paddingStyle = useDimensionStyle( styles?.dimensions, ['padding'] );
 
     const blockProps = useBlockProps( {
-        className: classnames( CLASS_NAME, {
-            'show-inserter': showInserter,
-            [`position-${ position }`]: position === 'bottom'
-        } )
+        className: classnames( BAR_CLASS_NAME, {
+            [ `position-${ position }` ]: position !== settingsDefaults?.position,
+        } ),
+        style: {
+            ...paddingStyle
+        }
     } );
 
-    const { left: marginLeft, right: marginRight } = getBoxUnitSizes( styles?.dimensions?.margin ?? defaults?.styles?.dimensions?.margin );
-    const marginStyle = useDimensionStyle( styles?.dimensions, [ 'margin' ] );
-    const colorStyle = useColorStyle( styles?.color, { text: 'color' } );
-
-    const { children, ...innerBlocksProps } = useInnerBlocksProps( {
-        className: `${ CLASS_NAME }__container`,
-        style: {
-            ...marginStyle,
-            ...colorStyle,
-            width: `calc( 100% - ${ marginLeft } - ${ marginRight } )`
-        },
+    const { children, ...combinedProps } = useInnerBlocksProps( {
+        ...blockProps,
         orientation: 'horizontal'
     } );
 
+    const { selectBlock } = useDispatch( blockEditorStore );
+
     return (
-        <div { ...blockProps }>
-            <div { ...innerBlocksProps }>
+        <>
+            <div className={ `${ BAR_CLASS_NAME }__backdrop` } onClick={ () => selectBlock( clientId ) }></div>
+            <div { ...combinedProps }>
                 { children }
             </div>
-        </div>
+        </>
     );
 };
 

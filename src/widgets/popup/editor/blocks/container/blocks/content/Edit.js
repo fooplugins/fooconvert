@@ -1,17 +1,11 @@
 import EditBlock from "./EditBlock";
-import { $object, useBlockAttributes} from "#editor";
-import { POPUP_DEFAULTS } from "../../../../Edit";
+import { $object, useRootAttributes } from "#editor";
 import EditStyles from "./EditStyles";
+import { POPUP_DEFAULTS } from "../../../../Edit";
 
 export const CONTENT_CLASS_NAME = 'fc--popup-content';
 
 const Edit = props => {
-
-    const {
-        context: {
-            'fc-popup/clientId': parentClientId
-        }
-    } = props;
 
     // strip out the original attributes and setAttributes as we store the values on the parent
     const {
@@ -20,7 +14,7 @@ const Edit = props => {
         ...restProps
     } = props;
 
-    const [ parentAttributes, setParentAttributes ] = useBlockAttributes( parentClientId );
+    const [ parentAttributes, setParentAttributes ] = useRootAttributes( 'fc/popup' );
 
     const attributes = parentAttributes?.content ?? {};
     const setAttributes = value => setParentAttributes( { content: $object( attributes, value ) } );
@@ -36,17 +30,16 @@ const Edit = props => {
 
     const customProps = {
         ...restProps,
-        parentClientId,
         parentAttributes,
         setParentAttributes,
         attributes,
         setAttributes,
+        attributesDefaults,
         settings,
         setSettings,
+        settingsDefaults,
         styles,
         setStyles,
-        attributesDefaults,
-        settingsDefaults,
         stylesDefaults,
     };
 

@@ -20,6 +20,21 @@
     .block-editor-inserter {
       position: relative;
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+
+      &:after {
+        content: '';
+        box-sizing: border-box;
+        display: block;
+        width: 100%;
+        height: 48px;
+        border: dashed 1px #1e1e1e;
+        border-radius: 2px;
+      }
     }
 
     .fc--popup-content--button-block-appender {

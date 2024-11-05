@@ -115,13 +115,7 @@ class Flyout extends Base_Widget {
                         array(),
                         array(
                             array( 'fc/flyout-close-button' ),
-                            array(
-                                'fc/flyout-content',
-                                array(),
-                                array(
-                                    array( 'core/paragraph' )
-                                )
-                            )
+                            array( 'fc/flyout-content' )
                         )
                     )
                 ),
@@ -318,36 +312,18 @@ class Flyout extends Base_Widget {
 
     public function get_frontend_icons( string $instance_id, array $attributes, WP_Block $block ) : array {
         $icons = [];
-        $close_button = Utils::get_array( $attributes, 'closeButton' );
-        if ( ! empty( $close_button ) ) {
-            $close_button_settings = Utils::get_array( $close_button, 'settings' );
-            if ( ! empty( $close_button_settings ) ) {
-                $close_button_icon = Utils::get_array( $close_button_settings, 'icon' );
-                if ( ! empty( $close_button_icon ) ) {
-                    $close_button_icon_close = Utils::get_array( $close_button_icon, 'close' );
-                    if ( ! empty( $close_button_icon_close ) ) {
-                        $close_button_icon_close_svg = Utils::get_string( $close_button_icon_close, 'svg' );
-                        if ( ! empty( $close_button_icon_close_svg ) ) {
-                            $icons[] = $close_button_icon_close_svg;
-                        }
-                    }
-                }
+        $close_icon_slug = Utils::get_key_path( $attributes, 'closeButton.settings.icon.slug' );
+        if ( ! empty( $close_icon_slug ) ) {
+            $close_icon = $this->get_frontend_icon( $close_icon_slug, 'close-button__icon' );
+            if ( ! empty( $close_icon ) ) {
+                $icons[] = $close_icon;
             }
         }
-        $open_button = Utils::get_array( $attributes, 'openButton' );
-        if ( ! empty( $open_button ) ) {
-            $open_button_settings = Utils::get_array( $open_button, 'settings' );
-            if ( ! empty( $open_button_settings ) ) {
-                $open_button_icon = Utils::get_array( $open_button_settings, 'icon' );
-                if ( ! empty( $open_button_icon ) ) {
-                    $open_button_icon_open = Utils::get_array( $open_button_icon, 'open' );
-                    if ( ! empty( $open_button_icon_open ) ) {
-                        $open_button_icon_open_svg = Utils::get_string( $open_button_icon_open, 'svg' );
-                        if ( ! empty( $open_button_icon_open_svg ) ) {
-                            $icons[] = $open_button_icon_open_svg;
-                        }
-                    }
-                }
+        $open_icon_slug = Utils::get_key_path( $attributes, 'openButton.settings.icon.slug' );
+        if ( ! empty( $open_icon_slug ) ) {
+            $open_icon = $this->get_frontend_icon( $open_icon_slug, 'open-button__icon' );
+            if ( ! empty( $open_icon ) ) {
+                $icons[] = $open_icon;
             }
         }
         return $icons;
