@@ -13,6 +13,7 @@ define( 'FOOCONVERT_META_KEY_DEMO_CONTENT', '_fooconvert_demo_content_v2' );    
 define( 'FOOCONVERT_META_KEY_DEMO_CONTENT_V1', '_fooconvert_demo_content' );    // Meta key for the first version of demo content.
 
 //other
+define( 'FOOCONVERT_DB_TABLE_EVENTS', 'fooconvert_events' );
 define( 'FOOCONVERT_EDITOR_ASSET_HANDLE', 'fc-editor' );
 define( 'FOOCONVERT_FRONTEND_ASSET_HANDLE', 'fc-frontend' );
 define( 'FOOCONVERT_MENU_SLUG', 'fooconvert' );

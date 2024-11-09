@@ -1,6 +1,6 @@
 <?php
 
-namespace FooPlugins\FooConvert\Admin;
+namespace FooPlugins\FooConvert\Data;
 
 use wpdb;
 
@@ -16,35 +16,22 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
         const FOOCONVERT_TABLE = 'fooconvert_events';
 
         /**
-         * @return string
-         * @global wpdb $wpdb The WordPress database class instance.
-         *
-         */
-        public function table_name()
-        {
-            global $wpdb;
-
-            return $wpdb->prefix . self::FOOCONVERT_TABLE;
-        }
-
-
-        /**
          * @return array<array-key, mixed>|false Table creation results, or false.
          */
-        public function create_table_if_needed()
+        public function create_event_table_if_needed()
         {
-            if (defined('FOOCONVERT_VERSION')) {
+            if ( defined( 'FOOCONVERT_VERSION' ) ) {
                 $current_version = FOOCONVERT_VERSION;
-                $version_create_table = get_option(FOOCONVERT_OPTION_VERSION_CREATE_TABLE, '0.0.10');
-                if (version_compare($current_version, $version_create_table, '>')) {
+                $version_create_table = get_option( FOOCONVERT_OPTION_VERSION_CREATE_TABLE, '0.0.10' );
+                if ( version_compare( $current_version, $version_create_table, '>' ) ) {
 
                     // Create the table.
-                    $table_creation_results = $this->create_table();
+                    $table_creation_results = $this->create_event_table_and_indexes();
 
                     // TODO : Run any necessary migrations.
 
                     // update the version in the database
-                    update_option(FOOCONVERT_OPTION_VERSION_CREATE_TABLE, $current_version);
+                    update_option( FOOCONVERT_OPTION_VERSION_CREATE_TABLE, $current_version );
 
                     return $table_creation_results;
                 }
@@ -58,23 +45,29 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
          * @global wpdb $wpdb The WordPress database class instance.
          *
          */
-        public function create_table()
+        public function create_event_table_and_indexes()
         {
             global $wpdb;
 
             $charset_collate = $wpdb->get_charset_collate();
-            $table_name = $this->table_name();
+            $table_name = parent::get_table_name( FOOCONVERT_DB_TABLE_EVENTS );
             $timestamp_default = parent::get_timestamp_default();
 
             /**
              * This is the Event table schema.
              *  - id is the primary key
-             *  - widget_id is the id of the widget that created the event
-             *  - event_type is the type of event
+             *  - widget_id is the id of the widget that created the event.
+             *  - event_type is the type of event. This can be one of: 'view', 'click', 'conversion', 'dismiss', 'interact'.
              *  - page_url is the url of the page that created the event
              *  - device_type is the type of device that was used for the event
-             *  - user_id who was the user when the event happened
-             *  - event_json is all the data associated with the event
+             *  - user_id who was the user when the event happened. Will be null if not logged in.
+             *  - anonymous_user_guid the unique id of an anonymous user from the frontend. Will be null if logged in.
+             *  - event_json is all the data associated with the event.
+             *      If event_type = 'conversion', then this will be the conversion data like the order id and value.
+             *      The conversion will always be linked to the widget with the most recent interaction that was not a dismissal or view.
+             *      This linking will be done using the user_id or anonymous_user_guid, whichever is present.
+             *          eg. if an order is for a logged in user, then this is trivial.
+             *          eg. if an order is for an anonymous user, then we need to use the anonymous_user_guid. If this is not available, then we do nothing.
              *  - timestamp is when the event happened
              */
 
@@ -84,6 +77,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
                 event_type VARCHAR(255) NOT NULL,
                 page_url TEXT DEFAULT NULL,
                 device_type VARCHAR(50) DEFAULT NULL,
+                anonymous_user_guid VARCHAR(255) DEFAULT NULL,
                 user_id BIGINT(20) UNSIGNED DEFAULT NULL,
                 event_json longtext DEFAULT NULL,
                 timestamp DATETIME DEFAULT $timestamp_default,
@@ -93,11 +87,30 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
             $db_delta_result = parent::safe_dbDelta($sql);
 
             // Create all the indexes we need.
-            parent::safe_create_index($table_name, 'idx_widget_id', 'widget_id');
-            parent::safe_create_index($table_name, 'idx_event_type', 'event_type');
-            parent::safe_create_index($table_name, 'idx_user_id', 'user_id');
-            parent::safe_create_index($table_name, 'idx_timestamp', 'timestamp');
-            parent::safe_create_index($table_name, 'idx_widget_id_timestamp', 'widget_id, timestamp');
+            parent::safe_create_index($table_name, 'idx_widget', 'widget_id'); // We need to query all events for a widget.
+
+            /*
+             * Purpose : many queries use widget_id and filter by event_type (e.g., counting views, conversions, dismissals).
+             */
+            parent::safe_create_index($table_name, 'idx_widget_event_type', 'widget_id, event_type');
+
+            /*
+             * Purpose: This index will be particularly helpful when filtering by both widget_id and timestamp,
+             * especially for queries restricted to recent data (e.g., the last 30, 60, or 90 days).
+             * This will allow the database to quickly find the events within the specified date range for a particular widget.
+             */
+            parent::safe_create_index($table_name, 'idx_widget_timestamp', 'widget_id, timestamp');
+
+            /*
+             * Purpose: This index supports queries that filter by widget_id and event_type while also filtering or ordering by timestamp.
+             * This will be useful for metrics that need to count or filter specific event types (like view, click, conversion, and dismiss) within a time range.
+             */
+            parent::safe_create_index($table_name, 'idx_widget_event_type_timestamp', 'widget_id, event_type, timestamp');
+
+            /*
+             * Purpose : Many metrics, such as unique visitors, conversion rate, and dismissal rate, rely on distinct counts of either user_id or anonymous_user_guid for each widget_id.
+             */
+            parent::safe_create_index($table_name, 'idx_widget_user', 'widget_id, user_id, anonymous_user_guid');
 
             return $db_delta_result;
         }
