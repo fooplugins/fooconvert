@@ -1,6 +1,7 @@
 <?php
 namespace FooPlugins\FooConvert\Admin;
 
+use FooPlugins\FooConvert\Event;
 use FooPlugins\FooConvert\FooConvert;
 
 /**
@@ -91,7 +92,76 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                     'ID' => $post_id,
                     'post_content' => $post_content
                 ) );
+
+                // Create some events for the demo content.
+                $this->create_events( $post_id );
             }
+        }
+
+
+        /**
+         * Creates demo event data for the widget.
+         *
+         * @param $widget_id
+         * @return void
+         */
+        function create_events( $widget_id, $num_events = 1000 ) {
+            $event = new Event();
+
+            // Define event types and probabilities (more positive events)
+            $event_types = [
+                'view' => 0.5,        // 50% chance of 'view'
+                'click' => 0.2,       // 20% chance of 'click'
+                'conversion' => 0.2,  // 20% chance of 'conversion'
+                'dismiss' => 0.1      // 10% chance of 'dismiss'
+            ];
+
+            // Generate event data
+            for ( $i = 0; $i < $num_events; $i++ ) {
+                // Randomly pick an event type based on probabilities
+                $event_type = $this->weighted_random_event( $event_types );
+
+                // Random timestamp within the last 30 days
+                $timestamp = date('Y-m-d H:i:s', strtotime("-" . rand(0, 30) . " days -" . rand(0, 86400) . " seconds"));
+
+                // Randomly select either a user_id or an anonymous_user_guid
+                if (rand(0, 1) === 1) {
+                    $user_id = rand(1, 10);  // Random user ID for logged-in users
+                    $anonymous_user_guid = null;
+                } else {
+                    $user_id = null;
+                    $anonymous_user_guid = bin2hex( random_bytes( 16 ) );  // Generate random GUID for anonymous users
+                }
+
+                // Random device type
+                $device_types = ['desktop', 'mobile', 'tablet'];
+                $device_type = $device_types[array_rand( $device_types )];
+
+                // Insert the generated event into the database
+                $event->create(
+                    $widget_id,
+                    $event_type,
+                    'https://example.com/page-' . rand(1, 10),
+                    $device_type,
+                    $anonymous_user_guid,
+                    json_encode(['sample_data' => 'value']),  // Sample JSON data
+                    $timestamp
+                );
+            }
+        }
+
+        // Helper function to select an event type based on weighted probabilities
+        private function weighted_random_event($weights) {
+            $rand = mt_rand() / mt_getrandmax();
+            $cumulative = 0;
+
+            foreach ($weights as $event => $weight) {
+                $cumulative += $weight;
+                if ($rand < $cumulative) {
+                    return $event;
+                }
+            }
+            return 'view';  // Fallback (shouldn’t happen if weights add up to 1)
         }
 
         function get_demo_content() {
