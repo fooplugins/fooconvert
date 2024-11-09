@@ -1,6 +1,7 @@
 <?php
 namespace FooPlugins\FooConvert\Admin;
 
+use FooPlugins\FooConvert\Data\Schema;
 use FooPlugins\FooConvert\FooConvert;
 
 /**
@@ -18,7 +19,13 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
          */
         function __construct()
         {
+            add_action( 'admin_init', array( $this, 'check_database' ) );
             add_action( 'admin_menu', array( $this, 'register_menu' ) );
+        }
+
+        public function check_database() {
+            $schema = new Schema();
+            $schema->create_event_table_if_needed();
         }
 
         /**
