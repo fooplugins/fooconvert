@@ -26,7 +26,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          *     @type string $device_type      The type of device (e.g. 'desktop', 'mobile', 'tablet').
          *     @type int|null $user_id        The ID of the user (if logged in).
          *     @type string|null $anonymous_user_guid The GUID of the anonymous user.
-         *     @type string|null $event_json   The event data in JSON format.
+         *     @type array|null $extra_data   An array or extra event data.
          *     @type string $timestamp        The timestamp of the event.
          * }
          *
@@ -72,15 +72,15 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                 return new WP_Error('invalid_event_data_no_user', 'No user ID or anonymous user GUID was provided.');
             }
 
-            // 7. Validate event_json (should be valid JSON format)
-            if ( isset( $data['event_json'] ) && is_string( $data['event_json'] ) ) {
-                json_decode( $data['event_json'] );
-                if ( json_last_error() !== JSON_ERROR_NONE ) {
-                    return new WP_Error('invalid_event_json', 'The event JSON is not valid.');
-                }
+            // 7. Validate extra_data.
+            if ( isset( $data['extra_data'] ) && !is_array( $data['extra_data'] ) ) {
+                return new WP_Error('invalid_event_data_extra_data', 'The extra data was not valid.');
             }
 
-            $data['timestamp'] = current_time( 'mysql', true );
+            // 8. Ensure timestamp is set.
+            if ( !isset( $data['timestamp'] ) ) {
+                $data['timestamp'] = current_time( 'mysql', true );
+            }
 
             $table_name = parent::get_table_name( FOOCONVERT_DB_TABLE_EVENTS );
 

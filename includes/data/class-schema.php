@@ -22,7 +22,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
         {
             if ( defined( 'FOOCONVERT_VERSION' ) ) {
                 $current_version = FOOCONVERT_VERSION;
-                $version_create_table = get_option( FOOCONVERT_OPTION_VERSION_CREATE_TABLE, '0.0.10' );
+                $version_create_table = get_option( FOOCONVERT_OPTION_VERSION_CREATE_TABLE, FOOCONVERT_VERSION );
                 if ( version_compare( $current_version, $version_create_table, '>' ) ) {
 
                     // Create the table.
@@ -62,7 +62,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
              *  - device_type is the type of device that was used for the event
              *  - user_id who was the user when the event happened. Will be null if not logged in.
              *  - anonymous_user_guid the unique id of an anonymous user from the frontend. Will be null if logged in.
-             *  - event_json is all the data associated with the event.
+             *  - extra_data is all the extra data associated with the event.
              *      If event_type = 'conversion', then this will be the conversion data like the order id and value.
              *      The conversion will always be linked to the widget with the most recent interaction that was not a dismissal or view.
              *      This linking will be done using the user_id or anonymous_user_guid, whichever is present.
@@ -79,7 +79,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
                 device_type VARCHAR(50) DEFAULT NULL,
                 anonymous_user_guid VARCHAR(255) DEFAULT NULL,
                 user_id BIGINT(20) UNSIGNED DEFAULT NULL,
-                event_json longtext DEFAULT NULL,
+                extra_data longtext DEFAULT NULL,
                 timestamp DATETIME DEFAULT $timestamp_default,
                 PRIMARY KEY (id)
             ) $charset_collate;";

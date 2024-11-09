@@ -17,7 +17,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
          * @param $page_url
          * @param $device_type
          * @param $anonymous_user_guid
-         * @param $event_json
+         * @param $extra_data
          * @param $timestamp
          * @return int|void|\WP_Error
          */
