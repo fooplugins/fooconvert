@@ -94,7 +94,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 ) );
 
                 // Create some events for the demo content.
-                $this->create_events( $post_id );
+                $this->create_events( $post_id, mt_rand( 500, 1000 ) );
             }
         }
 
@@ -122,29 +122,40 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 $event_type = $this->weighted_random_event( $event_types );
 
                 // Random timestamp within the last 30 days
-                $timestamp = date('Y-m-d H:i:s', strtotime("-" . rand(0, 30) . " days -" . rand(0, 86400) . " seconds"));
+                $timestamp = date('Y-m-d H:i:s', strtotime("-" . mt_rand(0, 30) . " days -" . mt_rand(0, 86400) . " seconds"));
 
                 // Randomly select either a user_id or an anonymous_user_guid
-                if (rand(0, 1) === 1) {
-                    $user_id = rand(1, 10);  // Random user ID for logged-in users
+                if (mt_rand(0, 1) === 1) {
+                    $user_id = mt_rand(1, 10);  // Random user ID for logged-in users
                     $anonymous_user_guid = null;
                 } else {
-                    $user_id = null;
-                    $anonymous_user_guid = bin2hex( random_bytes( 16 ) );  // Generate random GUID for anonymous users
+                    $user_id = 0;
+                    $anonymous_user_guid = bin2hex( random_bytes( 32 ) );  // Generate random GUID for anonymous users
                 }
 
                 // Random device type
                 $device_types = ['desktop', 'mobile', 'tablet'];
                 $device_type = $device_types[array_rand( $device_types )];
 
+                // Deal with extra data.
+                $extra_data = [];
+                if ( $event_type === 'conversion' ) {
+                    $extra_data = [
+                        'conversion_type' => 'woocommerce_order',
+                        'order_id' => mt_rand( 1, 100 ),
+                        'order_value' => mt_rand( 100 * 100, 500 * 100 ) / 100
+                    ];
+                }
+
                 // Insert the generated event into the database
                 $event->create(
                     $widget_id,
                     $event_type,
-                    'https://example.com/page-' . rand(1, 10),
+                    home_url( '/page-' . mt_rand(1, 10) ),
                     $device_type,
+                    $user_id,
                     $anonymous_user_guid,
-                    json_encode(['sample_data' => 'value']),  // Sample JSON data
+                    $extra_data,
                     $timestamp
                 );
             }
