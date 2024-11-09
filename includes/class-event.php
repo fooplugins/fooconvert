@@ -25,12 +25,12 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
                                 $user_id=null, $anonymous_user_guid=null, $extra_data=null, $timestamp=null ) {
             if ( $this->can_create_event() ) {
                 $data = array(
-                    'widget_id'  => $widget_id,
-                    'event_type' => $event_type,
-                    'page_url'   => $page_url,
+                    'widget_id'   => $widget_id,
+                    'event_type'  => $event_type,
+                    'page_url'    => $this->clean_page_url( $page_url ), // Clean the URL before inserting it into the database.
                     'device_type' => $device_type,
-                    'extra_data' => $extra_data,
-                    'timestamp' => $timestamp
+                    'extra_data'  => $extra_data,
+                    'timestamp'   => $timestamp
                 );
 
                 if ( is_null( $user_id ) && is_user_logged_in() ) {
@@ -42,7 +42,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
                     $data['user_id'] = $user_id;
                     $data['anonymous_user_guid'] = null;
                 } else {
-                    $data['user_id'] = null;
+                    $data['user_id'] = 0;
                     if ( empty( $anonymous_user_guid ) && isset( $_SERVER['REMOTE_ADDR'] ) && isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
                         // We could not determine the anonymous user GUID using the localStorage or cookie.
                         // Try and create a random GUID from the IP address and user agent.
@@ -53,7 +53,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
 
                 // Convert empty values to null.
                 foreach ( $data as $key => $value ) {
-                    if ( $value === '' || $value === 0 || $value === '0' ) {
+                    if ( is_array( $value ) && empty( $value ) ) {
+                        $data[$key] = null;
+                    } else if ( $value === '' || $value === 0 || $value === '0' ) {
                         $data[$key] = null;
                     }
                 }
@@ -73,6 +75,18 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
          */
         private function can_create_event() {
             return true;
+        }
+
+        private function clean_page_url($page_url)
+        {
+            // strip the domain from the URL
+            $home_url = home_url();
+
+            if ( strpos( $page_url, $home_url ) === 0 ) {
+                return '/' . ltrim( substr( $page_url, strlen( $home_url ) ), '/' );
+            }
+
+            return $page_url;
         }
     }
 }

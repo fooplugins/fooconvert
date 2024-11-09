@@ -51,8 +51,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                 return new WP_Error('invalid_event_data_event_type', 'The event type is not valid.');
             }
 
-            // 3. Validate page_url if provided (should be a valid URL)
-            if ( isset($data['page_url'] ) && !filter_var( $data['page_url'], FILTER_VALIDATE_URL ) ) {
+            // 3. Validate page_url if provided (should be a string)
+            if ( isset($data['page_url'] ) && !is_string( $data['page_url'] ) ) {
                 return new WP_Error('invalid_event_data_page_url', 'The page URL is not a valid URL.');
             }
 
@@ -72,9 +72,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                 return new WP_Error('invalid_event_data_no_user', 'No user ID or anonymous user GUID was provided.');
             }
 
-            // 7. Validate extra_data.
-            if ( isset( $data['extra_data'] ) && !is_array( $data['extra_data'] ) ) {
-                return new WP_Error('invalid_event_data_extra_data', 'The extra data was not valid.');
+            // 7. Serialize extra_data if provided.
+            if ( isset( $data['extra_data'] ) && is_array( $data['extra_data'] ) && !empty( $data['extra_data'] ) ) {
+                $data['extra_data'] = maybe_serialize( $data['extra_data'] );
+            } else {
+                $data['extra_data'] = null;
             }
 
             // 8. Ensure timestamp is set.
