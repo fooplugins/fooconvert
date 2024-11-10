@@ -1,5 +1,6 @@
 import { isPlainObject, isString } from "@steveush/utils";
 import { getElementConfiguration } from "../utils";
+import { logEvent } from "../events";
 
 class CustomElement extends HTMLElement {
     constructor() {
@@ -109,6 +110,10 @@ class CustomElement extends HTMLElement {
             return this.dispatchEvent( new Event( type ) );
         }
         throw new DOMException( "Failed to execute 'dispatch' on 'CustomElement': parameter 1 is not of type 'string' or is empty.", "InvalidStateError" )
+    }
+
+    log_event( event_type ) {
+        logEvent( this.config.postId, event_type );
     }
 
     //endregion
