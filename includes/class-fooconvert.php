@@ -99,6 +99,8 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             if ( is_admin() ) {
                 new Admin\Init();
             }
+
+            new Ajax();
         }
 
         function ensure_frontend_css_enqueued() {
