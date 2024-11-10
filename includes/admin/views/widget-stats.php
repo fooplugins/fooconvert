@@ -18,16 +18,20 @@ if ( $widget_id ) {
     <!-- Basic Metrics -->
     <div class="fooconvert-basic-metrics">
         <div class="metric">
-            <h2><?php _e('Total Views', 'fooconvert'); ?></h2>
+            <p id="total-events"><?php _e('Loading...', 'fooconvert'); ?></p>
+            <h2><?php _e('Total Events', 'fooconvert'); ?></h2>
+        </div>
+        <div class="metric">
             <p id="total-views"><?php _e('Loading...', 'fooconvert'); ?></p>
+            <h2><?php _e('Total Views', 'fooconvert'); ?></h2>
         </div>
         <div class="metric">
-            <h2><?php _e('Total Clicks', 'fooconvert'); ?></h2>
             <p id="total-clicks"><?php _e('Loading...', 'fooconvert'); ?></p>
+            <h2><?php _e('Total Clicks', 'fooconvert'); ?></h2>
         </div>
         <div class="metric">
-            <h2><?php _e('Click-Through Rate (CTR)', 'fooconvert'); ?></h2>
             <p id="click-through-rate"><?php _e('Loading...', 'fooconvert'); ?></p>
+            <h2><?php _e('Click-Through Rate (CTR)', 'fooconvert'); ?></h2>
         </div>
     </div>
 
@@ -37,30 +41,29 @@ if ( $widget_id ) {
         <canvas id="lineChart"></canvas>
     </div>
 
-    <!-- Future Metrics
-    <div class="fooconvert-pro-metrics">
-        <div class="metric">
-            <h2><?php _e('Conversion Rate', 'fooconvert'); ?></h2>
-            <p id="conversion-rate"><?php _e('Loading...', 'fooconvert'); ?></p>
-        </div>
-        <div class="metric">
-            <h2><?php _e('Geographic Breakdown', 'fooconvert'); ?></h2>
-            <p id="geo-breakdown"><?php _e('Loading...', 'fooconvert'); ?></p>
-        </div>
-        <div class="metric">
-            <h2><?php _e('Device & Browser Analytics', 'fooconvert'); ?></h2>
-            <p id="device-browser-analytics"><?php _e('Loading...', 'fooconvert'); ?></p>
-        </div>
-    </div>
 
-    <div class="fooconvert-chart-container">
-        <h2><?php _e('Conversion Rate Breakdown', 'fooconvert'); ?></h2>
-        <canvas id="pieChart"></canvas>
-    </div>
-    <div class="fooconvert-chart-container">
-        <h2><?php _e('Detailed Engagement Trends', 'fooconvert'); ?></h2>
-        <canvas id="engagementTrendChart"></canvas>
-    </div>
+<!--    <div class="fooconvert-pro-metrics">-->
+<!--        <div class="metric">-->
+<!--            <h2>--><?php //_e('Conversion Rate', 'fooconvert'); ?><!--</h2>-->
+<!--            <p id="conversion-rate">--><?php //_e('Loading...', 'fooconvert'); ?><!--</p>-->
+<!--        </div>-->
+<!--        <div class="metric">-->
+<!--            <h2>--><?php //_e('Geographic Breakdown', 'fooconvert'); ?><!--</h2>-->
+<!--            <p id="geo-breakdown">--><?php //_e('Loading...', 'fooconvert'); ?><!--</p>-->
+<!--        </div>-->
+<!--        <div class="metric">-->
+<!--            <h2>--><?php //_e('Device & Browser Analytics', 'fooconvert'); ?><!--</h2>-->
+<!--            <p id="device-browser-analytics">--><?php //_e('Loading...', 'fooconvert'); ?><!--</p>-->
+<!--        </div>-->
+<!--    </div>-->
+<!---->
+<!--    <div class="fooconvert-chart-container">-->
+<!--        <h2>--><?php //_e('Conversion Rate Breakdown', 'fooconvert'); ?><!--</h2>-->
+<!--        <canvas id="pieChart"></canvas>-->
+<!--    </div>-->
+<!--    <div class="fooconvert-chart-container">-->
+<!--        <h2>--><?php //_e('Detailed Engagement Trends', 'fooconvert'); ?><!--</h2>-->
+<!--        <canvas id="engagementTrendChart"></canvas>-->
+<!--    </div>-->
 
-    -->
 </div>

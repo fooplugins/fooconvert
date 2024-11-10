@@ -1,33 +1,33 @@
 /* General container styling */
 .fooconvert-stats-container {
-    padding: 20px;
     font-family: Arial, sans-serif;
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 800px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px; /* Space between the items */
+    margin: 20px 0 0;
 }
 
 .fooconvert-stats-container h1 {
     font-size: 26px;
-    margin-bottom: 20px;
+    margin: 0;
     color: #333;
-    text-align: center;
+    grid-column: span 4;
 }
 
 .fooconvert-stats-container h2 {
     font-size: 20px;
-    margin-bottom: 10px;
+    margin: 0;
     color: #333;
-    text-align: center;
+    grid-column: span 4;
 }
 
 /* Metrics layout */
 .fooconvert-basic-metrics,
 .fooconvert-pro-metrics {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    margin-bottom: 40px;
+    grid-column: span 4; /* Span all columns for overall metrics section */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .metric {
@@ -35,10 +35,11 @@
     border: 1px solid #e0e0e0;
     border-radius: 10px;
     padding: 10px;
-    width: 200px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     text-align: center;
     transition: transform 0.2s ease;
+    grid-column: span 1; /* Each metric takes one column */
+    margin-right: 10px; /* Add right margin to avoid touching neighboring blocks */
 }
 
 .metric:hover {
@@ -46,9 +47,9 @@
 }
 
 .metric h2 {
-    font-size: 18px;
+    font-size: 12px;
     color: #555;
-    margin-bottom: 10px;
+    margin: 0;
 }
 
 .metric p {
@@ -65,39 +66,50 @@
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     margin-bottom: 40px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+    grid-column: span 4; /* Chart takes up 4 columns */
 }
 
 .fooconvert-chart-container h2 {
     font-size: 20px;
     color: #333;
     margin-bottom: 15px;
-    text-align: center;
-}
-
-canvas {
-    max-width: 100%;
-    height: auto;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .fooconvert-stats-container {
+        grid-template-columns: repeat(2, 1fr); /* Change to 2 columns on smaller screens */
+    }
+
+    .fooconvert-basic-metrics,
+    .fooconvert-pro-metrics {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     .metric {
-        width: 100%;
-        max-width: 300px;
+        grid-column: span 1;
+    }
+
+    .fooconvert-chart-container {
+        grid-column: span 2; /* Chart takes 2 columns on smaller screens */
     }
 }
 
 @media (max-width: 480px) {
+    .fooconvert-stats-container {
+        grid-template-columns: 1fr; /* One column layout for mobile */
+    }
+
     .fooconvert-basic-metrics,
     .fooconvert-pro-metrics {
-        flex-direction: column;
-        align-items: center;
+        grid-template-columns: 1fr;
+    }
+
+    .metric {
+        grid-column: span 1;
     }
 
     .fooconvert-chart-container {
-        padding: 15px;
+        grid-column: span 1; /* Chart takes 1 column on very small screens */
     }
 }

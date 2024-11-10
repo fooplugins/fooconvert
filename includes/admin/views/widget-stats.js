@@ -10,7 +10,8 @@ jQuery(document).ready(function ($) {
                 nonce: fooconvertData.nonce
             },
             success: function (response) {
-                // Render Free metrics
+                // Render basic metrics
+                $('#total-events').text(response.total_events);
                 $('#total-views').text(response.total_views);
                 $('#total-clicks').text(response.total_clicks);
                 $('#click-through-rate').text(response.click_through_rate + '%');
