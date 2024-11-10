@@ -2,10 +2,6 @@ import { globby } from "globby";
 import { dirname, join } from "path";
 import { copyFile, mkdir } from "fs/promises";
 
-const source = "./src/media";
-const target = "./assets/media";
-const patterns = [ '**/*' ];
-
 const toShortTime = timespan => {
     if ( timespan > 1000 ) {
         return ( timespan / 1000 ).toFixed( 3 )
@@ -14,7 +10,7 @@ const toShortTime = timespan => {
     return timespan + "ms";
 };
 
-const performCopy = async() => {
+const performCopy = async(source, target, patterns) => {
     const started = Date.now();
     try {
         console.log( `copying "${ source }" to "${ target }"...` );
@@ -30,4 +26,5 @@ const performCopy = async() => {
     }
 };
 
-await performCopy();
+await performCopy( "./src/media", "./assets/media", [ '**/*' ] );
+await performCopy( "./src/admin", "./assets/admin", [ '**/*' ] );

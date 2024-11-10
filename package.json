@@ -19,7 +19,7 @@
     "build": "wp-scripts build --output-path=assets && npm run copy",
     "start": "wp-scripts start --output-path=assets",
     "develop": "wp-scripts start --no-watch --output-path=assets && npm run copy",
-    "copy": "node copy-media.mjs",
+    "copy": "node copy-assets.mjs",
     "i18n": "node make-pot.mjs",
     "composer:install": "composer install --prefer-dist --optimize-autoloader --no-dev",
     "composer:update": "composer update --optimize-autoloader",
