@@ -95,5 +95,79 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
 
             return $wpdb->insert_id;
         }
+
+        /**
+         * Retrieves a summary of the events for the given widget.
+         *
+         * @param int $widget_id The ID of the widget.
+         *
+         * @return array {
+         *     An array of summary data.
+         *
+         *     @type int $total_events The total number of events.
+         *     @type int $total_views The total number of views.
+         *     @type int $total_clicks The total number of clicks.
+         *     @type int $total_unique_visitors The total number of unique visitors.
+         * }
+         */
+        function get_widget_summary_data( $widget_id ) {
+            global $wpdb;
+
+            $table_name = parent::get_table_name( FOOCONVERT_DB_TABLE_EVENTS );
+            $widget_id = intval($widget_id);
+
+            // Prepare SQL query to return high-level statistics
+            return $wpdb->get_row(
+                $wpdb->prepare(
+                    "SELECT 
+                    COUNT(*) as total_events,
+                    COUNT(CASE WHEN event_type = 'view' THEN 1 END) as total_views,
+                    COUNT(CASE WHEN event_type = 'click' THEN 1 END) as total_clicks,
+                    COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as total_unique_visitors
+                    FROM {$table_name}
+                    WHERE widget_id = %d",
+                    $widget_id
+                ),
+                ARRAY_A
+            );
+        }
+
+        /**
+         * Returns an array of recent activity for the given widget.
+         *
+         * @param int $widget_id The ID of the widget.
+         * @param int $days The number of days to fetch (default is 7).
+         *
+         * @return array An array of recent activity, with the following structure:
+         *     'event_date' => string The date of the event (format: 'Y-m-d')
+         *     'views' => int The number of views
+         *     'clicks' => int The number of clicks
+         *     'unique_visitors' => int The number of unique visitors
+         */
+        function get_widget_daily_activity( $widget_id, $days = 7 ) {
+            global $wpdb;
+
+            $table_name = parent::get_table_name( FOOCONVERT_DB_TABLE_EVENTS );
+            $widget_id = intval( $widget_id ); // Ensure $widget_id is an integer
+            $days = intval( $days );  // Ensure $days is an integer
+
+            // Prepare recent activity for the last 7 days
+            return $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT 
+                    DATE(timestamp) as event_date,
+                    COUNT(CASE WHEN event_type = 'view' THEN 1 END) as views,
+                    COUNT(CASE WHEN event_type = 'click' THEN 1 END) as clicks,
+                    COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as unique_visitors
+                    FROM {$table_name}
+                    WHERE widget_id = %d AND timestamp >= DATE_SUB(NOW(), INTERVAL %d DAY)
+                    GROUP BY event_date
+                    ORDER BY event_date ASC",
+                    $widget_id,
+                    $days
+                ),
+                ARRAY_A
+            );
+        }
     }
 }

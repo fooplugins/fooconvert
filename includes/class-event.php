@@ -16,9 +16,10 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
          * @param $event_type
          * @param $page_url
          * @param $device_type
-         * @param $anonymous_user_guid
-         * @param $extra_data
-         * @param $timestamp
+         * @param null $user_id
+         * @param null $anonymous_user_guid
+         * @param null $extra_data
+         * @param null $timestamp
          * @return int|void|\WP_Error
          */
         public function create( $widget_id, $event_type, $page_url, $device_type,
@@ -77,6 +78,12 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
             return true;
         }
 
+        /**
+         * Cleans the page URL by removing the domain from it.
+         *
+         * @param string $page_url The URL of the page to clean.
+         * @return string The cleaned URL.
+         */
         private function clean_page_url($page_url)
         {
             // strip the domain from the URL
@@ -87,6 +94,32 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
             }
 
             return $page_url;
+        }
+
+        /**
+         * Get a summary of the events for a given widget.
+         *
+         * @param int $widget_id The ID of the widget to get the summary for.
+         * @return array An associative array of event summary data.
+         *     - int total_events: The total number of events.
+         *     - int total_views: The total number of views.
+         *     - int total_clicks: The total number of clicks.
+         *     - int total_unique_visitors: The total number of unique visitors.
+         *     - array recent_activity: The number of views, clicks, and unique visitors for each of the last 7 days.
+         */
+        public function get_widget_summary_data( $widget_id ) {
+            $query = new Data\Query();
+            $event_summary = $query->get_widget_summary_data( $widget_id );
+            $daily_activity = $query->get_widget_daily_activity( $widget_id, 7 );
+
+            // Combine data into a single response
+            return [
+                'total_events' => $event_summary['total_events'],
+                'total_views' => $event_summary['total_views'],
+                'total_clicks' => $event_summary['total_clicks'],
+                'total_unique_visitors' => $event_summary['total_unique_visitors'],
+                'recent_activity' => $daily_activity
+            ];
         }
     }
 }

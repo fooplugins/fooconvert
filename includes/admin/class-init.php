@@ -21,6 +21,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
         {
             add_action( 'admin_init', array( $this, 'check_database' ) );
             add_action( 'admin_menu', array( $this, 'register_menu' ) );
+
+            new Stats();
         }
 
         public function check_database() {

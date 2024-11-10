@@ -1,0 +1,103 @@
+/* General container styling */
+.fooconvert-stats-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.fooconvert-stats-container h1 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.fooconvert-stats-container h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333;
+    text-align: center;
+}
+
+/* Metrics layout */
+.fooconvert-basic-metrics,
+.fooconvert-pro-metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.metric {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 10px;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.metric:hover {
+    transform: translateY(-5px);
+}
+
+.metric h2 {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.metric p {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Chart containers */
+.fooconvert-chart-container {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.fooconvert-chart-container h2 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .metric {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .fooconvert-basic-metrics,
+    .fooconvert-pro-metrics {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .fooconvert-chart-container {
+        padding: 15px;
+    }
+}
