@@ -1,6 +1,6 @@
 {
   "name": "fooconvert",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "license": "GPL-3.0-or-later",
   "title": "FooConvert",
   "description": "Turning clicks into conversions, visitors into customers – the ultimate catalyst for online success!",
@@ -19,13 +19,12 @@
     "build": "wp-scripts build --output-path=assets && npm run copy",
     "start": "wp-scripts start --output-path=assets",
     "develop": "wp-scripts start --no-watch --output-path=assets && npm run copy",
-    "copy": "node copy-media.mjs",
+    "copy": "node copy-assets.mjs",
     "i18n": "node make-pot.mjs",
     "composer:install": "composer install --prefer-dist --optimize-autoloader --no-dev",
     "composer:update": "composer update --optimize-autoloader",
     "composer:refresh": "composer dump-autoload --optimize",
     "package:create-zip": "npm run build && npm run i18n && npm run composer:refresh && gulp",
-    "package:gulp": "gulp",
     "package:deploy": "gulp freemius-deploy"
   },
   "devDependencies": {

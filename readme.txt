@@ -4,7 +4,7 @@ Tags: sales-optimization,conversion-tools,lead-generation,marketing,wordpress-ec
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 6.6.2
-Stable tag: 0.0.11
+Stable tag: 0.0.12
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -71,6 +71,10 @@ No, FooConvert is optimized for performance and has minimal impact on your websi
 The source code for this plugin is available publicly on GitHub [here](https://github.com/fooplugins/fooconvert).
 
 == Changelog ==
+
+= 0.0.12 =
+* Date Updated : 9 Nov 2024
+* Added event table to the database to store conversion events for each widget.
 
 = 0.0.11 =
 * Date Updated : 2 Nov 2024

@@ -42,8 +42,14 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
                 update_site_option( FOOCONVERT_OPTION_DATA, $plugin_data );
             }
 
+            // Make sure the database tables are created.
+            $schema = new Data\Schema();
+            $schema->create_event_table_if_needed();
+
+            // Create some demo content.
             $demo_content = new Admin\DemoContent();
             $demo_content->run();
+
         }
 
         /**
@@ -93,6 +99,8 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             if ( is_admin() ) {
                 new Admin\Init();
             }
+
+            new Ajax();
         }
 
         function ensure_frontend_css_enqueued() {

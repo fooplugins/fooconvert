@@ -6,11 +6,14 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 //options
 define( 'FOOCONVERT_OPTION_DATA', 'fooconvert-settings' );
+define( 'FOOCONVERT_OPTION_VERSION_CREATE_TABLE', 'fooconvert-version-create-table' );
+
 define( 'FOOCONVERT_META_KEY_DISPLAY_RULES', '_fooconvert_display_rules' );     // Meta key for the widget display rules.
 define( 'FOOCONVERT_META_KEY_DEMO_CONTENT', '_fooconvert_demo_content_v2' );    // Meta key for the demo content.
 define( 'FOOCONVERT_META_KEY_DEMO_CONTENT_V1', '_fooconvert_demo_content' );    // Meta key for the first version of demo content.
 
 //other
+define( 'FOOCONVERT_DB_TABLE_EVENTS', 'fooconvert_events' );
 define( 'FOOCONVERT_EDITOR_ASSET_HANDLE', 'fc-editor' );
 define( 'FOOCONVERT_FRONTEND_ASSET_HANDLE', 'fc-frontend' );
 define( 'FOOCONVERT_MENU_SLUG', 'fooconvert' );

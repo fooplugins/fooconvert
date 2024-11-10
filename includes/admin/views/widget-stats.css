@@ -1,0 +1,115 @@
+/* General container styling */
+.fooconvert-stats-container {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px; /* Space between the items */
+    margin: 20px 0 0;
+}
+
+.fooconvert-stats-container h1 {
+    font-size: 26px;
+    margin: 0;
+    color: #333;
+    grid-column: span 4;
+}
+
+.fooconvert-stats-container h2 {
+    font-size: 20px;
+    margin: 0;
+    color: #333;
+    grid-column: span 4;
+}
+
+/* Metrics layout */
+.fooconvert-basic-metrics,
+.fooconvert-pro-metrics {
+    grid-column: span 4; /* Span all columns for overall metrics section */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.metric {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.2s ease;
+    grid-column: span 1; /* Each metric takes one column */
+    margin-right: 10px; /* Add right margin to avoid touching neighboring blocks */
+}
+
+.metric:hover {
+    transform: translateY(-5px);
+}
+
+.metric h2 {
+    font-size: 12px;
+    color: #555;
+    margin: 0;
+}
+
+.metric p {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Chart containers */
+.fooconvert-chart-container {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+    grid-column: span 4; /* Chart takes up 4 columns */
+}
+
+.fooconvert-chart-container h2 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .fooconvert-stats-container {
+        grid-template-columns: repeat(2, 1fr); /* Change to 2 columns on smaller screens */
+    }
+
+    .fooconvert-basic-metrics,
+    .fooconvert-pro-metrics {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .metric {
+        grid-column: span 1;
+    }
+
+    .fooconvert-chart-container {
+        grid-column: span 2; /* Chart takes 2 columns on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .fooconvert-stats-container {
+        grid-template-columns: 1fr; /* One column layout for mobile */
+    }
+
+    .fooconvert-basic-metrics,
+    .fooconvert-pro-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .metric {
+        grid-column: span 1;
+    }
+
+    .fooconvert-chart-container {
+        grid-column: span 1; /* Chart takes 1 column on very small screens */
+    }
+}
