@@ -120,18 +120,10 @@ class Popup extends Base_Widget {
     }
 
     public function get_frontend_attributes( string $instance_id, array $attributes, WP_Block $block ) : array {
-        $attr = array();
 
+        $attr = array();
         $settings = Utils::get_array( $attributes, 'settings' );
         if ( ! empty( $settings ) ) {
-            $trigger = Utils::get_array( $settings, 'trigger' );
-            if ( ! empty( $trigger ) ) {
-                $trigger_type = Utils::get_string( $trigger, 'type' );
-                if ( $trigger_type === 'immediate' ) {
-                    $attr['open'] = '';
-                }
-            }
-
             $transitions = Utils::get_bool( $settings, 'transitions' );
             if ( ! empty( $transitions ) ) {
                 $attr['transitions'] = '';

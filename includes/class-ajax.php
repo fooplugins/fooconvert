@@ -22,6 +22,13 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
             add_action('wp_ajax_nopriv_fooconvert_log_event', array( $this, 'handle_log_event' ) );
         }
 
+        public function get_endpoint() : array {
+            return array(
+                'url' => admin_url( 'admin-ajax.php' ),
+                'nonce' => wp_create_nonce( 'fooconvert_nonce' )
+            );
+        }
+
         public function handle_log_event(): void
         {
             // TODO Check nonce!
@@ -64,8 +71,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
             $page_url = is_string($data['pageURL']) ? esc_url_raw($data['pageURL']) : null;
             $anonymous_user_guid = is_string( $data['uniqueID'] ) ? sanitize_text_field( $data['uniqueID'] ) : null;
 
+            // TODO: sanitize?
+            $extra_data = isset( $data['extraData'] ) && is_array( $data['extraData'] ) ? $data['extraData'] : null;
+
             $event = new Event();
-            $event->create( $widget_id, $event_type, $page_url, $device_type, null, $anonymous_user_guid );
+            $event->create( $widget_id, $event_type, $page_url, $device_type, null, $anonymous_user_guid, $extra_data );
 
             echo json_encode( array( 'status' => 'success' ) );
             wp_die();

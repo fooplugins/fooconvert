@@ -349,14 +349,6 @@ class Bar extends Base_Widget {
 
         $settings = Utils::get_array( $attributes, 'settings' );
         if ( ! empty( $settings ) ) {
-            $trigger = Utils::get_array( $settings, 'trigger' );
-            if ( ! empty( $trigger ) ) {
-                $trigger_type = Utils::get_string( $trigger, 'type' );
-                if ( $trigger_type === 'immediate' ) {
-                    $attr['open'] = '';
-                }
-            }
-
             $transitions = Utils::get_bool( $settings, 'transitions' );
             if ( ! empty( $transitions ) ) {
                 $attr['transitions'] = '';

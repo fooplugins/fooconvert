@@ -87,7 +87,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         private function __construct() {
             add_action( 'init', array( $this, 'load_translations' ) );
             add_action( 'init', array( $this, 'register_frontend_assets' ) );
-            add_action( 'wp_enqueue_scripts', array( $this, 'ensure_frontend_css_enqueued' ) );
+            add_action( 'wp_enqueue_scripts', array( $this, 'ensure_frontend_assets_enqueued' ) );
             add_action( 'enqueue_block_assets', array( $this, 'enqueue_editor_assets' ) );
             add_filter( 'block_categories_all', array( $this, 'register_block_category' ) );
 
@@ -100,14 +100,20 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
                 new Admin\Init();
             }
 
-            new Ajax();
+            $this->ajax = new Ajax();
         }
 
-        function ensure_frontend_css_enqueued() {
+        function ensure_frontend_assets_enqueued() {
             $is_frontend_js_enqueued = wp_script_is( FOOCONVERT_FRONTEND_ASSET_HANDLE );
             $is_frontend_css_enqueued = wp_style_is( FOOCONVERT_FRONTEND_ASSET_HANDLE );
             if ( $is_frontend_js_enqueued && !$is_frontend_css_enqueued ) {
                 wp_enqueue_style( FOOCONVERT_FRONTEND_ASSET_HANDLE );
+            }
+            if ( $is_frontend_js_enqueued ) {
+                $data = array(
+                    'endpoint' => $this->ajax->get_endpoint(),
+                );
+                wp_add_inline_script( FOOCONVERT_FRONTEND_ASSET_HANDLE, Utils::to_js_script( 'FOOCONVERT_CONFIG', $data ), 'before' );
             }
         }
 
@@ -160,6 +166,8 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @since 1.0.0
          */
         public FooConvert_Widgets $widgets;
+
+        public Ajax $ajax;
 
         //endregion
 
@@ -331,6 +339,8 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
                  */
                 do_action( 'fooconvert_registered_frontend_assets', FOOCONVERT_FRONTEND_ASSET_HANDLE );
             }
+//            $demo_content = new Admin\DemoContent();
+//            $demo_content->run( true );
         }
 
         /**

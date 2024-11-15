@@ -21,10 +21,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
         }
 
-        function cleanup_old_demo_content( $widget_post_types ) {
+        function cleanup_old_demo_content( $widget_post_types, $meta_key ) {
             // Check if old demo content already exists
             $old_demo_content = get_posts( [
-                'meta_key' => FOOCONVERT_META_KEY_DEMO_CONTENT_V1,
+                'meta_key' => $meta_key,
                 'meta_value' => '1',
                 'post_type' => $widget_post_types,
                 'post_status' => 'any',
@@ -39,7 +39,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
             }
         }
 
-        function run() {
+        function run( $force = false ) {
             $widget_post_types = [];
 
             // We need to make sure the CPT's are registered.
@@ -50,7 +50,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
             }
 
             // Cleanup old demo content
-            $this->cleanup_old_demo_content( $widget_post_types );
+            $this->cleanup_old_demo_content( $widget_post_types, FOOCONVERT_META_KEY_DEMO_CONTENT_V1 );
+
+            if ( $force === true ) {
+                $this->cleanup_old_demo_content( $widget_post_types, FOOCONVERT_META_KEY_DEMO_CONTENT );
+            }
 
             // Check if demo content already exists
             $existing_posts = get_posts( [

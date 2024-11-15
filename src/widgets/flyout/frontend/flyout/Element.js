@@ -1,4 +1,4 @@
-import { TriggeredElement } from "#frontend";
+import { LOG_EVENT_TYPES, TriggeredElement } from "#frontend";
 import "./root.scss";
 import cssText from '!!css-loader?{"sourceMap":false,"exportType":"string"}!postcss-loader!sass-loader!./host.scss';
 import markup from "./template.html";
@@ -26,7 +26,6 @@ class FlyoutElement extends TriggeredElement {
         this.#contentElement = this.shadowRoot.querySelector( "[part~=content]" );
         this.onOpenButtonClicked = this.onOpenButtonClicked.bind( this );
         this.onCloseButtonClicked = this.onCloseButtonClicked.bind( this );
-        this.onCloseTriggered = this.onCloseTriggered.bind( this );
     }
 
     /**
@@ -65,58 +64,6 @@ class FlyoutElement extends TriggeredElement {
         return this.#contentElement;
     }
 
-    // updateButtonTransform() {
-    //     const position = this.buttonPosition;
-    //     if ( [ 'left', 'right' ].includes( position ) ) {
-    //         const alignment = this.buttonAlignment;
-    //         const {
-    //             marginTop,
-    //             marginRight,
-    //             marginBottom,
-    //             marginLeft
-    //         } = getComputedStyle( this.buttonElement );
-    //
-    //         const vertical = `(${ marginTop } + ${ marginBottom })`;
-    //         const horizontal = `(${ marginLeft } + ${ marginRight })`;
-    //
-    //         const {
-    //             borderTopWidth,
-    //             borderLeftWidth,
-    //             borderRightWidth
-    //         } = getComputedStyle( this.contentElement );
-    //
-    //         let transform = '';
-    //         if ( position === 'left' ) {
-    //             switch ( alignment ) {
-    //                 case 'inside':
-    //                     break;
-    //                 case 'outside':
-    //                     transform = `translateX(calc(-100% - ${ horizontal })) translateY(calc(-100% - ${ vertical }))`;
-    //                     break;
-    //                 case 'corner':
-    //                     transform = `translateX(calc(-50% - ${ marginLeft } + (${ borderLeftWidth }/2))) translateY(calc(-50% - ${ marginTop } + (${ borderTopWidth }/2)))`;
-    //                     break;
-    //             }
-    //         } else {
-    //             switch ( alignment ) {
-    //                 case 'inside':
-    //                     break;
-    //                 case 'outside':
-    //                     transform = `translateX(calc(100% + ${ horizontal })) translateY(calc(-100% - ${ vertical }))`;
-    //                     break;
-    //                 case 'corner':
-    //                     transform = `translateX(calc(50% + ${ marginRight } - (${ borderRightWidth }/2))) translateY(calc(-50% - ${ marginTop } + (${ borderTopWidth }/2)))`;
-    //                     break;
-    //             }
-    //         }
-    //         if ( transform !== '' ) {
-    //             this.closeButtonElement.style.setProperty( 'transform', transform, 'important' );
-    //         } else {
-    //             this.closeButtonElement.style.removeProperty( 'transform' );
-    //         }
-    //     }
-    // }
-
     initialize() {
         if ( !this.hasAttribute( "tabindex" ) ) {
             this.setAttribute( "tabindex", "0" );
@@ -126,7 +73,6 @@ class FlyoutElement extends TriggeredElement {
 
     connected() {
         super.connected();
-        // this.updateButtonTransform();
         this.closeButtonElement.addEventListener( "click", this.onCloseButtonClicked );
         this.openButtonElement.addEventListener( "click", this.onOpenButtonClicked );
         this.#closeAnchor = this.initCloseAnchor( this.config?.closeAnchor );
@@ -174,18 +120,17 @@ class FlyoutElement extends TriggeredElement {
     }
 
     triggeredCallback( type, ...args ) {
+        super.triggeredCallback( type, ...args );
         this.open = true;
     }
 
     onOpenButtonClicked() {
+        this.log( LOG_EVENT_TYPES.OPEN, { 'trigger': 'open-button' } );
         this.open = true;
     }
 
     onCloseButtonClicked() {
-        this.open = false;
-    }
-
-    onCloseTriggered() {
+        this.log( LOG_EVENT_TYPES.CLOSE, { 'trigger': 'close-button' } );
         this.open = false;
     }
 
@@ -205,30 +150,6 @@ class FlyoutElement extends TriggeredElement {
         return this.hasAttribute( 'transitions' );
     }
 
-    get buttonPosition() {
-        if ( this.hasAttribute( 'button-none' ) ) {
-            return 'none';
-        } else if ( this.hasAttribute( 'button-left' ) ) {
-            return 'left';
-        } else {
-            return 'right';
-        }
-    }
-
-    get buttonAlignment() {
-        if ( this.hasAttribute( 'button-corner' ) ) {
-            return 'corner';
-        } else if ( this.hasAttribute( 'button-outside' ) ) {
-            return 'outside';
-        } else {
-            return 'inside';
-        }
-    }
-
-    get buttonIsToggle() {
-        return this.hasAttribute( 'button-toggle' );
-    }
-
     // noinspection JSUnusedGlobalSymbols,JSUnusedLocalSymbols
     attributeChangedCallback( name, oldValue, newValue ) {
         if ( name === "open" ) {
@@ -243,6 +164,8 @@ class FlyoutElement extends TriggeredElement {
         dom.classList.toggle( 'fc-flyout__open', state );
         dom.classList.toggle( className, state );
         this.dispatch( type );
+
+        this.log( state ? LOG_EVENT_TYPES.VIEW : LOG_EVENT_TYPES.DISMISS );
     }
 }
 

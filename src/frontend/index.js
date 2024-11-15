@@ -1,12 +1,12 @@
-export * from "./utils";
-export * from "./elements";
-export * from "./events";
-
 import "./index.scss";
 
 import * as utils from "./utils";
 import * as elements from "./elements";
-import * as events from "./events";
+import config from "./config";
+
+export * from "./utils";
+export * from "./elements";
+export { config };
 
 if ( !globalThis?.FooConvert ) {
     globalThis.FooConvert = {};
@@ -15,5 +15,8 @@ globalThis.FooConvert = {
     ...globalThis.FooConvert,
     ...utils,
     ...elements,
-    ...events
+    config: {
+        ...( globalThis.FooConvert?.config ?? {} ),
+        ...config
+    }
 };

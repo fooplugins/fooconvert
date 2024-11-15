@@ -1,4 +1,4 @@
-import { TriggeredElement } from "#frontend";
+import { LOG_EVENT_TYPES, TriggeredElement } from "#frontend";
 import "./root.scss";
 import cssText from '!!css-loader?{"sourceMap":false,"exportType":"string"}!postcss-loader!sass-loader!./host.scss';
 import markup from "./template.html";
@@ -25,7 +25,7 @@ class PopupElement extends TriggeredElement {
         this.#closeButtonElement = this.shadowRoot.querySelector( "[part~=close-button]" );
         this.#contentElement = this.shadowRoot.querySelector( "[part~=content]" );
         this.onCloseButtonClicked = this.onCloseButtonClicked.bind( this );
-        this.onCloseTriggered = this.onCloseTriggered.bind( this );
+        this.onBackdropClicked = this.onBackdropClicked.bind( this );
     }
 
     /**
@@ -75,7 +75,7 @@ class PopupElement extends TriggeredElement {
         super.connected();
         this.closeButtonElement.addEventListener( "click", this.onCloseButtonClicked );
         if ( !this.config?.backdropIgnore ) {
-            this.backdropElement.addEventListener( "click", this.onCloseTriggered );
+            this.backdropElement.addEventListener( "click", this.onBackdropClicked );
         }
         this.#closeAnchor = this.initCloseAnchor( this.config?.closeAnchor );
     }
@@ -114,7 +114,7 @@ class PopupElement extends TriggeredElement {
     disconnected() {
         super.disconnected();
         this.closeButtonElement.removeEventListener( "click", this.onCloseButtonClicked );
-        this.backdropElement.removeEventListener( "click", this.onCloseTriggered );
+        this.backdropElement.removeEventListener( "click", this.onBackdropClicked );
         if ( isFunction( this.#closeAnchor ) ) {
             this.#closeAnchor();
             this.#closeAnchor = null;
@@ -122,14 +122,17 @@ class PopupElement extends TriggeredElement {
     }
 
     triggeredCallback( type, ...args ) {
+        super.triggeredCallback( type, ...args );
         this.open = true;
     }
 
     onCloseButtonClicked() {
+        this.log( LOG_EVENT_TYPES.CLOSE, { 'trigger': 'close-button' } );
         this.open = false;
     }
 
-    onCloseTriggered() {
+    onBackdropClicked() {
+        this.log( LOG_EVENT_TYPES.CLOSE, { 'trigger': 'backdrop' } );
         this.open = false;
     }
 
@@ -166,6 +169,8 @@ class PopupElement extends TriggeredElement {
         dom.classList.toggle( 'fc-popup__open', state );
         dom.classList.toggle( className, state );
         this.dispatch( type );
+
+        this.log( state ? LOG_EVENT_TYPES.VIEW : LOG_EVENT_TYPES.DISMISS );
     }
 }
 

@@ -1,6 +1,6 @@
 import CustomElement from "./CustomElement";
 import { isFunction, isNumber, isString, isUndefined, strim } from "@steveush/utils";
-import { getDocumentScrollPercent } from "../utils";
+import { getDocumentScrollPercent, LOG_EVENT_TYPES } from "../utils";
 
 /**
  * @typedef {"immediate"|"anchor"|"exit-intent"|"scroll"|"timer"|"visible"} TriggerType
@@ -79,7 +79,9 @@ class TriggeredElement extends CustomElement {
      * @param {TriggerType} type
      * @param {...any} args
      */
-    triggeredCallback( type, ...args ) {}
+    triggeredCallback( type, ...args ) {
+        this.log( LOG_EVENT_TYPES.OPEN, { 'trigger': type } );
+    }
 
     /**
      *
@@ -125,11 +127,11 @@ class TriggeredElement extends CustomElement {
      * @returns {?function}
      */
     initImmediateTrigger() {
-        const handle = requestAnimationFrame( () => {
+        const handle = globalThis.requestAnimationFrame( () => {
             this.triggeredCallback( "immediate" );
         } );
         return () => {
-            cancelAnimationFrame( handle );
+            globalThis.cancelAnimationFrame( handle );
         };
     }
 
@@ -147,7 +149,7 @@ class TriggeredElement extends CustomElement {
             const targets = [];
             strim( target, "," ).forEach( id => {
                 const element = this.ownerDocument.getElementById( id );
-                if ( element instanceof HTMLElement ) {
+                if ( element instanceof globalThis.HTMLElement ) {
                     element.addEventListener( "click", listener );
                     targets.push( element );
                 }
@@ -178,9 +180,9 @@ class TriggeredElement extends CustomElement {
                 this.ownerDocument.body.removeEventListener( "mouseleave", listener );
             };
             if ( delay > 0 ) {
-                const timeoutId = setTimeout( init, delay * 1000 );
+                const timeoutId = globalThis.setTimeout( init, delay * 1000 );
                 return () => {
-                    clearTimeout( timeoutId );
+                    globalThis.clearTimeout( timeoutId );
                     destroy();
                 };
             }
@@ -196,11 +198,11 @@ class TriggeredElement extends CustomElement {
      */
     initTimerTrigger( timeout ) {
         if ( isNumber( timeout ) ) {
-            const timeoutId = setTimeout( () => {
+            const timeoutId = globalThis.setTimeout( () => {
                 this.triggeredCallback( "timer", timeout );
             }, timeout * 1000 );
             return () => {
-                clearTimeout( timeoutId );
+                globalThis.clearTimeout( timeoutId );
             };
         }
     }
@@ -238,13 +240,13 @@ class TriggeredElement extends CustomElement {
         if ( isString( target, true ) ) {
             const targets = strim( target, "," ).reduce( ( acc, id ) => {
                 const element = this.ownerDocument.getElementById( id );
-                if ( element instanceof HTMLElement ) {
+                if ( element instanceof globalThis.HTMLElement ) {
                     acc.push( element );
                 }
                 return acc;
             }, [] );
             if ( targets.length > 0 ) {
-                const observer = new global.IntersectionObserver( entries => {
+                const observer = new globalThis.IntersectionObserver( entries => {
                     const visible = entries.find( entry => entry.isIntersecting );
                     if ( visible ) {
                         observer.disconnect();
