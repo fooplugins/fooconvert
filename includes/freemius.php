@@ -16,36 +16,18 @@ if ( ! function_exists( 'fooconvert_fs' ) ) {
 			// Include Freemius SDK.
 			require_once FOOCONVERT_PATH . '/freemius/start.php';
 
-			$pro_available = false;
-			$has_addons = false;
-
-			if ( defined( 'FOOCONVERT_PRO_AVAILABLE' ) ) {
-				$pro_available = FOOCONVERT_PRO_AVAILABLE;
-			}
-			if ( defined( 'FOOCONVERT_ADDONS_AVAILABLE' ) ) {
-				$has_addons = FOOCONVERT_ADDONS_AVAILABLE;
-			}
-
             $fooconvert_fs = fs_dynamic_init( array(
 				'id'                  => '14677',
 				'slug'                => 'fooconvert',
 				'type'                => 'plugin',
 				'public_key'          => 'pk_88b6346482978e6778a77c484cfbe',
-				'is_premium'          => $pro_available,
-				//'has_premium_version' => $pro_available,
-				'has_addons'          => $has_addons,
-				'has_paid_plans'      => $pro_available,
-				//'trial'               => array(
-				//	'days'               => 7,
-				//	'is_require_payment' => true,
-				//),
-				'menu'                => array(
-					'slug'       => 'edit.php?post_type=fc-bar',
-					//'first-path' => 'edit.php?post_type=' . FOOBAR_CPT_NOTIFICATION . '&page=' . FOOBAR_ADMIN_MENU_HELP_SLUG,
-					'account'    => $pro_available || $has_addons,
-					'contact'    => false,
-					'support'    => false,
-				),
+				'is_premium'          => false,
+				'has_addons'          => true,
+				'has_paid_plans'      => false,
+                'menu'                => array(
+                    'slug'           => 'fooconvert',
+                    'support'        => false,
+                ),
 			) );
 		}
 
