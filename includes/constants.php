@@ -17,6 +17,7 @@ define( 'FOOCONVERT_DB_TABLE_EVENTS', 'fooconvert_events' );
 define( 'FOOCONVERT_EDITOR_ASSET_HANDLE', 'fc-editor' );
 define( 'FOOCONVERT_FRONTEND_ASSET_HANDLE', 'fc-frontend' );
 define( 'FOOCONVERT_MENU_SLUG', 'fooconvert' );
+define( 'FOOCONVERT_MENU_SLUG_DASHBOARD', 'fooconvert-dashboard' );
 
 //SVG KSES
 /**
