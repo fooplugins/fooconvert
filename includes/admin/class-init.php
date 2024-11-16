@@ -24,7 +24,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             add_action( 'in_admin_header', array($this, 'add_custom_header') );
             add_action( 'admin_enqueue_scripts', array($this, 'admin_enqueues') );
 
-            new Stats();
+            new namespace\Stats();
+            new namespace\ContainerManager();
+            new namespace\Settings();
         }
 
         public function check_database() {
