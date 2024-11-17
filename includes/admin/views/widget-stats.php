@@ -18,21 +18,41 @@ if ( $widget_id ) {
     <!-- Basic Metrics -->
     <div class="fooconvert-basic-metrics">
         <div class="metric">
-            <p id="total-events"><?php _e('Loading...', 'fooconvert'); ?></p>
+            <p id="metric-total_events">...</p>
             <h2><?php _e('Total Events', 'fooconvert'); ?></h2>
+            <span data-balloon-pos="down" data-balloon="<?php esc_attr_e( 'Total events logged for the widget for it\'s lifetime.', 'fooconvert' ); ?>">
+                <i class="dashicons dashicons-editor-help"></i>
+            </span>
         </div>
         <div class="metric">
-            <p id="total-views"><?php _e('Loading...', 'fooconvert'); ?></p>
+            <p id="metric-total_views">...</p>
             <h2><?php _e('Total Views', 'fooconvert'); ?></h2>
+            <span data-balloon-pos="down" data-balloon="<?php esc_attr_e( 'Total number of times the widget has been viewed by a visitor.', 'fooconvert' ); ?>">
+                <i class="dashicons dashicons-editor-help"></i>
+            </span>
         </div>
         <div class="metric">
-            <p id="total-clicks"><?php _e('Loading...', 'fooconvert'); ?></p>
-            <h2><?php _e('Total Clicks', 'fooconvert'); ?></h2>
+            <p id="metric-total_unique_visitors">...</p>
+            <h2><?php _e('Total Visitors', 'fooconvert'); ?></h2>
+            <span data-balloon-pos="down" data-balloon="<?php esc_attr_e( 'Total number of unique visitors that have viewed the widget.', 'fooconvert' ); ?>">
+                <i class="dashicons dashicons-editor-help"></i>
+            </span>
         </div>
         <div class="metric">
-            <p id="click-through-rate"><?php _e('Loading...', 'fooconvert'); ?></p>
-            <h2><?php _e('Click-Through Rate (CTR)', 'fooconvert'); ?></h2>
+            <p id="metric-total_engagements">...</p>
+            <h2><?php _e('Total Engagements', 'fooconvert'); ?></h2>
+            <span data-balloon-pos="down" data-balloon="<?php esc_attr_e( 'Total number of engagements that have been made with the widget (clicks, opens, etc).', 'fooconvert' ); ?>">
+                <i class="dashicons dashicons-editor-help"></i>
+            </span>
         </div>
+<!--        <div class="metric">-->
+<!--            <p id="metric-total-engagements">...</p>-->
+<!--            <h2>--><?php //_e('Total Engagements', 'fooconvert'); ?><!--</h2>-->
+<!--        </div>-->
+<!--        <div class="metric">-->
+<!--            <p id="metric-engagement-rate">...</p>-->
+<!--            <h2>--><?php //_e('Engagement Rate', 'fooconvert'); ?><!--</h2>-->
+<!--        </div>-->
     </div>
 
     <!-- Recent Activity Chart -->
@@ -40,7 +60,6 @@ if ( $widget_id ) {
         <h2><?php _e('Recent Activity (7-Day)', 'fooconvert'); ?></h2>
         <canvas id="lineChart"></canvas>
     </div>
-
 
 <!--    <div class="fooconvert-pro-metrics">-->
 <!--        <div class="metric">-->
