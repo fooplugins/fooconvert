@@ -18,7 +18,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * disabled or plugin is activated on an individual blog.
          */
         public static function activated( bool $network_wide ) {
-            $plugin_data = get_site_option( FOOCONVERT_OPTION_DATA );
+            $plugin_data = get_site_option( FOOCONVERT_OPTION_VERSION );
             $save_data = false;
             if ( false === $plugin_data ) {
                 $plugin_data = array(
@@ -39,7 +39,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             }
 
             if ( $save_data ) {
-                update_site_option( FOOCONVERT_OPTION_DATA, $plugin_data );
+                update_site_option( FOOCONVERT_OPTION_VERSION, $plugin_data );
             }
 
             // Make sure the database tables are created.
@@ -49,7 +49,6 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             // Create some demo content.
             $demo_content = new Admin\DemoContent();
             $demo_content->run();
-
         }
 
         /**
