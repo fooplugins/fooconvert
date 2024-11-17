@@ -39,21 +39,36 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 wp_die( __( 'Invalid nonce!!', 'fooconvert' ) );
             }
 
-            $widget_id = intval( sanitize_text_field( $_POST['widget_id'] ) );
+            $widget_id = isset( $_POST['widget_id'] ) ? intval( sanitize_text_field( $_POST['widget_id'] ) ) : 0;
+            $days = isset( $_POST['days'] ) ? intval( sanitize_text_field( $_POST['days'] ) ) : 7;
+            if ( $days === 0 || $days > 100 ) {
+                $days = 7; //Make sure the days is at least 1 and at most 100.
+            }
+
+            if ( $widget_id === 0 ) {
+                wp_die(__('Invalid widget ID!!', 'fooconvert'));
+            }
 
             $event = new Event();
+
+            // Get summary data first.
             $widget_summary_data = $event->get_widget_summary_data( $widget_id );
 
-            $total_events = intval( $widget_summary_data['total_events'] );
-            $total_views = intval( $widget_summary_data['total_views'] );
-            $total_clicks = intval( $widget_summary_data['total_clicks'] );
+            $metrics = [
+                'total_events' => 0,
+                'total_views' => 0,
+                'total_unique_visitors' => 0,
+                'total_engagements' => 0,
+            ];
 
-            $data = array(
-                'total_events' => $total_events,
-                'total_views' => $total_views,
-                'total_clicks' => $total_clicks,
-                'click_through_rate' => round(( $total_clicks / $total_views ) * 100, 2),
-            );
+            $metrics = array_merge( $metrics, $widget_summary_data );
+
+            $data = [
+                'metrics' => apply_filters( 'fooconvert_build_widget_metrics', $metrics, $widget_id )
+            ];
+
+            // Get daily activity next.
+            $daily_activity = $event->get_widget_daily_activity( $widget_id, $days );
 
             $recent_activity_chart_data = [
                 'labels' => [],
@@ -62,7 +77,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 'unique_visitors' => []
             ];
 
-            foreach ( $widget_summary_data['recent_activity'] as $day) {
+            foreach ( $daily_activity as $day ) {
                 $recent_activity_chart_data['labels'][] = $day['event_date'];
                 $recent_activity_chart_data['views'][] = intval($day['views']);
                 $recent_activity_chart_data['clicks'][] = intval($day['clicks']);
@@ -202,10 +217,15 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
             // Enqueue the local Chart.js script
             wp_enqueue_script(
                 'chartjs',
-                FOOCONVERT_URL . 'assets/admin/vendor/chartjs/chart.min.js',
+                FOOCONVERT_ASSETS_URL . 'admin/vendor/chartjs/chart.min.js',
                 array(),
                 '4.4.6',  // specify the version of Chart.js
                 true
+            );
+
+            wp_enqueue_style(
+                'fooconvert-balloon-css',
+                FOOCONVERT_ASSETS_URL . 'admin/vendor/balloon/balloon.css'
             );
 
             wp_enqueue_style(

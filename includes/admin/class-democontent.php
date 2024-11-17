@@ -125,6 +125,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 // Randomly pick an event type based on probabilities
                 $event_type = $this->weighted_random_event( $event_types );
 
+                // TODO : figure out subtype based off event_type.
+                $event_subtype = null;
+
+                // TODO : figure out sentiment, based off event_type.
+                $sentiment = null;
+
                 // Random timestamp within the last 30 days
                 $timestamp = date('Y-m-d H:i:s', strtotime("-" . mt_rand(0, 30) . " days -" . mt_rand(0, 86400) . " seconds"));
 
@@ -153,14 +159,18 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
                 // Insert the generated event into the database
                 $event->create(
-                    $widget_id,
-                    $event_type,
-                    home_url( '/page-' . mt_rand(1, 10) ),
-                    $device_type,
-                    $user_id,
-                    $anonymous_user_guid,
-                    $extra_data,
-                    $timestamp
+                    [
+                        'widget_id' => $widget_id,
+                        'event_type' => $event_type,
+                        'event_subtype' => $event_subtype,
+                        'sentiment' => $sentiment,
+                        'page_url' => home_url( '/page-' . mt_rand(1, 10) ),
+                        'device_type' => $device_type,
+                        'user_id' => $user_id,
+                        'anonymous_user_guid' => $anonymous_user_guid,
+                        'extra_data' => $extra_data,
+                        'timestamp' => $timestamp
+                    ]
                 );
             }
         }

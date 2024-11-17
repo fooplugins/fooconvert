@@ -89,6 +89,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             add_action( 'wp_enqueue_scripts', array( $this, 'ensure_frontend_assets_enqueued' ) );
             add_action( 'enqueue_block_assets', array( $this, 'enqueue_editor_assets' ) );
             add_filter( 'block_categories_all', array( $this, 'register_block_category' ) );
+            add_filter( 'fooconvert_event_data', array( $this, 'adjust_event_data' ), 10, 3 );
 
             $this->components = new FooConvert_Components();
             $this->display_rules = new FooConvert_Display_Rules();
@@ -102,6 +103,36 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             $this->ajax = new Ajax();
         }
 
+        /**
+         * Allows adjusting the event data before it is saved.
+         *
+         * @param array $data The event data to be saved.
+         * @param string $post_type The type of post that the event is associated with.
+         * @param string $template The name of the template that the event is associated with.
+         *
+         */
+        function adjust_event_data( $data, $post_type, $template ) {
+            // We want to override event_type in certain scenarios.
+            // e.g. if a button is clicked, then event_type will be 'conversion'
+
+            // We want to check events to determine if a subtype is needed.
+            // e.g. if the event_type is 'click' then set the subtype to 'engagement';
+            // e.g. if the event_type is 'open' and the visitor manually opened it, then set the subtype to 'engagement';
+
+            // We also want to determine sentiment for certain events.
+            // e.g. if the event_type is 'close' then check how quickly it was closed to determine a negative sentiment;
+            // e.g. if the event_type is 'open' and the visitor manually opened it, then set positive negative;
+
+            return $data;
+        }
+
+        /**
+         * Callback for the `wp_enqueue_scripts` action.
+         *
+         * This hook makes sure that the frontend CSS is enqueued when the frontend JS is enqueued.
+         *
+         * @since 1.0.0
+         */
         function ensure_frontend_assets_enqueued() {
             $is_frontend_js_enqueued = wp_script_is( FOOCONVERT_FRONTEND_ASSET_HANDLE );
             $is_frontend_css_enqueued = wp_style_is( FOOCONVERT_FRONTEND_ASSET_HANDLE );
@@ -338,8 +369,6 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
                  */
                 do_action( 'fooconvert_registered_frontend_assets', FOOCONVERT_FRONTEND_ASSET_HANDLE );
             }
-//            $demo_content = new Admin\DemoContent();
-//            $demo_content->run( true );
         }
 
         /**

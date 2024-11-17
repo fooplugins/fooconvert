@@ -121,8 +121,13 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                 $wpdb->prepare(
                     "SELECT 
                     COUNT(*) as total_events,
-                    COUNT(CASE WHEN event_type = 'view' THEN 1 END) as total_views,
+                    COUNT(CASE WHEN event_type = 'open' THEN 1 END) as total_views,
+                    COUNT(CASE WHEN event_type = 'close' THEN 1 END) as total_dismiss,
                     COUNT(CASE WHEN event_type = 'click' THEN 1 END) as total_clicks,
+                    COUNT(CASE WHEN event_type = 'conversion' THEN 1 END) as total_conversions,
+                    COUNT(CASE WHEN event_subtype = 'engagement' THEN 1 END) as total_engagements,
+                    COUNT(CASE WHEN sentiment = 1 THEN 1 END) as total_positive_sentiment,
+                    COUNT(CASE WHEN sentiment = 0 THEN 1 END) as total_negative_sentiment,
                     COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as total_unique_visitors
                     FROM {$table_name}
                     WHERE widget_id = %d",
