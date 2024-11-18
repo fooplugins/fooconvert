@@ -21,6 +21,17 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
         }
 
+        /**
+         * Cleans up old demo content.
+         *
+         * This function will delete any posts of the given post types
+         * that have the meta key set to the given value.
+         *
+         * @param array $widget_post_types The post types to search for.
+         * @param string $meta_key The meta key to search for.
+         *
+         * @return void
+         */
         function cleanup_old_demo_content( $widget_post_types, $meta_key ) {
             // Check if old demo content already exists
             $old_demo_content = get_posts( [
@@ -39,23 +50,32 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
             }
         }
 
-        function run( $force = false ) {
-            $widget_post_types = [];
+        /**
+         * Deletes all demo content.
+         *
+         * This function will delete all demo content created by the `create` method.
+         *
+         * @since 1.0.0
+         */
+        function delete() {
+            $this->cleanup_old_demo_content( $this->register_and_get_widget_post_types(), FOOCONVERT_META_KEY_DEMO_CONTENT );
+        }
 
-            // We need to make sure the CPT's are registered.
-            $widgets = FooConvert::plugin()->widgets->get_instances();
-            foreach ( $widgets as $widget ) {
-                $post_type = $widget->get_post_type();
-                $widget_post_types[] = $post_type;
-                if ( !post_type_exists( $post_type ) ) {
-                    $widget->register_post_type();
-                }
-            }
-
-            // Cleanup old demo content
-            $this->cleanup_old_demo_content( $widget_post_types, FOOCONVERT_META_KEY_DEMO_CONTENT_V1 );
+        /**
+         * Create demo content for the plugin.
+         *
+         * This function will create demo content for the plugin, unless
+         * demo content already exists. If $force is set to true, it will
+         * delete any existing demo content, and then create the demo content.
+         *
+         * @param bool $force If set to true, will delete existing demo content.
+         * @return int The number of demo content created.
+         */
+        function create( $force = false ) {
+            $widget_post_types = $this->register_and_get_widget_post_types();
 
             if ( $force === true ) {
+                // Cleanup old demo content
                 $this->cleanup_old_demo_content( $widget_post_types, FOOCONVERT_META_KEY_DEMO_CONTENT );
             }
 
@@ -274,6 +294,24 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 <!-- /wp:fc/bar -->'
                 ],
             ];
+        }
+
+        /**
+         * @param array $widget_post_types
+         * @return array
+         */
+        public function register_and_get_widget_post_types()
+        {
+            // We need to make sure the CPT's are registered.
+            $widgets = FooConvert::plugin()->widgets->get_instances();
+            foreach ($widgets as $widget) {
+                $post_type = $widget->get_post_type();
+                $widget_post_types[] = $post_type;
+                if (!post_type_exists($post_type)) {
+                    $widget->register_post_type();
+                }
+            }
+            return $widget_post_types;
         }
     }
 }
