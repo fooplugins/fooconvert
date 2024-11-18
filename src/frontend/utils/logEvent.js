@@ -23,17 +23,21 @@ export const LOG_EVENT_TYPES = {
  * Log an event for a given widget.
  *
  * @param {number} widgetId The ID of the widget to log the event for.
+ * @param {string} postType The post type of the widget.
+ * @param {string} template The template used within the widget.
  * @param {string} eventType The type of event to log.
  * @param {object} [extraData] An optional object containing any extra info for the event.
  */
-const log = ( widgetId, eventType, extraData ) => {
-    if ( isNumber( widgetId ) && isString( eventType ) ) {
+const logEvent = ( widgetId, postType, template, eventType, extraData ) => {
+    if ( isNumber( widgetId ) && isString( postType ) && isString( template ) && isString( eventType ) ) {
         const deviceType = getDeviceType();
         const uniqueID = getUniqueID();
         const pageURL = globalThis?.window?.location?.href;
         if ( isString( uniqueID ) && isString( pageURL ) ) {
             const data = {
                 widgetId,
+                postType,
+                template,
                 eventType,
                 deviceType,
                 pageURL,
@@ -70,4 +74,4 @@ const log = ( widgetId, eventType, extraData ) => {
     }
 };
 
-export default log;
+export default logEvent;

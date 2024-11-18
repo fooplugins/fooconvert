@@ -110,8 +110,9 @@ const OpenTriggerComponent = ( props ) => {
                 hideLabelFromVision={ hideLabelFromVision }
                 help={ selected?.help }
                 value={ selected.value }
-                options={ options }
+                options={ options.map( opt => ({ label: opt.label, value: opt.value }) ) }
                 onChange={ nextValue => setTrigger( nextValue ) }
+                __nextHasNoMarginBottom
             />
         );
     };
@@ -126,6 +127,7 @@ const OpenTriggerComponent = ( props ) => {
                         help={ selected?.dataHelp }
                         value={ data ?? "" }
                         onChange={ value => setTrigger( selected.value, value ) }
+                        __nextHasNoMarginBottom
                     />
                 );
             case "scroll":
@@ -140,6 +142,7 @@ const OpenTriggerComponent = ( props ) => {
                         min={ selected.value === 'scroll' ? 1 : 0 }
                         max={ 100 }
                         onChange={ value => setTrigger( selected.value, value ) }
+                        __nextHasNoMarginBottom
                     />
                 );
         }

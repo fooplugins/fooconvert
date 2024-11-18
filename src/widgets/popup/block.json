@@ -16,6 +16,9 @@
     "html": false
   },
   "attributes": {
+    "template": {
+      "type": "string"
+    },
     "postId": {
       "type": "number"
     },

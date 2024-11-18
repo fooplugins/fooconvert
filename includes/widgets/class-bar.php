@@ -106,7 +106,7 @@ class Bar extends Base_Widget {
                 'title' => __( 'Empty', 'fooconvert' ),
                 'description' => __( 'Empty', 'fooconvert' ),
                 'attributes' => array(
-                    'variation' => 'empty'
+                    'template' => 'empty'
                 ),
                 'innerBlocks' => array(
                     array( 'fc/bar-open-button' ),
@@ -166,7 +166,7 @@ class Bar extends Base_Widget {
                             )
                         )
                     ),
-                    'variation' => 'black_friday_bar'
+                    'template' => 'black_friday_bar'
                 ),
                 'innerBlocks' => array(
                     array(
@@ -233,7 +233,7 @@ class Bar extends Base_Widget {
                 'icon' => '',
                 'attributes' => array(
                     'viewState' => 'open',
-                    'variation' => 'cookie_consent_bar',
+                    'template' => 'cookie_consent_bar',
                     'settings' => array(
                         'position' => 'bottom',
                         'transitions' => true,
@@ -396,10 +396,16 @@ class Bar extends Base_Widget {
     }
 
     public function get_frontend_data( string $instance_id, array $attributes, WP_Block $block ) : array {
-        $data = array();
+        $data = array(
+            'postType' => $this->get_post_type(),
+        );
         $post_id = Utils::get_int( $attributes, 'postId' );
         if ( ! empty( $post_id ) ) {
             $data['postId'] = $post_id;
+        }
+        $template = Utils::get_string( $attributes, 'template' );
+        if ( ! empty( $template ) ) {
+            $data['template'] = $template;
         }
 
         $settings = Utils::get_array( $attributes, 'settings' );

@@ -1,5 +1,5 @@
 import { isPlainObject, isString } from "@steveush/utils";
-import { getElementConfiguration, log } from "../utils";
+import { getElementConfiguration } from "../utils";
 
 class CustomElement extends HTMLElement {
     constructor() {
@@ -122,18 +122,6 @@ class CustomElement extends HTMLElement {
             return this.dispatchEvent( new Event( type ) );
         }
         throw new DOMException( "Failed to execute 'dispatch' on 'CustomElement': parameter 1 is not of type 'string' or is empty.", "InvalidStateError" )
-    }
-
-    /**
-     *
-     * @param {string} type
-     * @param {object} [data]
-     */
-    log( type, data ) {
-        if ( !this.isConfigurationInitialized ) {
-            this.initializeConfiguration();
-        }
-        log( this.config?.postId, type, data );
     }
 
     //endregion

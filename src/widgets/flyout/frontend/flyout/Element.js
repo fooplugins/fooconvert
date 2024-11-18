@@ -12,10 +12,6 @@ template.innerHTML = markup;
 
 class FlyoutElement extends TriggeredElement {
 
-    static get observedAttributes() {
-        return [ "open", "position" ];
-    }
-
     constructor() {
         super();
         this.attachShadow( { mode: "open" } ).append( template.content.cloneNode( true ) );
@@ -31,6 +27,12 @@ class FlyoutElement extends TriggeredElement {
     /**
      * @property {{trigger?: string|null, triggerData?: string|null}} config
      */
+
+    /**
+     *
+     * @type {?function}
+     */
+    #destroyCloseAnchorTrigger = null;
 
     /**
      * @type {?HTMLDivElement}
@@ -64,6 +66,14 @@ class FlyoutElement extends TriggeredElement {
         return this.#contentElement;
     }
 
+    get position() {
+        return this.hasAttribute( "position" );
+    }
+
+    get transitions() {
+        return this.hasAttribute( 'transitions' );
+    }
+
     initialize() {
         if ( !this.hasAttribute( "tabindex" ) ) {
             this.setAttribute( "tabindex", "0" );
@@ -75,97 +85,33 @@ class FlyoutElement extends TriggeredElement {
         super.connected();
         this.closeButtonElement.addEventListener( "click", this.onCloseButtonClicked );
         this.openButtonElement.addEventListener( "click", this.onOpenButtonClicked );
-        this.#closeAnchor = this.initCloseAnchor( this.config?.closeAnchor );
-    }
-
-    /**
-     *
-     * @type {?function}
-     */
-    #closeAnchor = null;
-
-    /**
-     *
-     * @param {string} target
-     * @returns {?function}
-     */
-    initCloseAnchor( target ) {
-        if ( isString( target, true ) ) {
-            const listener = event => {
-                event.preventDefault();
-                this.open = false;
-            };
-            const targets = [];
-            strim( target, "," ).forEach( id => {
-                const element = this.ownerDocument.getElementById( id );
-                if ( element instanceof HTMLElement ) {
-                    element.addEventListener( "click", listener );
-                    targets.push( element );
-                }
-            } );
-            return () => {
-                targets.forEach( element => element.removeEventListener( "click", listener ) );
-            };
-        }
     }
 
     disconnected() {
         super.disconnected();
         this.closeButtonElement.removeEventListener( "click", this.onCloseButtonClicked );
         this.openButtonElement.removeEventListener( "click", this.onOpenButtonClicked );
-        if ( isFunction( this.#closeAnchor ) ) {
-            this.#closeAnchor();
-            this.#closeAnchor = null;
-        }
     }
 
-    triggeredCallback( type, ...args ) {
-        super.triggeredCallback( type, ...args );
-        this.open = true;
+    connectTrigger() {
+        super.connectTrigger();
+        this.#destroyCloseAnchorTrigger = this.initAnchorTrigger( this.config?.closeAnchor, this.onCloseAnchorTrigger );
+    }
+
+    disconnectTrigger() {
+        super.disconnectTrigger();
+        if ( isFunction( this.#destroyCloseAnchorTrigger ) ) {
+            this.#destroyCloseAnchorTrigger();
+            this.#destroyCloseAnchorTrigger = null;
+        }
     }
 
     onOpenButtonClicked() {
-        this.log( LOG_EVENT_TYPES.OPEN, { 'trigger': 'open-button' } );
-        this.open = true;
+        this.setOpen( true, { 'trigger': 'open-button' } );
     }
 
     onCloseButtonClicked() {
-        this.log( LOG_EVENT_TYPES.CLOSE, { 'trigger': 'close-button' } );
-        this.open = false;
-    }
-
-    get open() {
-        return this.hasAttribute( "open" );
-    }
-
-    set open( state ) {
-        this.toggleAttribute( "open", Boolean( state ) );
-    }
-
-    get position() {
-        return this.hasAttribute( "position" );
-    }
-
-    get transitions() {
-        return this.hasAttribute( 'transitions' );
-    }
-
-    // noinspection JSUnusedGlobalSymbols,JSUnusedLocalSymbols
-    attributeChangedCallback( name, oldValue, newValue ) {
-        if ( name === "open" ) {
-            this.#onOpenChanged( this.open );
-        }
-    }
-
-    #onOpenChanged( state ) {
-        const type = state ? "open" : "close";
-        const dom = document.documentElement;
-        const className = `${ this.id }__open`;
-        dom.classList.toggle( 'fc-flyout__open', state );
-        dom.classList.toggle( className, state );
-        this.dispatch( type );
-
-        this.log( state ? LOG_EVENT_TYPES.VIEW : LOG_EVENT_TYPES.DISMISS );
+        this.setOpen( false, { 'trigger': 'close-button' } );
     }
 }
 

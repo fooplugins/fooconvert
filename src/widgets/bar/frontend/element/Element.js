@@ -119,8 +119,8 @@ class BarElement extends TriggeredElement {
         }
     }
 
-    triggeredCallback( type, ...args ) {
-        super.triggeredCallback( type, ...args );
+    onOpenTrigger( type, ...args ) {
+        super.onOpenTrigger( type, ...args );
         this.open = true;
     }
 
