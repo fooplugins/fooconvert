@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 //options
 define( 'FOOCONVERT_OPTION_DATA', 'fooconvert-settings' );
+define( 'FOOCONVERT_OPTION_VERSION', 'fooconvert-version' );
 define( 'FOOCONVERT_OPTION_VERSION_CREATE_TABLE', 'fooconvert-version-create-table' );
 
 define( 'FOOCONVERT_META_KEY_DISPLAY_RULES', '_fooconvert_display_rules' );     // Meta key for the widget display rules.
@@ -17,6 +18,7 @@ define( 'FOOCONVERT_DB_TABLE_EVENTS', 'fooconvert_events' );
 define( 'FOOCONVERT_EDITOR_ASSET_HANDLE', 'fc-editor' );
 define( 'FOOCONVERT_FRONTEND_ASSET_HANDLE', 'fc-frontend' );
 define( 'FOOCONVERT_MENU_SLUG', 'fooconvert' );
+define( 'FOOCONVERT_MENU_SLUG_DASHBOARD', 'fooconvert-dashboard' );
 
 //SVG KSES
 /**

@@ -72,15 +72,17 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
              */
 
             $sql = "CREATE TABLE $table_name (
-                id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-                widget_id BIGINT(20) UNSIGNED NOT NULL,
-                event_type VARCHAR(255) NOT NULL,
-                page_url TEXT DEFAULT NULL,
-                device_type VARCHAR(50) DEFAULT NULL,
-                anonymous_user_guid VARCHAR(255) DEFAULT NULL,
-                user_id BIGINT(20) UNSIGNED DEFAULT NULL,
+                id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                widget_id bigint(20) unsigned NOT NULL,
+                event_type varchar(255) NOT NULL,
+                event_subtype varchar(255) DEFAULT NULL,
+                sentiment boolean DEFAULT NULL,
+                page_url text DEFAULT NULL,
+                device_type varchar(50) DEFAULT NULL,
+                anonymous_user_guid varchar(255) DEFAULT NULL,
+                user_id bigint(20) unsigned DEFAULT NULL,
                 extra_data longtext DEFAULT NULL,
-                timestamp DATETIME DEFAULT $timestamp_default,
+                timestamp datetime DEFAULT $timestamp_default,
                 PRIMARY KEY (id)
             ) $charset_collate;";
 
@@ -93,6 +95,16 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
              * Purpose : many queries use widget_id and filter by event_type (e.g., counting views, conversions, dismissals).
              */
             parent::safe_create_index($table_name, 'idx_widget_event_type', 'widget_id, event_type');
+
+            /*
+             * Purpose : many queries also use widget_id and filter by event_subtype (e.g., counting interactions, bounces).
+             */
+            parent::safe_create_index($table_name, 'idx_widget_event_subtype', 'widget_id, event_subtype');
+
+            /*
+             * Purpose : many queries also use widget_id and filter by sentiment.
+             */
+            parent::safe_create_index($table_name, 'idx_widget_sentiment', 'widget_id, sentiment');
 
             /*
              * Purpose: This index will be particularly helpful when filtering by both widget_id and timestamp,

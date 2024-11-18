@@ -1,0 +1,21 @@
+/* Custom Header */
+.fooconvert-admin-header .fooconvert-title {
+    margin-left: -20px;
+    background-color: #fff;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.fooconvert-admin-header .fooconvert-title .fooconvert-logo {
+    height: 50px;
+}
+.fooconvert-admin-header .fooconvert-title p {
+    color: #6b3ae5;
+}
+.fooconvert-admin-header .fooconvert-notices-container {
+    margin: 0;
+}
+.fooconvert-admin-header.drop {
+    padding-top: 40px;
+}

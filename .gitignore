@@ -10,3 +10,4 @@ dist
 .test-pages
 package-lock.json
 assets
+!/src/admin/vendor
