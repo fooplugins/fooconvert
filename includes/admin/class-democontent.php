@@ -45,8 +45,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
             // We need to make sure the CPT's are registered.
             $widgets = FooConvert::plugin()->widgets->get_instances();
             foreach ( $widgets as $widget ) {
-                $widget_post_types[] = $widget->get_post_type();
-                $widget->register_post_type();
+                $post_type = $widget->get_post_type();
+                $widget_post_types[] = $post_type;
+                if ( !post_type_exists( $post_type ) ) {
+                    $widget->register_post_type();
+                }
             }
 
             // Cleanup old demo content
@@ -67,9 +70,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
             if ( !empty( $existing_posts ) ) {
                 // Demo content already exists; do nothing.
-                return;
+                return 0;
             }
 
+            $count = 0;
             foreach ( $this->get_demo_content() as $content) {
                 $content_for_insert = $content;
                 $post_content = $content['post_content'];
@@ -99,7 +103,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
                 // Create some events for the demo content.
                 $this->create_events( $post_id, mt_rand( 500, 1000 ) );
+
+                $count++;
             }
+
+            return $count;
         }
 
 
