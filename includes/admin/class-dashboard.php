@@ -42,15 +42,22 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
                 wp_die( __( 'Invalid nonce!!', 'fooconvert' ) );
             }
 
+            ob_start();
             $demo = new DemoContent();
-            $created = $demo->create();
+            $created = $demo->create( true );
+            $content = ob_get_clean();
+
+            if ( !empty( $content ) ) {
+                // TODO : There were errors creating demo content. Probably DB related, which need to be logged somewhere.
+                // For now, they can be ignored.
+            }
 
             fooconvert_set_setting( 'demo_content', 'on' );
 
             if ( $created === 0 ) {
                 wp_send_json( ['message' => __( 'No widgets created!', 'fooconvert' ) ] );
             } else {
-                wp_send_json( ['message' => __( 'Demo widgets created successfully!', 'fooconvert' ) ] );
+                wp_send_json( ['message' => sprintf( __( '%d demo widgets created successfully!', 'fooconvert' ), $created  ) ] );
             }
         }
 

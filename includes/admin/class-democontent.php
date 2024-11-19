@@ -121,8 +121,13 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                     'post_content' => $post_content
                 ) );
 
+                $meta = [
+                    'post_type' => $content_for_insert['post_type'],
+                    'template' => $content_for_insert['template']
+                ];
+
                 // Create some events for the demo content.
-                $this->create_events( $post_id, mt_rand( 500, 1000 ) );
+                $this->create_events( $post_id, $meta, mt_rand( 500, 1000 ) );
 
                 $count++;
             }
@@ -137,7 +142,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
          * @param $widget_id
          * @return void
          */
-        function create_events( $widget_id, $num_events = 1000 ) {
+        function create_events( $widget_id, $meta, $num_events = 1000 ) {
             $event = new Event();
 
             // Define event types and probabilities (more positive events)
@@ -198,7 +203,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                         'anonymous_user_guid' => $anonymous_user_guid,
                         'extra_data' => $extra_data,
                         'timestamp' => $timestamp
-                    ]
+                    ],
+                    $meta
                 );
             }
         }
@@ -223,6 +229,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                     'post_title' => 'Black Friday Bar [Demo]',
                     'post_status' => 'draft',
                     'post_type' => 'fc-bar',
+                    'template' => 'black_friday_bar',
                     'meta_input' => [
                         FOOCONVERT_META_KEY_DISPLAY_RULES => [
                             'location' => [
@@ -260,6 +267,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                     'post_title' => 'Cookie Consent Bar [Demo]',
                     'post_status' => 'draft',
                     'post_type' => 'fc-bar',
+                    'template' => 'cookie_consent_bar',
                     'meta_input' => [
                         FOOCONVERT_META_KEY_DISPLAY_RULES => [
                             'location' => [
