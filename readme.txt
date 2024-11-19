@@ -72,6 +72,12 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 
 == Changelog ==
 
+= 0.0.15 =
+* Date Updated : 16 Nov 2024
+* Added dashboard page, which includes panel for demo content and help.
+* Events now support subtypes and sentiment.
+* Enabled Addon Support.
+
 = 0.0.12 =
 * Date Updated : 9 Nov 2024
 * Added event table to the database to store conversion events for each widget.
