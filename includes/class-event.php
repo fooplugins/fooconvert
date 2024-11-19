@@ -15,7 +15,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
          * @param array $data
          * @return int|void|\WP_Error
          */
-        public function create( $data ) {
+        public function create( $data, $meta = array() ) {
             if ( $this->can_create_event() ) {
                 $user_id = isset( $data['user_id'] ) ? intval( $data['user_id'] ) : null;
                 $anonymous_user_guid = isset( $data['anonymous_user_guid'] ) ? $data['anonymous_user_guid'] : null;
@@ -51,8 +51,31 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
                     }
                 }
 
-                $query = new Data\Query();
-                return $query->insert_event_data( $data );
+                $post_type = null;
+                $template = null;
+
+                if ( is_array( $meta ) ) {
+                    $post_type = isset( $meta['post_type'] ) ? $meta['post_type'] : null;
+                    $template = isset( $meta['template'] ) ? $meta['template'] : null;
+                }
+
+                // Allow others to alter the event data.
+                $data = apply_filters( 'fooconvert_event_data', $data, $meta );
+
+                if ( !empty( $post_type ) ) {
+                    $data = apply_filters('fooconvert_event_data_by_post_type-' . $post_type, $data, $meta);
+                }
+
+                if ( !empty( $template ) ) {
+                    $data = apply_filters( 'fooconvert_event_data_by_template-' . $template, $data, $meta );
+                }
+
+                if ( !empty( $data ) && is_array( $data ) ) {
+                    $query = new Data\Query();
+                    return $query->insert_event_data( $data );
+                }
+
+                return 0;
             }
         }
 

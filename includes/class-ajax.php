@@ -91,23 +91,22 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
             // TODO: sanitize?
             $extra_data = isset( $data['extraData'] ) && is_array( $data['extraData'] ) ? $data['extraData'] : null;
 
-            $event = new Event();
-
-            // Allow others to alter the event data.
-            $data = apply_filters( 'fooconvert_event_data', [
+            $data = [
                 'widget_id'           => $widget_id,
                 'event_type'          => $event_type,
                 'page_url'            => $page_url,
                 'device_type'         => $device_type,
                 'anonymous_user_guid' => $anonymous_user_guid,
                 'extra_data'          => $extra_data
-            ], $post_type, $template );
+            ];
 
-            $data = apply_filters( 'fooconvert_event_data_by_post_type-' . $post_type, $data, $template );
+            $meta = [
+                'post_type' => $post_type,
+                'template'  => $template
+            ];
 
-            $data = apply_filters( 'fooconvert_event_data_by_template-' . $template, $data, $post_type );
-
-            $event->create( $data );
+            $event = new Event();
+            $event->create( $data, $meta );
 
             echo json_encode( array( 'status' => 'success' ) );
             wp_die();

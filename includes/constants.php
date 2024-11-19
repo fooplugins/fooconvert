@@ -12,6 +12,19 @@ define( 'FOOCONVERT_OPTION_VERSION_CREATE_TABLE', 'fooconvert-version-create-tab
 define( 'FOOCONVERT_META_KEY_DISPLAY_RULES', '_fooconvert_display_rules' );     // Meta key for the widget display rules.
 define( 'FOOCONVERT_META_KEY_DEMO_CONTENT', '_fooconvert_demo_content' );    // Meta key for the demo content.
 
+//CPT's
+define( 'FOOCONVERT_CPT_BAR', 'fc-bar' );
+define( 'FOOCONVERT_CPT_FLYOUT', 'fc-flyout' );
+define( 'FOOCONVERT_CPT_POPUP', 'fc-popup' );
+
+//EVENT TYPE
+define( 'FOOCONVERT_EVENT_TYPE_VIEW', 'view' );
+define( 'FOOCONVERT_EVENT_TYPE_OPEN', 'open' );
+define( 'FOOCONVERT_EVENT_TYPE_CLOSE', 'close' );
+define( 'FOOCONVERT_EVENT_TYPE_CLICK', 'click' );
+define( 'FOOCONVERT_EVENT_TYPE_CONVERSION', 'conversion' );
+define( 'FOOCONVERT_EVENT_SUBTYPE_ENGAGEMENT', 'engagement' );
+
 //other
 define( 'FOOCONVERT_DB_TABLE_EVENTS', 'fooconvert_events' );
 define( 'FOOCONVERT_EDITOR_ASSET_HANDLE', 'fc-editor' );
