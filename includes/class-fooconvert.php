@@ -45,10 +45,6 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             // Make sure the database tables are created.
             $schema = new Data\Schema();
             $schema->create_event_table_if_needed();
-
-            // Create some demo content.
-            $demo_content = new Admin\DemoContent();
-            $demo_content->run();
         }
 
         /**

@@ -25,6 +25,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             add_action( 'admin_enqueue_scripts', array($this, 'admin_enqueues') );
 
             new namespace\Stats();
+            new namespace\Dashboard();
             new namespace\ContainerManager();
             new namespace\Settings();
         }
@@ -52,16 +53,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                 'dashicons-chart-bar'
             );
 
-            add_submenu_page(
-                FOOCONVERT_MENU_SLUG,
-                __( 'Dashboard', 'fooconvert' ),
-                __( 'Dashboard', 'fooconvert' ),
-                'manage_options',
-                FOOCONVERT_MENU_SLUG,
-                function() {
-                    require_once FOOCONVERT_INCLUDES_PATH . 'admin/views/dashboard.php';
-                }
-            );
+            do_action( 'fooconvert_admin_menu_before_post_types' );
 
             foreach ( FooConvert::plugin()->widgets->get_post_types() as $post_type ) {
 
@@ -82,6 +74,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                     );
                 }
             }
+
+            do_action( 'fooconvert_admin_menu_after_post_types' );
         }
 
         private function is_valid_page() {
