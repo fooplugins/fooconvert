@@ -255,34 +255,74 @@ class FooConvert_Display_Rules extends Base_Component {
                         'label' => __( '404 Template', 'fooconvert' )
                     )
                 )
-            ),
-            array(
-                'group' => 'specific',
-                'label' => __( 'Specific', 'fooconvert' ),
-                'options' => array(
-                    array(
-                        'value' => 'specific:page',
-                        'label' => __( 'Page', 'fooconvert' )
-                    ),
-                    array(
-                        'value' => 'specific:post',
-                        'label' => __( 'Post', 'fooconvert' )
-                    ),
-                    array(
-                        'value' => 'specific:category',
-                        'label' => __( 'Category', 'fooconvert' )
-                    ),
-                    array(
-                        'value' => 'specific:tag',
-                        'label' => __( 'Tag', 'fooconvert' )
-                    )
-                )
             )
         );
 
-        $archives = $this->get_component_location_archives();
-        if ( ! empty( $archives ) ) {
-            $locations[] = $archives;
+        // First, load all public post types
+        $public_post_types = get_post_types( array( 'public' => true ), 'objects' );
+        $post_type_locations = [];
+        foreach ( $public_post_types as $post_type ) {
+            if ( $post_type instanceof WP_Post_Type ) {
+                $post_type_locations[] = array(
+                    'value' => 'specific:' . $post_type->name,
+                    'label' => $post_type->label,
+                    'filter_type' => 'post_type',
+                    'filter_value' => $post_type->name,
+                    'selector' => true,
+                    'selector_placeholder' => sprintf( __( 'Type to choose %s...', 'fooconvert' ), strtolower( $post_type->label ) )
+                );
+            }
+        }
+
+        if ( ! empty( $post_type_locations ) ) {
+            $locations[] = array(
+                'group' => 'specific_posts',
+                'label' => __( 'Specific Posts', 'fooconvert' ),
+                'options' => $post_type_locations
+            );
+        }
+
+        // Next, load all public taxonomies
+        $taxonomy_locations = [];
+        $public_taxonomies = get_taxonomies( array( 'public' => true ), 'objects' );
+        foreach ( $public_taxonomies as $taxonomy ) {
+            if ( $taxonomy instanceof \WP_Taxonomy ) {
+                $taxonomy_locations[] = array(
+                    'value' => 'specific:' . $taxonomy->name,
+                    'label' => $taxonomy->label,
+                    'filter_type' => 'taxonomy',
+                    'filter_value' => $taxonomy->name,
+                    'selector' => true,
+                    'selector_placeholder' => sprintf( __( 'Type to choose %s...', 'fooconvert' ), strtolower( $taxonomy->label ) )
+                );
+            }
+        }
+
+        if ( ! empty( $taxonomy_locations ) ) {
+            $locations[] = array(
+                'group' => 'specific_taxonomies',
+                'label' => __( 'Specific Taxonomies', 'fooconvert' ),
+                'options' => $taxonomy_locations
+            );
+        }
+
+        // Next, load all post types that have an archive.
+        $archive_locations = [];
+        foreach ( $public_post_types as $post_type ) {
+            if ( $post_type instanceof WP_Post_Type && $post_type->has_archive !== false ) {
+                $archive_locations[] = array(
+                    'value' => 'archive:' . $post_type->name,
+                    'label' => $post_type->label,
+                );
+            }
+        }
+
+        if ( ! empty( $archive_locations ) ) {
+            $locations[] = array(
+                'group' => 'archive',
+                'label' => __( 'Post Archives', 'fooconvert' ),
+                'options' => $archive_locations
+            );
         }
 
         if ( $context === 'exclude' ) {
@@ -290,29 +330,7 @@ class FooConvert_Display_Rules extends Base_Component {
             array_shift( $locations[0]['options'] );
         }
 
-        return $locations;
-    }
-
-    private array $component_location_archives = array();
-    private function get_component_location_archives() : array {
-        if ( ! empty( $this->component_location_archives ) ) {
-            return $this->component_location_archives;
-        }
-        $post_types = get_post_types( array( 'public' => true ), 'objects' );
-        $archives = array(
-            'group' => 'archive',
-            'label' => __( 'Post Archives', 'fooconvert' ),
-            'options' => array()
-        );
-        foreach ( $post_types as $post_type ) {
-            if ( $post_type instanceof WP_Post_Type && $post_type->has_archive !== false ) {
-                $archives['options'][] = array(
-                    'value' => 'archive:' . $post_type->name,
-                    'label' => $post_type->label,
-                );
-            }
-        }
-        return $this->component_location_archives = empty( $archives['options'] ) ? array() : $archives;
+        return apply_filters( 'fooconvert_display_rules_locations', $locations, $context );
     }
 
     function get_component_users() : array {
