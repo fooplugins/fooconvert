@@ -100,7 +100,7 @@ class Bar extends Base_Widget {
      * @inheritDoc
      */
     function get_editor_variations() : array {
-        return array(
+        return apply_filters('fooconvert_editor_variations-' . $this->get_post_type(), array(
             array(
                 'name' => 'empty',
                 'title' => __( 'Empty', 'fooconvert' ),
@@ -341,7 +341,7 @@ class Bar extends Base_Widget {
                     'block'
                 )
             )
-        );
+        ) );
     }
 
     public function get_frontend_attributes( string $instance_id, array $attributes, WP_Block $block ) : array {
