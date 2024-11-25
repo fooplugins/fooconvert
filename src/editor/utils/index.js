@@ -1,4 +1,5 @@
 export { default as contextNS } from "./contextNS";
+export { default as debounce } from "./debounce";
 export { default as getBlockSettings } from "./getBlockSettings";
 export { default as getEditorDocument } from "./getEditorDocument";
 export { default as isStringNotEmpty } from "./isStringNotEmpty";

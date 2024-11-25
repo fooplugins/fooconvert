@@ -266,10 +266,11 @@ class FooConvert_Display_Rules extends Base_Component {
                 $post_type_locations[] = array(
                     'value' => 'specific:' . $post_type->name,
                     'label' => $post_type->label,
-                    'filter_type' => 'post_type',
-                    'filter_value' => $post_type->name,
-                    'selector' => true,
-                    'selector_placeholder' => sprintf( __( 'Type to choose %s...', 'fooconvert' ), strtolower( $post_type->label ) )
+                    'data' => array(
+                        'kind' => 'postType',
+                        'name' => $post_type->name,
+                        'placeholder' => sprintf( __( 'Type to choose %s...', 'fooconvert' ), strtolower( $post_type->label ) )
+                    )
                 );
             }
         }
@@ -290,10 +291,11 @@ class FooConvert_Display_Rules extends Base_Component {
                 $taxonomy_locations[] = array(
                     'value' => 'specific:' . $taxonomy->name,
                     'label' => $taxonomy->label,
-                    'filter_type' => 'taxonomy',
-                    'filter_value' => $taxonomy->name,
-                    'selector' => true,
-                    'selector_placeholder' => sprintf( __( 'Type to choose %s...', 'fooconvert' ), strtolower( $taxonomy->label ) )
+                    'data' => array(
+                        'kind' => 'taxonomy',
+                        'name' => $taxonomy->name,
+                        'placeholder' => sprintf( __( 'Type to choose %s...', 'fooconvert' ), strtolower( $taxonomy->label ) )
+                    )
                 );
             }
         }

@@ -1,12 +1,14 @@
 import { FormTokenField } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { useEntityRecords } from "@wordpress/core-data";
-import { useState } from "@wordpress/element";
+import { useCallback, useEffect, useMemo, useState } from "@wordpress/element";
 import { isNumber, isPlainObject, isString } from "@steveush/utils";
 
 import "./Component.scss";
 import { createEntityRecordToken, parseEntityRecordToken, stringifyEntityRecordToken } from "./utils";
 import classnames from "classnames";
+import { Icon, border } from "@wordpress/icons";
+import useDebounce from "../../hooks/useDebounce";
 
 /**
  *
@@ -36,6 +38,19 @@ const tokenToJsonReducer = ( strings, token ) => {
     return strings;
 };
 
+const searchReducer = ( strings, token, search ) => {
+    if ( isString( search, true ) ) {
+        const match = token?.label?.toLocaleLowerCase()?.includes( search.toLocaleLowerCase() ) ?? false;
+        if ( match ) {
+            const json = stringifyEntityRecordToken( token );
+            if ( json !== null ) {
+                strings.push( json );
+            }
+        }
+    }
+    return strings;
+};
+
 /**
  *
  * @param {string} data
@@ -47,6 +62,14 @@ const displayTransform = data => {
         return token.label;
     }
     return data;
+};
+
+const renderItem = ( { item } ) => {
+    const token = parseEntityRecordToken( item );
+    const label = token?.label ?? item;
+    return (
+        <span className={ `${ rootClass }__item` } title={ label }>{ label }</span>
+    );
 };
 
 const makeSearchArgs = ( queryArgs, search, minChars, perPage ) => {
@@ -72,6 +95,8 @@ const rootClass = 'fc--entity-record-control';
  * @param {string} [placeholder] - Optional. The placeholder text for the component. Defaults to an empty string.
  * @param {number} [minSearchChars] - Optional. The minimum number of characters to be entered before a search query is performed. Defaults to `2`.
  * @param {number} [maxSuggestions] - Optional. The maximum number of suggestions to return per query. Defaults to `5`.
+ * @param {string} [emptyResult]
+ * @param {boolean} [__next40pxDefaultSize]
  * @param {string} [className] - Optional. A space delimited string of class names to add to the component.
  * @returns {JSX.Element} The rendered component.
  */
@@ -84,6 +109,7 @@ const EntityRecordControl = ( {
                                   onChange,
                                   minSearchChars = 2,
                                   maxSuggestions = 5,
+                                  emptyResult = __( 'No results found', 'fooconvert' ),
                                   __next40pxDefaultSize = true,
                                   className
                               } ) => {
@@ -99,20 +125,30 @@ const EntityRecordControl = ( {
     const searchChanged = value => {
         value = isString( value ) && value.length >= minSearchChars ? value : '';
         setSearch( value );
+        console.log( 'searchChanged', value );
     };
+
+    const debouncedSearch = useDebounce( searchChanged, 300 );
 
     let suggestions = [];
     const searchArgs = makeSearchArgs( queryArgs, search, minSearchChars, maxSuggestions );
-    const query = useEntityRecords( kind, name, searchArgs );
+    const options = { enabled: isString( searchArgs?.search ) };
+    const query = useEntityRecords( kind, name, searchArgs, options );
     if ( query.hasResolved && Array.isArray( query.records ) ) {
         suggestions = query.records.reduce( ( acc, record ) => {
             const token = createEntityRecordToken( kind, name, record );
-            return tokenToJsonReducer( acc, token );
+            return searchReducer( acc, token, searchArgs?.search );
         }, [] );
     }
+    const isResolving = query.isResolving;
+    const noResults = options.enabled && query.hasResolved && suggestions.length === 0;
 
     return (
-        <div className={ classnames( rootClass, className, { 'is-next-40px-default-size': __next40pxDefaultSize } ) }>
+        <div className={ classnames( rootClass, className, {
+            'is-next-40px-default-size': __next40pxDefaultSize,
+            'is-resolving': isResolving,
+            'no-results': noResults
+        } ) }>
             <FormTokenField
                 hideLabelFromVision
                 placeholder={ placeholder }
@@ -121,10 +157,25 @@ const EntityRecordControl = ( {
                 value={ value }
                 displayTransform={ displayTransform }
                 onChange={ tokensChanged }
-                onInputChange={ searchChanged }
+                onInputChange={ debouncedSearch }
+                __experimentalRenderItem={ renderItem }
                 __experimentalShowHowTo={ false }
                 __nextHasNoMarginBottom
             />
+            { ( isResolving || noResults ) && (
+                <div className={ `${ rootClass }__popup` }>
+                    { isResolving && (
+                        <div className={ `${ rootClass }__is-resolving` }>
+                            <Icon icon={ border } className={ `${ rootClass }__icon` }/>
+                        </div>
+                    ) }
+                    { noResults && (
+                        <div className={ `${ rootClass }__no-results` }>
+                            { emptyResult }
+                        </div>
+                    ) }
+                </div>
+            ) }
         </div>
     );
 };

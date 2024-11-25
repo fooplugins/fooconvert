@@ -8,7 +8,7 @@ const makeToken = ( id, label ) => {
 };
 
 const postTypeToken = ( record ) => {
-    const { id, title: { rendered: label } } = record;
+    const { id, title: { raw: label } } = record;
     return makeToken( id, label );
 };
 

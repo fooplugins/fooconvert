@@ -9,9 +9,10 @@ import "./Component.scss";
 
 import {
     GroupedSelectControl,
-    EntityRecordControl, TextContentControl
+    EntityRecordControl, TextContentControl, getGroupedSelectOption
 } from "../../../../../components";
 import isDisplayRulesLocation from "../../../utils/isDisplayRulesLocation";
+import { hasKeys, isPlainObject, isString } from "@steveush/utils";
 
 /**
  * Stores the root class for the component and is used to generate the class names for its children.
@@ -48,6 +49,12 @@ const DisplayRulesLocationControl = ( {
                                       } ) => {
 
     const { type = '', data = [] } = isDisplayRulesLocation( value ) ? value : {};
+    const option = getGroupedSelectOption( options, type );
+    const hasDataControls = hasKeys( option?.data, {
+        name: isString,
+        kind: isString,
+        placeholder: isString
+    } );
 
     const changed = ( type, data ) => {
         onChange( { type, data }, value );
@@ -56,56 +63,30 @@ const DisplayRulesLocationControl = ( {
         onRequestRemove( value );
     };
 
-    const hasDataControls = [
-        'specific:page',
-        'specific:post',
-        'specific:category',
-        'specific:tag',
-    ].includes( type );
-
     const renderDataControls = () => {
-        let kind = '',
-            name = '',
-            placeholder = __( 'Type to choose...', 'fooconvert' );
+        if ( hasDataControls ) {
+            const {
+                kind = '',
+                name = '',
+                placeholder = __( 'Type to choose...', 'fooconvert' )
+            } = option.data;
 
-        switch ( type ) {
-            case 'specific:page':
-                kind = 'postType';
-                name = 'page';
-                placeholder = __( 'Type to choose page...', 'fooconvert' );
-                break;
-            case 'specific:post':
-                kind = 'postType';
-                name = 'post';
-                placeholder = __( 'Type to choose post...', 'fooconvert' );
-                break;
-            case 'specific:category':
-                kind = 'taxonomy';
-                name = 'category';
-                placeholder = __( 'Type to choose category...', 'fooconvert' );
-                break;
-            case 'specific:tag':
-                kind = 'taxonomy';
-                name = 'tag';
-                placeholder = __( 'Type to choose tag...', 'fooconvert' );
-                break;
-        }
-
-        if ( kind !== '' && name !== '' ) {
-            return (
-                <>
-                    <div className={ `${ rootClass }__visualizer` }></div>
-                    <EntityRecordControl
-                        className={ `${ rootClass }__entity-record-control` }
-                        kind={ kind }
-                        name={ name }
-                        tokens={ data }
-                        onChange={ tokens => changed( type, tokens ) }
-                        placeholder={ placeholder }
-                        __next40pxDefaultSize
-                    />
-                </>
-            );
+            if ( kind !== '' && name !== '' ) {
+                return (
+                    <>
+                        <div className={ `${ rootClass }__visualizer` }></div>
+                        <EntityRecordControl
+                            className={ `${ rootClass }__entity-record-control` }
+                            kind={ kind }
+                            name={ name }
+                            tokens={ data }
+                            onChange={ tokens => changed( type, tokens ) }
+                            placeholder={ placeholder }
+                            __next40pxDefaultSize
+                        />
+                    </>
+                );
+            }
         }
         return null;
     };
