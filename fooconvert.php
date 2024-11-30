@@ -56,7 +56,6 @@ if ( require_once FOOCONVERT_INCLUDES_PATH . 'startup-checks.php' ) {
 
 	// Start autoloader.
 	require_once FOOCONVERT_PATH . 'vendor/autoload.php';
-    require_once FOOCONVERT_INCLUDES_PATH . 'autoload.php';
 
     require_once FOOCONVERT_INCLUDES_PATH . 'functions.php';
 
