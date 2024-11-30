@@ -71,8 +71,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
                 }
 
                 if ( !empty( $data ) && is_array( $data ) ) {
-                    $query = new Data\Query();
-                    return $query->insert_event_data( $data );
+                    return Data\Query::insert_event_data( $data );
                 }
 
                 return 0;
@@ -116,8 +115,55 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
          * @return array An associative array of event summary data.
          */
         public function get_widget_summary_data( $widget_id ) {
-            $query = new Data\Query();
-            return $query->get_widget_summary_data( $widget_id );
+            return Data\Query::get_widget_summary_data( $widget_id );
+        }
+
+        /**
+         * Deletes all events from the database.
+         *
+         * @return int The number of events deleted.
+         */
+        public function delete_all_events()
+        {
+            return Data\Query::delete_all_events();
+        }
+
+        /**
+         * Deletes all events for a given widget ID.
+         *
+         * @param int $widget_id The ID of the widget to delete events for.
+         *
+         * @return int The number of rows deleted.
+         */
+        public function delete_widget_events( $widget_id ) {
+            return Data\Query::delete_widget_events( $widget_id );
+        }
+
+
+        /**
+         * Deletes all events that are not associated with a widget in the posts table.
+         *
+         * @return int The number of events deleted.
+         */
+        public function delete_orphaned_events()
+        {
+            return Data\Query::delete_orphaned_events();
+        }
+
+
+        /**
+         * Retrieves stats we care about for the events table.
+         *
+         * @return array An associative array of data about the events table, with the following keys:
+         *     'Table' => string The name of the table.
+         *     'Size_in_MB' => float The size of the table in megabytes.
+         *     'Number_of_Rows' => int The number of rows in the table.
+         *     'Unique_Widgets' => int The number of unique widgets represented in the table.
+         *     'Orphaned_Events' => int The number of events that are not associated with a widget in the posts table.
+         *     'Unique_Orphaned_Widgets' => int The number of unique widgets that are not associated with a widget in the posts table.
+         */
+        public function get_event_table_stats() {
+            return Data\Query::get_events_table_stats();
         }
 
         /**
@@ -137,8 +183,8 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
             $widget_id = intval( $widget_id );
             $days = max( 1, (int)$days ); // Ensure days is at least 1
 
-            $query = new Data\Query();
-            $results = $query->get_widget_daily_activity( $widget_id, $days );
+
+            $results = Data\Query::get_widget_daily_activity( $widget_id, $days );
 
             // Loop through the data and ensure dates with no data are set to 0
             $final_data = [];
