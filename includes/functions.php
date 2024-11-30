@@ -184,3 +184,27 @@ function fooconvert_get_post_types() {
 function fooconvert_is_valid_post_type( $post_type ) {
     return in_array( $post_type, fooconvert_get_post_types() );
 }
+
+/**
+ * Retrieves the retention period for FooConvert data.
+ *
+ * The retention period is the number of days FooConvert will store its data.
+ *
+ * @return int The retention period in days.
+ */
+function fooconvert_retention() {
+    if ( function_exists( 'fooconvert_retention_actual' ) ) {
+        return fooconvert_retention_actual();
+    }
+
+    return intval( FOOCONVERT_RETENTION_DEFAULT );
+}
+
+/**
+ * Retrieves the URL for the FooConvert Addons admin page.
+ *
+ * @return string The URL for the FooConvert Addons admin page.
+ */
+function fooconvert_admin_url_addons() {
+    return admin_url( 'admin.php?page=fooconvert-addons' );
+}

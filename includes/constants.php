@@ -31,6 +31,7 @@ define( 'FOOCONVERT_EDITOR_ASSET_HANDLE', 'fc-editor' );
 define( 'FOOCONVERT_FRONTEND_ASSET_HANDLE', 'fc-frontend' );
 define( 'FOOCONVERT_MENU_SLUG', 'fooconvert' );
 define( 'FOOCONVERT_MENU_SLUG_DASHBOARD', 'fooconvert-dashboard' );
+define( 'FOOCONVERT_RETENTION_DEFAULT', '7' );
 
 //SVG KSES
 /**

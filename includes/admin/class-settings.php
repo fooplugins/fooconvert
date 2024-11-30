@@ -27,19 +27,29 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
 		}
 
 		function get_tabs() {
-			$general_tab = array(
+
+            $analytics_addon_link = '<a href="' . fooconvert_admin_url_addons() . '" target="_blank">' . __( 'Analytics PRO Addon', 'fooconvert' ) . '</a>';
+
+            $general_tab = array(
                 'id'     => 'general',
                 'label'  => __( 'General', 'fooconvert' ),
                 'icon'   => 'dashicons-admin-settings',
                 'order'  => 10,
                 'fields' => array(
-                    array(
+                    'retention' => array(
+                        'id'    => 'retention',
+                        'type'  => 'html',
+                        'label' => __( 'Retention Period', 'fooconvert' ),
+                        'html'  => '<pre>' . esc_html( fooconvert_retention() ) . ' ' . __( 'days', 'fooconvert' ) . '</pre>',
+                        'desc'  => __( 'The number of days before data is deleted.', 'fooconvert' ) . ' ' . sprintf( __( 'This can only be changed with the %s.', 'fooconvert' ), $analytics_addon_link )
+                    ),
+                    'debug' => array(
                         'id'    => 'debug',
                         'type'  => 'checkbox',
                         'label' => __( 'Enable Debug Mode', 'fooconvert' ),
                         'desc'  => __( 'Helps to debug problems and diagnose issues. Enable debugging if you need support for an issue you are having.', 'fooconvert' )
                     ),
-                    array(
+                    'demo_content' => array(
                         'id'    => 'demo_content',
                         'type'  => 'checkbox',
                         'label' => __( 'Demo Content Created', 'fooconvert' ),
@@ -139,9 +149,9 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
 			);
 
 			return apply_filters( 'fooconvert_admin_settings', array(
-				$general_tab,
-                $database_tab,
-				$system_info_tab,
+				'general' => $general_tab,
+                'database' => $database_tab,
+				'systeminfo' => $system_info_tab,
 			) );
 		}
 
@@ -201,6 +211,7 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
 					__( 'Activated Theme', 'fooconvert' )   => $current_theme['Name'],
 					__( 'WordPress URL', 'fooconvert' )     => get_site_url(),
 					__( 'PHP version', 'fooconvert' )       => phpversion(),
+                    __( 'Retention', 'fooconvert' )         => fooconvert_retention(),
 					__( 'Settings', 'fooconvert' )          => $settings,
 					__( 'Active Plugins', 'fooconvert' )    => $plugins
 			);
