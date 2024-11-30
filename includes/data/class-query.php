@@ -14,6 +14,20 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
 
     class Query extends Base
     {
+
+        private function __construct() {
+            // Prevent instantiation.
+        }
+
+        /**
+         * Returns the events table name.
+         *
+         * @return string
+         */
+        private static function get_events_table_name() {
+            return parent::get_table_name( FOOCONVERT_DB_TABLE_EVENTS );
+        }
+
         /**
          * Inserts event data into the database.
          *
@@ -32,7 +46,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          *
          * @return int|WP_Error The ID of the inserted event, or a WP_Error object on failure.
          */
-        function insert_event_data($data) {
+        public static function insert_event_data($data) {
             global $wpdb;
 
             // Validation rules and sanitization
@@ -84,7 +98,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                 $data['timestamp'] = current_time( 'mysql', true );
             }
 
-            $table_name = parent::get_table_name( FOOCONVERT_DB_TABLE_EVENTS );
+            $table_name = self::get_events_table_name();
 
             // Insert the data into the database
             $result = $wpdb->insert( $table_name, $data );
@@ -110,10 +124,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          *     @type int $total_unique_visitors The total number of unique visitors.
          * }
          */
-        function get_widget_summary_data( $widget_id ) {
+        public static function get_widget_summary_data( $widget_id ) {
             global $wpdb;
 
-            $table_name = parent::get_table_name( FOOCONVERT_DB_TABLE_EVENTS );
+            $table_name = self::get_events_table_name();
             $widget_id = intval($widget_id);
 
             // Prepare SQL query to return high-level statistics
@@ -149,10 +163,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          *     'clicks' => int The number of clicks
          *     'unique_visitors' => int The number of unique visitors
          */
-        function get_widget_daily_activity( $widget_id, $days = 7 ) {
+        public static function get_widget_daily_activity( $widget_id, $days = 7 ) {
             global $wpdb;
 
-            $table_name = parent::get_table_name( FOOCONVERT_DB_TABLE_EVENTS );
+            $table_name = self::get_events_table_name();
             $widget_id = intval( $widget_id ); // Ensure $widget_id is an integer
             $days = intval( $days );  // Ensure $days is an integer
 
