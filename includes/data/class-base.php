@@ -21,7 +21,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Base' ) ) {
          * @global wpdb $wpdb The WordPress database class instance.
          *
          */
-        public function get_table_name( $table_name )
+        public static function get_table_name( $table_name )
         {
             global $wpdb;
 

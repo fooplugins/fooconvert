@@ -188,5 +188,115 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                 ARRAY_A
             );
         }
+
+        /**
+         * Deletes all events for a given widget ID.
+         *
+         * @param int $widget_id The ID of the widget to delete events for.
+         *
+         * @return int The number of rows deleted.
+         */
+        public static function delete_widget_events( $widget_id ) {
+            global $wpdb;
+
+            $table_name = self::get_events_table_name();
+            $widget_id = intval( $widget_id ); // Ensure $widget_id is an integer
+
+            return $wpdb->delete( $table_name, array( 'widget_id' => $widget_id ) );
+        }
+
+        /**
+         * Deletes all events from the database.
+         *
+         * @return int The number of rows deleted.
+         */
+        public static function delete_all_events() {
+            global $wpdb;
+
+            $table_name = self::get_events_table_name();
+
+            return $wpdb->query( "DELETE FROM {$table_name}" );
+        }
+
+        /**
+         * Retrieves stats we care about for the events table.
+         *
+         * @return array An array of data about the events table, with the following keys:
+         *     'Table' => string The name of the table.
+         *     'Size_in_MB' => float The size of the table in megabytes.
+         *     'Number_of_Rows' => int The number of rows in the table.
+         *     'Unique_Widgets' => int The number of unique widgets represented in the table.
+         *     'Orphaned_Events' => int The number of events that are not associated with a widget in the posts table.
+         *     'Unique_Orphaned_Widgets' => int The number of unique widgets that are not associated with a widget in the posts table.
+         */
+        public static function get_events_table_stats() {
+            global $wpdb;
+
+            $schema_name = DB_NAME; // The current database name
+
+            $table_name = self::get_events_table_name();
+
+            $wpdb->query( "ANALYZE TABLE {$table_name};" );
+
+            // Prepare the SQL query safely.
+            $query = $wpdb->prepare( "SELECT
+                    table_name AS `Table`,
+                    ROUND(((data_length + index_length) / 1024 / 1024), 2) AS `Size_in_MB`,
+                    (
+                        SELECT COUNT(*)
+                        FROM {$table_name}
+                    ) AS `Number_of_Rows`,                    
+                    (
+                        SELECT COUNT(DISTINCT widget_id)
+                        FROM {$table_name}
+                    ) AS `Unique_Widgets`,
+                    (
+                        SELECT COUNT(*)
+                        FROM {$table_name} e
+                        LEFT JOIN {$wpdb->prefix}posts p ON e.widget_id = p.ID
+                        WHERE p.ID IS NULL
+                    ) AS `Orphaned_Events`,
+                    (
+                        SELECT COUNT(DISTINCT e.widget_id)
+                        FROM {$table_name} e
+                        LEFT JOIN {$wpdb->prefix}posts p ON e.widget_id = p.ID
+                        WHERE p.ID IS NULL
+                    ) AS `Unique_Orphaned_Widgets`
+                FROM
+                    information_schema.TABLES
+                WHERE
+                    table_schema = %s
+                    AND table_name = %s",
+                $schema_name,
+                $table_name
+            );
+
+            // Execute the query and get the result
+            return $wpdb->get_row( $query, ARRAY_A );
+        }
+
+        /**
+         * Deletes all events that are not associated with a widget in the posts table.
+         *
+         * @return int The number of events deleted.
+         */
+        public static function delete_orphaned_events() {
+            global $wpdb;
+
+            // Table names
+            $events_table = self::get_events_table_name();
+            $posts_table = $wpdb->prefix . 'posts';
+
+            // SQL query
+            $query = $wpdb->prepare( "
+                DELETE e
+                FROM {$events_table} e
+                LEFT JOIN {$posts_table} p ON e.widget_id = p.ID
+                WHERE p.ID IS NULL"
+            );
+
+            // Execute the query and return number of rows deleted.
+            return $wpdb->query( $query );
+        }
     }
 }
