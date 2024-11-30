@@ -21,8 +21,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
         {
             add_action( 'admin_init', array( $this, 'check_database' ) );
             add_action( 'admin_menu', array( $this, 'register_menu' ) );
-            add_action( 'in_admin_header', array($this, 'add_custom_header') );
-            add_action( 'admin_enqueue_scripts', array($this, 'admin_enqueues') );
+            add_action( 'in_admin_header', array( $this, 'add_custom_header' ) );
+            add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueues' ) );
 
             new namespace\Stats();
             new namespace\Dashboard();
@@ -30,6 +30,15 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             new namespace\Settings();
         }
 
+        /**
+         * Checks and ensures the necessary database tables are created.
+         *
+         * This method initializes the Schema class and calls the function
+         * to create the event table if it does not already exist.
+         *
+         * @access public
+         * @since 1.0.0
+         */
         public function check_database() {
             $schema = new Schema();
             $schema->create_event_table_if_needed();
