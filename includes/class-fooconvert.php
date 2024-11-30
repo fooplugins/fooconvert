@@ -85,7 +85,6 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             add_action( 'wp_enqueue_scripts', array( $this, 'ensure_frontend_assets_enqueued' ) );
             add_action( 'enqueue_block_assets', array( $this, 'enqueue_editor_assets' ) );
             add_filter( 'block_categories_all', array( $this, 'register_block_category' ) );
-            add_filter( 'fooconvert_event_data', array( $this, 'adjust_event_data' ), 10, 2 );
 
             $this->components = new FooConvert_Components();
             $this->display_rules = new FooConvert_Display_Rules();
@@ -97,87 +96,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             }
 
             $this->ajax = new Ajax();
-        }
-
-        /**
-         * Allows adjusting the event data before it is saved.
-         *
-         * @param array $data The event data to be saved.
-         * @param string $post_type The type of post that the event is associated with.
-         * @param string $template The name of the template that the event is associated with.
-         *
-         */
-        function adjust_event_data( $data, $meta ) {
-            // We want to override event_type in certain scenarios.
-            // e.g. if a button is clicked in a bar, then event_type will be 'conversion'
-
-            // We want to check events to determine if a subtype is needed.
-            // e.g. if the event_type is 'click' then set the subtype to 'engagement';
-            // e.g. if the event_type is 'open' and the visitor manually opened it, then set the subtype to 'engagement';
-
-            // We also want to determine sentiment for certain events.
-            // e.g. if the event_type is 'close' then check how quickly it was closed to determine a negative sentiment;
-            // e.g. if the event_type is 'open' and the visitor manually opened it, then set positive sentiment;
-
-            if ( empty( $meta ) ) {
-                $meta = [];
-            }
-
-            // Post type and template not used at the moment.
-            //$post_type = isset( $meta['post_type'] ) ? $meta['post_type'] : null;
-            //$template = isset( $meta['template'] ) ? $meta['template'] : null;
-
-            $event_type = isset( $data['event_type'] ) ? $data['event_type'] : null;
-            $extra_data = isset( $data['extra_data'] ) ? $data['extra_data'] : [];
-
-            $conversion = false;
-
-            // Check clicks
-            switch ( $event_type ) {
-                case FOOCONVERT_EVENT_TYPE_CLICK:
-
-                    // Any click is considered a positive engagement.
-                    $data['event_subtype'] = FOOCONVERT_EVENT_SUBTYPE_ENGAGEMENT;
-                    $data['sentiment'] = 1; // positive sentiment.
-
-                    // check for conversions.
-                    $tag_name = isset( $extra_data['tagName'] ) ? $extra_data['tagName'] : null;
-                    // button or link clicks are considered conversions.
-                    if ( $tag_name === 'a' || $tag_name === 'button' ) {
-                        $conversion = true;
-                    }
-
-                    break;
-                case FOOCONVERT_EVENT_TYPE_OPEN:
-                    $trigger = isset( $extra_data['trigger'] ) ? $extra_data['trigger'] : null;
-
-                    // A manual open is considered a positive engagement.
-                    if ( $trigger === 'open-button' ) {
-                        $data['event_subtype'] = FOOCONVERT_EVENT_SUBTYPE_ENGAGEMENT;
-                        $data['sentiment'] = 1; // positive sentiment.
-                    }
-
-                    break;
-                case FOOCONVERT_EVENT_TYPE_CLOSE:
-                    $data['event_subtype'] = FOOCONVERT_EVENT_SUBTYPE_ENGAGEMENT;
-
-                    $duration = isset( $extra_data['duration'] ) ? intval( $extra_data['duration'] ) : 0;
-
-                    // A close after 5 seconds is considered neutral.
-                    if ( $duration > apply_filters( 'fooconvert_close_sentiment_positive', 5000 ) ) {
-                        $data['sentiment'] = null; // neutral sentiment.
-                    } else {
-                        $data['sentiment'] = 0; // negative sentiment.
-                    }
-
-                    break;
-            }
-
-            if ( $conversion ) {
-                $data['event_type'] = FOOCONVERT_EVENT_TYPE_CONVERSION;
-            }
-
-            return $data;
+            new Event_Hooks();
         }
 
         /**

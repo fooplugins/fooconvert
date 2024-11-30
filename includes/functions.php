@@ -161,3 +161,26 @@ function fooconvert_set_setting( $key, $value ) {
 function fooconvert_is_debug() {
     return fooconvert_get_setting( 'debug', false );
 }
+
+/**
+ * Retrieve the custom post types for all FooConvert widgets.
+ *
+ * This function accesses the FooConvert plugin's widgets and retrieves
+ * an array of custom post types associated with all widgets.
+ *
+ * @return string[] An array of custom post type strings.
+ */
+function fooconvert_get_post_types() {
+    return \FooPlugins\FooConvert\FooConvert::plugin()->widgets->get_post_types();
+}
+
+/**
+ * Checks if the given post type is valid for FooConvert widgets.
+ *
+ * @param string $post_type The post type to check.
+ *
+ * @return bool True if the post type is valid, false otherwise.
+ */
+function fooconvert_is_valid_post_type( $post_type ) {
+    return in_array( $post_type, fooconvert_get_post_types() );
+}
