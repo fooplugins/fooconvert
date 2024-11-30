@@ -44,27 +44,3 @@ if ( ! function_exists( 'fooconvert_fs' ) ) {
 	}, 10, 1 );
 }
 
-if ( ! function_exists( 'fooconvert_is_pro' ) ) {
-
-    /**
-     * Returns true if the PRO version is running
-     */
-    function fooconvert_is_pro() {
-        global $fooconvert_pro;
-
-        if ( isset( $fooconvert_pro ) ) {
-            return $fooconvert_pro;
-        }
-
-        $fooconvert_pro = false;
-
-        //Check if the PRO version of FooConvert is running
-        if ( fooconvert_fs()->is__premium_only() ) {
-            if ( fooconvert_fs()->can_use_premium_code() ) {
-                $fooconvert_pro = true;
-            }
-        }
-
-        return $fooconvert_pro;
-    }
-}
