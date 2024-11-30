@@ -85,6 +85,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             add_action( 'wp_enqueue_scripts', array( $this, 'ensure_frontend_assets_enqueued' ) );
             add_action( 'enqueue_block_assets', array( $this, 'enqueue_editor_assets' ) );
             add_filter( 'block_categories_all', array( $this, 'register_block_category' ) );
+            add_action( 'transition_post_status', array( $this, 'clean_demo_content' ), 10, 3 );
 
             $this->components = new FooConvert_Components();
             $this->display_rules = new FooConvert_Display_Rules();
@@ -394,5 +395,34 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         }
 
         //endregion
+
+        /**
+         * Removes the demo content meta value when a widget is published.
+         *
+         * We assume that any widget that is published is no longer demo content.
+         * We want to remove the demo content "marker" so that we do not delete it when we delete demo content from the dashboard.
+         *
+         * @param string $new_status The new post status.
+         * @param string $old_status The previous post status.
+         * @param object $post The post object.
+         *
+         * @return void
+         */
+        public function clean_demo_content( $new_status, $old_status, $post ) {
+            // Only run when the post is being transitioned to 'publish'
+            if ( $old_status !== 'publish' && $new_status === 'publish' ) {
+                // Check if we're dealing with our post types
+                if ( fooconvert_is_valid_post_type( $post->post_type ) ) {
+
+                    // Check if the widget is demo content.
+                    $meta_value = get_post_meta( $post->ID, FOOCONVERT_META_KEY_DEMO_CONTENT, true );
+
+                    if ( ! empty( $meta_value ) ) {
+                        // Delete the demo content marker because we assume the user has adapted the widget because they have published.
+                        delete_post_meta( $post->ID, FOOCONVERT_META_KEY_DEMO_CONTENT );
+                    }
+                }
+            }
+        }
     }
 }
