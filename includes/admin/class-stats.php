@@ -40,9 +40,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
             }
 
             $widget_id = isset( $_POST['widget_id'] ) ? intval( sanitize_text_field( $_POST['widget_id'] ) ) : 0;
-            $days = isset( $_POST['days'] ) ? intval( sanitize_text_field( $_POST['days'] ) ) : 7;
+            $days = isset( $_POST['days'] ) ? intval( sanitize_text_field( $_POST['days'] ) ) : FOOCONVERT_RETENTION_DEFAULT;
             if ( $days === 0 || $days > 100 ) {
-                $days = 7; //Make sure the days is at least 1 and at most 100.
+                $days = FOOCONVERT_RETENTION_DEFAULT; //Make sure the days is at least 1 and at most 100.
             }
 
             if ( $widget_id === 0 ) {
