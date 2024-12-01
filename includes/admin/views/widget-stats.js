@@ -10,6 +10,9 @@ jQuery(document).ready(function ($) {
                 nonce: fooconvertData.nonce
             },
             success: function (response) {
+                // Remove loading state from metrics
+                $('.metric').removeClass('loading');
+
                 // Render basic metrics
                 if ( response.metrics ) {
                     //loop through metrics
@@ -19,19 +22,24 @@ jQuery(document).ready(function ($) {
                     });
                 }
 
+                // Remove loading state from chart container before rendering
+                $('.fooconvert-chart-container').removeClass('loading');
+
                 // Render line chart for recent activity
                 renderLineChart(response.recent_activity);
 
                 // Render PRO metrics if available
-                $('#conversion-rate').text(response.conversion_rate + '%');
-                $('#geo-breakdown').text(response.geo_breakdown);
-                $('#device-browser-analytics').text(response.device_browser);
-
-                // Render PRO-only charts
-                renderPieChart(response.conversion_breakdown);
-                renderEngagementTrendChart(response.engagement_trend.labels, response.engagement_trend.data);
+                // $('#conversion-rate').text(response.conversion_rate + '%');
+                // $('#geo-breakdown').text(response.geo_breakdown);
+                // $('#device-browser-analytics').text(response.device_browser);
+                //
+                // // Render PRO-only charts
+                // renderPieChart(response.conversion_breakdown);
+                // renderEngagementTrendChart(response.engagement_trend.labels, response.engagement_trend.data);
             },
             error: function () {
+                // Remove loading states even on error to show empty state
+                $('.metric, .fooconvert-chart-container').removeClass('loading');
                 console.error("Failed to fetch stats.");
             }
         });

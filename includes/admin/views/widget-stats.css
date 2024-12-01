@@ -23,11 +23,11 @@
 }
 
 /* Metrics layout */
-.fooconvert-basic-metrics,
-.fooconvert-pro-metrics {
+.fooconvert-basic-metrics {
     grid-column: span 4; /* Span all columns for overall metrics section */
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    gap: 10px; /* Add spacing between each metric */
 }
 
 .metric {
@@ -39,7 +39,6 @@
     text-align: center;
     transition: transform 0.2s ease;
     grid-column: span 1; /* Each metric takes one column */
-    margin-right: 10px; /* Add right margin to avoid touching neighboring blocks */
 }
 
 .metric:hover {
@@ -56,6 +55,115 @@
     font-size: 22px;
     font-weight: bold;
     color: #333;
+}
+
+.metric.pro-feature {
+    position: relative;
+    border-color: rgba(0, 123, 255, 0.25);
+}
+
+.metric.pro-feature p {
+    filter: blur(5px);
+    user-select: none;
+    color: #666;
+}
+
+.metric.pro-feature::before {
+    content: 'PRO';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 123, 255, 0.1);
+    color: #0d6efd;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.pro-info-panel {
+    grid-column: span 4;
+    background-color: rgba(0, 123, 255, 0.05);
+    border: 1px solid rgba(0, 123, 255, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pro-info-panel i {
+    color: #0d6efd;
+    font-size: 20px;
+}
+
+.pro-info-panel p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.pro-info-panel a {
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.pro-info-panel a:hover {
+    text-decoration: underline;
+}
+
+/* Shimmer effect */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.metric.loading span {
+    color: transparent !important;
+}
+
+.metric.loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.metric.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(90deg, rgba(240, 240, 240, 0.7) 25%, rgba(224, 224, 224, 0.7) 50%, rgba(240, 240, 240, 0.7) 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+}
+
+.fooconvert-chart-container.loading {
+    position: relative;
+    min-height: 300px;
+    overflow: hidden;
+}
+
+.fooconvert-chart-container.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+}
+
+.fooconvert-chart-container.loading canvas {
+    opacity: 0;
 }
 
 /* Chart containers */
