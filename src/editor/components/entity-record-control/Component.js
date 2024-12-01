@@ -125,7 +125,6 @@ const EntityRecordControl = ( {
     const searchChanged = value => {
         value = isString( value ) && value.length >= minSearchChars ? value : '';
         setSearch( value );
-        console.log( 'searchChanged', value );
     };
 
     const debouncedSearch = useDebounce( searchChanged, 300 );

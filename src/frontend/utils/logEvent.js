@@ -48,7 +48,7 @@ const logEvent = ( widgetId, postType, template, eventType, extraData ) => {
                 data.extraData = extraData;
             }
 
-            console.log( 'Sending event data to server...', data );
+            // console.log( 'Sending event data to server...', data );
 
             fetch( url, {
                 method: 'POST',

@@ -56,7 +56,7 @@ class Popup extends Base_Widget {
             ),
             array(
                 'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'widgets/popup/editor/blocks/container/blocks/content/block.json',
-                'args' => array( 'render_callback' => array( $this, 'render_content' ) )
+                'args' => array( 'render_callback' => array( $this, 'render_check_compatibility' ) )
             )
         ) );
     }

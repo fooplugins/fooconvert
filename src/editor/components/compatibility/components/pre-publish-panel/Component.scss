@@ -1,0 +1,39 @@
+.fc--compatibility__pre-publish-panel {
+  .components-panel__body-toggle {
+    .components-panel__icon {
+      display: none;
+    }
+    .fc--compatibility__pre-publish-panel__title {
+      display: inline-flex;
+      gap: 4px;
+    }
+    .fc--compatibility__pre-publish-panel__status {
+      display: inline-flex;
+      gap: 2px;
+      font-weight: normal;
+    }
+    .fc--compatibility__pre-publish-panel__status-icon {
+      fill: currentColor;
+      width: 24px;
+      height: 24px;
+      margin: -3px 0 -4px 0;
+    }
+  }
+
+  &.is-enabled {
+    .components-panel__body-toggle {
+      .fc--compatibility__pre-publish-panel__status-icon {
+        fill: #4ab866;
+      }
+    }
+  }
+
+  &.is-warning {
+    .components-panel__body-toggle {
+      .fc--compatibility__pre-publish-panel__status-icon {
+        transform: rotate(180deg);
+        fill: #f0b849;
+      }
+    }
+  }
+}

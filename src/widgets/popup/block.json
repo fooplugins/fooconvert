@@ -37,7 +37,7 @@
   },
   "usesContext": [ "postId" ],
   "providesContext": {
-    "fc-popup/clientId": "clientId",
+    "fc/postId": "postId",
     "fc-popup/settings": "settings",
     "fc-popup/styles": "styles",
     "fc-popup/closeButton": "closeButton",

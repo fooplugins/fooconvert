@@ -44,7 +44,6 @@ const DisplayRulesPostStatusInfo = () => {
                             aria-expanded={ isOpen }
                             text={ compiledRules.success ? __( 'Set', 'fooconvert' ) : __( 'Not set', 'fooconvert' ) }
                             icon={ compiledRules.success ? published : info }
-                            iconPosition="right"
                         />
                     ) }
                 />

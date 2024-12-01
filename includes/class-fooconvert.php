@@ -88,6 +88,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             add_filter( 'fooconvert_event_data', array( $this, 'adjust_event_data' ), 10, 2 );
 
             $this->components = new FooConvert_Components();
+            $this->compatibility = new FooConvert_Compatibility();
             $this->display_rules = new FooConvert_Display_Rules();
             $this->blocks = new FooConvert_Blocks();
             $this->widgets = new FooConvert_Widgets();
@@ -213,6 +214,8 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          */
         public FooConvert_Components $components;
 
+        public FooConvert_Compatibility $compatibility;
+
         /**
          * Contains the logic for the widget display rules.
          *
@@ -264,7 +267,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @param string $content Text content to filter.
          * @return string Filtered content containing only the allowed HTML.
          */
-        public function kses_post( string $content ) : string {
+        public function kses_post( string $content, bool $compatibility_mode = false ) : string {
             $allowed_html = wp_kses_allowed_html( 'post' );
             // merge the plugin elements into the allowed list
             $allowed_html = array_merge(
@@ -272,6 +275,14 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
                 $this->blocks->get_kses_definitions(),
                 $this->widgets->get_kses_definitions()
             );
+
+            if ( $compatibility_mode ) {
+                $allowed_html = array_merge(
+                    $allowed_html,
+                    $this->compatibility->get_kses_definitions()
+                );
+            }
+
             return $this->kses_with_svg( $content, $allowed_html );
         }
 

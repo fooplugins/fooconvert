@@ -25,6 +25,7 @@ export * from "./units-control";
 export * from "./variation-picker";
 export * from "./experimental";
 export * from "./display-rules";
+export * from "./compatibility";
 
 export * from "./icons-picker-control";
 export * from "./icons-dropdown";
