@@ -204,3 +204,7 @@ function fooconvert_retention() {
 function fooconvert_admin_url_addons() {
     return admin_url( 'admin.php?page=fooconvert-addons' );
 }
+
+function fooconvert_is_analytics_addon_active() {
+    return function_exists( 'fcpa_fs' ) && did_action('fcpa_fs_loaded');
+}

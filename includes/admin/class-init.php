@@ -28,6 +28,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             new namespace\Dashboard();
             new namespace\ContainerManager();
             new namespace\Settings();
+            new namespace\Promotions();
         }
 
         /**
