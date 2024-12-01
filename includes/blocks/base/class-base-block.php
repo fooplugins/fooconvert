@@ -347,7 +347,7 @@ abstract class Base_Block {
             // The do_blocks() output is passed through wp_kses with an extended post allowed HTML list that includes
             // the custom elements for the plugin.
             // phpcs:ignore WordPress.Security.EscapeOutput
-            echo FooConvert::plugin()->kses_post( do_blocks( $content ) );
+            echo $this->kses( $attributes, do_blocks( $content ), $block, 'root' );
     ?>
 </<?php echo esc_html( $tag_name ); ?>>
 <?php
@@ -361,14 +361,46 @@ abstract class Base_Block {
         return '';
     }
 
-    function render_content( array $attributes, string $content ) {
+    function render_content( array $attributes, string $content, WP_Block $block ) {
         ob_start();
         // Reviewers:
         // The do_blocks() output is passed through wp_kses with an extended post allowed HTML list that includes
         // the custom elements for the plugin.
         // phpcs:ignore WordPress.Security.EscapeOutput
-        echo FooConvert::plugin()->kses_post( do_blocks( $content ) );
+        echo $this->kses( $attributes, do_blocks( $content ), $block, 'content' );
         return ob_get_clean();
+    }
+
+    function render_check_compatibility( array $attributes, string $content, WP_Block $block ) {
+        ob_start();
+        // Reviewers:
+        // The do_blocks() output is passed through wp_kses with an extended post allowed HTML list that includes
+        // the custom elements for the plugin.
+        // phpcs:ignore WordPress.Security.EscapeOutput
+        echo $this->kses( $attributes, do_blocks( $content ), $block, 'check_compatibility' );
+        return ob_get_clean();
+    }
+
+    public function get_post_id( array $attributes, WP_Block $block ) : int {
+        $post_id = Utils::get_int( $attributes, 'postId' );
+        if ( !empty( $post_id ) ) {
+            return $post_id;
+        }
+        return Utils::get_int( $block->context, 'fc/postId' );
+    }
+
+    function kses( array $attributes, string $content, WP_Block $block, string $context = '' ) : string {
+        if ( $this->supports( 'compatibility' ) ) {
+            $post_id = $this->get_post_id( $attributes, $block );
+            if ( !empty( $post_id ) ) {
+                $compatibility_mode = FooConvert::plugin()->compatibility->is_enabled( $post_id );
+                if ( $context === 'check_compatibility' ) {
+                    FooConvert::plugin()->compatibility->check_content( $post_id, $content );
+                }
+                return FooConvert::plugin()->kses_post( $content, $compatibility_mode );
+            }
+        }
+        return FooConvert::plugin()->kses_post( $content );
     }
 
     //endregion

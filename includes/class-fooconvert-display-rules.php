@@ -465,7 +465,8 @@ class FooConvert_Display_Rules extends Base_Component {
                         // false positive - this array is not used to query posts
                         // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams
                         'exclude' => $this->compile_locations( $rules['exclude'] ),
-                        'users' => $rules['users']
+                        'users' => $rules['users'],
+                        'compatibility_mode' => FooConvert::plugin()->compatibility->is_enabled( $post_id )
                     );
                 }
             }
@@ -686,7 +687,7 @@ class FooConvert_Display_Rules extends Base_Component {
             // The content is passed through wp_kses with an extended post allowed HTML list that includes
             // the custom elements for the plugin.
             // phpcs:ignore WordPress.Security.EscapeOutput
-            echo FooConvert::plugin()->kses_post( $widget['content'] );
+            echo FooConvert::plugin()->kses_post( $widget['content'], $widget['compatibility_mode'] );
         }
     }
 
@@ -723,10 +724,12 @@ class FooConvert_Display_Rules extends Base_Component {
                     if ( $this->match_compiled( $compiled, $current_location, $current_user_roles ) ) {
                         $matched_id = $compiled['post_id'];
                         $matched_content = get_post_field( 'post_content', $matched_id );
+                        $matched_compatibility_mode = Utils::get_bool( $compiled, 'compatibility_mode' );
                         if ( Utils::is_string( $matched_content, true ) ) {
                             $this->enqueued[] = array(
                                 'post_id' => $matched_id,
-                                'content' => do_blocks( $matched_content )
+                                'content' => do_blocks( $matched_content ),
+                                'compatibility_mode' => $matched_compatibility_mode,
                             );
                         }
                     }

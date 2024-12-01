@@ -2,7 +2,7 @@
   width: 33%!important;
 }
 
-.fc--display-rules__post-status-info {
+.fc--compatibility__post-status-info {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -10,7 +10,7 @@
   gap: 8px;
   width: 100%;
 
-  .fc--display-rules__post-status-info__label {
+  .fc--compatibility__post-status-info__label {
     display: flex;
     align-items: center;
     flex-shrink: 0;
@@ -20,20 +20,22 @@
     padding: 6px 0;
     width: 33%;
   }
-  .fc--display-rules__post-status-info__control {
+  .fc--compatibility__post-status-info__control {
     display: flex;
     align-items: center;
     flex-grow: 1;
     min-height: 32px;
 
-    .fc--display-rules__post-status-info__dropdown-button {
+    .fc--compatibility__post-status-info__dropdown-button {
       line-height: 24px;
 
-      svg {
-        fill: #4ab866;
+      &.is-enabled {
+        svg {
+          fill: #4ab866;
+        }
       }
 
-      &.is-not-set {
+      &.is-warning {
         svg {
           transform: rotate(180deg);
           fill: #f0b849;

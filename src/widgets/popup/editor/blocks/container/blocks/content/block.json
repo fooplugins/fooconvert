@@ -13,5 +13,6 @@
     "reusable": false,
     "className": false,
     "html": false
-  }
+  },
+  "usesContext": [ "fc/postId" ]
 }
