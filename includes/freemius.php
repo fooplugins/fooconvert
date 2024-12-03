@@ -14,7 +14,7 @@ if ( ! function_exists( 'fooconvert_fs' ) ) {
             }
 
 			// Include Freemius SDK.
-			require_once FOOCONVERT_PATH . '/freemius/start.php';
+			require_once FOOCONVERT_PATH . 'vendor/freemius/wordpress-sdk/start.php';
 
             $fooconvert_fs = fs_dynamic_init( array(
 				'id'                  => '14677',
