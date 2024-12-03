@@ -72,6 +72,13 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 
 == Changelog ==
 
+= 0.0.16 =
+* Date Updated : 3 Dec 2024
+* Added compatability mode on widgets, so that blocks that generate scripts will now work.
+* Events now have a conversion bool field.
+* Updated to Freemius SDK 2.10.0.
+* Lots of updates and bug fixes!
+
 = 0.0.15 =
 * Date Updated : 16 Nov 2024
 * Added dashboard page, which includes panel for demo content and help.
