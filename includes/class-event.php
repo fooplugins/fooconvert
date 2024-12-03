@@ -201,16 +201,18 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
 
                 $matching_data = $this->find_row_from_results( $results, 'event_date', $date );
 
-                $final_data[] = $matching_data ?? [
+                $default_data = apply_filters( 'fooconvert_widget_daily_activity_default', [
                     'event_date' => $date,
                     'events' => 0,
                     'views' => 0,
                     'engagements' => 0,
                     'unique_visitors' => 0,
-                ];
+                ] );
+
+                $final_data[] = $matching_data ?? $default_data;
             }
 
-            return $final_data;
+            return apply_filters( 'fooconvert_widget_daily_activity', $final_data, $widget_id, $days );
         }
 
         /**

@@ -60,45 +60,46 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 'labels' => []
             ];
 
-            $events = $views = $engagements = $unique_visitors = [];
+            $activity_meta_data = apply_filters( 'fooconvert_widget_stats_activity_meta_data', [
+                'events' => [
+                    'label' => __( 'Events', 'fooconvert' ),
+                    'data' => [],
+                    'borderColor' => 'rgb(112, 112, 112)',
+                    'fill' => false
+                ],
+                'views' => [
+                    'label' => __( 'Views', 'fooconvert' ),
+                    'data' => [],
+                    'borderColor' => 'rgb(75, 192, 192)',
+                    'fill' => false
+                ],
+                'engagements' => [
+                    'label' => __( 'Engagements', 'fooconvert' ),
+                    'data' => [],
+                    'borderColor' => 'rgb(255, 99, 132)',
+                    'fill' => false
+                ],
+                'unique_visitors' => [
+                    'label' => __( 'Unique Visitors', 'fooconvert' ),
+                    'data' => [],
+                    'borderColor' => 'rgb(54, 162, 235)',
+                    'fill' => true
+                ],
+            ] );
 
             // Get daily activity next.
             $daily_activity = $event->get_widget_daily_activity( $widget_id, $days );
 
             foreach ( $daily_activity as $day ) {
                 $recent_activity_chart_data['labels'][] = $day['event_date'];
-                $events[] = intval( $day['events'] );
-                $views[] = intval( $day['views'] );
-                $engagements[] = intval( $day['engagements'] );
-                $unique_visitors[] = intval( $day['unique_visitors'] );
+                foreach ( $activity_meta_data as $key => $meta_data ) {
+                    $activity_meta_data[$key]['data'][] = intval( $day[$key] );
+                }
             }
 
-            $recent_activity_chart_data['datasets'] = [
-                [
-                    'label' => 'Events',
-                    'data' => $events,
-                    'borderColor' => 'rgb(112,112,112)',
-                    'fill' => false,
-                ],
-                [
-                    'label' => 'Views',
-                    'data' => $views,
-                    'borderColor' => 'rgba(75, 192, 192, 1)',
-                    'fill' => false,
-                ],
-                [
-                    'label' => 'Engagements',
-                    'data' => $engagements,
-                    'borderColor' => 'rgba(255, 99, 132, 1)',
-                    'fill' => false,
-                ],
-                [
-                    'label' => 'Unique Visitors',
-                    'data' => $unique_visitors,
-                    'borderColor' => 'rgba(54, 162, 235, 1)',
-                    'fill' => true,
-                ]
-            ];
+            foreach ( $activity_meta_data as $key => $meta_data ) {
+                $recent_activity_chart_data['datasets'][] = $meta_data;
+            }
 
             $data['recent_activity'] = $recent_activity_chart_data;
 
