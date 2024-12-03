@@ -19,11 +19,9 @@ define( 'FOOCONVERT_CPT_FLYOUT', 'fc-flyout' );
 define( 'FOOCONVERT_CPT_POPUP', 'fc-popup' );
 
 //EVENT TYPE
-define( 'FOOCONVERT_EVENT_TYPE_VIEW', 'view' );
 define( 'FOOCONVERT_EVENT_TYPE_OPEN', 'open' );
 define( 'FOOCONVERT_EVENT_TYPE_CLOSE', 'close' );
 define( 'FOOCONVERT_EVENT_TYPE_CLICK', 'click' );
-define( 'FOOCONVERT_EVENT_TYPE_CONVERSION', 'conversion' );
 define( 'FOOCONVERT_EVENT_SUBTYPE_ENGAGEMENT', 'engagement' );
 
 //other

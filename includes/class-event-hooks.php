@@ -108,7 +108,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Event_Hooks' ) ) {
             }
 
             if ( $conversion ) {
-                $data['event_type'] = FOOCONVERT_EVENT_TYPE_CONVERSION;
+                $data['conversion'] = 1;
             }
 
             return $data;

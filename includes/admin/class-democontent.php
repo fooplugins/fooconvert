@@ -147,16 +147,22 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
             // Define event types and probabilities (more positive events)
             $event_types = [
-                'view' => 0.5,        // 50% chance of 'view'
-                'click' => 0.2,       // 20% chance of 'click'
-                'conversion' => 0.2,  // 20% chance of 'conversion'
-                'dismiss' => 0.1      // 10% chance of 'dismiss'
+                FOOCONVERT_EVENT_TYPE_OPEN => 0.7,        // 70% chance of 'view'
+                FOOCONVERT_EVENT_TYPE_CLICK => 0.2,       // 20% chance of 'click'
+                FOOCONVERT_EVENT_TYPE_CLOSE => 0.1        // 10% chance of 'dismiss'
             ];
 
             // Generate event data
             for ( $i = 0; $i < $num_events; $i++ ) {
                 // Randomly pick an event type based on probabilities
                 $event_type = $this->weighted_random_event( $event_types );
+
+                $conversion = null;
+
+                if ( $event_type === FOOCONVERT_EVENT_TYPE_CLICK ) {
+                    // not every click is a conversion for demo data.
+                    $conversion = mt_rand( 0, 1 );
+                }
 
                 // TODO : figure out subtype based off event_type.
                 $event_subtype = null;
@@ -182,7 +188,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
                 // Deal with extra data.
                 $extra_data = [];
-                if ( $event_type === 'conversion' ) {
+                if ( $conversion === 1 ) {
                     $extra_data = [
                         'conversion_type' => 'woocommerce_order',
                         'order_id' => mt_rand( 1, 100 ),
@@ -196,6 +202,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                         'widget_id' => $widget_id,
                         'event_type' => $event_type,
                         'event_subtype' => $event_subtype,
+                        'conversion' => $conversion,
                         'sentiment' => $sentiment,
                         'page_url' => home_url( '/page-' . mt_rand(1, 10) ),
                         'device_type' => $device_type,
@@ -220,7 +227,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                     return $event;
                 }
             }
-            return 'view';  // Fallback (shouldn’t happen if weights add up to 1)
+            return FOOCONVERT_EVENT_TYPE_OPEN;  // Fallback (shouldn’t happen if weights add up to 1)
         }
 
         function get_demo_content() {

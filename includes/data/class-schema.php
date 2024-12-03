@@ -57,7 +57,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
              * This is the Event table schema.
              *  - id is the primary key
              *  - widget_id is the id of the widget that created the event.
-             *  - event_type is the type of event. This can be one of: 'view', 'click', 'conversion', 'dismiss', 'interact'.
+             *  - event_type is the type of event. This can be one of: 'open', 'click', 'close', etc.
              *  - page_url is the url of the page that created the event
              *  - device_type is the type of device that was used for the event
              *  - user_id who was the user when the event happened. Will be null if not logged in.
@@ -76,6 +76,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
                 widget_id bigint(20) unsigned NOT NULL,
                 event_type varchar(255) NOT NULL,
                 event_subtype varchar(255) DEFAULT NULL,
+                conversion boolean DEFAULT NULL,
                 sentiment boolean DEFAULT NULL,
                 page_url text DEFAULT NULL,
                 device_type varchar(50) DEFAULT NULL,
@@ -100,6 +101,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
              * Purpose : many queries also use widget_id and filter by event_subtype (e.g., counting interactions, bounces).
              */
             parent::safe_create_index($table_name, 'idx_widget_event_subtype', 'widget_id, event_subtype');
+
+            /*
+             * Purpose : many queries also use widget_id and filter by conversion.
+             */
+            parent::safe_create_index($table_name, 'idx_widget_conversion', 'widget_id, conversion');
 
             /*
              * Purpose : many queries also use widget_id and filter by sentiment.
