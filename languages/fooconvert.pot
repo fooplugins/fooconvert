@@ -2,21 +2,21 @@
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: FooConvert 0.0.11\n"
+"Project-Id-Version: FooConvert 0.0.16\n"
 "Report-Msgid-Bugs-To: https://github.com/fooplugins/fooconvert/issues\n"
 "Last-Translator: FooPlugins <info@fooplugins.com>\n"
 "Language-Team: FooPlugins <info@fooplugins.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-02T14:53:35+00:00\n"
+"POT-Creation-Date: 2024-12-03T19:48:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: fooconvert\n"
 
 #. Plugin Name of the plugin
-#: includes/admin/class-init.php:35
-#: includes/admin/class-init.php:36
+#: includes/admin/class-init.php:58
+#: includes/admin/class-init.php:59
 msgid "FooConvert"
 msgstr ""
 
@@ -34,6 +34,333 @@ msgstr ""
 
 #. Author URI of the plugin
 msgid "https://fooplugins.com/"
+msgstr ""
+
+#: includes/admin/class-dashboard.php:42
+#: includes/admin/class-dashboard.php:79
+#: includes/admin/class-dashboard.php:103
+#: includes/admin/class-stats.php:39
+msgid "Invalid nonce!!"
+msgstr ""
+
+#: includes/admin/class-dashboard.php:58
+msgid "No widgets created!"
+msgstr ""
+
+#. Translators: %d refers to the number of demo widgets created.
+#: includes/admin/class-dashboard.php:61
+msgid "%d demo widgets created successfully!"
+msgstr ""
+
+#: includes/admin/class-dashboard.php:87
+msgid "All demo widgets deleted!"
+msgstr ""
+
+#: includes/admin/class-dashboard.php:129
+#: includes/admin/class-dashboard.php:130
+msgid "Dashboard"
+msgstr ""
+
+#: includes/admin/class-promotions.php:31
+msgid "Total Clicks"
+msgstr ""
+
+#: includes/admin/class-promotions.php:32
+msgid "Total number of clicks made within the widget."
+msgstr ""
+
+#: includes/admin/class-promotions.php:38
+msgid "Click Through Rate"
+msgstr ""
+
+#: includes/admin/class-promotions.php:39
+msgid "Click Through Rate for the widget."
+msgstr ""
+
+#: includes/admin/class-promotions.php:45
+msgid "Total Conversions"
+msgstr ""
+
+#: includes/admin/class-promotions.php:46
+msgid "Total number of conversions for the widget."
+msgstr ""
+
+#: includes/admin/class-promotions.php:52
+msgid "Conversion Rate"
+msgstr ""
+
+#: includes/admin/class-promotions.php:53
+msgid "Conversion Rate for the widget."
+msgstr ""
+
+#: includes/admin/class-promotions.php:59
+msgid "Engagement Rate"
+msgstr ""
+
+#: includes/admin/class-promotions.php:60
+msgid "Engagement Rate for the widget."
+msgstr ""
+
+#: includes/admin/class-promotions.php:66
+msgid "Positive Engagements"
+msgstr ""
+
+#: includes/admin/class-promotions.php:67
+msgid "Total number of positive engagements for the widget (like clicks)."
+msgstr ""
+
+#: includes/admin/class-promotions.php:73
+msgid "Negative Engagements"
+msgstr ""
+
+#: includes/admin/class-promotions.php:74
+msgid "Total number of negative engagements for the widget (like dismissals)."
+msgstr ""
+
+#: includes/admin/class-promotions.php:80
+msgid "Overall Sentiment"
+msgstr ""
+
+#: includes/admin/class-promotions.php:81
+msgid "Overall sentiment for the widget which ranges from very negative to very positive. It can also be unknown if there are no engagements, or neutral."
+msgstr ""
+
+#: includes/admin/class-promotions.php:89
+msgid "These advanced metrics are available in the PRO Analytics Addon."
+msgstr ""
+
+#: includes/admin/class-promotions.php:89
+msgid "Buy PRO Analytics!"
+msgstr ""
+
+#: includes/admin/class-settings.php:21
+msgid "FooConvert Settings"
+msgstr ""
+
+#: includes/admin/class-settings.php:22
+#: includes/admin/class-settings.php:218
+msgid "Settings"
+msgstr ""
+
+#: includes/admin/class-settings.php:31
+msgid "Analytics PRO Addon"
+msgstr ""
+
+#: includes/admin/class-settings.php:35
+#: includes/class-fooconvert-display-rules.php:231
+#: includes/class-fooconvert-display-rules.php:350
+msgid "General"
+msgstr ""
+
+#: includes/admin/class-settings.php:42
+msgid "Retention Period"
+msgstr ""
+
+#: includes/admin/class-settings.php:43
+msgid "days"
+msgstr ""
+
+#. Translators: %s refers to the link to the Analytics PRO Addon.
+#: includes/admin/class-settings.php:45
+msgid "The number of days before data is deleted."
+msgstr ""
+
+#. Translators: %s refers to the link to the Analytics PRO Addon.
+#: includes/admin/class-settings.php:45
+msgid "This can only be changed with the %s."
+msgstr ""
+
+#: includes/admin/class-settings.php:50
+msgid "Enable Debug Mode"
+msgstr ""
+
+#: includes/admin/class-settings.php:51
+msgid "Helps to debug problems and diagnose issues. Enable debugging if you need support for an issue you are having."
+msgstr ""
+
+#: includes/admin/class-settings.php:56
+msgid "Demo Content Created"
+msgstr ""
+
+#: includes/admin/class-settings.php:57
+msgid "If the demo content has been created, then this will be checked. You can uncheck this to allow for demo content to be created again."
+msgstr ""
+
+#: includes/admin/class-settings.php:68
+msgid "Table"
+msgstr ""
+
+#: includes/admin/class-settings.php:72
+msgid "Table Size (MB)"
+msgstr ""
+
+#: includes/admin/class-settings.php:76
+msgid "Event Row Count"
+msgstr ""
+
+#: includes/admin/class-settings.php:80
+msgid "Widget Count With Events"
+msgstr ""
+
+#: includes/admin/class-settings.php:84
+msgid "Orphaned Event Count"
+msgstr ""
+
+#: includes/admin/class-settings.php:96
+msgid "Orphaned Widget Count"
+msgstr ""
+
+#: includes/admin/class-settings.php:103
+msgid "Database"
+msgstr ""
+
+#: includes/admin/class-settings.php:110
+msgid "Database Stats"
+msgstr ""
+
+#: includes/admin/class-settings.php:117
+msgid "Delete All Events"
+msgstr ""
+
+#: includes/admin/class-settings.php:127
+msgid "Delete Orphaned Data"
+msgstr ""
+
+#: includes/admin/class-settings.php:133
+msgid "System Info"
+msgstr ""
+
+#: includes/admin/class-settings.php:139
+msgid "Your System Information"
+msgstr ""
+
+#: includes/admin/class-settings.php:140
+msgid "The below system info can be used when submitting a support ticket, to help us replicate your environment."
+msgstr ""
+
+#. Translators: %d refers to the number of orphaned events that were deleted.
+#: includes/admin/class-settings.php:172
+msgid "Successfully deleted %d orphaned events."
+msgstr ""
+
+#. Translators: %d refers to the number of events that were deleted.
+#: includes/admin/class-settings.php:189
+msgid "Successfully deleted %d events."
+msgstr ""
+
+#: includes/admin/class-settings.php:212
+msgid "FooConvert version"
+msgstr ""
+
+#: includes/admin/class-settings.php:213
+msgid "WordPress version"
+msgstr ""
+
+#: includes/admin/class-settings.php:214
+msgid "Activated Theme"
+msgstr ""
+
+#: includes/admin/class-settings.php:215
+msgid "WordPress URL"
+msgstr ""
+
+#: includes/admin/class-settings.php:216
+msgid "PHP version"
+msgstr ""
+
+#: includes/admin/class-settings.php:217
+msgid "Retention"
+msgstr ""
+
+#: includes/admin/class-settings.php:219
+msgid "Active Plugins"
+msgstr ""
+
+#: includes/admin/class-stats.php:49
+msgid "Invalid widget ID!!"
+msgstr ""
+
+#: includes/admin/class-stats.php:65
+msgid "Events"
+msgstr ""
+
+#: includes/admin/class-stats.php:71
+msgid "Views"
+msgstr ""
+
+#: includes/admin/class-stats.php:77
+msgid "Engagements"
+msgstr ""
+
+#: includes/admin/class-stats.php:83
+msgid "Unique Visitors"
+msgstr ""
+
+#: includes/admin/class-stats.php:153
+#: includes/admin/class-stats.php:160
+msgid "Stats"
+msgstr ""
+
+#: includes/admin/class-stats.php:180
+msgid "View Stats"
+msgstr ""
+
+#: includes/admin/class-stats.php:197
+#: includes/admin/class-stats.php:198
+msgid "Widget Stats"
+msgstr ""
+
+#: includes/admin/views/widget-stats.php:4
+msgid "Unknown"
+msgstr ""
+
+#. Translators: %d refers to the ID of the widget.
+#: includes/admin/views/widget-stats.php:17
+msgid "Stats for Widget #%d"
+msgstr ""
+
+#: includes/admin/views/widget-stats.php:18
+msgid "Widget Title : "
+msgstr ""
+
+#: includes/admin/views/widget-stats.php:24
+msgid "Total Events"
+msgstr ""
+
+#: includes/admin/views/widget-stats.php:25
+msgid "Total events logged for the widget for it's lifetime."
+msgstr ""
+
+#: includes/admin/views/widget-stats.php:31
+msgid "Total Views"
+msgstr ""
+
+#: includes/admin/views/widget-stats.php:32
+msgid "Total number of times the widget has been viewed by a visitor."
+msgstr ""
+
+#: includes/admin/views/widget-stats.php:38
+msgid "Total Visitors"
+msgstr ""
+
+#: includes/admin/views/widget-stats.php:39
+msgid "Total number of unique visitors that have viewed the widget."
+msgstr ""
+
+#: includes/admin/views/widget-stats.php:45
+msgid "Total Engagements"
+msgstr ""
+
+#: includes/admin/views/widget-stats.php:46
+msgid "Total number of engagements that have been made with the widget (clicks, opens, etc)."
+msgstr ""
+
+#: includes/admin/views/widget-stats.php:55
+msgid "Recent Activity (7-Day)"
+msgstr ""
+
+#: includes/class-fooconvert-compatibility.php:73
+msgid "Compatibility settings for FooConvert."
 msgstr ""
 
 #: includes/class-fooconvert-display-rules.php:37
@@ -57,11 +384,6 @@ msgstr ""
 
 #: includes/class-fooconvert-display-rules.php:110
 msgid "Not set!"
-msgstr ""
-
-#: includes/class-fooconvert-display-rules.php:231
-#: includes/class-fooconvert-display-rules.php:329
-msgid "General"
 msgstr ""
 
 #: includes/class-fooconvert-display-rules.php:235
@@ -88,43 +410,37 @@ msgstr ""
 msgid "404 Template"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:261
-msgid "Specific"
-msgstr ""
-
-#: includes/class-fooconvert-display-rules.php:265
-msgid "Page"
-msgstr ""
-
-#: includes/class-fooconvert-display-rules.php:269
-msgid "Post"
-msgstr ""
-
+#. Translators: %s refers to the post type that is being searched for.
 #: includes/class-fooconvert-display-rules.php:273
-msgid "Category"
+#: includes/class-fooconvert-display-rules.php:298
+msgid "Type to choose %s..."
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:277
-msgid "Tag"
+#: includes/class-fooconvert-display-rules.php:282
+msgid "Specific Posts"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:304
+#: includes/class-fooconvert-display-rules.php:307
+msgid "Specific Taxonomies"
+msgstr ""
+
+#: includes/class-fooconvert-display-rules.php:326
 msgid "Post Archives"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:333
+#: includes/class-fooconvert-display-rules.php:354
 msgid "All Users"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:337
+#: includes/class-fooconvert-display-rules.php:358
 msgid "Logged In"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:341
+#: includes/class-fooconvert-display-rules.php:362
 msgid "Logged Out"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:347
+#: includes/class-fooconvert-display-rules.php:368
 msgid "Roles"
 msgstr ""
 
@@ -384,6 +700,10 @@ msgstr ""
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 msgid "Extra Large"
+msgstr ""
+
+#: assets/editor.js:1
+msgid "No results found"
 msgstr ""
 
 #: assets/editor.js:1
@@ -695,22 +1015,6 @@ msgid "Type to choose..."
 msgstr ""
 
 #: assets/editor.js:1
-msgid "Type to choose page..."
-msgstr ""
-
-#: assets/editor.js:1
-msgid "Type to choose post..."
-msgstr ""
-
-#: assets/editor.js:1
-msgid "Type to choose category..."
-msgstr ""
-
-#: assets/editor.js:1
-msgid "Type to choose tag..."
-msgstr ""
-
-#: assets/editor.js:1
 msgid "Select role"
 msgstr ""
 
@@ -781,6 +1085,30 @@ msgstr ""
 
 #: assets/editor.js:4
 msgid "Not set"
+msgstr ""
+
+#: assets/editor.js:4
+msgid "A content block attempted to render an inline script."
+msgstr ""
+
+#: assets/editor.js:4
+msgid "Allow inline scripts"
+msgstr ""
+
+#: assets/editor.js:4
+msgid "Compatibility"
+msgstr ""
+
+#: assets/editor.js:4
+msgid "Enabled"
+msgstr ""
+
+#: assets/editor.js:4
+msgid "Warning"
+msgstr ""
+
+#: assets/editor.js:4
+msgid "Disabled"
 msgstr ""
 
 #: assets/editor.js:4

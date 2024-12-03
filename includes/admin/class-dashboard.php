@@ -57,6 +57,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
             if ( $created === 0 ) {
                 wp_send_json( ['message' => __( 'No widgets created!', 'fooconvert' ) ] );
             } else {
+                // Translators: %d refers to the number of demo widgets created.
                 wp_send_json( ['message' => sprintf( __( '%d demo widgets created successfully!', 'fooconvert' ), $created  ) ] );
             }
         }

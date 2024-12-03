@@ -41,6 +41,7 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                         'type'  => 'html',
                         'label' => __( 'Retention Period', 'fooconvert' ),
                         'html'  => '<pre>' . esc_html( fooconvert_retention() ) . ' ' . __( 'days', 'fooconvert' ) . '</pre>',
+                        // Translators: %s refers to the link to the Analytics PRO Addon.
                         'desc'  => __( 'The number of days before data is deleted.', 'fooconvert' ) . ' ' . sprintf( __( 'This can only be changed with the %s.', 'fooconvert' ), $analytics_addon_link )
                     ),
                     'debug' => array(
@@ -167,7 +168,8 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
             $result = $event->delete_orphaned_events();
 
             wp_send_json_success( array(
-                'message' => sprintf( __( 'Successfully deleted %s orphaned events.', 'fooconvert' ), $result )
+                // Translators: %d refers to the number of orphaned events that were deleted.
+                'message' => sprintf( __( 'Successfully deleted %d orphaned events.', 'fooconvert' ), $result )
             ) );
         }
 
@@ -183,7 +185,8 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
             $result = $event->delete_all_events();
 
             wp_send_json_success( array(
-                'message' => sprintf( __( 'Successfully deleted %s events.', 'fooconvert' ), $result )
+                // Translators: %d refers to the number of events that were deleted.
+                'message' => sprintf( __( 'Successfully deleted %d events.', 'fooconvert' ), $result )
             ) );
         }
 

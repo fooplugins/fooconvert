@@ -12,7 +12,9 @@ if ( $widget_id ) {
 ?>
 
 <div class="fooconvert-stats-container" data-widget-id="<?php echo esc_attr( $widget_id ); ?>">
-    <h1><?php echo sprintf( esc_html__( 'Stats for Widget #%d', 'fooconvert' ), esc_html( $widget_id ) ); ?></h1>
+    <h1><?php
+        // Translators: %d refers to the ID of the widget.
+        echo sprintf( esc_html__( 'Stats for Widget #%d', 'fooconvert' ), esc_html( $widget_id ) ); ?></h1>
     <h2><?php _e('Widget Title : ', 'fooconvert'); ?> <?php echo esc_html( $widget_name ); ?></h2>
 
     <!-- Basic Metrics -->
