@@ -124,27 +124,24 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          *     @type int $total_unique_visitors The total number of unique visitors.
          * }
          */
-        public static function get_widget_summary_data( $widget_id ) {
+        public static function get_widget_metrics( $widget_id ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
             $widget_id = intval($widget_id);
 
+            $query = apply_filters( 'fooconvert_get_widget_metrics_query', "SELECT 
+                    COUNT(*) as total_events,
+                    COUNT(CASE WHEN event_type = 'open' THEN 1 END) as total_views,
+                    COUNT(CASE WHEN event_subtype = 'engagement' THEN 1 END) as total_engagements,
+                    COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as total_unique_visitors
+                    FROM {$table_name}
+                    WHERE widget_id = %d", $table_name );
+
             // Prepare SQL query to return high-level statistics
             return $wpdb->get_row(
                 $wpdb->prepare(
-                    "SELECT 
-                    COUNT(*) as total_events,
-                    COUNT(CASE WHEN event_type = 'open' THEN 1 END) as total_views,
-                    COUNT(CASE WHEN event_type = 'close' THEN 1 END) as total_dismiss,
-                    COUNT(CASE WHEN event_type = 'click' THEN 1 END) as total_clicks,
-                    COUNT(CASE WHEN event_type = 'conversion' THEN 1 END) as total_conversions,
-                    COUNT(CASE WHEN event_subtype = 'engagement' THEN 1 END) as total_engagements,
-                    COUNT(CASE WHEN sentiment = 1 THEN 1 END) as total_positive_sentiment,
-                    COUNT(CASE WHEN sentiment = 0 THEN 1 END) as total_negative_sentiment,
-                    COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as total_unique_visitors
-                    FROM {$table_name}
-                    WHERE widget_id = %d",
+                    $query,
                     $widget_id
                 ),
                 ARRAY_A
@@ -170,18 +167,21 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             $widget_id = intval( $widget_id ); // Ensure $widget_id is an integer
             $days = intval( $days );  // Ensure $days is an integer
 
-            // Prepare recent activity for the last 7 days
-            return $wpdb->get_results(
-                $wpdb->prepare(
-                    "SELECT 
+            $query = apply_filters( 'fooconvert_get_widget_daily_activity_query', "SELECT 
                     DATE(timestamp) as event_date,
-                    COUNT(CASE WHEN event_type = 'view' THEN 1 END) as views,
-                    COUNT(CASE WHEN event_type = 'click' THEN 1 END) as clicks,
-                    COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as unique_visitors
+                    COUNT(*) as events,
+                    COUNT(CASE WHEN event_type = 'open' THEN 1 END) as views,
+                    COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as unique_visitors,
+                    COUNT(CASE WHEN event_subtype = 'engagement' THEN 1 END) as engagements
                     FROM {$table_name}
                     WHERE widget_id = %d AND timestamp >= DATE_SUB(NOW(), INTERVAL %d DAY)
                     GROUP BY event_date
-                    ORDER BY event_date ASC",
+                    ORDER BY event_date ASC", $table_name );
+
+            // Prepare recent activity for the last 7 days
+            return $wpdb->get_results(
+                $wpdb->prepare(
+                    $query,
                     $widget_id,
                     $days
                 ),

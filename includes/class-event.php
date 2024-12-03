@@ -112,10 +112,19 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
          * Get a summary of the events for a given widget.
          *
          * @param int $widget_id The ID of the widget to get the summary for.
-         * @return array An associative array of event summary data.
+         * @return array An associative array of event metric data.
          */
-        public function get_widget_summary_data( $widget_id ) {
-            return Data\Query::get_widget_summary_data( $widget_id );
+        public function get_widget_metrics( $widget_id ) {
+            $metrics = apply_filters( 'fooconvert_widget_metrics_defaults', [
+                'total_events' => 0,
+                'total_views' => 0,
+                'total_unique_visitors' => 0,
+                'total_engagements' => 0,
+            ] );
+
+            return apply_filters( 'fooconvert_widget_metrics',
+                array_merge( $metrics, Data\Query::get_widget_metrics( $widget_id ) ),
+                $widget_id );
         }
 
         /**
@@ -183,7 +192,6 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
             $widget_id = intval( $widget_id );
             $days = max( 1, (int)$days ); // Ensure days is at least 1
 
-
             $results = Data\Query::get_widget_daily_activity( $widget_id, $days );
 
             // Loop through the data and ensure dates with no data are set to 0
@@ -195,8 +203,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
 
                 $final_data[] = $matching_data ?? [
                     'event_date' => $date,
+                    'events' => 0,
                     'views' => 0,
-                    'clicks' => 0,
+                    'engagements' => 0,
                     'unique_visitors' => 0,
                 ];
             }

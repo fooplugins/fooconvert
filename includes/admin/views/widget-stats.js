@@ -52,26 +52,7 @@ jQuery(document).ready(function ($) {
             type: 'line',
             data: {
                 labels: recent_activity.labels,
-                datasets: [
-                    {
-                        label: 'Views',
-                        data: recent_activity.views,
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        fill: false
-                    },
-                    {
-                        label: 'Clicks',
-                        data: recent_activity.clicks,
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        fill: false
-                    },
-                    {
-                        label: 'Unique Visitors',
-                        data: recent_activity.unique_visitors,
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        fill: false
-                    }
-                ]
+                datasets: recent_activity.datasets
             },
             options: {
                 responsive: true,

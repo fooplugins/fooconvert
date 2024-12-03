@@ -51,38 +51,54 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
 
             $event = new Event();
 
-            // Get summary data first.
-            $widget_summary_data = $event->get_widget_summary_data( $widget_id );
-
-            $metrics = [
-                'total_events' => 0,
-                'total_views' => 0,
-                'total_unique_visitors' => 0,
-                'total_engagements' => 0,
-            ];
-
-            $metrics = array_merge( $metrics, $widget_summary_data );
-
+            // Get metrics first.
             $data = [
-                'metrics' => apply_filters( 'fooconvert_build_widget_metrics', $metrics, $widget_id )
+                'metrics' => $event->get_widget_metrics( $widget_id ),
             ];
+
+            $recent_activity_chart_data = [
+                'labels' => []
+            ];
+
+            $events = $views = $engagements = $unique_visitors = [];
 
             // Get daily activity next.
             $daily_activity = $event->get_widget_daily_activity( $widget_id, $days );
 
-            $recent_activity_chart_data = [
-                'labels' => [],
-                'views' => [],
-                'clicks' => [],
-                'unique_visitors' => []
-            ];
-
             foreach ( $daily_activity as $day ) {
                 $recent_activity_chart_data['labels'][] = $day['event_date'];
-                $recent_activity_chart_data['views'][] = intval($day['views']);
-                $recent_activity_chart_data['clicks'][] = intval($day['clicks']);
-                $recent_activity_chart_data['unique_visitors'][] = intval($day['unique_visitors']);
+                $events[] = intval( $day['events'] );
+                $views[] = intval( $day['views'] );
+                $engagements[] = intval( $day['engagements'] );
+                $unique_visitors[] = intval( $day['unique_visitors'] );
             }
+
+            $recent_activity_chart_data['datasets'] = [
+                [
+                    'label' => 'Events',
+                    'data' => $events,
+                    'borderColor' => 'rgb(112,112,112)',
+                    'fill' => false,
+                ],
+                [
+                    'label' => 'Views',
+                    'data' => $views,
+                    'borderColor' => 'rgba(75, 192, 192, 1)',
+                    'fill' => false,
+                ],
+                [
+                    'label' => 'Engagements',
+                    'data' => $engagements,
+                    'borderColor' => 'rgba(255, 99, 132, 1)',
+                    'fill' => false,
+                ],
+                [
+                    'label' => 'Unique Visitors',
+                    'data' => $unique_visitors,
+                    'borderColor' => 'rgba(54, 162, 235, 1)',
+                    'fill' => true,
+                ]
+            ];
 
             $data['recent_activity'] = $recent_activity_chart_data;
 
