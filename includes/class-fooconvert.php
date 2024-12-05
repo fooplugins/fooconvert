@@ -188,6 +188,8 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @return string Filtered content containing only the allowed HTML.
          */
         public function kses_post( string $content, bool $compatibility_mode = false ) : string {
+            if ( $compatibility_mode ) return $content;
+
             $allowed_html = wp_kses_allowed_html( 'post' );
             // merge the plugin elements into the allowed list
             $allowed_html = array_merge(
@@ -195,13 +197,6 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
                 $this->blocks->get_kses_definitions(),
                 $this->widgets->get_kses_definitions()
             );
-
-            if ( $compatibility_mode ) {
-                $allowed_html = array_merge(
-                    $allowed_html,
-                    $this->compatibility->get_kses_definitions()
-                );
-            }
 
             return $this->kses_with_svg( $content, $allowed_html );
         }

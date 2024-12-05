@@ -36,24 +36,6 @@ class FooConvert_Compatibility extends Base_Component {
         );
     }
 
-    function get_kses_definitions() : array {
-        return array(
-            'script' => array(
-                'id' => true,
-                'type' => true,
-                'src' => true,
-                'async' => true,
-                'defer' => true,
-                'crossorigin' => true,
-                'integrity' => true,
-                'nomodule' => true,
-                'nonce' => true,
-                'fetchpriority' => true,
-                'referrerpolicy' => true,
-            )
-        );
-    }
-
     /**
      * The auth callback for the compatibility meta key.
      *
