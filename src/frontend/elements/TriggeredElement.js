@@ -1,9 +1,9 @@
 import CustomElement from "./CustomElement";
 import { isFunction, isNumber, isPlainObject, isString, isUndefined, strim } from "@steveush/utils";
-import { getClickableData, getDocumentScrollPercent, isClickable, logEvent, LOG_EVENT_TYPES } from "../utils";
+import { getClickableData, getDocumentScrollPercent, logEvent, LOG_EVENT_TYPES, isSelector } from "../utils";
 
 /**
- * @typedef {"immediate"|"anchor"|"exit-intent"|"scroll"|"timer"|"visible"} TriggerType
+ * @typedef {"immediate"|"anchor"|"element"|"exit-intent"|"scroll"|"timer"|"visible"} TriggerType
  */
 
 /**
@@ -22,7 +22,7 @@ class TriggeredElement extends CustomElement {
      * @returns {TriggerType[]}
      */
     static get triggerTypes() {
-        return [ "immediate", "anchor", "scroll", "timer", "visible", "exit-intent" ];
+        return [ "immediate", "anchor", "element", "scroll", "timer", "visible", "exit-intent" ];
     }
 
     /**
@@ -58,6 +58,7 @@ class TriggeredElement extends CustomElement {
         if ( !isUndefined( data ) ) {
             switch ( this.trigger ) {
                 case "anchor":
+                case "element":
                 case "visible":
                     return isString( data, true ) ? data : null;
                 case "exit-intent":
@@ -122,7 +123,7 @@ class TriggeredElement extends CustomElement {
             const path = event.composedPath();
             if ( Array.isArray( path ) ) {
                 const target = path.shift();
-                if ( isClickable( target ) ) {
+                if ( this.isClickable( target ) ) {
                     const data = getClickableData( target );
                     if ( data ) {
                         this.log( LOG_EVENT_TYPES.CLICK, data );
@@ -130,6 +131,43 @@ class TriggeredElement extends CustomElement {
                 }
             }
         }
+    }
+
+    isClickable( element ) {
+        return element instanceof HTMLElement && element.matches( this.clickableSelector );
+    }
+
+    /**
+     * @type {?string}
+     */
+    #clickableSelector;
+
+    /**
+     *
+     * @returns {string}
+     */
+    get clickableSelector() {
+        if ( !this.#clickableSelector ) {
+            this.#clickableSelector = this.createClickableSelector();
+        }
+        return this.#clickableSelector;
+    }
+
+    createClickableSelector() {
+        const selectors = [ 'a,button,input,textarea,select' ];
+        if ( [ 'anchor', 'visible' ].includes( this.trigger ) ) {
+            if ( isString( this.triggerData, true ) ) {
+                const idToSelector = strim( this.triggerData, ',' ).map( a => `#${ a }` ).join( ',' );
+                if ( isSelector( idToSelector ) ) {
+                    selectors.push( idToSelector );
+                }
+            }
+        } else if ( this.trigger === 'element' ) {
+            if ( isSelector( this.triggerData ) ) {
+                selectors.push( this.triggerData );
+            }
+        }
+        return selectors.join( ',' );
     }
 
     /**
@@ -149,6 +187,7 @@ class TriggeredElement extends CustomElement {
     }
 
     #openTimestamp = null;
+
     onOpenChanged( state ) {
         if ( !this.isConfigurationInitialized ) {
             this.initializeConfiguration();
@@ -202,6 +241,9 @@ class TriggeredElement extends CustomElement {
                 break;
             case "anchor":
                 this.#destroyOpenTrigger = this.initAnchorTrigger( this.triggerData, this.onOpenTrigger );
+                break;
+            case "element":
+                this.#destroyOpenTrigger = this.initElementTrigger( this.triggerData, this.onOpenTrigger );
                 break;
             case "exit-intent":
                 this.#destroyOpenTrigger = this.initExitIntentTrigger( this.triggerData, this.onOpenTrigger );
@@ -261,6 +303,29 @@ class TriggeredElement extends CustomElement {
                     element.addEventListener( "click", listener );
                     targets.push( element );
                 }
+            } );
+            return () => {
+                targets.forEach( element => element.removeEventListener( "click", listener ) );
+            };
+        }
+    }
+
+    /**
+     *
+     * @param {string} target
+     * @param {(trigger:string, triggerData?:(number|string|null)) => void} callback
+     * @returns {?function}
+     */
+    initElementTrigger( target, callback ) {
+        if ( isSelector( target ) ) {
+            const listener = event => {
+                event.stopPropagation();
+                callback( "element", target );
+            };
+            const targets = [];
+            this.ownerDocument.querySelectorAll( target )?.forEach( element => {
+                element.addEventListener( "click", listener );
+                targets.push( element );
             } );
             return () => {
                 targets.forEach( element => element.removeEventListener( "click", listener ) );

@@ -1,0 +1,1 @@
+import "./wp-button-clickable-data";
