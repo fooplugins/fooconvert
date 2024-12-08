@@ -99,6 +99,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
 
             $this->ajax = new Ajax();
             new Event_Hooks();
+            new Cron();
         }
 
         /**
