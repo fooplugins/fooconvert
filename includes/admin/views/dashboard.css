@@ -38,6 +38,39 @@
     padding: 5px 20px;
 }
 
+.fooconvert-panel-section.fooconvert-panel-no-padding {
+    padding: 0;
+}
+
+.fooconvert-panel-section.fooconvert-panel-no-padding .spinner {
+    margin: 10px;
+}
+
+.fooconvert-panel-section.fooconvert-panel-no-padding .fooconvert-padding {
+    padding: 5px 20px;
+}
+
+.fooconvert-panel-section-flex {
+    display: flex;
+    justify-content: space-between; /* Ensures spacing between child elements */
+    align-items: center; /* Vertically aligns the elements */
+}
+
+.fooconvert-panel-section-right {
+    display: flex;
+    align-items: center; /* Keeps the label and select vertically aligned */
+    justify-content: flex-end; /* Positions the content to the right */
+}
+
+.fooconvert-panel-section-right label {
+    display: flex;
+    align-items: center; /* Ensures the label and select are aligned */
+}
+
+.fooconvert-panel-section-right select {
+    margin-left: 8px; /* Adds spacing between the label text and the dropdown */
+}
+
 .fooconvert-panel-section h2 {
     margin-bottom: 8px;
     margin-top: 8px;
@@ -53,6 +86,7 @@
 }
 
 .fooconvert-panel .spinner {
+    float: none;
     margin: 0 10px 0;
 }
 
@@ -86,6 +120,43 @@ ol.fooconvert-ordered-list li::before {
     align-items: center;
     justify-content: center;
     font-weight: bold;
+}
+
+.fooconvert-top-performers-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    overflow: hidden;
+}
+
+.fooconvert-top-performers-table thead th {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.fooconvert-top-performers-table tbody tr:nth-child(odd) {
+    background: #fcfcfc;
+}
+
+.fooconvert-top-performers-table tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+.fooconvert-top-performers-table tbody tr:hover {
+    background: #fafafa;
+}
+
+.fooconvert-top-performers-table tbody td {
+    padding: 12px 15px;
+}
+
+.fooconvert-top-performers-table a {
+    text-decoration: none;
+}
+
+.fooconvert-tooltip {
+    color: #aaa;
 }
 
 @media (max-width: 768px) {

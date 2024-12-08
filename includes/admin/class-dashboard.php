@@ -20,9 +20,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
             add_action('fooconvert_admin_menu_before_post_types', array($this, 'register_menu'));
             add_action('admin_enqueue_scripts', array($this, 'enqueue_assets'));
 
-            add_action('wp_ajax_fooconvert_fetch_dashboard_data', array($this, 'fetch_dashboard_stats'));
+            add_action('wp_ajax_fooconvert_dashboard_top_performers', array($this, 'fetch_top_performers'));
             add_action('wp_ajax_fooconvert_create_demo_widgets', array($this, 'create_demo_widgets'));
             add_action('wp_ajax_fooconvert_delete_demo_widgets', array($this, 'delete_demo_widgets'));
+            add_action('wp_ajax_fooconvert_update_stats', array($this, 'update_stats'));
         }
 
         /**
@@ -88,30 +89,48 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
         }
 
         /**
-         * AJAX callback to fetch dummy data for the dashboard.
+         * AJAX callback to fetch top performers for the dashboard.
          *
          * This function fetches a nonce from the request and verifies it.
          * If the nonce is invalid, it dies with an error message.
-         * Otherwise, it sends back some data as JSON.
+         * Otherwise, it sends back the top performers.
          *
          * @since 1.0.0
          */
-        function fetch_dashboard_stats() {
+        function fetch_top_performers() {
             //get nonce
             $nonce = sanitize_text_field( $_POST['nonce'] );
             if ( !wp_verify_nonce($nonce, 'fooconvert-dashboard' ) ) {
                 wp_die( __( 'Invalid nonce!!', 'fooconvert' ) );
             }
 
-            //send back some dummy data for now!
-            $data = [
-                'total_widgets' => 12,
-                'total_clicks' => 1234,
-                'total_visitors' => 567,
-                'total_conversions' => 10
-            ];
+            $sort = sanitize_text_field( $_POST['sort'] );
+            if ( empty( $sort ) ) {
+                $sort = 'engagement';
+            }
 
-            wp_send_json( $data );
+            update_option( FOOCONVERT_OPTION_TOP_PERFORMERS_SORT, $sort );
+
+            ob_start();
+            require_once FOOCONVERT_INCLUDES_PATH . 'admin/views/dashboard-top-performers.php';
+            $html = ob_get_clean();
+
+            wp_send_json( ['html' => $html ] );
+        }
+
+        function update_stats() {
+            //get nonce
+            $nonce = sanitize_text_field( $_POST['nonce'] );
+            if ( !wp_verify_nonce($nonce, 'fooconvert-dashboard' ) ) {
+                wp_die( __( 'Invalid nonce!!', 'fooconvert' ) );
+            }
+
+            $stats = new \FooPlugins\FooConvert\Stats();
+            $stats->update();
+
+            wp_send_json( [
+                'message' => fooconvert_stats_last_updated()
+            ] );
         }
 
         /**
