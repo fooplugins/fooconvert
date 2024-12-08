@@ -120,6 +120,148 @@ class Flyout extends Base_Widget {
                     )
                 ),
                 'scope' => array( 'block' )
+            ),
+            array(
+                'name' => 'black_friday_flyout',
+                'title' => __( 'Black Friday Flyout', 'fooconvert' ),
+                'description' => __( 'A typical Black Friday flyout to help drive sales.', 'fooconvert' ),
+                'icon' => '',
+                'attributes' => array(
+                    'viewState' => 'open',
+                    'settings' => array(
+                        'trigger' => array(
+                            'type' => 'scroll',
+                            'data' => 20
+                        ),
+                        'transitions' => true
+                    ),
+                    'openButton' => array(
+                        'settings' => array(
+                            'hidden' => true
+                        )
+                    ),
+                    'closeButton' => array(
+                        'settings' => array(
+                            'icon' => array(
+                                'slug' => 'default__close-small',
+                                'size' => '48px'
+                            )
+                        )
+                    ),
+                    'content' => array(
+                        'styles' => array(
+                            'color' => array(
+                                'background' => 'linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)'
+                            ),
+                            'border' => array(
+                                'radius' => '18px',
+                                'color' => '#111111',
+                                'style' => 'solid',
+                                'width' => '3px'
+                            ),
+                            'dimensions' => array(
+                                'margin' => '10px',
+                                'padding' => '30px',
+                                'gap' => '16px'
+                            ),
+                            'width' => '480px'
+                        )
+                    ),
+                    'template' => 'black_friday_flyout'
+                ),
+                'innerBlocks' => array(
+                    array(
+                        'fc/flyout-open-button',
+                        array(),
+                        array()
+                    ),
+                    array(
+                        'fc/flyout-container',
+                        array(),
+                        array(
+                            array(
+                                'fc/flyout-close-button',
+                                array(),
+                                array()
+                            ),
+                            array(
+                                'fc/flyout-content',
+                                array(),
+                                array(
+                                    array(
+                                        'core/heading',
+                                        array(
+                                            'textAlign' => 'center',
+                                            'content' => 'WELCOME TO<br>BLACK FRIDAY',
+                                            'level' => 2,
+                                            'className' => 'is-style-default',
+                                            'fontFamily' => 'body'
+                                        ),
+                                        array()
+                                    ),
+                                    array(
+                                        'core/paragraph',
+                                        array(
+                                            'content' => '<strong>🔥crazy deals are finally here 🔥</strong>',
+                                            'dropCap' => false,
+                                            'align' => 'center'
+                                        ),
+                                        array()
+                                    ),
+                                    array(
+                                        'core/paragraph',
+                                        array(
+                                            'content' => '<strong>LIMITED STOCK</strong>!',
+                                            'dropCap' => false,
+                                            'align' => 'center'
+                                        ),
+                                        array()
+                                    ),
+                                    array(
+                                        'core/paragraph',
+                                        array(
+                                            'content' => '⚡<strong>Act fast!</strong>⚡',
+                                            'dropCap' => false,
+                                            'align' => 'center'
+                                        ),
+                                        array()
+                                    ),
+                                    array(
+                                        'core/buttons',
+                                        array(
+                                            'layout' => array(
+                                                'type' => 'flex',
+                                                'justifyContent' => 'center'
+                                            )
+                                        ),
+                                        array(
+                                            array(
+                                                'core/button',
+                                                array(
+                                                    'tagName' => 'a',
+                                                    'type' => 'button',
+                                                    'url' => '/shop',
+                                                    'text' => 'Save 70%',
+                                                    'style' => array(
+                                                        'border' => array(
+                                                            'radius' => '54px'
+                                                        )
+                                                    ),
+                                                    'anchor' => 'cta',
+                                                    'textAlign' => 'center'
+                                                ),
+                                                array()
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                ),
+                'scope' => array(
+                    'block'
+                )
             )
         ) );
     }

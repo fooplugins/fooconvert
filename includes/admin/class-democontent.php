@@ -232,6 +232,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
         function get_demo_content() {
             return [
+                // Demo Bars:
                 [
                     'post_title' => 'Black Friday Bar [Demo]',
                     'post_status' => 'draft',
@@ -307,6 +308,108 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 <!-- /wp:fc/bar-content -->
 <!-- /wp:fc/bar-container -->
 <!-- /wp:fc/bar -->'
+                ],
+
+                // Demo Flyouts:
+                [
+                    'post_title' => 'Black Friday Flyout [Demo]',
+                    'post_status' => 'draft',
+                    'post_type' => 'fc-flyout',
+                    'template' => 'black_friday_flyout',
+                    'meta_input' => [
+                        FOOCONVERT_META_KEY_DISPLAY_RULES => [
+                            'location' => [
+                                [
+                                    'type' => 'general:entire_site',
+                                    'data' => []
+                                ]
+                            ],
+                            'exclude' => [],
+                            'users' => [ 'general:all_users' ]
+                        ]
+                    ],
+                    'post_content' =>
+'<!-- wp:fc/flyout {"template":"black_friday_flyout","postId":||POST_ID||,"settings":{"trigger":{"type":"scroll","data":20},"transitions":true},"openButton":{"settings":{"hidden":true}},"closeButton":{"settings":{"icon":{"slug":"default__close-small","size":"48px"}}},"content":{"styles":{"color":{"background":"linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)"},"border":{"radius":"18px","color":"#111111","style":"solid","width":"3px"},"dimensions":{"margin":"10px","padding":"30px","gap":"16px"},"width":"480px"}}} -->
+<!-- wp:fc/flyout-open-button /-->
+
+<!-- wp:fc/flyout-container -->
+<!-- wp:fc/flyout-close-button /-->
+
+<!-- wp:fc/flyout-content -->
+<!-- wp:heading {"textAlign":"center","className":"is-style-default","fontFamily":"body"} -->
+<h2 class="wp-block-heading has-text-align-center is-style-default has-body-font-family">WELCOME TO<br>BLACK FRIDAY</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center"><strong>🔥crazy deals are finally here <strong>🔥</strong></strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center"><strong>LIMITED STOCK</strong>!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">⚡A<strong>ct fast!</strong>⚡</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons"><!-- wp:button {"textAlign":"center","style":{"border":{"radius":"54px"}}} -->
+<div class="wp-block-button" id="cta"><a class="wp-block-button__link has-text-align-center wp-element-button" href="/shop" style="border-radius:54px">Save 70%</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+<!-- /wp:fc/flyout-content -->
+<!-- /wp:fc/flyout-container -->
+<!-- /wp:fc/flyout -->'
+                ],
+
+                // Demo Popups:
+                [
+                    'post_title' => 'Black Friday Popup [Demo]',
+                    'post_status' => 'draft',
+                    'post_type' => 'fc-popup',
+                    'template' => 'black_friday_popup',
+                    'meta_input' => [
+                        FOOCONVERT_META_KEY_DISPLAY_RULES => [
+                            'location' => [
+                                [
+                                    'type' => 'general:entire_site',
+                                    'data' => []
+                                ]
+                            ],
+                            'exclude' => [],
+                            'users' => [ 'general:all_users' ]
+                        ]
+                    ],
+                    'post_content' =>
+'<!-- wp:fc/popup {"template":"black_friday_popup","postId":||POST_ID||,"settings":{"transitions":true,"hideScrollbar":true,"maxOnMobile":true,"trigger":{"type":"exit-intent","data":5},"backdropIgnore":false},"closeButton":{"settings":{"icon":{"slug":"default__close-small","size":"48px"}}},"content":{"styles":{"color":{"background":"linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)"},"border":{"radius":"18px","color":"#111111","style":"solid","width":"3px"},"width":"720px","dimensions":{"padding":"30px"}}}} -->
+<!-- wp:fc/popup-container -->
+<!-- wp:fc/popup-close-button /-->
+
+<!-- wp:fc/popup-content -->
+<!-- wp:heading {"textAlign":"center","className":"is-style-default","fontFamily":"body"} -->
+<h2 class="wp-block-heading has-text-align-center is-style-default has-body-font-family">WELCOME TO BLACK FRIDAY</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center"><strong>🔥crazy deals are finally here 🔥</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center"><strong>LIMITED STOCK</strong>!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">⚡<strong>Act fast!</strong>⚡</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons"><!-- wp:button {"textAlign":"center","style":{"border":{"radius":"54px"}}} -->
+<div class="wp-block-button" id="cta"><a class="wp-block-button__link has-text-align-center wp-element-button" href="/shop" style="border-radius:54px">Save 70%</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+<!-- /wp:fc/popup-content -->
+<!-- /wp:fc/popup-container -->
+<!-- /wp:fc/popup -->'
                 ],
             ];
         }

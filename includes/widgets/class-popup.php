@@ -109,13 +109,146 @@ class Popup extends Base_Widget {
                         'fc/popup-container',
                         array(),
                         array(
-                            array( 'fc/popup-close-button' ),
-                            array( 'fc/popup-content' )
+                            array(
+                                array( 'fc/popup-close-button' ),
+                                array( 'fc/popup-content' )
+                            )
                         )
                     )
                 ),
                 'scope' => array( 'block' )
-            )
+            ),
+            array(
+                'name' => 'black_friday_popup',
+                'title' => __( 'Black Friday Popup', 'fooconvert' ),
+                'description' => __( 'A typical Black Friday popup to help drive sales.', 'fooconvert' ),
+                'icon' => '',
+                'attributes' => array(
+                    'settings' => array(
+                        'transitions' => true,
+                        'hideScrollbar' => true,
+                        'maxOnMobile' => true,
+                        'trigger' => array(
+                            'type' => 'exit-intent',
+                            'data' => 5
+                        ),
+                        'backdropIgnore' => false
+                    ),
+                    'closeButton' => array(
+                        'settings' => array(
+                            'icon' => array(
+                                'slug' => 'default__close-small',
+                                'size' => '48px'
+                            )
+                        )
+                    ),
+                    'content' => array(
+                        'styles' => array(
+                            'color' => array(
+                                'background' => 'linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)'
+                            ),
+                            'border' => array(
+                                'radius' => '18px',
+                                'color' => '#111111',
+                                'style' => 'solid',
+                                'width' => '3px'
+                            ),
+                            'width' => '720px',
+                            'dimensions' => array(
+                                'padding' => '30px',
+                            )
+                        )
+                    )
+                ),
+                'innerBlocks' => array(
+                    array(
+                        'fc/popup-container',
+                        array(),
+                        array(
+                            array(
+                                'fc/popup-close-button',
+                                array(),
+                                array(),
+                            ),
+                            array(
+                                'fc/popup-content',
+                                array(),
+                                array(
+                                    array(
+                                        'core/heading',
+                                        array(
+                                            'textAlign' => 'center',
+                                            'content' => 'WELCOME TO BLACK FRIDAY',
+                                            'level' => 2,
+                                            'className' => 'is-style-default',
+                                            'fontFamily' => 'body'
+                                        ),
+                                        array()
+                                    ),
+                                    array(
+                                        'core/paragraph',
+                                        array(
+                                            'content' => '<strong>🔥crazy deals are finally here 🔥</strong>',
+                                            'dropCap' => false,
+                                            'align' => 'center'
+                                        ),
+                                        array()
+                                    ),
+                                    array(
+                                        'core/paragraph',
+                                        array(
+                                            'content' => '<strong>LIMITED STOCK</strong>!',
+                                            'dropCap' => false,
+                                            'align' => 'center'
+                                        ),
+                                        array()
+                                    ),
+                                    array(
+                                        'core/paragraph',
+                                        array(
+                                            'content' => '⚡<strong>Act fast!</strong>⚡',
+                                            'dropCap' => false,
+                                            'align' => 'center'
+                                        ),
+                                        array()
+                                    ),
+                                    array(
+                                        'core/buttons',
+                                        array(
+                                            'layout' => array(
+                                                'type' => 'flex',
+                                                'justifyContent' => 'center'
+                                            )
+                                        ),
+                                        array(
+                                            array(
+                                                'core/button',
+                                                array(
+                                                    'tagName' => 'a',
+                                                    'type' => 'button',
+                                                    'url' => '/shop',
+                                                    'text' => 'Save 70%',
+                                                    'style' => array(
+                                                        'border' => array(
+                                                            'radius' => '54px'
+                                                        )
+                                                    ),
+                                                    'anchor' => 'cta',
+                                                    'textAlign' => 'center'
+                                                ),
+                                                array()
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                ),
+                'scope' => array(
+                    'block'
+                )
+            ),
         ) );
     }
 
