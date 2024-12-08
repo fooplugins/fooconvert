@@ -8,10 +8,16 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 define( 'FOOCONVERT_OPTION_DATA', 'fooconvert-settings' );
 define( 'FOOCONVERT_OPTION_VERSION', 'fooconvert-version' );
 define( 'FOOCONVERT_OPTION_VERSION_CREATE_TABLE', 'fooconvert-version-create-table' );
+define( 'FOOCONVERT_OPTION_TOP_PERFORMERS_SORT', 'fooconvert_top_performers_sort' );
+define( 'FOOCONVERT_OPTION_STATS_LAST_UPDATED', 'fooconvert_stats_last_updated' );
 
+// Post meta
 define( 'FOOCONVERT_META_KEY_DISPLAY_RULES', '_fooconvert_display_rules' );     // Meta key for the widget display rules.
 define( 'FOOCONVERT_META_KEY_COMPATIBILITY', '_fooconvert_compatibility' );     // Meta key for the compatibility settings.
-define( 'FOOCONVERT_META_KEY_DEMO_CONTENT', '_fooconvert_demo_content' );    // Meta key for the demo content.
+define( 'FOOCONVERT_META_KEY_DEMO_CONTENT', '_fooconvert_demo_content' );       // Meta key for the demo content.
+define( 'FOOCONVERT_META_KEY_METRICS', '_fooconvert_metrics' );                 // Meta key for the widget metrics.
+define( 'FOOCONVERT_META_KEY_METRIC_VIEWS', '_fooconvert_metric_views' );
+define( 'FOOCONVERT_META_KEY_METRIC_ENGAGEMENTS', '_fooconvert_metric_engagements' );
 
 //CPT's
 define( 'FOOCONVERT_CPT_BAR', 'fc-bar' );
@@ -31,6 +37,10 @@ define( 'FOOCONVERT_FRONTEND_ASSET_HANDLE', 'fc-frontend' );
 define( 'FOOCONVERT_MENU_SLUG', 'fooconvert' );
 define( 'FOOCONVERT_MENU_SLUG_DASHBOARD', 'fooconvert-dashboard' );
 define( 'FOOCONVERT_RETENTION_DEFAULT', '7' );
+
+//CRON
+define( 'FOOCONVERT_CRON_CALC_STATS', 'fooconvert_calculate_widget_stats' );
+define( 'FOOCONVERT_CRON_DELETE_EVENTS', 'fooconvert_delete_old_events' );
 
 //SVG KSES
 /**

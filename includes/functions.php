@@ -205,6 +205,146 @@ function fooconvert_admin_url_addons() {
     return admin_url( 'admin.php?page=fooconvert-addons' );
 }
 
+/**
+ * Retrieves the URL for the FooConvert Widget Stats admin page.
+ *
+ * @param int $widget_id The ID of the widget to view stats for.
+ *
+ * @return string The URL for the FooConvert Widget Stats admin page.
+ */
+function fooconvert_admin_url_widget_stats( $widget_id ) {
+    return admin_url( 'admin.php?page=fooconvert-widget-stats&widget_id=' . $widget_id );
+}
+
+/**
+ * Checks if the FooConvert PRO Analytics Addon is active.
+ *
+ * @return bool True if the FooConvert Analytics Addon is active, false otherwise.
+ */
 function fooconvert_is_analytics_addon_active() {
     return function_exists( 'fcpa_fs' ) && did_action('fcpa_fs_loaded');
+}
+
+/**
+ * Retrieves the sorting preference for top performers in FooConvert.
+ *
+ * This function fetches the sorting criteria for top performers from the
+ * WordPress options table. If no value is set, it defaults to 'engagement'.
+ *
+ * @return string The sorting preference for top performers.
+ */
+function fooconvert_top_performers_sort() {
+    return get_option( FOOCONVERT_OPTION_TOP_PERFORMERS_SORT, 'engagements' );
+}
+
+function fooconvert_top_performers_sort_options() {
+    return apply_filters( 'fooconvert_top_performers_sort_options', array(
+        'engagements' => [
+            'dropdown_option' => __( 'engagements', 'fooconvert' ),
+            'table_header'    => __( 'Engagements', 'fooconvert' ),
+            'tooltip'         => __( 'Total number of engagements', 'fooconvert' ),
+            'metric'          => 'total_engagements',
+            'function'        => 'intval',
+            'meta_key'        => FOOCONVERT_META_KEY_METRIC_ENGAGEMENTS,
+        ],
+        'views'      => [
+            'dropdown_option' => __( 'views', 'fooconvert' ),
+            'table_header'    => __( 'Views', 'fooconvert' ),
+            'tooltip'         => __( 'Total number of views', 'fooconvert' ),
+            'metric'          => 'total_views',
+            'function'        => 'intval',
+            'meta_key'        => FOOCONVERT_META_KEY_METRIC_VIEWS,
+        ],
+    ) );
+}
+
+/**
+ * Convert a percentage string to a float
+ *
+ * @param string $percentage Percentage string, e.g. '34.5%'
+ * @return float
+ */
+function fooconvert_percentage_to_float( $percentage ) {
+    if ( empty( $percentage ) ) {
+        return 0;
+    }
+
+    // Remove the percentage sign if it exists
+    $number = str_replace( '%', '', $percentage );
+
+    // Convert the string to a float
+    return floatval( $number );
+}
+
+/**
+ * Retrieves a human-readable representation of when FooConvert stats were last updated.
+ *
+ * If the stats have never been updated, this function will return the string "Never".
+ * Otherwise, it returns a string describing the time that has elapsed since the last update.
+ *
+ * @return string A human-readable representation of when FooConvert stats were last updated.
+ */
+function fooconvert_stats_last_updated() {
+    $last_updated = get_option( FOOCONVERT_OPTION_STATS_LAST_UPDATED, fooconvert_stats_last_updated_default() );
+
+    if ( $last_updated !== fooconvert_stats_last_updated_default() ) {
+        // We can assume we have a timestamp.
+        $last_updated = human_time_diff( $last_updated ) . ' ' . __( 'ago', 'fooconvert' );
+    }
+    return $last_updated;
+}
+
+/**
+ * Checks if the FooConvert stats have ever been updated.
+ *
+ * This function checks if the value of `fooconvert_stats_last_updated()` is different
+ * from the default value returned by `fooconvert_stats_last_updated_default()`.
+ * If the values are different, this function returns `true`, indicating that the stats
+ * have been updated at least once. Otherwise, it returns `false`.
+ *
+ * @return bool Whether the FooConvert stats have ever been updated.
+ */
+function fooconvert_has_stats_last_updated() {
+    return fooconvert_stats_last_updated() !== fooconvert_stats_last_updated_default();
+}
+
+/**
+ * Returns the default value for the last updated timestamp of FooConvert stats.
+ *
+ * If the stats have never been updated, this function will return the string "Never".
+ * This default value is used for display purposes when no actual timestamp is available.
+ *
+ * @return string The default string "Never" indicating that stats have not been updated.
+ */
+function fooconvert_stats_last_updated_default() {
+    return __( 'Never', 'fooconvert' );
+}
+
+/**
+ * Retrieves a title for a FooConvert widget from a given post object.
+ *
+ * If the post has a title, it will be returned as is. If the post has no title,
+ * the function will return a string in the format "Post Type #<post ID>".
+ *
+ * @param WP_Post $post The post object to fetch the title from.
+ * @return string The title for the FooConvert widget.
+ */
+function fooconvert_get_widget_title( $post ) {
+// Return an empty string if no valid post is found
+    if ( ! $post ) {
+        return '';
+    }
+
+    // Check if the post has a title
+    if ( ! empty( $post->post_title ) ) {
+        return $post->post_title;
+    }
+
+    // Get the post type object
+    $post_type = get_post_type_object( $post->post_type );
+
+    // Use the post type label with the post ID if title is empty
+    $post_type_label = $post_type ? $post_type->labels->singular_name : 'Post';
+
+    return $post_type_label . ' #' . $post->ID;
 }
