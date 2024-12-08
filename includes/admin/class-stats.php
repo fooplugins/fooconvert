@@ -175,7 +175,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
         public function create_stats_column_content( $post_type, $column_name, $post_id ) : void {
             if ( $column_name === "{$post_type}_stats" ) {
 
-                $stats_page_url = admin_url( 'admin.php?page=fooconvert-widget-stats&widget_id=' . $post_id );
+                $stats_page_url = fooconvert_admin_url_widget_stats( $post_id );
 
                 echo '<a href="' . $stats_page_url . '">' . __( 'View Stats', 'fooconvert' ) . '</a>';
             }
