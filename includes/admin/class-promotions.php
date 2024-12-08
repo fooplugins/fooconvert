@@ -18,9 +18,16 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
 		}
 
         public function init_promotions() {
+
+            // If hide_promos is enabled, do not show any promotions!
+            if ( fooconvert_get_setting( 'hide_promos' ) === 'on' ) {
+                return;
+            }
+
             // Only show the promotion if the analytics addon is NOT active!
             if ( !fooconvert_is_analytics_addon_active() ) {
                 add_action( 'fooconvert_widget_stats_html-metrics', array( $this, 'render_metrics' ), 10, 2 );
+                add_filter( 'fooconvert_top_performers_sort_options', array( $this, 'adjust_top_performers_sort_options' ) );
             }
         }
 
@@ -89,6 +96,40 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
                 <p><?php _e('These advanced metrics are available in the PRO Analytics Addon.', 'fooconvert'); ?> <a href="<?php echo esc_url( fooconvert_admin_url_addons() ); ?>"><?php _e('Buy PRO Analytics!', 'fooconvert'); ?></a></p>
             </div>
 <?php
+        }
+
+        function adjust_top_performers_sort_options( $options ) {
+            $options['engagement-rate'] = [
+                'dropdown_option' => __( 'engagement rate (PRO)', 'fooconvert' ),
+                'pro_feature'     => true,
+                'pro_message'     => __('Top performers by engagement rate is only available in the PRO Analytics Addon.', 'fooconvert')
+            ];
+
+            $options['clicks'] = [
+                'dropdown_option' => __( 'clicks (PRO)', 'fooconvert' ),
+                'pro_feature'     => true,
+                'pro_message'     => __('Top performers by clicks is only available in the PRO Analytics Addon.', 'fooconvert')
+            ];
+
+            $options['click-rate'] = [
+                'dropdown_option' => __( 'click rate (PRO)', 'fooconvert' ),
+                'pro_feature'     => true,
+                'pro_message'     => __('Top performers by click rate is only available in the PRO Analytics Addon.', 'fooconvert')
+            ];
+
+            $options['conversions'] = [
+                'dropdown_option' => __( 'conversions (PRO)', 'fooconvert' ),
+                'pro_feature'     => true,
+                'pro_message'     => __('Top performers by conversions is only available in the PRO Analytics Addon.', 'fooconvert')
+            ];
+
+            $options['conversion-rate'] = [
+                'dropdown_option' => __( 'conversion rate (PRO)', 'fooconvert' ),
+                'pro_feature'     => true,
+                'pro_message'     => __('Top performers by conversion rate is only available in the PRO Analytics Addon.', 'fooconvert')
+            ];
+
+            return $options;
         }
 	}
 }
