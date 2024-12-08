@@ -219,6 +219,22 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         }
 
         /**
+         * Deletes all events older than the specified number of days.
+         *
+         * @param int $days The number of days to keep events for. Defaults to 7.
+         *
+         * @return int The number of rows deleted.
+         */
+        public static function delete_old_events( $days = 7 ) {
+            global $wpdb;
+
+            $table_name = self::get_events_table_name();
+            $days = intval( $days );  // Ensure $days is an integer
+
+            return $wpdb->query( $wpdb->prepare( "DELETE FROM {$table_name} WHERE timestamp < DATE_SUB(NOW(), INTERVAL %d DAY)", $days ) );
+        }
+
+        /**
          * Retrieves stats we care about for the events table.
          *
          * @return array An array of data about the events table, with the following keys:
@@ -288,15 +304,30 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             $posts_table = $wpdb->prefix . 'posts';
 
             // SQL query
-            $query = $wpdb->prepare( "
+            $query = "
                 DELETE e
                 FROM {$events_table} e
                 LEFT JOIN {$posts_table} p ON e.widget_id = p.ID
-                WHERE p.ID IS NULL"
-            );
+                WHERE p.ID IS NULL";
 
             // Execute the query and return number of rows deleted.
             return $wpdb->query( $query );
+        }
+
+        /**
+         * Retrieves a list of all widgets that have at least one event.
+         *
+         * @return array An array of widget IDs (int) that have at least one event.
+         */
+        public static function get_widgets_with_events() {
+            global $wpdb;
+
+            $table_name = self::get_events_table_name();
+            $posts_table = $wpdb->prefix . 'posts';
+
+            $query = "SELECT e.widget_id FROM {$table_name} e INNER JOIN {$posts_table} p ON e.widget_id = p.ID GROUP BY e.widget_id";
+
+            return $wpdb->get_results( $query, ARRAY_A );
         }
     }
 }

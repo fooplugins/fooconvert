@@ -112,19 +112,44 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
          * Get a summary of the events for a given widget.
          *
          * @param int $widget_id The ID of the widget to get the summary for.
+         * @param bool $force
          * @return array An associative array of event metric data.
          */
-        public function get_widget_metrics( $widget_id ) {
-            $metrics = apply_filters( 'fooconvert_widget_metrics_defaults', [
+        public function get_widget_metrics( $widget_id, $force = false) {
+
+            if ( !$force ) {
+                $data = get_post_meta($widget_id, FOOCONVERT_META_KEY_METRICS, true);
+
+                if ( !empty( $data ) && is_array( $data ) ) {
+                    $timestamp = isset( $data['timestamp'] ) ? intval( $data['timestamp'] ) : null;
+
+                    // Check if the timestamp is within last day.
+                    if ( time() - $timestamp < DAY_IN_SECONDS ) {
+                        return $data['metrics'];
+                    }
+                }
+            }
+
+            $metric_defaults = apply_filters( 'fooconvert_widget_metrics_defaults', [
                 'total_events' => 0,
                 'total_views' => 0,
                 'total_unique_visitors' => 0,
                 'total_engagements' => 0,
             ] );
 
-            return apply_filters( 'fooconvert_widget_metrics',
-                array_merge( $metrics, Data\Query::get_widget_metrics( $widget_id ) ),
+            $metrics = apply_filters( 'fooconvert_widget_metrics',
+                array_merge( $metric_defaults, Data\Query::get_widget_metrics( $widget_id ) ),
                 $widget_id );
+
+            $data = [
+                'timestamp' => time(),
+                'metrics' => $metrics,
+            ];
+
+            // Store performance score
+            update_post_meta( $widget_id, FOOCONVERT_META_KEY_METRICS, $data );
+
+            return $metrics;
         }
 
         /**
@@ -230,6 +255,31 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
                 }
             }
             return null;
+        }
+
+        /**
+         * Gets all widget IDs with events.
+         *
+         * @return int[] The IDs of all widgets with events.
+         */
+        public function get_all_widgets_with_events() {
+            $widgets = Data\Query::get_widgets_with_events();
+            if ( empty( $widgets ) ) {
+                return [];
+            }
+
+            return array_column( $widgets, 'widget_id' );
+        }
+
+        /**
+         * Deletes events older than the retention period.
+         *
+         * @return boolean True on success, false on failure.
+         */
+        public function delete_old_events() {
+            $retention = fooconvert_retention();
+
+            return Data\Query::delete_old_events( $retention );
         }
     }
 }
