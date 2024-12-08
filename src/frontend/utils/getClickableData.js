@@ -26,7 +26,7 @@ const getClickableData = element => {
         } );
         element.dispatchEvent( event );
         data = cleanObject( event.detail.data )
-        if ( isClickableData( data ) ) {
+        if ( data ) {
             // noinspection JSValidateTypes
             return data;
         }
