@@ -37,7 +37,7 @@ const files = [
 function zip() {
     return gulpZip.then( module => {
         // file list is in the package.json
-        return gulp.src( files )
+        return gulp.src( files, {encoding: false} )
             .pipe( module?.default(`${ pkg.name }.v${ pkg.version }.zip`) )
             .pipe( gulp.dest( "./dist" ) );
     } );
