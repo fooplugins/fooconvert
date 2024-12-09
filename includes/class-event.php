@@ -281,5 +281,15 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
 
             return Data\Query::delete_old_events( $retention );
         }
+
+        /**
+         * Checks if the events table exists in the database.
+         *
+         * @return bool True if the table exists, false otherwise.
+         */
+        public function does_table_exist() {
+            $table_name = Data\Schema::get_table_name( FOOCONVERT_DB_TABLE_EVENTS );
+            return Data\Schema::does_table_exist( $table_name );
+        }
     }
 }

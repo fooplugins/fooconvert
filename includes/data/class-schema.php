@@ -22,7 +22,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
         {
             if ( defined( 'FOOCONVERT_VERSION' ) ) {
                 $current_version = FOOCONVERT_VERSION;
-                $version_create_table = get_option( FOOCONVERT_OPTION_VERSION_CREATE_TABLE, FOOCONVERT_VERSION );
+                $version_create_table = get_option( FOOCONVERT_OPTION_VERSION_CREATE_TABLE, '0.0.0' );
                 if ( version_compare( $current_version, $version_create_table, '>' ) ) {
 
                     // Create the table.
@@ -76,8 +76,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
                 widget_id bigint(20) unsigned NOT NULL,
                 event_type varchar(255) NOT NULL,
                 event_subtype varchar(255) DEFAULT NULL,
-                conversion boolean DEFAULT NULL,
-                sentiment boolean DEFAULT NULL,
+                conversion tinyint(1) DEFAULT NULL,
+                sentiment tinyint(1) DEFAULT NULL,
                 page_url text DEFAULT NULL,
                 device_type varchar(50) DEFAULT NULL,
                 anonymous_user_guid varchar(255) DEFAULT NULL,
@@ -88,6 +88,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
             ) $charset_collate;";
 
             $db_delta_result = parent::safe_dbDelta($sql);
+
+            // Log the results of the table creation.
+            $this->log_table_creation_results( $db_delta_result, $sql, $table_name );
 
             // Create all the indexes we need.
             parent::safe_create_index($table_name, 'idx_widget', 'widget_id'); // We need to query all events for a widget.
@@ -131,6 +134,47 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
             parent::safe_create_index($table_name, 'idx_widget_user', 'widget_id, user_id, anonymous_user_guid');
 
             return $db_delta_result;
+        }
+
+        /**
+         * Logs the results of the table creation process.
+         *
+         * @param array $db_delta_result The results of the table creation process.
+         * @param string $sql The SQL statement used to create the table.
+         * @param string $table_name The name of the table that we tried to create.
+         * @return void
+         */
+        public function log_table_creation_results( $db_delta_result, $sql, $table_name ) {
+            global $wpdb;
+
+            $table_exists = self::does_table_exist( $table_name );
+
+            // If the table does not exist, or we got back from results from the dbDelta, then log the results.
+            if ( !$table_exists || !empty( $db_delta_result ) ) {
+                $data = [
+                    'table_exists' => $table_exists,
+                    'sql' => $sql,
+                    'result' => $db_delta_result,
+                    'error' => $wpdb->last_error,
+                    'server' => $wpdb->db_server_info()
+                ];
+
+                update_option( FOOCONVERT_OPTION_DATABASE_DATA, $data );
+            }
+        }
+
+        /**
+         * Checks if a table exists in the database.
+         *
+         * @param string $table_name The name of the table to check.
+         * @return bool True if the table exists, false otherwise.
+         */
+        static function does_table_exist( $table_name ) {
+            global $wpdb;
+
+            $table_exists = $wpdb->get_var("SHOW TABLES LIKE '{$table_name}'");
+
+            return $table_exists === $table_name;
         }
     }
 }
