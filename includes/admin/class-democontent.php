@@ -312,7 +312,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
                 // Demo Flyouts:
                 [
-                    'post_title' => 'Black Friday Flyout [Demo]',
+                    'post_title' => 'Black Friday Scroll Flyout [Demo]',
                     'post_status' => 'draft',
                     'post_type' => 'fc-flyout',
                     'template' => 'black_friday_flyout',
@@ -364,7 +364,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
                 // Demo Popups:
                 [
-                    'post_title' => 'Black Friday Popup [Demo]',
+                    'post_title' => 'Black Friday Exit Intent Popup [Demo]',
                     'post_status' => 'draft',
                     'post_type' => 'fc-popup',
                     'template' => 'black_friday_popup',
