@@ -17,11 +17,11 @@ FooConvert is a powerful WordPress plugin designed to help you optimize your web
 = Key Features =
 
 - Add high converting widgets to your pages, including:
-  - Exit-Intent Coupon Popups
-  - Countdown FOMO Bars
+  - Exit-Intent Popups
+  - FOMO Bars
   - CTA Flyouts
-- Track widget analytics and conversions. (coming soon!)
-- Advanced Analytics Dashboard (coming soon!)
+- Track widget analytics and conversions.
+- Advanced Analytics Dashboard.
 - WooCommerce Integration (coming soon!)
 - A/B Testing (coming soon!)
 - Personalized User Journey Mapping (coming soon!)
@@ -71,6 +71,13 @@ No, FooConvert is optimized for performance and has minimal impact on your websi
 The source code for this plugin is available publicly on GitHub [here](https://github.com/fooplugins/fooconvert).
 
 == Changelog ==
+
+= 0.0.19 =
+* Date Updated : 9 Dec 2024
+* Added demo content (black friday scroll flyout & black friday exit intent popup).
+* Added top performer panel to the dashboard.
+* Added cron job to calculate widget stats (for top performers panel).
+* Added cron job to delete old events (outside of retention period).
 
 = 0.0.16 =
 * Date Updated : 3 Dec 2024

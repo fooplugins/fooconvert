@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: FooConvert 0.0.16\n"
+"Project-Id-Version: FooConvert 0.0.20\n"
 "Report-Msgid-Bugs-To: https://github.com/fooplugins/fooconvert/issues\n"
 "Last-Translator: FooPlugins <info@fooplugins.com>\n"
 "Language-Team: FooPlugins <info@fooplugins.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-12-03T19:48:56+00:00\n"
+"POT-Creation-Date: 2024-12-09T20:36:40+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: fooconvert\n"
@@ -36,101 +36,143 @@ msgstr ""
 msgid "https://fooplugins.com/"
 msgstr ""
 
-#: includes/admin/class-dashboard.php:42
-#: includes/admin/class-dashboard.php:79
-#: includes/admin/class-dashboard.php:103
+#: includes/admin/class-dashboard.php:43
+#: includes/admin/class-dashboard.php:80
+#: includes/admin/class-dashboard.php:104
+#: includes/admin/class-dashboard.php:125
 #: includes/admin/class-stats.php:39
 msgid "Invalid nonce!!"
 msgstr ""
 
-#: includes/admin/class-dashboard.php:58
+#: includes/admin/class-dashboard.php:59
 msgid "No widgets created!"
 msgstr ""
 
 #. Translators: %d refers to the number of demo widgets created.
-#: includes/admin/class-dashboard.php:61
+#: includes/admin/class-dashboard.php:62
 msgid "%d demo widgets created successfully!"
 msgstr ""
 
-#: includes/admin/class-dashboard.php:87
+#: includes/admin/class-dashboard.php:88
 msgid "All demo widgets deleted!"
 msgstr ""
 
-#: includes/admin/class-dashboard.php:129
-#: includes/admin/class-dashboard.php:130
+#: includes/admin/class-dashboard.php:148
+#: includes/admin/class-dashboard.php:149
 msgid "Dashboard"
 msgstr ""
 
-#: includes/admin/class-promotions.php:31
+#: includes/admin/class-promotions.php:38
 msgid "Total Clicks"
 msgstr ""
 
-#: includes/admin/class-promotions.php:32
+#: includes/admin/class-promotions.php:39
 msgid "Total number of clicks made within the widget."
 msgstr ""
 
-#: includes/admin/class-promotions.php:38
+#: includes/admin/class-promotions.php:45
 msgid "Click Through Rate"
 msgstr ""
 
-#: includes/admin/class-promotions.php:39
+#: includes/admin/class-promotions.php:46
 msgid "Click Through Rate for the widget."
 msgstr ""
 
-#: includes/admin/class-promotions.php:45
+#: includes/admin/class-promotions.php:52
 msgid "Total Conversions"
 msgstr ""
 
-#: includes/admin/class-promotions.php:46
+#: includes/admin/class-promotions.php:53
 msgid "Total number of conversions for the widget."
 msgstr ""
 
-#: includes/admin/class-promotions.php:52
+#: includes/admin/class-promotions.php:59
 msgid "Conversion Rate"
 msgstr ""
 
-#: includes/admin/class-promotions.php:53
+#: includes/admin/class-promotions.php:60
 msgid "Conversion Rate for the widget."
 msgstr ""
 
-#: includes/admin/class-promotions.php:59
+#: includes/admin/class-promotions.php:66
 msgid "Engagement Rate"
 msgstr ""
 
-#: includes/admin/class-promotions.php:60
+#: includes/admin/class-promotions.php:67
 msgid "Engagement Rate for the widget."
 msgstr ""
 
-#: includes/admin/class-promotions.php:66
+#: includes/admin/class-promotions.php:73
 msgid "Positive Engagements"
 msgstr ""
 
-#: includes/admin/class-promotions.php:67
+#: includes/admin/class-promotions.php:74
 msgid "Total number of positive engagements for the widget (like clicks)."
 msgstr ""
 
-#: includes/admin/class-promotions.php:73
+#: includes/admin/class-promotions.php:80
 msgid "Negative Engagements"
 msgstr ""
 
-#: includes/admin/class-promotions.php:74
+#: includes/admin/class-promotions.php:81
 msgid "Total number of negative engagements for the widget (like dismissals)."
 msgstr ""
 
-#: includes/admin/class-promotions.php:80
+#: includes/admin/class-promotions.php:87
 msgid "Overall Sentiment"
 msgstr ""
 
-#: includes/admin/class-promotions.php:81
+#: includes/admin/class-promotions.php:88
 msgid "Overall sentiment for the widget which ranges from very negative to very positive. It can also be unknown if there are no engagements, or neutral."
 msgstr ""
 
-#: includes/admin/class-promotions.php:89
+#: includes/admin/class-promotions.php:96
 msgid "These advanced metrics are available in the PRO Analytics Addon."
 msgstr ""
 
-#: includes/admin/class-promotions.php:89
+#: includes/admin/class-promotions.php:96
+#: includes/admin/views/dashboard-top-performers.php:16
 msgid "Buy PRO Analytics!"
+msgstr ""
+
+#: includes/admin/class-promotions.php:103
+msgid "engagement rate (PRO)"
+msgstr ""
+
+#: includes/admin/class-promotions.php:105
+msgid "Top performers by engagement rate is only available in the PRO Analytics Addon."
+msgstr ""
+
+#: includes/admin/class-promotions.php:109
+msgid "clicks (PRO)"
+msgstr ""
+
+#: includes/admin/class-promotions.php:111
+msgid "Top performers by clicks is only available in the PRO Analytics Addon."
+msgstr ""
+
+#: includes/admin/class-promotions.php:115
+msgid "click rate (PRO)"
+msgstr ""
+
+#: includes/admin/class-promotions.php:117
+msgid "Top performers by click rate is only available in the PRO Analytics Addon."
+msgstr ""
+
+#: includes/admin/class-promotions.php:121
+msgid "conversions (PRO)"
+msgstr ""
+
+#: includes/admin/class-promotions.php:123
+msgid "Top performers by conversions is only available in the PRO Analytics Addon."
+msgstr ""
+
+#: includes/admin/class-promotions.php:127
+msgid "conversion rate (PRO)"
+msgstr ""
+
+#: includes/admin/class-promotions.php:129
+msgid "Top performers by conversion rate is only available in the PRO Analytics Addon."
 msgstr ""
 
 #: includes/admin/class-settings.php:21
@@ -138,7 +180,7 @@ msgid "FooConvert Settings"
 msgstr ""
 
 #: includes/admin/class-settings.php:22
-#: includes/admin/class-settings.php:218
+#: includes/admin/class-settings.php:289
 msgid "Settings"
 msgstr ""
 
@@ -179,100 +221,150 @@ msgid "Helps to debug problems and diagnose issues. Enable debugging if you need
 msgstr ""
 
 #: includes/admin/class-settings.php:56
-msgid "Demo Content Created"
+msgid "Hide Promos"
 msgstr ""
 
 #: includes/admin/class-settings.php:57
+msgid "If enabled, will hide all promotional messages within the admin area."
+msgstr ""
+
+#: includes/admin/class-settings.php:62
+msgid "Demo Content Created"
+msgstr ""
+
+#: includes/admin/class-settings.php:63
 msgid "If the demo content has been created, then this will be checked. You can uncheck this to allow for demo content to be created again."
 msgstr ""
 
-#: includes/admin/class-settings.php:68
-msgid "Table"
-msgstr ""
-
-#: includes/admin/class-settings.php:72
-msgid "Table Size (MB)"
-msgstr ""
-
-#: includes/admin/class-settings.php:76
-msgid "Event Row Count"
-msgstr ""
-
-#: includes/admin/class-settings.php:80
-msgid "Widget Count With Events"
-msgstr ""
-
-#: includes/admin/class-settings.php:84
-msgid "Orphaned Event Count"
-msgstr ""
-
-#: includes/admin/class-settings.php:96
-msgid "Orphaned Widget Count"
-msgstr ""
-
-#: includes/admin/class-settings.php:103
+#: includes/admin/class-settings.php:70
+#: includes/admin/class-settings.php:287
 msgid "Database"
 msgstr ""
 
-#: includes/admin/class-settings.php:110
-msgid "Database Stats"
+#: includes/admin/class-settings.php:83
+msgid "Database Error"
+msgstr ""
+
+#: includes/admin/class-settings.php:84
+msgid "Event Table Does Not Exist!"
+msgstr ""
+
+#: includes/admin/class-settings.php:93
+msgid "Database Data"
+msgstr ""
+
+#: includes/admin/class-settings.php:105
+msgid "Table"
+msgstr ""
+
+#: includes/admin/class-settings.php:109
+msgid "Table Size (MB)"
+msgstr ""
+
+#: includes/admin/class-settings.php:113
+msgid "Event Row Count"
 msgstr ""
 
 #: includes/admin/class-settings.php:117
-msgid "Delete All Events"
+msgid "Widget Count With Events"
 msgstr ""
 
-#: includes/admin/class-settings.php:127
-msgid "Delete Orphaned Data"
+#: includes/admin/class-settings.php:121
+msgid "Orphaned Event Count"
 msgstr ""
 
 #: includes/admin/class-settings.php:133
+msgid "Orphaned Widget Count"
+msgstr ""
+
+#: includes/admin/class-settings.php:141
+msgid "Database Stats"
+msgstr ""
+
+#: includes/admin/class-settings.php:149
+msgid "Delete Old Events"
+msgstr ""
+
+#: includes/admin/class-settings.php:150
+msgid "This will permanently delete all events older than the retention period."
+msgstr ""
+
+#: includes/admin/class-settings.php:150
+msgid "Currently :"
+msgstr ""
+
+#: includes/admin/class-settings.php:150
+msgid "days."
+msgstr ""
+
+#: includes/admin/class-settings.php:157
+msgid "Delete All Events"
+msgstr ""
+
+#: includes/admin/class-settings.php:158
+msgid "This will permanently delete all events."
+msgstr ""
+
+#: includes/admin/class-settings.php:166
+msgid "Delete Orphaned Data"
+msgstr ""
+
+#: includes/admin/class-settings.php:174
 msgid "System Info"
 msgstr ""
 
-#: includes/admin/class-settings.php:139
+#: includes/admin/class-settings.php:180
 msgid "Your System Information"
 msgstr ""
 
-#: includes/admin/class-settings.php:140
+#: includes/admin/class-settings.php:181
 msgid "The below system info can be used when submitting a support ticket, to help us replicate your environment."
 msgstr ""
 
 #. Translators: %d refers to the number of orphaned events that were deleted.
-#: includes/admin/class-settings.php:172
+#: includes/admin/class-settings.php:213
 msgid "Successfully deleted %d orphaned events."
 msgstr ""
 
 #. Translators: %d refers to the number of events that were deleted.
-#: includes/admin/class-settings.php:189
+#: includes/admin/class-settings.php:230
+#: includes/admin/class-settings.php:247
 msgid "Successfully deleted %d events."
 msgstr ""
 
-#: includes/admin/class-settings.php:212
+#: includes/admin/class-settings.php:272
+msgid "ERROR : The events table does not exist!"
+msgstr ""
+
+#: includes/admin/class-settings.php:280
 msgid "FooConvert version"
 msgstr ""
 
-#: includes/admin/class-settings.php:213
+#: includes/admin/class-settings.php:281
 msgid "WordPress version"
 msgstr ""
 
-#: includes/admin/class-settings.php:214
+#: includes/admin/class-settings.php:282
 msgid "Activated Theme"
 msgstr ""
 
-#: includes/admin/class-settings.php:215
+#: includes/admin/class-settings.php:283
 msgid "WordPress URL"
 msgstr ""
 
-#: includes/admin/class-settings.php:216
+#: includes/admin/class-settings.php:284
 msgid "PHP version"
 msgstr ""
 
-#: includes/admin/class-settings.php:217
+#: includes/admin/class-settings.php:285
 msgid "Retention"
 msgstr ""
 
-#: includes/admin/class-settings.php:219
+#: includes/admin/class-settings.php:286
+msgid "Cron Jobs"
+msgstr ""
+
+#: includes/admin/class-settings.php:288
 msgid "Active Plugins"
 msgstr ""
 
@@ -285,10 +377,12 @@ msgid "Events"
 msgstr ""
 
 #: includes/admin/class-stats.php:71
+#: includes/functions.php:252
 msgid "Views"
 msgstr ""
 
 #: includes/admin/class-stats.php:77
+#: includes/functions.php:244
 msgid "Engagements"
 msgstr ""
 
@@ -308,6 +402,152 @@ msgstr ""
 #: includes/admin/class-stats.php:197
 #: includes/admin/class-stats.php:198
 msgid "Widget Stats"
+msgstr ""
+
+#: includes/admin/views/dashboard-top-performers.php:19
+msgid "No top performers found!"
+msgstr ""
+
+#: includes/admin/views/dashboard-top-performers.php:21
+msgid "Please update stats in order to see top performers."
+msgstr ""
+
+#: includes/admin/views/dashboard-top-performers.php:27
+msgid "Rank"
+msgstr ""
+
+#: includes/admin/views/dashboard-top-performers.php:28
+#: assets/editor.js:1
+#: assets/editor.js:7
+msgid "Title"
+msgstr ""
+
+#: includes/admin/views/dashboard-top-performers.php:41
+msgid "Edit Widget"
+msgstr ""
+
+#: includes/admin/views/dashboard-top-performers.php:43
+msgid "View Widget Stats"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:14
+msgid "Getting Started with FooConvert!"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:19
+msgid "The easiest way to get started is by creating demo widgets, which will create 3 draft bars, flyouts and popups."
+msgstr ""
+
+#: includes/admin/views/dashboard.php:20
+msgid "It's also the best way to see the top performers in action!"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:24
+msgid "Create Demo Widgets"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:29
+msgid "Do not worry"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:30
+msgid "the demo widgets will NOT be visible to your site visitors :)"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:36
+msgid "Awesome, you have already created the demo widgets!"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:40
+msgid "Delete Demo Widgets"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:45
+msgid "Deleting the demo widgets will also delete all stats for the widgets."
+msgstr ""
+
+#: includes/admin/views/dashboard.php:50
+msgid "OR"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:52
+msgid "Create your own unique widget by following these simple steps:"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:56
+msgid "Create a new widget."
+msgstr ""
+
+#: includes/admin/views/dashboard.php:57
+msgid "create a new bar"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:60
+msgid "Select a pre-made template."
+msgstr ""
+
+#: includes/admin/views/dashboard.php:61
+msgid "e.g. Black Friday Bar"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:64
+msgid "Customize the look and feel &amp; change the content to your liking!"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:67
+msgid "Set the Display Rules locations."
+msgstr ""
+
+#: includes/admin/views/dashboard.php:68
+msgid "e.g. either \"Entire Site\" or \"Front Page\""
+msgstr ""
+
+#: includes/admin/views/dashboard.php:71
+msgid "Select an Open Trigger."
+msgstr ""
+
+#: includes/admin/views/dashboard.php:72
+msgid "e.g. on page load, or exit intent"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:75
+msgid "Publish and you're done!"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:82
+msgid "Need Help? We're here for you!"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:88
+msgid "Read FooConvert documentation"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:93
+msgid "Get Support"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:103
+msgid "Top Performers"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:106
+msgid "Sort by"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:125
+msgid "Update Stats"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:130
+msgid "Last Updated : "
+msgstr ""
+
+#: includes/admin/views/dashboard.php:137
+msgid "PRO Addons"
+msgstr ""
+
+#: includes/admin/views/dashboard.php:140
+msgid "Coming soon!"
 msgstr ""
 
 #: includes/admin/views/widget-stats.php:4
@@ -359,7 +599,7 @@ msgstr ""
 msgid "Recent Activity (7-Day)"
 msgstr ""
 
-#: includes/class-fooconvert-compatibility.php:73
+#: includes/class-fooconvert-compatibility.php:55
 msgid "Compatibility settings for FooConvert."
 msgstr ""
 
@@ -444,6 +684,30 @@ msgstr ""
 msgid "Roles"
 msgstr ""
 
+#: includes/functions.php:243
+msgid "engagements"
+msgstr ""
+
+#: includes/functions.php:245
+msgid "Total number of engagements"
+msgstr ""
+
+#: includes/functions.php:251
+msgid "views"
+msgstr ""
+
+#: includes/functions.php:253
+msgid "Total number of views"
+msgstr ""
+
+#: includes/functions.php:292
+msgid "ago"
+msgstr ""
+
+#: includes/functions.php:320
+msgid "Never"
+msgstr ""
+
 #. translators: %1$s = Plugin name; %2$s = Minimum PHP version; %3$s = Current PHP version
 #: includes/startup-checks.php:20
 msgid "%1$s could not be initialized because you need to be running at least PHP version %2$s, and you are running version %3$s"
@@ -481,6 +745,22 @@ msgstr ""
 
 #: includes/widgets/class-bar.php:232
 msgid "A simple bottom bar that is dismissed when the button is clicked."
+msgstr ""
+
+#: includes/widgets/class-flyout.php:126
+msgid "Black Friday Flyout"
+msgstr ""
+
+#: includes/widgets/class-flyout.php:127
+msgid "A typical Black Friday flyout to help drive sales."
+msgstr ""
+
+#: includes/widgets/class-popup.php:123
+msgid "Black Friday Popup"
+msgstr ""
+
+#: includes/widgets/class-popup.php:124
+msgid "A typical Black Friday popup to help drive sales."
 msgstr ""
 
 #: assets/blocks/example-block/editor/index.js:1
@@ -817,11 +1097,6 @@ msgid "Inner Blocks"
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/editor.js:7
-msgid "Title"
-msgstr ""
-
-#: assets/editor.js:1
 msgid "Description"
 msgstr ""
 
@@ -878,6 +1153,22 @@ msgstr ""
 
 #: assets/editor.js:1
 msgid "Open when an anchor becomes visible within the window."
+msgstr ""
+
+#: assets/editor.js:1
+msgid "On element click"
+msgstr ""
+
+#: assets/editor.js:1
+msgid "Open when an element is clicked."
+msgstr ""
+
+#: assets/editor.js:1
+msgid "Selector"
+msgstr ""
+
+#: assets/editor.js:1
+msgid "A CSS selector that specifies the element(s) to target."
 msgstr ""
 
 #: assets/editor.js:1
