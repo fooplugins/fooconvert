@@ -206,6 +206,18 @@ function fooconvert_admin_url_addons() {
 }
 
 /**
+ * Retrieves the base URL for the FooConvert Widget Stats admin page.
+ *
+ * This function constructs and returns the base URL for accessing the
+ * FooConvert Widget Stats page in the WordPress admin area.
+ *
+ * @return string The base URL for the FooConvert Widget Stats admin page.
+ */
+function fooconvert_admin_url_widget_stats_base() {
+    return 'admin.php?page=' . FOOCONVERT_MENU_SLUG_WIDGET_STATS;
+}
+
+/**
  * Retrieves the URL for the FooConvert Widget Stats admin page.
  *
  * @param int $widget_id The ID of the widget to view stats for.
@@ -213,7 +225,7 @@ function fooconvert_admin_url_addons() {
  * @return string The URL for the FooConvert Widget Stats admin page.
  */
 function fooconvert_admin_url_widget_stats( $widget_id ) {
-    return admin_url( 'admin.php?page=fooconvert-widget-stats&widget_id=' . $widget_id );
+    return admin_url(fooconvert_admin_url_widget_stats_base() . '&widget_id=' . $widget_id );
 }
 
 /**

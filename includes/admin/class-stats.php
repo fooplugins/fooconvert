@@ -197,7 +197,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 __( 'Widget Stats', 'fooconvert' ),
                 __( 'Widget Stats', 'fooconvert' ),
                 'manage_options',
-                'fooconvert-widget-stats',
+                FOOCONVERT_MENU_SLUG_WIDGET_STATS,
                 function() {
                     require_once FOOCONVERT_INCLUDES_PATH . 'admin/views/widget-stats.php';
                 }
@@ -228,6 +228,15 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
         public function enqueue_assets( $hook ) {
             // Only load on the FooConvert stats page
             if ( $hook !== 'fooconvert_page_fooconvert-widget-stats' ) {
+
+                // Hide "Widget Stats" submenu if we are NOT on the page.
+                wp_add_inline_style('wp-admin', '
+                    /* Hide "Widget Stats" submenu */
+                    #toplevel_page_fooconvert .wp-submenu li a[href="' . fooconvert_admin_url_widget_stats_base() . '"] {
+                        display: none !important;
+                    }
+                ');
+
                 return;
             }
 
