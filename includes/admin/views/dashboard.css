@@ -130,7 +130,8 @@ ol.fooconvert-ordered-list li::before {
     overflow: hidden;
 }
 
-.fooconvert-top-performers-table thead th {
+.fooconvert-top-performers-table th,
+.fooconvert-top-performers-table td {
     padding: 12px 15px;
     text-align: left;
 }
@@ -147,8 +148,25 @@ ol.fooconvert-ordered-list li::before {
     background: #fafafa;
 }
 
-.fooconvert-top-performers-table tbody td {
-    padding: 12px 15px;
+.fooconvert-top-performers-table th:nth-child(1),
+.fooconvert-top-performers-table td:nth-child(1) {
+    text-align: center;
+    width: 30px;
+}
+
+.fooconvert-top-performers-table th:nth-child(3),
+.fooconvert-top-performers-table td:nth-child(3) {
+    text-align: right;
+    width: 150px;
+}
+
+.fooconvert-top-performers-table-actions {
+    visibility: hidden;
+    display: inline-block;
+}
+
+.fooconvert-top-performers-table tr:hover .fooconvert-top-performers-table-actions {
+    visibility: visible;
 }
 
 .fooconvert-top-performers-table a {

@@ -30,7 +30,6 @@ if ( empty( $top_performers ) ) {
     echo esc_html( $sort_object['table_header'] );
     echo '<span class="fooconvert-tooltip" data-balloon-pos="left" aria-label="' . esc_attr( $sort_object['tooltip'] ) . '"><i class="dashicons dashicons-editor-help"></i></span>';
     echo '</th>';
-    echo '<th></th>';
     echo '</tr>';
     echo '</thead>';
     echo '<tbody>';
@@ -44,10 +43,14 @@ if ( empty( $top_performers ) ) {
         $score = $top_performer['score'];
 
         echo '<tr>';
-        echo '<td>' . $index . '</td>';
-        echo '<td>' . $top_performer['title'] . '</td>';
+        echo '<td>#' . $index . '</td>';
+        echo '<td><span>' . $top_performer['title'] . '</span>';
+        echo '<div class="fooconvert-top-performers-table-actions">';
+        echo $edit_link . ' ' . $stats_link;
+        echo '</div>';
+        echo '</td>';
         echo '<td>' . $score . '</td>';
-        echo '<td>' . $edit_link . ' ' . $stats_link . '</td>';
+        //echo '<td>' . $edit_link . ' ' . $stats_link . '</td>';
         echo '</tr>';
     }
 
