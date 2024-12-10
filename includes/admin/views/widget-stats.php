@@ -8,6 +8,10 @@ if ( $widget_id ) {
     if ( $widget ) {
         $widget_name = $widget->post_title;
     }
+} else {
+    // Redirect to the widget list page if the widget ID is not provided
+    wp_redirect( admin_url( 'admin.php?page=fooconvert' ) );
+    exit;
 }
 ?>
 
