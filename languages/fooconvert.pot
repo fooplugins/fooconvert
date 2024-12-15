@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: FooConvert 0.0.20\n"
+"Project-Id-Version: FooConvert 0.0.24\n"
 "Report-Msgid-Bugs-To: https://github.com/fooplugins/fooconvert/issues\n"
 "Last-Translator: FooPlugins <info@fooplugins.com>\n"
 "Language-Team: FooPlugins <info@fooplugins.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-12-09T20:36:40+00:00\n"
+"POT-Creation-Date: 2024-12-14T15:14:48+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: fooconvert\n"
@@ -21,7 +21,7 @@ msgid "FooConvert"
 msgstr ""
 
 #. Plugin URI of the plugin
-msgid "https://fooplugins.com/fooconvert-wordpress-sales-conversion/"
+msgid "https://fooplugins.com/fooconvert/"
 msgstr ""
 
 #. Description of the plugin
@@ -180,7 +180,7 @@ msgid "FooConvert Settings"
 msgstr ""
 
 #: includes/admin/class-settings.php:22
-#: includes/admin/class-settings.php:289
+#: includes/admin/class-settings.php:291
 msgid "Settings"
 msgstr ""
 
@@ -237,7 +237,7 @@ msgid "If the demo content has been created, then this will be checked. You can 
 msgstr ""
 
 #: includes/admin/class-settings.php:70
-#: includes/admin/class-settings.php:287
+#: includes/admin/class-settings.php:289
 msgid "Database"
 msgstr ""
 
@@ -249,122 +249,122 @@ msgstr ""
 msgid "Event Table Does Not Exist!"
 msgstr ""
 
-#: includes/admin/class-settings.php:93
+#: includes/admin/class-settings.php:94
 msgid "Database Data"
 msgstr ""
 
-#: includes/admin/class-settings.php:105
+#: includes/admin/class-settings.php:107
 msgid "Table"
 msgstr ""
 
-#: includes/admin/class-settings.php:109
+#: includes/admin/class-settings.php:111
 msgid "Table Size (MB)"
 msgstr ""
 
-#: includes/admin/class-settings.php:113
+#: includes/admin/class-settings.php:115
 msgid "Event Row Count"
 msgstr ""
 
-#: includes/admin/class-settings.php:117
+#: includes/admin/class-settings.php:119
 msgid "Widget Count With Events"
 msgstr ""
 
-#: includes/admin/class-settings.php:121
+#: includes/admin/class-settings.php:123
 msgid "Orphaned Event Count"
 msgstr ""
 
-#: includes/admin/class-settings.php:133
+#: includes/admin/class-settings.php:135
 msgid "Orphaned Widget Count"
 msgstr ""
 
-#: includes/admin/class-settings.php:141
+#: includes/admin/class-settings.php:143
 msgid "Database Stats"
 msgstr ""
 
-#: includes/admin/class-settings.php:149
+#: includes/admin/class-settings.php:151
 msgid "Delete Old Events"
 msgstr ""
 
-#: includes/admin/class-settings.php:150
+#: includes/admin/class-settings.php:152
 msgid "This will permanently delete all events older than the retention period."
 msgstr ""
 
-#: includes/admin/class-settings.php:150
+#: includes/admin/class-settings.php:152
 msgid "Currently :"
 msgstr ""
 
-#: includes/admin/class-settings.php:150
+#: includes/admin/class-settings.php:152
 msgid "days."
 msgstr ""
 
-#: includes/admin/class-settings.php:157
+#: includes/admin/class-settings.php:159
 msgid "Delete All Events"
 msgstr ""
 
-#: includes/admin/class-settings.php:158
+#: includes/admin/class-settings.php:160
 msgid "This will permanently delete all events."
 msgstr ""
 
-#: includes/admin/class-settings.php:166
+#: includes/admin/class-settings.php:168
 msgid "Delete Orphaned Data"
 msgstr ""
 
-#: includes/admin/class-settings.php:174
+#: includes/admin/class-settings.php:176
 msgid "System Info"
 msgstr ""
 
-#: includes/admin/class-settings.php:180
+#: includes/admin/class-settings.php:182
 msgid "Your System Information"
 msgstr ""
 
-#: includes/admin/class-settings.php:181
+#: includes/admin/class-settings.php:183
 msgid "The below system info can be used when submitting a support ticket, to help us replicate your environment."
 msgstr ""
 
 #. Translators: %d refers to the number of orphaned events that were deleted.
-#: includes/admin/class-settings.php:213
+#: includes/admin/class-settings.php:215
 msgid "Successfully deleted %d orphaned events."
 msgstr ""
 
 #. Translators: %d refers to the number of events that were deleted.
-#: includes/admin/class-settings.php:230
-#: includes/admin/class-settings.php:247
+#: includes/admin/class-settings.php:232
+#: includes/admin/class-settings.php:249
 msgid "Successfully deleted %d events."
 msgstr ""
 
-#: includes/admin/class-settings.php:272
+#: includes/admin/class-settings.php:274
 msgid "ERROR : The events table does not exist!"
 msgstr ""
 
-#: includes/admin/class-settings.php:280
+#: includes/admin/class-settings.php:282
 msgid "FooConvert version"
 msgstr ""
 
-#: includes/admin/class-settings.php:281
+#: includes/admin/class-settings.php:283
 msgid "WordPress version"
 msgstr ""
 
-#: includes/admin/class-settings.php:282
+#: includes/admin/class-settings.php:284
 msgid "Activated Theme"
 msgstr ""
 
-#: includes/admin/class-settings.php:283
+#: includes/admin/class-settings.php:285
 msgid "WordPress URL"
 msgstr ""
 
-#: includes/admin/class-settings.php:284
+#: includes/admin/class-settings.php:286
 msgid "PHP version"
 msgstr ""
 
-#: includes/admin/class-settings.php:285
+#: includes/admin/class-settings.php:287
 msgid "Retention"
 msgstr ""
 
-#: includes/admin/class-settings.php:286
+#: includes/admin/class-settings.php:288
 msgid "Cron Jobs"
 msgstr ""
 
-#: includes/admin/class-settings.php:288
+#: includes/admin/class-settings.php:290
 msgid "Active Plugins"
 msgstr ""
 
@@ -377,12 +377,12 @@ msgid "Events"
 msgstr ""
 
 #: includes/admin/class-stats.php:71
-#: includes/functions.php:252
+#: includes/functions.php:264
 msgid "Views"
 msgstr ""
 
 #: includes/admin/class-stats.php:77
-#: includes/functions.php:244
+#: includes/functions.php:256
 msgid "Engagements"
 msgstr ""
 
@@ -422,11 +422,11 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: includes/admin/views/dashboard-top-performers.php:41
+#: includes/admin/views/dashboard-top-performers.php:40
 msgid "Edit Widget"
 msgstr ""
 
-#: includes/admin/views/dashboard-top-performers.php:43
+#: includes/admin/views/dashboard-top-performers.php:42
 msgid "View Widget Stats"
 msgstr ""
 
@@ -555,47 +555,47 @@ msgid "Unknown"
 msgstr ""
 
 #. Translators: %d refers to the ID of the widget.
-#: includes/admin/views/widget-stats.php:17
+#: includes/admin/views/widget-stats.php:21
 msgid "Stats for Widget #%d"
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:18
+#: includes/admin/views/widget-stats.php:22
 msgid "Widget Title : "
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:24
+#: includes/admin/views/widget-stats.php:28
 msgid "Total Events"
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:25
+#: includes/admin/views/widget-stats.php:29
 msgid "Total events logged for the widget for it's lifetime."
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:31
+#: includes/admin/views/widget-stats.php:35
 msgid "Total Views"
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:32
+#: includes/admin/views/widget-stats.php:36
 msgid "Total number of times the widget has been viewed by a visitor."
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:38
+#: includes/admin/views/widget-stats.php:42
 msgid "Total Visitors"
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:39
+#: includes/admin/views/widget-stats.php:43
 msgid "Total number of unique visitors that have viewed the widget."
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:45
+#: includes/admin/views/widget-stats.php:49
 msgid "Total Engagements"
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:46
+#: includes/admin/views/widget-stats.php:50
 msgid "Total number of engagements that have been made with the widget (clicks, opens, etc)."
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:55
+#: includes/admin/views/widget-stats.php:59
 msgid "Recent Activity (7-Day)"
 msgstr ""
 
@@ -684,27 +684,27 @@ msgstr ""
 msgid "Roles"
 msgstr ""
 
-#: includes/functions.php:243
+#: includes/functions.php:255
 msgid "engagements"
 msgstr ""
 
-#: includes/functions.php:245
+#: includes/functions.php:257
 msgid "Total number of engagements"
 msgstr ""
 
-#: includes/functions.php:251
+#: includes/functions.php:263
 msgid "views"
 msgstr ""
 
-#: includes/functions.php:253
+#: includes/functions.php:265
 msgid "Total number of views"
 msgstr ""
 
-#: includes/functions.php:292
+#: includes/functions.php:304
 msgid "ago"
 msgstr ""
 
-#: includes/functions.php:320
+#: includes/functions.php:332
 msgid "Never"
 msgstr ""
 

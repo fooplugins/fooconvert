@@ -72,18 +72,19 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 
 == Changelog ==
 
-= 0.0.19 =
-* Date Updated : 9 Dec 2024
+= 0.0.24 =
+* Date Updated : 13 Dec 2024
 * Added demo content (black friday scroll flyout & black friday exit intent popup).
 * Added top performer panel to the dashboard.
 * Added cron job to calculate widget stats (for top performers panel).
 * Added cron job to delete old events (outside of retention period).
+* Updated to Freemius SDK 2.10.1
 
 = 0.0.16 =
 * Date Updated : 3 Dec 2024
 * Added compatability mode on widgets, so that blocks that generate scripts will now work.
 * Events now have a conversion bool field.
-* Updated to Freemius SDK 2.10.0.
+* Updated to Freemius SDK 2.9.0.
 * Lots of updates and bug fixes!
 
 = 0.0.15 =
