@@ -40,9 +40,18 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
             }
 
             $widget_id = isset( $_POST['widget_id'] ) ? intval( sanitize_text_field( $_POST['widget_id'] ) ) : 0;
-            $days = isset( $_POST['days'] ) ? intval( sanitize_text_field( $_POST['days'] ) ) : FOOCONVERT_RETENTION_DEFAULT;
-            if ( $days === 0 || $days > 100 ) {
-                $days = FOOCONVERT_RETENTION_DEFAULT; //Make sure the days is at least 1 and at most 100.
+
+            $saved_days = intval( get_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, FOOCONVERT_RETENTION_DEFAULT ) );
+            $days = isset( $_POST['days'] ) ? intval( sanitize_text_field( $_POST['days'] ) ) : $saved_days;
+            if ( $days !== $saved_days ) {
+                // We have a chosen number of days, so let's save it for next time.
+                update_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, $days );
+            }
+            if ( $days === 0 ) {
+                $days = FOOCONVERT_RETENTION_DEFAULT;
+            }
+            if ( $days > fooconvert_retention() ) {
+                $days = fooconvert_retention();
             }
 
             if ( $widget_id === 0 ) {

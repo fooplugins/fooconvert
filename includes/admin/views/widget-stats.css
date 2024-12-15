@@ -8,18 +8,21 @@
     margin: 20px 0 0;
 }
 
-.fooconvert-stats-container h1 {
-    font-size: 26px;
-    margin: 0;
-    color: #333;
-    grid-column: span 4;
-}
-
 .fooconvert-stats-container h2 {
     font-size: 20px;
     margin: 0;
     color: #333;
     grid-column: span 4;
+}
+
+.fooconvert-stats-header {
+    grid-column: span 4;
+    display: flex;
+    align-items: center; /* Vertically center the items */
+}
+
+.fooconvert-stats-header .button {
+    margin-left: 10px;
 }
 
 /* Metrics layout */
@@ -144,13 +147,13 @@
     animation: shimmer 2s infinite linear;
 }
 
-.fooconvert-chart-container.loading {
+.fooconvert-recent-activity-container.loading {
     position: relative;
     min-height: 300px;
     overflow: hidden;
 }
 
-.fooconvert-chart-container.loading::after {
+.fooconvert-recent-activity-container.loading::after {
     content: '';
     position: absolute;
     top: 0;
@@ -162,12 +165,12 @@
     animation: shimmer 2s infinite linear;
 }
 
-.fooconvert-chart-container.loading canvas {
+.fooconvert-recent-activity-container.loading canvas {
     opacity: 0;
 }
 
 /* Chart containers */
-.fooconvert-chart-container {
+.fooconvert-recent-activity-container {
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 10px;
@@ -177,7 +180,7 @@
     grid-column: span 4; /* Chart takes up 4 columns */
 }
 
-.fooconvert-chart-container h2 {
+.fooconvert-recent-activity-container h2 {
     font-size: 20px;
     color: #333;
     margin-bottom: 15px;
@@ -198,7 +201,7 @@
         grid-column: span 1;
     }
 
-    .fooconvert-chart-container {
+    .fooconvert-recent-activity-container {
         grid-column: span 2; /* Chart takes 2 columns on smaller screens */
     }
 }
@@ -217,7 +220,7 @@
         grid-column: span 1;
     }
 
-    .fooconvert-chart-container {
+    .fooconvert-recent-activity-container {
         grid-column: span 1; /* Chart takes 1 column on very small screens */
     }
 }

@@ -7,6 +7,7 @@ jQuery(document).ready(function ($) {
             data: {
                 action: 'fooconvert_fetch_stats',
                 widget_id: $('.fooconvert-stats-container').data('widget-id'),
+                days: $('.fooconvert-recent-activity-days').val(),
                 nonce: fooconvertData.nonce
             },
             success: function (response) {
@@ -23,10 +24,10 @@ jQuery(document).ready(function ($) {
                 }
 
                 // Remove loading state from chart container before rendering
-                $('.fooconvert-chart-container').removeClass('loading');
+                $('.fooconvert-recent-activity-container').removeClass('loading');
 
-                // Render line chart for recent activity
-                renderLineChart(response.recent_activity);
+                // Render chart for recent activity
+                renderRecentActivityChart(response.recent_activity);
 
                 // Render PRO metrics if available
                 // $('#conversion-rate').text(response.conversion_rate + '%');
@@ -39,16 +40,23 @@ jQuery(document).ready(function ($) {
             },
             error: function () {
                 // Remove loading states even on error to show empty state
-                $('.metric, .fooconvert-chart-container').removeClass('loading');
+                $('.metric, .fooconvert-recent-activity-container').removeClass('loading');
                 console.error("Failed to fetch stats.");
             }
         });
     }
 
     // Render Line Chart for Recent Activity
-    function renderLineChart(recent_activity) {
-        var ctx = document.getElementById('lineChart').getContext('2d');
-        new Chart(ctx, {
+    function renderRecentActivityChart(recent_activity) {
+        var ctx = document.getElementById('recentActivityChart').getContext('2d');
+
+        // Check if the chart already exists
+        if (window.recentActivityChartInstance) {
+            window.recentActivityChartInstance.destroy();
+        }
+
+        // Create a new chart instance
+        window.recentActivityChartInstance = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: recent_activity.labels,
@@ -114,4 +122,9 @@ jQuery(document).ready(function ($) {
 
     // Fetch and display the stats on page load
     fetchStats();
+
+    $('.fooconvert-recent-activity-days').change( function() {
+        $('.fooconvert-recent-activity-container').addClass('loading');
+        fetchStats();
+    });
 });

@@ -1,12 +1,18 @@
 <?php
 // Get the widget ID from the URL
 $widget_id = isset( $_GET['widget_id'] ) ? intval( $_GET['widget_id'] ) : 0;
-$widget_name = __( 'Unknown', 'fooconvert' );
+$widget_title = __( 'Unknown', 'fooconvert' );
+$recent_activity_days = intval( get_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, FOOCONVERT_RETENTION_DEFAULT ) );
+$recent_activity_options = apply_filters( 'fooconvert_widget_stats_recent_activity_options', [ FOOCONVERT_RETENTION_DEFAULT => __( 'Last 7 days', 'fooconvert' ) ] );
+$edit_link = '';
 
 if ( $widget_id ) {
     $widget = get_post( $widget_id );
     if ( $widget ) {
-        $widget_name = $widget->post_title;
+        $widget_title = fooconvert_get_widget_title( $widget );
+        $edit_url = fooconvert_admin_url_widget_edit( $widget_id );
+        $widget_type = fooconvert_get_widget_post_type_label( $widget );
+        $edit_link = '<a class="button" href="' . esc_url( $edit_url ) . '">' . esc_html( sprintf( __( 'Edit %s', 'fooconvert' ), $widget_type ) ) . '</a>';
     }
 } else {
     // Redirect to the widget list page if the widget ID is not provided
@@ -16,10 +22,14 @@ if ( $widget_id ) {
 ?>
 
 <div class="fooconvert-stats-container" data-widget-id="<?php echo esc_attr( $widget_id ); ?>">
-    <h1><?php
-        // Translators: %d refers to the ID of the widget.
-        echo sprintf( esc_html__( 'Stats for Widget #%d', 'fooconvert' ), esc_html( $widget_id ) ); ?></h1>
-    <h2><?php _e('Widget Title : ', 'fooconvert'); ?> <?php echo esc_html( $widget_name ); ?></h2>
+    <div class="fooconvert-stats-header">
+        <h2><?php
+            // Translators: %s refers to the title of the widget.
+            echo sprintf( esc_html__( 'Stats for #%s', 'fooconvert' ), esc_html( $widget_title ) );
+            ?>
+        </h2>
+        <?php echo $edit_link; ?>
+    </div>
 
     <!-- Basic Metrics -->
     <div class="fooconvert-basic-metrics">
@@ -55,9 +65,16 @@ if ( $widget_id ) {
     </div>
 
     <!-- Recent Activity Chart -->
-    <div class="fooconvert-chart-container loading">
-        <h2><?php _e('Recent Activity (7-Day)', 'fooconvert'); ?></h2>
-        <canvas id="lineChart"></canvas>
+    <div class="fooconvert-recent-activity-container loading">
+        <h2>
+            <?php _e('Recent Activity', 'fooconvert'); ?>
+            <select class="fooconvert-recent-activity-days">
+                <?php foreach ( $recent_activity_options as $days => $label ) : ?>
+                    <option value="<?php echo esc_attr( $days ); ?>" <?php selected( $recent_activity_days, $days ); ?>><?php echo esc_html( $label ); ?></option>
+                <?php endforeach; ?>
+            </select>
+        </h2>
+        <canvas id="recentActivityChart"></canvas>
     </div>
 
 </div>

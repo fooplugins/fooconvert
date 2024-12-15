@@ -11,6 +11,7 @@ define( 'FOOCONVERT_OPTION_VERSION_CREATE_TABLE', 'fooconvert-version-create-tab
 define( 'FOOCONVERT_OPTION_DATABASE_DATA', 'fooconvert-database-data' );
 define( 'FOOCONVERT_OPTION_TOP_PERFORMERS_SORT', 'fooconvert_top_performers_sort' );
 define( 'FOOCONVERT_OPTION_STATS_LAST_UPDATED', 'fooconvert_stats_last_updated' );
+define( 'FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS', 'fooconvert_recent_activity_days' );
 
 // Post meta
 define( 'FOOCONVERT_META_KEY_DISPLAY_RULES', '_fooconvert_display_rules' );     // Meta key for the widget display rules.
