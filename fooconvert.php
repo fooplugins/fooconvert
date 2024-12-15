@@ -42,24 +42,18 @@ if ( ! defined( 'FOOCONVERT_SLUG' ) ) {
 // Include other essential FooConvert constants.
 require_once FOOCONVERT_INCLUDES_PATH . 'constants.php';
 
-// Do a check to see if either free/pro version of the plugin is already running.
-if ( function_exists( 'fooconvert_fs' ) ) {
-    fooconvert_fs()->set_basename( true, __FILE__ );
-} else {
-    if ( ! function_exists( 'fooconvert_fs' ) ) {
-        require_once FOOCONVERT_INCLUDES_PATH . 'freemius.php';
-    }
-}
+// Start autoloader.
+require_once FOOCONVERT_PATH . 'vendor/autoload.php';
+
+// Init Freemius.
+require_once FOOCONVERT_INCLUDES_PATH . 'freemius.php';
 
 // Check minimum requirements before loading the plugin.
 if ( require_once FOOCONVERT_INCLUDES_PATH . 'startup-checks.php' ) {
 
-	// Start autoloader.
-	require_once FOOCONVERT_PATH . 'vendor/autoload.php';
-
     require_once FOOCONVERT_INCLUDES_PATH . 'functions.php';
 
-	spl_autoload_register( 'fooconvert_autoloader' );
+    spl_autoload_register( 'fooconvert_autoloader' );
 
 	// Hook in activation.
 	register_activation_hook( FOOCONVERT_FILE, array( FooPlugins\FooConvert\FooConvert::class, 'activated' ) );

@@ -3,7 +3,7 @@
  * Runs all the Freemius initialization code for FooConvert
  */
 if ( ! function_exists( 'fooconvert_fs' ) ) {
-	// Create a helper function for easy SDK access.
+
 	function fooconvert_fs() {
 		global $fooconvert_fs;
 
@@ -12,9 +12,6 @@ if ( ! function_exists( 'fooconvert_fs' ) ) {
             if ( ! defined( 'WP_FS__PRODUCT_14677_MULTISITE' ) ) {
                 define( 'WP_FS__PRODUCT_14677_MULTISITE', true );
             }
-
-			// Include Freemius SDK.
-			require_once FOOCONVERT_PATH . 'vendor/freemius/wordpress-sdk/start.php';
 
             $fooconvert_fs = fs_dynamic_init( array(
 				'id'                  => '14677',
@@ -43,4 +40,3 @@ if ( ! function_exists( 'fooconvert_fs' ) ) {
 		return FOOCONVERT_ASSETS_PATH . 'media/icon.png';
 	}, 10, 1 );
 }
-
