@@ -157,7 +157,6 @@ ol.fooconvert-ordered-list li::before {
 .fooconvert-top-performers-table th:nth-child(3),
 .fooconvert-top-performers-table td:nth-child(3) {
     text-align: right;
-    width: 150px;
 }
 
 .fooconvert-top-performers-table-actions {

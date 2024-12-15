@@ -229,6 +229,17 @@ function fooconvert_admin_url_widget_stats( $widget_id ) {
 }
 
 /**
+ * Retrieves the URL for the FooConvert Widget Edit admin page.
+ *
+ * @param int $widget_id The ID of the widget to edit.
+ *
+ * @return string The URL for the FooConvert Widget Edit admin page.
+ */
+function fooconvert_admin_url_widget_edit( $widget_id ) {
+    return admin_url('post.php?post=' . $widget_id . '&action=edit');
+}
+
+/**
  * Checks if the FooConvert PRO Analytics Addon is active.
  *
  * @return bool True if the FooConvert Analytics Addon is active, false otherwise.
@@ -342,7 +353,7 @@ function fooconvert_stats_last_updated_default() {
  * @return string The title for the FooConvert widget.
  */
 function fooconvert_get_widget_title( $post ) {
-// Return an empty string if no valid post is found
+    // Return an empty string if no valid post is found
     if ( ! $post ) {
         return '';
     }
@@ -352,11 +363,24 @@ function fooconvert_get_widget_title( $post ) {
         return $post->post_title;
     }
 
-    // Get the post type object
+    return fooconvert_get_widget_post_type_label( $post ) . ' #' . $post->ID;
+}
+
+/**
+ * Retrieves a singular label for a given post type.
+ *
+ * If the post is not available, the function will return an empty string.
+ * If the post has a valid post type, the singular name for that post type
+ * will be returned. If the post type is not available, the function will
+ * return a generic label 'Post'.
+ *
+ * @param WP_Post $post The post object to fetch the post type from.
+ * @return string The singular label for the post type.
+ */
+function fooconvert_get_widget_post_type_label( $post ) {
+    if ( ! $post ) {
+        return '';
+    }
     $post_type = get_post_type_object( $post->post_type );
-
-    // Use the post type label with the post ID if title is empty
-    $post_type_label = $post_type ? $post_type->labels->singular_name : 'Post';
-
-    return $post_type_label . ' #' . $post->ID;
+    return $post_type ? $post_type->labels->singular_name : 'Post';
 }
