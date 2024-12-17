@@ -17,6 +17,10 @@ class Border_Tools_Panel extends Base_Component {
 
     function get_styles( array $value, string $prefix = '', bool $style_required = true ) : array {
         $styles = array();
+        $shadow = Utils::get_string( $value, 'shadow' );
+        if ( !empty( $shadow ) ) {
+            $styles["{$prefix}box-shadow"] = $shadow;
+        }
         $radius = Utils::get_key( $value, 'radius' );
         if ( !empty( $radius ) ) {
             $styles = array_merge(
