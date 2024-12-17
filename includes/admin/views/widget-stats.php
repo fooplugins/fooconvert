@@ -2,8 +2,8 @@
 // Get the widget ID from the URL
 $widget_id = isset( $_GET['widget_id'] ) ? intval( $_GET['widget_id'] ) : 0;
 $widget_title = __( 'Unknown', 'fooconvert' );
-$recent_activity_days = intval( get_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, FOOCONVERT_RETENTION_DEFAULT ) );
-$recent_activity_options = apply_filters( 'fooconvert_widget_stats_recent_activity_options', [ FOOCONVERT_RETENTION_DEFAULT => __( 'Last 7 days', 'fooconvert' ) ] );
+$recent_activity_days = intval( get_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT ) );
+$recent_activity_options = apply_filters( 'fooconvert_widget_stats_recent_activity_options', [ FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT => __( 'Last 7 days', 'fooconvert' ) ] );
 $edit_link = '';
 
 if ( $widget_id ) {
