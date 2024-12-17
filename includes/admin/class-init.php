@@ -60,7 +60,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                 'manage_options',
                 FOOCONVERT_MENU_SLUG,
                 '__return_null',
-                'dashicons-chart-bar'
+                'dashicons-chart-bar',
+                50
             );
 
             do_action( 'fooconvert_admin_menu_before_post_types' );
