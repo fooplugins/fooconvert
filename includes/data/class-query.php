@@ -178,7 +178,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                     GROUP BY event_date
                     ORDER BY event_date ASC", $table_name );
 
-            // Prepare recent activity for the last 7 days
+            // Prepare recent activity for the last X days
             return $wpdb->get_results(
                 $wpdb->prepare(
                     $query,

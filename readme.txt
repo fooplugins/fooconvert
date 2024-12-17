@@ -14,25 +14,47 @@ Turn clicks into conversions, visitors into customers – FooConvert is the ulti
 
 FooConvert is a powerful WordPress plugin designed to help you optimize your website for maximum conversions. With high-converting widgets and advanced analytics, FooConvert helps you generate more leads, boost sales, and enhance customer engagement effortlessly.
 
-= Key Features =
+= FooConvert Key Features =
 
 - Add high converting widgets to your pages, including:
-  - Exit-Intent Popups
-  - FOMO Bars
-  - CTA Flyouts
-- Track widget analytics and conversions.
-- Advanced Analytics Dashboard.
-- WooCommerce Integration (coming soon!)
-- A/B Testing (coming soon!)
-- Personalized User Journey Mapping (coming soon!)
+  - Exit-Intent Popups.
+  - FOMO Bars.
+  - CTA Flyouts.
+- Track widget analytics, including:
+  - Base metrics : views, visitors, engagements.
+  - Daily activity charts for views, visitors and engagements.
+- Analytics Dashboard, including:
+  - Top Performers by Views and Engagement.
+- Data retention for 14 days only.
 
-= Benefits =
+= FooConvert Benefits =
 
 - Increase Conversion Rates: Turn more visitors into paying customers!
 - Boost Lead Generation: Capture more qualified leads for your business!
 - Optimize Sales Funnel: Streamline your sales process for better results!
 - Enhance User Experience: Create personalized journeys for your visitors!
 - Data-Driven Decisions: Make informed choices based on real-time analytics!
+
+= PRO Analytics Add-on =
+
+Track your widgets with our PRO analytics add-on. Gain deeper insights into your conversion funnel and optimize your marketing strategies.
+
+- Longer retention period for widget analytics. You can now track widget performance as long as your like!
+- Advanced widget analytics, including:
+  - Clicks and click-through-rates.
+  - Conversions and conversion rates.
+  - Engagement sentiment and engagement ratios (positive and negative).
+  - Daily activity charts for clicks, conversions and engagements.
+- Advanced dashboard, including:
+  - Top Performers by Engagement Rate, Clicks, Click Rate, Conversions, Conversion Rate.
+
+= PRO Templates Add-on =
+
+Get 15 professionally designed templates to create stunning, high-converting widgets in minutes – just pick, customize, publish!
+
+- Create stunning Flyouts, Bars, and Popups in minutes with professionally designed templates – no design skills needed!
+- Boost conversions and grow your leads effortlessly with high-performing, ready-to-use templates crafted to grab attention.
+- Stop wasting time designing from scratch – launch campaigns faster and start making more money with templates proven to convert.
 
 == Installation ==
 
@@ -72,8 +94,8 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 
 == Changelog ==
 
-= 0.0.24 =
-* Date Updated : 13 Dec 2024
+= 0.0.25 =
+* Date Updated : 17 Dec 2024
 * Added demo content (black friday scroll flyout & black friday exit intent popup).
 * Added top performer panel to the dashboard.
 * Added cron job to calculate widget stats (for top performers panel).
