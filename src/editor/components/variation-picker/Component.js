@@ -1,5 +1,5 @@
 import { useVariations } from "./hooks";
-import { isString } from "@steveush/utils";
+import { isBoolean, isString, isUndefined } from "@steveush/utils";
 import classNames from "classnames";
 
 import "./Component.scss";
@@ -7,6 +7,8 @@ import { Button } from "@wordpress/components";
 import { grid, list } from "@wordpress/icons";
 import { useState } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
+import useDebounce from "../../hooks/useDebounce";
+import SearchInput from "./components/search/Component";
 
 const modes = [ 'grid', 'list' ];
 const DEFAULT_MODE = 'grid';
@@ -19,17 +21,38 @@ const VariationPicker = ( {
                               className,
                               label = '',
                               media = DEFAULT_MEDIA,
-                              initialMode = DEFAULT_MODE
+                              initialMode = DEFAULT_MODE,
+                              showSearch,
+                              minSearchChars = 2
                           } ) => {
 
     media = medias.includes( media ) ? media : DEFAULT_MEDIA;
     initialMode = modes.includes( initialMode ) ? initialMode : DEFAULT_MODE;
 
     const [ mode, setMode ] = useState( initialMode );
+    const [ search, setSearch ] = useState( '' );
+
     const { defaultVariation, blockVariations, setVariation } = useVariations( clientId, reset );
 
     const showLabel = isString( label, true );
     const onChange = ( nextVariation = defaultVariation ) => setVariation( nextVariation );
+    const searchChanged = value => {
+        value = isString( value ) && value.length >= minSearchChars ? value : '';
+        setSearch( value );
+    };
+
+    const debouncedSearch = useDebounce( searchChanged, 300 );
+
+    let variations = blockVariations.slice();
+    if ( search !== '' ) {
+        variations = variations.filter( variation => variation.title.toLocaleLowerCase().includes( search.toLocaleLowerCase() ) );
+    }
+    let shouldShowSearch;
+    if ( isBoolean( showSearch ) ) {
+        shouldShowSearch = showSearch;
+    } else {
+        shouldShowSearch = variations.length > 8;
+    }
 
     const renderVariation = ( variation, i ) => {
         return (
@@ -87,11 +110,12 @@ const VariationPicker = ( {
         <div className={ classes }>
             <div className="fc-variation-picker__toolbar">
                 { showLabel && ( <label className="fc-variation-picker__label">{ label }</label> ) }
+                { shouldShowSearch && ( <SearchInput value={ search } onChange={ debouncedSearch }/> ) }
                 <ModeButton value="list" icon={ list } label={ __( "List View", "fooconvert" ) }/>
                 <ModeButton value="grid" icon={ grid } label={ __( "Grid View", "fooconvert" ) }/>
             </div>
             <div className="fc-variation-picker__variations">
-                { blockVariations.map( renderVariation ) }
+                { variations.map( renderVariation ) }
             </div>
         </div>
     );

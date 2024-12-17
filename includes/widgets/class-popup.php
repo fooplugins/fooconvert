@@ -98,6 +98,7 @@ class Popup extends Base_Widget {
     function get_editor_variations() : array {
         return apply_filters('fooconvert_editor_variations-' . $this->get_post_type(), array(
             array(
+                'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/empty.png',
                 'name' => 'empty',
                 'title' => __( 'Empty', 'fooconvert' ),
                 'description' => __( 'Empty', 'fooconvert' ),
@@ -109,10 +110,8 @@ class Popup extends Base_Widget {
                         'fc/popup-container',
                         array(),
                         array(
-                            array(
-                                array( 'fc/popup-close-button' ),
-                                array( 'fc/popup-content' )
-                            )
+                            array( 'fc/popup-close-button' ),
+                            array( 'fc/popup-content' )
                         )
                     )
                 ),
@@ -123,6 +122,7 @@ class Popup extends Base_Widget {
                 'title' => __( 'Black Friday Popup', 'fooconvert' ),
                 'description' => __( 'A typical Black Friday popup to help drive sales.', 'fooconvert' ),
                 'icon' => '',
+                'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/black_friday_popup.png',
                 'attributes' => array(
                     'settings' => array(
                         'transitions' => true,

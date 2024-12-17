@@ -3,13 +3,15 @@ import {
     getBorderStyle,
     getColorStyle,
     getDimensionStyle,
-    getTypographyStyle
+    getTypographyStyle,
+    getBoxShadowStyle
 } from "../components";
 
 const getStyles = ( value, colorMap ) => {
     return {
         ...getBorderStyle( value?.border, true ),
         ...getBorderRadiusStyle( value?.border?.radius, true ),
+        ...getBoxShadowStyle( value?.border?.shadow ),
         ...getColorStyle( value?.color, colorMap ),
         ...getDimensionStyle( value?.dimensions ),
         ...getTypographyStyle( value?.typography )

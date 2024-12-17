@@ -1,6 +1,7 @@
 import "./root.scss";
 export * from "./border-radius-control";
 export * from "./border-tools-panel";
+export * from "./box-shadow-control";
 export * from "./box-units-control";
 export * from "./color-tools-panel";
 export * from "./dimension-tools-panel";
