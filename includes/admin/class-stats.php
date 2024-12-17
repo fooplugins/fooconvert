@@ -74,24 +74,32 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                     'label' => __( 'Events', 'fooconvert' ),
                     'data' => [],
                     'borderColor' => 'rgb(112, 112, 112)',
+                    'cubicInterpolationMode' => 'monotone',
+                    'tension' => 0.4,
                     'fill' => false
                 ],
                 'views' => [
                     'label' => __( 'Views', 'fooconvert' ),
                     'data' => [],
                     'borderColor' => 'rgb(75, 192, 192)',
+                    'cubicInterpolationMode' => 'monotone',
+                    'tension' => 0.4,
                     'fill' => false
                 ],
                 'engagements' => [
                     'label' => __( 'Engagements', 'fooconvert' ),
                     'data' => [],
                     'borderColor' => 'rgb(255, 99, 132)',
+                    'cubicInterpolationMode' => 'monotone',
+                    'tension' => 0.4,
                     'fill' => false
                 ],
                 'unique_visitors' => [
                     'label' => __( 'Unique Visitors', 'fooconvert' ),
                     'data' => [],
                     'borderColor' => 'rgb(54, 162, 235)',
+                    'cubicInterpolationMode' => 'monotone',
+                    'tension' => 0.4,
                     'fill' => true
                 ],
             ] );

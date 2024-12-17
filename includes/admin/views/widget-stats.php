@@ -25,7 +25,7 @@ if ( $widget_id ) {
     <div class="fooconvert-stats-header">
         <h2><?php
             // Translators: %s refers to the title of the widget.
-            echo sprintf( esc_html__( 'Stats for #%s', 'fooconvert' ), esc_html( $widget_title ) );
+            echo sprintf( esc_html__( 'Stats for %s', 'fooconvert' ), esc_html( $widget_title ) );
             ?>
         </h2>
         <?php echo $edit_link; ?>
