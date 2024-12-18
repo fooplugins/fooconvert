@@ -98,10 +98,9 @@ class Popup extends Base_Widget {
     function get_editor_variations() : array {
         return apply_filters('fooconvert_editor_variations-' . $this->get_post_type(), array(
             array(
-                'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/empty.png',
                 'name' => 'empty',
                 'title' => __( 'Empty', 'fooconvert' ),
-                'description' => __( 'Empty', 'fooconvert' ),
+                'description' => __( 'A blank slate that you can use to build your own popup from scratch.', 'fooconvert' ),
                 'attributes' => array(
                     'template' => 'empty'
                 ),

@@ -104,7 +104,7 @@ class Flyout extends Base_Widget {
             array(
                 'name' => 'empty',
                 'title' => __( 'Empty', 'fooconvert' ),
-                'description' => __( 'Empty', 'fooconvert' ),
+                'description' => __( 'A blank slate that you can use to build your own flyout from scratch.', 'fooconvert' ),
                 'attributes' => array(
                     'template' => 'empty'
                 ),
@@ -125,7 +125,7 @@ class Flyout extends Base_Widget {
                 'name' => 'black_friday_flyout',
                 'title' => __( 'Black Friday Flyout', 'fooconvert' ),
                 'description' => __( 'A typical Black Friday flyout to help drive sales.', 'fooconvert' ),
-                'icon' => '',
+                'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/black_friday_flyout.png',
                 'attributes' => array(
                     'viewState' => 'open',
                     'settings' => array(

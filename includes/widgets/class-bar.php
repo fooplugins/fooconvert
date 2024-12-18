@@ -104,7 +104,7 @@ class Bar extends Base_Widget {
             array(
                 'name' => 'empty',
                 'title' => __( 'Empty', 'fooconvert' ),
-                'description' => __( 'Empty', 'fooconvert' ),
+                'description' => __( 'A blank slate that you can use to build your own bar from scratch.', 'fooconvert' ),
                 'attributes' => array(
                     'template' => 'empty'
                 ),
@@ -125,7 +125,7 @@ class Bar extends Base_Widget {
                 'name' => 'black_friday_bar',
                 'title' => __( 'Black Friday Bar', 'fooconvert' ),
                 'description' => __( 'A typical Black Friday bar to help drive sales.', 'fooconvert' ),
-                'icon' => '',
+                'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/black_friday_bar.png',
                 'attributes' => array(
                     'viewState' => 'open',
                     'settings' => array(
@@ -230,7 +230,7 @@ class Bar extends Base_Widget {
                 'name' => 'cookie_consent_bar',
                 'title' => __( 'Cookie Consent Bar', 'fooconvert' ),
                 'description' => __( 'A simple bottom bar that is dismissed when the button is clicked.', 'fooconvert' ),
-                'icon' => '',
+                'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/cookie_consent_bar.png',
                 'attributes' => array(
                     'viewState' => 'open',
                     'template' => 'cookie_consent_bar',
