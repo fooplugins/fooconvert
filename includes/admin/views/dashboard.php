@@ -16,7 +16,7 @@ $stats_last_updated = fooconvert_stats_last_updated();
                 <?php if ( ! $demos_created ) : ?>
                 <div class="fooconvert-panel-section">
                     <p>
-                        <?php esc_html_e( 'The easiest way to get started is by creating demo widgets, which will create 3 draft bars, flyouts and popups.', 'fooconvert' ); ?>
+                        <?php esc_html_e( 'The easiest way to get started is by creating demo widgets, which will create 4 draft bars, flyouts and popups.', 'fooconvert' ); ?>
                         <strong><?php esc_html_e( 'It\'s also the best way to see the top performers in action!', 'fooconvert' ); ?> </strong>
                     </p>
                     <p class="fooconvert-flex fooconvert-create-demo-container">
@@ -54,7 +54,7 @@ $stats_last_updated = fooconvert_stats_last_updated();
                     <ol class="fooconvert-ordered-list">
                         <li>
                             <?php esc_html_e( 'Create a new widget.', 'fooconvert' ); ?>
-                            (<a href="/post-new.php?post_type=fc-bar" target="_blank"><?php esc_html_e( 'create a new bar', 'fooconvert' ); ?></a>)
+                            (<a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=fc-bar' ) ); ?>" target="_blank"><?php esc_html_e( 'create a new bar', 'fooconvert' ); ?></a>)
                         </li>
                         <li>
                             <?php esc_html_e( 'Select a pre-made template.', 'fooconvert' ); ?>
