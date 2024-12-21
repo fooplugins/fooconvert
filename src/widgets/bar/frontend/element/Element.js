@@ -113,6 +113,10 @@ class BarElement extends TriggeredElement {
     onCloseButtonClicked() {
         this.setOpen( false, { 'trigger': 'close-button' } );
     }
+
+    onCloseAnchorTrigger( trigger, triggerData ) {
+        this.setOpen( false, { trigger, triggerData } );
+    }
 }
 
 export default BarElement;
