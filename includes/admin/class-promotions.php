@@ -120,49 +120,49 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
         public function render_metrics( $widget_id, $widget ) {
             ?>
             <div class="metric pro-feature">
-                <p><?php esc_html_e( wp_rand( 0, 100 ) ); ?></p>
+                <p><?php esc_html( wp_rand( 0, 100 ) ); ?></p>
                 <h2><?php esc_html_e('Total Clicks', 'fooconvert'); ?></h2>
                 <span data-balloon-pos="down" aria-label="<?php esc_attr_e( 'Total number of clicks made within the widget.', 'fooconvert' ); ?>">
                     <i class="dashicons dashicons-editor-help"></i>
                 </span>
             </div>
             <div class="metric pro-feature">
-                <p><?php esc_html_e( wp_rand( 0, 100 ) ); ?>%</p>
+                <p><?php esc_html( wp_rand( 0, 100 ) ); ?>%</p>
                 <h2><?php esc_html_e('Click Through Rate', 'fooconvert'); ?></h2>
                 <span data-balloon-pos="down" aria-label="<?php esc_attr_e( 'Click Through Rate for the widget.', 'fooconvert' ); ?>">
                     <i class="dashicons dashicons-editor-help"></i>
                 </span>
             </div>
             <div class="metric pro-feature">
-                <p><?php esc_html_e( wp_rand( 0, 100 ) ); ?></p>
+                <p><?php esc_html( wp_rand( 0, 100 ) ); ?></p>
                 <h2><?php esc_html_e('Total Conversions', 'fooconvert'); ?></h2>
                 <span data-balloon-pos="down" aria-label="<?php esc_attr_e( 'Total number of conversions for the widget.', 'fooconvert' ); ?>">
                     <i class="dashicons dashicons-editor-help"></i>
                 </span>
             </div>
             <div class="metric pro-feature">
-                <p><?php esc_html_e( wp_rand( 0, 100 ) ); ?>%</p>
+                <p><?php esc_html( wp_rand( 0, 100 ) ); ?>%</p>
                 <h2><?php esc_html_e('Conversion Rate', 'fooconvert'); ?></h2>
                 <span data-balloon-pos="down" aria-label="<?php esc_attr_e( 'Conversion Rate for the widget.', 'fooconvert' ); ?>">
                     <i class="dashicons dashicons-editor-help"></i>
                 </span>
             </div>
             <div class="metric pro-feature">
-                <p><?php esc_html_e( wp_rand( 0, 100 ) ); ?>%</p>
+                <p><?php esc_html( wp_rand( 0, 100 ) ); ?>%</p>
                 <h2><?php esc_html_e('Engagement Rate', 'fooconvert'); ?></h2>
                 <span data-balloon-pos="down" aria-label="<?php esc_attr_e( 'Engagement Rate for the widget.', 'fooconvert' ); ?>">
                     <i class="dashicons dashicons-editor-help"></i>
                 </span>
             </div>
             <div class="metric pro-feature">
-                <p><?php esc_html_e( wp_rand( 0, 100 ) ); ?></p>
+                <p><?php esc_html( wp_rand( 0, 100 ) ); ?></p>
                 <h2><?php esc_html_e('Positive Engagements', 'fooconvert'); ?></h2>
                 <span data-balloon-pos="down" aria-label="<?php esc_attr_e( 'Total number of positive engagements for the widget (like clicks).', 'fooconvert' ); ?>">
                     <i class="dashicons dashicons-editor-help"></i>
                 </span>
             </div>
             <div class="metric pro-feature">
-                <p><?php esc_html_e( wp_rand( 0, 100 ) ); ?></p>
+                <p><?php esc_html( wp_rand( 0, 100 ) ); ?></p>
                 <h2><?php esc_html_e('Negative Engagements', 'fooconvert'); ?></h2>
                 <span data-balloon-pos="down" aria-label="<?php esc_attr_e( 'Total number of negative engagements for the widget (like dismissals).', 'fooconvert' ); ?>">
                     <i class="dashicons dashicons-editor-help"></i>

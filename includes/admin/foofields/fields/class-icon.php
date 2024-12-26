@@ -54,7 +54,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Icon' ) ) {
 		function render_input( $override_attributes = false ) {
 			self::render_html_tag( 'span', array( 'class' => 'dashicons ' . $this->icon ) );
 
-			esc_html_e( $this->text );
+			echo esc_html( $this->text );
 		}
 	}
 }

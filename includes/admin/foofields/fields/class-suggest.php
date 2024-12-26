@@ -107,7 +107,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Suggest' ) ) {
 							}
 						}
 
-						esc_html_e( join( "\n", $results ) );
+						echo esc_html( join( "\n", $results ) );
 					}
 
 				}

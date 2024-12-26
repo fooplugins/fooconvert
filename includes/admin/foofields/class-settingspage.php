@@ -125,7 +125,7 @@ if ( ! class_exists( __NAMESPACE__ . '\SettingsPage' ) ) {
 						       value="<?php
                                // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
                                esc_attr_e( 'Save Changes', $this->manager->text_domain ); ?>"/>
-						<input name="<?php esc_attr_e( $this->container_id() ); ?>[reset-defaults]"
+						<input name="<?php echo esc_attr( $this->container_id() ); ?>[reset-defaults]"
 						       onclick="return confirm('<?php
                                // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
                                esc_attr_e( 'Are you sure you want to restore all settings back to their default values?', $this->manager->text_domain ); ?>');"
