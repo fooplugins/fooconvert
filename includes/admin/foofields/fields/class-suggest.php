@@ -59,7 +59,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Suggest' ) ) {
 			if ( $this->verify_nonce() ) {
 
 				$s = $this->sanitize_text( 'q' );
-				$comma = _x( ',', 'page delimiter' );
+				$comma = _x( ',', 'page delimiter', $this->container->manager->text_domain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
 				if ( ',' !== $comma ) {
 					$s = str_replace( $comma, ',', $s );
 				}

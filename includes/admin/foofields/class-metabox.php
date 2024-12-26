@@ -40,6 +40,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Metabox' ) ) {
 				if ( isset( $this->config['suppress_meta_key_error'] ) && $this->config['suppress_meta_key_error'] ) {
 					//Do nothing. Suppress the error message for the missing meta_key
 				} else {
+                    // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
 					$this->add_config_validation_error( __( 'WARNING : There is no "meta_key" value set for the metabox, which means nothing will be saved! If this is intentional, then set "suppress_meta_key_error" to true.', $this->manager->text_domain ) );
 				}
 			}

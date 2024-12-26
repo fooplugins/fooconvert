@@ -68,6 +68,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Container' ) ) {
 		 */
 		function validate_config() {
 			if ( !isset( $this->config['manager'] ) ) {
+                // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
 				$this->add_config_validation_error( __( 'ERROR : There is no "manager" value set for the container, which means nothing will work!', $this->manager->text_domain ) );
 			}
 		}
@@ -659,7 +660,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Container' ) ) {
 				self::render_html_tag( 'span', array(
 					'class' => 'foofields-tab-error',
                     // Translators: %s is the number of errors
-					'title' => sprintf( _n( 'There is an error. Click to see more info.', 'There are %s errors. Click to see more info.', count( $errors ), $this->manager->text_domain ), count( $errors ) )
+					'title' => sprintf( _n( 'There is an error. Click to see more info.', 'There are %s errors. Click to see more info.', count( $errors ), $this->manager->text_domain ), count( $errors ) ) // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
 				), count( $errors ) );
                 // phpcs:enable
 			}

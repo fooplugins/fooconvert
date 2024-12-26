@@ -46,7 +46,8 @@ if ( ! class_exists( __NAMESPACE__ . '\SettingsPage' ) ) {
 			parent::validate_config();
 
 			if ( !isset( $this->config['settings_id'] ) ) {
-				$this->add_config_validation_error( __( 'ERROR : There is no "settings_id" value set for the settings page, which means nothing will be saved!' ) );
+                // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
+				$this->add_config_validation_error( __( 'ERROR : There is no "settings_id" value set for the settings page, which means nothing will be saved!', $this->manager->text_domain ) );
 			}
 		}
 

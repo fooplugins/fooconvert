@@ -41,6 +41,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Manager' ) ) {
 
 		function __construct( $config ) {
 			$this->config = $config;
+            // phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain
 			if ( ! isset( $config['id'] ) ) {
 				throw new \Exception( esc_html__( 'ERROR : There is no "id" value set for your container manager!', $this->text_domain ), 66601 );
 			}
@@ -53,6 +54,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Manager' ) ) {
 			if ( ! isset( $config['plugin_version'] ) ) {
 				throw new \Exception( esc_html__( 'ERROR : There is no "plugin_version" value set! Things will not work!', $this->text_domain ), 66603 );
 			}
+            // phpcs:enable
 
 			$this->id = $config['id'];
 			$this->text_domain = $config['text_domain'];
