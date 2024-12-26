@@ -145,7 +145,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
 
             add_submenu_page(
                 FOOCONVERT_MENU_SLUG,
-                __( 'Dashboard', 'fooconvert' ),
+                __( 'FooConvert Dashboard', 'fooconvert' ),
                 __( 'Dashboard', 'fooconvert' ),
                 'manage_options',
                 FOOCONVERT_MENU_SLUG,

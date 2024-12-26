@@ -176,6 +176,66 @@ ol.fooconvert-ordered-list li::before {
     color: #aaa;
 }
 
+
+/* Top-level container for the slider */
+.fooconvert-slider {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+/* Slider wrapper for horizontal alignment */
+.fooconvert-slider-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 200%; /* Adjust based on number of slides (e.g., 200% for 2 slides, 300% for 3) */
+}
+
+/* Individual slide styling */
+.fooconvert-slide {
+    flex: 0 0 50%; /* Each slide takes up the full width of the slider */
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+/* Reduce addon header size */
+.fooconvert-slide h3 {
+    margin-top: 0;
+    font-size: 16px; /* Reduce font size */
+    color: #2271b1;
+}
+
+/* Bold description text */
+.fooconvert-slide p strong {
+    font-weight: bold;
+    color: #444;
+}
+
+/* Adjust navigation buttons inside header */
+.fooconvert-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fooconvert-slider-nav {
+    gap: 10px; /* Space between buttons */
+    display: none;
+}
+
+.fooconvert-slider-nav button.button.button-small {
+    min-height: 25px;
+    line-height: inherit;
+    padding: 0;
+}
+
+.fooconvert-slider-prev:hover,
+.fooconvert-slider-next:hover {
+    background: #005a9c; /* Darker shade on hover */
+}
+
+
+
 @media (max-width: 768px) {
     .fooconvert-dashboard-container {
         flex-direction: column;

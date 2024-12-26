@@ -104,3 +104,40 @@ jQuery(document).ready(function ($) {
         });
     })
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const sliderWrapper = document.querySelector('.fooconvert-slider-wrapper');
+    const slides = document.querySelectorAll('.fooconvert-slide');
+    const sliderNav = document.querySelector('.fooconvert-slider-nav');
+    const prevButton = document.querySelector('.fooconvert-slider-prev');
+    const nextButton = document.querySelector('.fooconvert-slider-next');
+
+    let currentIndex = 0;
+
+    // Hide navigation buttons if there is only one slide
+    if (slides.length > 1) {
+        sliderNav.style.display = 'flex';
+    } else {
+        return; // Exit script since we don't need navigation
+    }
+
+    function updateSliderPosition() {
+        sliderWrapper.style.transform = `translateX(-${currentIndex * 50}%)`;
+    }
+
+    prevButton.addEventListener('click', () => {
+        currentIndex = (currentIndex > 0) ? currentIndex - 1 : slides.length - 1;
+        updateSliderPosition();
+    });
+
+    nextButton.addEventListener('click', () => {
+        currentIndex = (currentIndex < slides.length - 1) ? currentIndex + 1 : 0;
+        updateSliderPosition();
+    });
+
+    // Auto slide every 5 seconds
+    setInterval(() => {
+        currentIndex = (currentIndex < slides.length - 1) ? currentIndex + 1 : 0;
+        updateSliderPosition();
+    }, 5000);
+});

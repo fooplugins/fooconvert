@@ -96,6 +96,7 @@ $stats_last_updated = fooconvert_stats_last_updated();
                     </ul>
                 </div>
             </div>
+            <?php do_action( 'fooconvert_admin_dashboard_left' ); ?>
         </div>
         <div class="fooconvert-dashboard-column fooconvert-dashboard-right">
             <div class="fooconvert-panel">
@@ -132,16 +133,8 @@ $stats_last_updated = fooconvert_stats_last_updated();
                     </p>
                 </div>
             </div>
-            <div class="fooconvert-panel">
-                <div class="fooconvert-panel-section">
-                    <h2><?php esc_html_e( 'PRO Addons', 'fooconvert' ); ?></h2>
-                </div>
-                <div class="fooconvert-panel-section">
-                    <h3><?php esc_html_e( 'Coming soon!', 'fooconvert' ); ?></h3>
-                </div>
-            </div>
+            <?php do_action( 'fooconvert_admin_dashboard_right' ); ?>
         </div>
-
     </div>
 </div>
 

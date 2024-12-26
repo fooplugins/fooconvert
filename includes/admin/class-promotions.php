@@ -24,11 +24,97 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
                 return;
             }
 
+            add_action( 'fooconvert_admin_dashboard_right', array( $this, 'render_addons_panel' ) );
+
             // Only show the promotion if the analytics addon is NOT active!
             if ( !fooconvert_is_analytics_addon_active() ) {
                 add_action( 'fooconvert_widget_stats_html-metrics', array( $this, 'render_metrics' ), 10, 2 );
                 add_filter( 'fooconvert_top_performers_sort_options', array( $this, 'adjust_top_performers_sort_options' ) );
             }
+        }
+
+        public function render_addons_panel() {
+            $fs = fooconvert_fs();
+
+            /**
+             * @var \FS_Plugin[]
+             */
+            $addons = $fs->get_addons();
+
+            $has_addons = ( is_array( $addons ) && 0 < count( $addons ) );
+
+            if ( ! $has_addons ) {
+                return;
+            }
+
+            ?>
+<div class="fooconvert-panel">
+    <div class="fooconvert-panel-section fooconvert-panel-header">
+        <h2>Premium Addons</h2>
+        <div class="fooconvert-slider-nav">
+            <button class="fooconvert-slider-prev button button-small"><span class="dashicons dashicons-arrow-left-alt2"></span></button>
+            <button class="fooconvert-slider-next button button-small"><span class="dashicons dashicons-arrow-right-alt2"></span></button>
+        </div>
+    </div>
+    <div class="fooconvert-slider">
+        <div class="fooconvert-slider-wrapper">
+
+
+            <?php
+
+            foreach ( $addons as $addon ) :
+
+                if ( is_null( $addon->info ) ) {
+                    $addon->info = new \stdClass();
+                }
+
+                $addon_description = ! empty( $addon->info->short_description ) ? $addon->info->short_description : '';
+                $add_features = [];
+
+                if ( ! empty( $addon->info->selling_point_0 ) ) {
+                    $add_features[] = $addon->info->selling_point_0;
+                }
+
+                if ( ! empty( $addon->info->selling_point_1 ) ) {
+                    $add_features[] = $addon->info->selling_point_1;
+                }
+
+                if ( ! empty( $addon->info->selling_point_2 ) ) {
+                    $add_features[] = $addon->info->selling_point_2;
+                }
+
+            ?>
+            <div class="fooconvert-slide">
+
+
+                    <h3><?php echo esc_html( $addon->title ); ?></h3>
+
+                    <p>
+                        <strong><?php echo esc_html( $addon_description ); ?></strong>
+                    </p>
+                    <?php if ( ! empty( $add_features ) ) : ?>
+                    <ul>
+                        <?php foreach ( $add_features as $feature ) : ?>
+                            <li>
+                                <span class="dashicons dashicons-yes"></span>
+                                <?php echo esc_html( $feature ); ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <?php endif; ?>
+                    <p>
+                        <a href="<?php echo esc_url( fooconvert_admin_url_addons() ); ?>" class="button button-primary" target="_blank"><?php esc_html_e( 'Buy Now!', 'fooconvert' ); ?></a>
+                    </p>
+
+            </div>
+
+            <?php endforeach;
+
+            ?>
+        </div>
+    </div>
+</div>
+            <?php
         }
 
         public function render_metrics( $widget_id, $widget ) {
