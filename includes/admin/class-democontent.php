@@ -21,6 +21,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
         }
 
+        // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key, WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+
         /**
          * Cleans up old demo content.
          *
@@ -135,6 +137,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
             return $count;
         }
 
+        // phpcs:enable
+
 
         /**
          * Creates demo event data for the widget.
@@ -231,6 +235,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
         }
 
         function get_demo_content() {
+            // phpcs:disable WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
             return [
                 // Demo Bars:
                 [
@@ -412,6 +417,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 <!-- /wp:fc/popup -->'
                 ],
             ];
+            // phpcs:enable
         }
 
         /**

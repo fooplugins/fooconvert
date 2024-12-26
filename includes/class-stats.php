@@ -84,7 +84,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Stats' ) ) {
             $query = new \WP_Query( [
                 'post_type'      => fooconvert_get_post_types(),
                 'posts_per_page' => $limit,
-                'meta_key'       => $sort_option['meta_key'],
+                'meta_key'       => $sort_option['meta_key'], // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
                 'orderby'        => 'meta_value_num',
                 'order'          => 'DESC',
             ] );

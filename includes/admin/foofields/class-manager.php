@@ -115,21 +115,42 @@ if ( ! class_exists( __NAMESPACE__ . '\Manager' ) ) {
 		public function enqueue_assets() {
 			//enqueue assets if there are any fields
 			if ( $this->has_fields() ) {
-				wp_enqueue_script( 'selectize', $this->plugin_url . 'assets/admin/vendor/selectize/selectize.min.js', array( 'jquery' ), $this->plugin_version );
-				wp_enqueue_script( 'foofields', $this->plugin_url . 'assets/admin/vendor/foofields/foofields.min.js', array(
-					'jquery',
-					'jquery-ui-sortable',
-					'wp-color-picker',
-					'selectize'
-				), $this->plugin_version );
+				wp_enqueue_script(
+                    'selectize',
+                    $this->plugin_url . 'assets/admin/vendor/selectize/selectize.min.js',
+                    array( 'jquery' ),
+                    $this->plugin_version,
+                    array( 'in_footer' => false )
+                );
+				wp_enqueue_script(
+                    'foofields',
+                    $this->plugin_url . 'assets/admin/vendor/foofields/foofields.min.js',
+                    array(
+					    'jquery',
+					    'jquery-ui-sortable',
+					    'wp-color-picker',
+					    'selectize'
+				    ),
+                    $this->plugin_version,
+                    array( 'in_footer' => false )
+                );
 
 				$this->enqueue_field_translations();
 
-				wp_enqueue_style( 'selectize', $this->plugin_url . 'assets/admin/vendor/selectize/selectize.css', array(), $this->plugin_version );
-				wp_enqueue_style( 'foofields', $this->plugin_url . 'assets/admin/vendor/foofields/foofields.min.css', array(
-					'wp-color-picker',
-					'selectize'
-				), $this->plugin_version );
+				wp_enqueue_style(
+                    'selectize',
+                    $this->plugin_url . 'assets/admin/vendor/selectize/selectize.css',
+                    array(),
+                    $this->plugin_version
+                );
+				wp_enqueue_style( 'foofields',
+                    $this->plugin_url . 'assets/admin/vendor/foofields/foofields.min.css',
+                    array(
+					    'wp-color-picker',
+					    'selectize'
+				    ),
+                    $this->plugin_version
+                );
 			}
 		}
 

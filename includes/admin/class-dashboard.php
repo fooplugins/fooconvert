@@ -183,12 +183,16 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
 
             wp_enqueue_style(
                 'fooconvert-balloon-css',
-                FOOCONVERT_ASSETS_URL . 'admin/vendor/balloon/balloon.css'
+                FOOCONVERT_ASSETS_URL . 'admin/vendor/balloon/balloon.css',
+                array(),
+                FOOCONVERT_VERSION
             );
 
             wp_enqueue_style(
                 'fooconvert-dashboard-css',
-                FOOCONVERT_INCLUDES_URL . 'admin/views/dashboard.css'
+                FOOCONVERT_INCLUDES_URL . 'admin/views/dashboard.css',
+                array(),
+                FOOCONVERT_VERSION
             );
 
             wp_enqueue_script(

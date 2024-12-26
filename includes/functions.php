@@ -261,6 +261,7 @@ function fooconvert_top_performers_sort() {
 }
 
 function fooconvert_top_performers_sort_options() {
+    // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key
     return apply_filters( 'fooconvert_top_performers_sort_options', array(
         'engagements' => [
             'dropdown_option' => __( 'engagements', 'fooconvert' ),
@@ -279,6 +280,7 @@ function fooconvert_top_performers_sort_options() {
             'meta_key'        => FOOCONVERT_META_KEY_METRIC_VIEWS,
         ],
     ) );
+    // phpcs:enable
 }
 
 /**
