@@ -10,9 +10,10 @@ if ( ! class_exists( __NAMESPACE__ . '\RepeaterDelete' ) ) {
 
 		function __construct( $container, $type, $field_config ) {
 			parent::__construct( $container, $type, $field_config );
-
+            // phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain
 			$this->delete_confirmation_message = isset( $field_config['delete_confirmation_message'] ) ? $field_config['delete_confirmation_message'] : __( 'Are you sure?', $container->manager->text_domain );
 			$this->delete_title = isset( $field_config['delete_title'] ) ? $field_config['delete_title'] : __( 'Delete Row', $container->manager->text_domain );
+            // phpcs:enable
 		}
 
 		/**

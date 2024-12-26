@@ -295,6 +295,7 @@ class FooConvert_Display_Rules extends Base_Component {
                     'data' => array(
                         'kind' => 'taxonomy',
                         'name' => $taxonomy->name,
+                        // Translators: %s refers to the taxonomy that is being searched for. e.g. "Category".
                         'placeholder' => sprintf( __( 'Type to choose %s...', 'fooconvert' ), strtolower( $taxonomy->label ) )
                     )
                 );

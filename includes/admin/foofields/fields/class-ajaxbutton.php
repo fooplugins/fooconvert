@@ -27,6 +27,7 @@ if ( ! class_exists( __NAMESPACE__ . '\AjaxButton' ) ) {
 		 */
 		function render_input( $override_attributes = false ) {
 
+            /// phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
 			$button_text = isset( $this->config['button'] ) ? $this->config['button'] : __( 'Run', $this->container->manager->text_domain );
 
 			$attributes = array(
@@ -58,6 +59,7 @@ if ( ! class_exists( __NAMESPACE__ . '\AjaxButton' ) ) {
 					if ( is_callable( $this->config['callback'] ) ) {
 						if ( false === call_user_func( $this->config['callback'], $this ) ) {
 							wp_send_json_error( array(
+                                // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
 								'message' => __( 'An unexpected error occurred!', $this->container->manager->text_domain )
 							) );
 						}

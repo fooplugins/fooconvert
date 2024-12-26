@@ -505,34 +505,41 @@ if ( ! class_exists( __NAMESPACE__ . '\Field' ) ) {
 
 			//check for required fields
 			if ( isset( $this->required ) ) {
+                // phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain
 				$text_domain = $this->container->manager->text_domain;
 				if ( true === $this->required && empty( $posted_value) ) {
+                    // Translators: %s is the field label.
 					$this->error = sprintf( __( '%s is required!', $text_domain ), $this->label );
 				} else if ( is_array( $this->required ) ) {
 					//check for more advanced required rules
 					if ( isset( $this->required['minimum'] ) && intval( $this->required['minimum'] ) > 0 ) {
-						$message = isset( $this->required['message'] ) ? $this->required['message'] : __( 'Please select a minimum of %d item(s) for %s!', $text_domain );
+                        // Translators: %1$d is the minimum number, %2$s is the field label.
+						$message = isset( $this->required['message'] ) ? $this->required['message'] : __( 'Please select a minimum of %1$d item(s) for %2$s!', $text_domain );
 						if ( !isset( $posted_value ) || ( is_array( $posted_value ) && count( $posted_value ) < intval( $this->required['minimum'] ) ) ) {
 							$this->error = sprintf( $message, intval( $this->required['minimum'] ), $this->label );
 						}
 					} else if ( isset( $this->required['maximum'] ) && intval( $this->required['maximum'] ) > 0 ) {
-						$message = isset( $this->required['message'] ) ? $this->required['message'] : __( 'Please select a maximum of %d item(s) for %s!', $text_domain );
+                        // Translators: %1$d is the maximum number, %2$s is the field label.
+						$message = isset( $this->required['message'] ) ? $this->required['message'] : __( 'Please select a maximum of %1$d item(s) for %2$s!', $text_domain );
 						if ( is_array( $posted_value ) && count( $posted_value ) > intval( $this->required['maximum'] ) ) {
 							$this->error = sprintf( $message, intval( $this->required['maximum'] ), $this->label );
 						}
 					} else if ( isset( $this->required['exact'] ) && intval( $this->required['exact'] ) > 0 ) {
-						$message = isset( $this->required['message'] ) ? $this->required['message'] : __( 'Please select exactly %d item(s) for %s!', $text_domain );
+                        // Translators: %1$d is the exact number, %2$s is the field label.
+						$message = isset( $this->required['message'] ) ? $this->required['message'] : __( 'Please select exactly %1$d item(s) for %2$s!', $text_domain );
 						if ( !isset( $posted_value ) || ( is_array( $posted_value ) && count( $posted_value ) !== intval( $this->required['exact'] ) ) ) {
 							$this->error = sprintf( $message, intval( $this->required['exact'] ), $this->label );
 						}
 					} else if ( isset( $this->required['validation_function'] ) ) {
 						$validation_result = call_user_func( $this->required['validation_function'], $posted_value, $this );
 						if ( $validation_result === false ) {
+                            // Translators: %s is the field label.
 							$message = isset( $this->required['message'] ) ? $this->required['message'] : __( 'Custom validation failed for %s!', $text_domain );
 							$this->error = sprintf( $message, $this->label );
 						}
 					}
 				}
+                // phpcs:enable
 			}
 
 			return $this->error === false;

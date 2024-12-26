@@ -10,7 +10,7 @@ if ( ! class_exists( __NAMESPACE__ . '\RepeaterIndex' ) ) {
 
 		function __construct( $container, $type, $field_config ) {
 			parent::__construct( $container, $type, $field_config );
-
+            // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
 			$this->format = isset( $field_config['format'] ) ? $field_config['format'] : __( '{count}', $container->manager->text_domain );
 			$this->row_index = intval( isset( $field_config['row_index'] ) ? $field_config['row_index'] : -1 );
 		}

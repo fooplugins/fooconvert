@@ -25,8 +25,10 @@ if ( ! class_exists( __NAMESPACE__ . '\Repeater' ) ) {
 		function __construct( $container, $type, $field_config ) {
 			parent::__construct( $container, $type, $field_config );
 
+            // phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain
 			$this->add_button_text = isset( $field_config['add_button_text'] ) ? $field_config['add_button_text'] : __( 'Add', $container->manager->text_domain );
 			$this->no_data_message = isset( $field_config['no_data_message'] ) ? $field_config['no_data_message'] : __( 'Nothing found', $container->manager->text_domain );
+            // phpcs:enable
 			$this->table_class = isset( $field_config['table_class'] ) ? $field_config['table_class'] : 'wp-list-table widefat striped';
 			$this->show_header = isset( $field_config['show_header'] ) ? $field_config['show_header'] : true;
 			if ( isset( $field_config['fields'] ) ) {
@@ -63,6 +65,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Repeater' ) ) {
 		 */
 		function render_input( $override_attributes = false ) {
 			if ( false === $this->fields ) {
+                // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
 				echo __( 'ERROR No fields for repeater!', $this->container->manager->text_domain );
 				return;
 			}

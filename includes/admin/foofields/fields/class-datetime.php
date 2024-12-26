@@ -126,18 +126,21 @@ if ( ! class_exists( __NAMESPACE__ . '\DateTime' ) ) {
 //			if ( $this->adjust_timezone ) {
 //				$timestamp = $timestamp + (int) ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
 //			}
-
+            // phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain
 			if ( isset( $this->config['minimum'] ) && is_numeric( $this->config['minimum'] ) && $timestamp < $this->config['minimum'] ){
 				$minimum = date( 'r', $this->config['minimum'] );
-				$message = __( 'Please select a date greater than %s for %s!', $this->container->manager->text_domain );
+                // Translators: %1$s is a date, %2$s is the field label.
+				$message = __( 'Please select a date greater than %1$s for %2$s!', $this->container->manager->text_domain );
 				$this->error = sprintf( $message, $minimum, $this->label );
 				return false;
 			}
 			if ( isset( $this->config['minimum'] ) && $this->config['minimum'] === 'now' && $timestamp < time() ){
+                // Translators: %s is the field label.
 				$message = __( 'Please select a date in the future for %s!', $this->container->manager->text_domain );
 				$this->error = sprintf( $message, $this->label );
 				return false;
 			}
+            // phpcs:enable
 			return parent::validate( $posted_value );
 		}
 	}

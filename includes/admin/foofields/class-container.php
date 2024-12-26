@@ -201,7 +201,10 @@ if ( ! class_exists( __NAMESPACE__ . '\Container' ) ) {
 			if ( array_key_exists( $field_id, $this->fields ) ) {
 				$field_config['id'] = $field_config['id'] . '_duplicate';
 				$field_config['type'] = $field_type = 'error';
+                // phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain
+                // Translators: %s is the field id
 				$field_config['text'] = sprintf( __( 'ERROR : Duplicate field id: %s', $this->manager->text_domain ), $field_config['id'] );
+                // phpcs:enable
 				$field_id = $this->get_unique_id( $field_config );
 			}
 
@@ -652,10 +655,13 @@ if ( ! class_exists( __NAMESPACE__ . '\Container' ) ) {
 			//check if there are any errors stored in the state
 			$errors = $this->get_field_errors( $tab_content_id );
 			if ( $errors !== false && is_array( $errors ) && count( $errors ) > 0 ) {
+                // phpcs:disable WordPress.WP.I18n.MissingSingularPlaceholder
 				self::render_html_tag( 'span', array(
 					'class' => 'foofields-tab-error',
+                    // Translators: %s is the number of errors
 					'title' => sprintf( _n( 'There is an error. Click to see more info.', 'There are %s errors. Click to see more info.', count( $errors ) ), count( $errors ) )
 				), count( $errors ) );
+                // phpcs:enable
 			}
 
 			echo '</a>';
@@ -723,6 +729,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Container' ) ) {
 					//check if there are any errors stored in the state, and render them
 					$errors = $this->get_field_errors( $parent_id );
 					if ( $errors !== false && is_array( $errors ) && count( $errors ) > 0 ) {
+                        // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
 						$error_message = '<strong>' . esc_html( __( 'The following errors were found:', $this->manager->text_domain ) ) . '</strong><br />';
 						$error_message .= implode( '<br />', $errors );
 

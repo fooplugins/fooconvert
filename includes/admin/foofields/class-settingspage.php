@@ -21,9 +21,11 @@ if ( ! class_exists( __NAMESPACE__ . '\SettingsPage' ) ) {
 			parent::__construct( $config );
 
 			$this->settings_id = $this->config['settings_id'];
+            // phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain
 			$this->page_title = isset( $this->config['page_title'] ) ? $this->config['page_title'] : __( 'Settings', $this->manager->text_domain );
 			$this->menu_parent_slug = isset( $this->config['menu_parent_slug'] ) ? $this->config['menu_parent_slug'] : 'options-general.php';
 			$this->menu_title = isset( $this->config['menu_title'] ) ? $this->config['menu_title'] : __( 'Settings', $this->manager->text_domain );
+            // phpcs:enable
 			$this->capability = isset( $this->config['capability'] ) ? $this->config['capability'] : 'manage_options';
 			$this->menu_position = isset( $this->config['position'] ) ? $this->config['capability'] : null;
 
@@ -120,11 +122,17 @@ if ( ! class_exists( __NAMESPACE__ . '\SettingsPage' ) ) {
 
 					<p class="submit">
 						<input name="submit" class="button-primary" type="submit"
-						       value="<?php _e( 'Save Changes', $this->manager->text_domain ); ?>"/>
+						       value="<?php
+                               // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
+                               _e( 'Save Changes', $this->manager->text_domain ); ?>"/>
 						<input name="<?php echo $this->container_id(); ?>[reset-defaults]"
-						       onclick="return confirm('<?php _e( 'Are you sure you want to restore all settings back to their default values?', $this->manager->text_domain ); ?>');"
+						       onclick="return confirm('<?php
+                               // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
+                               _e( 'Are you sure you want to restore all settings back to their default values?', $this->manager->text_domain ); ?>');"
 						       class="button-secondary" type="submit"
-						       value="<?php _e( 'Restore Defaults', $this->manager->text_domain ); ?>"/>
+						       value="<?php
+                               // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
+                               _e( 'Restore Defaults', $this->manager->text_domain ); ?>"/>
 					</p>
 				</form>
 			</div>
@@ -209,6 +217,7 @@ if ( ! class_exists( __NAMESPACE__ . '\SettingsPage' ) ) {
 				add_settings_error(
 					'reset',
 					'reset_error',
+                    // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
 					__( 'Settings restored to default values', $this->manager->text_domain ),
 					'updated'
 				);
