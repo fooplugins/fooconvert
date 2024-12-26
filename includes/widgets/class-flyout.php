@@ -71,17 +71,17 @@ class Flyout extends Base_Widget {
     function register_post_type() {
         return register_post_type( $this->get_post_type(), array(
             'labels' => array(
-                'name' => __( 'Flyouts', 'foobar' ),
-                'singular_name' => __( 'Flyout', 'foobar' ),
-                'add_new' => __( 'Add Flyout', 'foobar' ),
-                'add_new_item' => __( 'Add New Flyout', 'foobar' ),
-                'edit_item' => __( 'Edit Flyout', 'foobar' ),
-                'new_item' => __( 'New Flyout', 'foobar' ),
-                'view_item' => __( 'View Flyouts', 'foobar' ),
-                'search_items' => __( 'Search Flyouts', 'foobar' ),
-                'not_found' => __( 'No Flyouts found', 'foobar' ),
-                'not_found_in_trash' => __( 'No Flyouts found in Trash', 'foobar' ),
-                'all_items' => __( 'Flyouts', 'foobar' )
+                'name' => __( 'Flyouts', 'fooconvert' ),
+                'singular_name' => __( 'Flyout', 'fooconvert' ),
+                'add_new' => __( 'Add Flyout', 'fooconvert' ),
+                'add_new_item' => __( 'Add New Flyout', 'fooconvert' ),
+                'edit_item' => __( 'Edit Flyout', 'fooconvert' ),
+                'new_item' => __( 'New Flyout', 'fooconvert' ),
+                'view_item' => __( 'View Flyouts', 'fooconvert' ),
+                'search_items' => __( 'Search Flyouts', 'fooconvert' ),
+                'not_found' => __( 'No Flyouts found', 'fooconvert' ),
+                'not_found_in_trash' => __( 'No Flyouts found in Trash', 'fooconvert' ),
+                'all_items' => __( 'Flyouts', 'fooconvert' )
             ),
             'has_archive' => false,
             'public' => false,

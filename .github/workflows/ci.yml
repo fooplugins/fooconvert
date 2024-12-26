@@ -32,11 +32,11 @@ jobs:
         run: composer install --no-dev --prefer-dist
 
       # Install npm dependencies
-      - name: Install npm dependencies
+      - name: Install NPM dependencies
         run: npm install
 
       # Run npm build
-      - name: Build assets
+      - name: Run build
         run: npm run build
 
       # Run plugin check

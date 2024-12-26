@@ -92,7 +92,7 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                         'id' => 'database_data',
                         'type' => 'html',
                         'label' => __('Database Data', 'fooconvert'),
-                        'html' => '<pre>' . esc_html( print_r( $database_data, true ) ) . '</pre>'
+                        'html' => '<pre>' . esc_html( print_r( $database_data, true ) ) . '</pre>' // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
                     );
                 }
             }

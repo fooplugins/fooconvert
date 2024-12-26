@@ -219,7 +219,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
 
             $table_name = self::get_events_table_name();
 
-            return $wpdb->query( "DELETE FROM {$table_name}" );
+            return $wpdb->query( "DELETE FROM {$table_name}" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         }
 
         /**
@@ -237,7 +237,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
 
             return $wpdb->query(
                 $wpdb->prepare(
-                    "DELETE FROM {$table_name} WHERE timestamp < DATE_SUB(NOW(), INTERVAL %d DAY)",
+                    "DELETE FROM {$table_name} WHERE timestamp < DATE_SUB(NOW(), INTERVAL %d DAY)", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
                     $days
                 )
             );
@@ -260,6 +260,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             $schema_name = DB_NAME; // The current database name
 
             $table_name = self::get_events_table_name();
+
+            // phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
             $wpdb->query( "ANALYZE TABLE {$table_name};" );
 
@@ -295,6 +297,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                 $schema_name,
                 $table_name
             );
+
+            // phpcs:enable
 
             // Execute the query and get the result
             // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared

@@ -67,17 +67,17 @@ class Popup extends Base_Widget {
     function register_post_type() {
         return register_post_type( $this->get_post_type(), array(
             'labels' => array(
-                'name' => __( 'Popups', 'foobar' ),
-                'singular_name' => __( 'Popup', 'foobar' ),
-                'add_new' => __( 'Add Popup', 'foobar' ),
-                'add_new_item' => __( 'Add New Popup', 'foobar' ),
-                'edit_item' => __( 'Edit Popup', 'foobar' ),
-                'new_item' => __( 'New Popup', 'foobar' ),
-                'view_item' => __( 'View Popups', 'foobar' ),
-                'search_items' => __( 'Search Popups', 'foobar' ),
-                'not_found' => __( 'No Popups found', 'foobar' ),
-                'not_found_in_trash' => __( 'No Popups found in Trash', 'foobar' ),
-                'all_items' => __( 'Popups', 'foobar' )
+                'name' => __( 'Popups', 'fooconvert' ),
+                'singular_name' => __( 'Popup', 'fooconvert' ),
+                'add_new' => __( 'Add Popup', 'fooconvert' ),
+                'add_new_item' => __( 'Add New Popup', 'fooconvert' ),
+                'edit_item' => __( 'Edit Popup', 'fooconvert' ),
+                'new_item' => __( 'New Popup', 'fooconvert' ),
+                'view_item' => __( 'View Popups', 'fooconvert' ),
+                'search_items' => __( 'Search Popups', 'fooconvert' ),
+                'not_found' => __( 'No Popups found', 'fooconvert' ),
+                'not_found_in_trash' => __( 'No Popups found in Trash', 'fooconvert' ),
+                'all_items' => __( 'Popups', 'fooconvert' )
             ),
             'has_archive' => false,
             'public' => false,

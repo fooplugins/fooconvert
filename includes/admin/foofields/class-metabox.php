@@ -40,7 +40,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Metabox' ) ) {
 				if ( isset( $this->config['suppress_meta_key_error'] ) && $this->config['suppress_meta_key_error'] ) {
 					//Do nothing. Suppress the error message for the missing meta_key
 				} else {
-					$this->add_config_validation_error( __( 'WARNING : There is no "meta_key" value set for the metabox, which means nothing will be saved! If this is intentional, then set "suppress_meta_key_error" to true.' ) );
+					$this->add_config_validation_error( __( 'WARNING : There is no "meta_key" value set for the metabox, which means nothing will be saved! If this is intentional, then set "suppress_meta_key_error" to true.', $this->manager->text_domain ) );
 				}
 			}
 		}
@@ -150,7 +150,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Metabox' ) ) {
 
 			// verify nonce
 			if ( array_key_exists( $full_id . '_nonce', $_POST ) &&
-				 wp_verify_nonce( $_POST[ $full_id . '_nonce' ], $full_id ) ) {
+				 wp_verify_nonce( wp_unslash( sanitize_text_field( $_POST[ $full_id . '_nonce' ] ) ), $full_id ) ) {
 
 				//if we get here, we are dealing with the correct metabox
 

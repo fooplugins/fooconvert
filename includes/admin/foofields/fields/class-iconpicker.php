@@ -12,9 +12,9 @@ if ( ! class_exists( __NAMESPACE__ . '\IconPicker' ) ) {
 
 		public static function get_i18n(){
 			return array(
-				'select' => __( 'Select Icon', 'FooConvert' ),
-				'clear' => __( 'Clear Icon', 'FooConvert' ),
-				'default' => __( 'Default', 'FooConvert' )
+				'select' => __( 'Select Icon', 'fooconvert' ),
+				'clear' => __( 'Clear Icon', 'fooconvert' ),
+				'default' => __( 'Default', 'fooconvert' )
 			);
 		}
 
