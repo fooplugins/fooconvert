@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: FooConvert 0.0.24\n"
+"Project-Id-Version: FooConvert 0.0.25\n"
 "Report-Msgid-Bugs-To: https://github.com/fooplugins/fooconvert/issues\n"
 "Last-Translator: FooPlugins <info@fooplugins.com>\n"
 "Language-Team: FooPlugins <info@fooplugins.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-12-14T15:14:48+00:00\n"
+"POT-Creation-Date: 2024-12-18T08:40:10+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: fooconvert\n"
@@ -368,39 +368,39 @@ msgstr ""
 msgid "Active Plugins"
 msgstr ""
 
-#: includes/admin/class-stats.php:49
+#: includes/admin/class-stats.php:58
 msgid "Invalid widget ID!!"
 msgstr ""
 
-#: includes/admin/class-stats.php:65
+#: includes/admin/class-stats.php:74
 msgid "Events"
 msgstr ""
 
-#: includes/admin/class-stats.php:71
-#: includes/functions.php:264
+#: includes/admin/class-stats.php:82
+#: includes/functions.php:275
 msgid "Views"
 msgstr ""
 
-#: includes/admin/class-stats.php:77
-#: includes/functions.php:256
+#: includes/admin/class-stats.php:90
+#: includes/functions.php:267
 msgid "Engagements"
 msgstr ""
 
-#: includes/admin/class-stats.php:83
+#: includes/admin/class-stats.php:98
 msgid "Unique Visitors"
 msgstr ""
 
-#: includes/admin/class-stats.php:153
-#: includes/admin/class-stats.php:160
+#: includes/admin/class-stats.php:170
+#: includes/admin/class-stats.php:177
 msgid "Stats"
 msgstr ""
 
-#: includes/admin/class-stats.php:180
+#: includes/admin/class-stats.php:197
 msgid "View Stats"
 msgstr ""
 
-#: includes/admin/class-stats.php:197
-#: includes/admin/class-stats.php:198
+#: includes/admin/class-stats.php:214
+#: includes/admin/class-stats.php:215
 msgid "Widget Stats"
 msgstr ""
 
@@ -435,7 +435,7 @@ msgid "Getting Started with FooConvert!"
 msgstr ""
 
 #: includes/admin/views/dashboard.php:19
-msgid "The easiest way to get started is by creating demo widgets, which will create 3 draft bars, flyouts and popups."
+msgid "The easiest way to get started is by creating demo widgets, which will create 4 draft bars, flyouts and popups."
 msgstr ""
 
 #: includes/admin/views/dashboard.php:20
@@ -554,49 +554,54 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#. Translators: %d refers to the ID of the widget.
-#: includes/admin/views/widget-stats.php:21
-msgid "Stats for Widget #%d"
+#: includes/admin/views/widget-stats.php:6
+msgid "Last 7 days"
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:22
-msgid "Widget Title : "
+#. Translators: %s refers to the link to edit the widget.
+#: includes/admin/views/widget-stats.php:16
+msgid "Edit %s"
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:28
+#. Translators: %s refers to the title of the widget.
+#: includes/admin/views/widget-stats.php:29
+msgid "Stats for %s"
+msgstr ""
+
+#: includes/admin/views/widget-stats.php:39
 msgid "Total Events"
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:29
+#: includes/admin/views/widget-stats.php:40
 msgid "Total events logged for the widget for it's lifetime."
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:35
+#: includes/admin/views/widget-stats.php:46
 msgid "Total Views"
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:36
+#: includes/admin/views/widget-stats.php:47
 msgid "Total number of times the widget has been viewed by a visitor."
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:42
+#: includes/admin/views/widget-stats.php:53
 msgid "Total Visitors"
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:43
+#: includes/admin/views/widget-stats.php:54
 msgid "Total number of unique visitors that have viewed the widget."
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:49
+#: includes/admin/views/widget-stats.php:60
 msgid "Total Engagements"
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:50
+#: includes/admin/views/widget-stats.php:61
 msgid "Total number of engagements that have been made with the widget (clicks, opens, etc)."
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:59
-msgid "Recent Activity (7-Day)"
+#: includes/admin/views/widget-stats.php:71
+msgid "Recent Activity"
 msgstr ""
 
 #: includes/class-fooconvert-compatibility.php:55
@@ -684,27 +689,27 @@ msgstr ""
 msgid "Roles"
 msgstr ""
 
-#: includes/functions.php:255
+#: includes/functions.php:266
 msgid "engagements"
 msgstr ""
 
-#: includes/functions.php:257
+#: includes/functions.php:268
 msgid "Total number of engagements"
 msgstr ""
 
-#: includes/functions.php:263
+#: includes/functions.php:274
 msgid "views"
 msgstr ""
 
-#: includes/functions.php:265
+#: includes/functions.php:276
 msgid "Total number of views"
 msgstr ""
 
-#: includes/functions.php:304
+#: includes/functions.php:315
 msgid "ago"
 msgstr ""
 
-#: includes/functions.php:332
+#: includes/functions.php:343
 msgid "Never"
 msgstr ""
 
@@ -723,12 +728,13 @@ msgid "Update WordPress now."
 msgstr ""
 
 #: includes/widgets/class-bar.php:106
-#: includes/widgets/class-bar.php:107
 #: includes/widgets/class-flyout.php:106
-#: includes/widgets/class-flyout.php:107
 #: includes/widgets/class-popup.php:102
-#: includes/widgets/class-popup.php:103
 msgid "Empty"
+msgstr ""
+
+#: includes/widgets/class-bar.php:107
+msgid "A blank slate that you can use to build your own bar from scratch."
 msgstr ""
 
 #: includes/widgets/class-bar.php:126
@@ -747,6 +753,10 @@ msgstr ""
 msgid "A simple bottom bar that is dismissed when the button is clicked."
 msgstr ""
 
+#: includes/widgets/class-flyout.php:107
+msgid "A blank slate that you can use to build your own flyout from scratch."
+msgstr ""
+
 #: includes/widgets/class-flyout.php:126
 msgid "Black Friday Flyout"
 msgstr ""
@@ -755,11 +765,15 @@ msgstr ""
 msgid "A typical Black Friday flyout to help drive sales."
 msgstr ""
 
-#: includes/widgets/class-popup.php:123
+#: includes/widgets/class-popup.php:103
+msgid "A blank slate that you can use to build your own popup from scratch."
+msgstr ""
+
+#: includes/widgets/class-popup.php:121
 msgid "Black Friday Popup"
 msgstr ""
 
-#: includes/widgets/class-popup.php:124
+#: includes/widgets/class-popup.php:122
 msgid "A typical Black Friday popup to help drive sales."
 msgstr ""
 
@@ -815,11 +829,56 @@ msgid "Mixed"
 msgstr ""
 
 #: assets/editor.js:1
+msgid "Unset"
+msgstr ""
+
+#: assets/editor.js:1
+msgid "Natural"
+msgstr ""
+
+#: assets/editor.js:1
+msgid "Deep"
+msgstr ""
+
+#: assets/editor.js:1
+msgid "Sharp"
+msgstr ""
+
+#: assets/editor.js:1
+msgid "Outlined"
+msgstr ""
+
+#: assets/editor.js:1
+msgid "Crisp"
+msgstr ""
+
+#: assets/editor.js:1
+msgid "Select a shadow"
+msgstr ""
+
+#: assets/editor.js:1
+msgid "Box shadow"
+msgstr ""
+
+#: assets/editor.js:1
+#: assets/editor.js:4
+msgid "Reset"
+msgstr ""
+
+#: assets/editor.js:1
+msgid "Border & Shadow"
+msgstr ""
+
+#: assets/editor.js:1
 msgid "Border"
 msgstr ""
 
 #: assets/editor.js:1
 msgid "Radius"
+msgstr ""
+
+#: assets/editor.js:1
+msgid "Shadow"
 msgstr ""
 
 #: assets/editor.js:1
@@ -1080,11 +1139,6 @@ msgid "Select..."
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/editor.js:4
-msgid "Reset"
-msgstr ""
-
-#: assets/editor.js:1
 msgid "JSON"
 msgstr ""
 
@@ -1242,6 +1296,10 @@ msgstr ""
 
 #: assets/editor.js:1
 msgid "Add item"
+msgstr ""
+
+#: assets/editor.js:1
+msgid "Search"
 msgstr ""
 
 #: assets/editor.js:1

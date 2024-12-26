@@ -12,6 +12,7 @@ if ( $widget_id ) {
         $widget_title = fooconvert_get_widget_title( $widget );
         $edit_url = fooconvert_admin_url_widget_edit( $widget_id );
         $widget_type = fooconvert_get_widget_post_type_label( $widget );
+        // Translators: %s refers to the link to edit the widget.
         $edit_link = '<a class="button" href="' . esc_url( $edit_url ) . '">' . esc_html( sprintf( __( 'Edit %s', 'fooconvert' ), $widget_type ) ) . '</a>';
     }
 } else {
