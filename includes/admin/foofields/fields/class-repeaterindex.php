@@ -26,8 +26,8 @@ if ( ! class_exists( __NAMESPACE__ . '\RepeaterIndex' ) ) {
 		 */
 		function render_input( $override_attributes = false ) {
 			$patterns = array('/{index}/','/{count}/');
-			$replacements = array($this->row_index, $this->row_index+1);
-			echo preg_replace($patterns, $replacements, $this->format);
+			$replacements = array( $this->row_index, $this->row_index+1 );
+            esc_html_e( preg_replace( $patterns, $replacements, $this->format ) );
 //			echo sprintf( $this->format, ($this->row_index + 1) );
 		}
 	}

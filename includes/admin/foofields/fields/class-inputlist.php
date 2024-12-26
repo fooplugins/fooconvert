@@ -82,6 +82,7 @@ if ( ! class_exists( __NAMESPACE__ . '\InputList' ) ) {
 				}
 				self::render_html_tag( 'label', $label_attributes, null, false );
 				self::render_html_tag( 'input', $input_attributes );
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo $inner;
 				echo '</label>';
 				$i ++;

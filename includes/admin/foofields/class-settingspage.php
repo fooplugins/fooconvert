@@ -124,15 +124,15 @@ if ( ! class_exists( __NAMESPACE__ . '\SettingsPage' ) ) {
 						<input name="submit" class="button-primary" type="submit"
 						       value="<?php
                                // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
-                               _e( 'Save Changes', $this->manager->text_domain ); ?>"/>
-						<input name="<?php echo $this->container_id(); ?>[reset-defaults]"
+                               esc_attr_e( 'Save Changes', $this->manager->text_domain ); ?>"/>
+						<input name="<?php esc_attr_e( $this->container_id() ); ?>[reset-defaults]"
 						       onclick="return confirm('<?php
                                // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
-                               _e( 'Are you sure you want to restore all settings back to their default values?', $this->manager->text_domain ); ?>');"
+                               esc_attr_e( 'Are you sure you want to restore all settings back to their default values?', $this->manager->text_domain ); ?>');"
 						       class="button-secondary" type="submit"
 						       value="<?php
                                // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
-                               _e( 'Restore Defaults', $this->manager->text_domain ); ?>"/>
+                               esc_attr_e( 'Restore Defaults', $this->manager->text_domain ); ?>"/>
 					</p>
 				</form>
 			</div>
@@ -174,7 +174,7 @@ if ( ! class_exists( __NAMESPACE__ . '\SettingsPage' ) ) {
 			if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 
 				$referrer = wp_get_referer();
-				$url = parse_url( $referrer, PHP_URL_QUERY);
+				$url = wp_parse_url( $referrer, PHP_URL_QUERY);
 				if ( !empty( $url ) ) {
 					parse_str($url, $query);
 					return isset($query['page']) && $this->container_id() === $query['page'];

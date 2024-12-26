@@ -128,7 +128,7 @@ if ( ! class_exists( __NAMESPACE__ . '\DateTime' ) ) {
 //			}
             // phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain
 			if ( isset( $this->config['minimum'] ) && is_numeric( $this->config['minimum'] ) && $timestamp < $this->config['minimum'] ){
-				$minimum = date( 'r', $this->config['minimum'] );
+				$minimum = gmdate( 'r', $this->config['minimum'] );
                 // Translators: %1$s is a date, %2$s is the field label.
 				$message = __( 'Please select a date greater than %1$s for %2$s!', $this->container->manager->text_domain );
 				$this->error = sprintf( $message, $minimum, $this->label );

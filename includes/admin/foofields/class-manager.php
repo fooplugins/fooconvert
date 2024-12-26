@@ -42,16 +42,16 @@ if ( ! class_exists( __NAMESPACE__ . '\Manager' ) ) {
 		function __construct( $config ) {
 			$this->config = $config;
 			if ( ! isset( $config['id'] ) ) {
-				throw new \Exception( __( 'ERROR : There is no "id" value set for your container manager!' ), 66601 );
+				throw new \Exception( esc_html__( 'ERROR : There is no "id" value set for your container manager!' ), 66601 );
 			}
 			if ( ! isset( $config['text_domain'] ) ) {
-				throw new \Exception( __( 'ERROR : There is no "text_domain" value set! Translations will not work!' ), 66601 );
+				throw new \Exception( esc_html__( 'ERROR : There is no "text_domain" value set! Translations will not work!' ), 66601 );
 			}
 			if ( ! isset( $config['plugin_url'] ) ) {
-				throw new \Exception( __( 'ERROR : There is no "plugin_url" value set! Things will not work!' ), 66602 );
+				throw new \Exception( esc_html__( 'ERROR : There is no "plugin_url" value set! Things will not work!' ), 66602 );
 			}
 			if ( ! isset( $config['plugin_version'] ) ) {
-				throw new \Exception( __( 'ERROR : There is no "plugin_version" value set! Things will not work!' ), 66603 );
+				throw new \Exception( esc_html__( 'ERROR : There is no "plugin_version" value set! Things will not work!' ), 66603 );
 			}
 
 			$this->id = $config['id'];
@@ -165,7 +165,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Manager' ) ) {
 			}
 
 			$referrer = wp_get_raw_referer();
-			$url = parse_url( $referrer, PHP_URL_QUERY);
+			$url = wp_parse_url( $referrer, PHP_URL_QUERY);
 			if ( !empty( $url ) ) {
 				parse_str($url, $query);
 

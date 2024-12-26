@@ -93,9 +93,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Metabox' ) ) {
 			$full_id = $this->container_id();
 
 			//render the nonce used to validate when saving the metabox fields
-			?><input type="hidden" name="<?php echo $full_id; ?>_nonce"
-					 id="<?php echo $full_id; ?>_nonce"
-					 value="<?php echo wp_create_nonce( $full_id ); ?>"/><?php
+			?><input type="hidden" name="<?php echo esc_attr( $full_id ); ?>_nonce"
+					 id="<?php echo esc_attr( $full_id ); ?>_nonce"
+					 value="<?php echo esc_attr( wp_create_nonce( $full_id ) ); ?>"/><?php
 
 			//allow custom metabox rendering
 			$this->do_action( 'render', $post );
@@ -224,7 +224,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Metabox' ) ) {
 		function render_fields_before() {
 			?>
 			<style>
-				<?php echo '#' . $this->container_id() . ' .inside' ?> {
+				<?php echo '#' . esc_attr( $this->container_id() ) . ' .inside' ?> {
 					margin: 0;
 					padding: 0;
 				}
@@ -261,6 +261,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Metabox' ) ) {
 				}
 			}
 
+            // phpcs:disable WordPress.Security.NonceVerification.Recommended
 			if ( empty( $post_type ) && isset( $_REQUEST['post'] ) && ! empty( $_REQUEST['post'] ) && function_exists( 'get_post_type' ) && $get_post_type = get_post_type( (int) $_REQUEST['post'] ) ) {
 				$post_type = $get_post_type;
 			}
@@ -268,6 +269,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Metabox' ) ) {
 			if ( empty( $post_type ) && isset( $_REQUEST['post_type'] ) && ! empty( $_REQUEST['post_type'] ) ) {
 				$post_type = sanitize_key( $_REQUEST['post_type'] );
 			}
+            // phpcs:enable
 
 			if ( empty( $post_type ) && 'edit.php' == $pagenow ) {
 				$post_type = 'post';

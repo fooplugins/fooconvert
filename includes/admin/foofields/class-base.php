@@ -25,6 +25,8 @@ if ( ! class_exists( __NAMESPACE__ . '\Base' ) ) {
 			}
 		}
 
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
+
 		/**
 		 * Safe way to get value from the request object
 		 *
@@ -88,6 +90,8 @@ if ( ! class_exists( __NAMESPACE__ . '\Base' ) ) {
 			return null;
 		}
 
+        // phpcs:enable
+
 		/**
 		 * Safely renders an HTML tag
 		 *
@@ -98,6 +102,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Base' ) ) {
 		 * @param bool $escape_inner
 		 */
 		static function render_html_tag( $tag, $attributes, $inner = null, $close = true, $escape_inner = true ) {
+            // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '<' . $tag . ' ';
 			//make sure all attributes are escaped
 			$attributes     = array_map( 'esc_attr', $attributes );
@@ -129,6 +134,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Base' ) ) {
 			if ( $close ) {
 				echo '</' . $tag . '>';
 			}
+            // phpcs:enable
 		}
 	}
 }

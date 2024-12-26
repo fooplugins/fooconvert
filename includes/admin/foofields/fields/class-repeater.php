@@ -66,7 +66,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Repeater' ) ) {
 		function render_input( $override_attributes = false ) {
 			if ( false === $this->fields ) {
                 // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
-				echo __( 'ERROR No fields for repeater!', $this->container->manager->text_domain );
+				echo esc_html__( 'ERROR No fields for repeater!', $this->container->manager->text_domain );
 				return;
 			}
 

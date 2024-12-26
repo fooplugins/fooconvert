@@ -299,6 +299,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Field' ) ) {
 
 				case 'html':
 					if ( isset( $this->config['html'] ) ) {
+                        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						echo $this->config['html'];
 					}
 					break;

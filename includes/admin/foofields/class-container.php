@@ -874,9 +874,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Container' ) ) {
 		 */
 		function json_encode( $options ){
 			if ( defined( 'JSON_UNESCAPED_UNICODE' ) ) {
-				return json_encode( $options, JSON_UNESCAPED_UNICODE );
+				return wp_json_encode( $options, JSON_UNESCAPED_UNICODE );
 			} else {
-				return json_encode( $options );
+				return wp_json_encode( $options );
 			}
 		}
 
