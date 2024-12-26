@@ -1,4 +1,4 @@
-name: 'plugin-check'
+name: 'fooconvert-build'
 on: # rebuild any PRs and main branch changes
   pull_request:
   push:
@@ -9,9 +9,37 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+
+      # Checkout the repository
       - name: Checkout
         uses: actions/checkout@v3
 
+      # Set up PHP
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.1
+          tools: composer
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Install Composer dependencies
+      - name: Install Composer dependencies
+        run: composer install --no-dev --prefer-dist
+
+      # Install npm dependencies
+      - name: Install npm dependencies
+        run: npm install
+
+      # Run npm build
+      - name: Build assets
+        run: npm run build
+
+      # Run plugin check
       - name: Run plugin check
         uses: wordpress/plugin-check-action@v1
         with:
