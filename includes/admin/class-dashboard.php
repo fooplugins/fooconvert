@@ -40,7 +40,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
             //get nonce
             $nonce = sanitize_text_field( $_POST['nonce'] );
             if ( !wp_verify_nonce($nonce, 'fooconvert-dashboard' ) ) {
-                wp_die( __( 'Invalid nonce!!', 'fooconvert' ) );
+                wp_die( esc_html__( 'Invalid nonce!!', 'fooconvert' ) );
             }
 
             ob_start();
@@ -77,7 +77,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
             //get nonce
             $nonce = sanitize_text_field( $_POST['nonce'] );
             if ( !wp_verify_nonce($nonce, 'fooconvert-dashboard' ) ) {
-                wp_die( __( 'Invalid nonce!!', 'fooconvert' ) );
+                wp_die( esc_html__( 'Invalid nonce!!', 'fooconvert' ) );
             }
 
             $demo = new DemoContent();
@@ -101,7 +101,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
             //get nonce
             $nonce = sanitize_text_field( $_POST['nonce'] );
             if ( !wp_verify_nonce($nonce, 'fooconvert-dashboard' ) ) {
-                wp_die( __( 'Invalid nonce!!', 'fooconvert' ) );
+                wp_die( esc_html__( 'Invalid nonce!!', 'fooconvert' ) );
             }
 
             $sort = sanitize_text_field( $_POST['sort'] );
@@ -122,7 +122,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
             //get nonce
             $nonce = sanitize_text_field( $_POST['nonce'] );
             if ( !wp_verify_nonce($nonce, 'fooconvert-dashboard' ) ) {
-                wp_die( __( 'Invalid nonce!!', 'fooconvert' ) );
+                wp_die( esc_html__( 'Invalid nonce!!', 'fooconvert' ) );
             }
 
             $stats = new \FooPlugins\FooConvert\Stats();

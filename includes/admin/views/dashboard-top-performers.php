@@ -13,12 +13,12 @@ $top_performers = $stats->get_top_performers( $sort );
 if ( empty( $top_performers ) ) {
     if ( isset( $sort_object['pro_feature'] ) && $sort_object['pro_feature'] ) {
         echo '<p class="fooconvert-padding">' . esc_html( $sort_object['pro_message'] ) . '</p>';
-        echo '<p class="fooconvert-padding"><a class="button button-primary button-large" href="' . esc_url( fooconvert_admin_url_addons() ) . '">' . __('Buy PRO Analytics!', 'fooconvert'). '</a></p>';
+        echo '<p class="fooconvert-padding"><a class="button button-primary button-large" href="' . esc_url( fooconvert_admin_url_addons() ) . '">' . esc_html__('Buy PRO Analytics!', 'fooconvert'). '</a></p>';
     }
     else if ( fooconvert_has_stats_last_updated() ) {
-        echo '<p class="fooconvert-padding">' . __( 'No top performers found!', 'fooconvert' ) . '</p>';
+        echo '<p class="fooconvert-padding">' . esc_html__( 'No top performers found!', 'fooconvert' ) . '</p>';
     } else {
-        echo '<p class="fooconvert-padding">' . __( 'Please update stats in order to see top performers.', 'fooconvert' );
+        echo '<p class="fooconvert-padding">' . esc_html__( 'Please update stats in order to see top performers.', 'fooconvert' );
     }
 } else {
     echo '<table class="fooconvert-top-performers-table">';
@@ -43,14 +43,14 @@ if ( empty( $top_performers ) ) {
         $score = $top_performer['score'];
 
         echo '<tr>';
-        echo '<td>#' . $index . '</td>';
-        echo '<td><span>' . $top_performer['title'] . '</span>';
+        echo '<td>#' . esc_attr( $index ) . '</td>';
+        echo '<td><span>' . esc_html( $top_performer['title'] ) . '</span>';
         echo '<div class="fooconvert-top-performers-table-actions">';
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo $edit_link . ' ' . $stats_link;
         echo '</div>';
         echo '</td>';
-        echo '<td>' . $score . '</td>';
-        //echo '<td>' . $edit_link . ' ' . $stats_link . '</td>';
+        echo '<td>' . esc_html( $score ) . '</td>';
         echo '</tr>';
     }
 

@@ -222,7 +222,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
             // Loop through the data and ensure dates with no data are set to 0
             $final_data = [];
             for ( $i = $days - 1; $i >= 0; $i-- ) {
-                $date = date( 'Y-m-d', strtotime( "-$i days" ) );
+                $date = gmdate( 'Y-m-d', strtotime( "-$i days" ) );
 
                 $matching_data = $this->find_row_from_results( $results, 'event_date', $date );
 

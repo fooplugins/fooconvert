@@ -36,7 +36,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
             //get nonce
             $nonce = sanitize_text_field( $_POST['nonce'] );
             if ( !wp_verify_nonce($nonce, 'fooconvert-widget-stats' ) ) {
-                wp_die( __( 'Invalid nonce!!', 'fooconvert' ) );
+                wp_die( esc_html__( 'Invalid nonce!!', 'fooconvert' ) );
             }
 
             $widget_id = isset( $_POST['widget_id'] ) ? intval( sanitize_text_field( $_POST['widget_id'] ) ) : 0;
@@ -55,7 +55,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
             }
 
             if ( $widget_id === 0 ) {
-                wp_die(__('Invalid widget ID!!', 'fooconvert'));
+                wp_die( esc_html__('Invalid widget ID!!', 'fooconvert') );
             }
 
             $event = new Event();
@@ -194,7 +194,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
 
                 $stats_page_url = fooconvert_admin_url_widget_stats( $post_id );
 
-                echo '<a href="' . $stats_page_url . '">' . __( 'View Stats', 'fooconvert' ) . '</a>';
+                echo '<a href="' . esc_url( $stats_page_url ) . '">' . esc_html__( 'View Stats', 'fooconvert' ) . '</a>';
             }
         }
 

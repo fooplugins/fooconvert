@@ -108,7 +108,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
             $event = new Event();
             $event->create( $data, $meta );
 
-            echo json_encode( array( 'status' => 'success' ) );
+            echo wp_json_encode( array( 'status' => 'success' ) );
             wp_die();
         }
     }

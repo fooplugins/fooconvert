@@ -127,7 +127,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 ];
 
                 // Create some events for the demo content.
-                $this->create_events( $post_id, $meta, mt_rand( 500, 1000 ) );
+                $this->create_events( $post_id, $meta, wp_rand( 500, 1000 ) );
 
                 $count++;
             }
@@ -161,7 +161,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
                 if ( $event_type === FOOCONVERT_EVENT_TYPE_CLICK ) {
                     // not every click is a conversion for demo data.
-                    $conversion = mt_rand( 0, 1 );
+                    $conversion = wp_rand( 0, 1 );
                 }
 
                 // TODO : figure out subtype based off event_type.
@@ -171,11 +171,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 $sentiment = null;
 
                 // Random timestamp within the last 30 days
-                $timestamp = date('Y-m-d H:i:s', strtotime("-" . mt_rand(0, 30) . " days -" . mt_rand(0, 86400) . " seconds"));
+                $timestamp = gmdate('Y-m-d H:i:s', strtotime("-" . wp_rand(0, 30) . " days -" . wp_rand(0, 86400) . " seconds"));
 
                 // Randomly select either a user_id or an anonymous_user_guid
-                if (mt_rand(0, 1) === 1) {
-                    $user_id = mt_rand(1, 10);  // Random user ID for logged-in users
+                if (wp_rand(0, 1) === 1) {
+                    $user_id = wp_rand(1, 10);  // Random user ID for logged-in users
                     $anonymous_user_guid = null;
                 } else {
                     $user_id = 0;
@@ -191,8 +191,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 if ( $conversion === 1 ) {
                     $extra_data = [
                         'conversion_type' => 'woocommerce_order',
-                        'order_id' => mt_rand( 1, 100 ),
-                        'order_value' => mt_rand( 100 * 100, 500 * 100 ) / 100
+                        'order_id' => wp_rand( 1, 100 ),
+                        'order_value' => wp_rand( 100 * 100, 500 * 100 ) / 100
                     ];
                 }
 
@@ -204,7 +204,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                         'event_subtype' => $event_subtype,
                         'conversion' => $conversion,
                         'sentiment' => $sentiment,
-                        'page_url' => home_url( '/page-' . mt_rand(1, 10) ),
+                        'page_url' => home_url( '/page-' . wp_rand(1, 10) ),
                         'device_type' => $device_type,
                         'user_id' => $user_id,
                         'anonymous_user_guid' => $anonymous_user_guid,
@@ -218,7 +218,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
         // Helper function to select an event type based on weighted probabilities
         private function weighted_random_event($weights) {
-            $rand = mt_rand() / mt_getrandmax();
+            $rand = wp_rand() / mt_getrandmax();
             $cumulative = 0;
 
             foreach ($weights as $event => $weight) {

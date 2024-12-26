@@ -54,6 +54,7 @@ class FooConvert_Display_Rules extends Base_Component {
             $this->create_column_content( $post_type, $column_name, $post_id );
         }, 10, 2 );
 
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
         add_action( 'admin_enqueue_scripts', function( $hook_suffix ) use ( $post_type ) {
             if ( $hook_suffix === 'edit.php' && isset( $_GET['post_type'] ) ) {
                 $current_post_type = sanitize_key( $_GET['post_type'] );
@@ -62,6 +63,7 @@ class FooConvert_Display_Rules extends Base_Component {
                 }
             }
         } );
+        // phpcs:enable
     }
 
     public function create_column( $post_type, $columns ) : array {
@@ -105,9 +107,9 @@ class FooConvert_Display_Rules extends Base_Component {
             $is_set = !empty( $display_rules ) && !empty( $display_rules['location'] );
 
             if ( $is_set ) {
-                echo __( 'Set', 'fooconvert' );
+                esc_html_e( 'Set', 'fooconvert' );
             } else {
-                echo __( 'Not set!', 'fooconvert' );
+                esc_html_e( 'Not set!', 'fooconvert' );
             }
         }
     }

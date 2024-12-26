@@ -1,5 +1,6 @@
 <?php
 // Get the widget ID from the URL
+// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 $widget_id = isset( $_GET['widget_id'] ) ? intval( $_GET['widget_id'] ) : 0;
 $widget_title = __( 'Unknown', 'fooconvert' );
 $recent_activity_days = intval( get_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT ) );
@@ -29,35 +30,38 @@ if ( $widget_id ) {
             echo sprintf( esc_html__( 'Stats for %s', 'fooconvert' ), esc_html( $widget_title ) );
             ?>
         </h2>
-        <?php echo $edit_link; ?>
+        <?php
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo $edit_link;
+        ?>
     </div>
 
     <!-- Basic Metrics -->
     <div class="fooconvert-basic-metrics">
         <div class="metric loading">
             <p id="metric-total_events">...</p>
-            <h2><?php _e('Total Events', 'fooconvert'); ?></h2>
+            <h2><?php esc_html_e('Total Events', 'fooconvert'); ?></h2>
             <span data-balloon-pos="down" aria-label="<?php esc_attr_e( 'Total events logged for the widget for it\'s lifetime.', 'fooconvert' ); ?>">
                 <i class="dashicons dashicons-editor-help"></i>
             </span>
         </div>
         <div class="metric loading">
             <p id="metric-total_views">...</p>
-            <h2><?php _e('Total Views', 'fooconvert'); ?></h2>
+            <h2><?php esc_html_e('Total Views', 'fooconvert'); ?></h2>
             <span data-balloon-pos="down" aria-label="<?php esc_attr_e( 'Total number of times the widget has been viewed by a visitor.', 'fooconvert' ); ?>">
                 <i class="dashicons dashicons-editor-help"></i>
             </span>
         </div>
         <div class="metric loading">
             <p id="metric-total_unique_visitors">...</p>
-            <h2><?php _e('Total Visitors', 'fooconvert'); ?></h2>
+            <h2><?php esc_html_e('Total Visitors', 'fooconvert'); ?></h2>
             <span data-balloon-pos="down" aria-label="<?php esc_attr_e( 'Total number of unique visitors that have viewed the widget.', 'fooconvert' ); ?>">
                 <i class="dashicons dashicons-editor-help"></i>
             </span>
         </div>
         <div class="metric loading">
             <p id="metric-total_engagements">...</p>
-            <h2><?php _e('Total Engagements', 'fooconvert'); ?></h2>
+            <h2><?php esc_html_e('Total Engagements', 'fooconvert'); ?></h2>
             <span data-balloon-pos="down" aria-label="<?php esc_attr_e( 'Total number of engagements that have been made with the widget (clicks, opens, etc).', 'fooconvert' ); ?>">
                 <i class="dashicons dashicons-editor-help"></i>
             </span>
@@ -68,7 +72,7 @@ if ( $widget_id ) {
     <!-- Recent Activity Chart -->
     <div class="fooconvert-recent-activity-container loading">
         <h2>
-            <?php _e('Recent Activity', 'fooconvert'); ?>
+            <?php esc_html_e('Recent Activity', 'fooconvert'); ?>
             <select class="fooconvert-recent-activity-days">
                 <?php foreach ( $recent_activity_options as $days => $label ) : ?>
                     <option value="<?php echo esc_attr( $days ); ?>" <?php selected( $recent_activity_days, $days ); ?>><?php echo esc_html( $label ); ?></option>
