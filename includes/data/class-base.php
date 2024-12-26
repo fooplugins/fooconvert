@@ -83,6 +83,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Base' ) ) {
             return dbDelta( $sql );
         }
 
+        // phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+
         /**
          * Checks if an index exists in the database.
          *
@@ -148,5 +150,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Base' ) ) {
                 }
             }
         }
+
+        // phpcs:enable
     }
 }

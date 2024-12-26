@@ -172,7 +172,14 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
         static function does_table_exist( $table_name ) {
             global $wpdb;
 
-            $table_exists = $wpdb->get_var("SHOW TABLES LIKE '{$table_name}'");
+            // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+            $table_exists = $wpdb->get_var(
+                $wpdb->prepare(
+                    "SHOW TABLES LIKE %s",
+                    $table_name
+                )
+            );
+            // phpcs:enable
 
             return $table_exists === $table_name;
         }

@@ -28,6 +28,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             return parent::get_table_name( FOOCONVERT_DB_TABLE_EVENTS );
         }
 
+        // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+
         /**
          * Inserts event data into the database.
          *
@@ -140,6 +142,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
 
             // Prepare SQL query to return high-level statistics
             return $wpdb->get_row(
+                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 $wpdb->prepare(
                     $query,
                     $widget_id
@@ -180,6 +183,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
 
             // Prepare recent activity for the last X days
             return $wpdb->get_results(
+                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 $wpdb->prepare(
                     $query,
                     $widget_id,
@@ -221,17 +225,22 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         /**
          * Deletes all events older than the specified number of days.
          *
-         * @param int $days The number of days to keep events for. Defaults to 7.
+         * @param int $days The number of days to keep events for. Defaults to FOOCONVERT_RETENTION_DEFAULT which is 14.
          *
          * @return int The number of rows deleted.
          */
-        public static function delete_old_events( $days = 7 ) {
+        public static function delete_old_events( $days = FOOCONVERT_RETENTION_DEFAULT ) {
             global $wpdb;
 
-            $table_name = self::get_events_table_name();
+            $table_name = esc_sql( self::get_events_table_name() );
             $days = intval( $days );  // Ensure $days is an integer
 
-            return $wpdb->query( $wpdb->prepare( "DELETE FROM {$table_name} WHERE timestamp < DATE_SUB(NOW(), INTERVAL %d DAY)", $days ) );
+            return $wpdb->query(
+                $wpdb->prepare(
+                    "DELETE FROM {$table_name} WHERE timestamp < DATE_SUB(NOW(), INTERVAL %d DAY)",
+                    $days
+                )
+            );
         }
 
         /**
@@ -288,6 +297,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             );
 
             // Execute the query and get the result
+            // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
             return $wpdb->get_row( $query, ARRAY_A );
         }
 
@@ -300,17 +310,19 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             global $wpdb;
 
             // Table names
-            $events_table = self::get_events_table_name();
-            $posts_table = $wpdb->prefix . 'posts';
+            $events_table = esc_sql( self::get_events_table_name() );
+            $posts_table = esc_sql( $wpdb->prefix . 'posts' );
 
-            // SQL query
+            // Build the query with sanitized table names
             $query = "
                 DELETE e
                 FROM {$events_table} e
                 LEFT JOIN {$posts_table} p ON e.widget_id = p.ID
-                WHERE p.ID IS NULL";
+                WHERE p.ID IS NULL
+            ";
 
             // Execute the query and return number of rows deleted.
+            // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
             return $wpdb->query( $query );
         }
 
@@ -322,12 +334,20 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         public static function get_widgets_with_events() {
             global $wpdb;
 
-            $table_name = self::get_events_table_name();
-            $posts_table = $wpdb->prefix . 'posts';
+            $table_name = esc_sql( self::get_events_table_name() );
+            $posts_table = esc_sql( $wpdb->prefix . 'posts' );
 
-            $query = "SELECT e.widget_id FROM {$table_name} e INNER JOIN {$posts_table} p ON e.widget_id = p.ID GROUP BY e.widget_id";
+            $query = "
+                SELECT e.widget_id
+                FROM {$table_name} e
+                INNER JOIN {$posts_table} p ON e.widget_id = p.ID
+                GROUP BY e.widget_id
+            ";
 
+            // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
             return $wpdb->get_results( $query, ARRAY_A );
         }
+
+        // phpcs:enable
     }
 }
