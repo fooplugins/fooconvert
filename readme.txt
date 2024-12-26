@@ -3,8 +3,8 @@ Contributors: bradvin, steveush, fooplugins
 Tags: sales-optimization,conversion-tools,lead-generation,marketing,wordpress-ecommerce
 Requires at least: 6.5
 Requires PHP: 7.4
-Tested up to: 6.6.2
-Stable tag: 0.0.12
+Tested up to: 6.7
+Stable tag: 0.0.26
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -94,13 +94,16 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 
 == Changelog ==
 
-= 0.0.25 =
-* Date Updated : 17 Dec 2024
+= 0.0.26 =
+* Date Updated : 26 Dec 2024
 * Added demo content (black friday scroll flyout & black friday exit intent popup).
 * Added top performer panel to the dashboard.
 * Added cron job to calculate widget stats (for top performers panel).
 * Added cron job to delete old events (outside of retention period).
+* Added box shadow to border tools panel in block editor.
+* Updated template selector popup.
 * Updated to Freemius SDK 2.10.1
+* Fixed bug with widgets closing anchors not working as expected.
 
 = 0.0.16 =
 * Date Updated : 3 Dec 2024
