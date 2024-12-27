@@ -42,10 +42,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                     wp_die( esc_html__( 'Invalid nonce!!', 'fooconvert' ) );
                 }
 
-                $widget_id = isset( $_POST['widget_id'] ) ? intval( sanitize_text_field( $_POST['widget_id'] ) ) : 0;
+                $widget_id = isset( $_POST['widget_id'] ) ? intval( sanitize_text_field( wp_unslash( $_POST['widget_id'] ) ) ) : 0;
 
                 $saved_days = intval( get_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT ) );
-                $days = isset( $_POST['days'] ) ? intval( sanitize_text_field( $_POST['days'] ) ) : $saved_days;
+                $days = isset( $_POST['days'] ) ? intval( sanitize_text_field( wp_unslash( $_POST['days'] ) ) ) : $saved_days;
                 if ( $days !== $saved_days ) {
                     // We have a chosen number of days, so let's save it for next time.
                     update_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, $days );

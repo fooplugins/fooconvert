@@ -151,7 +151,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Metabox' ) ) {
 
 			// verify nonce
 			if ( array_key_exists( $full_id . '_nonce', $_POST ) &&
-				 wp_verify_nonce( wp_unslash( sanitize_text_field( $_POST[ $full_id . '_nonce' ] ) ), $full_id ) ) {
+				 wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ $full_id . '_nonce' ] ) ), $full_id ) ) {
 
 				//if we get here, we are dealing with the correct metabox
 

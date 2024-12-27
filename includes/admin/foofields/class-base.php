@@ -38,9 +38,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Base' ) ) {
 		 */
 		protected function safe_get_from_request( $key, $default = null, $clean = true ) {
 			if ( isset( $_REQUEST[ $key ] ) ) {
-				$value = wp_unslash( $_REQUEST[ $key ] );
+				$value = wp_unslash( $_REQUEST[ $key ] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				if ( $clean ) {
-					return $this->clean( $value );
+					return $this->clean( $value ); // Clean does the sanitizing.
 				}
 
 				return $value;

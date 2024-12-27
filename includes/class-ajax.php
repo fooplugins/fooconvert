@@ -59,7 +59,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
                 exit;
             }
 
-            $data = json_decode( stripslashes( $_POST['data'] ), true );
+            //TODO : test if data can be sanitised
+            $data = json_decode( wp_unslash( $_POST['data'] ), true );
 
             // Ensure $data is an array
             if ( !is_array( $data ) ) {
