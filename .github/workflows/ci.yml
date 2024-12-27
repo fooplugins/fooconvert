@@ -42,7 +42,7 @@ jobs:
         run: |
           VERSION=$(jq -r '.version' package.json)
           echo "VERSION=${VERSION}" >> $GITHUB_ENV
-          echo "::notice::Version : ${{ env.VERSION }}"
+          echo "::notice::Version : ${VERSION}"
 
       # Create ZIP package
       - name: Run Build and Create ZIP
