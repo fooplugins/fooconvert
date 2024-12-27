@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-12-27T09:45:55+00:00\n"
+"POT-Creation-Date: 2024-12-27T10:04:54+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: fooconvert\n"
@@ -37,7 +37,7 @@ msgid "https://fooplugins.com/"
 msgstr ""
 
 #: includes/admin/class-dashboard.php:47
-#: includes/admin/class-stats.php:39
+#: includes/admin/class-stats.php:42
 msgid "Invalid nonce!!"
 msgstr ""
 
@@ -46,6 +46,7 @@ msgid "You do not have permission to access this page."
 msgstr ""
 
 #: includes/admin/class-dashboard.php:59
+#: includes/admin/class-stats.php:138
 msgid "Nonce is not set."
 msgstr ""
 
@@ -380,39 +381,39 @@ msgstr ""
 msgid "Active Plugins"
 msgstr ""
 
-#: includes/admin/class-stats.php:58
+#: includes/admin/class-stats.php:61
 msgid "Invalid widget ID!!"
 msgstr ""
 
-#: includes/admin/class-stats.php:74
+#: includes/admin/class-stats.php:77
 msgid "Events"
 msgstr ""
 
-#: includes/admin/class-stats.php:82
+#: includes/admin/class-stats.php:85
 #: includes/functions.php:276
 msgid "Views"
 msgstr ""
 
-#: includes/admin/class-stats.php:90
+#: includes/admin/class-stats.php:93
 #: includes/functions.php:268
 msgid "Engagements"
 msgstr ""
 
-#: includes/admin/class-stats.php:98
+#: includes/admin/class-stats.php:101
 msgid "Unique Visitors"
 msgstr ""
 
-#: includes/admin/class-stats.php:170
-#: includes/admin/class-stats.php:177
+#: includes/admin/class-stats.php:176
+#: includes/admin/class-stats.php:183
 msgid "Stats"
 msgstr ""
 
-#: includes/admin/class-stats.php:197
+#: includes/admin/class-stats.php:203
 msgid "View Stats"
 msgstr ""
 
-#: includes/admin/class-stats.php:214
-#: includes/admin/class-stats.php:215
+#: includes/admin/class-stats.php:220
+#: includes/admin/class-stats.php:221
 msgid "Widget Stats"
 msgstr ""
 
