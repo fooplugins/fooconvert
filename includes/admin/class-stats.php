@@ -33,104 +33,110 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
          * @since 1.0.0
          */
         function fetch_widget_stats() {
-            //get nonce
-            $nonce = sanitize_text_field( $_POST['nonce'] );
-            if ( !wp_verify_nonce($nonce, 'fooconvert-widget-stats' ) ) {
-                wp_die( esc_html__( 'Invalid nonce!!', 'fooconvert' ) );
-            }
+            if ( isset( $_POST['nonce'] ) ) {
+                // Sanitize the nonce
+                $nonce = sanitize_text_field( wp_unslash( $_POST['nonce'] ) );
 
-            $widget_id = isset( $_POST['widget_id'] ) ? intval( sanitize_text_field( $_POST['widget_id'] ) ) : 0;
-
-            $saved_days = intval( get_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT ) );
-            $days = isset( $_POST['days'] ) ? intval( sanitize_text_field( $_POST['days'] ) ) : $saved_days;
-            if ( $days !== $saved_days ) {
-                // We have a chosen number of days, so let's save it for next time.
-                update_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, $days );
-            }
-            if ( $days === 0 ) {
-                $days = FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT;
-            }
-            if ( $days > fooconvert_retention() ) {
-                $days = fooconvert_retention();
-            }
-
-            if ( $widget_id === 0 ) {
-                wp_die( esc_html__('Invalid widget ID!!', 'fooconvert') );
-            }
-
-            $event = new Event();
-
-            // Get metrics first.
-            $data = [
-                'metrics' => $event->get_widget_metrics( $widget_id ),
-            ];
-
-            $recent_activity_chart_data = [
-                'labels' => []
-            ];
-
-            $activity_meta_data = apply_filters( 'fooconvert_widget_stats_activity_meta_data', [
-                'events' => [
-                    'label' => __( 'Events', 'fooconvert' ),
-                    'data' => [],
-                    'borderColor' => 'rgb(112, 112, 112)',
-                    'cubicInterpolationMode' => 'monotone',
-                    'tension' => 0.4,
-                    'fill' => false
-                ],
-                'views' => [
-                    'label' => __( 'Views', 'fooconvert' ),
-                    'data' => [],
-                    'borderColor' => 'rgb(75, 192, 192)',
-                    'cubicInterpolationMode' => 'monotone',
-                    'tension' => 0.4,
-                    'fill' => false
-                ],
-                'engagements' => [
-                    'label' => __( 'Engagements', 'fooconvert' ),
-                    'data' => [],
-                    'borderColor' => 'rgb(255, 99, 132)',
-                    'cubicInterpolationMode' => 'monotone',
-                    'tension' => 0.4,
-                    'fill' => false
-                ],
-                'unique_visitors' => [
-                    'label' => __( 'Unique Visitors', 'fooconvert' ),
-                    'data' => [],
-                    'borderColor' => 'rgb(54, 162, 235)',
-                    'cubicInterpolationMode' => 'monotone',
-                    'tension' => 0.4,
-                    'fill' => true
-                ],
-            ] );
-
-            // Get daily activity next.
-            $daily_activity = $event->get_widget_daily_activity( $widget_id, $days );
-
-            foreach ( $daily_activity as $day ) {
-                $recent_activity_chart_data['labels'][] = $day['event_date'];
-                foreach ( $activity_meta_data as $key => $meta_data ) {
-                    $activity_meta_data[$key]['data'][] = intval( $day[$key] );
+                // Verify the nonce
+                if ( !wp_verify_nonce($nonce, 'fooconvert-widget-stats' ) ) {
+                    wp_die( esc_html__( 'Invalid nonce!!', 'fooconvert' ) );
                 }
+
+                $widget_id = isset( $_POST['widget_id'] ) ? intval( sanitize_text_field( $_POST['widget_id'] ) ) : 0;
+
+                $saved_days = intval( get_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT ) );
+                $days = isset( $_POST['days'] ) ? intval( sanitize_text_field( $_POST['days'] ) ) : $saved_days;
+                if ( $days !== $saved_days ) {
+                    // We have a chosen number of days, so let's save it for next time.
+                    update_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, $days );
+                }
+                if ( $days === 0 ) {
+                    $days = FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT;
+                }
+                if ( $days > fooconvert_retention() ) {
+                    $days = fooconvert_retention();
+                }
+
+                if ( $widget_id === 0 ) {
+                    wp_die( esc_html__('Invalid widget ID!!', 'fooconvert') );
+                }
+
+                $event = new Event();
+
+                // Get metrics first.
+                $data = [
+                    'metrics' => $event->get_widget_metrics( $widget_id ),
+                ];
+
+                $recent_activity_chart_data = [
+                    'labels' => []
+                ];
+
+                $activity_meta_data = apply_filters( 'fooconvert_widget_stats_activity_meta_data', [
+                    'events' => [
+                        'label' => __( 'Events', 'fooconvert' ),
+                        'data' => [],
+                        'borderColor' => 'rgb(112, 112, 112)',
+                        'cubicInterpolationMode' => 'monotone',
+                        'tension' => 0.4,
+                        'fill' => false
+                    ],
+                    'views' => [
+                        'label' => __( 'Views', 'fooconvert' ),
+                        'data' => [],
+                        'borderColor' => 'rgb(75, 192, 192)',
+                        'cubicInterpolationMode' => 'monotone',
+                        'tension' => 0.4,
+                        'fill' => false
+                    ],
+                    'engagements' => [
+                        'label' => __( 'Engagements', 'fooconvert' ),
+                        'data' => [],
+                        'borderColor' => 'rgb(255, 99, 132)',
+                        'cubicInterpolationMode' => 'monotone',
+                        'tension' => 0.4,
+                        'fill' => false
+                    ],
+                    'unique_visitors' => [
+                        'label' => __( 'Unique Visitors', 'fooconvert' ),
+                        'data' => [],
+                        'borderColor' => 'rgb(54, 162, 235)',
+                        'cubicInterpolationMode' => 'monotone',
+                        'tension' => 0.4,
+                        'fill' => true
+                    ],
+                ] );
+
+                // Get daily activity next.
+                $daily_activity = $event->get_widget_daily_activity( $widget_id, $days );
+
+                foreach ( $daily_activity as $day ) {
+                    $recent_activity_chart_data['labels'][] = $day['event_date'];
+                    foreach ( $activity_meta_data as $key => $meta_data ) {
+                        $activity_meta_data[$key]['data'][] = intval( $day[$key] );
+                    }
+                }
+
+                foreach ( $activity_meta_data as $key => $meta_data ) {
+                    $recent_activity_chart_data['datasets'][] = $meta_data;
+                }
+
+                $data['recent_activity'] = $recent_activity_chart_data;
+
+                // Additional dummy data
+    //            $data['conversion_rate'] = 4.6;
+    //            $data['geo_breakdown'] = 'US: 40%, UK: 25%, CA: 15%, Other: 20%';
+    //            $data['device_browser'] = 'Mobile: 60%, Desktop: 40%';
+    //            $data['conversion_breakdown'] = [40, 60]; // Converted vs Not Converted
+    //            $data['engagement_trend'] = array(
+    //                'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+    //                'data' => [300, 450, 320, 500, 700, 600, 750]
+    //            );
+
+                wp_send_json($data);
+            } else {
+                wp_die( esc_html__( 'Nonce is not set.', 'fooconvert' ) );
             }
-
-            foreach ( $activity_meta_data as $key => $meta_data ) {
-                $recent_activity_chart_data['datasets'][] = $meta_data;
-            }
-
-            $data['recent_activity'] = $recent_activity_chart_data;
-
-            // Additional dummy data
-//            $data['conversion_rate'] = 4.6;
-//            $data['geo_breakdown'] = 'US: 40%, UK: 25%, CA: 15%, Other: 20%';
-//            $data['device_browser'] = 'Mobile: 60%, Desktop: 40%';
-//            $data['conversion_breakdown'] = [40, 60]; // Converted vs Not Converted
-//            $data['engagement_trend'] = array(
-//                'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-//                'data' => [300, 450, 320, 500, 700, 600, 750]
-//            );
-
-            wp_send_json($data);
         }
 
         /**
