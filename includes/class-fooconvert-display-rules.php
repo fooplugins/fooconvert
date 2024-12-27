@@ -271,7 +271,7 @@ class FooConvert_Display_Rules extends Base_Component {
                     'data' => array(
                         'kind' => 'postType',
                         'name' => $post_type->name,
-                        // Translators: %s refers to the post type that is being searched for.
+                        // Translators: %s refers to the taxonomy that is being searched for. e.g. "Category".
                         'placeholder' => sprintf( __( 'Type to choose %s...', 'fooconvert' ), strtolower( $post_type->label ) )
                     )
                 );
