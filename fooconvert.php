@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: FooConvert
+Plugin Name: FooConvert - Boost Conversions & Lead Generation
 Description: Turn clicks into conversions, visitors into customers – FooConvert is the ultimate catalyst for online success!
 Version:     0.0.26
 Author:      FooPlugins
