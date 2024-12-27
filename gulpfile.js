@@ -3,15 +3,24 @@ const gulpZip = import( "gulp-zip" );
 const gulpFreemius = require( "gulp-freemius-deploy" );
 const rm = require( "node:fs/promises" ).rm;
 const pkg = require( "./package.json" );
-const freemiusConfig = require( "./fs-config.json" );
+let freemiusConfig;
 
-// register the freemius-deploy task
-gulpFreemius( gulp, {
-    ...freemiusConfig,
-    zip_name: `${ pkg.name }.v${ pkg.version }.zip`,
-    zip_path: "./dist/",
-    add_contributor: true
-} );
+try {
+    freemiusConfig = require("./fs-config.json");
+} catch (err) {
+    // Only warn about missing fs-config.json if deploying
+    console.warn("Warning: fs-config.json not found. Freemius deploy task will not work.");
+}
+
+// Register the freemius-deploy task if fs-config.json exists
+if (freemiusConfig) {
+    gulpFreemius(gulp, {
+        ...freemiusConfig,
+        zip_name: `${pkg.name}.v${pkg.version}.zip`,
+        zip_path: "./dist/",
+        add_contributor: true
+    });
+}
 
 // clean up the files created by the tasks
 function clean() {
