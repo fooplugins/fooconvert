@@ -42,22 +42,21 @@ jobs:
         run: |
           VERSION=$(jq -r '.version' package.json)
           echo "VERSION=${VERSION}" >> $GITHUB_ENV
+          echo "::notice::Version : ${{ env.VERSION }}"
 
       # Create ZIP package
       - name: Run Build and Create ZIP
-        run: npm run package:create-zip
-        env:
-          SASS_SILENCE_DEPRECATION_WARNINGS: 'true'
+        run: npm run package:create-zip > /dev/null
 
       # Unzip plugin package
       - name: Unzip Plugin
         run: |
-          mkdir -p extracted
-          unzip -o dist/fooconvert.v${{ env.VERSION }}.zip -d extracted/
+          mkdir -p fooconvert
+          unzip -o dist/fooconvert.v${{ env.VERSION }}.zip -d fooconvert/ > /dev/null
 
       # Run plugin check
       - name: Run plugin check
         uses: wordpress/plugin-check-action@v1
         with:
-          build-dir: './extracted'
+          build-dir: './fooconvert'
           exclude-directories: 'vendor,src'
