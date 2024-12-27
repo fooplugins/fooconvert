@@ -19,7 +19,8 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.1
-          tools: composer
+          tools: composer, wp-cli
+          coverage: none
 
       # Set up Node.js
       - name: Set up Node.js
@@ -33,7 +34,7 @@ jobs:
 
       # Install npm dependencies
       - name: Install NPM dependencies
-        run: npm install
+        run: npm install --silent --no-audit
 
       # Extract version from package.json
       - name: Extract Version
