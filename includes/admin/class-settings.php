@@ -300,7 +300,7 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
 			</style>
 			<textarea class="fooconvert-debug"><?php foreach ( $debug_info as $key => $value ) {
 					echo esc_html( $key ) . ' : ';
-					print_r( $value );
+					print_r( $value ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 					echo "\n";
 				} ?></textarea>
 			<?php
