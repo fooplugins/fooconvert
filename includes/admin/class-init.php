@@ -158,7 +158,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                 echo esc_attr( $drop );
                 ?>">
                     <div class="fooconvert-title">
-                        <img class="fooconvert-logo" src="<?php
+                        <img class="fooconvert-logo" src="<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
                         echo esc_url( FOOCONVERT_ASSETS_URL . 'admin/img/horizontal-logo-50.png' );
                         ?>" alt="FooConvert Logo">
                         <p>Version <?php

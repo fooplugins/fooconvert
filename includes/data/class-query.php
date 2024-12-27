@@ -142,9 +142,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
 
             // Prepare SQL query to return high-level statistics
             return $wpdb->get_row(
-                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+
                 $wpdb->prepare(
-                    $query,
+                    $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                     $widget_id
                 ),
                 ARRAY_A
@@ -183,9 +183,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
 
             // Prepare recent activity for the last X days
             return $wpdb->get_results(
-                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+
                 $wpdb->prepare(
-                    $query,
+                    $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                     $widget_id,
                     $days
                 ),
