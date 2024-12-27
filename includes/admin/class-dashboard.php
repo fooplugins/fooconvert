@@ -27,6 +27,40 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
         }
 
         /**
+         * Checks nonce and user capabilities before performing an action.
+         *
+         * Verifies that the nonce is set and valid, and that the current user
+         * has the capability of 'manage_options' if check_admin is true.
+         *
+         * @param bool $check_admin Whether to check if the user is an administrator.
+         * @return bool True if the checks pass, otherwise an error message is displayed.
+         *
+         * @since 1.0.0
+         */
+        function do_checks( $check_admin = true ) {
+            if ( isset( $_POST['nonce'] ) ) {
+                // Sanitize the nonce
+                $nonce = sanitize_text_field( wp_unslash( $_POST['nonce'] ) );
+
+                // Verify the nonce
+                if ( !wp_verify_nonce($nonce, 'fooconvert-dashboard' ) ) {
+                    wp_die( esc_html__( 'Invalid nonce!!', 'fooconvert' ) );
+                }
+
+                // Check if the current user is an administrator
+                if ( $check_admin && ! current_user_can( 'manage_options' ) ) {
+                    wp_die( esc_html__( 'You do not have permission to access this page.', 'fooconvert' ) );
+                }
+
+                // If we get here, then all our checks have passed.
+                return true;
+
+            } else {
+                wp_die( esc_html__( 'Nonce is not set.', 'fooconvert' ) );
+            }
+        }
+
+        /**
          * AJAX callback to create demo widgets.
          *
          * This function fetches a nonce from the request and verifies it.
@@ -37,10 +71,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
          * @since 1.0.0
          */
         function create_demo_widgets() {
-            //get nonce
-            $nonce = sanitize_text_field( $_POST['nonce'] );
-            if ( !wp_verify_nonce($nonce, 'fooconvert-dashboard' ) ) {
-                wp_die( esc_html__( 'Invalid nonce!!', 'fooconvert' ) );
+            if ( !$this->do_checks() ) {
+                return;
             }
 
             ob_start();
@@ -74,10 +106,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
          * @since 1.0.0
          */
         function delete_demo_widgets() {
-            //get nonce
-            $nonce = sanitize_text_field( $_POST['nonce'] );
-            if ( !wp_verify_nonce($nonce, 'fooconvert-dashboard' ) ) {
-                wp_die( esc_html__( 'Invalid nonce!!', 'fooconvert' ) );
+            if ( !$this->do_checks() ) {
+                return;
             }
 
             $demo = new DemoContent();
@@ -98,13 +128,13 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
          * @since 1.0.0
          */
         function fetch_top_performers() {
-            //get nonce
-            $nonce = sanitize_text_field( $_POST['nonce'] );
-            if ( !wp_verify_nonce($nonce, 'fooconvert-dashboard' ) ) {
-                wp_die( esc_html__( 'Invalid nonce!!', 'fooconvert' ) );
+            if ( !$this->do_checks( false ) ) {
+                return;
             }
-
-            $sort = sanitize_text_field( $_POST['sort'] );
+            $sort = 'engagement';
+            if ( isset( $_POST['nonce'] ) ) {
+                $sort = sanitize_text_field( wp_unslash( $_POST['sort'] ) );
+            }
             if ( empty( $sort ) ) {
                 $sort = 'engagement';
             }
@@ -118,11 +148,18 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
             wp_send_json( ['html' => $html ] );
         }
 
+        /**
+         * AJAX callback to update the stats.
+         *
+         * This function fetches a nonce from the request and verifies it.
+         * If the nonce is invalid, it dies with an error message.
+         * Otherwise, it updates the stats.
+         *
+         * @since 1.1.0
+         */
         function update_stats() {
-            //get nonce
-            $nonce = sanitize_text_field( $_POST['nonce'] );
-            if ( !wp_verify_nonce($nonce, 'fooconvert-dashboard' ) ) {
-                wp_die( esc_html__( 'Invalid nonce!!', 'fooconvert' ) );
+            if ( !$this->do_checks() ) {
+                return;
             }
 
             $stats = new \FooPlugins\FooConvert\Stats();
@@ -142,7 +179,6 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
          * @since 1.0.0
          */
         public function register_menu() {
-
             add_submenu_page(
                 FOOCONVERT_MENU_SLUG,
                 __( 'FooConvert Dashboard', 'fooconvert' ),
