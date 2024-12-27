@@ -46,6 +46,8 @@ jobs:
       # Create ZIP package
       - name: Run Build and Create ZIP
         run: npm run package:create-zip
+        env:
+          SASS_SILENCE_DEPRECATION_WARNINGS: 'true'
 
       # Unzip plugin package
       - name: Unzip Plugin
