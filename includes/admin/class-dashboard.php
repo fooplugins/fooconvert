@@ -131,10 +131,13 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
             if ( !$this->do_checks( false ) ) {
                 return;
             }
+            // phpcs:disable WordPress.Security.NonceVerification.Missing
+            // Nonce checks are done in the do_checks() method
             $sort = 'engagement';
             if ( isset( $_POST['sort'] ) ) {
                 $sort = sanitize_text_field( wp_unslash( $_POST['sort'] ) );
             }
+            // phpcs:enable
             if ( empty( $sort ) ) {
                 $sort = 'engagement';
             }
