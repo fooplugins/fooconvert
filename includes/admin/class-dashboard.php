@@ -132,7 +132,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
                 return;
             }
             $sort = 'engagement';
-            if ( isset( $_POST['nonce'] ) ) {
+            if ( isset( $_POST['sort'] ) ) {
                 $sort = sanitize_text_field( wp_unslash( $_POST['sort'] ) );
             }
             if ( empty( $sort ) ) {
