@@ -23,6 +23,7 @@ const files = [
     "!{dist,dist/**,dist/**/*}",
     "!{node_modules,node_modules/**,node_modules/**/*}",
     "!{src,src/**,src/**/*}",
+    "!{.github,.github/**,.github/**/*}",
     "!.gitignore",
     "!fs-config.json",
     "!gulpfile.js",
