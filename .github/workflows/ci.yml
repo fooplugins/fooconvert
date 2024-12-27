@@ -6,7 +6,7 @@ on: # rebuild any PRs and main branch changes
       - develop
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
 
@@ -35,12 +35,26 @@ jobs:
       - name: Install NPM dependencies
         run: npm install
 
-      # Run npm build
-      - name: Run build
-        run: npm run build
+      # Extract version from package.json
+      - name: Extract Version
+        id: version
+        run: |
+          VERSION=$(jq -r '.version' package.json)
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+
+      # Create ZIP package
+      - name: Run Build and Create ZIP
+        run: npm run package:create-zip
+
+      # Unzip plugin package
+      - name: Unzip Plugin
+        run: |
+          mkdir -p extracted
+          unzip -o dist/fooconvert.v${{ env.VERSION }}.zip -d extracted/
 
       # Run plugin check
       - name: Run plugin check
         uses: wordpress/plugin-check-action@v1
         with:
+          build-dir: './extracted'
           exclude-directories: 'vendor,src'
