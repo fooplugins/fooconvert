@@ -163,7 +163,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          *     'clicks' => int The number of clicks
          *     'unique_visitors' => int The number of unique visitors
          */
-        public static function get_widget_daily_activity( $widget_id, $days = 7 ) {
+        public static function get_widget_daily_activity( $widget_id, $days = FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
@@ -354,6 +354,51 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
 
             // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
             return $wpdb->get_results( $query, ARRAY_A );
+        }
+
+        /**
+         * Retrieves a list of all events of a given type for a given widget.
+         *
+         * @param int $widget_id The ID of the widget to get events for.
+         * @param string $event_type The type of events to get.
+         * @param int $days The number of days to fetch events for. Defaults to FOOCONVERT_RETENTION_DEFAULT which is 14.
+         *
+         * @return array An array of events for the given widget and event type, with the following structure:
+         *     'id' => int The ID of the event.
+         *     'widget_id' => int The ID of the widget.
+         *     'event_type' => string The type of event.
+         *     'event_subtype' => string The subtype of event (if applicable).
+         *     'conversion' => bool Whether the event is a conversion (true) or not (false).
+         *     'sentiment' => bool Whether the event sentiment is positive (true) or negative (false).
+         *     'page_url' => string The URL of the page where the event occurred.
+         *     'device_type' => string The type of device (e.g. 'desktop', 'mobile', 'tablet').
+         *     'user_id' => int The ID of the user who triggered the event (if applicable).
+         *     'anonymous_user_guid' => string The GUID of the anonymous user who triggered the event (if applicable).
+         *     'extra_data' => array An array of extra data associated with the event.
+         *     'timestamp' => string The date of the event (format: 'Y-m-d')
+         */
+        public static function get_widget_events_of_type( $widget_id, $event_type, $days = FOOCONVERT_RETENTION_DEFAULT ) {
+            global $wpdb;
+
+            $table_name = self::get_events_table_name();
+            $widget_id = intval( $widget_id ); // Ensure $widget_id is an integer
+            $days = intval( $days );  // Ensure $days is an integer
+
+            $query = "SELECT *, DATE(timestamp) as event_date
+                    FROM {$table_name}
+                    WHERE widget_id = %d AND event_type = %s AND timestamp >= DATE_SUB(NOW(), INTERVAL %d DAY)
+                    ORDER BY timestamp ASC";
+
+            // Prepare event data for the last X days
+            return $wpdb->get_results(
+                $wpdb->prepare(
+                    $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                    $widget_id,
+                    $event_type,
+                    $days
+                ),
+                ARRAY_A
+            );
         }
 
         // phpcs:enable

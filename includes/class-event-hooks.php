@@ -2,7 +2,9 @@
 
 namespace FooPlugins\FooConvert;
 
-if ( ! class_exists( __NAMESPACE__ . '\Event_Hooks' ) ) {
+use WP_Post;
+
+if ( !class_exists( __NAMESPACE__ . '\Event_Hooks' ) ) {
 
     /**
      * Class for all event related hooks.
@@ -11,7 +13,8 @@ if ( ! class_exists( __NAMESPACE__ . '\Event_Hooks' ) ) {
 
         public function __construct() {
             add_filter( 'fooconvert_event_data', array( $this, 'adjust_event_data' ), 10, 2 );
-            add_action('before_delete_post', array( $this, 'delete_widget_events' ) );
+            add_action( 'before_delete_post', array( $this, 'delete_widget_events' ) );
+            add_action( 'post_updated', array( $this, 'store_post_update_event' ), 10, 3 );
         }
 
         /**
@@ -22,10 +25,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Event_Hooks' ) ) {
          * @since 1.0.0
          */
         public function delete_widget_events( $post_id ) {
-
             // Check post type if necessary
             $post_type = get_post_type( $post_id );
-            if ( !fooconvert_is_valid_post_type($post_type ) ) {
+            if ( !fooconvert_is_valid_post_type( $post_type ) ) {
                 return;
             }
 
@@ -114,7 +116,119 @@ if ( ! class_exists( __NAMESPACE__ . '\Event_Hooks' ) ) {
             return $data;
         }
 
+        /**
+         * Store an event when a post is updated
+         *
+         * @param int $post_id The post ID
+         * @param WP_Post $post_after Post object following the update
+         * @param WP_Post $post_before Post object before the update
+         */
+        public function store_post_update_event( $post_id, $post_after, $post_before ) {
+            // Verify post type
+            if ( !fooconvert_is_valid_post_type( $post_after->post_type ) ) {
+                return;
+            }
 
+            $extra_data = [];
+            $sentiment = null; // Default to null sentiment (neutral).
+
+            // Check for status changes.
+            if ( $post_before->post_status !== $post_after->post_status ) {
+                $change = [
+                    'has_value' => true,
+                    'value' => $post_after->post_status
+                ];
+                if ( $post_after->post_status === 'publish' ) {
+                    $change['reason'] = __( 'Published', 'fooconvert' );
+                    $sentiment = 1; // Post was published = positive sentiment.
+                } elseif ( $post_before->post_status === 'publish' ) {
+                    $change['reason'] = __( 'Un-published', 'fooconvert' );
+                    $sentiment = 0; // Post was un-published = negative sentiment.
+                } else {
+                    $change['reason'] = __( 'Status Updated', 'fooconvert' );
+                }
+                $extra_data['changes'][] = $change;
+            }
+
+            $block_before = $this->extract_block_from_content( $post_before->post_content );
+            $block_after = $this->extract_block_from_content( $post_after->post_content );
+
+            if ( !is_null( $block_before ) && !is_null( $block_after ) ) {
+
+                $content_before = maybe_serialize( $block_before['innerBlocks'] );
+                $content_after = maybe_serialize( $block_after['innerBlocks'] );
+
+                // Check for content changes.
+                if ( $content_before !== $content_after ) {
+                    $change = [
+                        'reason' => __( 'Content Updated', 'fooconvert' ),
+                        'has_value' => false
+                    ];
+                    $extra_data['changes'][] = $change;
+                }
+
+                $attributes_before = !empty( $block_before['attrs'] ) ? $block_before['attrs'] : [];
+                $attributes_after = !empty( $block_after['attrs'] ) ? $block_after['attrs'] : [];
+
+                $settings_before = !empty( $attributes_before['settings'] ) ? $attributes_before['settings'] : [];
+                $settings_after = !empty( $attributes_after['settings'] ) ? $attributes_after['settings'] : [];
+
+                $trigger_before = !empty( $settings_before['trigger'] ) ? $settings_before['trigger'] : [];
+                $trigger_after = !empty( $settings_after['trigger'] ) ? $settings_after['trigger'] : [];
+
+                if ( !empty( $trigger_before ) && !empty( $trigger_after )
+                    && $trigger_before['type'] !== $trigger_after['type'] ) {
+                    $change = [
+                        'reason' => __( 'Open Trigger Changed', 'fooconvert' ),
+                        'has_value' => true,
+                        'value' => $trigger_after['type']
+                    ];
+                    $extra_data['changes'][] = $change;
+                }
+
+                $content_before = !empty( $attributes_before['content'] ) ? $attributes_before['content'] : [];
+                $content_after = !empty( $attributes_after['content'] ) ? $attributes_after['content'] : [];
+
+                $styles_before = maybe_serialize( !empty( $content_before['styles'] ) ? $content_before['styles'] : [] );
+                $styles_after = maybe_serialize( !empty( $content_after['styles'] ) ? $content_after['styles'] : [] );
+
+                if ( $styles_before !== $styles_after ) {
+                    $change = [
+                        'reason' => __( 'Styling Updated', 'fooconvert' ),
+                        'has_value' => false
+                    ];
+                    $extra_data['changes'][] = $change;
+                }
+            }
+
+            $extra_data['sentiment'] = $sentiment;
+
+            $event = new Event();
+            $event->create(
+                [
+                    'widget_id' => $post_id,
+                    'event_type' => FOOCONVERT_EVENT_TYPE_UPDATE,
+                    'extra_data' => $extra_data,
+                ],
+                [
+                    'post_type' => $post_after->post_type
+                ]
+            );
+        }
+
+        private function extract_block_from_content( $post_content ) {
+            // Parse the blocks in the post content
+            $blocks = parse_blocks( $post_content );
+
+            foreach ( $blocks as $block ) {
+                // Check if the block type matches
+                if ( isset( $block['blockName'] ) && strpos( $block['blockName'], 'fc/' ) === 0 && isset( $block['attrs'] ) ) {
+                    return $block;
+                }
+            }
+
+            // Return null if nothing is found
+            return null;
+        }
     }
-
 }

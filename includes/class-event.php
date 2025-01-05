@@ -212,7 +212,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
          *     'clicks' => int The number of clicks
          *     'unique_visitors' => int The number of unique visitors
          */
-        public function get_widget_daily_activity( $widget_id, $days = 7 ) {
+        public function get_widget_daily_activity( $widget_id, $days = FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT ) {
             // Sanitize input
             $widget_id = intval( $widget_id );
             $days = max( 1, (int)$days ); // Ensure days is at least 1
@@ -277,6 +277,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
          * @return boolean True on success, false on failure.
          */
         public function delete_old_events() {
+            //TODO : how do we ensure that we dont use a retention period if the PRO analytics add-on is not active?
             $retention = fooconvert_retention();
 
             return Data\Query::delete_old_events( $retention );
@@ -290,6 +291,23 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
         public function does_table_exist() {
             $table_name = Data\Schema::get_table_name( FOOCONVERT_DB_TABLE_EVENTS );
             return Data\Schema::does_table_exist( $table_name );
+        }
+
+        /**
+         * Gets all events of a given type for a given widget, for the last X days.
+         *
+         * @param int $widget_id The ID of the widget.
+         * @param string $event_type The type of event to retrieve (e.g. 'view', 'click', 'conversion', 'dismiss').
+         * @param int $days The number of days to fetch (default is 7).
+         *
+         * @return array An array of events for the widget
+         */
+        public function get_widget_events_of_type( $widget_id, $event_type, $days = FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT ) {
+            // Sanitize input
+            $widget_id = intval( $widget_id );
+            $days = max( 1, (int)$days ); // Ensure days is at least 1
+
+            return Data\Query::get_widget_events_of_type( $widget_id, $event_type, $days );
         }
     }
 }
