@@ -712,12 +712,13 @@ class FooConvert_Display_Rules extends Base_Component {
      * @since 1.0.0
      */
     public function enqueue_required() {
+        $this->enqueued = apply_filters( 'fooconvert_enqueue_required', array() );
+
         //todo: add to these exclusions to limit the overhead on the server
-        if ( is_admin() || wp_is_json_request() ) {
+        if ( empty( $this->enqueued ) && ( is_admin() || wp_is_json_request() ) ) {
             return;
         }
 
-        $this->enqueued = array();
         // get the cached display rules
         $display_rules = get_option( 'fooconvert_display_rules', array() );
         if ( ! empty( $display_rules ) ) {
@@ -740,6 +741,19 @@ class FooConvert_Display_Rules extends Base_Component {
                 }
             }
         }
+    }
+
+    public function get_queueable( int $post_id ) : array {
+        $content = get_post_field( 'post_content', $post_id );
+        if ( ! empty( $content ) ) {
+            $compatibility_mode = FooConvert::plugin()->compatibility->is_enabled( $post_id );
+            return array(
+                'post_id' => $post_id,
+                'content' => do_blocks( $content ),
+                'compatibility_mode' => $compatibility_mode,
+            );
+        }
+        return array();
     }
 
     /**

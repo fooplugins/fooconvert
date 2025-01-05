@@ -22,6 +22,7 @@ class FlyoutElement extends TriggeredElement {
         this.#contentElement = this.shadowRoot.querySelector( "[part~=content]" );
         this.onOpenButtonClicked = this.onOpenButtonClicked.bind( this );
         this.onCloseButtonClicked = this.onCloseButtonClicked.bind( this );
+        this.onCloseAnchorTrigger = this.onCloseAnchorTrigger.bind( this );
     }
 
     /**
