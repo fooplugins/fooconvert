@@ -235,6 +235,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             $table_name = esc_sql( self::get_events_table_name() );
             $days = intval( $days );  // Ensure $days is an integer
 
+            if ( $days <= 0 ) {
+                return 0;
+            }
+
             return $wpdb->query(
                 $wpdb->prepare(
                     "DELETE FROM {$table_name} WHERE timestamp < DATE_SUB(NOW(), INTERVAL %d DAY)", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
