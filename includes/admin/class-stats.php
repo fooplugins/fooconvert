@@ -110,18 +110,33 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 // Get daily activity next.
                 $daily_activity = $event->get_widget_daily_activity( $widget_id, $days );
 
+                $min = 999;
+                $max = 0;
+
                 foreach ( $daily_activity as $day ) {
                     $recent_activity_chart_data['labels'][] = $day['event_date'];
                     foreach ( $activity_meta_data as $key => $meta_data ) {
-                        $activity_meta_data[$key]['data'][] = intval( $day[$key] );
+                        $value = intval( $day[$key] );
+                        $activity_meta_data[$key]['data'][] = $value;
+                        if ( $value < $min ) {
+                            $min = $value;
+                        }
+                        if ( $value > $max ) {
+                            $max = $value;
+                        }
                     }
                 }
+
+                $recent_activity_chart_data['min'] = $min;
+                $recent_activity_chart_data['max'] = $max;
 
                 foreach ( $activity_meta_data as $key => $meta_data ) {
                     $recent_activity_chart_data['datasets'][] = $meta_data;
                 }
 
                 $data['recent_activity'] = $recent_activity_chart_data;
+
+                $data = apply_filters( 'fooconvert_widget_stats_data', $data, $widget_id, $days );
 
                 // Additional dummy data
     //            $data['conversion_rate'] = 4.6;
