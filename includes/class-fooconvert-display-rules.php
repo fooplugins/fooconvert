@@ -732,7 +732,7 @@ class FooConvert_Display_Rules extends Base_Component {
                         if ( Utils::is_string( $matched_content, true ) ) {
                             $this->enqueued[] = array(
                                 'post_id' => $matched_id,
-                                'content' => do_shortcode( do_blocks( $matched_content ) ),
+                                'content' => do_blocks( $matched_content ),
                                 'compatibility_mode' => $matched_compatibility_mode,
                             );
                         }
