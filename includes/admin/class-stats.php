@@ -287,6 +287,15 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 true
             );
 
+            // Enqueue the local Chart.js annotations script
+            wp_enqueue_script(
+                'chartjs-annotations',
+                FOOCONVERT_ASSETS_URL . 'admin/vendor/chartjs/chart.annotations.min.js',
+                array( 'chartjs' ),
+                '4.4.6',  // specify the version of Chart.js
+                true
+            );
+
             wp_enqueue_style(
                 'fooconvert-balloon-css',
                 FOOCONVERT_ASSETS_URL . 'admin/vendor/balloon/balloon.css',
@@ -313,6 +322,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 'ajaxUrl' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('fooconvert-widget-stats')
             ));
+
+            do_action( 'fooconvert_widget_stats_enqueue_assets' );
         }
     }
 }

@@ -27,7 +27,7 @@ jQuery(document).ready(function ($) {
                 $('.fooconvert-recent-activity-container').removeClass('loading');
 
                 // Render chart for recent activity
-                renderRecentActivityChart(response.recent_activity);
+                renderRecentActivityChart(response);
 
                 // Render PRO metrics if available
                 // $('#conversion-rate').text(response.conversion_rate + '%');
@@ -47,13 +47,46 @@ jQuery(document).ready(function ($) {
     }
 
     // Render Line Chart for Recent Activity
-    function renderRecentActivityChart(recent_activity) {
+    function renderRecentActivityChart(response) {
+        if ( !response.recent_activity ) {
+            return;
+        }
+
+        var recent_activity = response.recent_activity;
+
         var ctx = document.getElementById('recentActivityChart').getContext('2d');
 
         // Check if the chart already exists
         if (window.recentActivityChartInstance) {
             window.recentActivityChartInstance.destroy();
         }
+
+        // Default options
+        const defaultOptions = {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        };
+
+        // Allow options to be overridden by external files
+        const overrideOptions = response.options_override || {};
+
+        // Merge default options with overridden options
+        const finalOptions = {
+            ...defaultOptions,
+            ...overrideOptions,
+            plugins: {
+                ...defaultOptions.plugins,
+                ...overrideOptions.plugins,
+            },
+            scales: {
+                ...defaultOptions.scales,
+                ...overrideOptions.scales,
+            }
+        };
 
         // Create a new chart instance
         window.recentActivityChartInstance = new Chart(ctx, {
@@ -62,14 +95,7 @@ jQuery(document).ready(function ($) {
                 labels: recent_activity.labels,
                 datasets: recent_activity.datasets
             },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
+            options: finalOptions
         });
     }
 
