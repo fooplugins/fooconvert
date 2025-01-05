@@ -74,7 +74,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
 
             // 4. Validate device_type (should be one of the allowed device types)
             $allowed_device_types = ['desktop', 'mobile', 'tablet', 'unknown'];
-            if ( !isset( $data['device_type'] ) || !in_array( $data['device_type'], $allowed_device_types, true ) ) {
+            if ( isset( $data['device_type'] ) && !in_array( $data['device_type'], $allowed_device_types, true ) ) {
                 return new WP_Error('invalid_event_data_device_type', 'The device type is not valid.');
             }
 
