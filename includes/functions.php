@@ -193,7 +193,10 @@ function fooconvert_is_valid_post_type( $post_type ) {
  * @return int The retention period in days.
  */
 function fooconvert_retention() {
-    return apply_filters( 'fooconvert_retention', intval( FOOCONVERT_RETENTION_DEFAULT ) );
+    if ( fooconvert_is_analytics_addon_active() ) {
+        return apply_filters( 'fooconvert_retention', intval( FOOCONVERT_RETENTION_DEFAULT ) );
+    }
+    return FOOCONVERT_RETENTION_DEFAULT;
 }
 
 /**
