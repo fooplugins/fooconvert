@@ -56,7 +56,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Cron' ) ) {
          */
         public function delete_old_events() {
             $event = new Event();
-            $event->delete_old_events();
+            return $event->delete_old_events();
         }
     }
 }
