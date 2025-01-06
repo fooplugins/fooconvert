@@ -59,6 +59,7 @@ jQuery(document).ready(function ($) {
         // Check if the chart already exists
         if (window.recentActivityChartInstance) {
             window.recentActivityChartInstance.destroy();
+            window.recentActivityChartUpdated = false;
         }
 
         // Default options
@@ -95,7 +96,35 @@ jQuery(document).ready(function ($) {
                 labels: recent_activity.labels,
                 datasets: recent_activity.datasets
             },
-            options: finalOptions
+            options: finalOptions,
+            plugins: [{
+                afterLayout: (chart) => {
+                    if ( window.recentActivityChartUpdated ) {
+                        return;
+                    }
+
+                    window.recentActivityChartUpdated = true;
+
+                    const yScaleMax = chart.scales['y'].max;
+
+                    // Check if the annotation plugin is defined
+                    if (chart.options.plugins.annotation && chart.options.plugins.annotation.annotations) {
+                        const annotations = chart.options.plugins.annotation.annotations;
+
+                        // Loop through each annotation and update properties using yScaleMax
+                        Object.keys(annotations).forEach((key) => {
+                            const annotation = annotations[key];
+                            if (annotation.type === 'line') {
+                                // Update Y-axis related properties dynamically
+                                annotation.yMax = yScaleMax;
+                            }
+                        });
+
+                        // Update the chart to apply changes
+                        chart.update();
+                    }
+                }
+            }]
         });
     }
 
