@@ -105,8 +105,6 @@ jQuery(document).ready(function ($) {
 
                     window.recentActivityChartUpdated = true;
 
-                    const yScaleMax = chart.scales['y'].max;
-
                     // Check if the annotation plugin is defined
                     if (chart.options.plugins.annotation && chart.options.plugins.annotation.annotations) {
                         const annotations = chart.options.plugins.annotation.annotations;
@@ -116,12 +114,17 @@ jQuery(document).ready(function ($) {
                             const annotation = annotations[key];
                             if (annotation.type === 'line') {
                                 // Update Y-axis related properties dynamically
-                                annotation.yMax = yScaleMax;
+                                annotation.enter = ({ element }) => {
+                                    element.label.options.display = true; // Show the label
+                                    return true; // Force chart re-drawing
+                                };
+
+                                annotation.leave = ({ element }) => {
+                                    element.label.options.display = false; // Hide the label
+                                    return true; // Force chart re-drawing
+                                };
                             }
                         });
-
-                        // Update the chart to apply changes
-                        chart.update();
                     }
                 }
             }]
