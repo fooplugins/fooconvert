@@ -135,8 +135,7 @@ if ( !class_exists( __NAMESPACE__ . '\Event_Hooks' ) ) {
             // Check for status changes.
             if ( $post_before->post_status !== $post_after->post_status ) {
                 $change = [
-                    'has_value' => true,
-                    'value' => $post_after->post_status
+                    'has_value' => false
                 ];
                 if ( $post_after->post_status === 'publish' ) {
                     $change['reason'] = __( 'Published', 'fooconvert' );
@@ -146,7 +145,10 @@ if ( !class_exists( __NAMESPACE__ . '\Event_Hooks' ) ) {
                     $sentiment = 0; // Post was un-published = negative sentiment.
                 } else {
                     $change['reason'] = __( 'Status Updated', 'fooconvert' );
+                    $change['has_value'] = true;
+                    $change['value'] = $post_after->post_status;
                 }
+                
                 $extra_data['changes'][] = $change;
             }
 
