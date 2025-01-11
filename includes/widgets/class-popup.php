@@ -56,7 +56,7 @@ class Popup extends Base_Widget {
             ),
             array(
                 'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'widgets/popup/editor/blocks/container/blocks/content/block.json',
-                'args' => array( 'render_callback' => array( $this, 'render_content' ) )
+                'args' => array( 'render_callback' => array( $this, 'render_check_compatibility' ) )
             )
         ) );
     }
@@ -67,17 +67,17 @@ class Popup extends Base_Widget {
     function register_post_type() {
         return register_post_type( $this->get_post_type(), array(
             'labels' => array(
-                'name' => __( 'Popups', 'foobar' ),
-                'singular_name' => __( 'Popup', 'foobar' ),
-                'add_new' => __( 'Add Popup', 'foobar' ),
-                'add_new_item' => __( 'Add New Popup', 'foobar' ),
-                'edit_item' => __( 'Edit Popup', 'foobar' ),
-                'new_item' => __( 'New Popup', 'foobar' ),
-                'view_item' => __( 'View Popups', 'foobar' ),
-                'search_items' => __( 'Search Popups', 'foobar' ),
-                'not_found' => __( 'No Popups found', 'foobar' ),
-                'not_found_in_trash' => __( 'No Popups found in Trash', 'foobar' ),
-                'all_items' => __( 'Popups', 'foobar' )
+                'name' => __( 'Popups', 'fooconvert' ),
+                'singular_name' => __( 'Popup', 'fooconvert' ),
+                'add_new' => __( 'Add Popup', 'fooconvert' ),
+                'add_new_item' => __( 'Add New Popup', 'fooconvert' ),
+                'edit_item' => __( 'Edit Popup', 'fooconvert' ),
+                'new_item' => __( 'New Popup', 'fooconvert' ),
+                'view_item' => __( 'View Popups', 'fooconvert' ),
+                'search_items' => __( 'Search Popups', 'fooconvert' ),
+                'not_found' => __( 'No Popups found', 'fooconvert' ),
+                'not_found_in_trash' => __( 'No Popups found in Trash', 'fooconvert' ),
+                'all_items' => __( 'Popups', 'fooconvert' )
             ),
             'has_archive' => false,
             'public' => false,
@@ -96,13 +96,13 @@ class Popup extends Base_Widget {
      * @inheritDoc
      */
     function get_editor_variations() : array {
-        return array(
+        return apply_filters('fooconvert_editor_variations-' . $this->get_post_type(), array(
             array(
                 'name' => 'empty',
                 'title' => __( 'Empty', 'fooconvert' ),
-                'description' => __( 'Empty', 'fooconvert' ),
+                'description' => __( 'A blank slate that you can use to build your own popup from scratch.', 'fooconvert' ),
                 'attributes' => array(
-                    'variation' => 'empty'
+                    'template' => 'empty'
                 ),
                 'innerBlocks' => array(
                     array(
@@ -115,23 +115,147 @@ class Popup extends Base_Widget {
                     )
                 ),
                 'scope' => array( 'block' )
-            )
-        );
+            ),
+            array(
+                'name' => 'black_friday_popup',
+                'title' => __( 'Black Friday Popup', 'fooconvert' ),
+                'description' => __( 'A typical Black Friday popup to help drive sales.', 'fooconvert' ),
+                'icon' => '',
+                'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/black_friday_popup.png',
+                'attributes' => array(
+                    'settings' => array(
+                        'transitions' => true,
+                        'hideScrollbar' => true,
+                        'maxOnMobile' => true,
+                        'trigger' => array(
+                            'type' => 'exit-intent',
+                            'data' => 5
+                        ),
+                        'backdropIgnore' => false
+                    ),
+                    'closeButton' => array(
+                        'settings' => array(
+                            'icon' => array(
+                                'slug' => 'default__close-small',
+                                'size' => '48px'
+                            )
+                        )
+                    ),
+                    'content' => array(
+                        'styles' => array(
+                            'color' => array(
+                                'background' => 'linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)'
+                            ),
+                            'border' => array(
+                                'radius' => '18px',
+                                'color' => '#111111',
+                                'style' => 'solid',
+                                'width' => '3px'
+                            ),
+                            'width' => '720px',
+                            'dimensions' => array(
+                                'padding' => '30px',
+                            )
+                        )
+                    )
+                ),
+                'innerBlocks' => array(
+                    array(
+                        'fc/popup-container',
+                        array(),
+                        array(
+                            array(
+                                'fc/popup-close-button',
+                                array(),
+                                array(),
+                            ),
+                            array(
+                                'fc/popup-content',
+                                array(),
+                                array(
+                                    array(
+                                        'core/heading',
+                                        array(
+                                            'textAlign' => 'center',
+                                            'content' => 'WELCOME TO BLACK FRIDAY',
+                                            'level' => 2,
+                                            'className' => 'is-style-default',
+                                            'fontFamily' => 'body'
+                                        ),
+                                        array()
+                                    ),
+                                    array(
+                                        'core/paragraph',
+                                        array(
+                                            'content' => '<strong>🔥crazy deals are finally here 🔥</strong>',
+                                            'dropCap' => false,
+                                            'align' => 'center'
+                                        ),
+                                        array()
+                                    ),
+                                    array(
+                                        'core/paragraph',
+                                        array(
+                                            'content' => '<strong>LIMITED STOCK</strong>!',
+                                            'dropCap' => false,
+                                            'align' => 'center'
+                                        ),
+                                        array()
+                                    ),
+                                    array(
+                                        'core/paragraph',
+                                        array(
+                                            'content' => '⚡<strong>Act fast!</strong>⚡',
+                                            'dropCap' => false,
+                                            'align' => 'center'
+                                        ),
+                                        array()
+                                    ),
+                                    array(
+                                        'core/buttons',
+                                        array(
+                                            'layout' => array(
+                                                'type' => 'flex',
+                                                'justifyContent' => 'center'
+                                            )
+                                        ),
+                                        array(
+                                            array(
+                                                'core/button',
+                                                array(
+                                                    'tagName' => 'a',
+                                                    'type' => 'button',
+                                                    'url' => '/shop',
+                                                    'text' => 'Save 70%',
+                                                    'style' => array(
+                                                        'border' => array(
+                                                            'radius' => '54px'
+                                                        )
+                                                    ),
+                                                    'anchor' => 'cta',
+                                                    'textAlign' => 'center'
+                                                ),
+                                                array()
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                ),
+                'scope' => array(
+                    'block'
+                )
+            ),
+        ) );
     }
 
     public function get_frontend_attributes( string $instance_id, array $attributes, WP_Block $block ) : array {
-        $attr = array();
 
+        $attr = array();
         $settings = Utils::get_array( $attributes, 'settings' );
         if ( ! empty( $settings ) ) {
-            $trigger = Utils::get_array( $settings, 'trigger' );
-            if ( ! empty( $trigger ) ) {
-                $trigger_type = Utils::get_string( $trigger, 'type' );
-                if ( $trigger_type === 'immediate' ) {
-                    $attr['open'] = '';
-                }
-            }
-
             $transitions = Utils::get_bool( $settings, 'transitions' );
             if ( ! empty( $transitions ) ) {
                 $attr['transitions'] = '';
@@ -168,10 +292,16 @@ class Popup extends Base_Widget {
     }
 
     public function get_frontend_data( string $instance_id, array $attributes, WP_Block $block ) : array {
-        $data = array();
+        $data = array(
+            'postType' => $this->get_post_type(),
+        );
         $post_id = Utils::get_int( $attributes, 'postId' );
         if ( ! empty( $post_id ) ) {
             $data['postId'] = $post_id;
+        }
+        $template = Utils::get_string( $attributes, 'template' );
+        if ( ! empty( $template ) ) {
+            $data['template'] = $template;
         }
 
         $settings = Utils::get_array( $attributes, 'settings' );

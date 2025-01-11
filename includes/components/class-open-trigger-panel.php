@@ -15,6 +15,7 @@ class Open_Trigger_Panel extends Base_Component {
                 $extra_attributes['trigger'] = $trigger_type;
                 break;
             case 'anchor':
+            case 'element':
             case 'visible':
                 if ( Utils::is_string( $trigger_data, true ) ) {
                     $extra_attributes['trigger'] = $trigger_type;
@@ -47,6 +48,7 @@ class Open_Trigger_Panel extends Base_Component {
                 $data['trigger'] = $trigger_type;
                 break;
             case 'anchor':
+            case 'element':
             case 'visible':
                 if ( Utils::is_string( $trigger_data, true ) ) {
                     $data['trigger'] = $trigger_type;

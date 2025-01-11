@@ -14,6 +14,11 @@ class CustomElement extends HTMLElement {
      */
     #config = {};
     /**
+     * Represents whether the configuration has been initialized.
+     * @type {boolean}
+     */
+    #isConfigurationInitialized = false;
+    /**
      * Represents the state of initialization.
      * @type {boolean}
      */
@@ -36,6 +41,10 @@ class CustomElement extends HTMLElement {
         return this.#config;
     }
 
+    get isConfigurationInitialized() {
+        return this.#isConfigurationInitialized;
+    }
+
     /**
      * Returns the value indicating whether the object is initialized.
      * @returns {boolean} - true if the object is initialized, false otherwise.
@@ -51,12 +60,7 @@ class CustomElement extends HTMLElement {
     // noinspection JSUnusedGlobalSymbols
     connectedCallback(){
         if ( !this.isInitialized ) {
-            const config = getElementConfiguration( this.id );
-            if ( isPlainObject( config ) ) {
-                this.#config = config;
-            } else {
-                console.warn( `[FooConvert] No configuration found for element ID '${ this.id }'. Falling back to defaults.` );
-            }
+            this.initializeConfiguration();
             this.initialize();
             this.#isInitialized = true;
         }
@@ -91,6 +95,18 @@ class CustomElement extends HTMLElement {
 
     //region Helpers
 
+    initializeConfiguration() {
+        if ( !this.#isConfigurationInitialized ) {
+            const config = getElementConfiguration( this.id );
+            if ( isPlainObject( config ) ) {
+                this.#config = config;
+            } else {
+                console.warn( `[FooConvert] No configuration found for element ID '${ this.id }'. Falling back to defaults.` );
+            }
+            this.#isConfigurationInitialized = true;
+        }
+    }
+
     /**
      *
      * @param {string} type
@@ -100,11 +116,8 @@ class CustomElement extends HTMLElement {
     dispatch( type, options ) {
         if ( isString( type, true ) ) {
             if ( isPlainObject( options ) ) {
-                if ( Object.hasOwn( options, "detail" ) ) {
-                    return this.dispatchEvent( new CustomEvent( type, options ) )
-                } else {
-                    return this.dispatchEvent( new Event( type, options ) );
-                }
+                let event = Object.hasOwn( options, "detail" ) ? new CustomEvent( type, options ) : new Event( type, options );
+                return this.dispatchEvent( event );
             }
             return this.dispatchEvent( new Event( type ) );
         }

@@ -60,7 +60,7 @@ class Bar extends Base_Widget {
             ),
             array(
                 'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'widgets/bar/editor/blocks/container/blocks/content/block.json',
-                'args' => array( 'render_callback' => array( $this, 'render_content' ) )
+                'args' => array( 'render_callback' => array( $this, 'render_check_compatibility' ) )
             )
         ) );
     }
@@ -71,17 +71,17 @@ class Bar extends Base_Widget {
     function register_post_type() {
         return register_post_type( $this->get_post_type(), array(
             'labels' => array(
-                'name' => __( 'Bars', 'foobar' ),
-                'singular_name' => __( 'Bar', 'foobar' ),
-                'add_new' => __( 'Add Bar', 'foobar' ),
-                'add_new_item' => __( 'Add New Bar', 'foobar' ),
-                'edit_item' => __( 'Edit Bar', 'foobar' ),
-                'new_item' => __( 'New Bar', 'foobar' ),
-                'view_item' => __( 'View Bars', 'foobar' ),
-                'search_items' => __( 'Search Bars', 'foobar' ),
-                'not_found' => __( 'No Bars found', 'foobar' ),
-                'not_found_in_trash' => __( 'No Bars found in Trash', 'foobar' ),
-                'all_items' => __( 'Bars', 'foobar' )
+                'name' => __( 'Bars', 'fooconvert' ),
+                'singular_name' => __( 'Bar', 'fooconvert' ),
+                'add_new' => __( 'Add Bar', 'fooconvert' ),
+                'add_new_item' => __( 'Add New Bar', 'fooconvert' ),
+                'edit_item' => __( 'Edit Bar', 'fooconvert' ),
+                'new_item' => __( 'New Bar', 'fooconvert' ),
+                'view_item' => __( 'View Bars', 'fooconvert' ),
+                'search_items' => __( 'Search Bars', 'fooconvert' ),
+                'not_found' => __( 'No Bars found', 'fooconvert' ),
+                'not_found_in_trash' => __( 'No Bars found in Trash', 'fooconvert' ),
+                'all_items' => __( 'Bars', 'fooconvert' )
             ),
             'has_archive' => false,
             'public' => false,
@@ -100,13 +100,13 @@ class Bar extends Base_Widget {
      * @inheritDoc
      */
     function get_editor_variations() : array {
-        return array(
+        return apply_filters('fooconvert_editor_variations-' . $this->get_post_type(), array(
             array(
                 'name' => 'empty',
                 'title' => __( 'Empty', 'fooconvert' ),
-                'description' => __( 'Empty', 'fooconvert' ),
+                'description' => __( 'A blank slate that you can use to build your own bar from scratch.', 'fooconvert' ),
                 'attributes' => array(
-                    'variation' => 'empty'
+                    'template' => 'empty'
                 ),
                 'innerBlocks' => array(
                     array( 'fc/bar-open-button' ),
@@ -125,7 +125,7 @@ class Bar extends Base_Widget {
                 'name' => 'black_friday_bar',
                 'title' => __( 'Black Friday Bar', 'fooconvert' ),
                 'description' => __( 'A typical Black Friday bar to help drive sales.', 'fooconvert' ),
-                'icon' => '',
+                'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/black_friday_bar.png',
                 'attributes' => array(
                     'viewState' => 'open',
                     'settings' => array(
@@ -166,7 +166,7 @@ class Bar extends Base_Widget {
                             )
                         )
                     ),
-                    'variation' => 'black_friday_bar'
+                    'template' => 'black_friday_bar'
                 ),
                 'innerBlocks' => array(
                     array(
@@ -230,10 +230,10 @@ class Bar extends Base_Widget {
                 'name' => 'cookie_consent_bar',
                 'title' => __( 'Cookie Consent Bar', 'fooconvert' ),
                 'description' => __( 'A simple bottom bar that is dismissed when the button is clicked.', 'fooconvert' ),
-                'icon' => '',
+                'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/cookie_consent_bar.png',
                 'attributes' => array(
                     'viewState' => 'open',
-                    'variation' => 'cookie_consent_bar',
+                    'template' => 'cookie_consent_bar',
                     'settings' => array(
                         'position' => 'bottom',
                         'transitions' => true,
@@ -341,7 +341,7 @@ class Bar extends Base_Widget {
                     'block'
                 )
             )
-        );
+        ) );
     }
 
     public function get_frontend_attributes( string $instance_id, array $attributes, WP_Block $block ) : array {
@@ -349,14 +349,6 @@ class Bar extends Base_Widget {
 
         $settings = Utils::get_array( $attributes, 'settings' );
         if ( ! empty( $settings ) ) {
-            $trigger = Utils::get_array( $settings, 'trigger' );
-            if ( ! empty( $trigger ) ) {
-                $trigger_type = Utils::get_string( $trigger, 'type' );
-                if ( $trigger_type === 'immediate' ) {
-                    $attr['open'] = '';
-                }
-            }
-
             $transitions = Utils::get_bool( $settings, 'transitions' );
             if ( ! empty( $transitions ) ) {
                 $attr['transitions'] = '';
@@ -404,10 +396,16 @@ class Bar extends Base_Widget {
     }
 
     public function get_frontend_data( string $instance_id, array $attributes, WP_Block $block ) : array {
-        $data = array();
+        $data = array(
+            'postType' => $this->get_post_type(),
+        );
         $post_id = Utils::get_int( $attributes, 'postId' );
         if ( ! empty( $post_id ) ) {
             $data['postId'] = $post_id;
+        }
+        $template = Utils::get_string( $attributes, 'template' );
+        if ( ! empty( $template ) ) {
+            $data['template'] = $template;
         }
 
         $settings = Utils::get_array( $attributes, 'settings' );

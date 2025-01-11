@@ -14,5 +14,6 @@
     "className": false,
     "html": false,
     "inserter": false
-  }
+  },
+  "usesContext": [ "fc/postId" ]
 }

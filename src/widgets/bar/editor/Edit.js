@@ -144,7 +144,7 @@ const EditPlaceholder = props => {
             label={ __( "Choose a template", "fooconvert" ) }
             instructions={ __( "Select a template to start with.", "fooconvert" ) }
             reset={ { variation: undefined } }
-            media="icon"
+            media="thumbnail"
             { ...props }
         />
     );

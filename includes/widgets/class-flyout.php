@@ -60,7 +60,7 @@ class Flyout extends Base_Widget {
             ),
             array(
                 'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'widgets/flyout/editor/blocks/container/blocks/content/block.json',
-                'args' => array( 'render_callback' => array( $this, 'render_content' ) )
+                'args' => array( 'render_callback' => array( $this, 'render_check_compatibility' ) )
             )
         ) );
     }
@@ -71,17 +71,17 @@ class Flyout extends Base_Widget {
     function register_post_type() {
         return register_post_type( $this->get_post_type(), array(
             'labels' => array(
-                'name' => __( 'Flyouts', 'foobar' ),
-                'singular_name' => __( 'Flyout', 'foobar' ),
-                'add_new' => __( 'Add Flyout', 'foobar' ),
-                'add_new_item' => __( 'Add New Flyout', 'foobar' ),
-                'edit_item' => __( 'Edit Flyout', 'foobar' ),
-                'new_item' => __( 'New Flyout', 'foobar' ),
-                'view_item' => __( 'View Flyouts', 'foobar' ),
-                'search_items' => __( 'Search Flyouts', 'foobar' ),
-                'not_found' => __( 'No Flyouts found', 'foobar' ),
-                'not_found_in_trash' => __( 'No Flyouts found in Trash', 'foobar' ),
-                'all_items' => __( 'Flyouts', 'foobar' )
+                'name' => __( 'Flyouts', 'fooconvert' ),
+                'singular_name' => __( 'Flyout', 'fooconvert' ),
+                'add_new' => __( 'Add Flyout', 'fooconvert' ),
+                'add_new_item' => __( 'Add New Flyout', 'fooconvert' ),
+                'edit_item' => __( 'Edit Flyout', 'fooconvert' ),
+                'new_item' => __( 'New Flyout', 'fooconvert' ),
+                'view_item' => __( 'View Flyouts', 'fooconvert' ),
+                'search_items' => __( 'Search Flyouts', 'fooconvert' ),
+                'not_found' => __( 'No Flyouts found', 'fooconvert' ),
+                'not_found_in_trash' => __( 'No Flyouts found in Trash', 'fooconvert' ),
+                'all_items' => __( 'Flyouts', 'fooconvert' )
             ),
             'has_archive' => false,
             'public' => false,
@@ -100,13 +100,13 @@ class Flyout extends Base_Widget {
      * @inheritDoc
      */
     function get_editor_variations() : array {
-        return array(
+        return apply_filters('fooconvert_editor_variations-' . $this->get_post_type(), array(
             array(
                 'name' => 'empty',
                 'title' => __( 'Empty', 'fooconvert' ),
-                'description' => __( 'Empty', 'fooconvert' ),
+                'description' => __( 'A blank slate that you can use to build your own flyout from scratch.', 'fooconvert' ),
                 'attributes' => array(
-                    'variation' => 'empty'
+                    'template' => 'empty'
                 ),
                 'innerBlocks' => array(
                     array( 'fc/flyout-open-button' ),
@@ -120,8 +120,150 @@ class Flyout extends Base_Widget {
                     )
                 ),
                 'scope' => array( 'block' )
+            ),
+            array(
+                'name' => 'black_friday_flyout',
+                'title' => __( 'Black Friday Flyout', 'fooconvert' ),
+                'description' => __( 'A typical Black Friday flyout to help drive sales.', 'fooconvert' ),
+                'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/black_friday_flyout.png',
+                'attributes' => array(
+                    'viewState' => 'open',
+                    'settings' => array(
+                        'trigger' => array(
+                            'type' => 'scroll',
+                            'data' => 20
+                        ),
+                        'transitions' => true
+                    ),
+                    'openButton' => array(
+                        'settings' => array(
+                            'hidden' => true
+                        )
+                    ),
+                    'closeButton' => array(
+                        'settings' => array(
+                            'icon' => array(
+                                'slug' => 'default__close-small',
+                                'size' => '48px'
+                            )
+                        )
+                    ),
+                    'content' => array(
+                        'styles' => array(
+                            'color' => array(
+                                'background' => 'linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)'
+                            ),
+                            'border' => array(
+                                'radius' => '18px',
+                                'color' => '#111111',
+                                'style' => 'solid',
+                                'width' => '3px'
+                            ),
+                            'dimensions' => array(
+                                'margin' => '10px',
+                                'padding' => '30px',
+                                'gap' => '16px'
+                            ),
+                            'width' => '480px'
+                        )
+                    ),
+                    'template' => 'black_friday_flyout'
+                ),
+                'innerBlocks' => array(
+                    array(
+                        'fc/flyout-open-button',
+                        array(),
+                        array()
+                    ),
+                    array(
+                        'fc/flyout-container',
+                        array(),
+                        array(
+                            array(
+                                'fc/flyout-close-button',
+                                array(),
+                                array()
+                            ),
+                            array(
+                                'fc/flyout-content',
+                                array(),
+                                array(
+                                    array(
+                                        'core/heading',
+                                        array(
+                                            'textAlign' => 'center',
+                                            'content' => 'WELCOME TO<br>BLACK FRIDAY',
+                                            'level' => 2,
+                                            'className' => 'is-style-default',
+                                            'fontFamily' => 'body'
+                                        ),
+                                        array()
+                                    ),
+                                    array(
+                                        'core/paragraph',
+                                        array(
+                                            'content' => '<strong>🔥crazy deals are finally here 🔥</strong>',
+                                            'dropCap' => false,
+                                            'align' => 'center'
+                                        ),
+                                        array()
+                                    ),
+                                    array(
+                                        'core/paragraph',
+                                        array(
+                                            'content' => '<strong>LIMITED STOCK</strong>!',
+                                            'dropCap' => false,
+                                            'align' => 'center'
+                                        ),
+                                        array()
+                                    ),
+                                    array(
+                                        'core/paragraph',
+                                        array(
+                                            'content' => '⚡<strong>Act fast!</strong>⚡',
+                                            'dropCap' => false,
+                                            'align' => 'center'
+                                        ),
+                                        array()
+                                    ),
+                                    array(
+                                        'core/buttons',
+                                        array(
+                                            'layout' => array(
+                                                'type' => 'flex',
+                                                'justifyContent' => 'center'
+                                            )
+                                        ),
+                                        array(
+                                            array(
+                                                'core/button',
+                                                array(
+                                                    'tagName' => 'a',
+                                                    'type' => 'button',
+                                                    'url' => '/shop',
+                                                    'text' => 'Save 70%',
+                                                    'style' => array(
+                                                        'border' => array(
+                                                            'radius' => '54px'
+                                                        )
+                                                    ),
+                                                    'anchor' => 'cta',
+                                                    'textAlign' => 'center'
+                                                ),
+                                                array()
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                ),
+                'scope' => array(
+                    'block'
+                )
             )
-        );
+        ) );
     }
 
     public function get_frontend_attributes( string $instance_id, array $attributes, WP_Block $block ) : array {
@@ -129,14 +271,6 @@ class Flyout extends Base_Widget {
 
         $settings = Utils::get_array( $attributes, 'settings' );
         if ( ! empty( $settings ) ) {
-            $trigger = Utils::get_array( $settings, 'trigger' );
-            if ( ! empty( $trigger ) ) {
-                $trigger_type = Utils::get_string( $trigger, 'type' );
-                if ( $trigger_type === 'immediate' ) {
-                    $attr['open'] = '';
-                }
-            }
-
             $transitions = Utils::get_bool( $settings, 'transitions' );
             if ( ! empty( $transitions ) ) {
                 $attr['transitions'] = '';
@@ -184,10 +318,16 @@ class Flyout extends Base_Widget {
     }
 
     public function get_frontend_data( string $instance_id, array $attributes, WP_Block $block ) : array {
-        $data = array();
+        $data = array(
+            'postType' => $this->get_post_type(),
+        );
         $post_id = Utils::get_int( $attributes, 'postId' );
         if ( ! empty( $post_id ) ) {
             $data['postId'] = $post_id;
+        }
+        $template = Utils::get_string( $attributes, 'template' );
+        if ( ! empty( $template ) ) {
+            $data['template'] = $template;
         }
 
         $settings = Utils::get_array( $attributes, 'settings' );

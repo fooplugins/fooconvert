@@ -1,6 +1,7 @@
 <?php
 namespace FooPlugins\FooConvert\Admin;
 
+use FooPlugins\FooConvert\Data\Schema;
 use FooPlugins\FooConvert\FooConvert;
 
 /**
@@ -18,7 +19,30 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
          */
         function __construct()
         {
+            add_action( 'admin_init', array( $this, 'check_database' ) );
             add_action( 'admin_menu', array( $this, 'register_menu' ) );
+            add_action( 'in_admin_header', array( $this, 'add_custom_header' ) );
+            add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueues' ) );
+
+            new namespace\Stats();
+            new namespace\Dashboard();
+            new namespace\ContainerManager();
+            new namespace\Settings();
+            new namespace\Promotions();
+        }
+
+        /**
+         * Checks and ensures the necessary database tables are created.
+         *
+         * This method initializes the Schema class and calls the function
+         * to create the event table if it does not already exist.
+         *
+         * @access public
+         * @since 1.0.0
+         */
+        public function check_database() {
+            $schema = new Schema();
+            $schema->create_event_table_if_needed();
         }
 
         /**
@@ -30,15 +54,17 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
          * @since 1.0.0
          */
         public function register_menu() {
-            /** @noinspection PhpUndefinedFunctionInspection - shows as unresolvable in my IDE - see https://developer.wordpress.org/reference/functions/add_menu_page/ */
             add_menu_page(
                 __( 'FooConvert', 'fooconvert' ),
                 __( 'FooConvert', 'fooconvert' ),
                 'manage_options',
                 FOOCONVERT_MENU_SLUG,
                 '__return_null',
-                'dashicons-chart-bar'
+                'dashicons-chart-bar',
+                50
             );
+
+            do_action( 'fooconvert_admin_menu_before_post_types' );
 
             foreach ( FooConvert::plugin()->widgets->get_post_types() as $post_type ) {
 
@@ -60,17 +86,88 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                 }
             }
 
-            // Hide the top submenu by removing it.
-            remove_submenu_page( FOOCONVERT_MENU_SLUG, FOOCONVERT_MENU_SLUG );
+            do_action( 'fooconvert_admin_menu_after_post_types' );
+        }
 
-//            add_submenu_page(
-//                FOOCONVERT_MENU_SLUG,    // Parent slug (top-level menu slug)
-//                __( 'Help', 'fooconvert' ),        // Page title
-//                __( 'Help', 'fooconvert' ),        // Submenu title
-//                'manage_options',         // Capability required
-//                FOOCONVERT_MENU_SLUG,     // Submenu slug (unique identifier)
-//                'fooconvert_welcome_page'  // Function to display the content
-//            );
+        private function is_valid_page() {
+            /**
+             * Check whether the get_current_screen function exists
+             * because it is loaded only after 'admin_init' hook.
+             */
+            if ( function_exists( 'get_current_screen' ) ) {
+                $current_screen = get_current_screen();
+
+                if ( $current_screen->id === 'toplevel_page_' . FOOCONVERT_MENU_SLUG ) {
+                    return true;
+                }
+
+                if ( str_starts_with( $current_screen->id, 'fooconvert_page_fooconvert-' ) ) {
+                    return true;
+                }
+
+                $current_post_Type = $current_screen->post_type;
+                if ( in_array( $current_post_Type, FooConvert::plugin()->widgets->get_post_types(), true ) ) {
+                    return $current_screen->base !== 'post';
+                }
+            }
+
+            return false;
+        }
+
+
+        /**
+         * Enqueues.
+         *
+         * @return void
+         */
+        public function admin_enqueues() {
+            if ( $this->is_valid_page() ) {
+                wp_enqueue_style(
+                    'fooconvert-admin',
+                    FOOCONVERT_ASSETS_URL . 'admin/css/admin.css',
+                    null,
+                    FOOCONVERT_VERSION
+                );
+
+//                wp_enqueue_script(
+//                    'fooconvert-admin',
+//                    FOOCONVERT_ASSETS_URL . 'admin/js/admin.js',
+//                    null,
+//                    FOOCONVERT_VERSION,
+//                    true
+//                );
+            }
+        }
+
+        /**
+         * Add a custom header to our admin pages.
+         *
+         * @return void
+         */
+        public function add_custom_header() {
+            if ( $this->is_valid_page() ) {
+                $current_screen = get_current_screen();
+                if ( FOOCONVERT_MENU_SLUG . '-contact' === $current_screen->base ||
+                    FOOCONVERT_MENU_SLUG . '-pricing' === $current_screen->base ) {
+                    $drop = 'drop';
+                } else {
+                    $drop = '';
+                }
+                ?>
+                <div class="fooconvert-admin-header <?php
+                echo esc_attr( $drop );
+                ?>">
+                    <div class="fooconvert-title">
+                        <img class="fooconvert-logo" src="<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
+                        echo esc_url( FOOCONVERT_ASSETS_URL . 'admin/img/horizontal-logo-50.png' );
+                        ?>" alt="FooConvert Logo">
+                        <p>Version <?php
+                            echo esc_html( FOOCONVERT_VERSION );
+                            ?></p>
+                    </div>
+                </div>
+                <?php
+            }
         }
     }
 }

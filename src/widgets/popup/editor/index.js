@@ -6,7 +6,7 @@ import { InnerBlocks } from '@wordpress/block-editor';
 import { Icon } from '@wordpress/icons';
 import { registerPlugin } from "@wordpress/plugins";
 
-import { CustomEditorPlugin, OverrideTemplateValidityPlugin, DisplayRulesPlugin, getBlockSettings } from "#editor";
+import { CustomEditorPlugin, OverrideTemplateValidityPlugin, DisplayRulesPlugin, CompatibilityPlugin, getBlockSettings } from "#editor";
 
 import block from '../block.json';
 import './index.scss';
@@ -14,6 +14,7 @@ import Edit from './Edit';
 
 const { variations } = getBlockSettings( block.name );
 
+registerPlugin( "fc-compatibility", { render: CompatibilityPlugin } );
 registerPlugin( "fc-custom-editor", { render: CustomEditorPlugin } );
 registerPlugin( "fc-display-rules", { render: DisplayRulesPlugin } );
 registerPlugin( "fc-override-template-validity", { render: OverrideTemplateValidityPlugin } );

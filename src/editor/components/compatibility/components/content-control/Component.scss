@@ -1,0 +1,39 @@
+.fc--compatibility__content-control {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 230px;
+  max-width: 100%;
+
+  .fc--compatibility__content-control__notice {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background-color: #ffffff;
+    border: solid 1px #007cba;
+    border-left-width: 4px;
+    padding: 8px 12px;
+    font-size: 13px;
+
+    &.is-warning {
+      background-color: #fef8ee;
+      border-color: #f0b849;
+    }
+
+    > p {
+      margin: 0;
+    }
+  }
+
+  .fc--compatibility__content-control__description {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 13px;
+
+    > p {
+      margin: 0;
+    }
+  }
+
+}

@@ -54,6 +54,7 @@ class FooConvert_Display_Rules extends Base_Component {
             $this->create_column_content( $post_type, $column_name, $post_id );
         }, 10, 2 );
 
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
         add_action( 'admin_enqueue_scripts', function( $hook_suffix ) use ( $post_type ) {
             if ( $hook_suffix === 'edit.php' && isset( $_GET['post_type'] ) ) {
                 $current_post_type = sanitize_key( $_GET['post_type'] );
@@ -62,6 +63,7 @@ class FooConvert_Display_Rules extends Base_Component {
                 }
             }
         } );
+        // phpcs:enable
     }
 
     public function create_column( $post_type, $columns ) : array {
@@ -105,9 +107,9 @@ class FooConvert_Display_Rules extends Base_Component {
             $is_set = !empty( $display_rules ) && !empty( $display_rules['location'] );
 
             if ( $is_set ) {
-                echo __( 'Set', 'fooconvert' );
+                esc_html_e( 'Set', 'fooconvert' );
             } else {
-                echo __( 'Not set!', 'fooconvert' );
+                esc_html_e( 'Not set!', 'fooconvert' );
             }
         }
     }
@@ -255,34 +257,78 @@ class FooConvert_Display_Rules extends Base_Component {
                         'label' => __( '404 Template', 'fooconvert' )
                     )
                 )
-            ),
-            array(
-                'group' => 'specific',
-                'label' => __( 'Specific', 'fooconvert' ),
-                'options' => array(
-                    array(
-                        'value' => 'specific:page',
-                        'label' => __( 'Page', 'fooconvert' )
-                    ),
-                    array(
-                        'value' => 'specific:post',
-                        'label' => __( 'Post', 'fooconvert' )
-                    ),
-                    array(
-                        'value' => 'specific:category',
-                        'label' => __( 'Category', 'fooconvert' )
-                    ),
-                    array(
-                        'value' => 'specific:tag',
-                        'label' => __( 'Tag', 'fooconvert' )
-                    )
-                )
             )
         );
 
-        $archives = $this->get_component_location_archives();
-        if ( ! empty( $archives ) ) {
-            $locations[] = $archives;
+        // First, load all public post types
+        $public_post_types = get_post_types( array( 'public' => true ), 'objects' );
+        $post_type_locations = [];
+        foreach ( $public_post_types as $post_type ) {
+            if ( $post_type instanceof WP_Post_Type ) {
+                $post_type_locations[] = array(
+                    'value' => 'specific:' . $post_type->name,
+                    'label' => $post_type->label,
+                    'data' => array(
+                        'kind' => 'postType',
+                        'name' => $post_type->name,
+                        // Translators: %s refers to the taxonomy that is being searched for. e.g. "Category".
+                        'placeholder' => sprintf( __( 'Type to choose %s...', 'fooconvert' ), strtolower( $post_type->label ) )
+                    )
+                );
+            }
+        }
+
+        if ( ! empty( $post_type_locations ) ) {
+            $locations[] = array(
+                'group' => 'specific_posts',
+                'label' => __( 'Specific Posts', 'fooconvert' ),
+                'options' => $post_type_locations
+            );
+        }
+
+        // Next, load all public taxonomies
+        $taxonomy_locations = [];
+        $public_taxonomies = get_taxonomies( array( 'public' => true ), 'objects' );
+        foreach ( $public_taxonomies as $taxonomy ) {
+            if ( $taxonomy instanceof \WP_Taxonomy ) {
+                $taxonomy_locations[] = array(
+                    'value' => 'specific:' . $taxonomy->name,
+                    'label' => $taxonomy->label,
+                    'data' => array(
+                        'kind' => 'taxonomy',
+                        'name' => $taxonomy->name,
+                        // Translators: %s refers to the taxonomy that is being searched for. e.g. "Category".
+                        'placeholder' => sprintf( __( 'Type to choose %s...', 'fooconvert' ), strtolower( $taxonomy->label ) )
+                    )
+                );
+            }
+        }
+
+        if ( ! empty( $taxonomy_locations ) ) {
+            $locations[] = array(
+                'group' => 'specific_taxonomies',
+                'label' => __( 'Specific Taxonomies', 'fooconvert' ),
+                'options' => $taxonomy_locations
+            );
+        }
+
+        // Next, load all post types that have an archive.
+        $archive_locations = [];
+        foreach ( $public_post_types as $post_type ) {
+            if ( $post_type instanceof WP_Post_Type && $post_type->has_archive !== false ) {
+                $archive_locations[] = array(
+                    'value' => 'archive:' . $post_type->name,
+                    'label' => $post_type->label,
+                );
+            }
+        }
+
+        if ( ! empty( $archive_locations ) ) {
+            $locations[] = array(
+                'group' => 'archive',
+                'label' => __( 'Post Archives', 'fooconvert' ),
+                'options' => $archive_locations
+            );
         }
 
         if ( $context === 'exclude' ) {
@@ -290,29 +336,7 @@ class FooConvert_Display_Rules extends Base_Component {
             array_shift( $locations[0]['options'] );
         }
 
-        return $locations;
-    }
-
-    private array $component_location_archives = array();
-    private function get_component_location_archives() : array {
-        if ( ! empty( $this->component_location_archives ) ) {
-            return $this->component_location_archives;
-        }
-        $post_types = get_post_types( array( 'public' => true ), 'objects' );
-        $archives = array(
-            'group' => 'archive',
-            'label' => __( 'Post Archives', 'fooconvert' ),
-            'options' => array()
-        );
-        foreach ( $post_types as $post_type ) {
-            if ( $post_type instanceof WP_Post_Type && $post_type->has_archive !== false ) {
-                $archives['options'][] = array(
-                    'value' => 'archive:' . $post_type->name,
-                    'label' => $post_type->label,
-                );
-            }
-        }
-        return $this->component_location_archives = empty( $archives['options'] ) ? array() : $archives;
+        return apply_filters( 'fooconvert_display_rules_locations', $locations, $context );
     }
 
     function get_component_users() : array {
@@ -445,7 +469,8 @@ class FooConvert_Display_Rules extends Base_Component {
                         // false positive - this array is not used to query posts
                         // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams
                         'exclude' => $this->compile_locations( $rules['exclude'] ),
-                        'users' => $rules['users']
+                        'users' => $rules['users'],
+                        'compatibility_mode' => FooConvert::plugin()->compatibility->is_enabled( $post_id )
                     );
                 }
             }
@@ -666,7 +691,7 @@ class FooConvert_Display_Rules extends Base_Component {
             // The content is passed through wp_kses with an extended post allowed HTML list that includes
             // the custom elements for the plugin.
             // phpcs:ignore WordPress.Security.EscapeOutput
-            echo FooConvert::plugin()->kses_post( $widget['content'] );
+            echo FooConvert::plugin()->kses_post( $widget['content'], $widget['compatibility_mode'] );
         }
     }
 
@@ -687,12 +712,13 @@ class FooConvert_Display_Rules extends Base_Component {
      * @since 1.0.0
      */
     public function enqueue_required() {
+        $this->enqueued = apply_filters( 'fooconvert_enqueue_required', array() );
+
         //todo: add to these exclusions to limit the overhead on the server
-        if ( is_admin() || wp_is_json_request() ) {
+        if ( empty( $this->enqueued ) && ( is_admin() || wp_is_json_request() ) ) {
             return;
         }
 
-        $this->enqueued = array();
         // get the cached display rules
         $display_rules = get_option( 'fooconvert_display_rules', array() );
         if ( ! empty( $display_rules ) ) {
@@ -703,16 +729,31 @@ class FooConvert_Display_Rules extends Base_Component {
                     if ( $this->match_compiled( $compiled, $current_location, $current_user_roles ) ) {
                         $matched_id = $compiled['post_id'];
                         $matched_content = get_post_field( 'post_content', $matched_id );
+                        $matched_compatibility_mode = Utils::get_bool( $compiled, 'compatibility_mode' );
                         if ( Utils::is_string( $matched_content, true ) ) {
                             $this->enqueued[] = array(
                                 'post_id' => $matched_id,
-                                'content' => do_blocks( $matched_content )
+                                'content' => do_blocks( $matched_content ),
+                                'compatibility_mode' => $matched_compatibility_mode,
                             );
                         }
                     }
                 }
             }
         }
+    }
+
+    public function get_queueable( int $post_id ) : array {
+        $content = get_post_field( 'post_content', $post_id );
+        if ( ! empty( $content ) ) {
+            $compatibility_mode = FooConvert::plugin()->compatibility->is_enabled( $post_id );
+            return array(
+                'post_id' => $post_id,
+                'content' => do_blocks( $content ),
+                'compatibility_mode' => $compatibility_mode,
+            );
+        }
+        return array();
     }
 
     /**

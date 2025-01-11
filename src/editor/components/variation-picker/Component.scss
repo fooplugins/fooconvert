@@ -20,6 +20,8 @@
   color: var(--foreground);
   background: var(--background);
   min-width: 400px;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px #ccc, 0 2px 3px #0000000d, 0 4px 5px #0000000a, 0 12px 12px #00000008, 0 16px 16px #00000005;
 
   &.fc-variation-picker__mode-grid {
     &.fc-variation-picker__media-icon {
@@ -76,6 +78,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: var(--spacing);
+    padding: 0 var(--spacing);
     justify-content: center;
   }
   .fc-variation-picker__mode-list & {
@@ -116,6 +119,7 @@
   .fc-variation-picker__mode-list & {
     flex-direction: row;
     border-bottom: solid 1px var(--border);
+    //border-right: solid 1px var(--border);
     &:last-child {
       border-bottom: none;
     }

@@ -2,7 +2,7 @@ import { hasKeys, isArray, isString } from "@steveush/utils";
 import isDisplayRulesLocation from "./isDisplayRulesLocation";
 
 const isDisplayRulesLocationArray = ( value, notEmpty = false ) => isArray( value, notEmpty, isDisplayRulesLocation );
-const isStringArray = ( value, notEmpty = false ) => isArray( value, notEmpty, isString );
+const isStringArray = ( value, notEmpty = false ) => isArray( value, notEmpty, item => isString( item ) );
 
 const DISPLAY_RULES_META_DEFINITION = {
     location: isDisplayRulesLocationArray,

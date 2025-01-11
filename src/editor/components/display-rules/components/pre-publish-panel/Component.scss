@@ -1,20 +1,25 @@
 .fc--display-rules__pre-publish-panel {
   .components-panel__body-toggle {
     .components-panel__icon {
+      display: none;
+    }
+    .fc--display-rules__pre-publish-panel__status {
+      display: inline-flex;
+      gap: 2px;
+      font-weight: normal;
+    }
+
+    .fc--display-rules__pre-publish-panel__status-icon {
       fill: #4ab866;
       width: 24px;
       height: 24px;
       margin: -3px 0 -4px 4px;
     }
-    .fc--display-rules__pre-publish-panel__status {
-      padding-left: 4px;
-      font-weight: normal;
-    }
   }
 
   &.is-not-set {
     .components-panel__body-toggle {
-      .components-panel__icon {
+      .fc--display-rules__pre-publish-panel__status-icon {
         transform: rotate(180deg);
         fill: #f0b849;
       }

@@ -18,7 +18,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * disabled or plugin is activated on an individual blog.
          */
         public static function activated( bool $network_wide ) {
-            $plugin_data = get_site_option( FOOCONVERT_OPTION_DATA );
+            $plugin_data = get_site_option( FOOCONVERT_OPTION_VERSION );
             $save_data = false;
             if ( false === $plugin_data ) {
                 $plugin_data = array(
@@ -39,11 +39,12 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             }
 
             if ( $save_data ) {
-                update_site_option( FOOCONVERT_OPTION_DATA, $plugin_data );
+                update_site_option( FOOCONVERT_OPTION_VERSION, $plugin_data );
             }
 
-            $demo_content = new Admin\DemoContent();
-            $demo_content->run();
+            // Make sure the database tables are created.
+            $schema = new Data\Schema();
+            $schema->create_event_table_if_needed();
         }
 
         /**
@@ -81,11 +82,13 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         private function __construct() {
             add_action( 'init', array( $this, 'load_translations' ) );
             add_action( 'init', array( $this, 'register_frontend_assets' ) );
-            add_action( 'wp_enqueue_scripts', array( $this, 'ensure_frontend_css_enqueued' ) );
+            add_action( 'wp_enqueue_scripts', array( $this, 'ensure_frontend_assets_enqueued' ) );
             add_action( 'enqueue_block_assets', array( $this, 'enqueue_editor_assets' ) );
             add_filter( 'block_categories_all', array( $this, 'register_block_category' ) );
+            add_action( 'transition_post_status', array( $this, 'clean_demo_content' ), 10, 3 );
 
             $this->components = new FooConvert_Components();
+            $this->compatibility = new FooConvert_Compatibility();
             $this->display_rules = new FooConvert_Display_Rules();
             $this->blocks = new FooConvert_Blocks();
             $this->widgets = new FooConvert_Widgets();
@@ -93,13 +96,30 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             if ( is_admin() ) {
                 new Admin\Init();
             }
+
+            $this->ajax = new Ajax();
+            new Event_Hooks();
+            new Cron();
         }
 
-        function ensure_frontend_css_enqueued() {
+        /**
+         * Callback for the `wp_enqueue_scripts` action.
+         *
+         * This hook makes sure that the frontend CSS is enqueued when the frontend JS is enqueued.
+         *
+         * @since 1.0.0
+         */
+        function ensure_frontend_assets_enqueued() {
             $is_frontend_js_enqueued = wp_script_is( FOOCONVERT_FRONTEND_ASSET_HANDLE );
             $is_frontend_css_enqueued = wp_style_is( FOOCONVERT_FRONTEND_ASSET_HANDLE );
             if ( $is_frontend_js_enqueued && !$is_frontend_css_enqueued ) {
                 wp_enqueue_style( FOOCONVERT_FRONTEND_ASSET_HANDLE );
+            }
+            if ( $is_frontend_js_enqueued ) {
+                $data = array(
+                    'endpoint' => $this->ajax->get_endpoint(),
+                );
+                wp_add_inline_script( FOOCONVERT_FRONTEND_ASSET_HANDLE, Utils::to_js_script( 'FOOCONVERT_CONFIG', $data ), 'before' );
             }
         }
 
@@ -114,6 +134,8 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @since 1.0.0
          */
         public FooConvert_Components $components;
+
+        public FooConvert_Compatibility $compatibility;
 
         /**
          * Contains the logic for the widget display rules.
@@ -153,6 +175,8 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          */
         public FooConvert_Widgets $widgets;
 
+        public Ajax $ajax;
+
         //endregion
 
         //region KSES
@@ -164,7 +188,9 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @param string $content Text content to filter.
          * @return string Filtered content containing only the allowed HTML.
          */
-        public function kses_post( string $content ) : string {
+        public function kses_post( string $content, bool $compatibility_mode = false ) : string {
+            if ( $compatibility_mode ) return $content;
+
             $allowed_html = wp_kses_allowed_html( 'post' );
             // merge the plugin elements into the allowed list
             $allowed_html = array_merge(
@@ -172,6 +198,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
                 $this->blocks->get_kses_definitions(),
                 $this->widgets->get_kses_definitions()
             );
+
             return $this->kses_with_svg( $content, $allowed_html );
         }
 
@@ -375,5 +402,34 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         }
 
         //endregion
+
+        /**
+         * Removes the demo content meta value when a widget is published.
+         *
+         * We assume that any widget that is published is no longer demo content.
+         * We want to remove the demo content "marker" so that we do not delete it when we delete demo content from the dashboard.
+         *
+         * @param string $new_status The new post status.
+         * @param string $old_status The previous post status.
+         * @param object $post The post object.
+         *
+         * @return void
+         */
+        public function clean_demo_content( $new_status, $old_status, $post ) {
+            // Only run when the post is being transitioned to 'publish'
+            if ( $old_status !== 'publish' && $new_status === 'publish' ) {
+                // Check if we're dealing with our post types
+                if ( fooconvert_is_valid_post_type( $post->post_type ) ) {
+
+                    // Check if the widget is demo content.
+                    $meta_value = get_post_meta( $post->ID, FOOCONVERT_META_KEY_DEMO_CONTENT, true );
+
+                    if ( ! empty( $meta_value ) ) {
+                        // Delete the demo content marker because we assume the user has adapted the widget because they have published.
+                        delete_post_meta( $post->ID, FOOCONVERT_META_KEY_DEMO_CONTENT );
+                    }
+                }
+            }
+        }
     }
 }

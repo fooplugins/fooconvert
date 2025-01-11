@@ -36,7 +36,7 @@ abstract class Base_Block {
      */
     function init() {
         $block_types = $this->register_blocks();
-        if ( ! empty( $block_types ) ) {
+        if ( !empty( $block_types ) ) {
             $this->block_types = $block_types;
             foreach ( $this->block_types as $block_type ) {
                 foreach ( $block_type->editor_script_handles as $editor_script_handle ) {
@@ -52,7 +52,7 @@ abstract class Base_Block {
      * @param string|string[] $value A string or string array of features to check for.
      * @return bool True if all given features are supported, otherwise false.
      */
-    function supports( $value ) : bool {
+    function supports( $value ): bool {
         if ( is_string( $value ) ) {
             return in_array( $value, $this->supported );
         }
@@ -73,7 +73,7 @@ abstract class Base_Block {
      *
      * @since 1.0.0
      */
-    abstract function get_block_name() : string;
+    abstract function get_block_name(): string;
 
     /**
      * Get the element tag name.
@@ -82,7 +82,7 @@ abstract class Base_Block {
      *
      * @since 1.0.0
      */
-    abstract function get_tag_name() : string;
+    abstract function get_tag_name(): string;
 
     /**
      * Register the block.
@@ -105,11 +105,11 @@ abstract class Base_Block {
      * @return false|string The asset handle, otherwise false.
      */
     function get_asset_handle( string $name, int $asset_index = 0, int $block_index = 0 ) {
-        if ( ! empty( $this->block_types ) && $block_index < count( $this->block_types ) ) {
-            $block_type = $this->block_types[ $block_index ];
+        if ( !empty( $this->block_types ) && $block_index < count( $this->block_types ) ) {
+            $block_type = $this->block_types[$block_index];
             $handles = Utils::get_array( $block_type, $name );
             if ( $asset_index < count( $handles ) ) {
-                return $handles[ $asset_index ];
+                return $handles[$asset_index];
             }
         }
         return false;
@@ -127,14 +127,14 @@ abstract class Base_Block {
      *
      * @since 1.0.0
      */
-    function get_editor_settings() : array {
+    function get_editor_settings(): array {
         $settings = array();
         $variations = $this->get_editor_variations();
-        if ( ! empty( $variations ) ) {
+        if ( !empty( $variations ) ) {
             $settings['variations'] = $variations;
         }
         $data = $this->get_editor_data();
-        if ( ! empty( $data ) ) {
+        if ( !empty( $data ) ) {
             $settings['data'] = $data;
         }
         return $settings;
@@ -154,7 +154,7 @@ abstract class Base_Block {
      *
      * @since 1.0.0
      */
-    function get_editor_settings_name() : string {
+    function get_editor_settings_name(): string {
         return Utils::make_identifier( $this->get_block_name() );
     }
 
@@ -174,7 +174,7 @@ abstract class Base_Block {
      *
      * @since 1.0.0
      */
-    function get_frontend_data_name( string $instance_id ) : string {
+    function get_frontend_data_name( string $instance_id ): string {
         return Utils::make_identifier( $instance_id );
     }
 
@@ -185,7 +185,7 @@ abstract class Base_Block {
      *
      * @since 1.0.0
      */
-    function get_editor_variations() : array {
+    function get_editor_variations(): array {
         return array();
     }
 
@@ -198,7 +198,7 @@ abstract class Base_Block {
      *
      * @since 1.0.0
      */
-    function get_editor_data() : array {
+    function get_editor_data(): array {
         return array();
     }
 
@@ -212,7 +212,7 @@ abstract class Base_Block {
      *
      * @since 1.0.0
      */
-    function create_instance_id() : string {
+    function create_instance_id(): string {
         return wp_unique_prefixed_id( $this->get_tag_name() . '-' );
     }
 
@@ -237,7 +237,7 @@ abstract class Base_Block {
      *
      * @since 1.0.0
      */
-    function get_frontend_styles( string $instance_id, array $attributes, WP_Block $block ) : array {
+    function get_frontend_styles( string $instance_id, array $attributes, WP_Block $block ): array {
         return array();
     }
 
@@ -257,7 +257,7 @@ abstract class Base_Block {
      *
      * @since 1.0.0
      */
-    function get_frontend_data( string $instance_id, array $attributes, WP_Block $block ) : array {
+    function get_frontend_data( string $instance_id, array $attributes, WP_Block $block ): array {
         return array();
     }
 
@@ -279,15 +279,16 @@ abstract class Base_Block {
      *
      * @since 1.0.0
      */
-    function get_frontend_attributes( string $instance_id, array $attributes, WP_Block $block ) : array {
+    function get_frontend_attributes( string $instance_id, array $attributes, WP_Block $block ): array {
         return array();
     }
 
     function get_frontend_icon( string $slug, string $slot ) {
         list( $set_name, $icon_name ) = explode( '__', $slug );
         $file_path = FOOCONVERT_ASSETS_PATH . "/media/icons/$set_name/$icon_name.svg";
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
         $file_contents = file_get_contents( $file_path );
-        if ( ! empty( $file_contents ) ) {
+        if ( !empty( $file_contents ) ) {
             return "<span class=\"fc-icon\" slot=\"$slot\" role=\"img\" aria-hidden=\"true\">$file_contents</span>";
         }
         return false;
@@ -312,7 +313,7 @@ abstract class Base_Block {
      *
      * @since 1.0.0
      */
-    function get_frontend_icons( string $instance_id, array $attributes, WP_Block $block ) : array {
+    function get_frontend_icons( string $instance_id, array $attributes, WP_Block $block ): array {
         return array();
     }
 
@@ -326,7 +327,7 @@ abstract class Base_Block {
      * @return string|false
      */
     function render( array $attributes, string $content, WP_Block $block ) {
-        if ( ! empty( $content ) ) {
+        if ( !empty( $content ) ) {
             $tag_name = $this->get_tag_name();
             $instance_id = $this->create_instance_id();
             $frontend_attributes = $this->get_frontend_attributes( $instance_id, $attributes, $block );
@@ -347,7 +348,7 @@ abstract class Base_Block {
             // The do_blocks() output is passed through wp_kses with an extended post allowed HTML list that includes
             // the custom elements for the plugin.
             // phpcs:ignore WordPress.Security.EscapeOutput
-            echo FooConvert::plugin()->kses_post( do_blocks( $content ) );
+            echo $this->kses( $attributes, do_blocks( $content ), $block, 'root' );
     ?>
 </<?php echo esc_html( $tag_name ); ?>>
 <?php
@@ -357,27 +358,59 @@ abstract class Base_Block {
         return false;
     }
 
-    function render_empty() : string {
+    function render_empty(): string {
         return '';
     }
 
-    function render_content( array $attributes, string $content ) {
+    function render_content( array $attributes, string $content, WP_Block $block ) {
         ob_start();
         // Reviewers:
         // The do_blocks() output is passed through wp_kses with an extended post allowed HTML list that includes
         // the custom elements for the plugin.
         // phpcs:ignore WordPress.Security.EscapeOutput
-        echo FooConvert::plugin()->kses_post( do_blocks( $content ) );
+        echo $this->kses( $attributes, do_blocks( $content ), $block, 'content' );
         return ob_get_clean();
+    }
+
+    function render_check_compatibility( array $attributes, string $content, WP_Block $block ) {
+        ob_start();
+        // Reviewers:
+        // The do_blocks() output is passed through wp_kses with an extended post allowed HTML list that includes
+        // the custom elements for the plugin.
+        // phpcs:ignore WordPress.Security.EscapeOutput
+        echo $this->kses( $attributes, do_shortcode( do_blocks( $content ) ), $block, 'check_compatibility' );
+        return ob_get_clean();
+    }
+
+    public function get_post_id( array $attributes, WP_Block $block ): int {
+        $post_id = Utils::get_int( $attributes, 'postId' );
+        if ( !empty( $post_id ) ) {
+            return $post_id;
+        }
+        return Utils::get_int( $block->context, 'fc/postId' );
+    }
+
+    function kses( array $attributes, string $content, WP_Block $block, string $context = '' ): string {
+        if ( $this->supports( 'compatibility' ) ) {
+            $post_id = $this->get_post_id( $attributes, $block );
+            if ( !empty( $post_id ) ) {
+                $compatibility_mode = FooConvert::plugin()->compatibility->is_enabled( $post_id );
+                if ( $context === 'check_compatibility' ) {
+                    FooConvert::plugin()->compatibility->check_content( $post_id, $content );
+                }
+                return FooConvert::plugin()->kses_post( $content, $compatibility_mode );
+            }
+        }
+        return FooConvert::plugin()->kses_post( $content );
     }
 
     //endregion
 
-    function enqueue_editor_settings() : bool {
+    function enqueue_editor_settings(): bool {
         $js_script = Utils::to_js_script( $this->get_editor_settings_name(), $this->get_editor_settings() );
-        if ( ! empty( $js_script ) ) {
+        if ( !empty( $js_script ) ) {
             $handle = $this->get_asset_handle( 'editor_script_handles' );
-            if ( ! empty( $handle ) ) {
+            if ( !empty( $handle ) ) {
                 // Reviewers:
                 // The $js_script is built up from settings required by our plugins' blocks and is both
                 // HTML decoded and JSON encoded by the to_js_script method.
@@ -389,7 +422,7 @@ abstract class Base_Block {
     }
 
     function render_frontend_icons( string $instance_id, array $icons ) {
-        if ( ! empty( $icons ) ) {
+        if ( !empty( $icons ) ) {
             foreach ( $icons as $icon ) {
                 if ( Utils::is_string( $icon, true ) && false !== strpos( $icon, 'slot=' ) ) {
                     // Reviewers:
@@ -402,22 +435,22 @@ abstract class Base_Block {
         }
     }
 
-    function enqueue_frontend_styles( string $instance_id, array $styles ) : bool {
+    function enqueue_frontend_styles( string $instance_id, array $styles ): bool {
         $css_text = Utils::to_css_text( $styles, true );
-        if ( ! empty( $css_text ) ) {
+        if ( !empty( $css_text ) ) {
             $handle = $this->get_asset_handle( 'view_style_handles' );
-            if ( ! empty( $handle ) ) {
+            if ( !empty( $handle ) ) {
                 return wp_add_inline_style( $handle, esc_html( $css_text ) );
             }
         }
         return false;
     }
 
-    function enqueue_frontend_data( string $instance_id, array $data ) : bool {
+    function enqueue_frontend_data( string $instance_id, array $data ): bool {
         $js_script = Utils::to_js_script( $this->get_frontend_data_name( $instance_id ), $data );
-        if ( ! empty( $js_script ) ) {
+        if ( !empty( $js_script ) ) {
             $handle = $this->get_asset_handle( 'view_script_handles' );
-            if ( ! empty( $handle ) ) {
+            if ( !empty( $handle ) ) {
                 // Reviewers:
                 // The $js_script is built up from the $data array created by our plugins' blocks and is both
                 // HTML decoded and JSON encoded by the to_js_script method.

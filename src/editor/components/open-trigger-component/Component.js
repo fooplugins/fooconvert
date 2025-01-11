@@ -5,11 +5,11 @@ import { cleanObject, isNumberWithin, isString } from "@steveush/utils";
 import "./Component.scss";
 
 /**
- * @typedef {"immediate"|"anchor"|"exit-intent"|"scroll"|"timer"|"visible"} TriggerType
+ * @typedef {"immediate"|"anchor"|"element"|"exit-intent"|"scroll"|"timer"|"visible"} TriggerType
  */
 
 /**
- * @typedef {{value: TriggerType, label: import('react').ReactNode, help: import('react').ReactNode, dataLabel?: import('react').ReactNode, dataHelp?: import('react').ReactNode}} Trigger
+ * @typedef {{value: TriggerType, label: import('react').ReactNode, help?: import('react').ReactNode, dataLabel?: import('react').ReactNode, dataHelp?: import('react').ReactNode}} Trigger
  */
 
 /**
@@ -35,6 +35,12 @@ const TRIGGERS = [ {
     help: __( 'Open when an anchor becomes visible within the window.', 'fooconvert' ),
     dataLabel: __( 'Anchor', 'fooconvert' ),
     dataHelp: __( 'Add an anchor to a block and then insert the same value here.', 'fooconvert' )
+}, {
+    value: 'element',
+    label: __( 'On element click', 'fooconvert' ),
+    help: __( 'Open when an element is clicked.', 'fooconvert' ),
+    dataLabel: __( 'Selector', 'fooconvert' ),
+    dataHelp: __( 'A CSS selector that specifies the element(s) to target.', 'fooconvert' )
 }, {
     value: 'exit-intent',
     label: __( 'On exit intent', 'fooconvert' ),
@@ -77,6 +83,7 @@ const OpenTriggerComponent = ( props ) => {
     const setTrigger = ( type, data ) => {
         switch ( type ) {
             case "anchor":
+            case "element":
             case "visible":
                 data = isString( data ) ? data : "";
                 break;
@@ -110,8 +117,9 @@ const OpenTriggerComponent = ( props ) => {
                 hideLabelFromVision={ hideLabelFromVision }
                 help={ selected?.help }
                 value={ selected.value }
-                options={ options }
+                options={ options.map( opt => ({ label: opt.label, value: opt.value }) ) }
                 onChange={ nextValue => setTrigger( nextValue ) }
+                __nextHasNoMarginBottom
             />
         );
     };
@@ -119,6 +127,7 @@ const OpenTriggerComponent = ( props ) => {
     const renderData = () => {
         switch ( selected.value ) {
             case "anchor":
+            case "element":
             case "visible":
                 return (
                     <TextControl
@@ -126,6 +135,7 @@ const OpenTriggerComponent = ( props ) => {
                         help={ selected?.dataHelp }
                         value={ data ?? "" }
                         onChange={ value => setTrigger( selected.value, value ) }
+                        __nextHasNoMarginBottom
                     />
                 );
             case "scroll":
@@ -140,6 +150,7 @@ const OpenTriggerComponent = ( props ) => {
                         min={ selected.value === 'scroll' ? 1 : 0 }
                         max={ 100 }
                         onChange={ value => setTrigger( selected.value, value ) }
+                        __nextHasNoMarginBottom
                     />
                 );
         }

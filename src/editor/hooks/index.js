@@ -11,4 +11,5 @@ export { default as useBlockObjectAttribute } from "./useBlockObjectAttribute";
 export { default as useBlockAttributes } from "./useBlockAttributes";
 export { default as useParentAttributes } from "./useParentAttributes";
 export { default as useRootAttributes } from "./useRootAttributes";
+export { default as useDebounce } from "./useDebounce";
 export * from "./use-icon-sets";

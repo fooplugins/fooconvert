@@ -90,6 +90,5 @@ This project extends the default `@wordpress/scripts/config/webpack.config` to p
 `frontend` scripts based on there include path.
 3. Configure the `@wordpress/dependency-extraction-webpack-plugin` to handle the `editor` and `frontend` scripts.
 4. Add `raw-loader` to the default `module.rules` and configure it to import `.html` files.
-5. Add `copy-webpack-plugin` to the default `plugins` and configure it to copy the `src/media` folder to the `assets` folder.
 
 **_Note:_** Check the comments in the file for more detailed explanations of the above.

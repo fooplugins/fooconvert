@@ -28,6 +28,13 @@
         }
     },
     "require": {
-        "composer/installers": "v1.12.0"
-    }
+        "composer/installers": "v1.12.0",
+        "freemius/wordpress-sdk": "^2.10"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://repo.packagist.org"
+        }
+    ]
 }

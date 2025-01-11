@@ -16,6 +16,9 @@
     "html": false
   },
   "attributes": {
+    "template": {
+      "type": "string"
+    },
     "postId": {
       "type": "number"
     },
@@ -41,6 +44,7 @@
   },
   "usesContext": [ "postId" ],
   "providesContext": {
+    "fc/postId": "postId",
     "fc-flyout/viewState": "viewState",
     "fc-flyout/settings": "settings",
     "fc-flyout/styles": "styles",

@@ -1,0 +1,252 @@
+.fooconvert-dashboard-container {
+    margin-left: -20px;
+}
+
+.fooconvert-dashboard-columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1032px;
+    margin: 0 auto;
+    justify-content: space-between;
+}
+
+.fooconvert-dashboard-column {
+    width: calc(50% - 12px);
+    margin: 0;
+    align-self: flex-start;
+}
+
+.fooconvert-dashboard-left {
+}
+
+.fooconvert-dashboard-right {
+}
+
+.fooconvert-panel {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.fooconvert-panel-section {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 5px 20px;
+}
+
+.fooconvert-panel-section.fooconvert-panel-no-padding {
+    padding: 0;
+}
+
+.fooconvert-panel-section.fooconvert-panel-no-padding .spinner {
+    margin: 10px;
+}
+
+.fooconvert-panel-section.fooconvert-panel-no-padding .fooconvert-padding {
+    padding: 5px 20px;
+}
+
+.fooconvert-panel-section-flex {
+    display: flex;
+    justify-content: space-between; /* Ensures spacing between child elements */
+    align-items: center; /* Vertically aligns the elements */
+}
+
+.fooconvert-panel-section-right {
+    display: flex;
+    align-items: center; /* Keeps the label and select vertically aligned */
+    justify-content: flex-end; /* Positions the content to the right */
+}
+
+.fooconvert-panel-section-right label {
+    display: flex;
+    align-items: center; /* Ensures the label and select are aligned */
+}
+
+.fooconvert-panel-section-right select {
+    margin-left: 8px; /* Adds spacing between the label text and the dropdown */
+}
+
+.fooconvert-panel-section h2 {
+    margin-bottom: 8px;
+    margin-top: 8px;
+}
+
+.fooconvert-center {
+    text-align: center;
+}
+
+.fooconvert-flex {
+    display: flex;
+    align-items: center;
+}
+
+.fooconvert-panel .spinner {
+    float: none;
+    margin: 0 10px 0;
+}
+
+ol.fooconvert-ordered-list {
+    counter-reset: item;
+    list-style: none;
+    margin-left: 5px;
+}
+
+ol.fooconvert-ordered-list li {
+    counter-increment: item;
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 40px;
+    display: flex;
+    align-items: center;
+    height: 30px;
+}
+
+ol.fooconvert-ordered-list li::before {
+    content: counter(item);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    background-color: #2271b1;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.fooconvert-top-performers-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    overflow: hidden;
+}
+
+.fooconvert-top-performers-table th,
+.fooconvert-top-performers-table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.fooconvert-top-performers-table tbody tr:nth-child(odd) {
+    background: #fcfcfc;
+}
+
+.fooconvert-top-performers-table tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+.fooconvert-top-performers-table tbody tr:hover {
+    background: #fafafa;
+}
+
+.fooconvert-top-performers-table th:nth-child(1),
+.fooconvert-top-performers-table td:nth-child(1) {
+    text-align: center;
+    width: 30px;
+}
+
+.fooconvert-top-performers-table th:nth-child(3),
+.fooconvert-top-performers-table td:nth-child(3) {
+    text-align: right;
+}
+
+.fooconvert-top-performers-table-actions {
+    visibility: hidden;
+    display: inline-block;
+}
+
+.fooconvert-top-performers-table tr:hover .fooconvert-top-performers-table-actions {
+    visibility: visible;
+}
+
+.fooconvert-top-performers-table a {
+    text-decoration: none;
+}
+
+.fooconvert-tooltip {
+    color: #aaa;
+}
+
+
+/* Top-level container for the slider */
+.fooconvert-slider {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+/* Slider wrapper for horizontal alignment */
+.fooconvert-slider-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 200%; /* Adjust based on number of slides (e.g., 200% for 2 slides, 300% for 3) */
+}
+
+/* Individual slide styling */
+.fooconvert-slide {
+    flex: 0 0 50%; /* Each slide takes up the full width of the slider */
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+/* Reduce addon header size */
+.fooconvert-slide h3 {
+    margin-top: 0;
+    font-size: 16px; /* Reduce font size */
+    color: #2271b1;
+}
+
+/* Bold description text */
+.fooconvert-slide p strong {
+    font-weight: bold;
+    color: #444;
+}
+
+/* Adjust navigation buttons inside header */
+.fooconvert-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fooconvert-slider-nav {
+    gap: 10px; /* Space between buttons */
+    display: none;
+}
+
+.fooconvert-slider-nav button.button.button-small {
+    min-height: 25px;
+    line-height: inherit;
+    padding: 0;
+}
+
+.fooconvert-slider-prev:hover,
+.fooconvert-slider-next:hover {
+    background: #005a9c; /* Darker shade on hover */
+}
+
+
+
+@media (max-width: 768px) {
+    .fooconvert-dashboard-container {
+        flex-direction: column;
+        margin-left: -10px;
+    }
+
+    .fooconvert-dashboard-columns {
+        gap: 0;
+    }
+
+    .fooconvert-dashboard-column {
+        width: 100%;
+    }
+}

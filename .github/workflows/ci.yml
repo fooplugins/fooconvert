@@ -1,0 +1,62 @@
+name: 'fooconvert-build'
+on: # rebuild any PRs and main branch changes
+  pull_request:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      # Checkout the repository
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Set up PHP
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.1
+          tools: composer, wp-cli
+          coverage: none
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Install Composer dependencies
+      - name: Install Composer dependencies
+        run: composer install --no-dev --prefer-dist
+
+      # Install npm dependencies
+      - name: Install NPM dependencies
+        run: npm install --silent --no-audit
+
+      # Extract version from package.json
+      - name: Extract Version
+        id: version
+        run: |
+          VERSION=$(jq -r '.version' package.json)
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+          echo "::notice::Version : ${VERSION}"
+
+      # Create ZIP package
+      - name: Run Build and Create ZIP
+        run: npm run package:create-zip > /dev/null
+
+      # Unzip plugin package
+      - name: Unzip Plugin
+        run: |
+          mkdir -p fooconvert
+          unzip -o dist/fooconvert.v${{ env.VERSION }}.zip -d fooconvert/ > /dev/null
+
+      # Run plugin check
+      - name: Run plugin check
+        uses: wordpress/plugin-check-action@v1
+        with:
+          build-dir: './fooconvert'
+          exclude-directories: 'vendor,src'

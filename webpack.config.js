@@ -1,7 +1,6 @@
 
 const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
-const CopyPlugin = require( 'copy-webpack-plugin' );
 
 /**
  * Modify the default WordPress config entry points to include our internal packages '#editor' and '#frontend' that are
@@ -109,14 +108,6 @@ module.exports = {
     // CopyPlugin to allow simple copying of files within the media folder.
     plugins: [
         ...defaultConfig.plugins.filter( plugin => plugin.constructor.name !== 'DependencyExtractionWebpackPlugin' ),
-        !process.env.WP_NO_EXTERNALS && new DependencyExtractionWebpackPlugin( dependencyExtractionWebpackPluginOptions ),
-        new CopyPlugin( {
-            patterns: [ {
-                context: './src/media',
-                from: '*.*',
-                to: 'media/[name][ext]',
-                noErrorOnMissing: true
-            } ]
-        } )
+        !process.env.WP_NO_EXTERNALS && new DependencyExtractionWebpackPlugin( dependencyExtractionWebpackPluginOptions )
     ].filter( Boolean )
 };

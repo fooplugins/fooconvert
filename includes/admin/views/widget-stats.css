@@ -1,0 +1,226 @@
+/* General container styling */
+.fooconvert-stats-container {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px; /* Space between the items */
+    margin: 20px 0 0;
+}
+
+.fooconvert-stats-container h2 {
+    font-size: 20px;
+    margin: 0;
+    color: #333;
+    grid-column: span 4;
+}
+
+.fooconvert-stats-header {
+    grid-column: span 4;
+    display: flex;
+    align-items: center; /* Vertically center the items */
+}
+
+.fooconvert-stats-header .button {
+    margin-left: 10px;
+}
+
+/* Metrics layout */
+.fooconvert-basic-metrics {
+    grid-column: span 4; /* Span all columns for overall metrics section */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px; /* Add spacing between each metric */
+}
+
+.metric {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.2s ease;
+    grid-column: span 1; /* Each metric takes one column */
+}
+
+.metric:hover {
+    transform: translateY(-5px);
+}
+
+.metric h2 {
+    font-size: 12px;
+    color: #555;
+    margin: 0;
+}
+
+.metric p {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+}
+
+.metric.pro-feature {
+    position: relative;
+    border-color: rgba(0, 123, 255, 0.25);
+}
+
+.metric.pro-feature p {
+    filter: blur(5px);
+    user-select: none;
+    color: #666;
+}
+
+.metric.pro-feature::before {
+    content: 'PRO';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 123, 255, 0.1);
+    color: #0d6efd;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.pro-info-panel {
+    grid-column: span 4;
+    background-color: rgba(0, 123, 255, 0.05);
+    border: 1px solid rgba(0, 123, 255, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pro-info-panel i {
+    color: #0d6efd;
+    font-size: 20px;
+}
+
+.pro-info-panel p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.pro-info-panel a {
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.pro-info-panel a:hover {
+    text-decoration: underline;
+}
+
+/* Shimmer effect */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.metric.loading span {
+    color: transparent !important;
+}
+
+.metric.loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.metric.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(90deg, rgba(240, 240, 240, 0.7) 25%, rgba(224, 224, 224, 0.7) 50%, rgba(240, 240, 240, 0.7) 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+}
+
+.fooconvert-recent-activity-container.loading {
+    position: relative;
+    min-height: 300px;
+    overflow: hidden;
+}
+
+.fooconvert-recent-activity-container.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+}
+
+.fooconvert-recent-activity-container.loading canvas {
+    opacity: 0;
+}
+
+/* Chart containers */
+.fooconvert-recent-activity-container {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+    grid-column: span 4; /* Chart takes up 4 columns */
+}
+
+.fooconvert-recent-activity-container h2 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .fooconvert-stats-container {
+        grid-template-columns: repeat(2, 1fr); /* Change to 2 columns on smaller screens */
+    }
+
+    .fooconvert-basic-metrics,
+    .fooconvert-pro-metrics {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .metric {
+        grid-column: span 1;
+    }
+
+    .fooconvert-recent-activity-container {
+        grid-column: span 2; /* Chart takes 2 columns on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .fooconvert-stats-container {
+        grid-template-columns: 1fr; /* One column layout for mobile */
+    }
+
+    .fooconvert-basic-metrics,
+    .fooconvert-pro-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .metric {
+        grid-column: span 1;
+    }
+
+    .fooconvert-recent-activity-container {
+        grid-column: span 1; /* Chart takes 1 column on very small screens */
+    }
+}

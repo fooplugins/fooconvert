@@ -6,9 +6,7 @@ import { __, sprintf } from "@wordpress/i18n";
 import "./Plugin.scss";
 import usePostTypeLabels from "../../hooks/usePostTypeLabels";
 
-const PluginCustomEditor = ( ...args ) => {
-    console.log( args );
-
+const PluginCustomEditor = () => {
     const title = useSelect( select => {
         return select( editorStore )?.getEditedPostAttribute( 'title' );
     }, [] );
@@ -31,6 +29,7 @@ const PluginCustomEditor = ( ...args ) => {
                     onChange={ value => editPost( { title: value } ) }
                     help={ help }
                     __next40pxDefaultSize
+                    __nextHasNoMarginBottom
                 />
             </PanelRow>
         </PluginDocumentSettingPanel>

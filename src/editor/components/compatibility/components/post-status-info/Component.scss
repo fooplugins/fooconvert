@@ -1,0 +1,46 @@
+.editor-post-panel__row-label {
+  width: 33%!important;
+}
+
+.fc--compatibility__post-status-info {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+  width: 100%;
+
+  .fc--compatibility__post-status-info__label {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    hyphens: auto;
+    line-height: 20px;
+    min-height: 32px;
+    padding: 6px 0;
+    width: 33%;
+  }
+  .fc--compatibility__post-status-info__control {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    min-height: 32px;
+
+    .fc--compatibility__post-status-info__dropdown-button {
+      line-height: 24px;
+
+      &.is-enabled {
+        svg {
+          fill: #4ab866;
+        }
+      }
+
+      &.is-warning {
+        svg {
+          transform: rotate(180deg);
+          fill: #f0b849;
+        }
+      }
+    }
+  }
+}

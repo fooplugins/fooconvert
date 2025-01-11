@@ -1,6 +1,7 @@
 import "./root.scss";
 export * from "./border-radius-control";
 export * from "./border-tools-panel";
+export * from "./box-shadow-control";
 export * from "./box-units-control";
 export * from "./color-tools-panel";
 export * from "./dimension-tools-panel";
@@ -25,6 +26,7 @@ export * from "./units-control";
 export * from "./variation-picker";
 export * from "./experimental";
 export * from "./display-rules";
+export * from "./compatibility";
 
 export * from "./icons-picker-control";
 export * from "./icons-dropdown";
