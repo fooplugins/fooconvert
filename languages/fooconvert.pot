@@ -1,23 +1,21 @@
-# Copyright (C) 2024 FooPlugins
+# Copyright (C) 2025 FooPlugins
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: FooConvert 0.0.26\n"
+"Project-Id-Version: FooConvert - Boost Conversions & Lead Generation 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/fooplugins/fooconvert/issues\n"
 "Last-Translator: FooPlugins <info@fooplugins.com>\n"
 "Language-Team: FooPlugins <info@fooplugins.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-12-27T10:04:54+00:00\n"
+"POT-Creation-Date: 2025-01-07T21:05:40+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: fooconvert\n"
 
 #. Plugin Name of the plugin
-#: includes/admin/class-init.php:58
-#: includes/admin/class-init.php:59
-msgid "FooConvert"
+msgid "FooConvert - Boost Conversions & Lead Generation"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -46,7 +44,7 @@ msgid "You do not have permission to access this page."
 msgstr ""
 
 #: includes/admin/class-dashboard.php:59
-#: includes/admin/class-stats.php:138
+#: includes/admin/class-stats.php:153
 msgid "Nonce is not set."
 msgstr ""
 
@@ -63,12 +61,17 @@ msgstr ""
 msgid "All demo widgets deleted!"
 msgstr ""
 
-#: includes/admin/class-dashboard.php:184
+#: includes/admin/class-dashboard.php:187
 msgid "FooConvert Dashboard"
 msgstr ""
 
-#: includes/admin/class-dashboard.php:185
+#: includes/admin/class-dashboard.php:188
 msgid "Dashboard"
+msgstr ""
+
+#: includes/admin/class-init.php:58
+#: includes/admin/class-init.php:59
+msgid "FooConvert"
 msgstr ""
 
 #: includes/admin/class-promotions.php:106
@@ -390,12 +393,12 @@ msgid "Events"
 msgstr ""
 
 #: includes/admin/class-stats.php:85
-#: includes/functions.php:276
+#: includes/functions.php:279
 msgid "Views"
 msgstr ""
 
 #: includes/admin/class-stats.php:93
-#: includes/functions.php:268
+#: includes/functions.php:271
 msgid "Engagements"
 msgstr ""
 
@@ -403,17 +406,17 @@ msgstr ""
 msgid "Unique Visitors"
 msgstr ""
 
-#: includes/admin/class-stats.php:176
-#: includes/admin/class-stats.php:183
+#: includes/admin/class-stats.php:191
+#: includes/admin/class-stats.php:198
 msgid "Stats"
 msgstr ""
 
-#: includes/admin/class-stats.php:203
+#: includes/admin/class-stats.php:218
 msgid "View Stats"
 msgstr ""
 
-#: includes/admin/class-stats.php:220
-#: includes/admin/class-stats.php:221
+#: includes/admin/class-stats.php:235
+#: includes/admin/class-stats.php:236
 msgid "Widget Stats"
 msgstr ""
 
@@ -623,6 +626,30 @@ msgstr ""
 msgid "Recent Activity"
 msgstr ""
 
+#: includes/class-event-hooks.php:142
+msgid "Published"
+msgstr ""
+
+#: includes/class-event-hooks.php:145
+msgid "Un-published"
+msgstr ""
+
+#: includes/class-event-hooks.php:148
+msgid "Status Updated"
+msgstr ""
+
+#: includes/class-event-hooks.php:164
+msgid "Content Updated"
+msgstr ""
+
+#: includes/class-event-hooks.php:182
+msgid "Open Trigger Changed"
+msgstr ""
+
+#: includes/class-event-hooks.php:197
+msgid "Styling Updated"
+msgstr ""
+
 #: includes/class-fooconvert-compatibility.php:55
 msgid "Compatibility settings for FooConvert."
 msgstr ""
@@ -708,27 +735,27 @@ msgstr ""
 msgid "Roles"
 msgstr ""
 
-#: includes/functions.php:267
+#: includes/functions.php:270
 msgid "engagements"
 msgstr ""
 
-#: includes/functions.php:269
+#: includes/functions.php:272
 msgid "Total number of engagements"
 msgstr ""
 
-#: includes/functions.php:275
+#: includes/functions.php:278
 msgid "views"
 msgstr ""
 
-#: includes/functions.php:277
+#: includes/functions.php:280
 msgid "Total number of views"
 msgstr ""
 
-#: includes/functions.php:317
+#: includes/functions.php:320
 msgid "ago"
 msgstr ""
 
-#: includes/functions.php:345
+#: includes/functions.php:348
 msgid "Never"
 msgstr ""
 
