@@ -38,6 +38,7 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                 'fields' => array(
                     'retention' => array(
                         'id'    => 'retention',
+                        'order' => 1,
                         'type'  => 'html',
                         'label' => __( 'Retention Period', 'fooconvert' ),
                         'html'  => '<pre>' . esc_html( fooconvert_retention() ) . ' ' . __( 'days', 'fooconvert' ) . '</pre>',
@@ -46,18 +47,21 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                     ),
                     'debug' => array(
                         'id'    => 'debug',
+                        'order' => 10,
                         'type'  => 'checkbox',
                         'label' => __( 'Enable Debug Mode', 'fooconvert' ),
                         'desc'  => __( 'Helps to debug problems and diagnose issues. Enable debugging if you need support for an issue you are having.', 'fooconvert' )
                     ),
                     'hide_promos' => array(
                         'id'    => 'hide_promos',
+                        'order' => 20,
                         'type'  => 'checkbox',
                         'label' => __( 'Hide Promos', 'fooconvert' ),
                         'desc'  => __( 'If enabled, will hide all promotional messages within the admin area.', 'fooconvert' )
                     ),
                     'demo_content' => array(
                         'id'    => 'demo_content',
+                        'order' => 30,
                         'type'  => 'checkbox',
                         'label' => __( 'Demo Content Created', 'fooconvert' ),
                         'desc'  => __( 'If the demo content has been created, then this will be checked. You can uncheck this to allow for demo content to be created again.', 'fooconvert' )
