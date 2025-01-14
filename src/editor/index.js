@@ -4,6 +4,8 @@ export * from "./plugins";
 export * from "./utils";
 export * from "./icons";
 
+import "./index.scss";
+
 import * as components from "./components";
 import * as hooks from "./hooks";
 import * as plugins from "./plugins";
