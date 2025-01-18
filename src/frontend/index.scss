@@ -12,3 +12,11 @@ span[role=img].fc-icon {
     fill: currentColor;
   }
 }
+
+.wp-block-button.fc-image-button {
+  > .wp-block-button__link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+}

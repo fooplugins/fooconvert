@@ -349,8 +349,8 @@ class Popup extends Base_Widget {
                     'text' => 'color'
                 ) ) );
 
-                $content_width = Utils::get_string( $content_styles_attribute, 'width', '480px' );
-                if ( ! empty( $content_width ) && $content_width !== '480px' ) {
+                $content_width = Utils::get_string( $content_styles_attribute, 'width', '720px' );
+                if ( ! empty( $content_width ) && $content_width !== '720px' ) {
                     $content['width'] = $content_width;
                 }
             }
