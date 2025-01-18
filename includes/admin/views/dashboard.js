@@ -8,7 +8,8 @@ jQuery(document).ready(function ($) {
             url: fooconvertData.ajaxUrl,
             method: 'POST',
             data: {
-                action: 'fooconvert_dashboard_top_performers',
+                action: 'fooconvert_dashboard_task',
+                task: 'fetch_top_performers',
                 sort: $('.fooconvert-top-performers-sort').val(),
                 nonce: fooconvertData.nonce
             },
@@ -39,7 +40,8 @@ jQuery(document).ready(function ($) {
             url: fooconvertData.ajaxUrl,
             method: 'POST',
             data: {
-                action: 'fooconvert_update_stats',
+                action: 'fooconvert_dashboard_task',
+                task: 'update_stats',
                 nonce: fooconvertData.nonce
             },
             success: function (response) {
@@ -66,7 +68,8 @@ jQuery(document).ready(function ($) {
             url: fooconvertData.ajaxUrl,
             method: 'POST',
             data: {
-                action: 'fooconvert_create_demo_widgets',
+                action: 'fooconvert_dashboard_task',
+                task: 'create_demo_widgets',
                 nonce: fooconvertData.nonce
             },
             success: function (response) {
@@ -90,7 +93,8 @@ jQuery(document).ready(function ($) {
             url: fooconvertData.ajaxUrl,
             method: 'POST',
             data: {
-                action: 'fooconvert_delete_demo_widgets',
+                action: 'fooconvert_dashboard_task',
+                task: 'delete_demo_widgets',
                 nonce: fooconvertData.nonce
             },
             success: function (response) {
@@ -102,7 +106,36 @@ jQuery(document).ready(function ($) {
                 alert('Failed to delete demo widgets!');
             }
         });
-    })
+    });
+
+    // Hide panel
+    $('.fooconvert-hide-panel').click(function(e) {
+        e.preventDefault();
+        var $spinner = $('<span class="spinner is-active panel-hide-spinner"></span>'),
+            panel = $(this).data('panel'),
+            $panel = $('.fooconvert-panel[data-panel="' + panel + '"]');
+
+        $(this).hide().after( $spinner );
+
+        $.ajax({
+            url: fooconvertData.ajaxUrl,
+            method: 'POST',
+            data: {
+                action: 'fooconvert_dashboard_task',
+                task: 'hide_panel',
+                panel: panel,
+                nonce: fooconvertData.nonce
+            },
+            success: function (response) {
+                $spinner.remove();
+                $panel.hide();
+            },
+            error: function () {
+                $spinner.remove();
+                alert('Failed to hide panel!');
+            }
+        });
+    });
 });
 
 document.addEventListener('DOMContentLoaded', function () {

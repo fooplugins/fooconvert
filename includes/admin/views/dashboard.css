@@ -90,6 +90,10 @@
     margin: 0 10px 0;
 }
 
+.fooconvert-hide-panel {
+    text-decoration: none;
+}
+
 ol.fooconvert-ordered-list {
     counter-reset: item;
     list-style: none;

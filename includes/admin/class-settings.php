@@ -57,11 +57,22 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                         'order' => 20,
                         'type'  => 'checkbox',
                         'label' => __( 'Hide Promos', 'fooconvert' ),
-                        'desc'  => __( 'If enabled, will hide all promotional messages within the admin area.', 'fooconvert' )
+                        'desc'  => __( 'If enabled, will hide all promotional messages within the admin area, including the dashboard Addons panel.', 'fooconvert' )
+                    ),
+                    'hide_dashboard_panels' => array(
+                        'id'    => 'hide_dashboard_panels',
+                        'order' => 30,
+                        'type'  => 'checkboxlist',
+                        'label' => __( 'Hide Dashboard Panels', 'fooconvert' ),
+                        'choices' => array(
+                            'getting-started' => __( 'Getting Started', 'fooconvert' ),
+                            'help' => __( 'Help', 'fooconvert' ),
+                        ),
+                        'desc'  => __( 'Will hide specific dashboard panel if checked.', 'fooconvert' )
                     ),
                     'demo_content' => array(
                         'id'    => 'demo_content',
-                        'order' => 30,
+                        'order' => 40,
                         'type'  => 'checkbox',
                         'label' => __( 'Demo Content Created', 'fooconvert' ),
                         'desc'  => __( 'If the demo content has been created, then this will be checked. You can uncheck this to allow for demo content to be created again.', 'fooconvert' )
