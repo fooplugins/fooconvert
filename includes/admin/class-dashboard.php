@@ -1,4 +1,5 @@
 <?php
+
 namespace FooPlugins\FooConvert\Admin;
 
 use FooPlugins\FooConvert\Event;
@@ -10,20 +11,18 @@ use FooPlugins\FooConvert\FooConvert;
 
 if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
 
-    class Dashboard
-    {
+    class Dashboard {
         /**
          * Init constructor.
          */
-        function __construct()
-        {
-            add_action('fooconvert_admin_menu_before_post_types', array($this, 'register_menu'));
-            add_action('admin_enqueue_scripts', array($this, 'enqueue_assets'));
+        function __construct() {
+            add_action( 'fooconvert_admin_menu_before_post_types', array( $this, 'register_menu' ) );
+            add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 
-            add_action('wp_ajax_fooconvert_dashboard_top_performers', array($this, 'fetch_top_performers'));
-            add_action('wp_ajax_fooconvert_create_demo_widgets', array($this, 'create_demo_widgets'));
-            add_action('wp_ajax_fooconvert_delete_demo_widgets', array($this, 'delete_demo_widgets'));
-            add_action('wp_ajax_fooconvert_update_stats', array($this, 'update_stats'));
+            add_action( 'wp_ajax_fooconvert_dashboard_top_performers', array( $this, 'fetch_top_performers' ) );
+            add_action( 'wp_ajax_fooconvert_create_demo_widgets', array( $this, 'create_demo_widgets' ) );
+            add_action( 'wp_ajax_fooconvert_delete_demo_widgets', array( $this, 'delete_demo_widgets' ) );
+            add_action( 'wp_ajax_fooconvert_update_stats', array( $this, 'update_stats' ) );
         }
 
         /**
@@ -43,12 +42,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
                 $nonce = sanitize_text_field( wp_unslash( $_POST['nonce'] ) );
 
                 // Verify the nonce
-                if ( !wp_verify_nonce($nonce, 'fooconvert-dashboard' ) ) {
+                if ( !wp_verify_nonce( $nonce, 'fooconvert-dashboard' ) ) {
                     wp_die( esc_html__( 'Invalid nonce!!', 'fooconvert' ) );
                 }
 
                 // Check if the current user is an administrator
-                if ( $check_admin && ! current_user_can( 'manage_options' ) ) {
+                if ( $check_admin && !current_user_can( 'manage_options' ) ) {
                     wp_die( esc_html__( 'You do not have permission to access this page.', 'fooconvert' ) );
                 }
 
@@ -88,10 +87,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
             fooconvert_set_setting( 'demo_content', 'on' );
 
             if ( $created === 0 ) {
-                wp_send_json( ['message' => __( 'No widgets created!', 'fooconvert' ) ] );
+                wp_send_json( [ 'message' => __( 'No widgets created!', 'fooconvert' ) ] );
             } else {
                 // Translators: %d refers to the number of demo widgets created.
-                wp_send_json( ['message' => sprintf( __( '%d demo widgets created successfully!', 'fooconvert' ), $created  ) ] );
+                wp_send_json( [ 'message' => sprintf( __( '%d demo widgets created successfully!', 'fooconvert' ), $created ) ] );
             }
         }
 
@@ -115,7 +114,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
 
             fooconvert_set_setting( 'demo_content', '' );
 
-            wp_send_json( ['message' => __( 'All demo widgets deleted!', 'fooconvert' ) ] );
+            wp_send_json( [ 'message' => __( 'All demo widgets deleted!', 'fooconvert' ) ] );
         }
 
         /**
@@ -148,7 +147,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
             require_once FOOCONVERT_INCLUDES_PATH . 'admin/views/dashboard-top-performers.php';
             $html = ob_get_clean();
 
-            wp_send_json( ['html' => $html ] );
+            wp_send_json( [ 'html' => $html ] );
         }
 
         /**
@@ -188,7 +187,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
                 __( 'Dashboard', 'fooconvert' ),
                 'manage_options',
                 FOOCONVERT_MENU_SLUG,
-                function() {
+                function () {
                     require_once FOOCONVERT_INCLUDES_PATH . 'admin/views/dashboard.php';
                 }
             );
@@ -242,10 +241,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
                 true
             );
 
-            wp_localize_script('fooconvert-dashboard-js', 'fooconvertData', array(
-                'ajaxUrl' => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('fooconvert-dashboard')
-            ));
+            wp_localize_script( 'fooconvert-dashboard-js', 'fooconvertData', array(
+                'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+                'nonce' => wp_create_nonce( 'fooconvert-dashboard' )
+            ) );
         }
     }
 }
