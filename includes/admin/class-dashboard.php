@@ -137,6 +137,15 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
             }
         }
 
+        /**
+         * Hides a panel in the FooConvert dashboard.
+         *
+         * Handles the AJAX request to hide a panel in the FooConvert dashboard.
+         * Verifies that the 'panel' key is set in the $_POST array and that the value is valid.
+         * If the checks pass, it adds the panel to the hidden_panels option and sends a JSON response.
+         *
+         * @since 1.0.0
+         */
         function hide_panel() {
             $panel = $this->get_post_value( 'panel' );
             if ( empty( $panel ) ) {
