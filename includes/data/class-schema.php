@@ -57,7 +57,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
              * This is the Event table schema.
              *  - id is the primary key
              *  - widget_id is the id of the widget that created the event.
-             *  - event_type is the type of event. This can be one of: 'open', 'click', 'close', etc.
+             *  - event_type is the type of event. This can be one of: 'open', 'click', 'close', 'update'.
+             *  - event_subtype is the subtype of the event. This can be one of: 'engagement'.
+             *  - conversion is a boolean that is true if the event is a conversion.
+             *  - sentiment is a boolean that is true if the event sentiment is positive.
              *  - page_url is the url of the page that created the event
              *  - device_type is the type of device that was used for the event
              *  - user_id who was the user when the event happened. Will be null if not logged in.
