@@ -1,0 +1,23 @@
+This file outlines what the FooConvert plugin does.
+
+FooConvert allows you to create 3 different types of widgets: bars, flyouts, and popups.
+
+FooConvert has a widget designer, which allows you to create and edit widgets using the Gutenberg block editor.
+
+When you create a new widget, you can choose to start from a predefined template or start from scratch.
+
+You can customize the appearance and behavior of each widget, with the following options:
+ - Display Rules : this controls where the widget is displayed. Examples : all pages, on a specific page, on a specific post type, etc.
+ - Open Trigger : this controls when the widget is opened. Examples : on page load, on page scroll, on timer, on anchor click, on exit intent, etc.
+ - Appearance : you control the style, colors, size and layout of the widget.
+ - Content : you can embed any block or shortcode within the widget.
+
+FooConvert has an admin dashboard, which displays the following panels:
+ - Getting started : a quick way to create demo widgets, or how to get started and create your first widget.
+ - Top Performers : displays the top performing widgets (for example by engagements and views).
+ - Help : links to support and documentation.
+ - Premium Addons : a list of premium addons that extend the functionality of FooConvert.
+
+There is also an admin page for Widget Stats, which shows the metrics and a recent activity chart for your widgets.
+Metrics include total events, views, visitors and engagements.
+The recent activity chart shows the daily number of events, views, visitors and engagements for the last 14 days.
