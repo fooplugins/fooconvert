@@ -32,10 +32,15 @@ if ( !class_exists( __NAMESPACE__ . '\Stats' ) ) {
 
                 foreach ( fooconvert_widget_metric_options() as $key => $option ) {
                     $metric_value = 0;
-                    if ( isset( $metrics[$option['metric']] ) ) {
-                        $metric_value = $metrics[$option['metric']];
-                        if ( isset( $option['function'] ) && is_callable( $option['function'] ) ) {
+                    if ( array_key_exists('metric', $option) ) {
+                        if ( isset( $metrics[$option['metric']] ) ) {
+                            $metric_value = $metrics[$option['metric']];
+                        } elseif ( isset( $option['function'] ) && is_callable( $option['function'] ) ) {
                             $metric_value = call_user_func( $option['function'], $metric_value );
+                        }
+                    } else {
+                        if ( isset( $option['function'] ) && is_callable( $option['function'] ) ) {
+                            $metric_value = call_user_func( $option['function'], $metrics );
                         }
                     }
                     if ( $metric_value > 0 ) {
