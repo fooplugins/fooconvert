@@ -2,13 +2,12 @@
 
 namespace FooPlugins\FooConvert;
 
-if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
+if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
 
     /**
      * The event class that manages creating events for a widget.
      */
-    class Event
-    {
+    class Event {
         /**
          * Creates a new event and inserts it into the database.
          *
@@ -64,7 +63,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
                 $data = apply_filters( 'fooconvert_event_data', $data, $meta );
 
                 if ( !empty( $post_type ) ) {
-                    $data = apply_filters('fooconvert_event_data_by_post_type-' . $post_type, $data, $meta);
+                    $data = apply_filters( 'fooconvert_event_data_by_post_type-' . $post_type, $data, $meta );
                 }
 
                 if ( !empty( $template ) ) {
@@ -96,8 +95,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
          * @param string $page_url The URL of the page to clean.
          * @return string The cleaned URL.
          */
-        private function clean_page_url($page_url)
-        {
+        private function clean_page_url( $page_url ) {
             // strip the domain from the URL
             $home_url = home_url();
 
@@ -115,10 +113,10 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
          * @param bool $force
          * @return array An associative array of event metric data.
          */
-        public function get_widget_metrics( $widget_id, $force = false) {
+        public function get_widget_metrics( $widget_id, $force = false ) {
 
             if ( !$force ) {
-                $data = get_post_meta($widget_id, FOOCONVERT_META_KEY_METRICS, true);
+                $data = get_post_meta( $widget_id, FOOCONVERT_META_KEY_METRICS, true );
 
                 if ( !empty( $data ) && is_array( $data ) ) {
                     $timestamp = isset( $data['timestamp'] ) ? intval( $data['timestamp'] ) : null;
@@ -157,8 +155,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
          *
          * @return int The number of events deleted.
          */
-        public function delete_all_events()
-        {
+        public function delete_all_events() {
             return Data\Query::delete_all_events();
         }
 
@@ -179,8 +176,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
          *
          * @return int The number of events deleted.
          */
-        public function delete_orphaned_events()
-        {
+        public function delete_orphaned_events() {
             return Data\Query::delete_orphaned_events();
         }
 
