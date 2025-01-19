@@ -1,6 +1,6 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
  * An autoloader based on the {@link https://developer.wordpress.org/coding-standards/wordpress-coding-standards/php/ WordPress - PHP Coding Standards}.
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 function fooconvert_autoloader( string $qualified_name ) {
 
     /* Only autoload classes from this namespace */
-    if ( ! str_starts_with( $qualified_name, FOOCONVERT_NAMESPACE . '\\' ) ) {
+    if ( !str_starts_with( $qualified_name, FOOCONVERT_NAMESPACE . '\\' ) ) {
         return;
     }
 
@@ -44,7 +44,7 @@ function fooconvert_autoloader( string $qualified_name ) {
     $path = implode( '/', $parts );
 
     // ensure the path ends with a slash
-    if ( ! empty( $path ) && ! str_ends_with( $path, '/' ) ) {
+    if ( !empty( $path ) && !str_ends_with( $path, '/' ) ) {
         $path .= '/';
     }
 
@@ -110,7 +110,7 @@ function fooconvert_autoloader( string $qualified_name ) {
  */
 function fooconvert_safe_get_from_array( $key, $array, $default ) {
     if ( is_array( $array ) && array_key_exists( $key, $array ) ) {
-        return $array[ $key ];
+        return $array[$key];
     } else if ( is_object( $array ) && property_exists( $array, $key ) ) {
         return $array->{$key};
     }
@@ -228,7 +228,7 @@ function fooconvert_admin_url_widget_stats_base() {
  * @return string The URL for the FooConvert Widget Stats admin page.
  */
 function fooconvert_admin_url_widget_stats( $widget_id ) {
-    return admin_url(fooconvert_admin_url_widget_stats_base() . '&widget_id=' . $widget_id );
+    return admin_url( fooconvert_admin_url_widget_stats_base() . '&widget_id=' . $widget_id );
 }
 
 /**
@@ -239,7 +239,7 @@ function fooconvert_admin_url_widget_stats( $widget_id ) {
  * @return string The URL for the FooConvert Widget Edit admin page.
  */
 function fooconvert_admin_url_widget_edit( $widget_id ) {
-    return admin_url('post.php?post=' . $widget_id . '&action=edit');
+    return admin_url( 'post.php?post=' . $widget_id . '&action=edit' );
 }
 
 /**
@@ -248,7 +248,7 @@ function fooconvert_admin_url_widget_edit( $widget_id ) {
  * @return bool True if the FooConvert Analytics Addon is active, false otherwise.
  */
 function fooconvert_is_analytics_addon_active() {
-    return function_exists( 'fcpa_fs' ) && did_action('fcpa_fs_loaded');
+    return function_exists( 'fcpa_fs' ) && did_action( 'fcpa_fs_loaded' );
 }
 
 /**
@@ -268,16 +268,16 @@ function fooconvert_widget_metric_options() {
     return apply_filters( 'fooconvert_widget_metric_options', array(
         'engagements' => [
             'dropdown_option' => __( 'engagements', 'fooconvert' ),
-            'table_header'    => __( 'Engagements', 'fooconvert' ),
-            'tooltip'         => __( 'Total number of engagements', 'fooconvert' ),
+            'label'           => __( 'Engagements', 'fooconvert' ),
+            'description'     => __( 'Total number of engagements', 'fooconvert' ),
             'metric'          => 'total_engagements',
             'function'        => 'intval',
             'meta_key'        => FOOCONVERT_META_KEY_METRIC_ENGAGEMENTS,
         ],
-        'views'      => [
+        'views'       => [
             'dropdown_option' => __( 'views', 'fooconvert' ),
-            'table_header'    => __( 'Views', 'fooconvert' ),
-            'tooltip'         => __( 'Total number of views', 'fooconvert' ),
+            'label'           => __( 'Views', 'fooconvert' ),
+            'description'     => __( 'Total number of views', 'fooconvert' ),
             'metric'          => 'total_views',
             'function'        => 'intval',
             'meta_key'        => FOOCONVERT_META_KEY_METRIC_VIEWS,
@@ -359,12 +359,12 @@ function fooconvert_stats_last_updated_default() {
  */
 function fooconvert_get_widget_title( $post ) {
     // Return an empty string if no valid post is found
-    if ( ! $post ) {
+    if ( !$post ) {
         return '';
     }
 
     // Check if the post has a title
-    if ( ! empty( $post->post_title ) ) {
+    if ( !empty( $post->post_title ) ) {
         return $post->post_title;
     }
 
@@ -383,7 +383,7 @@ function fooconvert_get_widget_title( $post ) {
  * @return string The singular label for the post type.
  */
 function fooconvert_get_widget_post_type_label( $post ) {
-    if ( ! $post ) {
+    if ( !$post ) {
         return '';
     }
     $post_type = get_post_type_object( $post->post_type );
