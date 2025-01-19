@@ -12,7 +12,9 @@
                 <select class="fooconvert-top-performers-sort">
                     <?php
                     foreach ( $top_performers_sort_options as $key => $sort_object ) {
-                        echo '<option ' . selected( $key, $top_performers_sort ) . ' value="' . esc_attr( $key ) . '">' . esc_html( $sort_object['dropdown_option'] ) . '</option>';
+                        if ( isset( $sort_object['dropdown_option'] ) ) {
+                            echo '<option ' . selected( $key, $top_performers_sort ) . ' value="' . esc_attr( $key ) . '">' . esc_html( $sort_object['dropdown_option'] ) . '</option>';
+                        }
                     }
                     ?>
                 </select>

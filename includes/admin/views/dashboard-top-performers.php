@@ -27,8 +27,8 @@ if ( empty( $top_performers ) ) {
     echo '<th>' . esc_html__( 'Rank', 'fooconvert' ) . '</th>';
     echo '<th>' . esc_html__( 'Title', 'fooconvert' ) . '</th>';
     echo '<th>';
-    echo esc_html( $sort_object['table_header'] );
-    echo '<span class="fooconvert-tooltip" data-balloon-pos="left" aria-label="' . esc_attr( $sort_object['tooltip'] ) . '"><i class="dashicons dashicons-editor-help"></i></span>';
+    echo esc_html( $sort_object['label'] );
+    echo '<span class="fooconvert-tooltip" data-balloon-pos="left" aria-label="' . esc_attr( $sort_object['description'] ) . '"><i class="dashicons dashicons-editor-help"></i></span>';
     echo '</th>';
     echo '</tr>';
     echo '</thead>';
