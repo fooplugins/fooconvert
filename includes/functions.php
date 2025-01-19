@@ -263,9 +263,9 @@ function fooconvert_top_performers_sort() {
     return get_option( FOOCONVERT_OPTION_TOP_PERFORMERS_SORT, 'engagements' );
 }
 
-function fooconvert_top_performers_sort_options() {
+function fooconvert_widget_metric_options() {
     // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-    return apply_filters( 'fooconvert_top_performers_sort_options', array(
+    return apply_filters( 'fooconvert_widget_metric_options', array(
         'engagements' => [
             'dropdown_option' => __( 'engagements', 'fooconvert' ),
             'table_header'    => __( 'Engagements', 'fooconvert' ),

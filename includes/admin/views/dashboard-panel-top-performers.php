@@ -1,5 +1,5 @@
 <?php
-    $top_performers_sort_options = fooconvert_top_performers_sort_options();
+    $top_performers_sort_options = fooconvert_widget_metric_options();
     $top_performers_sort = fooconvert_top_performers_sort();
     $stats_last_updated = fooconvert_stats_last_updated();
 ?>

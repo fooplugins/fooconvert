@@ -4,7 +4,7 @@ if ( empty( $sort ) ) {
     $sort = 'engagement';
 }
 
-$sort_object = fooconvert_top_performers_sort_options()[ $sort ];
+$sort_object = fooconvert_widget_metric_options()[ $sort ];
 
 $stats = new FooPlugins\FooConvert\Stats();
 
