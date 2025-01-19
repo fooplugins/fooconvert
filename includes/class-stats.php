@@ -2,13 +2,12 @@
 
 namespace FooPlugins\FooConvert;
 
-if ( ! class_exists( __NAMESPACE__ . '\Stats' ) ) {
+if ( !class_exists( __NAMESPACE__ . '\Stats' ) ) {
 
     /**
      * Class for stats related functions.
      */
-    class Stats
-    {
+    class Stats {
 
         /**
          * Fetches and updates the stats for all widgets with events.
@@ -22,8 +21,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Stats' ) ) {
          *
          * The time of the last update is stored in the `FOOCONVERT_OPTION_STATS_LAST_UPDATED` option.
          */
-        public function update()
-        {
+        public function update() {
             $event = new Event();
 
             // Find all widgets with events.
@@ -37,8 +35,8 @@ if ( ! class_exists( __NAMESPACE__ . '\Stats' ) ) {
                 if ( is_array( $metrics ) ) {
                     foreach ( fooconvert_top_performers_sort_options() as $key => $option ) {
                         $metric_value = 0;
-                        if ( isset( $metrics[ $option['metric'] ] ) ) {
-                            $metric_value = $metrics[ $option['metric'] ];
+                        if ( isset( $metrics[$option['metric']] ) ) {
+                            $metric_value = $metrics[$option['metric']];
                             if ( isset( $option['function'] ) && is_callable( $option['function'] ) ) {
                                 $metric_value = call_user_func( $option['function'], $metric_value );
                             }
@@ -69,7 +67,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Stats' ) ) {
                 return [];
             }
 
-            $sort_option = $sort_options[ $sort ];
+            $sort_option = $sort_options[$sort];
 
             // We do not want to return anything for pro features.
             if ( isset( $sort_option['pro_feature'] ) && $sort_option['pro_feature'] ) {
@@ -82,11 +80,11 @@ if ( ! class_exists( __NAMESPACE__ . '\Stats' ) ) {
             }
 
             $query = new \WP_Query( [
-                'post_type'      => fooconvert_get_post_types(),
+                'post_type' => fooconvert_get_post_types(),
                 'posts_per_page' => $limit,
-                'meta_key'       => $sort_option['meta_key'], // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-                'orderby'        => 'meta_value_num',
-                'order'          => 'DESC',
+                'meta_key' => $sort_option['meta_key'], // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+                'orderby' => 'meta_value_num',
+                'order' => 'DESC',
             ] );
 
             $top_performers = [];
