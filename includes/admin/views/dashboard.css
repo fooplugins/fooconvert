@@ -90,6 +90,10 @@
     margin: 0 10px 0;
 }
 
+.fooconvert-hide-panel {
+    text-decoration: none;
+}
+
 ol.fooconvert-ordered-list {
     counter-reset: item;
     list-style: none;
@@ -122,7 +126,7 @@ ol.fooconvert-ordered-list li::before {
     font-weight: bold;
 }
 
-.fooconvert-top-performers-table {
+.fooconvert-dashboard-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
@@ -130,21 +134,21 @@ ol.fooconvert-ordered-list li::before {
     overflow: hidden;
 }
 
-.fooconvert-top-performers-table th,
-.fooconvert-top-performers-table td {
+.fooconvert-dashboard-table th,
+.fooconvert-dashboard-table td {
     padding: 12px 15px;
     text-align: left;
 }
 
-.fooconvert-top-performers-table tbody tr:nth-child(odd) {
+.fooconvert-dashboard-table tbody tr:nth-child(odd) {
     background: #fcfcfc;
 }
 
-.fooconvert-top-performers-table tbody tr {
+.fooconvert-dashboard-table tbody tr {
     transition: background-color 0.3s ease;
 }
 
-.fooconvert-top-performers-table tbody tr:hover {
+.fooconvert-dashboard-table tbody tr:hover {
     background: #fafafa;
 }
 
@@ -159,16 +163,16 @@ ol.fooconvert-ordered-list li::before {
     text-align: right;
 }
 
-.fooconvert-top-performers-table-actions {
+.fooconvert-dashboard-table-actions {
     visibility: hidden;
     display: inline-block;
 }
 
-.fooconvert-top-performers-table tr:hover .fooconvert-top-performers-table-actions {
+.fooconvert-dashboard-table tr:hover .fooconvert-dashboard-table-actions {
     visibility: visible;
 }
 
-.fooconvert-top-performers-table a {
+.fooconvert-dashboard-table a {
     text-decoration: none;
 }
 
@@ -176,6 +180,15 @@ ol.fooconvert-ordered-list li::before {
     color: #aaa;
 }
 
+.fooconvert-dashboard-pill {
+    color: #fff;
+    background: #888;
+    border-radius: 4px;
+    margin: auto 5px;
+    padding: 2px 8px;
+    font-size: 10px;
+    text-transform: uppercase;
+}
 
 /* Top-level container for the slider */
 .fooconvert-slider {

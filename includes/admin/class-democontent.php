@@ -125,7 +125,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
                 $meta = [
                     'post_type' => $content_for_insert['post_type'],
-                    'template' => $content_for_insert['template']
+                    'template' => $content_for_insert['template'],
+                    'demo' => true
                 ];
 
                 // Create some events for the demo content.

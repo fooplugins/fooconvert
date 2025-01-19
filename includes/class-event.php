@@ -13,10 +13,11 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
          * Creates a new event and inserts it into the database.
          *
          * @param array $data
+         * @param array $meta
          * @return int|void|\WP_Error
          */
         public function create( $data, $meta = array() ) {
-            if ( $this->can_create_event() ) {
+            if ( $this->can_create_event( $data, $meta ) ) {
                 $user_id = isset( $data['user_id'] ) ? intval( $data['user_id'] ) : null;
                 $anonymous_user_guid = isset( $data['anonymous_user_guid'] ) ? $data['anonymous_user_guid'] : null;
 
@@ -81,13 +82,12 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
         /**
          * Will validate if the event can be created for a number of criteria.
          *
-         * TODO : implement checks so that certain users do not create events. (eg. admins)
-         * TODO : should we look into blocking bots?
-         *
+         * @param array $data
+         * @param array $meta
          * @return true
          */
-        private function can_create_event() {
-            return true;
+        private function can_create_event( $data, $meta ) {
+            return apply_filters( 'fooconvert_can_create_event', true, $data, $meta );
         }
 
         /**

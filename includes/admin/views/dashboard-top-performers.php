@@ -21,7 +21,7 @@ if ( empty( $top_performers ) ) {
         echo '<p class="fooconvert-padding">' . esc_html__( 'Please update stats in order to see top performers.', 'fooconvert' );
     }
 } else {
-    echo '<table class="fooconvert-top-performers-table">';
+    echo '<table class="fooconvert-dashboard-table fooconvert-top-performers-table">';
     echo '<thead>';
     echo '<tr>';
     echo '<th>' . esc_html__( 'Rank', 'fooconvert' ) . '</th>';
@@ -45,7 +45,7 @@ if ( empty( $top_performers ) ) {
         echo '<tr>';
         echo '<td>#' . esc_attr( $index ) . '</td>';
         echo '<td><span>' . esc_html( $top_performer['title'] ) . '</span>';
-        echo '<div class="fooconvert-top-performers-table-actions">';
+        echo '<div class="fooconvert-dashboard-table-actions">';
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo $edit_link . ' ' . $stats_link;
         echo '</div>';
