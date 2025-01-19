@@ -432,6 +432,40 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             );
         }
 
+        /**
+         * Retrieves a summary of all events for all widgets.
+         *
+         * This function returns an array of arrays, where each sub-array contains the
+         * following metrics for a single widget:
+         *     'widget_id' => int The ID of the widget.
+         *     'total_events' => int The total number of events.
+         *     'total_views' => int The total number of views.
+         *     'total_engagements' => int The total number of engagements.
+         *     'total_unique_visitors' => int The total number of unique visitors.
+         *
+         * @return array[] An array of arrays, each containing the metrics for a single widget.
+         */
+        public static function get_all_widget_metrics() {
+            global $wpdb;
+
+            $table_name = self::get_events_table_name();
+
+            $query = apply_filters( 'fooconvert_get_all_widget_metrics_query', "SELECT
+                    widget_id,  
+                    COUNT(*) as total_events,
+                    COUNT(CASE WHEN event_type = 'open' THEN 1 END) as total_views,
+                    COUNT(CASE WHEN event_subtype = 'engagement' THEN 1 END) as total_engagements,
+                    COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as total_unique_visitors
+                    FROM {$table_name}
+                    GROUP BY widget_id", $table_name );
+
+            // Prepare SQL query to return high-level statistics
+            return $wpdb->get_results(
+                $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                ARRAY_A
+            );
+        }
+
         // phpcs:enable
     }
 }

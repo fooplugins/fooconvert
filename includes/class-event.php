@@ -282,6 +282,15 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
         }
 
         /**
+         * Gets all widget metrics for all widgets.
+         *
+         * @return array An associative array of widget metrics.
+         */
+        public function get_all_widget_metrics() {
+            return Data\Query::get_all_widget_metrics();
+        }
+
+        /**
          * Deletes events older than the retention period.
          *
          * @return boolean True on success, false on failure.

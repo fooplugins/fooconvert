@@ -25,27 +25,23 @@ if ( !class_exists( __NAMESPACE__ . '\Stats' ) ) {
             $event = new Event();
 
             // Find all widgets with events.
-            $widgets_with_events = $event->get_all_widgets_with_events();
+            $all_widgets_metrics = $event->get_all_widget_metrics();
 
-            foreach ( $widgets_with_events as $widget_id ) {
-                // Get stats for the widget.
-                // Passing in force will force a fetch and also store the metrics in post meta.
-                $metrics = $event->get_widget_metrics( $widget_id, true );
+            foreach ( $all_widgets_metrics as $metrics ) {
+                $widget_id = intval( $metrics['widget_id'] );
 
-                if ( is_array( $metrics ) ) {
-                    foreach ( fooconvert_top_performers_sort_options() as $key => $option ) {
-                        $metric_value = 0;
-                        if ( isset( $metrics[$option['metric']] ) ) {
-                            $metric_value = $metrics[$option['metric']];
-                            if ( isset( $option['function'] ) && is_callable( $option['function'] ) ) {
-                                $metric_value = call_user_func( $option['function'], $metric_value );
-                            }
+                foreach ( fooconvert_top_performers_sort_options() as $key => $option ) {
+                    $metric_value = 0;
+                    if ( isset( $metrics[$option['metric']] ) ) {
+                        $metric_value = $metrics[$option['metric']];
+                        if ( isset( $option['function'] ) && is_callable( $option['function'] ) ) {
+                            $metric_value = call_user_func( $option['function'], $metric_value );
                         }
-                        if ( $metric_value > 0 ) {
-                            update_post_meta( $widget_id, $option['meta_key'], $metric_value );
-                        } else {
-                            delete_post_meta( $widget_id, $option['meta_key'] );
-                        }
+                    }
+                    if ( $metric_value > 0 ) {
+                        update_post_meta( $widget_id, $option['meta_key'], $metric_value );
+                    } else {
+                        delete_post_meta( $widget_id, $option['meta_key'] );
                     }
                 }
             }
