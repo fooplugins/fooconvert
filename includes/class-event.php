@@ -268,6 +268,20 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
         }
 
         /**
+         * Gets all widget IDs with no events.
+         *
+         * @return int[] The IDs of all widgets with ZERO events.
+         */
+        public function get_all_widgets_with_no_events() {
+            $widgets = Data\Query::get_widgets_with_no_events();
+            if ( empty( $widgets ) ) {
+                return [];
+            }
+
+            return array_column( $widgets, 'widget_id' );
+        }
+
+        /**
          * Deletes events older than the retention period.
          *
          * @return boolean True on success, false on failure.

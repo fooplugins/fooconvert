@@ -25,9 +25,9 @@ if ( !class_exists( __NAMESPACE__ . '\Stats' ) ) {
             $event = new Event();
 
             // Find all widgets with events.
-            $widgets = $event->get_all_widgets_with_events();
+            $widgets_with_events = $event->get_all_widgets_with_events();
 
-            foreach ( $widgets as $widget_id ) {
+            foreach ( $widgets_with_events as $widget_id ) {
                 // Get stats for the widget.
                 // Passing in force will force a fetch and also store the metrics in post meta.
                 $metrics = $event->get_widget_metrics( $widget_id, true );
@@ -47,6 +47,17 @@ if ( !class_exists( __NAMESPACE__ . '\Stats' ) ) {
                             delete_post_meta( $widget_id, $option['meta_key'] );
                         }
                     }
+                }
+            }
+
+            // Find all widgets with no events.
+            $widgets_with_no_events = $event->get_all_widgets_with_no_events();
+
+            // Delete all post meta for the widgets with no events, so the stats are correct.
+            // This is done to cater for widgets whose events have been deleted, older than the retention period, etc.
+            foreach ( $widgets_with_no_events as $widget_id ) {
+                foreach ( fooconvert_top_performers_sort_options() as $key => $option ) {
+                    delete_post_meta( $widget_id, $option['meta_key'] );
                 }
             }
 
