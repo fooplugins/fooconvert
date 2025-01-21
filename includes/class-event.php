@@ -34,6 +34,7 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
                     $data['anonymous_user_guid'] = null;
                 } else {
                     $data['user_id'] = 0;
+                    
                     if ( empty( $anonymous_user_guid ) && isset( $_SERVER['REMOTE_ADDR'] ) && isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
                         // We could not determine the anonymous user GUID using the localStorage or cookie.
                         // Try and create a random GUID from the IP address and user agent.

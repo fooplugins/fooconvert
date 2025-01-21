@@ -10,31 +10,29 @@ namespace FooPlugins\FooConvert;
 
 if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
 
-    class Ajax
-    {
+    class Ajax {
 
         /**
          * Init constructor.
          */
-        function __construct()
-        {
-            add_action('wp_ajax_fooconvert_log_event', array( $this, 'handle_log_event' ) );
-            add_action('wp_ajax_nopriv_fooconvert_log_event', array( $this, 'handle_log_event' ) );
+        function __construct() {
+            add_action( 'wp_ajax_fooconvert_log_event', array( $this, 'handle_log_event' ) );
+            add_action( 'wp_ajax_nopriv_fooconvert_log_event', array( $this, 'handle_log_event' ) );
         }
 
         /**
          * Get the AJAX endpoint data.
          *
-         * @since 1.0.0
-         *
          * @return array{
          *     url: string The URL of the AJAX endpoint.
          *     nonce: string A nonce token for use with the AJAX endpoint.
          * }
+         * @since 1.0.0
+         *
          */
-        public function get_endpoint() : array {
+        public function get_endpoint(): array {
             return array(
-                'url' => admin_url( 'admin-ajax.php' ),
+                'url'   => admin_url( 'admin-ajax.php' ),
                 'nonce' => wp_create_nonce( 'fooconvert_nonce' )
             );
         }
@@ -44,8 +42,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
          *
          * @since 1.0.0
          */
-        public function handle_log_event(): void
-        {
+        public function handle_log_event(): void {
             // Verify nonce!
             check_ajax_referer( 'fooconvert_nonce', 'nonce' );
 
@@ -83,11 +80,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
             }
 
             // get other data
-            $device_type = is_string($data['deviceType']) ? sanitize_text_field($data['deviceType']) : null;
-            $page_url = is_string($data['pageURL']) ? esc_url_raw($data['pageURL']) : null;
+            $device_type = is_string( $data['deviceType'] ) ? sanitize_text_field( $data['deviceType'] ) : null;
+            $page_url = is_string( $data['pageURL'] ) ? esc_url_raw( $data['pageURL'] ) : null;
             $anonymous_user_guid = is_string( $data['uniqueID'] ) ? sanitize_text_field( $data['uniqueID'] ) : null;
-            $post_type = is_string($data['postType']) ? sanitize_text_field($data['postType']) : null;
-            $template = is_string($data['template']) ? sanitize_text_field($data['template']) : null;
+            $post_type = is_string( $data['postType'] ) ? sanitize_text_field( $data['postType'] ) : null;
+            $template = is_string( $data['template'] ) ? sanitize_text_field( $data['template'] ) : null;
 
             // TODO: sanitize?
             $extra_data = isset( $data['extraData'] ) && is_array( $data['extraData'] ) ? $data['extraData'] : null;
