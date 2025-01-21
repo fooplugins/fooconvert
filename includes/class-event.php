@@ -34,11 +34,15 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
                     $data['anonymous_user_guid'] = null;
                 } else {
                     $data['user_id'] = 0;
-                    
-                    if ( empty( $anonymous_user_guid ) && isset( $_SERVER['REMOTE_ADDR'] ) && isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
+
+                    // unslash and sanitize.
+                    $remote_addr = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
+                    $user_agent = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) );
+
+                    if ( empty( $anonymous_user_guid ) && isset( $remote_addr ) && isset( $user_agent ) ) {
                         // We could not determine the anonymous user GUID using the localStorage or cookie.
                         // Try and create a random GUID from the IP address and user agent.
-                        $anonymous_user_guid = hash( 'sha256', $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] );
+                        $anonymous_user_guid = hash( 'sha256', $remote_addr . $user_agent );
                     }
                     $data['anonymous_user_guid'] = $anonymous_user_guid;
                 }

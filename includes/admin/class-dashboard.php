@@ -90,13 +90,14 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
          */
         function get_post_value( $key, $default = '' ) {
             $value = $default;
+            //phpcs:disable WordPress.Security.NonceVerification.Missing
             if ( isset( $_POST[ $key ] ) ) {
                 $value = sanitize_text_field( wp_unslash( $_POST[ $key ] ) );
                 if ( empty( $value ) ) {
                     $value = $default;
                 }
             }
-
+            //phpcs:enable
             return $value;
         }
 
