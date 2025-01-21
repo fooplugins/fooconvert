@@ -43,7 +43,7 @@ if ( !class_exists( __NAMESPACE__ . '\Stats' ) ) {
                             $metric_value = call_user_func( $option['function'], $metrics );
                         }
                     }
-                    if ( $metric_value > 0 ) {
+                    if ( $metric_value !== 0 ) {
                         update_post_meta( $widget_id, $option['meta_key'], $metric_value );
                     } else {
                         delete_post_meta( $widget_id, $option['meta_key'] );
