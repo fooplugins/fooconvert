@@ -7,7 +7,7 @@
 ?>
 <div class="fooconvert-panel" data-panel="help">
     <div class="fooconvert-panel-section fooconvert-panel-section-flex">
-        <h2><?php esc_html_e( 'Need Help? We\'re here for you!', 'fooconvert' ); ?></h2>
+        <h2>❓<?php esc_html_e( 'Need Help? We\'re here for you!', 'fooconvert' ); ?></h2>
         <div class="fooconvert-panel-section-right">
             <a class="fooconvert-hide-panel" data-panel="help" href="#hide" title="<?php esc_html_e( 'Hide Panel', 'fooconvert' ); ?>">
                 <span class="dashicons dashicons-no-alt"></span>

@@ -45,6 +45,12 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
          * @since 1.0.0
          */
         public function render_addons_panel() {
+            $hidden_panels = fooconvert_get_setting( 'hide_dashboard_panels', [] );
+
+            if ( in_array( 'premium', $hidden_panels ) ) {
+                return;
+            }
+
             $fs = fooconvert_fs();
 
             /**
@@ -59,14 +65,21 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
             }
 
             ?>
-            <div class="fooconvert-panel">
+            <div class="fooconvert-panel" data-panel="premium">
                 <div class="fooconvert-panel-section fooconvert-panel-header">
-                    <h2><?php esc_html_e( 'Premium Addons', 'fooconvert' ); ?></h2>
-                    <div class="fooconvert-slider-nav">
-                        <button class="fooconvert-slider-prev button button-small"><span
-                                    class="dashicons dashicons-arrow-left-alt2"></span></button>
-                        <button class="fooconvert-slider-next button button-small"><span
-                                    class="dashicons dashicons-arrow-right-alt2"></span></button>
+                    <h2>💎<?php esc_html_e( 'Premium Addons', 'fooconvert' ); ?></h2>
+                    <div class="fooconvert-panel-section-right">
+                        <div class="fooconvert-slider-nav">
+                            <button class="fooconvert-slider-prev button button-small">
+                                <span class="dashicons dashicons-arrow-left-alt2"></span>
+                            </button>
+                            <button class="fooconvert-slider-next button button-small">
+                                <span class="dashicons dashicons-arrow-right-alt2"></span>
+                            </button>
+                        </div>
+                        <a class="fooconvert-hide-panel" data-panel="premium" href="#hide" title="<?php esc_html_e( 'Hide Panel', 'fooconvert' ); ?>">
+                            <span class="dashicons dashicons-no-alt"></span>
+                        </a>
                     </div>
                 </div>
                 <div class="fooconvert-slider">
@@ -115,7 +128,7 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
                                         <?php endforeach; ?>
                                     </ul>
                                 <?php endif; ?>
-                                <p>
+                                <p class="fooconvert-last">
                                     <a href="<?php echo esc_url( fooconvert_admin_url_addons() ); ?>"
                                        class="button button-primary"
                                        target="_blank"><?php esc_html_e( 'Buy Now!', 'fooconvert' ); ?></a>

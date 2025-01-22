@@ -35,7 +35,7 @@
 
 .fooconvert-panel-section {
     border-bottom: 1px solid #e0e0e0;
-    padding: 5px 20px;
+    padding: 5px 10px;
 }
 
 .fooconvert-panel-section.fooconvert-panel-no-padding {
@@ -47,7 +47,7 @@
 }
 
 .fooconvert-panel-section.fooconvert-panel-no-padding .fooconvert-padding {
-    padding: 5px 20px;
+    padding: 5px 10px;
 }
 
 .fooconvert-panel-section-flex {
@@ -76,6 +76,10 @@
     margin-top: 8px;
 }
 
+.fooconvert-panel .fooconvert-last {
+    margin-bottom: 0;
+}
+
 .fooconvert-center {
     text-align: center;
 }
@@ -88,6 +92,10 @@
 .fooconvert-panel .spinner {
     float: none;
     margin: 0 10px 0;
+}
+
+.fooconvert-panel .spinner.panel-hide-spinner {
+    margin: 0;
 }
 
 .fooconvert-hide-panel {
@@ -154,7 +162,7 @@ ol.fooconvert-ordered-list li::before {
 
 .fooconvert-top-performers-table th:nth-child(1),
 .fooconvert-top-performers-table td:nth-child(1) {
-    text-align: center;
+    text-align: left;
     width: 20px;
 }
 
@@ -207,7 +215,7 @@ ol.fooconvert-ordered-list li::before {
 /* Individual slide styling */
 .fooconvert-slide {
     flex: 0 0 50%; /* Each slide takes up the full width of the slider */
-    padding: 10px 20px;
+    padding: 10px;
     box-sizing: border-box;
 }
 

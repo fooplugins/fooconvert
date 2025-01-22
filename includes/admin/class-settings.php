@@ -30,6 +30,12 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
 
             $analytics_addon_link = '<a href="' . fooconvert_admin_url_addons() . '" target="_blank">' . __( 'Analytics PRO Addon', 'fooconvert' ) . '</a>';
 
+            $hide_dashboard_panels_choices = apply_filters( 'fooconvert_hide_dashboard_panels_choices', array(
+                'getting-started' => __( 'Getting Started', 'fooconvert' ),
+                'help' => __( 'Help', 'fooconvert' ),
+                'premium' => __( 'Premium Addons', 'fooconvert' )
+            ) );
+
             $general_tab = array(
                 'id'     => 'general',
                 'label'  => __( 'General', 'fooconvert' ),
@@ -64,10 +70,7 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                         'order' => 30,
                         'type'  => 'checkboxlist',
                         'label' => __( 'Hide Dashboard Panels', 'fooconvert' ),
-                        'choices' => array(
-                            'getting-started' => __( 'Getting Started', 'fooconvert' ),
-                            'help' => __( 'Help', 'fooconvert' ),
-                        ),
+                        'choices' => $hide_dashboard_panels_choices,
                         'desc'  => __( 'Will hide specific dashboard panel if checked.', 'fooconvert' )
                     ),
                     'demo_content' => array(

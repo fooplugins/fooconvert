@@ -5,7 +5,7 @@
 ?>
 <div class="fooconvert-panel">
     <div class="fooconvert-panel-section fooconvert-panel-section-flex">
-        <h2><?php esc_html_e( 'Top Performers', 'fooconvert' ); ?></h2>
+        <h2>🏆<?php esc_html_e( 'Top Performers', 'fooconvert' ); ?></h2>
         <div class="fooconvert-panel-section-right">
             <label>
                 <?php esc_html_e( 'Sort by', 'fooconvert' ); ?>
