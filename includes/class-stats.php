@@ -105,6 +105,7 @@ if ( !class_exists( __NAMESPACE__ . '\Stats' ) ) {
                 $top_performers[$index] = [
                     'id' => $post->ID,
                     'title' => fooconvert_get_widget_title( $post ),
+                    'post_type' => $post->post_type,
                     'score' => get_post_meta( $post->ID, $sort_option['meta_key'], true ),
                 ];
 

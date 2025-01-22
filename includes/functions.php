@@ -379,13 +379,25 @@ function fooconvert_get_widget_title( $post ) {
  * will be returned. If the post type is not available, the function will
  * return a generic label 'Post'.
  *
- * @param WP_Post $post The post object to fetch the post type from.
+ * @param WP_Post|string $thing The post object to fetch the post type from.
  * @return string The singular label for the post type.
  */
-function fooconvert_get_widget_post_type_label( $post ) {
-    if ( !$post ) {
+function fooconvert_get_widget_post_type_label( $thing ) {
+    if ( !$thing ) {
         return '';
     }
-    $post_type = get_post_type_object( $post->post_type );
-    return $post_type ? $post_type->labels->singular_name : 'Post';
+    if ( $thing instanceof WP_Post ) {
+        $post_type = get_post_type_object( $thing->post_type );
+        return $post_type ? $post_type->labels->singular_name : 'Post';
+    } else if ( is_string( $thing ) ) {
+        switch ( $thing ) {
+            case 'fc-popup':
+                return __( 'Popup', 'fooconvert' );
+            case 'fc-flyout':
+                return __( 'Flyout', 'fooconvert' );
+            case 'fc-bar':
+                return __( 'Bar', 'fooconvert' );
+        }
+    }
+    return '';
 }
