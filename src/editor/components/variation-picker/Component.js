@@ -7,6 +7,9 @@ import { Button } from "@wordpress/components";
 import { grid, list } from "@wordpress/icons";
 import { useState } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
+import { useDispatch } from "@wordpress/data";
+import { store as editorStore } from "@wordpress/editor";
+
 import useDebounce from "../../hooks/useDebounce";
 import SearchInput from "./components/search/Component";
 
@@ -32,10 +35,18 @@ const VariationPicker = ( {
     const [ mode, setMode ] = useState( initialMode );
     const [ search, setSearch ] = useState( '' );
 
+    const { editPost } = useDispatch( editorStore );
     const { defaultVariation, blockVariations, setVariation } = useVariations( clientId, reset );
 
     const showLabel = isString( label, true );
-    const onChange = ( nextVariation = defaultVariation ) => setVariation( nextVariation );
+    const onChange = ( nextVariation = defaultVariation ) => {
+        // noinspection JSIgnoredPromiseFromCall
+        setVariation( nextVariation );
+        // set the post title to the current variation title by default
+        if ( isString( nextVariation?.title ) ) {
+            editPost( { title: nextVariation.title } );
+        }
+    };
     const searchChanged = value => {
         value = isString( value ) && value.length >= minSearchChars ? value : '';
         setSearch( value );
