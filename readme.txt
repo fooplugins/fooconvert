@@ -28,6 +28,10 @@ FooConvert is a powerful WordPress plugin designed to help you optimize your web
   - Customize widget appearance, colors, and positioning.
   - Add any blocks to your widgets content.
   - Add shortcodes within widget content.
+- Widget display rules:
+  - locations (e.g. entire site, homepage, specific pages, etc)
+  - exclusions (e.g. exclude certain pages or taxonomies)
+  - users (e.g. logged-in users only, non-logged-in users, specific roles, etc)
 - Widget open triggers:
   - Page load
   - Exit intent
@@ -95,6 +99,11 @@ The PRO analytics add-on has longer retention period for widget analytics, so yo
 
 FooConvert is designed to work with most WordPress themes. If you encounter any compatibility issues, please contact our support team.
 
+= Is FooConvert compatible with Classic Editor plugin? =
+
+Not really. The FooConvert widget designer is built on top of the Gutenberg block editor, which means you need to enable the block editor to create and edit widgets. You will not be able to easily create or edit widgets using the Classic Editor.
+If you have the Classic Editor plugin installed, You will need to enable the setting "Allow users to switch editors" from Settings -> Writing, so that you can switch to the block editor when adding or editing FooConvert widgets.
+
 = Can I use FooConvert with other e-commerce plugins? =
 
 Yes, FooConvert integrates seamlessly with the popular e-commerce plugin WooCommerce.
@@ -117,6 +126,15 @@ No, FooConvert is optimized for performance and has minimal impact on your websi
 The source code for this plugin is available publicly on GitHub [here](https://github.com/fooplugins/fooconvert).
 
 == Changelog ==
+
+= 1.0.1 =
+* Date Updated : 27 Jan 2025
+* Added support for embeds within widget content.
+* Added new filter 'fooconvert_can_create_event' to allow for disabling event creation.
+* Added setting to hide Dashboard panels.
+* Updated the widget metrics update job to be faster!
+* Fixed default width of popups.
+* Updated to Freemius SDK 2.11.0
 
 = 1.0.0 =
 * Date Updated : 7 Jan 2025
