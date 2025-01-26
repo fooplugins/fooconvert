@@ -185,12 +185,6 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @return string Processed content
          */
         public function do_content( string $content ) : string {
-//            global $wp_embed;
-
-            $content = do_blocks( $content );               // convert gutenberg comment syntax to HTML
-//            $content = do_shortcode( $content );            // convert any WordPress shortcode to HTML
-//            $content = $wp_embed->autoembed( $content );    // convert any embeds to HTML
-
             // pass the content through a filter to allow further processing by other plugins
             $result = apply_filters( 'the_content', $content );
             return is_string( $result ) ? $result : '';
