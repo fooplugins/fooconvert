@@ -2,7 +2,7 @@
 
 namespace FooPlugins\FooConvert;
 
-if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
+if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
 
     /**
      * The core plugin class manages the overall flow of the plugin.
@@ -64,7 +64,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          *
          * @since 1.0.0
          */
-        public static function plugin() : FooConvert {
+        public static function plugin(): FooConvert {
             if ( self::$_instance === null ) {
                 self::$_instance = new FooConvert();
             }
@@ -185,6 +185,12 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @return string Processed content
          */
         public function do_content( string $content ) : string {
+//            global $wp_embed;
+
+            $content = do_blocks( $content );               // convert gutenberg comment syntax to HTML
+//            $content = do_shortcode( $content );            // convert any WordPress shortcode to HTML
+//            $content = $wp_embed->autoembed( $content );    // convert any embeds to HTML
+
             // pass the content through a filter to allow further processing by other plugins
             $result = apply_filters( 'the_content', $content );
             return is_string( $result ) ? $result : '';
@@ -199,7 +205,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @param string $content Text content to filter.
          * @return string Filtered content containing only the allowed HTML.
          */
-        public function kses_post( string $content, bool $compatibility_mode = false ) : string {
+        public function kses_post( string $content, bool $compatibility_mode = false ): string {
             if ( $compatibility_mode ) return $content;
 
             $allowed_html = wp_kses_allowed_html( 'post' );
@@ -220,7 +226,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @param string $content Text content to filter.
          * @return string Filtered content containing only the allowed HTML.
          */
-        public function kses_svg( string $content ) : string {
+        public function kses_svg( string $content ): string {
             return $this->kses_with_svg( $content, array() );
         }
 
@@ -230,7 +236,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @param string $content Text content to filter.
          * @return string Filtered content containing only the allowed HTML.
          */
-        public function kses_icon( string $content ) : string {
+        public function kses_icon( string $content ): string {
             return $this->kses_with_svg( $content, array(
                 'span' => array(
                     'class' => true,
@@ -248,7 +254,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @param array $allowed_html An array of allowed HTML elements and attributes.
          * @return string Filtered content containing only the allowed HTML.
          */
-        private function kses_with_svg( string $content, array $allowed_html ) : string {
+        private function kses_with_svg( string $content, array $allowed_html ): string {
             // merge the SVG elements into the allowed list
             $allowed_html = $this->merge_allowed_svg_html( $allowed_html );
             // extend all elements with the 'slot' and 'is' global attributes for custom elements
@@ -286,17 +292,17 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @param array $allowed_html An array of allowed HTML elements and attributes.
          * @return array
          */
-        private function merge_allowed_svg_html( array $allowed_html ) : array {
+        private function merge_allowed_svg_html( array $allowed_html ): array {
             if ( empty( $allowed_html ) ) {
                 $allowed_html = FOOCONVERT_SVG_ALLOWED_HTML;
             } else {
                 foreach ( FOOCONVERT_SVG_ALLOWED_HTML as $tag_name => $attributes ) {
-                    if ( isset( $allowed_html[ $tag_name ] ) && is_array( $allowed_html[ $tag_name ] ) && is_array( FOOCONVERT_SVG_ALLOWED_HTML[ $tag_name ] ) ) {
+                    if ( isset( $allowed_html[$tag_name] ) && is_array( $allowed_html[$tag_name] ) && is_array( FOOCONVERT_SVG_ALLOWED_HTML[$tag_name] ) ) {
                         // if the tag already exists and both it and the SVG values are an array, merge them
-                        $allowed_html[ $tag_name ] = array_merge( $allowed_html[ $tag_name ], FOOCONVERT_SVG_ALLOWED_HTML[ $tag_name ] );
+                        $allowed_html[$tag_name] = array_merge( $allowed_html[$tag_name], FOOCONVERT_SVG_ALLOWED_HTML[$tag_name] );
                     } else {
                         // otherwise simply set the tag
-                        $allowed_html[ $tag_name ] = FOOCONVERT_SVG_ALLOWED_HTML[ $tag_name ];
+                        $allowed_html[$tag_name] = FOOCONVERT_SVG_ALLOWED_HTML[$tag_name];
                     }
                 }
             }
@@ -315,7 +321,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          *
          * @see https://developer.wordpress.org/reference/hooks/safe_style_css/
          */
-        public function safe_style_css_svg_presentation_attributes( array $attr ) : array {
+        public function safe_style_css_svg_presentation_attributes( array $attr ): array {
             return array_merge( $attr, FOOCONVERT_SVG_SAFE_CSS );
         }
 
@@ -403,7 +409,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @access public
          * @since 1.0.0
          */
-        public function register_block_category( array $categories ) : array {
+        public function register_block_category( array $categories ): array {
             // using unshift to place our category first
             array_unshift( $categories, array(
                 'slug' => FOOCONVERT_SLUG,
@@ -435,7 +441,7 @@ if ( ! class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
                     // Check if the widget is demo content.
                     $meta_value = get_post_meta( $post->ID, FOOCONVERT_META_KEY_DEMO_CONTENT, true );
 
-                    if ( ! empty( $meta_value ) ) {
+                    if ( !empty( $meta_value ) ) {
                         // Delete the demo content marker because we assume the user has adapted the widget because they have published.
                         delete_post_meta( $post->ID, FOOCONVERT_META_KEY_DEMO_CONTENT );
                     }
