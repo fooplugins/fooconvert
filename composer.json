@@ -6,7 +6,10 @@
         "psr-4" : {
             "FooPlugins\\FooConvert\\" : "includes"
         },
-	  	"classmap": [ "includes" ]
+	  	"classmap": [ "includes" ],
+        "files": [
+            "vendor/freemius/wordpress-sdk/start.php"
+        ]
     },
     "extra": {
         "installer-paths": {
@@ -29,7 +32,7 @@
     },
     "require": {
         "composer/installers": "v1.12.0",
-        "freemius/wordpress-sdk": "^2.11.0"
+        "freemius/wordpress-sdk": "2.11.0"
     },
     "repositories": [
         {
