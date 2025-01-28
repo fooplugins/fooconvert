@@ -23,3 +23,8 @@
 .fooconvert-admin-header.drop {
     padding-top: 40px;
 }
+
+/* Settings Overrides */
+.foofields-type-checkboxlist .foofields-field-input label {
+    padding-left: 0 !important;
+}

@@ -30,6 +30,12 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
 
             $analytics_addon_link = '<a href="' . fooconvert_admin_url_addons() . '" target="_blank">' . __( 'Analytics PRO Addon', 'fooconvert' ) . '</a>';
 
+            $hide_dashboard_panels_choices = apply_filters( 'fooconvert_hide_dashboard_panels_choices', array(
+                'getting-started' => __( 'Getting Started', 'fooconvert' ),
+                'help' => __( 'Help', 'fooconvert' ),
+                'premium' => __( 'Premium Addons', 'fooconvert' )
+            ) );
+
             $general_tab = array(
                 'id'     => 'general',
                 'label'  => __( 'General', 'fooconvert' ),
@@ -38,6 +44,7 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                 'fields' => array(
                     'retention' => array(
                         'id'    => 'retention',
+                        'order' => 1,
                         'type'  => 'html',
                         'label' => __( 'Retention Period', 'fooconvert' ),
                         'html'  => '<pre>' . esc_html( fooconvert_retention() ) . ' ' . __( 'days', 'fooconvert' ) . '</pre>',
@@ -46,18 +53,29 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                     ),
                     'debug' => array(
                         'id'    => 'debug',
+                        'order' => 10,
                         'type'  => 'checkbox',
                         'label' => __( 'Enable Debug Mode', 'fooconvert' ),
                         'desc'  => __( 'Helps to debug problems and diagnose issues. Enable debugging if you need support for an issue you are having.', 'fooconvert' )
                     ),
                     'hide_promos' => array(
                         'id'    => 'hide_promos',
+                        'order' => 20,
                         'type'  => 'checkbox',
                         'label' => __( 'Hide Promos', 'fooconvert' ),
-                        'desc'  => __( 'If enabled, will hide all promotional messages within the admin area.', 'fooconvert' )
+                        'desc'  => __( 'If enabled, will hide all promotional messages within the admin area, including the dashboard Addons panel.', 'fooconvert' )
+                    ),
+                    'hide_dashboard_panels' => array(
+                        'id'    => 'hide_dashboard_panels',
+                        'order' => 30,
+                        'type'  => 'checkboxlist',
+                        'label' => __( 'Hide Dashboard Panels', 'fooconvert' ),
+                        'choices' => $hide_dashboard_panels_choices,
+                        'desc'  => __( 'Will hide specific dashboard panel if checked.', 'fooconvert' )
                     ),
                     'demo_content' => array(
                         'id'    => 'demo_content',
+                        'order' => 40,
                         'type'  => 'checkbox',
                         'label' => __( 'Demo Content Created', 'fooconvert' ),
                         'desc'  => __( 'If the demo content has been created, then this will be checked. You can uncheck this to allow for demo content to be created again.', 'fooconvert' )

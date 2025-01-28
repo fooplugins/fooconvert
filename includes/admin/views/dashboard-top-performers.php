@@ -4,7 +4,7 @@ if ( empty( $sort ) ) {
     $sort = 'engagement';
 }
 
-$sort_object = fooconvert_top_performers_sort_options()[ $sort ];
+$sort_object = fooconvert_widget_metric_options()[ $sort ];
 
 $stats = new FooPlugins\FooConvert\Stats();
 
@@ -21,14 +21,14 @@ if ( empty( $top_performers ) ) {
         echo '<p class="fooconvert-padding">' . esc_html__( 'Please update stats in order to see top performers.', 'fooconvert' );
     }
 } else {
-    echo '<table class="fooconvert-top-performers-table">';
+    echo '<table class="fooconvert-dashboard-table fooconvert-top-performers-table">';
     echo '<thead>';
     echo '<tr>';
     echo '<th>' . esc_html__( 'Rank', 'fooconvert' ) . '</th>';
-    echo '<th>' . esc_html__( 'Title', 'fooconvert' ) . '</th>';
+    echo '<th>' . esc_html__( 'Widget', 'fooconvert' ) . '</th>';
     echo '<th>';
-    echo esc_html( $sort_object['table_header'] );
-    echo '<span class="fooconvert-tooltip" data-balloon-pos="left" aria-label="' . esc_attr( $sort_object['tooltip'] ) . '"><i class="dashicons dashicons-editor-help"></i></span>';
+    echo esc_html__( 'Metric', 'fooconvert' );
+    echo '<span class="fooconvert-tooltip" data-balloon-pos="left" aria-label="' . esc_attr( $sort_object['description'] ) . '"><i class="dashicons dashicons-editor-help"></i></span>';
     echo '</th>';
     echo '</tr>';
     echo '</thead>';
@@ -41,11 +41,12 @@ if ( empty( $top_performers ) ) {
         $stats_url = fooconvert_admin_url_widget_stats( $id );
         $stats_link = '<a href="' . esc_url( $stats_url ) . '"><i class="dashicons dashicons-chart-bar" title="' . esc_attr__( 'View Widget Stats', 'fooconvert' ) . '"></i></a>';
         $score = $top_performer['score'];
-
+        $post_type = fooconvert_get_widget_post_type_label( $top_performer['post_type'] );
         echo '<tr>';
         echo '<td>#' . esc_attr( $index ) . '</td>';
         echo '<td><span>' . esc_html( $top_performer['title'] ) . '</span>';
-        echo '<div class="fooconvert-top-performers-table-actions">';
+        echo '<span class="fooconvert-dashboard-pill">' . esc_html( $post_type ) . '</span>';
+        echo '<div class="fooconvert-dashboard-table-actions">';
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo $edit_link . ' ' . $stats_link;
         echo '</div>';

@@ -2,21 +2,21 @@
 
 namespace FooPlugins\FooConvert;
 
-if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
+if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
 
     /**
      * The event class that manages creating events for a widget.
      */
-    class Event
-    {
+    class Event {
         /**
          * Creates a new event and inserts it into the database.
          *
          * @param array $data
+         * @param array $meta
          * @return int|void|\WP_Error
          */
         public function create( $data, $meta = array() ) {
-            if ( $this->can_create_event() ) {
+            if ( $this->can_create_event( $data, $meta ) ) {
                 $user_id = isset( $data['user_id'] ) ? intval( $data['user_id'] ) : null;
                 $anonymous_user_guid = isset( $data['anonymous_user_guid'] ) ? $data['anonymous_user_guid'] : null;
 
@@ -34,10 +34,15 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
                     $data['anonymous_user_guid'] = null;
                 } else {
                     $data['user_id'] = 0;
-                    if ( empty( $anonymous_user_guid ) && isset( $_SERVER['REMOTE_ADDR'] ) && isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
+
+                    // unslash and sanitize.
+                    $remote_addr = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
+                    $user_agent = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) );
+
+                    if ( empty( $anonymous_user_guid ) && isset( $remote_addr ) && isset( $user_agent ) ) {
                         // We could not determine the anonymous user GUID using the localStorage or cookie.
                         // Try and create a random GUID from the IP address and user agent.
-                        $anonymous_user_guid = hash( 'sha256', $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] );
+                        $anonymous_user_guid = hash( 'sha256', $remote_addr . $user_agent );
                     }
                     $data['anonymous_user_guid'] = $anonymous_user_guid;
                 }
@@ -63,7 +68,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
                 $data = apply_filters( 'fooconvert_event_data', $data, $meta );
 
                 if ( !empty( $post_type ) ) {
-                    $data = apply_filters('fooconvert_event_data_by_post_type-' . $post_type, $data, $meta);
+                    $data = apply_filters( 'fooconvert_event_data_by_post_type-' . $post_type, $data, $meta );
                 }
 
                 if ( !empty( $template ) ) {
@@ -81,13 +86,12 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
         /**
          * Will validate if the event can be created for a number of criteria.
          *
-         * TODO : implement checks so that certain users do not create events. (eg. admins)
-         * TODO : should we look into blocking bots?
-         *
+         * @param array $data
+         * @param array $meta
          * @return true
          */
-        private function can_create_event() {
-            return true;
+        private function can_create_event( $data, $meta ) {
+            return apply_filters( 'fooconvert_can_create_event', true, $data, $meta );
         }
 
         /**
@@ -96,8 +100,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
          * @param string $page_url The URL of the page to clean.
          * @return string The cleaned URL.
          */
-        private function clean_page_url($page_url)
-        {
+        private function clean_page_url( $page_url ) {
             // strip the domain from the URL
             $home_url = home_url();
 
@@ -115,10 +118,10 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
          * @param bool $force
          * @return array An associative array of event metric data.
          */
-        public function get_widget_metrics( $widget_id, $force = false) {
+        public function get_widget_metrics( $widget_id, $force = false ) {
 
             if ( !$force ) {
-                $data = get_post_meta($widget_id, FOOCONVERT_META_KEY_METRICS, true);
+                $data = get_post_meta( $widget_id, FOOCONVERT_META_KEY_METRICS, true );
 
                 if ( !empty( $data ) && is_array( $data ) ) {
                     $timestamp = isset( $data['timestamp'] ) ? intval( $data['timestamp'] ) : null;
@@ -157,8 +160,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
          *
          * @return int The number of events deleted.
          */
-        public function delete_all_events()
-        {
+        public function delete_all_events() {
             return Data\Query::delete_all_events();
         }
 
@@ -179,8 +181,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
          *
          * @return int The number of events deleted.
          */
-        public function delete_orphaned_events()
-        {
+        public function delete_orphaned_events() {
             return Data\Query::delete_orphaned_events();
         }
 
@@ -269,6 +270,29 @@ if ( ! class_exists( __NAMESPACE__ . '\Event' ) ) {
             }
 
             return array_column( $widgets, 'widget_id' );
+        }
+
+        /**
+         * Gets all widget IDs with no events.
+         *
+         * @return int[] The IDs of all widgets with ZERO events.
+         */
+        public function get_all_widgets_with_no_events() {
+            $widgets = Data\Query::get_widgets_with_no_events();
+            if ( empty( $widgets ) ) {
+                return [];
+            }
+
+            return array_column( $widgets, 'widget_id' );
+        }
+
+        /**
+         * Gets all widget metrics for all widgets.
+         *
+         * @return array An associative array of widget metrics.
+         */
+        public function get_all_widget_metrics() {
+            return Data\Query::get_all_widget_metrics();
         }
 
         /**

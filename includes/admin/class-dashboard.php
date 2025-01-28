@@ -1,4 +1,5 @@
 <?php
+
 namespace FooPlugins\FooConvert\Admin;
 
 use FooPlugins\FooConvert\Event;
@@ -10,20 +11,15 @@ use FooPlugins\FooConvert\FooConvert;
 
 if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
 
-    class Dashboard
-    {
+    class Dashboard {
         /**
          * Init constructor.
          */
-        function __construct()
-        {
-            add_action('fooconvert_admin_menu_before_post_types', array($this, 'register_menu'));
-            add_action('admin_enqueue_scripts', array($this, 'enqueue_assets'));
+        function __construct() {
+            add_action( 'fooconvert_admin_menu_before_post_types', array( $this, 'register_menu' ) );
+            add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 
-            add_action('wp_ajax_fooconvert_dashboard_top_performers', array($this, 'fetch_top_performers'));
-            add_action('wp_ajax_fooconvert_create_demo_widgets', array($this, 'create_demo_widgets'));
-            add_action('wp_ajax_fooconvert_delete_demo_widgets', array($this, 'delete_demo_widgets'));
-            add_action('wp_ajax_fooconvert_update_stats', array($this, 'update_stats'));
+            add_action( 'wp_ajax_fooconvert_dashboard_task', array( $this, 'handle_task' ) );
         }
 
         /**
@@ -43,12 +39,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
                 $nonce = sanitize_text_field( wp_unslash( $_POST['nonce'] ) );
 
                 // Verify the nonce
-                if ( !wp_verify_nonce($nonce, 'fooconvert-dashboard' ) ) {
+                if ( !wp_verify_nonce( $nonce, 'fooconvert-dashboard' ) ) {
                     wp_die( esc_html__( 'Invalid nonce!!', 'fooconvert' ) );
                 }
 
                 // Check if the current user is an administrator
-                if ( $check_admin && ! current_user_can( 'manage_options' ) ) {
+                if ( $check_admin && !current_user_can( 'manage_options' ) ) {
                     wp_die( esc_html__( 'You do not have permission to access this page.', 'fooconvert' ) );
                 }
 
@@ -61,20 +57,119 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
         }
 
         /**
-         * AJAX callback to create demo widgets.
+         * Retrieves the dashboard task from the POST request.
          *
-         * This function fetches a nonce from the request and verifies it.
-         * If the nonce is invalid, it dies with an error message.
-         * Otherwise, it creates demo widgets and sends back a JSON success
-         * response with the number of widgets created.
+         * This function checks if the 'task' key is set in the $_POST array.
+         * If set, it sanitizes and returns the task value. If not set, it
+         * terminates execution with an error message.
+         *
+         * @return string Sanitized task value from the POST request.
+         * @since 1.0.0
+         */
+        function get_dashboard_task() {
+            $task = $this->get_post_value( 'task' );
+
+            if ( empty( $task ) ) {
+                wp_die( esc_html__( 'Dashboard task is not set.', 'fooconvert' ) );
+            }
+
+            return $task;
+        }
+
+        /**
+         * Retrieves a sanitized value from the $_POST array.
+         *
+         * Checks if the $key is set in the $_POST array and sanitizes the value if set.
+         * If the value is empty after sanitization, it will be set to the $default value.
+         *
+         * @param string $key The key to look for in the $_POST array.
+         * @param string $default The default value if the key is not set or empty.
+         * @return string The sanitized value from the $_POST array, or the $default value.
          *
          * @since 1.0.0
          */
-        function create_demo_widgets() {
+        function get_post_value( $key, $default = '' ) {
+            $value = $default;
+            //phpcs:disable WordPress.Security.NonceVerification.Missing
+            if ( isset( $_POST[ $key ] ) ) {
+                $value = sanitize_text_field( wp_unslash( $_POST[ $key ] ) );
+                if ( empty( $value ) ) {
+                    $value = $default;
+                }
+            }
+            //phpcs:enable
+            return $value;
+        }
+
+        /**
+         * Handles AJAX requests for FooConvert dashboard tasks.
+         *
+         * Verifies nonce and user capabilities before performing the task.
+         * If the checks pass, it calls the corresponding method for the task.
+         *
+         * @since 1.0.0
+         */
+        function handle_task() {
             if ( !$this->do_checks() ) {
                 return;
             }
 
+            $task = $this->get_dashboard_task();
+
+            switch ( $task ) {
+                case 'create_demo_widgets':
+                    $this->create_demo_widgets();
+                    break;
+                case 'delete_demo_widgets':
+                    $this->delete_demo_widgets();
+                    break;
+                case 'update_stats':
+                    $this->update_stats();
+                    break;
+                case 'fetch_top_performers':
+                    $this->fetch_top_performers();
+                    break;
+                case 'hide_panel':
+                    $this->hide_panel();
+                    break;
+                default:
+                    wp_die( esc_html__( 'Invalid dashboard task!', 'fooconvert' ) );
+
+            }
+        }
+
+        /**
+         * Hides a panel in the FooConvert dashboard.
+         *
+         * Handles the AJAX request to hide a panel in the FooConvert dashboard.
+         * Verifies that the 'panel' key is set in the $_POST array and that the value is valid.
+         * If the checks pass, it adds the panel to the hidden_panels option and sends a JSON response.
+         *
+         * @since 1.0.0
+         */
+        function hide_panel() {
+            $panel = $this->get_post_value( 'panel' );
+            if ( empty( $panel ) ) {
+                wp_send_json( [ 'message' => __( 'Panel is not set.', 'fooconvert' ) ] );
+            }
+
+            $hidden_panels = fooconvert_get_setting( 'hide_dashboard_panels', [] );
+
+            if ( !in_array( $panel, $hidden_panels ) ) {
+                $hidden_panels[$panel] = $panel;
+                fooconvert_set_setting( 'hide_dashboard_panels', $hidden_panels );
+                wp_send_json( [ 'message' => __( 'Panel hidden.', 'fooconvert' ) ] );
+            }
+        }
+
+        /**
+         * Function to create demo widgets.
+         *
+         * This function creates demo widgets and sends back a JSON success
+         * response with the number of widgets created.
+         *
+         */
+        function create_demo_widgets() {
             ob_start();
             $demo = new DemoContent();
             $created = $demo->create( true );
@@ -88,34 +183,28 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
             fooconvert_set_setting( 'demo_content', 'on' );
 
             if ( $created === 0 ) {
-                wp_send_json( ['message' => __( 'No widgets created!', 'fooconvert' ) ] );
+                wp_send_json( [ 'message' => __( 'No widgets created!', 'fooconvert' ) ] );
             } else {
                 // Translators: %d refers to the number of demo widgets created.
-                wp_send_json( ['message' => sprintf( __( '%d demo widgets created successfully!', 'fooconvert' ), $created  ) ] );
+                wp_send_json( [ 'message' => sprintf( __( '%d demo widgets created successfully!', 'fooconvert' ), $created ) ] );
             }
         }
 
         /**
-         * AJAX callback to delete all demo widgets.
+         * Function to delete all demo widgets.
          *
-         * This function fetches a nonce from the request and verifies it.
-         * If the nonce is invalid, it dies with an error message.
-         * Otherwise, it deletes all demo widgets and sends back a JSON success
+         * This function deletes all demo widgets and sends back a JSON success
          * response.
          *
          * @since 1.0.0
          */
         function delete_demo_widgets() {
-            if ( !$this->do_checks() ) {
-                return;
-            }
-
             $demo = new DemoContent();
             $demo->delete();
 
             fooconvert_set_setting( 'demo_content', '' );
 
-            wp_send_json( ['message' => __( 'All demo widgets deleted!', 'fooconvert' ) ] );
+            wp_send_json( [ 'message' => __( 'All demo widgets deleted!', 'fooconvert' ) ] );
         }
 
         /**
@@ -128,19 +217,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
          * @since 1.0.0
          */
         function fetch_top_performers() {
-            if ( !$this->do_checks( false ) ) {
-                return;
-            }
-            // phpcs:disable WordPress.Security.NonceVerification.Missing
-            // Nonce checks are done in the do_checks() method
-            $sort = 'engagement';
-            if ( isset( $_POST['sort'] ) ) {
-                $sort = sanitize_text_field( wp_unslash( $_POST['sort'] ) );
-            }
-            // phpcs:enable
-            if ( empty( $sort ) ) {
-                $sort = 'engagement';
-            }
+            $sort = $this->get_post_value( 'sort', 'engagement' );
 
             update_option( FOOCONVERT_OPTION_TOP_PERFORMERS_SORT, $sort );
 
@@ -148,23 +225,17 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
             require_once FOOCONVERT_INCLUDES_PATH . 'admin/views/dashboard-top-performers.php';
             $html = ob_get_clean();
 
-            wp_send_json( ['html' => $html ] );
+            wp_send_json( [ 'html' => $html ] );
         }
 
         /**
-         * AJAX callback to update the stats.
+         * Function to update the stats.
          *
-         * This function fetches a nonce from the request and verifies it.
-         * If the nonce is invalid, it dies with an error message.
-         * Otherwise, it updates the stats.
+         * This function updates all widget stats.
          *
          * @since 1.1.0
          */
         function update_stats() {
-            if ( !$this->do_checks() ) {
-                return;
-            }
-
             $stats = new \FooPlugins\FooConvert\Stats();
             $stats->update();
 
@@ -188,7 +259,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
                 __( 'Dashboard', 'fooconvert' ),
                 'manage_options',
                 FOOCONVERT_MENU_SLUG,
-                function() {
+                function () {
                     require_once FOOCONVERT_INCLUDES_PATH . 'admin/views/dashboard.php';
                 }
             );
@@ -242,10 +313,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
                 true
             );
 
-            wp_localize_script('fooconvert-dashboard-js', 'fooconvertData', array(
-                'ajaxUrl' => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('fooconvert-dashboard')
-            ));
+            wp_localize_script( 'fooconvert-dashboard-js', 'fooconvertData', array(
+                'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+                'nonce' => wp_create_nonce( 'fooconvert-dashboard' )
+            ) );
         }
     }
 }

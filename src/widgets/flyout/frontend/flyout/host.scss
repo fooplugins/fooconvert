@@ -14,7 +14,7 @@
   max-height: calc(100% - var(--wp-admin--admin-bar--height, 0px))!important;
   margin: 0;
   padding: 32px;
-  z-index: 99998;
+  z-index: 99997;
   color: #000;
 
   &::part(inner) {

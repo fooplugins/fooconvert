@@ -33,6 +33,7 @@ const files = [
     "!{node_modules,node_modules/**,node_modules/**/*}",
     "!{src,src/**,src/**/*}",
     "!{.github,.github/**,.github/**/*}",
+    "!{.chatgpt,.chatgpt/**,.chatgpt/**/*}",
     "!.gitignore",
     "!fs-config.json",
     "!gulpfile.js",
