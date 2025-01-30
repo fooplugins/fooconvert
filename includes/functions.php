@@ -48,6 +48,13 @@ function fooconvert_autoloader( string $qualified_name ) {
         $path .= '/';
     }
 
+    $includes = FOOCONVERT_INCLUDES_PATH;
+
+    if ( !empty( $path ) && str_starts_with( $path, 'pro' ) && defined( 'FOOCONVERT_PRO_INCLUDES_PATH' ) ) {
+        $includes = FOOCONVERT_PRO_INCLUDES_PATH;
+        $path = str_replace( 'pro/', '', $path );
+    }
+
     /*
      * Attempt to load the target name from the directory path using the type specific naming
      * conventions in the following order.
@@ -64,13 +71,13 @@ function fooconvert_autoloader( string $qualified_name ) {
      *          => 'INCLUDES_PATH/folder/sub-folder/interface-itarget-name.php'
      *          => 'INCLUDES_PATH/folder/sub-folder/interface-target-name.php'
      */
-    $class_path = FOOCONVERT_INCLUDES_PATH . $path . "class-$target_name.php";
+    $class_path = $includes . $path . "class-$target_name.php";
     if ( file_exists( $class_path ) ) {
         require_once $class_path;
         return;
     }
 
-    $interface_path = FOOCONVERT_INCLUDES_PATH . $path . "interface-$target_name.php";
+    $interface_path = $includes . $path . "interface-$target_name.php";
     if ( file_exists( $interface_path ) ) {
         require_once $interface_path;
         return;
@@ -79,20 +86,20 @@ function fooconvert_autoloader( string $qualified_name ) {
     // additional check for possible interface
     if ( str_starts_with( $target_name, 'i' ) ) {
         $maybe_interface = substr( $target_name, 1 );
-        $maybe_interface_path = FOOCONVERT_INCLUDES_PATH . $path . "interface-$maybe_interface.php";
+        $maybe_interface_path = $includes . $path . "interface-$maybe_interface.php";
         if ( file_exists( $maybe_interface_path ) ) {
             require_once $maybe_interface_path;
             return;
         }
     }
 
-    $trait_path = FOOCONVERT_INCLUDES_PATH . $path . "trait-$target_name.php";
+    $trait_path = $includes . $path . "trait-$target_name.php";
     if ( file_exists( $trait_path ) ) {
         require_once $trait_path;
         return;
     }
 
-    $enum_path = FOOCONVERT_INCLUDES_PATH . $path . "enum-$target_name.php";
+    $enum_path = $includes . $path . "enum-$target_name.php";
     if ( file_exists( $enum_path ) ) {
         require_once $enum_path;
     }

@@ -30,7 +30,9 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
 
             // Check if the PRO version is running and run the PRO code.
             if ( fooconvert_is_pro() ) {
-                new Pro\Init();
+                if ( file_exists( FOOCONVERT_PATH . 'pro/start.php' ) ) {
+                    require_once FOOCONVERT_PATH . 'pro/start.php';
+                }
             }
         }
     }
