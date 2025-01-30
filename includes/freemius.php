@@ -14,18 +14,25 @@ if ( ! function_exists( 'fooconvert_fs' ) ) {
             }
 
             $fooconvert_fs = fs_dynamic_init( array(
-				'id'                  => '14677',
-				'slug'                => 'fooconvert',
-				'type'                => 'plugin',
-				'public_key'          => 'pk_88b6346482978e6778a77c484cfbe',
-				'is_premium'          => false,
-				'has_addons'          => true,
-				'has_paid_plans'      => false,
+                'id'                  => '14677',
+                'slug'                => 'fooconvert',
+                'type'                => 'plugin',
+                'public_key'          => 'pk_88b6346482978e6778a77c484cfbe',
+                'is_premium'          => true,
+                'premium_suffix'      => 'PRO',
+                // If your plugin is a serviceware, set this option to false.
+                'has_premium_version' => true,
+                'has_addons'          => true,
+                'has_paid_plans'      => true,
+                'trial'               => array(
+                    'days'               => 7,
+                    'is_require_payment' => false,
+                ),
                 'menu'                => array(
                     'slug'           => 'fooconvert',
                     'support'        => false,
                 ),
-			) );
+            ) );
 		}
 
 		return $fooconvert_fs;

@@ -401,3 +401,27 @@ function fooconvert_get_widget_post_type_label( $thing ) {
     }
     return '';
 }
+
+/**
+ * Retrieves whether the PRO version of FooConvert is running.
+ *
+ * @return bool True if the PRO version is running, false otherwise.
+ */
+function fooconvert_is_pro() {
+    global $fooconvert_pro;
+
+    if ( isset( $fooconvert_pro ) ) {
+        return $fooconvert_pro;
+    }
+
+    $fooconvert_pro = false;
+
+    //Check if the PRO version of FooBar is running
+    if ( fooconvert_fs()->is__premium_only() ) {
+        if ( fooconvert_fs()->can_use_premium_code() ) {
+            $fooconvert_pro = true;
+        }
+    }
+
+    return $fooconvert_pro;
+}
