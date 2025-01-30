@@ -1,0 +1,31 @@
+<?php
+namespace FooPlugins\FooConvert;
+
+/**
+ * FooConvert Init Class
+ * Runs all classes that need to run at startup
+ */
+
+if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
+
+    class Init {
+
+        public function __construct() {
+
+            // Initialize the main plugin.
+            FooConvert::plugin();
+
+            if ( is_admin() ) {
+                new Admin\Init();
+            }
+
+            new Event_Hooks();
+            new Cron();
+
+            // Check if the PRO version is running and run the PRO code.
+            if ( fooconvert_is_pro() ) {
+                new Pro\Init();
+            }
+        }
+    }
+}

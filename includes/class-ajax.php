@@ -46,8 +46,6 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
             // Verify nonce!
             check_ajax_referer( 'fooconvert_nonce', 'nonce' );
 
-            // TODO : if the user is logged in, check if their role is excluded from tracking
-
             // TODO : should we care about bots?
 
             // Validate the POST data
