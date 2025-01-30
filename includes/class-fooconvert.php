@@ -44,7 +44,6 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @access private
          */
         private function __construct() {
-            add_action( 'init', array( $this, 'load_translations' ) );
             add_action( 'init', array( $this, 'register_frontend_assets' ) );
             add_action( 'wp_enqueue_scripts', array( $this, 'ensure_frontend_assets_enqueued' ) );
             add_action( 'enqueue_block_assets', array( $this, 'enqueue_editor_assets' ) );
@@ -285,19 +284,6 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         //endregion
 
         //region Hooks
-
-        /**
-         * Callback for the `init` action.
-         *
-         * This hook loads the translations for the plugin.
-         *
-         * @access public
-         * @since 1.0.0
-         */
-        public function load_translations() {
-            $plugin_rel_path = dirname( plugin_basename( FOOCONVERT_FILE ) ) . '/languages/';
-            load_plugin_textdomain( FOOCONVERT_SLUG, false, $plugin_rel_path );
-        }
 
         /**
          * Callback for the `init` action.
