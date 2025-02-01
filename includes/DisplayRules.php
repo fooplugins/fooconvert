@@ -2,14 +2,14 @@
 
 namespace FooPlugins\FooConvert;
 
-use FooPlugins\FooConvert\Components\Base\Base_Component;
+use FooPlugins\FooConvert\Components\Base\BaseComponent;
 use WP_Post;
 use WP_Post_Type;
 use WP_Query;
 use WP_Term;
 use WP_User;
 
-class FooConvert_Display_Rules extends Base_Component {
+class DisplayRules extends BaseComponent {
     public function __construct() {
         parent::__construct();
 

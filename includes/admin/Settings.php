@@ -83,7 +83,7 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                 )
 			);
 
-            $database_tab = array(
+            $dataBasetab = array(
                 'id'     => 'database',
                 'label'  => __( 'Database', 'fooconvert' ),
                 'icon'   => 'dashicons-database',
@@ -95,8 +95,8 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
             $event_table_exists = $event->does_table_exist();
 
             if ( !$event_table_exists ) {
-                $database_tab['fields'][] = array(
-                    'id' => 'database_error',
+                $dataBasetab['fields'][] = array(
+                    'id' => 'dataBaseerror',
                     'type' => 'html',
                     'label' => __('Database Error', 'fooconvert'),
                     'html' => '<h3 style="color:red">' . esc_html__('Event Table Does Not Exist!', 'fooconvert') . '</h3>'
@@ -104,38 +104,38 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
             }
 
             if ( fooconvert_is_debug() ) {
-                $database_data = get_option( FOOCONVERT_OPTION_DATABASE_DATA );
-                if ( !empty( $database_data ) ) {
-                    $database_tab['fields'][] = array(
-                        'id' => 'database_data',
+                $dataBasedata = get_option( FOOCONVERT_OPTION_DATABaseDATA );
+                if ( !empty( $dataBasedata ) ) {
+                    $dataBasetab['fields'][] = array(
+                        'id' => 'dataBasedata',
                         'type' => 'html',
                         'label' => __('Database Data', 'fooconvert'),
-                        'html' => '<pre>' . esc_html( print_r( $database_data, true ) ) . '</pre>' // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+                        'html' => '<pre>' . esc_html( print_r( $dataBasedata, true ) ) . '</pre>' // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
                     );
                 }
             }
 
             if ( $event_table_exists ) {
-                $database_stats = $event->get_event_table_stats();
-                if (!empty($database_stats)) {
-                    $orphaned_events = intval($database_stats['Orphaned_Events']);
+                $dataBasestats = $event->get_event_table_stats();
+                if (!empty($dataBasestats)) {
+                    $orphaned_events = intval($dataBasestats['Orphaned_Events']);
 
                     $stats_html = '<table>';
                     $stats_html .= '<tr>';
                     $stats_html .= '<td>' . esc_html__('Table', 'fooconvert') . '</td>';
-                    $stats_html .= '<td><pre>' . esc_html($database_stats['Table']) . '</pre></td>';
+                    $stats_html .= '<td><pre>' . esc_html($dataBasestats['Table']) . '</pre></td>';
                     $stats_html .= '</tr>';
                     $stats_html .= '<tr>';
                     $stats_html .= '<td>' . __('Table Size (MB)', 'fooconvert') . '</td>';
-                    $stats_html .= '<td><pre>' . esc_html($database_stats['Size_in_MB']) . '</pre></td>';
+                    $stats_html .= '<td><pre>' . esc_html($dataBasestats['Size_in_MB']) . '</pre></td>';
                     $stats_html .= '</tr>';
                     $stats_html .= '<tr>';
                     $stats_html .= '<td>' . __('Event Row Count', 'fooconvert') . '</td>';
-                    $stats_html .= '<td><pre>' . esc_html($database_stats['Number_of_Rows']) . '</pre></td>';
+                    $stats_html .= '<td><pre>' . esc_html($dataBasestats['Number_of_Rows']) . '</pre></td>';
                     $stats_html .= '</tr>';
                     $stats_html .= '<tr>';
                     $stats_html .= '<td>' . __('Widget Count With Events', 'fooconvert') . '</td>';
-                    $stats_html .= '<td><pre>' . esc_html($database_stats['Unique_Widgets']) . '</pre></td>';
+                    $stats_html .= '<td><pre>' . esc_html($dataBasestats['Unique_Widgets']) . '</pre></td>';
                     $stats_html .= '</tr>';
                     $stats_html .= '<tr>';
                     $stats_html .= '<td>' . __('Orphaned Event Count', 'fooconvert') . '</td>';
@@ -151,27 +151,27 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                     $stats_html .= '</tr>';
                     $stats_html .= '<tr>';
                     $stats_html .= '<td>' . __('Orphaned Widget Count', 'fooconvert') . '</td>';
-                    $stats_html .= '<td><pre>' . esc_html($database_stats['Unique_Orphaned_Widgets']) . '</pre></td>';
+                    $stats_html .= '<td><pre>' . esc_html($dataBasestats['Unique_Orphaned_Widgets']) . '</pre></td>';
                     $stats_html .= '</tr>';
                     $stats_html .= '</table>';
 
-                    $database_tab['fields'][] = array(
-                        'id' => 'database_stats',
+                    $dataBasetab['fields'][] = array(
+                        'id' => 'dataBasestats',
                         'type' => 'html',
                         'label' => __('Database Stats', 'fooconvert'),
                         'html' => $stats_html
                     );
 
-                    $database_tab['fields'][] = array(
-                        'id' => 'database_delete_old',
+                    $dataBasetab['fields'][] = array(
+                        'id' => 'dataBasedelete_old',
                         'type' => 'ajaxbutton',
                         'callback' => array($this, 'delete_old_events'),
                         'button' => __('Delete Old Events', 'fooconvert'),
                         'desc' => __('This will permanently delete all events older than the retention period.', 'fooconvert') . ' ' . __('Currently :', 'fooconvert') . ' ' . fooconvert_retention() . ' ' . __('days.', 'fooconvert'),
                     );
 
-                    $database_tab['fields'][] = array(
-                        'id' => 'database_delete_all',
+                    $dataBasetab['fields'][] = array(
+                        'id' => 'dataBasedelete_all',
                         'type' => 'ajaxbutton',
                         'callback' => array($this, 'delete_all_events'),
                         'button' => __('Delete All Events', 'fooconvert'),
@@ -179,8 +179,8 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                     );
 
                     if ($orphaned_events > 0) {
-                        $database_tab['fields'][] = array(
-                            'id' => 'database_delete_orphans',
+                        $dataBasetab['fields'][] = array(
+                            'id' => 'dataBasedelete_orphans',
                             'type' => 'ajaxbutton',
                             'callback' => array($this, 'delete_orphans'),
                             'button' => __('Delete Orphaned Data', 'fooconvert'),
@@ -212,7 +212,7 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
 
 			return apply_filters( 'fooconvert_admin_settings', array(
 				'general' => $general_tab,
-                'database' => $database_tab,
+                'database' => $dataBasetab,
 				'systeminfo' => $system_info_tab,
 			) );
 		}
@@ -289,9 +289,9 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
             $event = new Event();
             $event_table_exists = $event->does_table_exist();
             if ( !$event_table_exists ) {
-                $database_stats = __( 'ERROR : The events table does not exist!', 'fooconvert' );
+                $dataBasestats = __( 'ERROR : The events table does not exist!', 'fooconvert' );
             } else {
-                $database_stats = $event->get_event_table_stats();
+                $dataBasestats = $event->get_event_table_stats();
             }
 
             $cron_jobs = $this->get_cron_jobs();
@@ -304,7 +304,7 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
 					__( 'PHP version', 'fooconvert' )       => phpversion(),
                     __( 'Retention', 'fooconvert' )         => fooconvert_retention(),
                     __( 'Cron Jobs', 'fooconvert' )         => $cron_jobs,
-                    __( 'Database', 'fooconvert' )    => $database_stats,
+                    __( 'Database', 'fooconvert' )    => $dataBasestats,
 					__( 'Active Plugins', 'fooconvert' )    => $plugins,
                     __( 'Settings', 'fooconvert' )          => $settings,
 			);

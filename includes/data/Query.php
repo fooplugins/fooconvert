@@ -108,7 +108,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             $result = $wpdb->insert( $table_name, $data );
 
             if ( $result === false ) {
-                return new WP_Error( 'database_error', 'Error inserting data into ' . $table_name . ': ' . $wpdb->last_error );
+                return new WP_Error( 'dataBaseerror', 'Error inserting data into ' . $table_name . ': ' . $wpdb->last_error );
             }
 
             return $wpdb->insert_id;

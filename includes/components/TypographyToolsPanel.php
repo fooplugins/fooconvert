@@ -2,10 +2,10 @@
 
 namespace FooPlugins\FooConvert\Components;
 
-use FooPlugins\FooConvert\Components\Base\Base_Component;
+use FooPlugins\FooConvert\Components\Base\BaseComponent;
 use FooPlugins\FooConvert\Utils;
 
-class Typography_Tools_Panel extends Base_Component {
+class TypographyToolsPanel extends BaseComponent {
     public function get_styles( array $attr_value, string $prefix = '' ) : array {
         $styles = [];
 

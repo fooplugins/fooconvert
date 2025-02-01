@@ -2,10 +2,10 @@
 
 namespace FooPlugins\FooConvert\Components;
 
-use FooPlugins\FooConvert\Components\Base\Base_Component;
+use FooPlugins\FooConvert\Components\Base\BaseComponent;
 use FooPlugins\FooConvert\Utils;
 
-class Box_Unit_Control extends Base_Component {
+class BoxUnitControl extends BaseComponent {
 
     private array $default_box_unit = array(
         'top' => '',
@@ -46,11 +46,11 @@ class Box_Unit_Control extends Base_Component {
         return $this->make_box_unit( $value, array_merge( array(), $this->default_box_unit_size, $defaults ) );
     }
 
-    function get_styles( $value, string $css_base_name, string $prefix = '' ): array {
+    function get_styles( $value, string $css_Basename, string $prefix = '' ): array {
         $styles = array();
 
         if ( Utils::is_string( $value, true ) ) {
-            $styles["$prefix$css_base_name"] = $value;
+            $styles["$prefix$css_Basename"] = $value;
         } elseif ( $this->is_possible_box_unit( $value ) ) {
             list(
                 'top' => $top,
@@ -60,16 +60,16 @@ class Box_Unit_Control extends Base_Component {
                 ) = $this->make_box_unit( $value, $this->default_box_unit );
 
             if ( ! empty( $top ) ) {
-                $styles["$prefix$css_base_name-top"] = $top;
+                $styles["$prefix$css_Basename-top"] = $top;
             }
             if ( ! empty( $right ) ) {
-                $styles["$prefix$css_base_name-right"] = $right;
+                $styles["$prefix$css_Basename-right"] = $right;
             }
             if ( ! empty( $bottom ) ) {
-                $styles["$prefix$css_base_name-bottom"] = $bottom;
+                $styles["$prefix$css_Basename-bottom"] = $bottom;
             }
             if ( ! empty( $left ) ) {
-                $styles["$prefix$css_base_name-left"] = $left;
+                $styles["$prefix$css_Basename-left"] = $left;
             }
         }
 

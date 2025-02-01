@@ -2,8 +2,8 @@
 
 namespace FooPlugins\FooConvert;
 
-use FooPlugins\FooConvert\Components\Base\Base_Component;
-use FooPlugins\FooConvert\Widgets\Base\Base_Widget;
+use FooPlugins\FooConvert\Components\Base\BaseComponent;
+use FooPlugins\FooConvert\Widgets\Base\BaseWidget;
 use FooPlugins\FooConvert\Widgets\Bar;
 use FooPlugins\FooConvert\Widgets\Flyout;
 use FooPlugins\FooConvert\Widgets\Popup;
@@ -12,10 +12,10 @@ use WP_Query;
 /**
  * This class both initializes and contains high level management utilities for plugin widgets.
  */
-class FooConvert_Widgets extends Base_Component {
+class Widgets extends BaseComponent {
 
     /**
-     * @var Base_Widget[]
+     * @var BaseWidget[]
      */
     private array $instances;
 
@@ -38,7 +38,7 @@ class FooConvert_Widgets extends Base_Component {
     /**
      * Get all widget instances.
      *
-     * @return Base_Widget[]
+     * @return BaseWidget[]
      *
      * @since 1.0.0
      */
@@ -62,7 +62,7 @@ class FooConvert_Widgets extends Base_Component {
         } );
     }
 
-    function get_instance( string $post_type ) : ?Base_Widget {
+    function get_instance( string $post_type ) : ?BaseWidget {
         foreach ( $this->instances as $instance ) {
             if ( $instance->get_post_type() === $post_type ) {
                 return $instance;

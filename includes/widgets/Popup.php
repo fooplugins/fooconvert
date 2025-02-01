@@ -3,11 +3,11 @@
 namespace FooPlugins\FooConvert\Widgets;
 
 use FooPlugins\FooConvert\FooConvert;
-use FooPlugins\FooConvert\Widgets\Base\Base_Widget;
+use FooPlugins\FooConvert\Widgets\Base\BaseWidget;
 use FooPlugins\FooConvert\Utils;
 use WP_Block;
 
-class Popup extends Base_Widget {
+class Popup extends BaseWidget {
 
     public function kses_definition() : array {
         return array(

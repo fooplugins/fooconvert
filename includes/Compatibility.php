@@ -2,9 +2,9 @@
 
 namespace FooPlugins\FooConvert;
 
-use FooPlugins\FooConvert\Components\Base\Base_Component;
+use FooPlugins\FooConvert\Components\Base\BaseComponent;
 
-class FooConvert_Compatibility extends Base_Component {
+class Compatibility extends BaseComponent {
 
     function get_component_data_name() : string {
         return 'FC_COMPATIBILITY';

@@ -4,9 +4,9 @@
     "type": "wordpress-plugin",
     "autoload"    : {
         "psr-4" : {
-            "FooPlugins\\FooConvert\\" : "includes"
+            "FooPlugins\\FooConvert\\" : "includes/",
+            "FooPlugins\\FooConvert\\Pro\\" : "pro/includes/"
         },
-	  	"classmap": [ "includes" ],
         "files": [
             "vendor/freemius/wordpress-sdk/start.php"
         ]

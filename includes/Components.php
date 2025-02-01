@@ -2,14 +2,14 @@
 
 namespace FooPlugins\FooConvert;
 
-use FooPlugins\FooConvert\Components\Border_Control;
-use FooPlugins\FooConvert\Components\Border_Radius_Control;
-use FooPlugins\FooConvert\Components\Border_Tools_Panel;
-use FooPlugins\FooConvert\Components\Box_Unit_Control;
-use FooPlugins\FooConvert\Components\Color_Tools_Panel;
-use FooPlugins\FooConvert\Components\Dimensions_Tools_Panel;
-use FooPlugins\FooConvert\Components\Open_Trigger_Panel;
-use FooPlugins\FooConvert\Components\Typography_Tools_Panel;
+use FooPlugins\FooConvert\Components\BorderControl;
+use FooPlugins\FooConvert\Components\BorderRadiusControl;
+use FooPlugins\FooConvert\Components\BorderToolsPanel;
+use FooPlugins\FooConvert\Components\BoxUnitControl;
+use FooPlugins\FooConvert\Components\ColorToolsPanel;
+use FooPlugins\FooConvert\Components\DimensionsToolsPanel;
+use FooPlugins\FooConvert\Components\OpenTriggerPanel;
+use FooPlugins\FooConvert\Components\TypographyToolsPanel;
 
 /**
  * This class contains utility classes and methods to make dynamic block rendering a bit simpler by providing
@@ -17,34 +17,34 @@ use FooPlugins\FooConvert\Components\Typography_Tools_Panel;
  *
  * An instance of this class is exposed as the `FooConvert::plugin()->components` property.
  */
-class FooConvert_Components {
+class Components {
 
     /**
      * Create a new instance of this class.
      */
     function __construct() {
         // individual controls
-        $this->border_control = new Border_Control();
-        $this->border_radius_control = new Border_Radius_Control();
-        $this->box_unit_control = new Box_Unit_Control();
+        $this->border_control = new BorderControl();
+        $this->border_radius_control = new BorderRadiusControl();
+        $this->box_unit_control = new BoxUnitControl();
 
         // composite controls
-        $this->border_tools_panel = new Border_Tools_Panel( $this->border_control, $this->border_radius_control );
-        $this->color_tools_panel = new Color_Tools_Panel();
-        $this->dimensions_tools_panel = new Dimensions_Tools_Panel( $this->box_unit_control );
-        $this->open_trigger_panel = new Open_Trigger_Panel();
-        $this->typography_tools_panel = new Typography_Tools_Panel();
+        $this->border_tools_panel = new BorderToolsPanel( $this->border_control, $this->border_radius_control );
+        $this->color_tools_panel = new ColorToolsPanel();
+        $this->dimensions_tools_panel = new DimensionsToolsPanel( $this->box_unit_control );
+        $this->open_trigger_panel = new OpenTriggerPanel();
+        $this->typography_tools_panel = new TypographyToolsPanel();
     }
 
-    public Border_Control $border_control;
-    public Border_Radius_Control $border_radius_control;
-    public Box_Unit_Control $box_unit_control;
+    public BorderControl $border_control;
+    public BorderRadiusControl $border_radius_control;
+    public BoxUnitControl $box_unit_control;
 
-    public Border_Tools_Panel $border_tools_panel;
-    public Color_Tools_Panel $color_tools_panel;
-    public Dimensions_Tools_Panel $dimensions_tools_panel;
-    public Open_Trigger_Panel $open_trigger_panel;
-    public Typography_Tools_Panel $typography_tools_panel;
+    public BorderToolsPanel $border_tools_panel;
+    public ColorToolsPanel $color_tools_panel;
+    public DimensionsToolsPanel $dimensions_tools_panel;
+    public OpenTriggerPanel $open_trigger_panel;
+    public TypographyToolsPanel $typography_tools_panel;
 
     function get_styles( array $styles_attribute, string $prefix = '', array $color_map = array() ) : array {
         $styles = array();

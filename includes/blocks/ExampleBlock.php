@@ -2,12 +2,12 @@
 
 namespace FooPlugins\FooConvert\Blocks;
 
-use FooPlugins\FooConvert\Blocks\Base\Base_Block;
+use FooPlugins\FooConvert\Blocks\Base\BaseBlock;
 use FooPlugins\FooConvert\FooConvert;
 use FooPlugins\FooConvert\Utils;
 use WP_Block;
 
-class Example_Block extends Base_Block {
+class ExampleBlock extends BaseBlock {
 
     public function kses_definition() : array {
         return array(

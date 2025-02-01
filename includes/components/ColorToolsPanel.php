@@ -2,9 +2,9 @@
 
 namespace FooPlugins\FooConvert\Components;
 
-use FooPlugins\FooConvert\Components\Base\Base_Component;
+use FooPlugins\FooConvert\Components\Base\BaseComponent;
 
-class Color_Tools_Panel extends Base_Component {
+class ColorToolsPanel extends BaseComponent {
 
     /**
      * @param array $value

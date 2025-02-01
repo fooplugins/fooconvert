@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 define( 'FOOCONVERT_OPTION_DATA', 'fooconvert-settings' );
 define( 'FOOCONVERT_OPTION_VERSION', 'fooconvert-version' );
 define( 'FOOCONVERT_OPTION_VERSION_CREATE_TABLE', 'fooconvert-version-create-table' );
-define( 'FOOCONVERT_OPTION_DATABASE_DATA', 'fooconvert-database-data' );
+define( 'FOOCONVERT_OPTION_DATABaseDATA', 'fooconvert-database-data' );
 define( 'FOOCONVERT_OPTION_TOP_PERFORMERS_SORT', 'fooconvert_top_performers_sort' );
 define( 'FOOCONVERT_OPTION_STATS_LAST_UPDATED', 'fooconvert_stats_last_updated' );
 define( 'FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS', 'fooconvert_recent_activity_days' );

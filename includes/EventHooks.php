@@ -4,12 +4,12 @@ namespace FooPlugins\FooConvert;
 
 use WP_Post;
 
-if ( !class_exists( __NAMESPACE__ . '\Event_Hooks' ) ) {
+if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
 
     /**
      * Class for all event related hooks.
      */
-    class Event_Hooks {
+    class EventHooks {
 
         public function __construct() {
             add_filter( 'fooconvert_event_data', array( $this, 'adjust_event_data' ), 10, 2 );

@@ -4,7 +4,7 @@ namespace FooPlugins\FooConvert\Components\Base;
 
 use FooPlugins\FooConvert\Utils;
 
-abstract class Base_Component {
+abstract class BaseComponent {
 
     function __construct() {
         add_action( 'fooconvert_enqueued_editor_assets', array( $this, 'enqueue_component_data' ) );

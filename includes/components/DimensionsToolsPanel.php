@@ -2,13 +2,13 @@
 
 namespace FooPlugins\FooConvert\Components;
 
-use FooPlugins\FooConvert\Components\Base\Base_Component;
+use FooPlugins\FooConvert\Components\Base\BaseComponent;
 use FooPlugins\FooConvert\Utils;
 
-class Dimensions_Tools_Panel extends Base_Component {
-    private Box_Unit_Control $box_unit_control;
+class DimensionsToolsPanel extends BaseComponent {
+    private BoxUnitControl $box_unit_control;
 
-    function __construct( Box_Unit_Control $box_unit_control ) {
+    function __construct( BoxUnitControl $box_unit_control ) {
         parent::__construct();
         $this->box_unit_control = $box_unit_control;
     }

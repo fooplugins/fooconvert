@@ -53,8 +53,6 @@ if ( require_once FOOCONVERT_INCLUDES_PATH . 'startup-checks.php' ) {
 
     require_once FOOCONVERT_INCLUDES_PATH . 'functions.php';
 
-    spl_autoload_register( 'fooconvert_autoloader' );
-
 	// Hook in activation.
 	register_activation_hook( FOOCONVERT_FILE, array( FooPlugins\FooConvert\Activation::class, 'activated' ) );
 

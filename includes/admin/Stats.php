@@ -237,7 +237,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 'manage_options',
                 FOOCONVERT_MENU_SLUG_WIDGET_STATS,
                 function() {
-                    require_once FOOCONVERT_INCLUDES_PATH . 'admin/views/widget-stats.php';
+                    require_once FOOCONVERT_INCLUDES_PATH . 'Admin/Views/widget-stats.php';
                 }
             );
         }
@@ -281,7 +281,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
             // Enqueue the local Chart.js script
             wp_enqueue_script(
                 'chartjs',
-                FOOCONVERT_ASSETS_URL . 'admin/vendor/chartjs/chart.min.js',
+                FOOCONVERT_ASSETS_URL . 'Admin/vendor/chartjs/chart.min.js',
                 array(),
                 '4.4.6',  // specify the version of Chart.js
                 true
@@ -290,7 +290,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
             // Enqueue the local Chart.js annotations script
             wp_enqueue_script(
                 'chartjs-annotations',
-                FOOCONVERT_ASSETS_URL . 'admin/vendor/chartjs/chart.annotations.min.js',
+                FOOCONVERT_ASSETS_URL . 'Admin/vendor/chartjs/chart.annotations.min.js',
                 array( 'chartjs' ),
                 '4.4.6',  // specify the version of Chart.js
                 true
@@ -298,21 +298,21 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
 
             wp_enqueue_style(
                 'fooconvert-balloon-css',
-                FOOCONVERT_ASSETS_URL . 'admin/vendor/balloon/balloon.css',
+                FOOCONVERT_ASSETS_URL . 'Admin/vendor/balloon/balloon.css',
                 array(),
                 FOOCONVERT_VERSION
             );
 
             wp_enqueue_style(
                 'fooconvert-widget-stats-css',
-                FOOCONVERT_INCLUDES_URL . 'admin/views/widget-stats.css',
+                FOOCONVERT_INCLUDES_URL . 'Admin/Views/widget-stats.css',
                 array(),
                 FOOCONVERT_VERSION
             );
 
             wp_enqueue_script(
                 'fooconvert-widget-stats-js',
-                FOOCONVERT_INCLUDES_URL . 'admin/views/widget-stats.js',
+                FOOCONVERT_INCLUDES_URL . 'Admin/Views/widget-stats.js',
                 array( 'jquery', 'chartjs' ), // Chart.js dependency
                 FOOCONVERT_VERSION,
                 true

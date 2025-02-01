@@ -2,10 +2,10 @@
 
 namespace FooPlugins\FooConvert\Components;
 
-use FooPlugins\FooConvert\Components\Base\Base_Component;
+use FooPlugins\FooConvert\Components\Base\BaseComponent;
 use FooPlugins\FooConvert\Utils;
 
-class Open_Trigger_Panel extends Base_Component {
+class OpenTriggerPanel extends BaseComponent {
     function get_attributes( array $attr_value ): array {
         $extra_attributes = array();
         $trigger_type = Utils::get_string( $attr_value, 'type' );

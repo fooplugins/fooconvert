@@ -2,14 +2,14 @@
 
 namespace FooPlugins\FooConvert\Components;
 
-use FooPlugins\FooConvert\Components\Base\Base_Component;
+use FooPlugins\FooConvert\Components\Base\BaseComponent;
 use FooPlugins\FooConvert\Utils;
 
-class Border_Tools_Panel extends Base_Component {
-    private Border_Control $border_control;
-    private Border_Radius_Control $border_radius_control;
+class BorderToolsPanel extends BaseComponent {
+    private BorderControl $border_control;
+    private BorderRadiusControl $border_radius_control;
 
-    function __construct( Border_Control $border_control, Border_Radius_Control $border_radius_control ) {
+    function __construct( BorderControl $border_control, BorderRadiusControl $border_radius_control ) {
         parent::__construct();
         $this->border_control = $border_control;
         $this->border_radius_control = $border_radius_control;

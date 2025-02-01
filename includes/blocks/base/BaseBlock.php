@@ -10,7 +10,7 @@ use WP_Block_Type;
 /**
  * A base class for a dynamic block.
  */
-abstract class Base_Block {
+abstract class BaseBlock {
     /**
      * The block types registered by the call to the `register_blocks` method.
      *

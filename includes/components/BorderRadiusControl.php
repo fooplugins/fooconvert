@@ -2,14 +2,14 @@
 
 namespace FooPlugins\FooConvert\Components;
 
-use FooPlugins\FooConvert\Components\Base\Base_Component;
+use FooPlugins\FooConvert\Components\Base\BaseComponent;
 use FooPlugins\FooConvert\Utils;
 
 /**
  * Provides utility methods for working with the JavaScript `BorderRadiusControl` component.
- * @extends Base_Component
+ * @extends BaseComponent
  */
-class Border_Radius_Control extends Base_Component {
+class BorderRadiusControl extends BaseComponent {
 
     private array $default_box_value = array(
         'topLeft' => '0px',

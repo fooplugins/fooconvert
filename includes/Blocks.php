@@ -2,25 +2,25 @@
 
 namespace FooPlugins\FooConvert;
 
-use FooPlugins\FooConvert\Blocks\Base\Base_Block;
-use FooPlugins\FooConvert\Blocks\Example_Block;
+use FooPlugins\FooConvert\Blocks\Base\BaseBlock;
+use FooPlugins\FooConvert\Blocks\ExampleBlock;
 
-class FooConvert_Blocks {
+class Blocks {
     function __construct() {
         $this->instances = array(
-            new Example_Block()
+            new ExampleBlock()
         );
     }
 
     /**
-     * @var Base_Block[]
+     * @var BaseBlock[]
      */
     private array $instances;
 
     /**
      * Get all widget instances.
      *
-     * @return Base_Block[]
+     * @return BaseBlock[]
      *
      * @since 1.0.0
      */

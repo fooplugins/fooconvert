@@ -222,7 +222,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
             update_option( FOOCONVERT_OPTION_TOP_PERFORMERS_SORT, $sort );
 
             ob_start();
-            require_once FOOCONVERT_INCLUDES_PATH . 'admin/views/dashboard-top-performers.php';
+            require_once FOOCONVERT_INCLUDES_PATH . 'Admin/Views/dashboard-top-performers.php';
             $html = ob_get_clean();
 
             wp_send_json( [ 'html' => $html ] );
@@ -260,7 +260,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
                 'manage_options',
                 FOOCONVERT_MENU_SLUG,
                 function () {
-                    require_once FOOCONVERT_INCLUDES_PATH . 'admin/views/dashboard.php';
+                    require_once FOOCONVERT_INCLUDES_PATH . 'Admin/Views/dashboard.php';
                 }
             );
         }
@@ -293,21 +293,21 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
 
             wp_enqueue_style(
                 'fooconvert-balloon-css',
-                FOOCONVERT_ASSETS_URL . 'admin/vendor/balloon/balloon.css',
+                FOOCONVERT_ASSETS_URL . 'Admin/vendor/balloon/balloon.css',
                 array(),
                 FOOCONVERT_VERSION
             );
 
             wp_enqueue_style(
                 'fooconvert-dashboard-css',
-                FOOCONVERT_INCLUDES_URL . 'admin/views/dashboard.css',
+                FOOCONVERT_INCLUDES_URL . 'Admin/Views/dashboard.css',
                 array(),
                 FOOCONVERT_VERSION
             );
 
             wp_enqueue_script(
                 'fooconvert-dashboard-js',
-                FOOCONVERT_INCLUDES_URL . 'admin/views/dashboard.js',
+                FOOCONVERT_INCLUDES_URL . 'Admin/Views/dashboard.js',
                 array( 'jquery' ),
                 FOOCONVERT_VERSION,
                 true

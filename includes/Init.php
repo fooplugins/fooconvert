@@ -25,7 +25,7 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
                 new Admin\Init();
             }
 
-            new Event_Hooks();
+            new EventHooks();
             new Cron();
 
             // Check if the PRO version is running and run the PRO code.

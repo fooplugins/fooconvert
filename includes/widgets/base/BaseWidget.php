@@ -2,14 +2,14 @@
 
 namespace FooPlugins\FooConvert\Widgets\Base;
 
-use FooPlugins\FooConvert\Blocks\Base\Base_Block;
+use FooPlugins\FooConvert\Blocks\Base\BaseBlock;
 use FooPlugins\FooConvert\FooConvert;
 use FooPlugins\FooConvert\Utils;
 use WP_Block;
 use WP_Error;
 use WP_Post_Type;
 
-abstract class Base_Widget extends Base_Block {
+abstract class BaseWidget extends BaseBlock {
 
     public array $supported = array( 'shortcode', 'display-rules', 'compatibility' );
 

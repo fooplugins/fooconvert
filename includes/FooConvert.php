@@ -50,11 +50,11 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             add_filter( 'block_categories_all', array( $this, 'register_block_category' ) );
             add_action( 'transition_post_status', array( $this, 'clean_demo_content' ), 10, 3 );
 
-            $this->components = new FooConvert_Components();
-            $this->compatibility = new FooConvert_Compatibility();
-            $this->display_rules = new FooConvert_Display_Rules();
-            $this->blocks = new FooConvert_Blocks();
-            $this->widgets = new FooConvert_Widgets();
+            $this->components = new Components();
+            $this->compatibility = new Compatibility();
+            $this->display_rules = new DisplayRules();
+            $this->blocks = new Blocks();
+            $this->widgets = new Widgets();
             $this->ajax = new Ajax();
         }
 
@@ -84,24 +84,24 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         /**
          * Utility classes and methods for custom element dynamic blocks.
          *
-         * @var FooConvert_Components
+         * @var Components
          * @access public
          *
          * @since 1.0.0
          */
-        public FooConvert_Components $components;
+        public Components $components;
 
-        public FooConvert_Compatibility $compatibility;
+        public Compatibility $compatibility;
 
         /**
          * Contains the logic for the widget display rules.
          *
-         * @var FooConvert_Display_Rules
+         * @var DisplayRules
          * @access public
          *
          * @since 1.0.0
          */
-        public FooConvert_Display_Rules $display_rules;
+        public DisplayRules $display_rules;
 
         /**
          * Contains utility methods as well as all block instances for the plugin.
@@ -110,12 +110,12 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * Blocks are different to widgets within the context of the plugin. A widget has its own custom post type
          * and cannot be used outside of it. A block can be used by all widgets, but will only be visible to widgets.
          *
-         * @var FooConvert_Blocks
+         * @var Blocks
          * @access public
          *
          * @since 1.0.0
          */
-        public FooConvert_Blocks $blocks;
+        public Blocks $blocks;
 
         /**
          * Contains utility methods as well as all widget instances for the plugin.
@@ -124,12 +124,12 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * Widgets are different to blocks within the context of the plugin. A widget has its own custom post type
          * and cannot be used outside of it. A block can be used by all widgets, but will only be visible to widgets.
          *
-         * @var FooConvert_Widgets
+         * @var Widgets
          * @access public
          *
          * @since 1.0.0
          */
-        public FooConvert_Widgets $widgets;
+        public Widgets $widgets;
 
         public Ajax $ajax;
 
