@@ -104,6 +104,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                     return true;
                 }
 
+                if ( 'admin_page_fooconvert-pricing' === $current_screen->id ) {
+                    return false;
+                }
+
                 if ( str_starts_with( $current_screen->id, 'fooconvert_page_fooconvert-' ) ) {
                     return true;
                 }
@@ -127,14 +131,14 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             if ( $this->is_valid_page() ) {
                 wp_enqueue_style(
                     'fooconvert-admin',
-                    FOOCONVERT_ASSETS_URL . 'Admin/css/admin.css',
+                    FOOCONVERT_ASSETS_URL . 'admin/css/admin.css',
                     null,
                     FOOCONVERT_VERSION
                 );
 
 //                wp_enqueue_script(
 //                    'fooconvert-admin',
-//                    FOOCONVERT_ASSETS_URL . 'Admin/js/admin.js',
+//                    FOOCONVERT_ASSETS_URL . 'admin/js/admin.js',
 //                    null,
 //                    FOOCONVERT_VERSION,
 //                    true
@@ -162,7 +166,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                 ?>">
                     <div class="fooconvert-title">
                         <img class="fooconvert-logo" src="<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
-                        echo esc_url( FOOCONVERT_ASSETS_URL . 'Admin/img/horizontal-logo-50.png' );
+                        echo esc_url( FOOCONVERT_ASSETS_URL . 'admin/img/horizontal-logo-50.png' );
                         ?>" alt="FooConvert Logo">
                         <p>Version <?php
                             echo esc_html( FOOCONVERT_VERSION );

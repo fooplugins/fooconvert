@@ -281,7 +281,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
             // Enqueue the local Chart.js script
             wp_enqueue_script(
                 'chartjs',
-                FOOCONVERT_ASSETS_URL . 'Admin/vendor/chartjs/chart.min.js',
+                FOOCONVERT_ASSETS_URL . 'admin/vendor/chartjs/chart.min.js',
                 array(),
                 '4.4.6',  // specify the version of Chart.js
                 true
@@ -290,7 +290,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
             // Enqueue the local Chart.js annotations script
             wp_enqueue_script(
                 'chartjs-annotations',
-                FOOCONVERT_ASSETS_URL . 'Admin/vendor/chartjs/chart.annotations.min.js',
+                FOOCONVERT_ASSETS_URL . 'admin/vendor/chartjs/chart.annotations.min.js',
                 array( 'chartjs' ),
                 '4.4.6',  // specify the version of Chart.js
                 true
@@ -298,7 +298,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
 
             wp_enqueue_style(
                 'fooconvert-balloon-css',
-                FOOCONVERT_ASSETS_URL . 'Admin/vendor/balloon/balloon.css',
+                FOOCONVERT_ASSETS_URL . 'admin/vendor/balloon/balloon.css',
                 array(),
                 FOOCONVERT_VERSION
             );

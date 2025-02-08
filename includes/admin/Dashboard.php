@@ -293,7 +293,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
 
             wp_enqueue_style(
                 'fooconvert-balloon-css',
-                FOOCONVERT_ASSETS_URL . 'Admin/vendor/balloon/balloon.css',
+                FOOCONVERT_ASSETS_URL . 'admin/vendor/balloon/balloon.css',
                 array(),
                 FOOCONVERT_VERSION
             );
