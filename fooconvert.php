@@ -2,7 +2,7 @@
 /*
 Plugin Name: FooConvert - Boost Conversions & Lead Generation
 Description: Turn clicks into conversions, visitors into customers – FooConvert is the ultimate catalyst for online success!
-Version:     1.0.1
+Version:     1.1.1
 Author:      FooPlugins
 Plugin URI:  https://fooplugins.com/fooconvert/
 Author URI:  https://fooplugins.com/
@@ -34,7 +34,7 @@ if ( ! defined( 'FOOCONVERT_SLUG' ) ) {
     define( 'FOOCONVERT_ASSETS_PATH', FOOCONVERT_PATH . 'assets/' );
     define( 'FOOCONVERT_ASSETS_URL', FOOCONVERT_URL . 'assets/' );
     define( 'FOOCONVERT_FILE', __FILE__ );
-    define( 'FOOCONVERT_VERSION', '1.0.1' );
+    define( 'FOOCONVERT_VERSION', '1.1.1' );
     define( 'FOOCONVERT_MIN_PHP', '7.4.0' );
     define( 'FOOCONVERT_MIN_WP', '6.5.0' );
 }

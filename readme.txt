@@ -4,7 +4,7 @@ Tags: sales-optimization,conversion-tools,lead-generation,marketing,wordpress-ec
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 6.7
-Stable tag: 1.0.1
+Stable tag: 1.1.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -122,6 +122,12 @@ No, FooConvert is optimized for performance and has minimal impact on your websi
 The source code for this plugin is available publicly on GitHub [here](https://github.com/fooplugins/fooconvert).
 
 == Changelog ==
+
+= 1.1.1 =
+* Date Updated : 8 Feb 2025
+* FooConvert PRO now available!
+* Updated whole plugin to use PSR4 autoloading standards.
+* Fixed admin path issues where assets were not loading.
 
 = 1.0.1 =
 * Date Updated : 27 Jan 2025
