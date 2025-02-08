@@ -28,3 +28,4 @@ const performCopy = async(source, target, patterns) => {
 
 await performCopy( "./src/media", "./assets/media", [ '**/*' ] );
 await performCopy( "./src/admin", "./assets/admin", [ '**/*' ] );
+await performCopy( "./pro/src/media", "./pro/assets/media", [ '**/*' ] );
