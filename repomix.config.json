@@ -1,0 +1,39 @@
+{
+  "output": {
+    "filePath": "dist/repomix-output.md",
+    "style": "markdown",
+    "headerText": "FooConvert Codebase",
+    "fileSummary": true,
+    "directoryStructure": true,
+    "removeComments": false,
+    "removeEmptyLines": false,
+    "topFilesLength": 5,
+    "showLineNumbers": false,
+    "copyToClipboard": false,
+    "includeEmptyDirectories": false
+  },
+  "include": ["**/*"],
+  "ignore": {
+    "useGitignore": true,
+    "useDefaultPatterns": true,
+    "customPatterns": [
+      "LICENSE",
+      "src/admin/vendor/**/*",
+      "vendor/**/*",
+      "assets/**/*",
+      "includes/Admin/FooFields/**/*",
+      "dist/**/*",
+      "languages/**/*",
+      "node_modules/**/*",
+      "fs-config.json",
+      "**/*.mjs",
+      "package-lock.json",
+      "composer.lock",
+      "repomix.config.json",
+      "includes/constant-svg.php"
+    ]
+  },
+  "security": {
+    "enableSecurityCheck": true
+  }
+}
