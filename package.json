@@ -25,7 +25,8 @@
     "composer:update": "composer update --optimize-autoloader",
     "composer:refresh": "composer dump-autoload --optimize",
     "package:create-zip": "npm run build && npm run i18n && npm run composer:refresh && gulp",
-    "package:deploy": "gulp freemius-deploy"
+    "package:deploy": "gulp freemius-deploy",
+    "repomix": "repomix"
   },
   "devDependencies": {
     "@steveush/utils": "^0.0.2",
@@ -51,6 +52,7 @@
     "gulp": "^5.0.0",
     "gulp-freemius-deploy": "^1.0.11",
     "gulp-zip": "^6.0.0",
-    "raw-loader": "^4.0.2"
+    "raw-loader": "^4.0.2",
+    "repomix": "^0.2.25"
   }
 }
