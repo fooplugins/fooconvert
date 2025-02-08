@@ -46,7 +46,7 @@ FooConvert is a powerful WordPress plugin designed to help you optimize your web
 - Analytics Dashboard:
   - Top Performers by Views and Engagement.
 - Widget data retention for 14 days only.
-  - Longer retention period with PRO analytics add-on.
+  - Longer retention period available with FooConvert PRO.
 
 = FooConvert Benefits =
 
@@ -56,26 +56,22 @@ FooConvert is a powerful WordPress plugin designed to help you optimize your web
 - Sell More Products: Generate more revenue with high-converting widgets!
 - Data-Driven Decisions: Make informed choices based on real-time analytics!
 
-= PRO Analytics Add-on =
+= FooConvert PRO Features =
 
-Track your widgets with our PRO analytics add-on. Gain deeper insights into your conversion funnel and optimize your marketing strategies.
+PRO gives you insights into your widget performance and saves you time! Features include:
 
 - Longer retention period for widget analytics. You can now track widget performance as long as your like!
-- Advanced widget analytics, including:
+- More advanced widget analytics, including:
   - Clicks and click-through-rates.
   - Conversions and conversion rates.
   - Engagement sentiment and engagement ratios (positive and negative).
   - Daily activity charts for clicks, conversions and engagements.
-- Advanced dashboard, including:
+- More dashboard metrics, including:
   - Top Performers by Engagement Rate, Clicks, Click Rate, Conversions, Conversion Rate.
-
-= PRO Templates Add-on =
-
-COMING SOON! Get 15 professionally designed templates to create stunning, high-converting widgets in minutes – just pick, customize, publish!
-
-- Create stunning Flyouts, Bars, and Popups in minutes with professionally designed templates – no design skills needed!
-- Boost conversions and grow your leads effortlessly with high-performing, ready-to-use templates crafted to grab attention.
-- Stop wasting time designing from scratch – launch campaigns faster and start making more money with templates proven to convert.
+- 9 professionally designed templates:
+  - No design skills needed!
+  - Proven to convert and grab attention!
+  - Create stunning, high-converting widgets in minutes – just pick, customize, publish!
 
 == Installation ==
 
@@ -93,7 +89,7 @@ There is NO limit to the number of views each widget can have.
 Most alternative conversion solutions limit how many widgets you can create or limit how many times each widget is displayed. Not FooConvert!
 
 The only limitation is the data retention for widget analytics. The data is stored for 14 days only.
-The PRO analytics add-on has longer retention period for widget analytics, so you can track widget performance as long as your like!
+FooConvert PRO has a longer retention period for widget analytics, so you can track widget performance as long as your like!
 
 = Is FooConvert compatible with my theme? =
 

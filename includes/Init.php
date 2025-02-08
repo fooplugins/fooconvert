@@ -28,8 +28,8 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
             new EventHooks();
             new Cron();
 
-            // Check if the PRO version is running and run the PRO code.
-            if ( fooconvert_is_pro() ) {
+            if ( fooconvert_fs()->can_use_premium_code__premium_only() ) {
+                // Check if the PRO version is running and run the PRO code.
                 if ( file_exists( FOOCONVERT_PATH . 'pro/start.php' ) ) {
                     require_once FOOCONVERT_PATH . 'pro/start.php';
                 }

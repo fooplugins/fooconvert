@@ -20,7 +20,6 @@ if ( ! function_exists( 'fooconvert_fs' ) ) {
                 'public_key'          => 'pk_88b6346482978e6778a77c484cfbe',
                 'is_premium'          => true,
                 'premium_suffix'      => 'PRO',
-                // If your plugin is a serviceware, set this option to false.
                 'has_premium_version' => true,
                 'has_addons'          => true,
                 'has_paid_plans'      => true,

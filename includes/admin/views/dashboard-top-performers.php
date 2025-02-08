@@ -13,7 +13,7 @@ $top_performers = $stats->get_top_performers( $sort );
 if ( empty( $top_performers ) ) {
     if ( isset( $sort_object['pro_feature'] ) && $sort_object['pro_feature'] ) {
         echo '<p class="fooconvert-padding">' . esc_html( $sort_object['pro_message'] ) . '</p>';
-        echo '<p class="fooconvert-padding"><a class="button button-primary button-large" href="' . esc_url( fooconvert_admin_url_addons() ) . '">' . esc_html__('Buy PRO Analytics!', 'fooconvert'). '</a></p>';
+        echo '<p class="fooconvert-padding"><a class="button button-primary button-large" href="' . esc_url( fooconvert_admin_url_pricing() ) . '">' . esc_html__('Buy FooConvert PRO!', 'fooconvert'). '</a></p>';
     }
     else if ( fooconvert_has_stats_last_updated() ) {
         echo '<p class="fooconvert-padding">' . esc_html__( 'No top performers found!', 'fooconvert' ) . '</p>';

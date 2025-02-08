@@ -301,7 +301,7 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
          * @return boolean True on success, false on failure.
          */
         public function delete_old_events() {
-            //TODO : how do we ensure that we dont use a retention period if the PRO analytics add-on is not active?
+            //TODO : how do we ensure that we dont use a retention period if FooConvert PRO is not active?
             $retention = fooconvert_retention();
 
             return Data\Query::delete_old_events( $retention );
