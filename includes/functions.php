@@ -155,15 +155,6 @@ function fooconvert_admin_url_widget_edit( $widget_id ) {
 }
 
 /**
- * Checks if the FooConvert PRO Analytics Addon is active.
- *
- * @return bool True if the FooConvert Analytics Addon is active, false otherwise.
- */
-function fooconvert_is_analytics_addon_active() {
-    return function_exists( 'fcpa_fs' ) && did_action( 'fcpa_fs_loaded' );
-}
-
-/**
  * Retrieves the sorting preference for top performers in FooConvert.
  *
  * This function fetches the sorting criteria for top performers from the

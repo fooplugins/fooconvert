@@ -28,7 +28,7 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
 
 		function get_tabs() {
 
-            $analytics_addon_link = '<a href="' . fooconvert_admin_url_addons() . '" target="_blank">' . __( 'Analytics PRO Addon', 'fooconvert' ) . '</a>';
+            $pro_link = '<a href="' . fooconvert_admin_url_pricing() . '" target="_blank">' . __( 'FooConvert PRO', 'fooconvert' ) . '</a>';
 
             $hide_dashboard_panels_choices = apply_filters( 'fooconvert_hide_dashboard_panels_choices', array(
                 'getting-started' => __( 'Getting Started', 'fooconvert' ),
@@ -48,8 +48,8 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                         'type'  => 'html',
                         'label' => __( 'Retention Period', 'fooconvert' ),
                         'html'  => '<pre>' . esc_html( fooconvert_retention() ) . ' ' . __( 'days', 'fooconvert' ) . '</pre>',
-                        // Translators: %s refers to the link to the Analytics PRO Addon.
-                        'desc'  => __( 'The number of days before data is deleted.', 'fooconvert' ) . ' ' . sprintf( __( 'This can only be changed with the %s.', 'fooconvert' ), $analytics_addon_link )
+                        // Translators: %s refers to the link to the FooConvert PRO Pricing page.
+                        'desc'  => __( 'The number of days before data is deleted.', 'fooconvert' ) . ' ' . sprintf( __( 'This can only be changed with %s.', 'fooconvert' ), $pro_link )
                     ),
                     'debug' => array(
                         'id'    => 'debug',

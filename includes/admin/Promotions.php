@@ -31,12 +31,8 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
             }
 
             add_action( 'fooconvert_admin_dashboard_right', array( $this, 'render_addons_panel' ) );
-
-            // Only show the promotion if the analytics addon is NOT active!
-            if ( !fooconvert_is_analytics_addon_active() ) {
-                add_action( 'fooconvert_widget_stats_html-metrics', array( $this, 'render_metrics' ), 10, 2 );
-                add_filter( 'fooconvert_widget_metric_options', array( $this, 'adjust_widget_metric_options' ) );
-            }
+            add_action( 'fooconvert_widget_stats_html-metrics', array( $this, 'render_metrics' ), 10, 2 );
+            add_filter( 'fooconvert_widget_metric_options', array( $this, 'adjust_widget_metric_options' ) );
         }
 
         /**
