@@ -17,7 +17,7 @@ jQuery(document).ready(function ($) {
                 $('.fooconvert-top-performers-container').html(response.html);
             },
             error: function () {
-                $container.html( '<p>ERROR : Failed to fetch top performers!</p>' );
+                $container.html('<p>ERROR : Failed to fetch top performers!</p>');
             }
         });
     }
@@ -25,12 +25,12 @@ jQuery(document).ready(function ($) {
     // Fetch and display the dashboard data on page load
     fetchDashboardData();
 
-    $('.fooconvert-top-performers-sort').change(function() {
+    $('.fooconvert-top-performers-sort').change(function () {
         fetchDashboardData();
     });
 
     // Update stats
-    $('.fooconvert-update-stats').click(function(e) {
+    $('.fooconvert-update-stats').click(function (e) {
         e.preventDefault();
         var $spinner = $('.fooconvert-update-stats-spinner'),
             $button = $(this);
@@ -59,7 +59,7 @@ jQuery(document).ready(function ($) {
     });
 
     // Create demo widgets
-    $('.fooconvert-create-demo-widgets').click(function(e) {
+    $('.fooconvert-create-demo-widgets').click(function (e) {
         e.preventDefault();
         var $spinner = $('.fooconvert-create-demo-widgets-spinner');
         $spinner.addClass('is-active');
@@ -84,7 +84,7 @@ jQuery(document).ready(function ($) {
     });
 
     // Delete demo widgets
-    $('.fooconvert-delete-demo-widgets').click(function(e) {
+    $('.fooconvert-delete-demo-widgets').click(function (e) {
         e.preventDefault();
         var $spinner = $('.fooconvert-delete-demo-widgets-spinner');
         $spinner.addClass('is-active');
@@ -109,13 +109,13 @@ jQuery(document).ready(function ($) {
     });
 
     // Hide panel
-    $('.fooconvert-hide-panel').click(function(e) {
+    $('.fooconvert-hide-panel').click(function (e) {
         e.preventDefault();
         var $spinner = $('<span class="spinner is-active panel-hide-spinner"></span>'),
             panel = $(this).data('panel'),
             $panel = $('.fooconvert-panel[data-panel="' + panel + '"]');
 
-        $(this).hide().after( $spinner );
+        $(this).hide().after($spinner);
 
         $.ajax({
             url: fooconvertData.ajaxUrl,

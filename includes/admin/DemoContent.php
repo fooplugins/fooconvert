@@ -1,4 +1,5 @@
 <?php
+
 namespace FooPlugins\FooConvert\Admin;
 
 use FooPlugins\FooConvert\Event;
@@ -11,15 +12,11 @@ use FooPlugins\FooConvert\FooConvert;
 
 if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
-    class DemoContent
-    {
+    class DemoContent {
         /**
          * Init constructor.
          */
-        function __construct()
-        {
-
-        }
+        function __construct() {}
 
         // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key, WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 
@@ -37,9 +34,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
         function cleanup_old_demo_content( $widget_post_types, $meta_key ) {
             // Check if old demo content already exists
             $old_demo_content = get_posts( [
-                'meta_key' => $meta_key,
-                'meta_value' => '1',
-                'post_type' => $widget_post_types,
+                'meta_key'    => $meta_key,
+                'meta_value'  => '1',
+                'post_type'   => $widget_post_types,
                 'post_status' => 'any',
                 'numberposts' => -1
             ] );
@@ -83,10 +80,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
             // Check if demo content already exists
             $existing_posts = get_posts( [
-                'meta_key' => FOOCONVERT_META_KEY_DEMO_CONTENT,
-                'post_type' => $widget_post_types,
-                'post_status' => 'any',
-                'meta_value' => '1',
+                'meta_key'       => FOOCONVERT_META_KEY_DEMO_CONTENT,
+                'post_type'      => $widget_post_types,
+                'post_status'    => 'any',
+                'meta_value'     => '1',
                 'posts_per_page' => 1,
             ] );
 
@@ -96,7 +93,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
             }
 
             $count = 0;
-            foreach ( $this->get_demo_content() as $content) {
+            foreach ( $this->get_demo_content() as $content ) {
                 $content_for_insert = $content;
                 $post_content = $content['post_content'];
 
@@ -119,14 +116,14 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 $post_content = str_replace( '||POST_ID||', $post_id, $post_content );
 
                 wp_update_post( array(
-                    'ID' => $post_id,
+                    'ID'           => $post_id,
                     'post_content' => $post_content
                 ) );
 
                 $meta = [
                     'post_type' => $content_for_insert['post_type'],
-                    'template' => $content_for_insert['template'],
-                    'demo' => true
+                    'template'  => $content_for_insert['template'],
+                    'demo'      => true
                 ];
 
                 // Create some events for the demo content.
@@ -152,9 +149,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
             // Define event types and probabilities (more positive events)
             $event_types = [
-                FOOCONVERT_EVENT_TYPE_OPEN => 0.7,        // 70% chance of 'view'
-                FOOCONVERT_EVENT_TYPE_CLICK => 0.2,       // 20% chance of 'click'
-                FOOCONVERT_EVENT_TYPE_CLOSE => 0.1        // 10% chance of 'dismiss'
+                FOOCONVERT_EVENT_TYPE_OPEN  => 0.7,        // 70% chance of 'view'
+                FOOCONVERT_EVENT_TYPE_CLICK => 0.2,        // 20% chance of 'click'
+                FOOCONVERT_EVENT_TYPE_CLOSE => 0.1         // 10% chance of 'dismiss'
             ];
 
             // Generate event data
@@ -176,11 +173,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 $sentiment = null;
 
                 // Random timestamp within the last 30 days
-                $timestamp = gmdate('Y-m-d H:i:s', strtotime("-" . wp_rand(0, 30) . " days -" . wp_rand(0, 86400) . " seconds"));
+                $timestamp = gmdate( 'Y-m-d H:i:s', strtotime( "-" . wp_rand( 0, 30 ) . " days -" . wp_rand( 0, 86400 ) . " seconds" ) );
 
                 // Randomly select either a user_id or an anonymous_user_guid
-                if (wp_rand(0, 1) === 1) {
-                    $user_id = wp_rand(1, 10);  // Random user ID for logged-in users
+                if ( wp_rand( 0, 1 ) === 1 ) {
+                    $user_id = wp_rand( 1, 10 );  // Random user ID for logged-in users
                     $anonymous_user_guid = null;
                 } else {
                     $user_id = 0;
@@ -188,7 +185,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 }
 
                 // Random device type
-                $device_types = ['desktop', 'mobile', 'tablet'];
+                $device_types = [ 'desktop', 'mobile', 'tablet' ];
                 $device_type = $device_types[array_rand( $device_types )];
 
                 // Deal with extra data.
@@ -196,25 +193,25 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 if ( $conversion === 1 ) {
                     $extra_data = [
                         'conversion_type' => 'woocommerce_order',
-                        'order_id' => wp_rand( 1, 100 ),
-                        'order_value' => wp_rand( 100 * 100, 500 * 100 ) / 100
+                        'order_id'        => wp_rand( 1, 100 ),
+                        'order_value'     => wp_rand( 100 * 100, 500 * 100 ) / 100
                     ];
                 }
 
                 // Insert the generated event into the database
                 $event->create(
                     [
-                        'widget_id' => $widget_id,
-                        'event_type' => $event_type,
-                        'event_subtype' => $event_subtype,
-                        'conversion' => $conversion,
-                        'sentiment' => $sentiment,
-                        'page_url' => home_url( '/page-' . wp_rand(1, 10) ),
-                        'device_type' => $device_type,
-                        'user_id' => $user_id,
+                        'widget_id'           => $widget_id,
+                        'event_type'          => $event_type,
+                        'event_subtype'       => $event_subtype,
+                        'conversion'          => $conversion,
+                        'sentiment'           => $sentiment,
+                        'page_url'            => home_url( '/page-' . wp_rand( 1, 10 ) ),
+                        'device_type'         => $device_type,
+                        'user_id'             => $user_id,
                         'anonymous_user_guid' => $anonymous_user_guid,
-                        'extra_data' => $extra_data,
-                        'timestamp' => $timestamp
+                        'extra_data'          => $extra_data,
+                        'timestamp'           => $timestamp
                     ],
                     $meta
                 );
@@ -222,13 +219,13 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
         }
 
         // Helper function to select an event type based on weighted probabilities
-        private function weighted_random_event($weights) {
+        private function weighted_random_event( $weights ) {
             $rand = wp_rand() / mt_getrandmax();
             $cumulative = 0;
 
-            foreach ($weights as $event => $weight) {
+            foreach ( $weights as $event => $weight ) {
                 $cumulative += $weight;
-                if ($rand < $cumulative) {
+                if ( $rand < $cumulative ) {
                     return $event;
                 }
             }
@@ -240,11 +237,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
             return [
                 // Demo Bars:
                 [
-                    'post_title' => 'Black Friday Bar [Demo]',
-                    'post_status' => 'draft',
-                    'post_type' => 'fc-bar',
-                    'template' => 'black_friday_bar',
-                    'meta_input' => [
+                    'post_title'   => 'Black Friday Bar [Demo]',
+                    'post_status'  => 'draft',
+                    'post_type'    => 'fc-bar',
+                    'template'     => 'black_friday_bar',
+                    'meta_input'   => [
                         FOOCONVERT_META_KEY_DISPLAY_RULES => [
                             'location' => [
                                 [
@@ -252,12 +249,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                                     'data' => []
                                 ]
                             ],
-                            'exclude' => [],
-                            'users' => [ 'general:all_users' ]
+                            'exclude'  => [],
+                            'users'    => [ 'general:all_users' ]
                         ]
                     ],
                     'post_content' =>
-'<!-- wp:fc/bar {"postId":||POST_ID||,"template":"black_friday_bar","settings":{"trigger":{"type":"timer","data":3},"transitions":true},"openButton":{"settings":{"hidden":true}},"closeButton":{"settings":{"icon":{"slug":"default__close-small","size":"48px"}}},"content":{"styles":{"color":{"background":"linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)"},"border":{"radius":"18px","color":"#111111","style":"solid","width":"3px"},"dimensions":{"margin":"5px","padding":"3px","gap":"16px"}}}} -->
+                        '<!-- wp:fc/bar {"postId":||POST_ID||,"template":"black_friday_bar","settings":{"trigger":{"type":"timer","data":3},"transitions":true},"openButton":{"settings":{"hidden":true}},"closeButton":{"settings":{"icon":{"slug":"default__close-small","size":"48px"}}},"content":{"styles":{"color":{"background":"linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)"},"border":{"radius":"18px","color":"#111111","style":"solid","width":"3px"},"dimensions":{"margin":"5px","padding":"3px","gap":"16px"}}}} -->
 <!-- wp:fc/bar-open-button /-->
 
 <!-- wp:fc/bar-container -->
@@ -278,11 +275,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 <!-- /wp:fc/bar -->'
                 ],
                 [
-                    'post_title' => 'Cookie Consent Bar [Demo]',
-                    'post_status' => 'draft',
-                    'post_type' => 'fc-bar',
-                    'template' => 'cookie_consent_bar',
-                    'meta_input' => [
+                    'post_title'   => 'Cookie Consent Bar [Demo]',
+                    'post_status'  => 'draft',
+                    'post_type'    => 'fc-bar',
+                    'template'     => 'cookie_consent_bar',
+                    'meta_input'   => [
                         FOOCONVERT_META_KEY_DISPLAY_RULES => [
                             'location' => [
                                 [
@@ -290,8 +287,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                                     'data' => []
                                 ]
                             ],
-                            'exclude' => [],
-                            'users' => [ 'general:all_users' ]
+                            'exclude'  => [],
+                            'users'    => [ 'general:all_users' ]
                         ]
                     ],
                     'post_content' =>
@@ -318,11 +315,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
                 // Demo Flyouts:
                 [
-                    'post_title' => 'Black Friday Scroll Flyout [Demo]',
-                    'post_status' => 'draft',
-                    'post_type' => 'fc-flyout',
-                    'template' => 'black_friday_flyout',
-                    'meta_input' => [
+                    'post_title'   => 'Black Friday Scroll Flyout [Demo]',
+                    'post_status'  => 'draft',
+                    'post_type'    => 'fc-flyout',
+                    'template'     => 'black_friday_flyout',
+                    'meta_input'   => [
                         FOOCONVERT_META_KEY_DISPLAY_RULES => [
                             'location' => [
                                 [
@@ -330,12 +327,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                                     'data' => []
                                 ]
                             ],
-                            'exclude' => [],
-                            'users' => [ 'general:all_users' ]
+                            'exclude'  => [],
+                            'users'    => [ 'general:all_users' ]
                         ]
                     ],
                     'post_content' =>
-'<!-- wp:fc/flyout {"template":"black_friday_flyout","postId":||POST_ID||,"settings":{"trigger":{"type":"scroll","data":20},"transitions":true},"openButton":{"settings":{"hidden":true}},"closeButton":{"settings":{"icon":{"slug":"default__close-small","size":"48px"}}},"content":{"styles":{"color":{"background":"linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)"},"border":{"radius":"18px","color":"#111111","style":"solid","width":"3px"},"dimensions":{"margin":"10px","padding":"30px","gap":"16px"},"width":"480px"}}} -->
+                        '<!-- wp:fc/flyout {"template":"black_friday_flyout","postId":||POST_ID||,"settings":{"trigger":{"type":"scroll","data":20},"transitions":true},"openButton":{"settings":{"hidden":true}},"closeButton":{"settings":{"icon":{"slug":"default__close-small","size":"48px"}}},"content":{"styles":{"color":{"background":"linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)"},"border":{"radius":"18px","color":"#111111","style":"solid","width":"3px"},"dimensions":{"margin":"10px","padding":"30px","gap":"16px"},"width":"480px"}}} -->
 <!-- wp:fc/flyout-open-button /-->
 
 <!-- wp:fc/flyout-container -->
@@ -370,11 +367,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
                 // Demo Popups:
                 [
-                    'post_title' => 'Black Friday Exit Intent Popup [Demo]',
-                    'post_status' => 'draft',
-                    'post_type' => 'fc-popup',
-                    'template' => 'black_friday_popup',
-                    'meta_input' => [
+                    'post_title'   => 'Black Friday Exit Intent Popup [Demo]',
+                    'post_status'  => 'draft',
+                    'post_type'    => 'fc-popup',
+                    'template'     => 'black_friday_popup',
+                    'meta_input'   => [
                         FOOCONVERT_META_KEY_DISPLAY_RULES => [
                             'location' => [
                                 [
@@ -382,12 +379,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                                     'data' => []
                                 ]
                             ],
-                            'exclude' => [],
-                            'users' => [ 'general:all_users' ]
+                            'exclude'  => [],
+                            'users'    => [ 'general:all_users' ]
                         ]
                     ],
                     'post_content' =>
-'<!-- wp:fc/popup {"template":"black_friday_popup","postId":||POST_ID||,"settings":{"transitions":true,"hideScrollbar":true,"maxOnMobile":true,"trigger":{"type":"exit-intent","data":5},"backdropIgnore":false},"closeButton":{"settings":{"icon":{"slug":"default__close-small","size":"48px"}}},"content":{"styles":{"color":{"background":"linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)"},"border":{"radius":"18px","color":"#111111","style":"solid","width":"3px"},"width":"720px","dimensions":{"padding":"30px"}}}} -->
+                        '<!-- wp:fc/popup {"template":"black_friday_popup","postId":||POST_ID||,"settings":{"transitions":true,"hideScrollbar":true,"maxOnMobile":true,"trigger":{"type":"exit-intent","data":5},"backdropIgnore":false},"closeButton":{"settings":{"icon":{"slug":"default__close-small","size":"48px"}}},"content":{"styles":{"color":{"background":"linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)"},"border":{"radius":"18px","color":"#111111","style":"solid","width":"3px"},"width":"720px","dimensions":{"padding":"30px"}}}} -->
 <!-- wp:fc/popup-container -->
 <!-- wp:fc/popup-close-button /-->
 
@@ -425,14 +422,13 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
          * @param array $widget_post_types
          * @return array
          */
-        public function register_and_get_widget_post_types()
-        {
+        public function register_and_get_widget_post_types() {
             // We need to make sure the CPT's are registered.
             $widgets = FooConvert::plugin()->widgets->get_instances();
-            foreach ($widgets as $widget) {
+            foreach ( $widgets as $widget ) {
                 $post_type = $widget->get_post_type();
                 $widget_post_types[] = $post_type;
-                if (!post_type_exists($post_type)) {
+                if ( !post_type_exists( $post_type ) ) {
                     $widget->register_post_type();
                 }
             }

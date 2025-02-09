@@ -10,11 +10,11 @@ abstract class BaseComponent {
         add_action( 'fooconvert_enqueued_editor_assets', array( $this, 'enqueue_component_data' ) );
     }
 
-    function get_component_data_name() : string {
+    function get_component_data_name(): string {
         return '';
     }
 
-    function get_component_data() : array {
+    function get_component_data(): array {
         return array();
     }
 

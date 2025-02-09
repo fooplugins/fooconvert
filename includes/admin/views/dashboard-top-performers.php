@@ -4,7 +4,7 @@ if ( empty( $sort ) ) {
     $sort = 'engagement';
 }
 
-$sort_object = fooconvert_widget_metric_options()[ $sort ];
+$sort_object = fooconvert_widget_metric_options()[$sort];
 
 $stats = new FooPlugins\FooConvert\Stats();
 
@@ -13,9 +13,8 @@ $top_performers = $stats->get_top_performers( $sort );
 if ( empty( $top_performers ) ) {
     if ( isset( $sort_object['pro_feature'] ) && $sort_object['pro_feature'] ) {
         echo '<p class="fooconvert-padding">' . esc_html( $sort_object['pro_message'] ) . '</p>';
-        echo '<p class="fooconvert-padding"><a class="button button-primary button-large" href="' . esc_url( fooconvert_admin_url_pricing() ) . '">' . esc_html__('Buy FooConvert PRO!', 'fooconvert'). '</a></p>';
-    }
-    else if ( fooconvert_has_stats_last_updated() ) {
+        echo '<p class="fooconvert-padding"><a class="button button-primary button-large" href="' . esc_url( fooconvert_admin_url_pricing() ) . '">' . esc_html__( 'Buy FooConvert PRO!', 'fooconvert' ) . '</a></p>';
+    } else if ( fooconvert_has_stats_last_updated() ) {
         echo '<p class="fooconvert-padding">' . esc_html__( 'No top performers found!', 'fooconvert' ) . '</p>';
     } else {
         echo '<p class="fooconvert-padding">' . esc_html__( 'Please update stats in order to see top performers.', 'fooconvert' );

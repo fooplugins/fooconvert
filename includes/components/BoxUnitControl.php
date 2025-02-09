@@ -8,41 +8,41 @@ use FooPlugins\FooConvert\Utils;
 class BoxUnitControl extends BaseComponent {
 
     private array $default_box_unit = array(
-        'top' => '',
-        'right' => '',
+        'top'    => '',
+        'right'  => '',
         'bottom' => '',
-        'left' => ''
+        'left'   => ''
     );
 
     private array $default_box_unit_size = array(
-        'top' => '0px',
-        'right' => '0px',
+        'top'    => '0px',
+        'right'  => '0px',
         'bottom' => '0px',
-        'left' => '0px'
+        'left'   => '0px'
     );
 
-    function is_possible_box_unit( $value ) : bool {
+    function is_possible_box_unit( $value ): bool {
         return Utils::some_keys( $value, array_keys( $this->default_box_unit ), function ( $key_value ) {
             return Utils::is_string( $key_value, true );
         } );
     }
 
-    private function make_box_unit( $value, array $defaults ) : array {
+    private function make_box_unit( $value, array $defaults ): array {
         $box_value = array();
         if ( is_string( $value ) ) {
             foreach ( $defaults as $key => $default_value ) {
-                $box_value[ $key ] = ! empty( $value ) ? $value : $default_value;
+                $box_value[$key] = !empty( $value ) ? $value : $default_value;
             }
         } else {
             foreach ( $defaults as $key => $default_value ) {
                 $given = Utils::get_string( $value, $key );
-                $box_value[ $key ] = ! empty( $given ) ? $given : $default_value;
+                $box_value[$key] = !empty( $given ) ? $given : $default_value;
             }
         }
         return $box_value;
     }
 
-    function get_sizes( $value, array $defaults = array() ) : array {
+    function get_sizes( $value, array $defaults = array() ): array {
         return $this->make_box_unit( $value, array_merge( array(), $this->default_box_unit_size, $defaults ) );
     }
 
@@ -59,16 +59,16 @@ class BoxUnitControl extends BaseComponent {
                 'left' => $left
                 ) = $this->make_box_unit( $value, $this->default_box_unit );
 
-            if ( ! empty( $top ) ) {
+            if ( !empty( $top ) ) {
                 $styles["$prefix$css_Basename-top"] = $top;
             }
-            if ( ! empty( $right ) ) {
+            if ( !empty( $right ) ) {
                 $styles["$prefix$css_Basename-right"] = $right;
             }
-            if ( ! empty( $bottom ) ) {
+            if ( !empty( $bottom ) ) {
                 $styles["$prefix$css_Basename-bottom"] = $bottom;
             }
-            if ( ! empty( $left ) ) {
+            if ( !empty( $left ) ) {
                 $styles["$prefix$css_Basename-left"] = $left;
             }
         }

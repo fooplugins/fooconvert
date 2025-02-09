@@ -46,9 +46,9 @@ class Components {
     public OpenTriggerPanel $open_trigger_panel;
     public TypographyToolsPanel $typography_tools_panel;
 
-    function get_styles( array $styles_attribute, string $prefix = '', array $color_map = array() ) : array {
+    function get_styles( array $styles_attribute, string $prefix = '', array $color_map = array() ): array {
         $styles = array();
-        if ( ! empty( $styles_attribute ) ) {
+        if ( !empty( $styles_attribute ) ) {
             $border = Utils::get_array( $styles_attribute, 'border' );
             if ( !empty( $border ) ) {
                 $styles = array_merge( $styles, $this->border_tools_panel->get_styles( $border, $prefix ) );

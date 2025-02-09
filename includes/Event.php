@@ -134,10 +134,10 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
             }
 
             $metric_defaults = apply_filters( 'fooconvert_widget_metrics_defaults', [
-                'total_events' => 0,
-                'total_views' => 0,
+                'total_events'          => 0,
+                'total_views'           => 0,
                 'total_unique_visitors' => 0,
-                'total_engagements' => 0,
+                'total_engagements'     => 0,
             ] );
 
             $metrics = apply_filters( 'fooconvert_widget_metrics',
@@ -146,7 +146,7 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
 
             $data = [
                 'timestamp' => time(),
-                'metrics' => $metrics,
+                'metrics'   => $metrics,
             ];
 
             // Store performance score
@@ -228,10 +228,10 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
                 $matching_data = $this->find_row_from_results( $results, 'event_date', $date );
 
                 $default_data = apply_filters( 'fooconvert_widget_daily_activity_default', [
-                    'event_date' => $date,
-                    'events' => 0,
-                    'views' => 0,
-                    'engagements' => 0,
+                    'event_date'      => $date,
+                    'events'          => 0,
+                    'views'           => 0,
+                    'engagements'     => 0,
                     'unique_visitors' => 0,
                 ] );
 

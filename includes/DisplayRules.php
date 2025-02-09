@@ -28,34 +28,34 @@ class DisplayRules extends BaseComponent {
      *
      * @since 1.0.0
      */
-    public function register( string $post_type ) : bool {
+    public function register( string $post_type ): bool {
         $this->register_column( $post_type );
         return register_meta( 'post', FOOCONVERT_META_KEY_DISPLAY_RULES, array(
             'object_subtype' => $post_type,
-            'single' => true,
-            'type' => 'object',
-            'description' => __( 'Display rules for FooConvert.', 'fooconvert' ),
-            'auth_callback' => array( $this, 'auth_callback' ),
-            'default' => $this->defaults(),
-            'show_in_rest' => array( 'schema' => $this->schema() )
+            'single'         => true,
+            'type'           => 'object',
+            'description'    => __( 'Display rules for FooConvert.', 'fooconvert' ),
+            'auth_callback'  => array( $this, 'auth_callback' ),
+            'default'        => $this->defaults(),
+            'show_in_rest'   => array( 'schema' => $this->schema() )
         ) );
     }
 
-    public function register_column( string $post_type ) : void {
-        add_filter( "manage_{$post_type}_posts_columns", function( $columns ) use ( $post_type ) {
+    public function register_column( string $post_type ): void {
+        add_filter( "manage_{$post_type}_posts_columns", function ( $columns ) use ( $post_type ) {
             return $this->create_column( $post_type, $columns );
         } );
 
-        add_filter( "manage_edit-{$post_type}_sortable_columns", function( $columns ) use ( $post_type ) {
+        add_filter( "manage_edit-{$post_type}_sortable_columns", function ( $columns ) use ( $post_type ) {
             return $this->sortable_column( $post_type, $columns );
         } );
 
-        add_action( "manage_{$post_type}_posts_custom_column", function( $column_name, $post_id ) use ( $post_type ) {
+        add_action( "manage_{$post_type}_posts_custom_column", function ( $column_name, $post_id ) use ( $post_type ) {
             $this->create_column_content( $post_type, $column_name, $post_id );
         }, 10, 2 );
 
         // phpcs:disable WordPress.Security.NonceVerification.Recommended
-        add_action( 'admin_enqueue_scripts', function( $hook_suffix ) use ( $post_type ) {
+        add_action( 'admin_enqueue_scripts', function ( $hook_suffix ) use ( $post_type ) {
             if ( $hook_suffix === 'edit.php' && isset( $_GET['post_type'] ) ) {
                 $current_post_type = sanitize_key( $_GET['post_type'] );
                 if ( $current_post_type === $post_type ) {
@@ -66,12 +66,12 @@ class DisplayRules extends BaseComponent {
         // phpcs:enable
     }
 
-    public function create_column( $post_type, $columns ) : array {
+    public function create_column( $post_type, $columns ): array {
         // add the column after the default title column
         $updated = array();
         $inserted = false;
         foreach ( $columns as $column_name => $column_display_name ) {
-            $updated[ $column_name ] = $column_display_name;
+            $updated[$column_name] = $column_display_name;
             if ( $column_name === 'title' ) {
                 $updated["{$post_type}_display_rules"] = __( 'Display Rules', 'fooconvert' );
                 $inserted = true;
@@ -101,7 +101,7 @@ class DisplayRules extends BaseComponent {
      * @param $post_id
      * @return void
      */
-    public function create_column_content( $post_type, $column_name, $post_id ) : void {
+    public function create_column_content( $post_type, $column_name, $post_id ): void {
         if ( $column_name === "{$post_type}_display_rules" ) {
             $display_rules = get_post_meta( $post_id, FOOCONVERT_META_KEY_DISPLAY_RULES, true );
             $is_set = !empty( $display_rules ) && !empty( $display_rules['location'] );
@@ -121,7 +121,7 @@ class DisplayRules extends BaseComponent {
      *
      * @since 1.0.0
      */
-    public function auth_callback() : bool {
+    public function auth_callback(): bool {
         return current_user_can( 'edit_posts' );
     }
 
@@ -132,13 +132,13 @@ class DisplayRules extends BaseComponent {
      *
      * @since 1.0.0
      */
-    public function defaults() : array {
+    public function defaults(): array {
         return array(
             'location' => array(),
             // false positive - this array is not used to query posts
             // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams
-            'exclude' => array(),
-            'users' => array( 'general:all_users' )
+            'exclude'  => array(),
+            'users'    => array( 'general:all_users' )
         );
     }
 
@@ -150,22 +150,22 @@ class DisplayRules extends BaseComponent {
      * @since 1.0.0
      * @see https://developer.wordpress.org/rest-api/extending-the-rest-api/schema/
      */
-    public function schema() : array {
+    public function schema(): array {
         return array(
-            'type' => 'object',
+            'type'       => 'object',
             'properties' => array(
                 'location' => array(
-                    'type' => 'array',
+                    'type'  => 'array',
                     'items' => array(
-                        'type' => 'object',
+                        'type'       => 'object',
                         'properties' => array(
                             'type' => array( 'type' => 'string', 'required' => true ),
                             'data' => array(
-                                'type' => 'array',
+                                'type'  => 'array',
                                 'items' => array(
-                                    'type' => 'object',
+                                    'type'       => 'object',
                                     'properties' => array(
-                                        'id' => array( 'type' => 'integer', 'required' => true ),
+                                        'id'    => array( 'type' => 'integer', 'required' => true ),
                                         'label' => array( 'type' => 'string', 'required' => true )
                                     )
                                 )
@@ -175,18 +175,18 @@ class DisplayRules extends BaseComponent {
                 ),
                 // false positive - this array is not used to query posts
                 // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams
-                'exclude' => array(
-                    'type' => 'array',
+                'exclude'  => array(
+                    'type'  => 'array',
                     'items' => array(
-                        'type' => 'object',
+                        'type'       => 'object',
                         'properties' => array(
                             'type' => array( 'type' => 'string', 'required' => true ),
                             'data' => array(
-                                'type' => 'array',
+                                'type'  => 'array',
                                 'items' => array(
-                                    'type' => 'object',
+                                    'type'       => 'object',
                                     'properties' => array(
-                                        'id' => array( 'type' => 'integer', 'required' => true ),
+                                        'id'    => array( 'type' => 'integer', 'required' => true ),
                                         'label' => array( 'type' => 'string', 'required' => true )
                                     )
                                 )
@@ -194,8 +194,8 @@ class DisplayRules extends BaseComponent {
                         )
                     )
                 ),
-                'users' => array(
-                    'type' => 'array',
+                'users'    => array(
+                    'type'  => 'array',
                     'items' => array(
                         'type' => 'string'
                     )
@@ -208,29 +208,29 @@ class DisplayRules extends BaseComponent {
 
     //region Component - Create the data for the display rules component
 
-    function get_component_data_name() : string {
+    function get_component_data_name(): string {
         return 'FC_DISPLAY_RULES';
     }
 
-    function get_component_data() : array {
+    function get_component_data(): array {
         return array(
-            'meta' => array(
-                'key' => FOOCONVERT_META_KEY_DISPLAY_RULES,
+            'meta'     => array(
+                'key'      => FOOCONVERT_META_KEY_DISPLAY_RULES,
                 'defaults' => $this->defaults()
             ),
             'location' => $this->get_component_locations(),
             // false positive - this array is not used to query posts
             // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams
-            'exclude' => $this->get_component_locations( 'exclude' ),
-            'users' => $this->get_component_users()
+            'exclude'  => $this->get_component_locations( 'exclude' ),
+            'users'    => $this->get_component_users()
         );
     }
 
-    function get_component_locations( string $context = 'default' ) : array {
+    function get_component_locations( string $context = 'default' ): array {
         $locations = array(
             array(
-                'group' => 'general',
-                'label' => __( 'General', 'fooconvert' ),
+                'group'   => 'general',
+                'label'   => __( 'General', 'fooconvert' ),
                 'options' => array(
                     array(
                         'value' => 'general:entire_site',
@@ -268,9 +268,9 @@ class DisplayRules extends BaseComponent {
                 $post_type_locations[] = array(
                     'value' => 'specific:' . $post_type->name,
                     'label' => $post_type->label,
-                    'data' => array(
-                        'kind' => 'postType',
-                        'name' => $post_type->name,
+                    'data'  => array(
+                        'kind'        => 'postType',
+                        'name'        => $post_type->name,
                         // Translators: %s refers to the taxonomy that is being searched for. e.g. "Category".
                         'placeholder' => sprintf( __( 'Type to choose %s...', 'fooconvert' ), strtolower( $post_type->label ) )
                     )
@@ -278,10 +278,10 @@ class DisplayRules extends BaseComponent {
             }
         }
 
-        if ( ! empty( $post_type_locations ) ) {
+        if ( !empty( $post_type_locations ) ) {
             $locations[] = array(
-                'group' => 'specific_posts',
-                'label' => __( 'Specific Posts', 'fooconvert' ),
+                'group'   => 'specific_posts',
+                'label'   => __( 'Specific Posts', 'fooconvert' ),
                 'options' => $post_type_locations
             );
         }
@@ -294,9 +294,9 @@ class DisplayRules extends BaseComponent {
                 $taxonomy_locations[] = array(
                     'value' => 'specific:' . $taxonomy->name,
                     'label' => $taxonomy->label,
-                    'data' => array(
-                        'kind' => 'taxonomy',
-                        'name' => $taxonomy->name,
+                    'data'  => array(
+                        'kind'        => 'taxonomy',
+                        'name'        => $taxonomy->name,
                         // Translators: %s refers to the taxonomy that is being searched for. e.g. "Category".
                         'placeholder' => sprintf( __( 'Type to choose %s...', 'fooconvert' ), strtolower( $taxonomy->label ) )
                     )
@@ -304,10 +304,10 @@ class DisplayRules extends BaseComponent {
             }
         }
 
-        if ( ! empty( $taxonomy_locations ) ) {
+        if ( !empty( $taxonomy_locations ) ) {
             $locations[] = array(
-                'group' => 'specific_taxonomies',
-                'label' => __( 'Specific Taxonomies', 'fooconvert' ),
+                'group'   => 'specific_taxonomies',
+                'label'   => __( 'Specific Taxonomies', 'fooconvert' ),
                 'options' => $taxonomy_locations
             );
         }
@@ -323,10 +323,10 @@ class DisplayRules extends BaseComponent {
             }
         }
 
-        if ( ! empty( $archive_locations ) ) {
+        if ( !empty( $archive_locations ) ) {
             $locations[] = array(
-                'group' => 'archive',
-                'label' => __( 'Post Archives', 'fooconvert' ),
+                'group'   => 'archive',
+                'label'   => __( 'Post Archives', 'fooconvert' ),
                 'options' => $archive_locations
             );
         }
@@ -339,7 +339,7 @@ class DisplayRules extends BaseComponent {
         return apply_filters( 'fooconvert_display_rules_locations', $locations, $context );
     }
 
-    function get_component_users() : array {
+    function get_component_users(): array {
         $roles = Utils::array_map( wp_roles()->get_names(), function ( $value, $key ) {
             return [ 'value' => "role:$key", 'label' => $value ];
         } );
@@ -349,8 +349,8 @@ class DisplayRules extends BaseComponent {
 
         return array(
             array(
-                'group' => 'general',
-                'label' => __( 'General', 'fooconvert' ),
+                'group'   => 'general',
+                'label'   => __( 'General', 'fooconvert' ),
                 'options' => array(
                     array(
                         'value' => 'general:all_users',
@@ -367,8 +367,8 @@ class DisplayRules extends BaseComponent {
                 )
             ),
             array(
-                'group' => 'roles',
-                'label' => __( 'Roles', 'fooconvert' ),
+                'group'   => 'roles',
+                'label'   => __( 'Roles', 'fooconvert' ),
                 'options' => $roles
             )
         );
@@ -431,7 +431,7 @@ class DisplayRules extends BaseComponent {
         // then go about compiling the rules again if currently published
         if ( $is_published ) {
             $compiled = $this->get_compiled( $post_id );
-            if ( ! empty( $compiled ) ) {
+            if ( !empty( $compiled ) ) {
                 $updated[] = $compiled;
             }
         }
@@ -446,15 +446,15 @@ class DisplayRules extends BaseComponent {
      *
      * @since 1.0.0
      */
-    public function get_compiled( int $post_id ) : array {
+    public function get_compiled( int $post_id ): array {
         $rules = get_post_meta( $post_id, FOOCONVERT_META_KEY_DISPLAY_RULES, true );
-        if ( ! empty( $rules ) ) {
+        if ( !empty( $rules ) ) {
             // make sure at a minimum the rules are the expected types and that at least 1 location and user
             // have been set before compiling
             $should_compile = Utils::has_keys( $rules, array_keys( $this->defaults() ), function ( $value, $key ) {
                 if ( is_array( $value ) ) {
                     if ( $key === 'location' || $key === 'users' ) {
-                        return ! empty( $value );
+                        return !empty( $value );
                     }
                     return true;
                 }
@@ -462,14 +462,14 @@ class DisplayRules extends BaseComponent {
             } );
             if ( $should_compile ) {
                 $include = $this->compile_locations( $rules['location'] );
-                if ( ! empty( $include ) ) {
+                if ( !empty( $include ) ) {
                     return array(
-                        'post_id' => $post_id,
-                        'include' => $include,
+                        'post_id'            => $post_id,
+                        'include'            => $include,
                         // false positive - this array is not used to query posts
                         // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams
-                        'exclude' => $this->compile_locations( $rules['exclude'] ),
-                        'users' => $rules['users'],
+                        'exclude'            => $this->compile_locations( $rules['exclude'] ),
+                        'users'              => $rules['users'],
                         'compatibility_mode' => FooConvert::plugin()->compatibility->is_enabled( $post_id )
                     );
                 }
@@ -512,7 +512,7 @@ class DisplayRules extends BaseComponent {
      *
      * @since 1.0.0
      */
-    private function compile_locations( array $locations ) : array {
+    private function compile_locations( array $locations ): array {
         $entire_site = Utils::array_find( $locations, function ( $location ) {
             return Utils::get_string( $location, 'type' ) === 'general:entire_site';
         }, false );
@@ -525,19 +525,19 @@ class DisplayRules extends BaseComponent {
                 $type = Utils::get_string( $location, 'type' );
                 if ( str_starts_with( $type, 'general:' ) || str_starts_with( $type, 'archive:' ) ) {
                     // general & archive locations have no additional checks, they are static
-                    $result[ $type ] = true;
+                    $result[$type] = true;
                 } elseif ( str_starts_with( $type, 'specific:' ) ) {
                     // specific locations require post_ids that must be matched, so extract them out
                     $data = Utils::get_array( $location, 'data' );
                     $post_ids = array_reduce( $data, function ( $result, $data_value ) {
                         $post_id = Utils::get_int( $data_value, 'id' );
-                        if ( ! empty( $post_id ) ) {
+                        if ( !empty( $post_id ) ) {
                             $result[] = $post_id;
                         }
                         return $result;
                     }, array() );
-                    if ( ! empty( $post_ids ) ) {
-                        $result[ $type ] = $post_ids;
+                    if ( !empty( $post_ids ) ) {
+                        $result[$type] = $post_ids;
                     }
                 }
                 return $result;
@@ -567,8 +567,8 @@ class DisplayRules extends BaseComponent {
      * @global $wp_query WP_Query
      * @since 1.0.0
      */
-    public function get_current_location() : array {
-        if ( ! empty( $this->current_location ) ) {
+    public function get_current_location(): array {
+        if ( !empty( $this->current_location ) ) {
             return $this->current_location;
         }
 
@@ -627,8 +627,8 @@ class DisplayRules extends BaseComponent {
      *
      * @since 1.0.0
      */
-    public function get_current_user_roles() : array {
-        if ( ! empty( $this->current_user_roles ) ) {
+    public function get_current_user_roles(): array {
+        if ( !empty( $this->current_user_roles ) ) {
             return $this->current_user_roles;
         }
 
@@ -666,7 +666,7 @@ class DisplayRules extends BaseComponent {
      *
      * @since 1.0.0
      */
-    public function is_enqueued( int $post_id ) : bool {
+    public function is_enqueued( int $post_id ): bool {
         return in_array( $post_id, $this->enqueued );
     }
 
@@ -721,9 +721,9 @@ class DisplayRules extends BaseComponent {
 
         // get the cached display rules
         $display_rules = get_option( 'fooconvert_display_rules', array() );
-        if ( ! empty( $display_rules ) ) {
+        if ( !empty( $display_rules ) ) {
             $current_location = $this->get_current_location();
-            if ( ! empty( $current_location ) ) {
+            if ( !empty( $current_location ) ) {
                 $current_user_roles = $this->get_current_user_roles();
                 foreach ( $display_rules as $compiled ) {
                     if ( $this->match_compiled( $compiled, $current_location, $current_user_roles ) ) {
@@ -732,8 +732,8 @@ class DisplayRules extends BaseComponent {
                         $matched_compatibility_mode = Utils::get_bool( $compiled, 'compatibility_mode' );
                         if ( Utils::is_string( $matched_content, true ) ) {
                             $this->enqueued[] = array(
-                                'post_id' => $matched_id,
-                                'content' => do_blocks( $matched_content ),
+                                'post_id'            => $matched_id,
+                                'content'            => do_blocks( $matched_content ),
                                 'compatibility_mode' => $matched_compatibility_mode,
                             );
                         }
@@ -743,13 +743,13 @@ class DisplayRules extends BaseComponent {
         }
     }
 
-    public function get_queueable( int $post_id ) : array {
+    public function get_queueable( int $post_id ): array {
         $content = get_post_field( 'post_content', $post_id );
-        if ( ! empty( $content ) ) {
+        if ( !empty( $content ) ) {
             $compatibility_mode = FooConvert::plugin()->compatibility->is_enabled( $post_id );
             return array(
-                'post_id' => $post_id,
-                'content' => do_blocks( $content ),
+                'post_id'            => $post_id,
+                'content'            => do_blocks( $content ),
                 'compatibility_mode' => $compatibility_mode,
             );
         }
@@ -768,7 +768,7 @@ class DisplayRules extends BaseComponent {
      *
      * @since 1.0.0
      */
-    public function match_compiled( array $rules, array $current_location, array $current_user_roles ) : bool {
+    public function match_compiled( array $rules, array $current_location, array $current_user_roles ): bool {
         $match = false;
         if ( $this->match_compiled_locations( $rules['include'], $current_location ) ) {
             $match = true;
@@ -776,21 +776,21 @@ class DisplayRules extends BaseComponent {
         if ( $match && $this->match_compiled_locations( $rules['exclude'], $current_location ) ) {
             $match = false;
         }
-        if ( $match && ! $this->match_compiled_user_roles( $rules['users'], $current_user_roles ) ) {
+        if ( $match && !$this->match_compiled_user_roles( $rules['users'], $current_user_roles ) ) {
             $match = false;
         }
         return $match;
     }
 
-    public function match_compiled_locations( array $compiled_locations, array $current_location ) : bool {
+    public function match_compiled_locations( array $compiled_locations, array $current_location ): bool {
         if ( array_key_exists( 'general:entire_site', $compiled_locations ) ) {
             return true;
         }
         list( 'type' => $type, 'data' => $data ) = $current_location;
-        return array_key_exists( $type, $compiled_locations ) && ( ! is_int( $data ) || in_array( $data, $compiled_locations[ $type ], true ) );
+        return array_key_exists( $type, $compiled_locations ) && ( !is_int( $data ) || in_array( $data, $compiled_locations[$type], true ) );
     }
 
-    public function match_compiled_user_roles( array $compiled_user_roles, array $current_user_roles ) : bool {
+    public function match_compiled_user_roles( array $compiled_user_roles, array $current_user_roles ): bool {
         if ( in_array( 'general:all_users', $compiled_user_roles ) ) {
             return true;
         }

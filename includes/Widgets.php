@@ -42,7 +42,7 @@ class Widgets extends BaseComponent {
      *
      * @since 1.0.0
      */
-    function get_instances() : array {
+    function get_instances(): array {
         return $this->instances;
     }
 
@@ -53,8 +53,8 @@ class Widgets extends BaseComponent {
      *
      * @since 1.0.0
      */
-    function get_post_types() : array {
-        if ( ! empty( $this->post_types ) ) {
+    function get_post_types(): array {
+        if ( !empty( $this->post_types ) ) {
             return $this->post_types;
         }
         return $this->post_types = Utils::array_map( $this->instances, function ( $widget ) {
@@ -62,7 +62,7 @@ class Widgets extends BaseComponent {
         } );
     }
 
-    function get_instance( string $post_type ) : ?BaseWidget {
+    function get_instance( string $post_type ): ?BaseWidget {
         foreach ( $this->instances as $instance ) {
             if ( $instance->get_post_type() === $post_type ) {
                 return $instance;
@@ -71,7 +71,7 @@ class Widgets extends BaseComponent {
         return null;
     }
 
-    function get_kses_definitions() : array {
+    function get_kses_definitions(): array {
         $defs = array();
         foreach ( $this->instances as $instance ) {
             $def = $instance->kses_definition();
@@ -89,7 +89,7 @@ class Widgets extends BaseComponent {
      *
      * @since 1.0.0
      */
-    function is_editor() : bool {
+    function is_editor(): bool {
         return Utils::is_post_type_editor( $this->get_post_types() );
     }
 
@@ -103,8 +103,8 @@ class Widgets extends BaseComponent {
 
     public function render_shortcode( array $attributes, ?string $content, string $tag ) {
         $attributes = shortcode_atts( [ 'id' => 0 ], $attributes, $tag );
-        $post_id = (int) $attributes['id'];
-        if ( ! empty( $post_id ) && ! FooConvert::plugin()->display_rules->is_enqueued( $post_id ) ) {
+        $post_id = (int)$attributes['id'];
+        if ( !empty( $post_id ) && !FooConvert::plugin()->display_rules->is_enqueued( $post_id ) ) {
             $args = [ 'post_type' => $tag, 'p' => $post_id ];
             $query = new WP_Query( $args );
             if ( $query->have_posts() ) {

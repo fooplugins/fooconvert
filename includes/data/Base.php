@@ -12,8 +12,7 @@ use wpdb;
 
 if ( !class_exists( 'FooPlugins\FooConvert\Data\Base' ) ) {
 
-    abstract class Base
-    {
+    abstract class Base {
         /**
          * Returns the table name including the prefix.
          *
@@ -21,8 +20,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Base' ) ) {
          * @global wpdb $wpdb The WordPress database class instance.
          *
          */
-        public static function get_table_name( $table_name )
-        {
+        public static function get_table_name( $table_name ) {
             global $wpdb;
 
             return $wpdb->prefix . $table_name;
@@ -91,12 +89,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Base' ) ) {
          * @param string $table_name
          * @param string $index_name
          *
+         * @return bool
          * @global wpdb $wpdb The WordPress database class instance.
          *
-         * @return bool
          */
-        public static function index_exists( $table_name, $index_name )
-        {
+        public static function index_exists( $table_name, $index_name ) {
             global $wpdb;
 
             $query = (string)$wpdb->prepare(
@@ -126,7 +123,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Base' ) ) {
 
             if ( !self::index_exists( $table_name, $index_name ) ) {
                 $index_query = "CREATE INDEX {$index_name} ON {$table_name} ({$columns})";
-                $wpdb->query($index_query);
+                $wpdb->query( $index_query );
             }
         }
 
@@ -144,9 +141,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Base' ) ) {
 
             if ( self::db_version_minimum( '8.0' ) ) {
 
-                if (!self::index_exists($table_name, $index_name)) {
+                if ( !self::index_exists( $table_name, $index_name ) ) {
                     $index_query = "CREATE INDEX {$index_name} ON {$table_name} ({$columns}) {$partial_query}";
-                    $wpdb->query($index_query);
+                    $wpdb->query( $index_query );
                 }
             }
         }

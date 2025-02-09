@@ -36,7 +36,7 @@ abstract class BaseWidget extends BaseBlock {
      *
      * @since 1.0.0
      */
-    abstract function get_post_type() : string;
+    abstract function get_post_type(): string;
 
     /**
      * Register the widget post type.

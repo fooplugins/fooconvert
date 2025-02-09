@@ -35,17 +35,17 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          * @param array $data {
          *     An array of event data.
          *
-         *     @type int $widget_id The ID of the widget.
-         *     @type string $event_type The type of event (e.g. 'view', 'click', 'conversion', 'dismiss').
-         *     @type string|null $event_subtype The subtype of event (if applicable).
-         *     @type bool|null $conversion Whether the event is a conversion (true) or not (false).
-         *     @type bool|null $sentiment Whether the event sentiment is positive (true) or negative (false) or null (neutral).
-         *     @type string|null $page_url The URL of the page where the event occurred.
-         *     @type string|null $device_type The type of device (e.g. 'desktop', 'mobile', 'tablet').
-         *     @type int|null $user_id The ID of the user (if logged in).
-         *     @type string|null $anonymous_user_guid The GUID of the anonymous user.
-         *     @type array|null $extra_data An array or extra event data.
-         *     @type string $timestamp The timestamp of the event.
+         * @type int $widget_id The ID of the widget.
+         * @type string $event_type The type of event (e.g. 'view', 'click', 'conversion', 'dismiss').
+         * @type string|null $event_subtype The subtype of event (if applicable).
+         * @type bool|null $conversion Whether the event is a conversion (true) or not (false).
+         * @type bool|null $sentiment Whether the event sentiment is positive (true) or negative (false) or null (neutral).
+         * @type string|null $page_url The URL of the page where the event occurred.
+         * @type string|null $device_type The type of device (e.g. 'desktop', 'mobile', 'tablet').
+         * @type int|null $user_id The ID of the user (if logged in).
+         * @type string|null $anonymous_user_guid The GUID of the anonymous user.
+         * @type array|null $extra_data An array or extra event data.
+         * @type string $timestamp The timestamp of the event.
          * }
          *
          * @return int|WP_Error The ID of the inserted event, or a WP_Error object on failure.
@@ -170,7 +170,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
 
             $table_name = self::get_events_table_name();
             $widget_id = intval( $widget_id ); // Ensure $widget_id is an integer
-            $days = intval( $days );  // Ensure $days is an integer
+            $days = intval( $days );           // Ensure $days is an integer
 
             $query = apply_filters( 'fooconvert_get_widget_daily_activity_query', "SELECT 
                     DATE(timestamp) as event_date,
@@ -382,7 +382,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                   AND e.widget_id IS NULL";
 
             // Combine post types into the prepared query
-            $prepared_query = $wpdb->prepare($query, ...$post_types);
+            $prepared_query = $wpdb->prepare( $query, ...$post_types );
 
             return $wpdb->get_results( $prepared_query, ARRAY_A );
         }
@@ -413,7 +413,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
 
             $table_name = self::get_events_table_name();
             $widget_id = intval( $widget_id ); // Ensure $widget_id is an integer
-            $days = intval( $days );  // Ensure $days is an integer
+            $days = intval( $days );           // Ensure $days is an integer
 
             $query = "SELECT *, DATE(timestamp) as event_date
                     FROM {$table_name}

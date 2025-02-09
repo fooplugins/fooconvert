@@ -91,8 +91,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
         function get_post_value( $key, $default = '' ) {
             $value = $default;
             //phpcs:disable WordPress.Security.NonceVerification.Missing
-            if ( isset( $_POST[ $key ] ) ) {
-                $value = sanitize_text_field( wp_unslash( $_POST[ $key ] ) );
+            if ( isset( $_POST[$key] ) ) {
+                $value = sanitize_text_field( wp_unslash( $_POST[$key] ) );
                 if ( empty( $value ) ) {
                     $value = $default;
                 }
@@ -315,7 +315,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
 
             wp_localize_script( 'fooconvert-dashboard-js', 'fooconvertData', array(
                 'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-                'nonce' => wp_create_nonce( 'fooconvert-dashboard' )
+                'nonce'   => wp_create_nonce( 'fooconvert-dashboard' )
             ) );
         }
     }

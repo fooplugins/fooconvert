@@ -5,7 +5,7 @@ namespace FooPlugins\FooConvert;
 use WP_Block_Type;
 use WP_Post;
 
-if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
+if ( !class_exists( __NAMESPACE__ . '\Utils' ) ) {
 
     class Utils {
         /**
@@ -27,7 +27,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
             $target_key = array_pop( $keys );
             $target_array = $array_or_object;
             foreach ( $keys as $key ) {
-                if ( ! self::has_key( $target_array, $key ) ) {
+                if ( !self::has_key( $target_array, $key ) ) {
                     return $default;
                 }
                 $target_array = self::get_array( $target_array, $key );
@@ -47,7 +47,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        public static function has_key( $array_or_object, $key ) : bool {
+        public static function has_key( $array_or_object, $key ): bool {
             return ( ( is_string( $key ) || is_int( $key ) ) && is_array( $array_or_object ) && array_key_exists( $key, $array_or_object ) )
                 || ( is_string( $key ) && is_object( $array_or_object ) && property_exists( $array_or_object, $key ) );
         }
@@ -65,7 +65,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          */
         public static function get_key( $array_or_object, $key, $default = null ) {
             if ( ( is_string( $key ) || is_int( $key ) ) && is_array( $array_or_object ) && array_key_exists( $key, $array_or_object ) ) {
-                return $array_or_object[ $key ];
+                return $array_or_object[$key];
             } else if ( is_string( $key ) && is_object( $array_or_object ) && property_exists( $array_or_object, $key ) ) {
                 return $array_or_object->{$key};
             }
@@ -83,9 +83,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        public static function set_key( &$array_or_object, $key, $value ) : bool {
+        public static function set_key( &$array_or_object, $key, $value ): bool {
             if ( ( is_string( $key ) || is_int( $key ) ) && is_array( $array_or_object ) ) {
-                $array_or_object[ $key ] = $value;
+                $array_or_object[$key] = $value;
                 return true;
             } else if ( is_string( $key ) && is_object( $array_or_object ) ) {
                 $array_or_object->{$key} = $value;
@@ -111,7 +111,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        public static function has_keys( $array_or_object, array $keys, ?callable $callback = null ) : bool {
+        public static function has_keys( $array_or_object, array $keys, ?callable $callback = null ): bool {
             $has_callback = is_callable( $callback );
             return self::array_every( $keys, function ( $key ) use ( $array_or_object, $has_callback, $callback ) {
                 $key_exists = self::has_key( $array_or_object, $key );
@@ -140,7 +140,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        public static function some_keys( $array_or_object, array $keys, ?callable $callback = null ) : bool {
+        public static function some_keys( $array_or_object, array $keys, ?callable $callback = null ): bool {
             $has_callback = is_callable( $callback );
             return self::array_some( $keys, function ( $key ) use ( $array_or_object, $has_callback, $callback ) {
                 $key_exists = self::has_key( $array_or_object, $key );
@@ -172,7 +172,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        static function array_some( array $array, callable $callback ) : bool {
+        static function array_some( array $array, callable $callback ): bool {
             foreach ( $array as $key => $value ) {
                 if ( call_user_func( $callback, $value, $key, $array ) ) {
                     return true;
@@ -197,9 +197,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        static function array_every( array $array, callable $callback ) : bool {
+        static function array_every( array $array, callable $callback ): bool {
             foreach ( $array as $key => $value ) {
-                if ( ! call_user_func( $callback, $value, $key, $array ) ) {
+                if ( !call_user_func( $callback, $value, $key, $array ) ) {
                     return false;
                 }
             }
@@ -274,10 +274,10 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        static function array_map( array $array, callable $callback ) : array {
+        static function array_map( array $array, callable $callback ): array {
             $result = [];
             foreach ( $array as $key => $value ) {
-                $result[ $key ] = call_user_func( $callback, $value, $key, $array );
+                $result[$key] = call_user_func( $callback, $value, $key, $array );
             }
             return $result;
         }
@@ -300,9 +300,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        public static function is_array( $value, bool $not_empty = false ) : bool {
+        public static function is_array( $value, bool $not_empty = false ): bool {
             if ( is_array( $value ) ) {
-                return ! ( $not_empty && empty( $value ) );
+                return !( $not_empty && empty( $value ) );
             }
             return false;
         }
@@ -326,7 +326,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        public static function is_key_array( $array_or_object, $key, bool $not_empty = false ) : bool {
+        public static function is_key_array( $array_or_object, $key, bool $not_empty = false ): bool {
             return self::is_array( self::get_key( $array_or_object, $key ), $not_empty );
         }
 
@@ -349,7 +349,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        public static function get_array( $array_or_object, $key, array $default = array() ) : array {
+        public static function get_array( $array_or_object, $key, array $default = array() ): array {
             $value = self::get_key( $array_or_object, $key );
             return is_array( $value ) ? $value : $default;
         }
@@ -368,7 +368,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        public static function is_key_bool( $array_or_object, $key ) : bool {
+        public static function is_key_bool( $array_or_object, $key ): bool {
             return is_bool( self::get_key( $array_or_object, $key ) );
         }
 
@@ -383,7 +383,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        public static function get_bool( $array_or_object, $key, bool $default = false ) : bool {
+        public static function get_bool( $array_or_object, $key, bool $default = false ): bool {
             $value = self::get_key( $array_or_object, $key );
             return is_bool( $value ) ? $value : $default;
         }
@@ -398,9 +398,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          * @param ?int $max Optional. The maximum allowed value. Default `null`.
          * @return bool True if the value is greater than or equal to min and/or is smaller than or equal to max, otherwise false.
          */
-        public static function is_int_within( $value, ?int $min = null, ?int $max = null ) : bool {
+        public static function is_int_within( $value, ?int $min = null, ?int $max = null ): bool {
             if ( is_int( $value ) ) {
-                return ! ( ( is_int( $min ) && $value < $min ) || ( is_int( $max ) && $value > $max ) );
+                return !( ( is_int( $min ) && $value < $min ) || ( is_int( $max ) && $value > $max ) );
             }
             return false;
         }
@@ -417,9 +417,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        public static function is_int( $value, bool $not_empty = false ) : bool {
+        public static function is_int( $value, bool $not_empty = false ): bool {
             if ( is_int( $value ) ) {
-                return ! ( $not_empty && empty( $value ) );
+                return !( $not_empty && empty( $value ) );
             }
             return false;
         }
@@ -437,7 +437,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        public static function is_key_int( $array_or_object, $key, bool $not_empty = false ) : bool {
+        public static function is_key_int( $array_or_object, $key, bool $not_empty = false ): bool {
             return self::is_int( self::get_key( $array_or_object, $key ), $not_empty );
         }
 
@@ -454,7 +454,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        public static function get_int( $array_or_object, $key, int $default = 0 ) : int {
+        public static function get_int( $array_or_object, $key, int $default = 0 ): int {
             $value = self::get_key( $array_or_object, $key );
             return is_int( $value ) ? $value : $default;
         }
@@ -475,9 +475,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        public static function is_string( $value, bool $not_empty = false ) : bool {
+        public static function is_string( $value, bool $not_empty = false ): bool {
             if ( is_string( $value ) ) {
-                return ! ( $not_empty && empty( $value ) );
+                return !( $not_empty && empty( $value ) );
             }
             return false;
         }
@@ -495,7 +495,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        public static function is_key_string( $array_or_object, $key, bool $not_empty = false ) : bool {
+        public static function is_key_string( $array_or_object, $key, bool $not_empty = false ): bool {
             return self::is_string( self::get_key( $array_or_object, $key ), $not_empty );
         }
 
@@ -511,7 +511,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        public static function get_string( $array_or_object, $key, string $default = '' ) : string {
+        public static function get_string( $array_or_object, $key, string $default = '' ): string {
             $value = self::get_key( $array_or_object, $key );
             return is_string( $value ) ? $value : $default;
         }
@@ -529,21 +529,21 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        static function is_post_type_editor( $post_type ) : bool {
+        static function is_post_type_editor( $post_type ): bool {
             if ( is_admin() ) {
                 $current_post_type = null;
                 global $pagenow;
                 // Reviewers: there is no nonce, we do not own post-new.php
                 // See https://github.com/WordPress/plugin-check/issues/549
                 if ( $pagenow == "post-new.php" && isset( $_GET['post_type'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-                    $current_post_type = sanitize_key( $_GET['post_type'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                    $current_post_type = sanitize_key( $_GET['post_type'] );       // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 }
                 if ( $pagenow == "post.php" ) {
                     $post_id = null;
                     // Reviewers: there is no nonce, we do not own post.php
                     // See https://github.com/WordPress/plugin-check/issues/549
-                    if ( isset( $_GET['post'] ) ) $post_id = (int) $_GET['post']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-                    elseif ( isset( $_GET['post_ID'] ) ) $post_id = (int) $_GET['post_ID']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                    if ( isset( $_GET['post'] ) ) $post_id = (int)$_GET['post']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                    elseif ( isset( $_GET['post_ID'] ) ) $post_id = (int)$_GET['post_ID']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                     if ( is_int( $post_id ) ) {
                         $post_obj = get_post( $post_id );
                         if ( $post_obj instanceof WP_Post ) {
@@ -582,7 +582,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          * @since 1.0.0
          */
         static function register_post_type_block( $post_type, string $file_or_folder, array $args = array() ) {
-            if ( is_admin() && ! self::is_post_type_editor( $post_type ) ) return false;
+            if ( is_admin() && !self::is_post_type_editor( $post_type ) ) return false;
             return register_block_type_from_metadata( $file_or_folder, $args );
         }
 
@@ -595,7 +595,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
             $block_types = [];
             foreach ( $blocks as $block ) {
                 $file_or_folder = self::get_string( $block, 'file_or_folder' );
-                if ( ! empty( $file_or_folder ) ) {
+                if ( !empty( $file_or_folder ) ) {
                     $result = self::register_post_type_block( $post_type, $file_or_folder, self::get_array( $block, 'args' ) );
                     if ( $result instanceof WP_Block_Type ) {
                         $block_types[] = $result;
@@ -606,7 +606,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
                     return false;
                 }
             }
-            return ! empty( $block_types ) ? $block_types : false;
+            return !empty( $block_types ) ? $block_types : false;
         }
 
         //endregion
@@ -621,8 +621,8 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          * $prepared_ids = Utils::wpdb_prepare_in( $ids ); // => '(%d,%d,%d)'
          * $query = $wpdb->prepare( "SELECT * FROM table WHERE id IN {$prepared_ids}", $ids );
          */
-        static function wpdb_prepare_in( array $array ) : ?string {
-            if ( ! empty( $array ) ) {
+        static function wpdb_prepare_in( array $array ): ?string {
+            if ( !empty( $array ) ) {
                 $placeholders = array_map( function ( $item ) {
                     return is_string( $item ) ? '%s' : ( is_float( $item ) ? '%f' : ( is_int( $item ) ? '%d' : '' ) );
                 }, $array );
@@ -654,7 +654,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          * @since 1.0.0
          */
         static function to_css_text( array $styles, bool $prettify = false ) {
-            if ( ! empty( $styles ) ) {
+            if ( !empty( $styles ) ) {
                 $indent = $prettify ? "\t" : '';
                 $new_line = $prettify ? "\n" : '';
                 $css_text = '';
@@ -689,7 +689,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @since 1.0.0
          */
-        static function make_identifier( string $name ) : string {
+        static function make_identifier( string $name ): string {
             $name = preg_replace( '/\W/', '_', $name );
             $name = preg_replace( '/^(\d)/', '$$1', $name );
             return strtoupper( $name );
@@ -709,21 +709,21 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
          * @since 1.0.0
          */
         static function to_js_script( $object_name, array $data, bool $prefer_const = false ) {
-            if ( ! empty( $object_name ) && ! empty( $data ) ) {
+            if ( !empty( $object_name ) && !empty( $data ) ) {
                 if ( is_string( $object_name ) ) {
                     $object_name = array( $object_name );
                 }
                 foreach ( $object_name as $index => $name_part ) {
                     if ( $index === 0 ) {
                         // Make sure the first name part is an acceptable JavaScript identifier.
-                        if ( ! preg_match( '/[a-zA-Z0-9_]+/', $name_part ) ) {
+                        if ( !preg_match( '/[a-zA-Z0-9_]+/', $name_part ) ) {
                             return false;
                         }
                     } else {
                         // For additional parts we only care that the name is a non-empty string as the value is set
                         // using JavaScript bracket notation: i.e. someObject[ 'name_path' ][ 'name' ] = data.
                         // When setting properties this way JavaScript pretty much allows any character in the name.
-                        if ( ! self::is_string( $name_part, true ) ) {
+                        if ( !self::is_string( $name_part, true ) ) {
                             return false;
                         }
                     }
@@ -731,10 +731,10 @@ if ( ! class_exists( __NAMESPACE__ . '\Utils' ) ) {
 
                 // Prepare the data for JSON encoding, this copies the logic from wp_localize_script
                 foreach ( $data as $key => $value ) {
-                    if ( ! is_string( $value ) ) {
+                    if ( !is_string( $value ) ) {
                         continue;
                     }
-                    $data[ $key ] = html_entity_decode( $value, ENT_QUOTES, 'UTF-8' );
+                    $data[$key] = html_entity_decode( $value, ENT_QUOTES, 'UTF-8' );
                 }
                 $json = wp_json_encode( $data );
                 if ( empty( $json ) ) {

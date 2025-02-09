@@ -256,7 +256,6 @@ ol.fooconvert-ordered-list li::before {
 }
 
 
-
 @media (max-width: 768px) {
     .fooconvert-dashboard-container {
         flex-direction: column;

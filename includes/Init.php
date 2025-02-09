@@ -1,4 +1,5 @@
 <?php
+
 namespace FooPlugins\FooConvert;
 
 /**
@@ -13,7 +14,7 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
         public function __construct() {
 
             // Load the plugin text domain for translations.
-            add_action( 'init', function() {
+            add_action( 'init', function () {
                 $plugin_rel_path = dirname( plugin_basename( FOOCONVERT_FILE ) ) . '/languages/';
                 load_plugin_textdomain( FOOCONVERT_SLUG, false, $plugin_rel_path );
             } );

@@ -9,17 +9,17 @@ use WP_Block;
 
 class Bar extends BaseWidget {
 
-    public function kses_definition() : array {
+    public function kses_definition(): array {
         return array(
             $this->get_tag_name() => array(
-                'id' => true,
-                'class' => true,
-                'open' => true,
-                'transitions' => true,
-                'position' => true,
+                'id'              => true,
+                'class'           => true,
+                'open'            => true,
+                'transitions'     => true,
+                'position'        => true,
                 'button-position' => true,
-                'close-button' => true,
-                'open-button' => true
+                'close-button'    => true,
+                'open-button'     => true
             )
         );
     }
@@ -27,15 +27,15 @@ class Bar extends BaseWidget {
     /**
      * @inheritDoc
      */
-    function get_post_type() : string {
+    function get_post_type(): string {
         return 'fc-bar';
     }
 
-    function get_block_name() : string {
+    function get_block_name(): string {
         return 'fc/bar';
     }
 
-    function get_tag_name() : string {
+    function get_tag_name(): string {
         return 'fc-bar';
     }
 
@@ -44,23 +44,23 @@ class Bar extends BaseWidget {
         return Utils::register_post_type_blocks( $post_type, array(
             array(
                 'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'widgets/bar/block.json',
-                'args' => array( 'render_callback' => array( $this, 'render' ) )
+                'args'           => array( 'render_callback' => array( $this, 'render' ) )
             ),
             array(
                 'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'widgets/bar/editor/blocks/open-button/block.json',
-                'args' => array( 'render_callback' => array( $this, 'render_empty' ) )
+                'args'           => array( 'render_callback' => array( $this, 'render_empty' ) )
             ),
             array(
                 'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'widgets/bar/editor/blocks/container/block.json',
-                'args' => array( 'render_callback' => array( $this, 'render_content' ) )
+                'args'           => array( 'render_callback' => array( $this, 'render_content' ) )
             ),
             array(
                 'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'widgets/bar/editor/blocks/container/blocks/close-button/block.json',
-                'args' => array( 'render_callback' => array( $this, 'render_empty' ) )
+                'args'           => array( 'render_callback' => array( $this, 'render_empty' ) )
             ),
             array(
                 'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'widgets/bar/editor/blocks/container/blocks/content/block.json',
-                'args' => array( 'render_callback' => array( $this, 'render_check_compatibility' ) )
+                'args'           => array( 'render_callback' => array( $this, 'render_check_compatibility' ) )
             )
         ) );
     }
@@ -70,26 +70,26 @@ class Bar extends BaseWidget {
      */
     function register_post_type() {
         return register_post_type( $this->get_post_type(), array(
-            'labels' => array(
-                'name' => __( 'Bars', 'fooconvert' ),
-                'singular_name' => __( 'Bar', 'fooconvert' ),
-                'add_new' => __( 'Add Bar', 'fooconvert' ),
-                'add_new_item' => __( 'Add New Bar', 'fooconvert' ),
-                'edit_item' => __( 'Edit Bar', 'fooconvert' ),
-                'new_item' => __( 'New Bar', 'fooconvert' ),
-                'view_item' => __( 'View Bars', 'fooconvert' ),
-                'search_items' => __( 'Search Bars', 'fooconvert' ),
-                'not_found' => __( 'No Bars found', 'fooconvert' ),
+            'labels'        => array(
+                'name'               => __( 'Bars', 'fooconvert' ),
+                'singular_name'      => __( 'Bar', 'fooconvert' ),
+                'add_new'            => __( 'Add Bar', 'fooconvert' ),
+                'add_new_item'       => __( 'Add New Bar', 'fooconvert' ),
+                'edit_item'          => __( 'Edit Bar', 'fooconvert' ),
+                'new_item'           => __( 'New Bar', 'fooconvert' ),
+                'view_item'          => __( 'View Bars', 'fooconvert' ),
+                'search_items'       => __( 'Search Bars', 'fooconvert' ),
+                'not_found'          => __( 'No Bars found', 'fooconvert' ),
                 'not_found_in_trash' => __( 'No Bars found in Trash', 'fooconvert' ),
-                'all_items' => __( 'Bars', 'fooconvert' )
+                'all_items'          => __( 'Bars', 'fooconvert' )
             ),
-            'has_archive' => false,
-            'public' => false,
-            'show_ui' => true,
-            'show_in_rest' => true,
-            'show_in_menu' => false,
-            'supports' => [ 'title', 'editor', 'author', 'custom-fields' ],
-            'template' => array(
+            'has_archive'   => false,
+            'public'        => false,
+            'show_ui'       => true,
+            'show_in_rest'  => true,
+            'show_in_menu'  => false,
+            'supports'      => [ 'title', 'editor', 'author', 'custom-fields' ],
+            'template'      => array(
                 array( $this->get_block_name() )
             ),
             'template_lock' => 'all'
@@ -99,13 +99,13 @@ class Bar extends BaseWidget {
     /**
      * @inheritDoc
      */
-    function get_editor_variations() : array {
-        return apply_filters('fooconvert_editor_variations-' . $this->get_post_type(), array(
+    function get_editor_variations(): array {
+        return apply_filters( 'fooconvert_editor_variations-' . $this->get_post_type(), array(
             array(
-                'name' => 'empty',
-                'title' => __( 'Empty', 'fooconvert' ),
+                'name'        => 'empty',
+                'title'       => __( 'Empty', 'fooconvert' ),
                 'description' => __( 'A blank slate that you can use to build your own bar from scratch.', 'fooconvert' ),
-                'attributes' => array(
+                'attributes'  => array(
                     'template' => 'empty'
                 ),
                 'innerBlocks' => array(
@@ -119,23 +119,23 @@ class Bar extends BaseWidget {
                         )
                     )
                 ),
-                'scope' => array( 'block' )
+                'scope'       => array( 'block' )
             ),
             array(
-                'name' => 'black_friday_bar',
-                'title' => __( 'Black Friday Bar', 'fooconvert' ),
+                'name'        => 'black_friday_bar',
+                'title'       => __( 'Black Friday Bar', 'fooconvert' ),
                 'description' => __( 'A typical Black Friday bar to help drive sales.', 'fooconvert' ),
-                'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/black_friday_bar.png',
-                'attributes' => array(
-                    'viewState' => 'open',
-                    'settings' => array(
-                        'trigger' => array(
+                'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/black_friday_bar.png',
+                'attributes'  => array(
+                    'viewState'   => 'open',
+                    'settings'    => array(
+                        'trigger'     => array(
                             'type' => 'timer',
                             'data' => 3
                         ),
                         'transitions' => true
                     ),
-                    'openButton' => array(
+                    'openButton'  => array(
                         'settings' => array(
                             'hidden' => true
                         )
@@ -148,25 +148,25 @@ class Bar extends BaseWidget {
                             )
                         )
                     ),
-                    'content' => array(
+                    'content'     => array(
                         'styles' => array(
-                            'color' => array(
+                            'color'      => array(
                                 'background' => 'linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)'
                             ),
-                            'border' => array(
+                            'border'     => array(
                                 'radius' => '18px',
-                                'color' => '#111111',
-                                'style' => 'solid',
-                                'width' => '3px'
+                                'color'  => '#111111',
+                                'style'  => 'solid',
+                                'width'  => '3px'
                             ),
                             'dimensions' => array(
-                                'margin' => '5px',
+                                'margin'  => '5px',
                                 'padding' => '3px',
-                                'gap' => '16px'
+                                'gap'     => '16px'
                             )
                         )
                     ),
-                    'template' => 'black_friday_bar'
+                    'template'    => 'black_friday_bar'
                 ),
                 'innerBlocks' => array(
                     array(
@@ -203,15 +203,15 @@ class Bar extends BaseWidget {
                                                 'core/button',
                                                 array(
                                                     'tagName' => 'a',
-                                                    'type' => 'button',
-                                                    'url' => '/shop',
-                                                    'text' => 'Save 70%',
-                                                    'style' => array(
+                                                    'type'    => 'button',
+                                                    'url'     => '/shop',
+                                                    'text'    => 'Save 70%',
+                                                    'style'   => array(
                                                         'border' => array(
                                                             'radius' => '54px'
                                                         )
                                                     ),
-                                                    'anchor' => 'cta'
+                                                    'anchor'  => 'cta'
                                                 ),
                                                 array()
                                             )
@@ -222,27 +222,27 @@ class Bar extends BaseWidget {
                         )
                     )
                 ),
-                'scope' => array(
+                'scope'       => array(
                     'block'
                 )
             ),
             array(
-                'name' => 'cookie_consent_bar',
-                'title' => __( 'Cookie Consent Bar', 'fooconvert' ),
+                'name'        => 'cookie_consent_bar',
+                'title'       => __( 'Cookie Consent Bar', 'fooconvert' ),
                 'description' => __( 'A simple bottom bar that is dismissed when the button is clicked.', 'fooconvert' ),
-                'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/cookie_consent_bar.png',
-                'attributes' => array(
-                    'viewState' => 'open',
-                    'template' => 'cookie_consent_bar',
-                    'settings' => array(
-                        'position' => 'bottom',
+                'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/cookie_consent_bar.png',
+                'attributes'  => array(
+                    'viewState'   => 'open',
+                    'template'    => 'cookie_consent_bar',
+                    'settings'    => array(
+                        'position'    => 'bottom',
                         'transitions' => true,
-                        'trigger' => array(
+                        'trigger'     => array(
                             'type' => 'immediate'
                         ),
                         'closeAnchor' => 'accept'
                     ),
-                    'openButton' => array(
+                    'openButton'  => array(
                         'settings' => array(
                             'hidden' => true
                         )
@@ -252,25 +252,25 @@ class Bar extends BaseWidget {
                             'hidden' => true
                         )
                     ),
-                    'content' => array(
+                    'content'     => array(
                         'styles' => array(
-                            'color' => array(
+                            'color'      => array(
                                 'background' => '#76736e',
-                                'text' => '#ffffff'
+                                'text'       => '#ffffff'
                             ),
-                            'border' => array(
+                            'border'     => array(
                                 'radius' => '0px',
-                                'style' => 'none',
-                                'width' => '0px'
+                                'style'  => 'none',
+                                'width'  => '0px'
                             ),
                             'dimensions' => array(
-                                'margin' => '0px',
-                                'gap' => '16px',
+                                'margin'  => '0px',
+                                'gap'     => '16px',
                                 'padding' => '0px'
                             )
                         )
                     ),
-                    'styles' => array(
+                    'styles'      => array(
                         'dimensions' => array(
                             'padding' => '0px'
                         )
@@ -310,19 +310,19 @@ class Bar extends BaseWidget {
                                             array(
                                                 'core/button',
                                                 array(
-                                                    'tagName' => 'a',
-                                                    'type' => 'button',
-                                                    'text' => 'Accept',
+                                                    'tagName'   => 'a',
+                                                    'type'      => 'button',
+                                                    'text'      => 'Accept',
                                                     'className' => 'is-style-outline',
-                                                    'fontSize' => 'small',
-                                                    'anchor' => 'accept',
-                                                    'style' => array(
-                                                        'border' => array(
+                                                    'fontSize'  => 'small',
+                                                    'anchor'    => 'accept',
+                                                    'style'     => array(
+                                                        'border'  => array(
                                                             'width' => '2px'
                                                         ),
                                                         'spacing' => array(
                                                             'padding' => array(
-                                                                'top' => '3px',
+                                                                'top'    => '3px',
                                                                 'bottom' => '3px'
                                                             )
                                                         )
@@ -337,20 +337,20 @@ class Bar extends BaseWidget {
                         )
                     )
                 ),
-                'scope' => array(
+                'scope'       => array(
                     'block'
                 )
             )
         ) );
     }
 
-    public function get_frontend_attributes( string $instance_id, array $attributes, WP_Block $block ) : array {
+    public function get_frontend_attributes( string $instance_id, array $attributes, WP_Block $block ): array {
         $attr = array();
 
         $settings = Utils::get_array( $attributes, 'settings' );
-        if ( ! empty( $settings ) ) {
+        if ( !empty( $settings ) ) {
             $transitions = Utils::get_bool( $settings, 'transitions' );
-            if ( ! empty( $transitions ) ) {
+            if ( !empty( $transitions ) ) {
                 $attr['transitions'] = '';
             }
 
@@ -361,9 +361,9 @@ class Bar extends BaseWidget {
         }
 
         $close_button = Utils::get_array( $attributes, 'closeButton' );
-        if ( ! empty( $close_button ) ) {
+        if ( !empty( $close_button ) ) {
             $close_button_settings = Utils::get_array( $close_button, 'settings' );
-            if ( ! empty( $close_button_settings ) ) {
+            if ( !empty( $close_button_settings ) ) {
                 $close_button_hidden = Utils::get_bool( $close_button_settings, 'hidden' );
                 if ( $close_button_hidden ) {
                     $attr['close-button'] = 'none';
@@ -377,9 +377,9 @@ class Bar extends BaseWidget {
         }
 
         $open_button = Utils::get_array( $attributes, 'openButton' );
-        if ( ! empty( $open_button ) ) {
+        if ( !empty( $open_button ) ) {
             $open_button_settings = Utils::get_array( $open_button, 'settings' );
-            if ( ! empty( $open_button_settings ) ) {
+            if ( !empty( $open_button_settings ) ) {
                 $open_button_hidden = Utils::get_bool( $open_button_settings, 'hidden' );
                 if ( $open_button_hidden ) {
                     $attr['open-button'] = 'none';
@@ -395,23 +395,23 @@ class Bar extends BaseWidget {
         return $attr;
     }
 
-    public function get_frontend_data( string $instance_id, array $attributes, WP_Block $block ) : array {
+    public function get_frontend_data( string $instance_id, array $attributes, WP_Block $block ): array {
         $data = array(
             'postType' => $this->get_post_type(),
         );
         $post_id = Utils::get_int( $attributes, 'postId' );
-        if ( ! empty( $post_id ) ) {
+        if ( !empty( $post_id ) ) {
             $data['postId'] = $post_id;
         }
         $template = Utils::get_string( $attributes, 'template' );
-        if ( ! empty( $template ) ) {
+        if ( !empty( $template ) ) {
             $data['template'] = $template;
         }
 
         $settings = Utils::get_array( $attributes, 'settings' );
-        if ( ! empty( $settings ) ) {
+        if ( !empty( $settings ) ) {
             $trigger = Utils::get_array( $settings, 'trigger' );
-            if ( ! empty( $trigger ) ) {
+            if ( !empty( $trigger ) ) {
                 $data = array_merge(
                     $data,
                     FooConvert::plugin()->components->open_trigger_panel->get_data( $trigger )
@@ -419,7 +419,7 @@ class Bar extends BaseWidget {
             }
 
             $close_anchor = Utils::get_string( $settings, 'closeAnchor' );
-            if ( ! empty( $close_anchor ) ) {
+            if ( !empty( $close_anchor ) ) {
                 $data['closeAnchor'] = $close_anchor;
             }
         }
@@ -427,54 +427,54 @@ class Bar extends BaseWidget {
         return $data;
     }
 
-    public function get_frontend_styles( string $instance_id, array $attributes, WP_Block $block ) : array {
+    public function get_frontend_styles( string $instance_id, array $attributes, WP_Block $block ): array {
 
         $components = FooConvert::plugin()->components;
 
         $root = array();
         $styles_attribute = Utils::get_array( $attributes, 'styles' );
-        if ( ! empty( $styles_attribute ) ) {
+        if ( !empty( $styles_attribute ) ) {
             $root = array_merge( $root, $components->get_styles( $styles_attribute ) );
         }
 
         $container = array();
         $container_attribute = Utils::get_array( $attributes, 'container' );
-        if ( ! empty( $container_attribute ) ) {
+        if ( !empty( $container_attribute ) ) {
             $container_styles_attribute = Utils::get_array( $container_attribute, 'styles' );
-            if ( ! empty( $container_styles_attribute ) ) {
+            if ( !empty( $container_styles_attribute ) ) {
                 $container = array_merge( $container, $components->get_styles( $container_styles_attribute ) );
             }
         }
 
         $content = array();
         $content_attribute = Utils::get_array( $attributes, 'content' );
-        if ( ! empty( $content_attribute ) ) {
+        if ( !empty( $content_attribute ) ) {
             $content_styles_attribute = Utils::get_array( $content_attribute, 'styles' );
-            if ( ! empty( $content_styles_attribute ) ) {
+            if ( !empty( $content_styles_attribute ) ) {
                 $content = array_merge( $content, $components->get_styles( $content_styles_attribute, '', array(
                     'background' => 'background',
-                    'text' => 'color'
+                    'text'       => 'color'
                 ) ) );
             }
         }
 
         $close_button = array();
         $close_button_attribute = Utils::get_array( $attributes, 'closeButton' );
-        if ( ! empty( $close_button_attribute ) ) {
+        if ( !empty( $close_button_attribute ) ) {
             $close_button_styles_attribute = Utils::get_array( $close_button_attribute, 'styles' );
-            if ( ! empty( $close_button_styles_attribute ) ) {
+            if ( !empty( $close_button_styles_attribute ) ) {
                 $close_button = array_merge( $close_button, $components->get_styles( $close_button_styles_attribute, '', array(
                     'background' => 'background',
-                    'icon' => 'color'
+                    'icon'       => 'color'
                 ) ) );
             }
 
             $close_button_settings = Utils::get_array( $close_button_attribute, 'settings' );
-            if ( ! empty( $close_button_settings ) ) {
+            if ( !empty( $close_button_settings ) ) {
                 $close_button_icon = Utils::get_array( $close_button_settings, 'icon' );
-                if ( ! empty( $close_button_icon ) ) {
+                if ( !empty( $close_button_icon ) ) {
                     $close_button_icon_size = Utils::get_string( $close_button_icon, 'size' );
-                    if ( ! empty( $close_button_icon_size ) ) {
+                    if ( !empty( $close_button_icon_size ) ) {
                         $close_button['font-size'] = $close_button_icon_size;
                     }
                 }
@@ -483,21 +483,21 @@ class Bar extends BaseWidget {
 
         $open_button = array();
         $open_button_attribute = Utils::get_array( $attributes, 'openButton' );
-        if ( ! empty( $open_button_attribute ) ) {
+        if ( !empty( $open_button_attribute ) ) {
             $open_button_styles_attribute = Utils::get_array( $open_button_attribute, 'styles' );
-            if ( ! empty( $open_button_styles_attribute ) ) {
+            if ( !empty( $open_button_styles_attribute ) ) {
                 $open_button = array_merge( $open_button, $components->get_styles( $open_button_styles_attribute, '', array(
                     'background' => 'background',
-                    'icon' => 'color'
+                    'icon'       => 'color'
                 ) ) );
             }
 
             $open_button_settings = Utils::get_array( $open_button_attribute, 'settings' );
-            if ( ! empty( $open_button_settings ) ) {
+            if ( !empty( $open_button_settings ) ) {
                 $open_button_icon = Utils::get_array( $open_button_settings, 'icon' );
-                if ( ! empty( $open_button_icon ) ) {
+                if ( !empty( $open_button_icon ) ) {
                     $open_button_icon_size = Utils::get_string( $open_button_icon, 'size' );
-                    if ( ! empty( $open_button_icon_size ) ) {
+                    if ( !empty( $open_button_icon_size ) ) {
                         $open_button['font-size'] = $open_button_icon_size;
                     }
                 }
@@ -523,19 +523,19 @@ class Bar extends BaseWidget {
         return $styles;
     }
 
-    public function get_frontend_icons( string $instance_id, array $attributes, WP_Block $block ) : array {
+    public function get_frontend_icons( string $instance_id, array $attributes, WP_Block $block ): array {
         $icons = [];
         $close_icon_slug = Utils::get_key_path( $attributes, 'closeButton.settings.icon.slug' );
-        if ( ! empty( $close_icon_slug ) ) {
+        if ( !empty( $close_icon_slug ) ) {
             $close_icon = $this->get_frontend_icon( $close_icon_slug, 'close-button__icon' );
-            if ( ! empty( $close_icon ) ) {
+            if ( !empty( $close_icon ) ) {
                 $icons[] = $close_icon;
             }
         }
         $open_icon_slug = Utils::get_key_path( $attributes, 'openButton.settings.icon.slug' );
-        if ( ! empty( $open_icon_slug ) ) {
+        if ( !empty( $open_icon_slug ) ) {
             $open_icon = $this->get_frontend_icon( $open_icon_slug, 'open-button__icon' );
-            if ( ! empty( $open_icon ) ) {
+            if ( !empty( $open_icon ) ) {
                 $icons[] = $open_icon;
             }
         }

@@ -15,7 +15,7 @@ class BorderToolsPanel extends BaseComponent {
         $this->border_radius_control = $border_radius_control;
     }
 
-    function get_styles( array $value, string $prefix = '', bool $style_required = true ) : array {
+    function get_styles( array $value, string $prefix = '', bool $style_required = true ): array {
         $styles = array();
         $shadow = Utils::get_string( $value, 'shadow' );
         if ( !empty( $shadow ) ) {

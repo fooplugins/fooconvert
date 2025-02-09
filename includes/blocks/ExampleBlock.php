@@ -9,20 +9,20 @@ use WP_Block;
 
 class ExampleBlock extends BaseBlock {
 
-    public function kses_definition() : array {
+    public function kses_definition(): array {
         return array(
             $this->get_tag_name() => array(
-                'id' => true,
+                'id'    => true,
                 'class' => true
             )
         );
     }
 
-    function get_block_name() : string {
+    function get_block_name(): string {
         return 'fc/example-block';
     }
 
-    function get_tag_name() : string {
+    function get_tag_name(): string {
         return 'fc-example-block';
     }
 
@@ -31,7 +31,7 @@ class ExampleBlock extends BaseBlock {
         return Utils::register_post_type_blocks( $post_types, array(
             array(
                 'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'blocks/example-block/block.json',
-                'args' => array(
+                'args'           => array(
                     'render_callback' => array( $this, 'render' )
                 )
             )
@@ -48,11 +48,11 @@ class ExampleBlock extends BaseBlock {
         );
     }
 
-    public function get_frontend_data( string $instance_id, array $attributes, WP_Block $block ) : array {
+    public function get_frontend_data( string $instance_id, array $attributes, WP_Block $block ): array {
         return array();
     }
 
-    function get_frontend_styles( string $instance_id, array $attributes, WP_Block $block ) : array {
+    function get_frontend_styles( string $instance_id, array $attributes, WP_Block $block ): array {
         $root = array();
 
         $styles_attribute = Utils::get_array( $attributes, 'styles' );
@@ -61,7 +61,7 @@ class ExampleBlock extends BaseBlock {
                 $root,
                 FooConvert::plugin()->components->get_styles( $styles_attribute, '', array(
                     'background' => 'background',
-                    'text' => 'color'
+                    'text'       => 'color'
                 ) )
             );
         }

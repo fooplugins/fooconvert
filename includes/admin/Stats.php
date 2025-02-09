@@ -1,4 +1,5 @@
 <?php
+
 namespace FooPlugins\FooConvert\Admin;
 
 use FooPlugins\FooConvert\Event;
@@ -10,17 +11,15 @@ use FooPlugins\FooConvert\FooConvert;
 
 if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
 
-    class Stats
-    {
+    class Stats {
         /**
          * Init constructor.
          */
-        function __construct()
-        {
+        function __construct() {
             add_action( 'admin_menu', array( $this, 'register_menu' ) );
             add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
             add_action( 'admin_init', array( $this, 'register_columns' ) );
-            add_action( 'wp_ajax_fooconvert_fetch_stats',  array( $this, 'fetch_widget_stats' ) );
+            add_action( 'wp_ajax_fooconvert_fetch_stats', array( $this, 'fetch_widget_stats' ) );
         }
 
         /**
@@ -38,7 +37,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 $nonce = sanitize_text_field( wp_unslash( $_POST['nonce'] ) );
 
                 // Verify the nonce
-                if ( !wp_verify_nonce($nonce, 'fooconvert-widget-stats' ) ) {
+                if ( !wp_verify_nonce( $nonce, 'fooconvert-widget-stats' ) ) {
                     wp_die( esc_html__( 'Invalid nonce!!', 'fooconvert' ) );
                 }
 
@@ -58,7 +57,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 }
 
                 if ( $widget_id === 0 ) {
-                    wp_die( esc_html__('Invalid widget ID!!', 'fooconvert') );
+                    wp_die( esc_html__( 'Invalid widget ID!!', 'fooconvert' ) );
                 }
 
                 $event = new Event();
@@ -73,37 +72,37 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 ];
 
                 $activity_meta_data = apply_filters( 'fooconvert_widget_stats_activity_meta_data', [
-                    'events' => [
-                        'label' => __( 'Events', 'fooconvert' ),
-                        'data' => [],
-                        'borderColor' => 'rgb(112, 112, 112)',
+                    'events'          => [
+                        'label'                  => __( 'Events', 'fooconvert' ),
+                        'data'                   => [],
+                        'borderColor'            => 'rgb(112, 112, 112)',
                         'cubicInterpolationMode' => 'monotone',
-                        'tension' => 0.4,
-                        'fill' => false
+                        'tension'                => 0.4,
+                        'fill'                   => false
                     ],
-                    'views' => [
-                        'label' => __( 'Views', 'fooconvert' ),
-                        'data' => [],
-                        'borderColor' => 'rgb(75, 192, 192)',
+                    'views'           => [
+                        'label'                  => __( 'Views', 'fooconvert' ),
+                        'data'                   => [],
+                        'borderColor'            => 'rgb(75, 192, 192)',
                         'cubicInterpolationMode' => 'monotone',
-                        'tension' => 0.4,
-                        'fill' => false
+                        'tension'                => 0.4,
+                        'fill'                   => false
                     ],
-                    'engagements' => [
-                        'label' => __( 'Engagements', 'fooconvert' ),
-                        'data' => [],
-                        'borderColor' => 'rgb(255, 99, 132)',
+                    'engagements'     => [
+                        'label'                  => __( 'Engagements', 'fooconvert' ),
+                        'data'                   => [],
+                        'borderColor'            => 'rgb(255, 99, 132)',
                         'cubicInterpolationMode' => 'monotone',
-                        'tension' => 0.4,
-                        'fill' => false
+                        'tension'                => 0.4,
+                        'fill'                   => false
                     ],
                     'unique_visitors' => [
-                        'label' => __( 'Unique Visitors', 'fooconvert' ),
-                        'data' => [],
-                        'borderColor' => 'rgb(54, 162, 235)',
+                        'label'                  => __( 'Unique Visitors', 'fooconvert' ),
+                        'data'                   => [],
+                        'borderColor'            => 'rgb(54, 162, 235)',
                         'cubicInterpolationMode' => 'monotone',
-                        'tension' => 0.4,
-                        'fill' => true
+                        'tension'                => 0.4,
+                        'fill'                   => true
                     ],
                 ] );
 
@@ -139,16 +138,16 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 $data = apply_filters( 'fooconvert_widget_stats_data', $data, $widget_id, $days );
 
                 // Additional dummy data
-    //            $data['conversion_rate'] = 4.6;
-    //            $data['geo_breakdown'] = 'US: 40%, UK: 25%, CA: 15%, Other: 20%';
-    //            $data['device_browser'] = 'Mobile: 60%, Desktop: 40%';
-    //            $data['conversion_breakdown'] = [40, 60]; // Converted vs Not Converted
-    //            $data['engagement_trend'] = array(
-    //                'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-    //                'data' => [300, 450, 320, 500, 700, 600, 750]
-    //            );
+                //            $data['conversion_rate'] = 4.6;
+                //            $data['geo_breakdown'] = 'US: 40%, UK: 25%, CA: 15%, Other: 20%';
+                //            $data['device_browser'] = 'Mobile: 60%, Desktop: 40%';
+                //            $data['conversion_breakdown'] = [40, 60]; // Converted vs Not Converted
+                //            $data['engagement_trend'] = array(
+                //                'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                //                'data' => [300, 450, 320, 500, 700, 600, 750]
+                //            );
 
-                wp_send_json($data);
+                wp_send_json( $data );
             } else {
                 wp_die( esc_html__( 'Nonce is not set.', 'fooconvert' ) );
             }
@@ -164,10 +163,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
          */
         public function register_columns() {
             foreach ( FooConvert::plugin()->widgets->get_post_types() as $post_type ) {
-                add_filter( "manage_{$post_type}_posts_columns", function( $columns ) use ( $post_type ) {
+                add_filter( "manage_{$post_type}_posts_columns", function ( $columns ) use ( $post_type ) {
                     return $this->create_stats_column( $post_type, $columns );
                 } );
-                add_action( "manage_{$post_type}_posts_custom_column", function( $column_name, $post_id ) use ( $post_type ) {
+                add_action( "manage_{$post_type}_posts_custom_column", function ( $column_name, $post_id ) use ( $post_type ) {
                     $this->create_stats_column_content( $post_type, $column_name, $post_id );
                 }, 10, 2 );
             }
@@ -181,12 +180,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
          *
          * @return array The updated columns array.
          */
-        public function create_stats_column( $post_type, $columns ) : array {
+        public function create_stats_column( $post_type, $columns ): array {
             // add the column after the default title column
             $updated = array();
             $inserted = false;
             foreach ( $columns as $column_name => $column_display_name ) {
-                $updated[ $column_name ] = $column_display_name;
+                $updated[$column_name] = $column_display_name;
                 if ( $column_name === 'title' ) {
                     $updated["{$post_type}_stats"] = __( 'Stats', 'fooconvert' );
                     $inserted = true;
@@ -210,7 +209,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
          *
          * @return void
          */
-        public function create_stats_column_content( $post_type, $column_name, $post_id ) : void {
+        public function create_stats_column_content( $post_type, $column_name, $post_id ): void {
             if ( $column_name === "{$post_type}_stats" ) {
 
                 $stats_page_url = fooconvert_admin_url_widget_stats( $post_id );
@@ -236,7 +235,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 __( 'Widget Stats', 'fooconvert' ),
                 'manage_options',
                 FOOCONVERT_MENU_SLUG_WIDGET_STATS,
-                function() {
+                function () {
                     require_once FOOCONVERT_INCLUDES_PATH . 'Admin/Views/widget-stats.php';
                 }
             );
@@ -268,12 +267,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
             if ( $hook !== 'fooconvert_page_fooconvert-widget-stats' ) {
 
                 // Hide "Widget Stats" submenu if we are NOT on the page.
-                wp_add_inline_style('wp-admin', '
+                wp_add_inline_style( 'wp-admin', '
                     /* Hide "Widget Stats" submenu */
                     #toplevel_page_fooconvert .wp-submenu li a[href="' . fooconvert_admin_url_widget_stats_base() . '"] {
                         display: none !important;
                     }
-                ');
+                ' );
 
                 return;
             }
@@ -318,10 +317,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 true
             );
 
-            wp_localize_script('fooconvert-widget-stats-js', 'fooconvertData', array(
-                'ajaxUrl' => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('fooconvert-widget-stats')
-            ));
+            wp_localize_script( 'fooconvert-widget-stats-js', 'fooconvertData', array(
+                'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+                'nonce'   => wp_create_nonce( 'fooconvert-widget-stats' )
+            ) );
 
             do_action( 'fooconvert_widget_stats_enqueue_assets' );
         }

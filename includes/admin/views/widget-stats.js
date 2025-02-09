@@ -15,9 +15,9 @@ jQuery(document).ready(function ($) {
                 $('.metric').removeClass('loading');
 
                 // Render basic metrics
-                if ( response.metrics ) {
+                if (response.metrics) {
                     //loop through metrics
-                    $.each(response.metrics, function(key, value) {
+                    $.each(response.metrics, function (key, value) {
                         // Use the key to find the element and set its text
                         $('#metric-' + key).text(value);
                     });
@@ -48,7 +48,7 @@ jQuery(document).ready(function ($) {
 
     // Render Line Chart for Recent Activity
     function renderRecentActivityChart(response) {
-        if ( !response.recent_activity ) {
+        if (!response.recent_activity) {
             return;
         }
 
@@ -99,7 +99,7 @@ jQuery(document).ready(function ($) {
             options: finalOptions,
             plugins: [{
                 afterLayout: (chart) => {
-                    if ( window.recentActivityChartUpdated ) {
+                    if (window.recentActivityChartUpdated) {
                         return;
                     }
 
@@ -114,12 +114,12 @@ jQuery(document).ready(function ($) {
                             const annotation = annotations[key];
                             if (annotation.type === 'line') {
                                 // Update Y-axis related properties dynamically
-                                annotation.enter = ({ element }) => {
+                                annotation.enter = ({element}) => {
                                     element.label.options.display = true; // Show the label
                                     return true; // Force chart re-drawing
                                 };
 
-                                annotation.leave = ({ element }) => {
+                                annotation.leave = ({element}) => {
                                     element.label.options.display = false; // Hide the label
                                     return true; // Force chart re-drawing
                                 };
@@ -181,7 +181,7 @@ jQuery(document).ready(function ($) {
     // Fetch and display the stats on page load
     fetchStats();
 
-    $('.fooconvert-recent-activity-days').change( function() {
+    $('.fooconvert-recent-activity-days').change(function () {
         $('.fooconvert-recent-activity-container').addClass('loading');
         fetchStats();
     });

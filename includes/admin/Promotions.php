@@ -73,7 +73,8 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
                                 <span class="dashicons dashicons-arrow-right-alt2"></span>
                             </button>
                         </div>
-                        <a class="fooconvert-hide-panel" data-panel="premium" href="#hide" title="<?php esc_html_e( 'Hide Panel', 'fooconvert' ); ?>">
+                        <a class="fooconvert-hide-panel" data-panel="premium" href="#hide"
+                           title="<?php esc_html_e( 'Hide Panel', 'fooconvert' ); ?>">
                             <span class="dashicons dashicons-no-alt"></span>
                         </a>
                     </div>
@@ -233,32 +234,32 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
         function adjust_widget_metric_options( $options ) {
             $options['engagement-rate'] = [
                 'dropdown_option' => __( 'engagement rate (PRO)', 'fooconvert' ),
-                'pro_feature' => true,
-                'pro_message' => __( 'Top performers by engagement rate is only available in FooConvert PRO.', 'fooconvert' )
+                'pro_feature'     => true,
+                'pro_message'     => __( 'Top performers by engagement rate is only available in FooConvert PRO.', 'fooconvert' )
             ];
 
             $options['clicks'] = [
                 'dropdown_option' => __( 'clicks (PRO)', 'fooconvert' ),
-                'pro_feature' => true,
-                'pro_message' => __( 'Top performers by clicks is only available in FooConvert PRO.', 'fooconvert' )
+                'pro_feature'     => true,
+                'pro_message'     => __( 'Top performers by clicks is only available in FooConvert PRO.', 'fooconvert' )
             ];
 
             $options['click-rate'] = [
                 'dropdown_option' => __( 'click rate (PRO)', 'fooconvert' ),
-                'pro_feature' => true,
-                'pro_message' => __( 'Top performers by click rate is only available in FooConvert PRO.', 'fooconvert' )
+                'pro_feature'     => true,
+                'pro_message'     => __( 'Top performers by click rate is only available in FooConvert PRO.', 'fooconvert' )
             ];
 
             $options['conversions'] = [
                 'dropdown_option' => __( 'conversions (PRO)', 'fooconvert' ),
-                'pro_feature' => true,
-                'pro_message' => __( 'Top performers by conversions is only available in FooConvert PRO.', 'fooconvert' )
+                'pro_feature'     => true,
+                'pro_message'     => __( 'Top performers by conversions is only available in FooConvert PRO.', 'fooconvert' )
             ];
 
             $options['conversion-rate'] = [
                 'dropdown_option' => __( 'conversion rate (PRO)', 'fooconvert' ),
-                'pro_feature' => true,
-                'pro_message' => __( 'Top performers by conversion rate is only available in FooConvert PRO.', 'fooconvert' )
+                'pro_feature'     => true,
+                'pro_message'     => __( 'Top performers by conversion rate is only available in FooConvert PRO.', 'fooconvert' )
             ];
 
             return $options;

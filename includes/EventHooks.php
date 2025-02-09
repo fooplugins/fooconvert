@@ -148,7 +148,7 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
                     $change['has_value'] = true;
                     $change['value'] = $post_after->post_status;
                 }
-                
+
                 $extra_data['changes'][] = $change;
             }
 
@@ -163,7 +163,7 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
                 // Check for content changes.
                 if ( $content_before !== $content_after ) {
                     $change = [
-                        'reason' => __( 'Content Updated', 'fooconvert' ),
+                        'reason'    => __( 'Content Updated', 'fooconvert' ),
                         'has_value' => false
                     ];
                     $extra_data['changes'][] = $change;
@@ -181,9 +181,9 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
                 if ( !empty( $trigger_before ) && !empty( $trigger_after )
                     && $trigger_before['type'] !== $trigger_after['type'] ) {
                     $change = [
-                        'reason' => __( 'Open Trigger Changed', 'fooconvert' ),
+                        'reason'    => __( 'Open Trigger Changed', 'fooconvert' ),
                         'has_value' => true,
-                        'value' => $trigger_after['type']
+                        'value'     => $trigger_after['type']
                     ];
                     $extra_data['changes'][] = $change;
                 }
@@ -196,7 +196,7 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
 
                 if ( $styles_before !== $styles_after ) {
                     $change = [
-                        'reason' => __( 'Styling Updated', 'fooconvert' ),
+                        'reason'    => __( 'Styling Updated', 'fooconvert' ),
                         'has_value' => false
                     ];
                     $extra_data['changes'][] = $change;
@@ -208,7 +208,7 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
             $event = new Event();
             $event->create(
                 [
-                    'widget_id' => $post_id,
+                    'widget_id'  => $post_id,
                     'event_type' => FOOCONVERT_EVENT_TYPE_UPDATE,
                     'extra_data' => $extra_data,
                 ],

@@ -140,7 +140,7 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @param string $content Raw content string to process.
          * @return string Processed content
          */
-        public function do_content( string $content ) : string {
+        public function do_content( string $content ): string {
 //            global $wp_embed;
 
             $content = do_blocks( $content );               // convert gutenberg comment syntax to HTML
@@ -195,8 +195,8 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         public function kses_icon( string $content ): string {
             return $this->kses_with_svg( $content, array(
                 'span' => array(
-                    'class' => true,
-                    'role' => true,
+                    'class'       => true,
+                    'role'        => true,
                     'aria-hidden' => true,
                 )
             ) );
@@ -355,7 +355,7 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         public function register_block_category( array $categories ): array {
             // using unshift to place our category first
             array_unshift( $categories, array(
-                'slug' => FOOCONVERT_SLUG,
+                'slug'  => FOOCONVERT_SLUG,
                 'title' => FOOCONVERT_NAME
             ) );
             return $categories;

@@ -40,29 +40,33 @@ if ( $widget_id ) {
     <div class="fooconvert-basic-metrics">
         <div class="metric loading">
             <p id="metric-total_events">...</p>
-            <h2><?php esc_html_e('Total Events', 'fooconvert'); ?></h2>
-            <span data-balloon-pos="down" aria-label="<?php esc_attr_e( 'Total events logged for the widget for it\'s lifetime.', 'fooconvert' ); ?>">
+            <h2><?php esc_html_e( 'Total Events', 'fooconvert' ); ?></h2>
+            <span data-balloon-pos="down"
+                  aria-label="<?php esc_attr_e( 'Total events logged for the widget for it\'s lifetime.', 'fooconvert' ); ?>">
                 <i class="dashicons dashicons-editor-help"></i>
             </span>
         </div>
         <div class="metric loading">
             <p id="metric-total_views">...</p>
-            <h2><?php esc_html_e('Total Views', 'fooconvert'); ?></h2>
-            <span data-balloon-pos="down" aria-label="<?php esc_attr_e( 'Total number of times the widget has been viewed by a visitor.', 'fooconvert' ); ?>">
+            <h2><?php esc_html_e( 'Total Views', 'fooconvert' ); ?></h2>
+            <span data-balloon-pos="down"
+                  aria-label="<?php esc_attr_e( 'Total number of times the widget has been viewed by a visitor.', 'fooconvert' ); ?>">
                 <i class="dashicons dashicons-editor-help"></i>
             </span>
         </div>
         <div class="metric loading">
             <p id="metric-total_unique_visitors">...</p>
-            <h2><?php esc_html_e('Total Visitors', 'fooconvert'); ?></h2>
-            <span data-balloon-pos="down" aria-label="<?php esc_attr_e( 'Total number of unique visitors that have viewed the widget.', 'fooconvert' ); ?>">
+            <h2><?php esc_html_e( 'Total Visitors', 'fooconvert' ); ?></h2>
+            <span data-balloon-pos="down"
+                  aria-label="<?php esc_attr_e( 'Total number of unique visitors that have viewed the widget.', 'fooconvert' ); ?>">
                 <i class="dashicons dashicons-editor-help"></i>
             </span>
         </div>
         <div class="metric loading">
             <p id="metric-total_engagements">...</p>
-            <h2><?php esc_html_e('Total Engagements', 'fooconvert'); ?></h2>
-            <span data-balloon-pos="down" aria-label="<?php esc_attr_e( 'Total number of engagements that have been made with the widget (clicks, opens, etc).', 'fooconvert' ); ?>">
+            <h2><?php esc_html_e( 'Total Engagements', 'fooconvert' ); ?></h2>
+            <span data-balloon-pos="down"
+                  aria-label="<?php esc_attr_e( 'Total number of engagements that have been made with the widget (clicks, opens, etc).', 'fooconvert' ); ?>">
                 <i class="dashicons dashicons-editor-help"></i>
             </span>
         </div>
@@ -72,7 +76,7 @@ if ( $widget_id ) {
     <!-- Recent Activity Chart -->
     <div class="fooconvert-recent-activity-container loading">
         <h2>
-            <?php esc_html_e('Recent Activity', 'fooconvert'); ?>
+            <?php esc_html_e( 'Recent Activity', 'fooconvert' ); ?>
             <select class="fooconvert-recent-activity-days">
                 <?php foreach ( $recent_activity_options as $days => $label ) : ?>
                     <option value="<?php echo esc_attr( $days ); ?>" <?php selected( $recent_activity_days, $days ); ?>><?php echo esc_html( $label ); ?></option>

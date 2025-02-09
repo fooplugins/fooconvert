@@ -6,7 +6,7 @@ use FooPlugins\FooConvert\Components\Base\BaseComponent;
 use FooPlugins\FooConvert\Utils;
 
 class TypographyToolsPanel extends BaseComponent {
-    public function get_styles( array $attr_value, string $prefix = '' ) : array {
+    public function get_styles( array $attr_value, string $prefix = '' ): array {
         $styles = [];
 
         $font_family = Utils::get_string( $attr_value, 'fontFamily' );

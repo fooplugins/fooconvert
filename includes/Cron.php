@@ -1,4 +1,5 @@
 <?php
+
 namespace FooPlugins\FooConvert;
 
 /**
@@ -7,13 +8,11 @@ namespace FooPlugins\FooConvert;
 
 if ( !class_exists( 'FooPlugins\FooConvert\Cron' ) ) {
 
-    class Cron
-    {
+    class Cron {
         /**
          * Init constructor.
          */
-        function __construct()
-        {
+        function __construct() {
             add_action( 'init', [ $this, 'init' ] );
         }
 
@@ -25,11 +24,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Cron' ) ) {
          */
         public function init() {
             // Schedule cron jobs if not already scheduled
-            if ( ! wp_next_scheduled( FOOCONVERT_CRON_CALC_STATS ) ) {
+            if ( !wp_next_scheduled( FOOCONVERT_CRON_CALC_STATS ) ) {
                 wp_schedule_event( time(), 'hourly', FOOCONVERT_CRON_CALC_STATS );
             }
 
-            if ( ! wp_next_scheduled( FOOCONVERT_CRON_DELETE_EVENTS ) ) {
+            if ( !wp_next_scheduled( FOOCONVERT_CRON_DELETE_EVENTS ) ) {
                 wp_schedule_event( time(), 'daily', FOOCONVERT_CRON_DELETE_EVENTS );
             }
 

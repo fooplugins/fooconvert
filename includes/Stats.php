@@ -32,7 +32,7 @@ if ( !class_exists( __NAMESPACE__ . '\Stats' ) ) {
 
                 foreach ( fooconvert_widget_metric_options() as $key => $option ) {
                     $metric_value = 0;
-                    if ( array_key_exists('metric', $option) ) {
+                    if ( array_key_exists( 'metric', $option ) ) {
                         if ( isset( $metrics[$option['metric']] ) ) {
                             $metric_value = $metrics[$option['metric']];
                         } elseif ( isset( $option['function'] ) && is_callable( $option['function'] ) ) {
@@ -92,21 +92,21 @@ if ( !class_exists( __NAMESPACE__ . '\Stats' ) ) {
             }
 
             $query = new \WP_Query( [
-                'post_type' => fooconvert_get_post_types(),
+                'post_type'      => fooconvert_get_post_types(),
                 'posts_per_page' => $limit,
-                'meta_key' => $sort_option['meta_key'], // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-                'orderby' => 'meta_value_num',
-                'order' => 'DESC',
+                'meta_key'       => $sort_option['meta_key'], // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+                'orderby'        => 'meta_value_num',
+                'order'          => 'DESC',
             ] );
 
             $top_performers = [];
             $index = 1;
             foreach ( $query->posts as $post ) {
                 $top_performers[$index] = [
-                    'id' => $post->ID,
-                    'title' => fooconvert_get_widget_title( $post ),
+                    'id'        => $post->ID,
+                    'title'     => fooconvert_get_widget_title( $post ),
                     'post_type' => $post->post_type,
-                    'score' => get_post_meta( $post->ID, $sort_option['meta_key'], true ),
+                    'score'     => get_post_meta( $post->ID, $sort_option['meta_key'], true ),
                 ];
 
                 $index++;
