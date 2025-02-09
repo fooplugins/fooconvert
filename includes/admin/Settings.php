@@ -63,7 +63,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                         'order' => 20,
                         'type'  => 'checkbox',
                         'label' => __( 'Hide Promos', 'fooconvert' ),
-                        'desc'  => __( 'If enabled, will hide all promotional messages within the admin area, including the dashboard Addons panel.', 'fooconvert' )
+                        'desc'  => __( 'If enabled, will hide all promotional messages within the admin area, including the free trial admin banners.', 'fooconvert' )
                     ),
                     'hide_dashboard_panels' => array(
                         'id'      => 'hide_dashboard_panels',

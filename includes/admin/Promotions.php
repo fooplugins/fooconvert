@@ -16,6 +16,18 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
          */
         function __construct() {
             add_action( 'init', array( $this, 'init_promotions' ) );
+
+            add_filter( 'fs_show_trial_fooconvert', array( $this, 'force_trial_hide' ) );
+            add_action( 'admin_init', array( $this, 'force_hide_trial_notice' ), 99 );
+        }
+
+        /**
+         * Determines whether promotions should be hidden or not.
+         *
+         * @return bool Whether promotions should be hidden.
+         */
+        private function must_hide_promos() {
+            return 'on' === fooconvert_get_setting( 'hide_promos' );
         }
 
         /**
@@ -26,13 +38,40 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
         public function init_promotions() {
 
             // If hide_promos is enabled, do not show any promotions!
-            if ( fooconvert_get_setting( 'hide_promos' ) === 'on' ) {
+            if ( $this->must_hide_promos() ) {
                 return;
             }
 
             add_action( 'fooconvert_admin_dashboard_right', array( $this, 'render_addons_panel' ) );
             add_action( 'fooconvert_widget_stats_html-metrics', array( $this, 'render_metrics' ), 10, 2 );
             add_filter( 'fooconvert_widget_metric_options', array( $this, 'adjust_widget_metric_options' ) );
+        }
+
+        /**
+         * Make sure the trail banner admin notice is not shown
+         *
+         * @param $show_trial
+         *
+         * @return false
+         */
+        function force_trial_hide( $show_trial ) {
+            if ( $this->must_hide_promos() ) {
+                $show_trial = false;
+            }
+
+            return $show_trial;
+        }
+
+        /**
+         * Force the trial promotion admin notice to be removed
+         */
+        function force_hide_trial_notice() {
+            if ( $this->must_hide_promos() ) {
+                $freemius_sdk = fooconvert_fs();
+                $plugin_id    = $freemius_sdk->get_slug();
+                $admin_notice_manager = \FS_Admin_Notice_Manager::instance( $plugin_id );
+                $admin_notice_manager->remove_sticky( 'trial_promotion' );
+            }
         }
 
         /**
