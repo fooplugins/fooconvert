@@ -36,13 +36,6 @@
     },
     "repositories": [
         {
-            "type": "package",
-            "package": {
-                "name": "freemius/wordpress-sdk",
-                "version": "2.11.0"
-            }
-        },
-        {
             "type": "composer",
             "url": "http://repo.packagist.org"
         }
