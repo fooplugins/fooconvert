@@ -99,15 +99,13 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             if ( function_exists( 'get_current_screen' ) ) {
                 $current_screen = get_current_screen();
 
-                if ( $current_screen->id === 'toplevel_page_' . FOOCONVERT_MENU_SLUG ) {
-                    return true;
-                }
-
-                if ( 'admin_page_fooconvert-pricing' === $current_screen->id ) {
+                // Do not show the header on the pricing page.
+                if ( str_contains( $current_screen->id, 'fooconvert-pricing' ) ) {
                     return false;
                 }
 
-                if ( str_starts_with( $current_screen->id, 'fooconvert_page_fooconvert-' ) ) {
+                // Else, if the current screen is a fooconvert-related screen.
+                else if ( str_contains( $current_screen->id, FOOCONVERT_MENU_SLUG ) ) {
                     return true;
                 }
 
@@ -153,11 +151,15 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
         public function add_custom_header() {
             if ( $this->is_valid_page() ) {
                 $current_screen = get_current_screen();
-                if ( FOOCONVERT_MENU_SLUG . '-contact' === $current_screen->base ||
-                    FOOCONVERT_MENU_SLUG . '-pricing' === $current_screen->base ) {
-                    $drop = 'drop';
-                } else {
-                    $drop = '';
+
+                $drop = '';
+                $pages = [ 'contact', 'pricing' ];
+                foreach ( $pages as $page ) {
+                    $check = FOOCONVERT_MENU_SLUG . '-' . $page;
+                    if ( str_contains( $current_screen->id, $check ) ) {
+                        $drop = 'drop';
+                        break;
+                    }
                 }
                 ?>
                 <div class="fooconvert-admin-header <?php
