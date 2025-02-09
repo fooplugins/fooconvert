@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9102fb545ea41020ee770a2abba03ce2",
+    "content-hash": "ba8fdb8d1cb59b04282179ad4bcb9994",
     "packages": [
         {
             "name": "composer/installers",
@@ -160,10 +160,6 @@
         {
             "name": "freemius/wordpress-sdk",
             "version": "2.11.0",
-            "dist": {
-                "type": "zip",
-                "url": "dist/wordpress-sdk-2.11.0.zip"
-            },
             "type": "library"
         }
     ],

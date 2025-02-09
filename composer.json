@@ -39,11 +39,7 @@
             "type": "package",
             "package": {
                 "name": "freemius/wordpress-sdk",
-                "version": "2.11.0",
-                "dist": {
-                    "type": "zip",
-                    "url": "dist/wordpress-sdk-2.11.0.zip"
-                }
+                "version": "2.11.0"
             }
         },
         {
