@@ -366,8 +366,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         public static function get_widgets_with_no_events() {
             global $wpdb;
 
-            $table_name = esc_sql( self::get_events_table_name() );
-            $posts_table = esc_sql( $wpdb->prefix . 'posts' );
+            $table_name = self::get_events_table_name();
+            $posts_table = $wpdb->prefix . 'posts';
 
             $post_types = fooconvert_get_post_types();
 
@@ -376,13 +376,18 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             $placeholders_string = implode( ', ', $placeholders );
 
             $query = "SELECT p.ID AS widget_id
-                FROM {$posts_table} p
-                LEFT JOIN {$table_name} e ON p.ID = e.widget_id
+                FROM %i p
+                LEFT JOIN %i e ON p.ID = e.widget_id
                 WHERE p.post_type IN ($placeholders_string)
                   AND e.widget_id IS NULL";
 
             // Combine post types into the prepared query
-            $prepared_query = $wpdb->prepare( $query, ...$post_types );
+            $prepared_query = $wpdb->prepare(
+                $query,
+                $posts_table,
+                $table_name,
+                ...$post_types
+            );
 
             return $wpdb->get_results( $prepared_query, ARRAY_A );
         }
