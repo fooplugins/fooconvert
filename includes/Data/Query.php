@@ -382,9 +382,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                   AND e.widget_id IS NULL";
 
             // Combine post types into the prepared query
-            // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
             $prepared_query = $wpdb->prepare(
-                $query,
+                $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 $posts_table,
                 $table_name,
                 ...$post_types
