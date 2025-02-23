@@ -16,7 +16,12 @@ const slugify = value => {
     return '';
 }
 
-const InnerBlocksButton = ( { children, targetClientId, prepareAttributes = (attr, variationName) => attr, ...buttonProps } ) => {
+const prepareAttributesDefault = (attr, variationName) => {
+    attr.template = variationName;
+    return attr;
+};
+
+const InnerBlocksButton = ( { children, targetClientId, prepareAttributes = prepareAttributesDefault, ...buttonProps } ) => {
     const [ isOpen, setOpen ] = useState( false );
     const [ title, setTitle ] = useState( '' );
     const [ description, setDescription ] = useState( '' );
@@ -45,6 +50,7 @@ const InnerBlocksButton = ( { children, targetClientId, prepareAttributes = (att
                 title,
                 description,
                 icon: '',
+                thumbnail: '',
                 attributes: attr,
                 innerBlocks: innerBlocks,
                 scope: [ 'block' ]
@@ -60,13 +66,13 @@ const InnerBlocksButton = ( { children, targetClientId, prepareAttributes = (att
             .replaceAll( /[}\]]/g, ')' )
             .replaceAll( /(?<!\\)"/g, "'" )
             .replaceAll( /\\"/g, '"' )
-            .replaceAll( /\s?:\s?/g, ' => ' );
+            .replaceAll( /':\s?/g, "' => " );
     };
 
     const tabs = [
         {
             name: 'json',
-            title: __( 'JSON', 'fooconvert' ),
+            title: __( 'JS', 'fooconvert' ),
             className: `${ rootClass }__json-tab`
         },
         {
