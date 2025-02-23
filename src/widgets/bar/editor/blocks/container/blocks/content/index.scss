@@ -8,13 +8,13 @@
   width: 100%;
   height: fit-content;
   margin: 0;
-  padding: 16px;
-  gap: 16px;
   overflow: hidden;
   background-color: #FFFFFF;
   color: #000000;
-  border: solid 1px #DDDDDD;
-  border-radius: 4px;
+  border: none;
+  border-radius: 0;
+  padding: 16px;
+  gap: 16px;
 
   .block-list-appender {
     display: none;

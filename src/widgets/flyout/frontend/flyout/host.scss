@@ -44,8 +44,8 @@
     margin: 0;
     cursor: pointer;
     z-index: 2;
-    border: solid 1px #DDDDDD;
-    border-radius: 4px;
+    border: none;
+    border-radius: 0;
     outline: none;
 
     pointer-events: auto;
@@ -115,8 +115,8 @@
     overflow-y: auto;
     background: #FFFFFF;
     color: #000000;
-    border: solid 1px #DDDDDD;
-    border-radius: 4px;
+    border: none;
+    border-radius: 0;
     margin: 0;
     padding: 16px;
   }

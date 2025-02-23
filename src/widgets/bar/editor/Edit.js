@@ -27,19 +27,9 @@ export const BAR_DEFAULTS = {
             }
         },
         styles: {
-            dimensions: {
-                padding: '6px',
-                margin: '24px'
-            },
             color: {
                 background: '#FFFFFF',
                 icon: '#000000'
-            },
-            border: {
-                radius: '4px',
-                color: '#DDDDDD',
-                style: 'solid',
-                width: '1px'
             }
         }
     },
@@ -53,8 +43,8 @@ export const BAR_DEFAULTS = {
             }
         },
         styles: {
-            dimensions: {
-                padding: '6px'
+            color: {
+                icon: '#000000'
             }
         }
     },
@@ -63,16 +53,6 @@ export const BAR_DEFAULTS = {
             color: {
                 background: '#FFFFFF',
                 text: '#000000'
-            },
-            border: {
-                radius: '4px',
-                color: '#DDDDDD',
-                style: 'solid',
-                width: '1px'
-            },
-            dimensions: {
-                padding: '16px',
-                gap: '16px'
             }
         }
     }

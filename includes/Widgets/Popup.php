@@ -102,6 +102,16 @@ class Popup extends BaseWidget {
                 'title'       => __( 'Empty', 'fooconvert' ),
                 'description' => __( 'A blank slate that you can use to build your own popup from scratch.', 'fooconvert' ),
                 'attributes'  => array(
+                    'content'     => array(
+                        'styles' => array(
+                            'border'     => array(
+                                'radius' => '4px',
+                                'color'  => '#DDDDDD',
+                                'style'  => 'solid',
+                                'width'  => '1px'
+                            )
+                        )
+                    ),
                     'template' => 'empty'
                 ),
                 'innerBlocks' => array(

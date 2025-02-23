@@ -18,11 +18,6 @@ export const FLYOUT_DEFAULTS = {
         transitions: false,
         maxOnMobile: false
     },
-    styles: {
-        dimensions: {
-            padding: '32px'
-        }
-    },
     openButton: {
         settings: {
             hidden: false,
@@ -32,18 +27,9 @@ export const FLYOUT_DEFAULTS = {
             }
         },
         styles: {
-            dimensions: {
-                padding: '6px'
-            },
             color: {
                 background: '#FFFFFF',
                 icon: '#000000'
-            },
-            border: {
-                radius: '4px',
-                color: '#DDDDDD',
-                style: 'solid',
-                width: '1px'
             }
         }
     },
@@ -55,11 +41,6 @@ export const FLYOUT_DEFAULTS = {
                 size: '32px',
                 slug: 'default__close-small'
             }
-        },
-        styles: {
-            dimensions: {
-                padding: '6px'
-            }
         }
     },
     content: {
@@ -68,15 +49,6 @@ export const FLYOUT_DEFAULTS = {
             color: {
                 background: '#FFFFFF',
                 text: '#000000'
-            },
-            border: {
-                radius: '4px',
-                color: '#DDDDDD',
-                style: 'solid',
-                width: '1px'
-            },
-            dimensions: {
-                padding: '16px'
             }
         }
     }

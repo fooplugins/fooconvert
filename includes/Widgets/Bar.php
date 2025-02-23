@@ -106,6 +106,26 @@ class Bar extends BaseWidget {
                 'title'       => __( 'Empty', 'fooconvert' ),
                 'description' => __( 'A blank slate that you can use to build your own bar from scratch.', 'fooconvert' ),
                 'attributes'  => array(
+                    'openButton'  => array(
+                        'styles' => array(
+                            'border'     => array(
+                                'radius' => '4px',
+                                'color'  => '#DDDDDD',
+                                'style'  => 'solid',
+                                'width'  => '1px'
+                            )
+                        )
+                    ),
+                    'content'     => array(
+                        'styles' => array(
+                            'border'     => array(
+                                'radius' => '4px',
+                                'color'  => '#DDDDDD',
+                                'style'  => 'solid',
+                                'width'  => '1px'
+                            )
+                        )
+                    ),
                     'template' => 'empty'
                 ),
                 'innerBlocks' => array(

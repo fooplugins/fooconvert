@@ -20,9 +20,6 @@ export const POPUP_DEFAULTS = {
         maxOnMobile: false
     },
     styles: {
-        dimensions: {
-            padding: '32px'
-        },
         color: {
             backdrop: '#00000059'
         }
@@ -35,11 +32,6 @@ export const POPUP_DEFAULTS = {
                 size: '32px',
                 slug: 'default__close-small'
             }
-        },
-        styles: {
-            dimensions: {
-                padding: '6px'
-            }
         }
     },
     content: {
@@ -48,15 +40,6 @@ export const POPUP_DEFAULTS = {
             color: {
                 background: '#FFFFFF',
                 text: '#000000'
-            },
-            border: {
-                radius: '4px',
-                color: '#DDDDDD',
-                style: 'solid',
-                width: '1px'
-            },
-            dimensions: {
-                padding: '16px'
             }
         }
     }
