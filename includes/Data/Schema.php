@@ -159,7 +159,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
                     'server'       => $wpdb->db_server_info()
                 ];
 
-                update_option( FOOCONVERT_OPTION_DATABaseDATA, $data );
+                update_option( FOOCONVERT_OPTION_DATABASEDATA, $data );
             }
         }
 
