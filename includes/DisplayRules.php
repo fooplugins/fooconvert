@@ -16,6 +16,7 @@ class DisplayRules extends BaseComponent {
         add_action( 'wp_after_insert_post', array( $this, 'after_insert_should_compile' ), 10, 4 );
         add_action( 'template_redirect', array( $this, 'enqueue_required' ), 5 );
         add_action( 'wp_footer', array( $this, 'render_enqueued' ), 5 );
+        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
     }
 
     //region Meta
@@ -423,19 +424,38 @@ class DisplayRules extends BaseComponent {
      * @since 1.0.0
      */
     public function compile( int $post_id, bool $is_published ) {
-        $cached = get_option( 'fooconvert_display_rules', array() );
-        // first remove any previous value if it exists
-        $updated = array_filter( $cached, function ( $value ) use ( $post_id ) {
-            return Utils::get_int( $value, 'post_id' ) !== $post_id;
-        } );
+        $widgets = [];
+
+        $cached = get_option( FOOCONVERT_OPTION_DISPLAY_RULES, [] );
+
+        // First, make sure all the widgets exist and are published.
+        foreach ( $cached as $widget ) {
+            $id = Utils::get_int( $widget, 'post_id' );
+
+            // Do not add the current post to the list, so that it is compiled later.
+            if ( $id === $post_id ) {
+                continue;
+            }
+
+            $post = get_post( $id );
+
+            if ( $post && $post->post_status === 'publish' ) {
+                // The widget exists and is published.
+                $widgets[] = $widget;
+            }
+        }
+
         // then go about compiling the rules again if currently published
         if ( $is_published ) {
             $compiled = $this->get_compiled( $post_id );
             if ( !empty( $compiled ) ) {
-                $updated[] = $compiled;
+                $widgets[] = $compiled;
             }
         }
-        update_option( 'fooconvert_display_rules', $updated, true );
+
+        do_action( 'fooconvert_display_rules_compiled', $widgets );
+
+        update_option( FOOCONVERT_OPTION_DISPLAY_RULES, $widgets, true );
     }
 
     /**
@@ -696,6 +716,17 @@ class DisplayRules extends BaseComponent {
     }
 
     /**
+     * Triggers the `fooconvert_enqueue_assets` action.
+     *
+     * This function allows other developers to enqueue additional assets
+     * for the enqueued widgets by hooking into the `fooconvert_enqueue_assets`
+     * action.
+     */
+    public function enqueue_assets() {
+        do_action( 'fooconvert_enqueue_assets', $this->enqueued );
+    }
+
+    /**
      * Callback for the `template_redirect` action.
      *
      * This callback checks if any widgets with display rules match the current request and if any do, enqueues there
@@ -712,15 +743,14 @@ class DisplayRules extends BaseComponent {
      * @since 1.0.0
      */
     public function enqueue_required() {
-        $this->enqueued = apply_filters( 'fooconvert_enqueue_required', array() );
-
-        //todo: add to these exclusions to limit the overhead on the server
-        if ( empty( $this->enqueued ) && ( is_admin() || wp_is_json_request() ) ) {
-            return;
+        if ( is_admin() || wp_doing_ajax() || wp_is_json_request() ) {
+            return; // Exit if not needed!
         }
 
+        $this->enqueued = apply_filters( 'fooconvert_enqueue_required', array() );
+
         // get the cached display rules
-        $display_rules = get_option( 'fooconvert_display_rules', array() );
+        $display_rules = get_option( FOOCONVERT_OPTION_DISPLAY_RULES, array() );
         if ( !empty( $display_rules ) ) {
             $current_location = $this->get_current_location();
             if ( !empty( $current_location ) ) {
