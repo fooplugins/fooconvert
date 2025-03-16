@@ -28,6 +28,12 @@ class Blocks {
         return $this->instances;
     }
 
+    function register( $block ) {
+        if ( $block instanceof BaseBlock ) {
+            $this->instances[] = $block;
+        }
+    }
+
     /**
      * The KSES definition to allow iframes. This is required to allow core WP embed blocks as content.
      * @var array
