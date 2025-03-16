@@ -325,6 +325,8 @@ abstract class BaseBlock {
      * @param WP_Block $block
      *
      * @return string|false
+     *
+     * @note Needed to remove the inline comments as it was causing issues with rendering.
      */
     function render( array $attributes, string $content, WP_Block $block ) {
         if ( !empty( $content ) ) {
@@ -338,22 +340,13 @@ abstract class BaseBlock {
             $this->enqueue_frontend_styles( $instance_id, $frontend_styles );
             $this->enqueue_frontend_data( $instance_id, $frontend_data );
 
-            ob_start();
             // @formatter:off
-?>
-<<?php echo esc_html( $tag_name ); ?> id="<?php echo esc_attr( $instance_id ) ?>" <?php echo wp_kses_data( get_block_wrapper_attributes( $frontend_attributes ) ); ?>>
-    <?php $this->render_frontend_icons( $instance_id, $frontend_icons ); ?>
-    <?php
-            // Reviewers:
-            // The do_blocks() output is passed through wp_kses with an extended post allowed HTML list that includes
-            // the custom elements for the plugin.
-            // phpcs:ignore WordPress.Security.EscapeOutput
-            echo $this->kses( $attributes, do_blocks( $content ), $block, 'root' );
-    ?>
-</<?php echo esc_html( $tag_name ); ?>>
-<?php
-            // @formatter:on
+            ob_start();?><<?php echo esc_html( $tag_name ); ?> id="<?php echo esc_attr( $instance_id ) ?>" <?php echo wp_kses_data( get_block_wrapper_attributes( $frontend_attributes ) ); ?>><?php
+            $this->render_frontend_icons( $instance_id, $frontend_icons );
+            ?><?php echo $this->kses( $attributes, do_blocks( $content ), $block, 'root' );
+            ?></<?php echo esc_html( $tag_name ); ?>><?php
             return ob_get_clean();
+            // @formatter:on
         }
         return false;
     }
@@ -363,23 +356,11 @@ abstract class BaseBlock {
     }
 
     function render_content( array $attributes, string $content, WP_Block $block ) {
-        ob_start();
-        // Reviewers:
-        // The do_blocks() output is passed through wp_kses with an extended post allowed HTML list that includes
-        // the custom elements for the plugin.
-        // phpcs:ignore WordPress.Security.EscapeOutput
-        echo $this->kses( $attributes, do_blocks( $content ), $block, 'content' );
-        return ob_get_clean();
+        return $this->kses( $attributes, do_blocks( $content ), $block, 'content' );
     }
 
     function render_check_compatibility( array $attributes, string $content, WP_Block $block ) {
-        ob_start();
-        // Reviewers:
-        // The do_blocks() output is passed through wp_kses with an extended post allowed HTML list that includes
-        // the custom elements for the plugin.
-        // phpcs:ignore WordPress.Security.EscapeOutput
-        echo $this->kses( $attributes, FooConvert::plugin()->do_content( $content ), $block, 'check_compatibility' );
-        return ob_get_clean();
+        return $this->kses( $attributes, FooConvert::plugin()->do_content( trim( $content ) ), $block, 'check_compatibility' );
     }
 
     public function get_post_id( array $attributes, WP_Block $block ): int {
