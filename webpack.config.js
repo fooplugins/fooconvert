@@ -1,6 +1,151 @@
-
+const { basename, dirname, extname, join, sep } = require( 'path' );
+const { sync: glob } = require( 'fast-glob' );
 const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
+const { fromProjectRoot, hasProjectFile } = require( "@wordpress/scripts/utils/file" );
+const { readFileSync } = require( "fs" );
+const { getBlockJsonScriptFields, getBlockJsonModuleFields } = require( "@wordpress/scripts/utils/block-json" );
+
+/**
+ *
+ * @param root
+ * @param buildType
+ * @returns {{}|{index: string}}
+ * @see getWebpackEntryPoints
+ */
+const getBlockEntries = ( root, buildType = 'script' ) => {
+
+    const srcPath = join( root, 'src' );
+
+    // Continue only if the source directory exists.
+    if ( !hasProjectFile( srcPath ) ) {
+        console.log(
+            `Source directory "${ srcPath }" was not found.`
+        );
+        return {};
+    }
+
+    // 2. Checks whether any block metadata files can be detected in the defined source directory.
+    //    It scans all discovered files looking for JavaScript assets and converts them to entry points.
+    const blockMetadataFiles = glob( '**/block.json', {
+        absolute: true,
+        cwd: fromProjectRoot( srcPath ),
+    } );
+
+    if ( blockMetadataFiles.length > 0 ) {
+        const srcDirectory = fromProjectRoot(
+            srcPath + sep
+        );
+
+        const entryPoints = {};
+
+        for ( const blockMetadataFile of blockMetadataFiles ) {
+            const fileContents = readFileSync( blockMetadataFile );
+            let parsedBlockJson;
+            // wrapping in try/catch in case the file is malformed
+            // this happens especially when new block.json files are added
+            // at which point they are completely empty and therefore not valid JSON
+            try {
+                parsedBlockJson = JSON.parse( fileContents );
+            } catch ( error ) {
+                console.log(
+                    `Skipping "${ blockMetadataFile.replace(
+                        fromProjectRoot( sep ),
+                        ''
+                    ) }" due to malformed JSON.`
+                );
+            }
+
+            const fields =
+                buildType === 'script'
+                    ? getBlockJsonScriptFields( parsedBlockJson )
+                    : getBlockJsonModuleFields( parsedBlockJson );
+
+            if ( !fields ) {
+                continue;
+            }
+
+            for ( const value of Object.values( fields ).flat() ) {
+                if ( !value.startsWith( 'file:' ) ) {
+                    continue;
+                }
+
+                // Removes the `file:` prefix.
+                const filepath = join(
+                    dirname( blockMetadataFile ),
+                    value.replace( 'file:', '' )
+                );
+
+                // Takes the path without the file extension, and relative to the defined source directory.
+                if ( !filepath.startsWith( srcDirectory ) ) {
+                    console.log(
+                        `Skipping "${ value.replace(
+                            'file:',
+                            ''
+                        ) }" listed in "${ blockMetadataFile.replace(
+                            fromProjectRoot( sep ),
+                            ''
+                        ) }". File is located outside of the "${ srcPath }" directory.`
+                    );
+                    break;
+                }
+                const entryName = filepath
+                    .replace( extname( filepath ), '' )
+                    .replace( srcDirectory, '' )
+                    .replace( /\\/g, '/' );
+
+                // Detects the proper file extension used in the defined source directory.
+                const [ entryFilepath ] = glob(
+                    `${ entryName }.?(m)[jt]s?(x)`,
+                    {
+                        absolute: true,
+                        cwd: fromProjectRoot( srcPath ),
+                    }
+                );
+
+                if ( !entryFilepath ) {
+                    console.log(
+                        `Skipping "${ value.replace(
+                            'file:',
+                            ''
+                        ) }" listed in "${ blockMetadataFile.replace(
+                            fromProjectRoot( sep ),
+                            ''
+                        ) }". File does not exist in the "${ srcPath }" directory.`
+                    );
+                    break;
+                }
+                entryPoints[ root + '/' + entryName ] = entryFilepath;
+            }
+        }
+
+        if ( Object.keys( entryPoints ).length > 0 ) {
+            return entryPoints;
+        }
+    }
+
+    // Don't do any further processing if this is a module build.
+    // This only respects *module block.json fields.
+    if ( buildType === 'module' ) {
+        return {};
+    }
+
+    // 3. Checks whether a standard file name can be detected in the defined source directory,
+    //  and converts the discovered file to entry point.
+    const [ entryFile ] = glob( 'index.[jt]s?(x)', {
+        absolute: true,
+        cwd: fromProjectRoot( srcPath ),
+    } );
+
+    if ( !entryFile ) {
+        console.log( `No entry file discovered in the "${ srcPath }" directory.` );
+        return {};
+    }
+
+    return {
+        index: entryFile,
+    };
+};
 
 /**
  * Modify the default WordPress config entry points to include our internal packages '#editor' and '#frontend' that are
@@ -11,13 +156,15 @@ const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extrac
 const entry = () => {
     // get the default config entries
     const defaultEntries = defaultConfig.entry();
+    const proEntries = getBlockEntries( 'pro' );
+    const blockEntries = { ...defaultEntries, ...proEntries };
     // create our custom entry points to match the `pkg.imports` values
     const entries = {
         "editor": "./src/editor/index.js",
         "frontend": "./src/frontend/index.js"
     };
     // iterate the default entries and add them to our new entries object
-    return Object.entries( defaultEntries ).reduce( ( acc, [ key, value ] ) => {
+    return Object.entries( blockEntries ).reduce( ( acc, [ key, value ] ) => {
         if ( key.includes( "/frontend/" ) ) {
             // if the current entry path includes /frontend/ then add it as a dependency.
             acc[ key ] = {
@@ -90,6 +237,14 @@ const dependencyExtractionWebpackPluginOptions = {
         }
     }
 };
+
+// const cwp = defaultConfig.plugins.find( plugin => plugin.constructor.name === 'CopyPlugin' );
+// if ( cwp && cwp.patterns ) {
+//     const copiedPatterns = cwp.patterns.slice();
+//     copiedPatterns.forEach( pattern => {
+//
+//     } );
+// }
 
 // merge and export the customized config
 module.exports = {
