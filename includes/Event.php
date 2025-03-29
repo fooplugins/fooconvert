@@ -118,20 +118,7 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
          * @param bool $force
          * @return array An associative array of event metric data.
          */
-        public function get_widget_metrics( $widget_id, $force = false ) {
-
-            if ( !$force ) {
-                $data = get_post_meta( $widget_id, FOOCONVERT_META_KEY_METRICS, true );
-
-                if ( !empty( $data ) && is_array( $data ) ) {
-                    $timestamp = isset( $data['timestamp'] ) ? intval( $data['timestamp'] ) : null;
-
-                    // Check if the timestamp is within last day.
-                    if ( time() - $timestamp < DAY_IN_SECONDS ) {
-                        return $data['metrics'];
-                    }
-                }
-            }
+        public function get_widget_metrics( $widget_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
 
             $metric_defaults = apply_filters( 'fooconvert_widget_metrics_defaults', [
                 'total_events'          => 0,
@@ -140,19 +127,9 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
                 'total_engagements'     => 0,
             ] );
 
-            $metrics = apply_filters( 'fooconvert_widget_metrics',
-                array_merge( $metric_defaults, Data\Query::get_widget_metrics( $widget_id ) ),
+            return apply_filters( 'fooconvert_widget_metrics',
+                array_merge( $metric_defaults, Data\Query::get_widget_metrics( $widget_id, $days ) ),
                 $widget_id );
-
-            $data = [
-                'timestamp' => time(),
-                'metrics'   => $metrics,
-            ];
-
-            // Store performance score
-            update_post_meta( $widget_id, FOOCONVERT_META_KEY_METRICS, $data );
-
-            return $metrics;
         }
 
         /**
@@ -213,7 +190,7 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
          *     'clicks' => int The number of clicks
          *     'unique_visitors' => int The number of unique visitors
          */
-        public function get_widget_daily_activity( $widget_id, $days = FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT ) {
+        public function get_widget_daily_activity( $widget_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
             // Sanitize input
             $widget_id = intval( $widget_id );
             $days = max( 1, (int)$days ); // Ensure days is at least 1
@@ -326,7 +303,7 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
          *
          * @return array An array of events for the widget
          */
-        public function get_widget_events_of_type( $widget_id, $event_type, $days = FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT ) {
+        public function get_widget_events_of_type( $widget_id, $event_type, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
             // Sanitize input
             $widget_id = intval( $widget_id );
             $days = max( 1, (int)$days ); // Ensure days is at least 1

@@ -74,14 +74,14 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
 
                 $widget_id = isset( $_POST['widget_id'] ) ? intval( sanitize_text_field( wp_unslash( $_POST['widget_id'] ) ) ) : 0;
 
-                $saved_days = intval( get_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT ) );
+                $saved_days = intval( get_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, FOOCONVERT_METRICS_DAYS_DEFAULT ) );
                 $days = isset( $_POST['days'] ) ? intval( sanitize_text_field( wp_unslash( $_POST['days'] ) ) ) : $saved_days;
                 if ( $days !== $saved_days ) {
                     // We have a chosen number of days, so let's save it for next time.
                     update_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, $days );
                 }
                 if ( $days === 0 ) {
-                    $days = FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT;
+                    $days = FOOCONVERT_METRICS_DAYS_DEFAULT;
                 }
                 if ( $days > fooconvert_retention() ) {
                     $days = fooconvert_retention();
@@ -95,7 +95,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
 
                 // Get metrics first.
                 $data = [
-                    'metrics' => $event->get_widget_metrics( $widget_id ),
+                    'metrics' => $event->get_widget_metrics( $widget_id, $days )
                 ];
 
                 $recent_activity_chart_data = [

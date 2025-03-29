@@ -183,6 +183,7 @@ jQuery(document).ready(function ($) {
 
     $('.fooconvert-recent-activity-days').change(function () {
         $('.fooconvert-recent-activity-container').addClass('loading');
+        $('.metric').addClass('loading');
         fetchStats();
     });
 });

@@ -3,8 +3,14 @@
 // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 $widget_id = isset( $_GET['widget_id'] ) ? intval( $_GET['widget_id'] ) : 0;
 $widget_title = __( 'Unknown', 'fooconvert' );
-$recent_activity_days = intval( get_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT ) );
-$recent_activity_options = apply_filters( 'fooconvert_widget_stats_recent_activity_options', [ FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT => __( 'Last 7 days', 'fooconvert' ) ] );
+$filter_days = intval( get_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, FOOCONVERT_METRICS_DAYS_DEFAULT ) );
+$filter_options = apply_filters( 'fooconvert_widget_stats_recent_activity_options',
+    [
+        1                               => __( 'Last day', 'fooconvert' ),
+        2                               => __( 'Last 2 days', 'fooconvert' ),
+        FOOCONVERT_METRICS_DAYS_DEFAULT => __( 'Last 7 days', 'fooconvert' )
+    ]
+);
 $edit_link = '';
 $preview_link = '';
 
@@ -17,7 +23,7 @@ if ( $widget_id ) {
         // Translators: %s refers to the link to edit the widget.
         $edit_link = '<a class="button" href="' . esc_url( $edit_url ) . '">' . esc_html( sprintf( __( 'Edit %s', 'fooconvert' ), $widget_type ) ) . '</a>';
 
-        $preview_link = '<a id="fooconvert-widget-preview" class="button button-primary" href="#preview">' . esc_html( sprintf( __( 'Preview %s', 'fooconvert' ), $widget_type ) ) . '</a>';
+        $preview_link = '<a id="fooconvert-widget-preview" class="button" href="#preview">' . esc_html( sprintf( __( 'Preview %s', 'fooconvert' ), $widget_type ) ) . '</a>';
     }
 } else {
     // Redirect to the widget list page if the widget ID is not provided
@@ -33,12 +39,19 @@ if ( $widget_id ) {
             echo sprintf( esc_html__( 'Stats for %s', 'fooconvert' ), esc_html( $widget_title ) );
             ?>
         </h2>
-        <?php
-        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-        echo $edit_link;
-        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-        echo $preview_link;
-        ?>
+        <div class="right">
+            <?php
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            echo $edit_link;
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            echo $preview_link;
+            ?>
+            <select class="fooconvert-recent-activity-days">
+                <?php foreach ( $filter_options as $days => $label ) : ?>
+                    <option value="<?php echo esc_attr( $days ); ?>" <?php selected( $filter_days, $days ); ?>><?php echo esc_html( $label ); ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
     </div>
 
     <!-- Basic Metrics -->
@@ -47,7 +60,7 @@ if ( $widget_id ) {
             <p id="metric-total_events">...</p>
             <h2><?php esc_html_e( 'Total Events', 'fooconvert' ); ?></h2>
             <span data-balloon-pos="down"
-                  aria-label="<?php esc_attr_e( 'Total events logged for the widget for it\'s lifetime.', 'fooconvert' ); ?>">
+                  aria-label="<?php esc_attr_e( 'Total events logged for the widget over the time period.', 'fooconvert' ); ?>">
                 <i class="dashicons dashicons-editor-help"></i>
             </span>
         </div>
@@ -81,12 +94,10 @@ if ( $widget_id ) {
     <!-- Recent Activity Chart -->
     <div class="fooconvert-recent-activity-container loading">
         <h2>
-            <?php esc_html_e( 'Recent Activity', 'fooconvert' ); ?>
-            <select class="fooconvert-recent-activity-days">
-                <?php foreach ( $recent_activity_options as $days => $label ) : ?>
-                    <option value="<?php echo esc_attr( $days ); ?>" <?php selected( $recent_activity_days, $days ); ?>><?php echo esc_html( $label ); ?></option>
-                <?php endforeach; ?>
-            </select>
+            <?php
+            // Translators: %s refers to the widget type.
+            echo sprintf( esc_html__( '%s Activity', 'fooconvert' ), esc_html( $widget_type ) );
+            ?>
         </h2>
         <canvas id="recentActivityChart"></canvas>
     </div>

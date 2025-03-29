@@ -42,7 +42,7 @@ define( 'FOOCONVERT_MENU_SLUG', 'fooconvert' );
 define( 'FOOCONVERT_MENU_SLUG_DASHBOARD', 'fooconvert-dashboard' );
 define( 'FOOCONVERT_MENU_SLUG_WIDGET_STATS', 'fooconvert-widget-stats' );
 define( 'FOOCONVERT_RETENTION_DEFAULT', 14 );
-define( 'FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT', 7 );
+define( 'FOOCONVERT_METRICS_DAYS_DEFAULT', 7 );
 
 //CRON
 define( 'FOOCONVERT_CRON_CALC_STATS', 'fooconvert_calculate_widget_stats' );
