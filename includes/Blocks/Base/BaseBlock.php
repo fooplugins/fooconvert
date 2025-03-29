@@ -332,6 +332,9 @@ abstract class BaseBlock {
         if ( !empty( $content ) ) {
             $tag_name = $this->get_tag_name();
             $instance_id = $this->create_instance_id();
+
+            $attributes = apply_filters( 'fooconvert-widget-frontend-attributes', $attributes, $instance_id, $tag_name, $block );
+
             $frontend_attributes = $this->get_frontend_attributes( $instance_id, $attributes, $block );
             $frontend_styles = $this->get_frontend_styles( $instance_id, $attributes, $block );
             $frontend_data = $this->get_frontend_data( $instance_id, $attributes, $block );

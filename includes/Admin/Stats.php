@@ -20,6 +20,37 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
             add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
             add_action( 'admin_init', array( $this, 'register_columns' ) );
             add_action( 'wp_ajax_fooconvert_fetch_stats', array( $this, 'fetch_widget_stats' ) );
+            add_action( 'admin_init', array( $this, 'enqueue_widget' ) );
+            add_action( 'admin_footer', array( $this, 'render_enqueued' ) );
+            add_filter( 'fooconvert-widget-frontend-attributes', array( $this, 'override_widget_attributes' ), 10, 4 );
+        }
+
+        function override_widget_attributes( $attributes, $instance_id, $tag_name, $block ) {
+            if ( fooconvert_is_admin_stats_page() ) {
+                $attributes['settings']['trigger'] = [
+                    'type' => 'anchor',
+                    'data' => 'fooconvert-widget-preview'
+                ];
+            }
+
+            return $attributes;
+        }
+
+        function render_enqueued() {
+            FooConvert::plugin()->display_rules->render_enqueued();
+        }
+
+        function enqueue_widget() {
+            if ( fooconvert_is_admin_stats_page() ) {
+                // This is what the block editor loads behind the scenes
+                //require_once ABSPATH . 'wp-includes/block-editor.php';
+                //register_core_block_types();
+
+                $widget_id = absint( $_GET['widget_id'] );
+
+                // We need to make sure the widget is enqueued for the admin stats page.
+                FooConvert::plugin()->display_rules->add_to_queue( $widget_id );
+            }
         }
 
         /**
@@ -321,6 +352,15 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 'ajaxUrl' => admin_url( 'admin-ajax.php' ),
                 'nonce'   => wp_create_nonce( 'fooconvert-widget-stats' )
             ) );
+
+            FooConvert::plugin()->ensure_frontend_assets_enqueued();
+
+            // 1. Register all blocks (core + plugin)
+            require_once ABSPATH . 'wp-includes/block-editor.php';
+
+            // 2. Trigger enqueue actions manually
+            do_action('enqueue_block_assets');          // Block frontend + editor shared assets
+            do_action('enqueue_block_editor_assets');   // Editor-only assets (the big one)
 
             do_action( 'fooconvert_widget_stats_enqueue_assets' );
         }

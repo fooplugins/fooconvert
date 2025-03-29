@@ -6,6 +6,7 @@ $widget_title = __( 'Unknown', 'fooconvert' );
 $recent_activity_days = intval( get_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT ) );
 $recent_activity_options = apply_filters( 'fooconvert_widget_stats_recent_activity_options', [ FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT => __( 'Last 7 days', 'fooconvert' ) ] );
 $edit_link = '';
+$preview_link = '';
 
 if ( $widget_id ) {
     $widget = get_post( $widget_id );
@@ -15,6 +16,8 @@ if ( $widget_id ) {
         $widget_type = fooconvert_get_widget_post_type_label( $widget );
         // Translators: %s refers to the link to edit the widget.
         $edit_link = '<a class="button" href="' . esc_url( $edit_url ) . '">' . esc_html( sprintf( __( 'Edit %s', 'fooconvert' ), $widget_type ) ) . '</a>';
+
+        $preview_link = '<a id="fooconvert-widget-preview" class="button button-primary" href="#preview">' . esc_html( sprintf( __( 'Preview %s', 'fooconvert' ), $widget_type ) ) . '</a>';
     }
 } else {
     // Redirect to the widget list page if the widget ID is not provided
@@ -33,6 +36,8 @@ if ( $widget_id ) {
         <?php
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo $edit_link;
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo $preview_link;
         ?>
     </div>
 
