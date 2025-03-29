@@ -743,7 +743,7 @@ class DisplayRules extends BaseComponent {
      * @since 1.0.0
      */
     public function enqueue_required() {
-        if ( is_admin() || wp_doing_ajax() || wp_is_json_request() ) {
+        if ( is_admin() || wp_doing_ajax() || wp_is_json_request() || wp_doing_cron() ) {
             return; // Exit if not needed!
         }
 
@@ -771,6 +771,20 @@ class DisplayRules extends BaseComponent {
                 }
             }
         }
+    }
+
+    /**
+     * Adds a widget to the queue for processing.
+     *
+     * This function retrieves the queueable data for the given post ID
+     * and appends it to the list of enqueued widgets for further processing.
+     *
+     * @param int $post_id The post ID of the widget to enqueue.
+     *
+     * @since 1.0.0
+     */
+    public function add_to_queue( int $post_id ) {
+        $this->enqueued[] = $this->get_queueable( $post_id );
     }
 
     public function get_queueable( int $post_id ): array {

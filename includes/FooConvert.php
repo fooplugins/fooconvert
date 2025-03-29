@@ -66,6 +66,10 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @since 1.0.0
          */
         function ensure_frontend_assets_enqueued() {
+            if ( wp_doing_ajax() || wp_is_json_request() || wp_doing_cron() ) {
+                return; // Exit if not needed!
+            }
+
             $is_frontend_js_enqueued = wp_script_is( FOOCONVERT_FRONTEND_ASSET_HANDLE );
             $is_frontend_css_enqueued = wp_style_is( FOOCONVERT_FRONTEND_ASSET_HANDLE );
             if ( $is_frontend_js_enqueued && !$is_frontend_css_enqueued ) {
@@ -298,6 +302,10 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @since 1.0.0
          */
         public function register_frontend_assets() {
+            if ( wp_doing_ajax() || wp_is_json_request() || wp_doing_cron() ) {
+                return; // Exit if not needed!
+            }
+
             $frontend = include FOOCONVERT_ASSETS_PATH . 'frontend.asset.php';
             if ( Utils::has_keys( $frontend, array( 'dependencies', 'version' ) ) ) {
                 wp_register_style( FOOCONVERT_FRONTEND_ASSET_HANDLE, FOOCONVERT_ASSETS_URL . 'frontend.css', array(), $frontend['version'] );
@@ -322,7 +330,7 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @since 1.0.0
          */
         public function enqueue_editor_assets() {
-            if ( $this->widgets->is_editor() ) {
+            if ( $this->widgets->is_editor() || fooconvert_is_admin_stats_page() ) {
                 $editor = include FOOCONVERT_ASSETS_PATH . 'editor.asset.php';
                 if ( Utils::has_keys( $editor, array( 'dependencies', 'version' ) ) ) {
                     wp_enqueue_style( FOOCONVERT_EDITOR_ASSET_HANDLE, FOOCONVERT_ASSETS_URL . 'editor.css', array(), $editor['version'] );

@@ -304,3 +304,18 @@ function fooconvert_get_widget_post_type_label( $thing ) {
     }
     return '';
 }
+
+/**
+ * Checks if the current page is a FooConvert widget stats page.
+ *
+ * This function checks if the current page is an admin page and if the
+ * page is a FooConvert widget stats page. The function will return true
+ * if the page meets both conditions.
+ *
+ * @return bool True if the current page is a FooConvert widget stats page, false otherwise.
+ */
+function fooconvert_is_admin_stats_page() {
+    return is_admin() &&
+        isset( $_GET['page'] ) && $_GET['page'] === 'fooconvert-widget-stats' &&
+        isset( $_GET['widget_id'] ) && is_numeric( $_GET['widget_id'] );
+}
