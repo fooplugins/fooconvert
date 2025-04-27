@@ -20,6 +20,10 @@ export const LOG_EVENT_TYPES = {
 };
 
 /**
+ * @typedef {{success:boolean,data?:string}} LogEventResult
+ */
+
+/**
  * Log an event for a given widget.
  *
  * @param {number} widgetId The ID of the widget to log the event for.
@@ -27,6 +31,7 @@ export const LOG_EVENT_TYPES = {
  * @param {string} template The template used within the widget.
  * @param {string} eventType The type of event to log.
  * @param {object} [extraData] An optional object containing any extra info for the event.
+ * @returns {Promise<LogEventResult>}
  */
 const logEvent = ( widgetId, postType, template, eventType, extraData ) => {
     if ( isNumber( widgetId ) && isString( postType ) && isString( template ) && isString( eventType ) ) {
@@ -50,7 +55,7 @@ const logEvent = ( widgetId, postType, template, eventType, extraData ) => {
 
             // console.log( 'Sending event data to server...', data );
 
-            fetch( url, {
+            return fetch( url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -62,16 +67,13 @@ const logEvent = ( widgetId, postType, template, eventType, extraData ) => {
                 } )
             } )
                 .then( response => response.json() )
-                .then( responseJSON => {
-                    if ( responseJSON?.success === false ) {
-                        const err = new Error( responseJSON?.data?.message ?? 'Unknown error' );
-                        err.name = 'FooConvertLogEventError';
-                        throw err;
-                    }
-                } )
-                .catch( error => console.error( error ) );
+                .catch( err => {
+                    console.error( 'FooConvertLogEventError', err );
+                    return { success: false, data: 'Unexpected Error' }
+                } );
         }
     }
+    return Promise.resolve( { success: false, data: 'Invalid parameters' } );
 };
 
 export default logEvent;

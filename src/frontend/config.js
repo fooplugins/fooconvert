@@ -1,9 +1,10 @@
-import { hasKeys, isPlainObject, isString } from "@steveush/utils";
+import { hasKeys, isArray, isPlainObject, isString } from "@steveush/utils";
 
 const objectName = 'FOOCONVERT_CONFIG';
 /**
  * @typedef FooConvertConfiguration
  * @property {{ url: string, nonce: string }} endpoint
+ * @property {string[]} widgets
  */
 
 /**
@@ -15,6 +16,9 @@ if ( !isPlainObject( configuration ) ) {
 }
 if ( !hasKeys( configuration?.endpoint, { url: isString, nonce: isString } ) ) {
     throw new Error( `FOOCONVERT_ERROR: The global "${ objectName }" object is missing the required "endpoint" object property.` );
+}
+if ( !isArray( configuration?.widgets, true, value => isString( value ) ) ) {
+    throw new Error( `FOOCONVERT_ERROR: The global "${ objectName }" object is missing the required "widgets" string[] property.` );
 }
 
 export default configuration;

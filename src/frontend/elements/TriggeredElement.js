@@ -1,15 +1,11 @@
-import CustomElement from "./CustomElement";
+import WidgetElement from "./WidgetElement";
 import { isFunction, isNumber, isPlainObject, isString, isUndefined, strim } from "@steveush/utils";
-import { getClickableData, getDocumentScrollPercent, logEvent, LOG_EVENT_TYPES, isSelector } from "../utils";
-
-/**
- * @typedef {"immediate"|"anchor"|"element"|"exit-intent"|"scroll"|"timer"|"visible"} TriggerType
- */
+import { getClickableData, getDocumentScrollPercent, LOG_EVENT_TYPES, isSelector } from "../utils";
 
 /**
  *
  */
-class TriggeredElement extends CustomElement {
+class TriggeredElement extends WidgetElement {
 
     // noinspection JSUnusedGlobalSymbols
 
@@ -36,6 +32,7 @@ class TriggeredElement extends CustomElement {
 
     constructor() {
         super();
+        this.onRequestClose = this.onRequestClose.bind( this );
         this.onOpenTrigger = this.onOpenTrigger.bind( this );
         this.onClickableClicked = this.onClickableClicked.bind( this );
     }
@@ -78,21 +75,13 @@ class TriggeredElement extends CustomElement {
         this.toggleAttribute( "open", Boolean( state ) );
     }
 
-    /**
-     *
-     * @param {string} type
-     * @param {object} [data]
-     */
-    log( type, data ) {
-        if ( !this.isConfigurationInitialized ) {
-            this.initializeConfiguration();
-        }
-        const { postId, postType, template = '' } = this.config;
-        logEvent( postId, postType, template, type, data );
+    onRequestClose( event ) {
+        this.setOpen( false );
     }
 
     connected() {
         super.connected();
+        this.addEventListener( "request-close", this.onRequestClose );
         this.connectTrigger();
         this.connectClickable();
     }
