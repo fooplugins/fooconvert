@@ -128,11 +128,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          * @type int $total_unique_visitors The total number of unique visitors.
          * }
          */
-        public static function get_widget_metrics( $widget_id ) {
+        public static function get_widget_metrics( $widget_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
-            $widget_id = intval( $widget_id );
+            $widget_id  = intval( $widget_id );
+            $days       = intval( $days );
 
             $query = apply_filters( 'fooconvert_get_widget_metrics_query', "SELECT 
                     COUNT(*) as total_events,
@@ -140,14 +141,16 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                     COUNT(CASE WHEN event_subtype = 'engagement' THEN 1 END) as total_engagements,
                     COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as total_unique_visitors
                     FROM {$table_name}
-                    WHERE widget_id = %d", $table_name );
+                    WHERE widget_id = %d
+                    AND `timestamp` >= NOW() - INTERVAL %d DAY", $table_name );
 
             // Prepare SQL query to return high-level statistics
             return $wpdb->get_row(
 
                 $wpdb->prepare(
                     $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-                    $widget_id
+                    $widget_id,
+                    $days
                 ),
                 ARRAY_A
             );
@@ -165,7 +168,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          *     'clicks' => int The number of clicks
          *     'unique_visitors' => int The number of unique visitors
          */
-        public static function get_widget_daily_activity( $widget_id, $days = FOOCONVERT_RECENT_ACTIVITY_DAYS_DEFAULT ) {
+        public static function get_widget_daily_activity( $widget_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();

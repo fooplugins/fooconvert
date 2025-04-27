@@ -18,12 +18,14 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                 array(
                     'manager'          => FOOCONVERT_SLUG,
                     'settings_id'      => FOOCONVERT_SLUG,
-                    'page_title'       => __( 'FooConvert Settings', 'fooconvert' ),
-                    'menu_title'       => __( 'Settings', 'fooconvert' ),
                     'menu_parent_slug' => FOOCONVERT_MENU_SLUG,
                     'layout'           => 'foofields-tabs-horizontal'
                 )
             );
+        }
+
+        function get_page_title() {
+            return __( 'FooConvert Settings', 'fooconvert' );
         }
 
         function get_tabs() {

@@ -582,7 +582,9 @@ if ( !class_exists( __NAMESPACE__ . '\Utils' ) ) {
          * @since 1.0.0
          */
         static function register_post_type_block( $post_type, string $file_or_folder, array $args = array() ) {
-            if ( is_admin() && !self::is_post_type_editor( $post_type ) ) return false;
+            if ( is_admin() ) {
+                if ( !fooconvert_is_admin_stats_page() && !self::is_post_type_editor( $post_type ) ) return false;
+            }
             return register_block_type_from_metadata( $file_or_folder, $args );
         }
 

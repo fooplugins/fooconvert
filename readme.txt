@@ -1,9 +1,9 @@
 === FooConvert - Boost Conversions & Lead Generation ===
-Contributors: bradvin, steveush, fooplugins
+Contributors: fooplugins, bradvin, steveush
 Tags: sales-optimization,conversion-tools,lead-generation,marketing,wordpress-ecommerce
 Requires at least: 6.5
 Requires PHP: 7.4
-Tested up to: 6.7
+Tested up to: 6.8
 Stable tag: 1.1.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -122,6 +122,10 @@ No, FooConvert is optimized for performance and has minimal impact on your websi
 The source code for this plugin is available publicly on GitHub [here](https://github.com/fooplugins/fooconvert).
 
 == Changelog ==
+
+= 1.1.2 =
+* Date Updated : 29 Mar 2025
+
 
 = 1.1.1 =
 * Date Updated : 8 Feb 2025
