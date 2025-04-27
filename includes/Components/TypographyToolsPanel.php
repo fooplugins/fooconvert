@@ -21,7 +21,7 @@ class TypographyToolsPanel extends BaseComponent {
 
         // fontAppearance
         $font_style = Utils::get_string( $attr_value, 'fontStyle' );
-        $font_weight = Utils::get_string( $attr_value, 'fontWeight' );
+        $font_weight = Utils::get_int( $attr_value, 'fontWeight' );
         if ( !empty( $font_style ) && !empty( $font_weight ) ) {
             $styles["{$prefix}font-style"] = $font_style;
             $styles["{$prefix}font-weight"] = $font_weight;
