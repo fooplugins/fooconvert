@@ -45,7 +45,7 @@ class BorderControl extends BaseComponent {
         } );
     }
 
-    function get_css_value( $value, bool $style_required = true ): string {
+    function get_css_value( $value, bool $style_required = false ): string {
         if ( $this->is_possible_value( $value ) ) {
             list(
                 'color' => $color,
@@ -60,7 +60,7 @@ class BorderControl extends BaseComponent {
         return '';
     }
 
-    function get_styles( $value, string $prefix = '', bool $style_required = true ): array {
+    function get_styles( $value, string $prefix = '', bool $style_required = false ): array {
         $styles = array();
         $border = $this->get_css_value( $value );
         if ( !empty( $border ) ) {
