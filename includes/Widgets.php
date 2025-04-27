@@ -24,6 +24,11 @@ class Widgets extends BaseComponent {
      */
     private array $post_types = array();
 
+    /**
+     * @var string[]
+     */
+    private array $tag_names = array();
+
     function __construct() {
         parent::__construct();
         $this->instances = array(
@@ -59,6 +64,22 @@ class Widgets extends BaseComponent {
         }
         return $this->post_types = Utils::array_map( $this->instances, function ( $widget ) {
             return $widget->get_post_type();
+        } );
+    }
+
+    /**
+     * Get the tag names for all widgets.
+     *
+     * @return string[] A string array of tag names for all widgets.
+     *
+     * @since 1.0.0
+     */
+    function get_tag_names(): array {
+        if ( !empty( $this->tag_names ) ) {
+            return $this->tag_names;
+        }
+        return $this->tag_names = Utils::array_map( $this->instances, function ( $widget ) {
+            return $widget->get_tag_name();
         } );
     }
 
