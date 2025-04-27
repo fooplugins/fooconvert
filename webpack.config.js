@@ -161,11 +161,31 @@ const entry = () => {
     // create our custom entry points to match the `pkg.imports` values
     const entries = {
         "editor": "./src/editor/index.js",
-        "frontend": "./src/frontend/index.js"
+        "frontend": "./src/frontend/index.js",
+        "editor-pro": {
+            "import": "./pro/src/editor/index.js",
+            "dependOn": [ "editor" ]
+        },
+        "frontend-pro": {
+            "import": "./pro/src/frontend/index.js",
+            "dependOn": [ "frontend" ]
+        },
     };
     // iterate the default entries and add them to our new entries object
     return Object.entries( blockEntries ).reduce( ( acc, [ key, value ] ) => {
-        if ( key.includes( "/frontend/" ) ) {
+        if ( key.startsWith( "pro/" ) && key.includes( "/editor/" ) ) {
+            // if the current entry path includes /editor/ then add it as a dependency.
+            acc[ key ] = {
+                import: value,
+                dependOn: [ "editor", "editor-pro" ]
+            };
+        } else if ( key.startsWith( "pro/" ) && key.includes( "/frontend/" ) ) {
+            // if the current entry path includes /frontend/ then add it as a dependency.
+            acc[ key ] = {
+                import: value,
+                dependOn: [ "frontend", "frontend-pro" ]
+            };
+        } else if ( key.includes( "/frontend/" ) ) {
             // if the current entry path includes /frontend/ then add it as a dependency.
             acc[ key ] = {
                 import: value,
@@ -201,6 +221,16 @@ const dependencyExtractionWebpackPluginOptions = {
      * @returns {string | string[] | undefined}
      */
     requestToExternal( request ) {
+        // handle requests like `import { XY } from '#frontend-pro';`
+        if ( request.startsWith( "#frontend-pro" ) ) {
+            // expect to find `#frontend-pro` as `FooConvertPro` in the global scope. See 'pro/src/frontend/index.js' for the definition.
+            return [ "FooConvertPro" ];
+        }
+        // handle requests like `import { XY } from '#editor-pro';`
+        if ( request.startsWith( "#editor-pro" ) ) {
+            // expect to find `#editor-pro` as `FooConvertPro` in the global scope. See 'pro/src/editor/index.js' for the definition.
+            return [ "FooConvertPro", "editor" ];
+        }
         // handle requests like `import { CustomElement } from '#frontend';`
         if ( request.startsWith( "#frontend" ) ) {
             // expect to find `#frontend` as `FooConvert` in the global scope. See 'src/frontend/index.js' for the definition.
@@ -218,6 +248,12 @@ const dependencyExtractionWebpackPluginOptions = {
      * @returns {string | undefined}
      */
     requestToHandle( request ) {
+        if ( request.startsWith( "#editor-pro" ) ) {
+            return "fc-editor-pro";
+        }
+        if ( request.startsWith( "#frontend-pro" ) ) {
+            return "fc-frontend-pro";
+        }
         if ( request.startsWith( "#editor" ) ) {
             return "fc-editor";
         }
@@ -232,7 +268,12 @@ const dependencyExtractionWebpackPluginOptions = {
      * @returns {string | boolean | undefined}
      */
     requestToExternalModule( request ) {
-        if ( request.startsWith( "#editor" ) || request.startsWith( "#frontend" ) ) {
+        if (
+            request.startsWith( "#editor" )
+            || request.startsWith( "#frontend" )
+            || request.startsWith( "#editor-pro" )
+            || request.startsWith( "#frontend-pro" )
+        ) {
             throw new Error( `Attempted to use FooConvert script in a module: ${ request }, which is not supported.` );
         }
     }
