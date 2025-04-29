@@ -20,8 +20,8 @@ const SizeControl = ( props ) => {
         sizes = [],
         units = [
             { value: 'px', label: 'px', default: 0 },
-            { value: 'em', label: 'em', default: 0 },
-            { value: 'rem', label: 'rem', default: 0 },
+            { value: 'em', label: 'em', default: 0, step: 0.1, max: 10 },
+            { value: 'rem', label: 'rem', default: 0, step: 0.1, max: 10 },
             { value: 'vw', label: 'vw', default: 0 },
             { value: 'vh', label: 'vh', default: 0 },
         ],

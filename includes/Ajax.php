@@ -50,7 +50,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
 
             // Validate the POST data
             if ( !isset( $_POST['data'] ) ) {
-                wp_send_json_error( array( 'message' => 'Invalid data format!' ) );
+                wp_send_json_error( 'Invalid data format!' );
                 exit;
             }
 
@@ -59,21 +59,21 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
 
             // Ensure $data is an array
             if ( !is_array( $data ) ) {
-                wp_send_json_error( array( 'message' => 'Invalid data format!' ) );
+                wp_send_json_error( 'Invalid data format!' );
                 exit;
             }
 
             // check the event type
             $event_type = is_string( $data['eventType'] ) ? sanitize_text_field( $data['eventType'] ) : null;
             if ( empty( $event_type ) ) {
-                wp_send_json_error( array( 'message' => 'Missing event type!' ) );
+                wp_send_json_error( 'Missing event type!' );
                 exit;
             }
 
             // check the widget ID
             $widget_id = isset( $data['widgetId'] ) ? intval( $data['widgetId'] ) : 0;
             if ( $widget_id === 0 ) {
-                wp_send_json_error( array( 'message' => 'Missing widget ID!' ) );
+                wp_send_json_error( 'Missing widget ID!' );
                 exit;
             }
 
@@ -86,6 +86,20 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
 
             // TODO: sanitize?
             $extra_data = isset( $data['extraData'] ) && is_array( $data['extraData'] ) ? $data['extraData'] : null;
+
+            // TODO: handle email sign-up
+            if ( is_string( $extra_data['source'] ) && is_string( $extra_data['email'] ) ) {
+                // we have the minimum required for sign-up
+                if ( is_string( $extra_data['name'] ) ) {
+                    // optional name has been supplied
+                }
+                // check for existence?
+                $email_exists = false;
+                if ( $email_exists === true ) {
+                    wp_send_json_error( 'Email already exists!' );
+                    exit;
+                }
+            }
 
             $data = [
                 'widget_id'           => $widget_id,
@@ -104,8 +118,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
             $event = new Event();
             $event->create( $data, $meta );
 
-            echo wp_json_encode( array( 'status' => 'success' ) );
-            wp_die();
+            wp_send_json_success();
+            exit;
         }
     }
 }

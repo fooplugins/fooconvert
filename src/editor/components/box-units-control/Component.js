@@ -5,7 +5,7 @@ import { useState } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 
 // noinspection ES6PreferShortImport - If switched to #editor from pkg.imports a circular import is created as we are in #editor
-import { UnitControl } from "../experimental";
+import { parseQuantityAndUnitFromRawValue, UnitControl } from "../experimental";
 
 // External
 import classnames from "classnames";
@@ -16,7 +16,7 @@ import { isStringNotEmpty, $string } from "../../utils";
 import { isBoxUnit, makeBoxUnit, makeBoxUnitTuple } from "./utils";
 
 import "./Component.scss";
-import { cleanObject, distinct } from "@steveush/utils";
+import { cleanObject, distinct, isNumber } from "@steveush/utils";
 
 /**
  * An object containing the labels for the box unit sides.
@@ -57,9 +57,9 @@ const BoxUnitsControl = ( props ) => {
         value,
         onChange,
         units = [
-            { value: 'px', label: 'px', default: 0 },
-            { value: '%', label: '%', default: 0 },
-            { value: 'em', label: 'em', default: 0 },
+            { value: 'px', label: 'px', default: 0, step: 1 },
+            { value: 'em', label: 'em', default: 0, step: 0.1, max: 10 },
+            { value: 'rem', label: 'rem', default: 0, step: 0.1, max: 10 },
         ],
         disableUnits = false,
         initialPosition = 0,
@@ -141,6 +141,24 @@ const BoxUnitsControl = ( props ) => {
                         } );
                         onChange( newValue );
                     };
+                    const currentValue = previousValue[ key ];
+                    const [ quantity, parsedUnit = "px" ] = parseQuantityAndUnitFromRawValue( currentValue, units );
+                    const unit = units.find( u => u.value === parsedUnit );
+                    const unitProps = {};
+                    if ( isNumber( unit?.step ) ) {
+                        unitProps.step = unit.step;
+                    }
+                    if ( isNumber( unit?.min ) ) {
+                        unitProps.min = unit.min;
+                    }
+                    if ( isNumber( unit?.max ) ) {
+                        unitProps.max = unit.max;
+                    }
+                    const currentProps = {
+                        ...commonProps,
+                        ...unitProps
+                    };
+
                     return (
                         <UnitControl
                             key={ key }
@@ -150,7 +168,7 @@ const BoxUnitsControl = ( props ) => {
                             className={ `${ CLASS_NAME }__unit-control is-${ key }` }
                             label={ LABELS[ key ] }
                             placeholder={ placeholder }
-                            { ...commonProps }
+                            { ...currentProps }
                         />
                     );
                 } ) }

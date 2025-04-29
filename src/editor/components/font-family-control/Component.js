@@ -2,10 +2,11 @@ import { CustomSelectControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import classnames from "classnames";
 import { isString } from "@steveush/utils";
+import { useFontFamilies } from "./hooks";
 
 export const FONT_FAMILY_OPTIONS_DEFAULTS = [
     {
-        key: 'default',
+        key: '',
         name: __( 'Default', 'fooconvert' )
     },
     {
@@ -27,12 +28,21 @@ const FontFamilyControl = ( props ) => {
     const {
         value,
         onChange,
-        options = FONT_FAMILY_OPTIONS_DEFAULTS,
         size = "__unstable-large",
         className,
         label,
         ...restProps
     } = props;
+
+    const fontFamilies = useFontFamilies();
+
+    const options = [
+        {
+            key: '',
+            name: __( 'Default' ),
+        },
+        ...fontFamilies,
+    ];
 
     const found = isString( value, true ) ? options.find( option => option?.style?.fontFamily === value ) : undefined;
     const selected = found ?? options.at( 0 );

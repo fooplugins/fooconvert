@@ -329,29 +329,26 @@ abstract class BaseBlock {
      * @note Needed to remove the inline comments as it was causing issues with rendering.
      */
     function render( array $attributes, string $content, WP_Block $block ) {
-        if ( !empty( $content ) ) {
-            $tag_name = $this->get_tag_name();
-            $instance_id = $this->create_instance_id();
+        $tag_name = $this->get_tag_name();
+        $instance_id = $this->create_instance_id();
 
-            $attributes = apply_filters( 'fooconvert-widget-frontend-attributes', $attributes, $instance_id, $tag_name, $block );
+        $attributes = apply_filters( 'fooconvert-widget-frontend-attributes', $attributes, $instance_id, $tag_name, $block );
 
-            $frontend_attributes = $this->get_frontend_attributes( $instance_id, $attributes, $block );
-            $frontend_styles = $this->get_frontend_styles( $instance_id, $attributes, $block );
-            $frontend_data = $this->get_frontend_data( $instance_id, $attributes, $block );
-            $frontend_icons = $this->get_frontend_icons( $instance_id, $attributes, $block );
+        $frontend_attributes = $this->get_frontend_attributes( $instance_id, $attributes, $block );
+        $frontend_styles = $this->get_frontend_styles( $instance_id, $attributes, $block );
+        $frontend_data = $this->get_frontend_data( $instance_id, $attributes, $block );
+        $frontend_icons = $this->get_frontend_icons( $instance_id, $attributes, $block );
 
-            $this->enqueue_frontend_styles( $instance_id, $frontend_styles );
-            $this->enqueue_frontend_data( $instance_id, $frontend_data );
+        $this->enqueue_frontend_styles( $instance_id, $frontend_styles );
+        $this->enqueue_frontend_data( $instance_id, $frontend_data );
 
-            // @formatter:off
-            ob_start();?><<?php echo esc_html( $tag_name ); ?> id="<?php echo esc_attr( $instance_id ) ?>" <?php echo wp_kses_data( get_block_wrapper_attributes( $frontend_attributes ) ); ?>><?php
-            $this->render_frontend_icons( $instance_id, $frontend_icons );
-            ?><?php echo $this->kses( $attributes, do_blocks( $content ), $block, 'root' );
-            ?></<?php echo esc_html( $tag_name ); ?>><?php
-            return ob_get_clean();
-            // @formatter:on
-        }
-        return false;
+        // @formatter:off
+        ob_start();?><<?php echo esc_html( $tag_name ); ?> id="<?php echo esc_attr( $instance_id ) ?>" <?php echo wp_kses_data( get_block_wrapper_attributes( $frontend_attributes ) ); ?>><?php
+        $this->render_frontend_icons( $instance_id, $frontend_icons );
+        ?><?php echo $this->kses( $attributes, do_blocks( $content ), $block, 'root' );
+        ?></<?php echo esc_html( $tag_name ); ?>><?php
+        return ob_get_clean();
+        // @formatter:on
     }
 
     function render_empty(): string {
@@ -443,5 +440,39 @@ abstract class BaseBlock {
             }
         }
         return false;
+    }
+
+    function get_settings_icon( array $icon_settings, string $slot, string $default_slug = '', string $default_size = '24px' ) {
+        if ( !empty( $slot ) ) {
+            $slug = Utils::get_string( $icon_settings, 'slug', $default_slug );
+            $size = Utils::get_string( $icon_settings, 'size', $default_size );
+            if ( !empty( $slug ) ) {
+                list( $set_name, $icon_name ) = explode( '__', $slug );
+                $file_path = FOOCONVERT_ASSETS_PATH . "/media/icons/$set_name/$icon_name.svg";
+                // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+                $file_contents = file_get_contents( $file_path );
+                if ( !empty( $file_contents ) ) {
+                    // insert attributes on the SVG element before returning
+                    return substr_replace( $file_contents, " slot=\"$slot\" height=\"$size\" width=\"$size\" aria-hidden=\"true\"", 4, 0 );
+                }
+            }
+        }
+        return false;
+    }
+
+    function get_settings( array $attributes, string $child = '' ): array {
+        if ( !empty( $child ) ) {
+            $child_attributes = Utils::get_array( $attributes, $child );
+            return Utils::get_array( $child_attributes, 'settings' );
+        }
+        return Utils::get_array( $attributes, 'settings' );
+    }
+
+    function get_styles( array $attributes, string $child = '' ): array {
+        if ( !empty( $child ) ) {
+            $child_attributes = Utils::get_array( $attributes, $child );
+            return Utils::get_array( $child_attributes, 'styles' );
+        }
+        return Utils::get_array( $attributes, 'styles' );
     }
 }

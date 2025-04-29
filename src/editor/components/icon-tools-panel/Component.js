@@ -5,7 +5,7 @@ import {
     ToolsPanel,
     ToolsPanelItem
 } from "../../components";
-import { cleanObject, isString } from "@steveush/utils";
+import { cleanObject, isFunction, isString } from "@steveush/utils";
 
 const IconToolsPanel = props => {
     const {
@@ -19,7 +19,10 @@ const IconToolsPanel = props => {
         sizeLabel = __( "Size", "fooconvert" ),
         sizeHelp = __( "Set the size of the icon.", "fooconvert" ),
         hideIconLabelFromVision = true,
+        itemRenderer,
     } = props;
+
+    const hasItemRenderer = isFunction( itemRenderer );
 
     const setValue = ( newValue ) => {
         const previousValue = value ?? {};
@@ -90,6 +93,7 @@ const IconToolsPanel = props => {
                     ] }
                 />
             </ToolsPanelItem>
+            { hasItemRenderer && itemRenderer( panelId ) }
         </ToolsPanel>
     );
 };

@@ -78,9 +78,11 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             if ( $is_frontend_js_enqueued ) {
                 $data = array(
                     'endpoint' => $this->ajax->get_endpoint(),
+                    'widgets' => $this->widgets->get_tag_names()
                 );
                 wp_add_inline_script( FOOCONVERT_FRONTEND_ASSET_HANDLE, Utils::to_js_script( 'FOOCONVERT_CONFIG', $data ), 'before' );
             }
+            do_action( 'fooconvert_ensured_frontend_assets_enqueued' );
         }
 
         //region Properties

@@ -15,6 +15,7 @@ import plus from './plus.js';
 import plusCircle from './plus-circle.js';
 import plusCircleFilled from './plus-circle-filled.js';
 import plusSmall from './plus-small.js';
+import send from './send.js';
 
 /**
  *
@@ -39,5 +40,6 @@ export default {
         { name: 'plus-circle', label: __( 'Plus Circle', 'fooconvert' ), value: plusCircle },
         { name: 'plus-circle-filled', label: __( 'Plus Circle Filled', 'fooconvert' ), value: plusCircleFilled },
         { name: 'plus-small', label: __( 'Plus Small', 'fooconvert' ), value: plusSmall },
+        { name: 'send', label: __( 'Send', 'fooconvert' ), value: send },
     ]
 };

@@ -9,7 +9,9 @@
   "author": "FooPlugins <info@fooplugins.com>",
   "imports": {
     "#editor": "./src/editor/index.js",
-    "#frontend": "./src/frontend/index.js"
+    "#frontend": "./src/frontend/index.js",
+    "#editor-pro": "./pro/src/editor/index.js",
+    "#frontend-pro": "./pro/src/frontend/index.js"
   },
   "browserslist": [
     "defaults"

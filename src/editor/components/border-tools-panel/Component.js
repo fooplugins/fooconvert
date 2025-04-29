@@ -53,7 +53,6 @@ const BorderToolsPanel = ( {
         const newValue = isBoxShadow( shadow ) ? { shadow, ...prev } : prev;
         const keys = Object.keys( newValue );
         onChange( keys.length === 0 ? undefined : newValue );
-        console.log( 'shadow', keys.length === 0 ? undefined : newValue );
     };
 
     const resetAll = () => {
@@ -105,7 +104,6 @@ const BorderToolsPanel = ( {
                     hasValue={ () => hasBoxShadow }
                     label={ __( "Shadow", "fooconvert" ) }
                     onDeselect={ () => setBoxShadow( undefined ) }
-                    isShownByDefault
                 >
                     <BoxShadowControl
                         label={ __( 'Shadow', 'fooconvert' ) }
