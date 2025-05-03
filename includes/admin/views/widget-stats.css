@@ -19,11 +19,14 @@
     grid-column: span 4;
     display: flex;
     align-items: center; /* Vertically center the items */
+    justify-content: space-between;
 }
 
-.fooconvert-stats-header .button {
-    margin-left: 10px;
-}
+    .fooconvert-stats-header .right {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
 
 /* Metrics layout */
 .fooconvert-basic-metrics {

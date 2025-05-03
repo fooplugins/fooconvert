@@ -1,6 +1,6 @@
 {
   "name": "fooconvert",
-  "version": "1.0.1",
+  "version": "1.1.1",
   "license": "GPL-3.0-or-later",
   "title": "FooConvert",
   "description": "Turning clicks into conversions, visitors into customers – the ultimate catalyst for online success!",
@@ -9,7 +9,9 @@
   "author": "FooPlugins <info@fooplugins.com>",
   "imports": {
     "#editor": "./src/editor/index.js",
-    "#frontend": "./src/frontend/index.js"
+    "#frontend": "./src/frontend/index.js",
+    "#editor-pro": "./pro/src/editor/index.js",
+    "#frontend-pro": "./pro/src/frontend/index.js"
   },
   "browserslist": [
     "defaults"
@@ -25,7 +27,8 @@
     "composer:update": "composer update --optimize-autoloader",
     "composer:refresh": "composer dump-autoload --optimize",
     "package:create-zip": "npm run build && npm run i18n && npm run composer:refresh && gulp",
-    "package:deploy": "gulp freemius-deploy"
+    "package:deploy": "gulp freemius-deploy",
+    "repomix": "repomix"
   },
   "devDependencies": {
     "@steveush/utils": "^0.0.2",
@@ -46,11 +49,14 @@
     "@wordpress/plugins": "^7.7.0",
     "@wordpress/primitives": "^4.7.0",
     "@wordpress/scripts": "^29.0.0",
+    "chalk": "^5.4.1",
     "classnames": "^2.5.1",
+    "fast-glob": "^3.3.3",
     "globby": "^14.0.2",
     "gulp": "^5.0.0",
     "gulp-freemius-deploy": "^1.0.11",
     "gulp-zip": "^6.0.0",
-    "raw-loader": "^4.0.2"
+    "raw-loader": "^4.0.2",
+    "repomix": "^0.2.25"
   }
 }

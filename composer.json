@@ -4,12 +4,9 @@
     "type": "wordpress-plugin",
     "autoload"    : {
         "psr-4" : {
-            "FooPlugins\\FooConvert\\" : "includes"
-        },
-	  	"classmap": [ "includes" ],
-        "files": [
-            "vendor/freemius/wordpress-sdk/start.php"
-        ]
+            "FooPlugins\\FooConvert\\" : "includes/",
+            "FooPlugins\\FooConvert\\Pro\\" : "pro/includes/"
+        }
     },
     "extra": {
         "installer-paths": {
@@ -35,17 +32,6 @@
         "freemius/wordpress-sdk": "2.11.0"
     },
     "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "freemius/wordpress-sdk",
-                "version": "2.11.0",
-                "dist": {
-                    "type": "zip",
-                    "url": "dist/wordpress-sdk-2.11.0.zip"
-                }
-            }
-        },
         {
             "type": "composer",
             "url": "http://repo.packagist.org"

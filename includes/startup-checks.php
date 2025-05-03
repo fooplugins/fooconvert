@@ -1,17 +1,17 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
  * Does some preliminary checks before the plugin is loaded
  */
 
-if ( ! function_exists( 'fooconvert_min_php_admin_notice' ) ) {
+if ( !function_exists( 'fooconvert_min_php_admin_notice' ) ) {
     /**
      * Show an admin notice to administrators when the minimum PHP version could not be reached
      */
     function fooconvert_min_php_admin_notice() {
         //only show the admin message to users who can install plugins
-        if ( ! current_user_can( 'install_plugins' ) ) {
+        if ( !current_user_can( 'install_plugins' ) ) {
             return;
         }
 
@@ -27,13 +27,13 @@ if ( ! function_exists( 'fooconvert_min_php_admin_notice' ) ) {
     }
 }
 
-if ( ! function_exists( 'fooconvert_min_wp_admin_notice' ) ) {
+if ( !function_exists( 'fooconvert_min_wp_admin_notice' ) ) {
     /**
      * Show an admin notice to administrators when the minimum WP version could not be reached
      */
     function fooconvert_min_wp_admin_notice() {
         //only show the admin message to users who can install plugins
-        if ( ! current_user_can( 'install_plugins' ) ) {
+        if ( !current_user_can( 'install_plugins' ) ) {
             return;
         }
 

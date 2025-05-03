@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: FooConvert - Boost Conversions & Lead Generation 1.0.1\n"
+"Project-Id-Version: FooConvert - Boost Conversions & Lead Generation 1.1.1\n"
 "Report-Msgid-Bugs-To: https://github.com/fooplugins/fooconvert/issues\n"
 "Last-Translator: FooPlugins <info@fooplugins.com>\n"
 "Language-Team: FooPlugins <info@fooplugins.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-27T18:29:27+00:00\n"
+"POT-Creation-Date: 2025-02-08T18:06:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: fooconvert\n"
@@ -34,788 +34,809 @@ msgstr ""
 msgid "https://fooplugins.com/"
 msgstr ""
 
-#: includes/admin/class-dashboard.php:43
-#: includes/admin/class-stats.php:42
+#: includes/Admin/Dashboard.php:43
+#: includes/Admin/Stats.php:42
 msgid "Invalid nonce!!"
 msgstr ""
 
-#: includes/admin/class-dashboard.php:48
+#: includes/Admin/Dashboard.php:48
 msgid "You do not have permission to access this page."
 msgstr ""
 
-#: includes/admin/class-dashboard.php:55
-#: includes/admin/class-stats.php:153
+#: includes/Admin/Dashboard.php:55
+#: includes/Admin/Stats.php:153
 msgid "Nonce is not set."
 msgstr ""
 
-#: includes/admin/class-dashboard.php:73
+#: includes/Admin/Dashboard.php:73
 msgid "Dashboard task is not set."
 msgstr ""
 
-#: includes/admin/class-dashboard.php:136
+#: includes/Admin/Dashboard.php:136
 msgid "Invalid dashboard task!"
 msgstr ""
 
-#: includes/admin/class-dashboard.php:153
+#: includes/Admin/Dashboard.php:153
 msgid "Panel is not set."
 msgstr ""
 
-#: includes/admin/class-dashboard.php:161
+#: includes/Admin/Dashboard.php:161
 msgid "Panel hidden."
 msgstr ""
 
-#: includes/admin/class-dashboard.php:186
+#: includes/Admin/Dashboard.php:186
 msgid "No widgets created!"
 msgstr ""
 
 #. Translators: %d refers to the number of demo widgets created.
-#: includes/admin/class-dashboard.php:189
+#: includes/Admin/Dashboard.php:189
 msgid "%d demo widgets created successfully!"
 msgstr ""
 
-#: includes/admin/class-dashboard.php:207
+#: includes/Admin/Dashboard.php:207
 msgid "All demo widgets deleted!"
 msgstr ""
 
-#: includes/admin/class-dashboard.php:258
+#: includes/Admin/Dashboard.php:258
 msgid "FooConvert Dashboard"
 msgstr ""
 
-#: includes/admin/class-dashboard.php:259
+#: includes/Admin/Dashboard.php:259
 msgid "Dashboard"
 msgstr ""
 
-#: includes/admin/class-init.php:58
-#: includes/admin/class-init.php:59
-msgid "FooConvert"
-msgstr ""
-
-#: includes/admin/class-promotions.php:70
-#: includes/admin/class-settings.php:36
-msgid "Premium Addons"
-msgstr ""
-
-#: includes/admin/class-promotions.php:80
-#: includes/admin/views/dashboard-panel-getting-started.php:13
-#: includes/admin/views/dashboard-panel-help.php:12
-msgid "Hide Panel"
-msgstr ""
-
-#: includes/admin/class-promotions.php:134
-msgid "Buy Now!"
-msgstr ""
-
-#: includes/admin/class-promotions.php:158
-msgid "Total Clicks"
-msgstr ""
-
-#: includes/admin/class-promotions.php:160
-msgid "Total number of clicks made within the widget."
-msgstr ""
-
-#: includes/admin/class-promotions.php:166
-msgid "Click Through Rate"
-msgstr ""
-
-#: includes/admin/class-promotions.php:168
-msgid "Click Through Rate for the widget."
-msgstr ""
-
-#: includes/admin/class-promotions.php:174
-msgid "Total Conversions"
-msgstr ""
-
-#: includes/admin/class-promotions.php:176
-msgid "Total number of conversions for the widget."
-msgstr ""
-
-#: includes/admin/class-promotions.php:182
-msgid "Conversion Rate"
-msgstr ""
-
-#: includes/admin/class-promotions.php:184
-msgid "Conversion Rate for the widget."
-msgstr ""
-
-#: includes/admin/class-promotions.php:190
-msgid "Engagement Rate"
-msgstr ""
-
-#: includes/admin/class-promotions.php:192
-msgid "Engagement Rate for the widget."
-msgstr ""
-
-#: includes/admin/class-promotions.php:198
-msgid "Positive Engagements"
-msgstr ""
-
-#: includes/admin/class-promotions.php:200
-msgid "Total number of positive engagements for the widget (like clicks)."
-msgstr ""
-
-#: includes/admin/class-promotions.php:206
-msgid "Negative Engagements"
-msgstr ""
-
-#: includes/admin/class-promotions.php:208
-msgid "Total number of negative engagements for the widget (like dismissals)."
-msgstr ""
-
-#: includes/admin/class-promotions.php:214
-msgid "Overall Sentiment"
-msgstr ""
-
-#: includes/admin/class-promotions.php:216
-msgid "Overall sentiment for the widget which ranges from very negative to very positive. It can also be unknown if there are no engagements, or neutral."
-msgstr ""
-
-#: includes/admin/class-promotions.php:224
-msgid "These advanced metrics are available in the PRO Analytics Addon."
-msgstr ""
-
-#: includes/admin/class-promotions.php:225
-#: includes/admin/views/dashboard-top-performers.php:16
-msgid "Buy PRO Analytics!"
-msgstr ""
-
-#: includes/admin/class-promotions.php:239
-msgid "engagement rate (PRO)"
-msgstr ""
-
-#: includes/admin/class-promotions.php:241
-msgid "Top performers by engagement rate is only available in the PRO Analytics Addon."
-msgstr ""
-
-#: includes/admin/class-promotions.php:245
-msgid "clicks (PRO)"
-msgstr ""
-
-#: includes/admin/class-promotions.php:247
-msgid "Top performers by clicks is only available in the PRO Analytics Addon."
-msgstr ""
-
-#: includes/admin/class-promotions.php:251
-msgid "click rate (PRO)"
-msgstr ""
-
-#: includes/admin/class-promotions.php:253
-msgid "Top performers by click rate is only available in the PRO Analytics Addon."
-msgstr ""
-
-#: includes/admin/class-promotions.php:257
-msgid "conversions (PRO)"
-msgstr ""
-
-#: includes/admin/class-promotions.php:259
-msgid "Top performers by conversions is only available in the PRO Analytics Addon."
-msgstr ""
-
-#: includes/admin/class-promotions.php:263
-msgid "conversion rate (PRO)"
-msgstr ""
-
-#: includes/admin/class-promotions.php:265
-msgid "Top performers by conversion rate is only available in the PRO Analytics Addon."
-msgstr ""
-
-#: includes/admin/class-settings.php:21
-msgid "FooConvert Settings"
-msgstr ""
-
-#: includes/admin/class-settings.php:22
-#: includes/admin/class-settings.php:309
-msgid "Settings"
-msgstr ""
-
-#: includes/admin/class-settings.php:31
-msgid "Analytics PRO Addon"
-msgstr ""
-
-#: includes/admin/class-settings.php:34
-msgid "Getting Started"
-msgstr ""
-
-#: includes/admin/class-settings.php:35
-msgid "Help"
-msgstr ""
-
-#: includes/admin/class-settings.php:41
-#: includes/class-fooconvert-display-rules.php:233
-#: includes/class-fooconvert-display-rules.php:353
-msgid "General"
-msgstr ""
-
-#: includes/admin/class-settings.php:49
-msgid "Retention Period"
-msgstr ""
-
-#: includes/admin/class-settings.php:50
-msgid "days"
-msgstr ""
-
-#. Translators: %s refers to the link to the Analytics PRO Addon.
-#: includes/admin/class-settings.php:52
-msgid "The number of days before data is deleted."
-msgstr ""
-
-#. Translators: %s refers to the link to the Analytics PRO Addon.
-#: includes/admin/class-settings.php:52
-msgid "This can only be changed with the %s."
-msgstr ""
-
-#: includes/admin/class-settings.php:58
-msgid "Enable Debug Mode"
-msgstr ""
-
-#: includes/admin/class-settings.php:59
-msgid "Helps to debug problems and diagnose issues. Enable debugging if you need support for an issue you are having."
-msgstr ""
-
-#: includes/admin/class-settings.php:65
-msgid "Hide Promos"
-msgstr ""
-
-#: includes/admin/class-settings.php:66
-msgid "If enabled, will hide all promotional messages within the admin area, including the dashboard Addons panel."
-msgstr ""
-
-#: includes/admin/class-settings.php:72
-msgid "Hide Dashboard Panels"
-msgstr ""
-
-#: includes/admin/class-settings.php:74
-msgid "Will hide specific dashboard panel if checked."
-msgstr ""
-
-#: includes/admin/class-settings.php:80
-msgid "Demo Content Created"
-msgstr ""
-
-#: includes/admin/class-settings.php:81
-msgid "If the demo content has been created, then this will be checked. You can uncheck this to allow for demo content to be created again."
-msgstr ""
-
-#: includes/admin/class-settings.php:88
-#: includes/admin/class-settings.php:307
-msgid "Database"
-msgstr ""
-
-#: includes/admin/class-settings.php:101
-msgid "Database Error"
-msgstr ""
-
-#: includes/admin/class-settings.php:102
-msgid "Event Table Does Not Exist!"
-msgstr ""
-
-#: includes/admin/class-settings.php:112
-msgid "Database Data"
-msgstr ""
-
-#: includes/admin/class-settings.php:125
-msgid "Table"
-msgstr ""
-
-#: includes/admin/class-settings.php:129
-msgid "Table Size (MB)"
-msgstr ""
-
-#: includes/admin/class-settings.php:133
-msgid "Event Row Count"
-msgstr ""
-
-#: includes/admin/class-settings.php:137
-msgid "Widget Count With Events"
-msgstr ""
-
-#: includes/admin/class-settings.php:141
-msgid "Orphaned Event Count"
-msgstr ""
-
-#: includes/admin/class-settings.php:153
-msgid "Orphaned Widget Count"
-msgstr ""
-
-#: includes/admin/class-settings.php:161
-msgid "Database Stats"
-msgstr ""
-
-#: includes/admin/class-settings.php:169
-msgid "Delete Old Events"
-msgstr ""
-
-#: includes/admin/class-settings.php:170
-msgid "This will permanently delete all events older than the retention period."
-msgstr ""
-
-#: includes/admin/class-settings.php:170
-msgid "Currently :"
-msgstr ""
-
-#: includes/admin/class-settings.php:170
-msgid "days."
-msgstr ""
-
-#: includes/admin/class-settings.php:177
-msgid "Delete All Events"
-msgstr ""
-
-#: includes/admin/class-settings.php:178
-msgid "This will permanently delete all events."
-msgstr ""
-
-#: includes/admin/class-settings.php:186
-msgid "Delete Orphaned Data"
-msgstr ""
-
-#: includes/admin/class-settings.php:194
-msgid "System Info"
-msgstr ""
-
-#: includes/admin/class-settings.php:200
-msgid "Your System Information"
-msgstr ""
-
-#: includes/admin/class-settings.php:201
-msgid "The below system info can be used when submitting a support ticket, to help us replicate your environment."
-msgstr ""
-
-#. Translators: %d refers to the number of orphaned events that were deleted.
-#: includes/admin/class-settings.php:233
-msgid "Successfully deleted %d orphaned events."
-msgstr ""
-
-#. Translators: %d refers to the number of events that were deleted.
-#: includes/admin/class-settings.php:250
-#: includes/admin/class-settings.php:267
-msgid "Successfully deleted %d events."
-msgstr ""
-
-#: includes/admin/class-settings.php:292
-msgid "ERROR : The events table does not exist!"
-msgstr ""
-
-#: includes/admin/class-settings.php:300
-msgid "FooConvert version"
-msgstr ""
-
-#: includes/admin/class-settings.php:301
-msgid "WordPress version"
-msgstr ""
-
-#: includes/admin/class-settings.php:302
-msgid "Activated Theme"
-msgstr ""
-
-#: includes/admin/class-settings.php:303
-msgid "WordPress URL"
-msgstr ""
-
-#: includes/admin/class-settings.php:304
-msgid "PHP version"
-msgstr ""
-
-#: includes/admin/class-settings.php:305
-msgid "Retention"
-msgstr ""
-
-#: includes/admin/class-settings.php:306
-msgid "Cron Jobs"
-msgstr ""
-
-#: includes/admin/class-settings.php:308
-msgid "Active Plugins"
-msgstr ""
-
-#: includes/admin/class-stats.php:61
-msgid "Invalid widget ID!!"
-msgstr ""
-
-#: includes/admin/class-stats.php:77
-msgid "Events"
-msgstr ""
-
-#: includes/admin/class-stats.php:85
-#: includes/functions.php:279
-msgid "Views"
-msgstr ""
-
-#: includes/admin/class-stats.php:93
-#: includes/functions.php:271
-msgid "Engagements"
-msgstr ""
-
-#: includes/admin/class-stats.php:101
-msgid "Unique Visitors"
-msgstr ""
-
-#: includes/admin/class-stats.php:191
-#: includes/admin/class-stats.php:198
-msgid "Stats"
-msgstr ""
-
-#: includes/admin/class-stats.php:218
-msgid "View Stats"
-msgstr ""
-
-#: includes/admin/class-stats.php:235
-#: includes/admin/class-stats.php:236
-msgid "Widget Stats"
-msgstr ""
-
-#: includes/admin/foofields/fields/class-iconpicker.php:15
+#: includes/Admin/FooFields/Fields/IconPicker.php:15
 msgid "Select Icon"
 msgstr ""
 
-#: includes/admin/foofields/fields/class-iconpicker.php:16
+#: includes/Admin/FooFields/Fields/IconPicker.php:16
 msgid "Clear Icon"
 msgstr ""
 
-#: includes/admin/foofields/fields/class-iconpicker.php:17
+#: includes/Admin/FooFields/Fields/IconPicker.php:17
 #: assets/editor.js:1
 #: assets/editor.js:4
 msgid "Default"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:11
+#: includes/Admin/Init.php:61
+#: includes/Admin/Init.php:62
+msgid "FooConvert"
+msgstr ""
+
+#: includes/Admin/Promotions.php:70
+#: includes/Admin/Settings.php:36
+msgid "Premium Addons"
+msgstr ""
+
+#: includes/Admin/Promotions.php:80
+#: includes/Admin/Views/dashboard-panel-getting-started.php:13
+#: includes/Admin/Views/dashboard-panel-help.php:12
+#: pro/includes/Admin/Views/dashboard-panel-recent.php:22
+msgid "Hide Panel"
+msgstr ""
+
+#: includes/Admin/Promotions.php:134
+msgid "Buy Now!"
+msgstr ""
+
+#: includes/Admin/Promotions.php:158
+#: pro/includes/Analytics/Metrics.php:41
+msgid "Total Clicks"
+msgstr ""
+
+#: includes/Admin/Promotions.php:160
+#: pro/includes/Analytics/Metrics.php:43
+msgid "Total number of clicks made within the widget."
+msgstr ""
+
+#: includes/Admin/Promotions.php:166
+#: pro/includes/Analytics/Metrics.php:49
+msgid "Click Through Rate"
+msgstr ""
+
+#: includes/Admin/Promotions.php:168
+#: pro/includes/Analytics/Metrics.php:51
+msgid "Click Through Rate for the widget."
+msgstr ""
+
+#: includes/Admin/Promotions.php:174
+#: pro/includes/Analytics/Metrics.php:57
+msgid "Total Conversions"
+msgstr ""
+
+#: includes/Admin/Promotions.php:176
+#: pro/includes/Analytics/Metrics.php:59
+msgid "Total number of conversions for the widget."
+msgstr ""
+
+#: includes/Admin/Promotions.php:182
+#: pro/includes/Analytics/Metrics.php:65
+#: pro/includes/Analytics/Metrics.php:376
+msgid "Conversion Rate"
+msgstr ""
+
+#: includes/Admin/Promotions.php:184
+#: pro/includes/Analytics/Metrics.php:67
+msgid "Conversion Rate for the widget."
+msgstr ""
+
+#: includes/Admin/Promotions.php:190
+#: pro/includes/Analytics/Metrics.php:73
+#: pro/includes/Analytics/Metrics.php:340
+msgid "Engagement Rate"
+msgstr ""
+
+#: includes/Admin/Promotions.php:192
+#: pro/includes/Analytics/Metrics.php:75
+msgid "Engagement Rate for the widget."
+msgstr ""
+
+#: includes/Admin/Promotions.php:198
+#: pro/includes/Analytics/Metrics.php:81
+msgid "Positive Engagements"
+msgstr ""
+
+#: includes/Admin/Promotions.php:200
+#: pro/includes/Analytics/Metrics.php:83
+msgid "Total number of positive engagements for the widget (like clicks)."
+msgstr ""
+
+#: includes/Admin/Promotions.php:206
+#: pro/includes/Analytics/Metrics.php:89
+msgid "Negative Engagements"
+msgstr ""
+
+#: includes/Admin/Promotions.php:208
+#: pro/includes/Analytics/Metrics.php:91
+msgid "Total number of negative engagements for the widget (like dismissals)."
+msgstr ""
+
+#: includes/Admin/Promotions.php:214
+#: pro/includes/Analytics/Metrics.php:97
+msgid "Overall Sentiment"
+msgstr ""
+
+#: includes/Admin/Promotions.php:216
+#: pro/includes/Analytics/Metrics.php:99
+msgid "Overall sentiment for the widget which ranges from very negative to very positive. It can also be unknown if there are no engagements, or neutral."
+msgstr ""
+
+#: includes/Admin/Promotions.php:224
+msgid "These advanced metrics are available in FooConvert PRO."
+msgstr ""
+
+#: includes/Admin/Promotions.php:225
+#: includes/Admin/Views/dashboard-top-performers.php:16
+msgid "Buy FooConvert PRO!"
+msgstr ""
+
+#: includes/Admin/Promotions.php:239
+msgid "engagement rate (PRO)"
+msgstr ""
+
+#: includes/Admin/Promotions.php:241
+msgid "Top performers by engagement rate is only available in FooConvert PRO."
+msgstr ""
+
+#: includes/Admin/Promotions.php:245
+msgid "clicks (PRO)"
+msgstr ""
+
+#: includes/Admin/Promotions.php:247
+msgid "Top performers by clicks is only available in FooConvert PRO."
+msgstr ""
+
+#: includes/Admin/Promotions.php:251
+msgid "click rate (PRO)"
+msgstr ""
+
+#: includes/Admin/Promotions.php:253
+msgid "Top performers by click rate is only available in FooConvert PRO."
+msgstr ""
+
+#: includes/Admin/Promotions.php:257
+msgid "conversions (PRO)"
+msgstr ""
+
+#: includes/Admin/Promotions.php:259
+msgid "Top performers by conversions is only available in FooConvert PRO."
+msgstr ""
+
+#: includes/Admin/Promotions.php:263
+msgid "conversion rate (PRO)"
+msgstr ""
+
+#: includes/Admin/Promotions.php:265
+msgid "Top performers by conversion rate is only available in FooConvert PRO."
+msgstr ""
+
+#: includes/Admin/Settings.php:21
+msgid "FooConvert Settings"
+msgstr ""
+
+#: includes/Admin/Settings.php:22
+#: includes/Admin/Settings.php:309
+msgid "Settings"
+msgstr ""
+
+#: includes/Admin/Settings.php:31
+msgid "Analytics PRO Addon"
+msgstr ""
+
+#: includes/Admin/Settings.php:34
+msgid "Getting Started"
+msgstr ""
+
+#: includes/Admin/Settings.php:35
+msgid "Help"
+msgstr ""
+
+#: includes/Admin/Settings.php:41
+#: includes/DisplayRules.php:233
+#: includes/DisplayRules.php:353
+msgid "General"
+msgstr ""
+
+#: includes/Admin/Settings.php:49
+msgid "Retention Period"
+msgstr ""
+
+#: includes/Admin/Settings.php:50
+msgid "days"
+msgstr ""
+
+#. Translators: %s refers to the link to the Analytics PRO Addon.
+#: includes/Admin/Settings.php:52
+msgid "The number of days before data is deleted."
+msgstr ""
+
+#. Translators: %s refers to the link to the Analytics PRO Addon.
+#: includes/Admin/Settings.php:52
+msgid "This can only be changed with the %s."
+msgstr ""
+
+#: includes/Admin/Settings.php:58
+msgid "Enable Debug Mode"
+msgstr ""
+
+#: includes/Admin/Settings.php:59
+msgid "Helps to debug problems and diagnose issues. Enable debugging if you need support for an issue you are having."
+msgstr ""
+
+#: includes/Admin/Settings.php:65
+msgid "Hide Promos"
+msgstr ""
+
+#: includes/Admin/Settings.php:66
+msgid "If enabled, will hide all promotional messages within the admin area, including the dashboard Addons panel."
+msgstr ""
+
+#: includes/Admin/Settings.php:72
+msgid "Hide Dashboard Panels"
+msgstr ""
+
+#: includes/Admin/Settings.php:74
+msgid "Will hide specific dashboard panel if checked."
+msgstr ""
+
+#: includes/Admin/Settings.php:80
+msgid "Demo Content Created"
+msgstr ""
+
+#: includes/Admin/Settings.php:81
+msgid "If the demo content has been created, then this will be checked. You can uncheck this to allow for demo content to be created again."
+msgstr ""
+
+#: includes/Admin/Settings.php:88
+#: includes/Admin/Settings.php:307
+msgid "Database"
+msgstr ""
+
+#: includes/Admin/Settings.php:101
+msgid "Database Error"
+msgstr ""
+
+#: includes/Admin/Settings.php:102
+msgid "Event Table Does Not Exist!"
+msgstr ""
+
+#: includes/Admin/Settings.php:112
+msgid "Database Data"
+msgstr ""
+
+#: includes/Admin/Settings.php:125
+msgid "Table"
+msgstr ""
+
+#: includes/Admin/Settings.php:129
+msgid "Table Size (MB)"
+msgstr ""
+
+#: includes/Admin/Settings.php:133
+msgid "Event Row Count"
+msgstr ""
+
+#: includes/Admin/Settings.php:137
+msgid "Widget Count With Events"
+msgstr ""
+
+#: includes/Admin/Settings.php:141
+msgid "Orphaned Event Count"
+msgstr ""
+
+#: includes/Admin/Settings.php:153
+msgid "Orphaned Widget Count"
+msgstr ""
+
+#: includes/Admin/Settings.php:161
+msgid "Database Stats"
+msgstr ""
+
+#: includes/Admin/Settings.php:169
+msgid "Delete Old Events"
+msgstr ""
+
+#: includes/Admin/Settings.php:170
+msgid "This will permanently delete all events older than the retention period."
+msgstr ""
+
+#: includes/Admin/Settings.php:170
+msgid "Currently :"
+msgstr ""
+
+#: includes/Admin/Settings.php:170
+msgid "days."
+msgstr ""
+
+#: includes/Admin/Settings.php:177
+msgid "Delete All Events"
+msgstr ""
+
+#: includes/Admin/Settings.php:178
+msgid "This will permanently delete all events."
+msgstr ""
+
+#: includes/Admin/Settings.php:186
+msgid "Delete Orphaned Data"
+msgstr ""
+
+#: includes/Admin/Settings.php:194
+msgid "System Info"
+msgstr ""
+
+#: includes/Admin/Settings.php:200
+msgid "Your System Information"
+msgstr ""
+
+#: includes/Admin/Settings.php:201
+msgid "The below system info can be used when submitting a support ticket, to help us replicate your environment."
+msgstr ""
+
+#. Translators: %d refers to the number of orphaned events that were deleted.
+#: includes/Admin/Settings.php:233
+msgid "Successfully deleted %d orphaned events."
+msgstr ""
+
+#. Translators: %d refers to the number of events that were deleted.
+#: includes/Admin/Settings.php:250
+#: includes/Admin/Settings.php:267
+msgid "Successfully deleted %d events."
+msgstr ""
+
+#: includes/Admin/Settings.php:292
+msgid "ERROR : The events table does not exist!"
+msgstr ""
+
+#: includes/Admin/Settings.php:300
+msgid "FooConvert version"
+msgstr ""
+
+#: includes/Admin/Settings.php:301
+msgid "WordPress version"
+msgstr ""
+
+#: includes/Admin/Settings.php:302
+msgid "Activated Theme"
+msgstr ""
+
+#: includes/Admin/Settings.php:303
+msgid "WordPress URL"
+msgstr ""
+
+#: includes/Admin/Settings.php:304
+msgid "PHP version"
+msgstr ""
+
+#: includes/Admin/Settings.php:305
+msgid "Retention"
+msgstr ""
+
+#: includes/Admin/Settings.php:306
+msgid "Cron Jobs"
+msgstr ""
+
+#: includes/Admin/Settings.php:308
+msgid "Active Plugins"
+msgstr ""
+
+#: includes/Admin/Stats.php:61
+msgid "Invalid widget ID!!"
+msgstr ""
+
+#: includes/Admin/Stats.php:77
+msgid "Events"
+msgstr ""
+
+#: includes/Admin/Stats.php:85
+#: includes/functions.php:191
+msgid "Views"
+msgstr ""
+
+#: includes/Admin/Stats.php:93
+#: includes/functions.php:183
+msgid "Engagements"
+msgstr ""
+
+#: includes/Admin/Stats.php:101
+msgid "Unique Visitors"
+msgstr ""
+
+#: includes/Admin/Stats.php:191
+#: includes/Admin/Stats.php:198
+msgid "Stats"
+msgstr ""
+
+#: includes/Admin/Stats.php:218
+msgid "View Stats"
+msgstr ""
+
+#: includes/Admin/Stats.php:235
+#: includes/Admin/Stats.php:236
+msgid "Widget Stats"
+msgstr ""
+
+#: includes/Admin/Views/dashboard-panel-getting-started.php:11
 msgid "Getting Started with FooConvert!"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:21
+#: includes/Admin/Views/dashboard-panel-getting-started.php:21
 msgid "The easiest way to get started is by creating demo widgets, which will create 4 draft bars, flyouts and popups."
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:22
+#: includes/Admin/Views/dashboard-panel-getting-started.php:22
 msgid "It's also the best way to see the top performers in action!"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:26
+#: includes/Admin/Views/dashboard-panel-getting-started.php:26
 msgid "Create Demo Widgets"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:31
+#: includes/Admin/Views/dashboard-panel-getting-started.php:31
 msgid "Do not worry"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:32
+#: includes/Admin/Views/dashboard-panel-getting-started.php:32
 msgid "the demo widgets will NOT be visible to your site visitors :)"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:38
+#: includes/Admin/Views/dashboard-panel-getting-started.php:38
 msgid "Awesome, you have already created the demo widgets!"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:42
+#: includes/Admin/Views/dashboard-panel-getting-started.php:42
 msgid "Delete Demo Widgets"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:47
+#: includes/Admin/Views/dashboard-panel-getting-started.php:47
 msgid "Deleting the demo widgets will also delete all stats for the widgets."
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:52
+#: includes/Admin/Views/dashboard-panel-getting-started.php:52
 msgid "OR"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:54
+#: includes/Admin/Views/dashboard-panel-getting-started.php:54
 msgid "Create your own unique widget by following these simple steps:"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:58
+#: includes/Admin/Views/dashboard-panel-getting-started.php:58
 msgid "Create a new widget."
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:59
+#: includes/Admin/Views/dashboard-panel-getting-started.php:59
 msgid "create a new bar"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:62
+#: includes/Admin/Views/dashboard-panel-getting-started.php:62
 msgid "Select a pre-made template."
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:63
+#: includes/Admin/Views/dashboard-panel-getting-started.php:63
 msgid "e.g. Black Friday Bar"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:66
+#: includes/Admin/Views/dashboard-panel-getting-started.php:66
 msgid "Customize the look and feel &amp; change the content to your liking!"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:69
+#: includes/Admin/Views/dashboard-panel-getting-started.php:69
 msgid "Set the Display Rules locations."
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:70
+#: includes/Admin/Views/dashboard-panel-getting-started.php:70
 msgid "e.g. either \"Entire Site\" or \"Front Page\""
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:73
+#: includes/Admin/Views/dashboard-panel-getting-started.php:73
 msgid "Select an Open Trigger."
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:74
+#: includes/Admin/Views/dashboard-panel-getting-started.php:74
 msgid "e.g. on page load, or exit intent"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-getting-started.php:77
+#: includes/Admin/Views/dashboard-panel-getting-started.php:77
 msgid "Publish and you're done!"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-help.php:10
+#: includes/Admin/Views/dashboard-panel-help.php:10
 msgid "Need Help? We're here for you!"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-help.php:21
+#: includes/Admin/Views/dashboard-panel-help.php:21
 msgid "Read FooConvert documentation"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-help.php:26
+#: includes/Admin/Views/dashboard-panel-help.php:26
 msgid "Get Support"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-top-performers.php:8
+#: includes/Admin/Views/dashboard-panel-top-performers.php:8
 msgid "Top Performers"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-top-performers.php:11
+#: includes/Admin/Views/dashboard-panel-top-performers.php:11
 msgid "Sort by"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-top-performers.php:32
+#: includes/Admin/Views/dashboard-panel-top-performers.php:32
 msgid "Update Stats"
 msgstr ""
 
-#: includes/admin/views/dashboard-panel-top-performers.php:37
+#: includes/Admin/Views/dashboard-panel-top-performers.php:37
 msgid "Last Updated : "
 msgstr ""
 
-#: includes/admin/views/dashboard-top-performers.php:19
+#: includes/Admin/Views/dashboard-top-performers.php:19
 msgid "No top performers found!"
 msgstr ""
 
-#: includes/admin/views/dashboard-top-performers.php:21
+#: includes/Admin/Views/dashboard-top-performers.php:21
 msgid "Please update stats in order to see top performers."
 msgstr ""
 
-#: includes/admin/views/dashboard-top-performers.php:27
+#: includes/Admin/Views/dashboard-top-performers.php:27
 msgid "Rank"
 msgstr ""
 
-#: includes/admin/views/dashboard-top-performers.php:28
+#: includes/Admin/Views/dashboard-top-performers.php:28
 msgid "Widget"
 msgstr ""
 
-#: includes/admin/views/dashboard-top-performers.php:30
+#: includes/Admin/Views/dashboard-top-performers.php:30
 msgid "Metric"
 msgstr ""
 
-#: includes/admin/views/dashboard-top-performers.php:40
+#: includes/Admin/Views/dashboard-top-performers.php:40
+#: pro/includes/Admin/Views/dashboard-panel-recent.php:42
 msgid "Edit Widget"
 msgstr ""
 
-#: includes/admin/views/dashboard-top-performers.php:42
+#: includes/Admin/Views/dashboard-top-performers.php:42
+#: pro/includes/Admin/Views/dashboard-panel-recent.php:44
 msgid "View Widget Stats"
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:5
+#: includes/Admin/Views/widget-stats.php:5
 msgid "Unknown"
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:7
+#: includes/Admin/Views/widget-stats.php:7
 msgid "Last 7 days"
 msgstr ""
 
 #. Translators: %s refers to the link to edit the widget.
-#: includes/admin/views/widget-stats.php:17
+#: includes/Admin/Views/widget-stats.php:17
 msgid "Edit %s"
 msgstr ""
 
 #. Translators: %s refers to the title of the widget.
-#: includes/admin/views/widget-stats.php:30
+#: includes/Admin/Views/widget-stats.php:30
 msgid "Stats for %s"
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:43
+#: includes/Admin/Views/widget-stats.php:43
 msgid "Total Events"
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:44
+#: includes/Admin/Views/widget-stats.php:44
 msgid "Total events logged for the widget for it's lifetime."
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:50
+#: includes/Admin/Views/widget-stats.php:50
 msgid "Total Views"
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:51
+#: includes/Admin/Views/widget-stats.php:51
 msgid "Total number of times the widget has been viewed by a visitor."
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:57
+#: includes/Admin/Views/widget-stats.php:57
 msgid "Total Visitors"
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:58
+#: includes/Admin/Views/widget-stats.php:58
 msgid "Total number of unique visitors that have viewed the widget."
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:64
+#: includes/Admin/Views/widget-stats.php:64
 msgid "Total Engagements"
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:65
+#: includes/Admin/Views/widget-stats.php:65
 msgid "Total number of engagements that have been made with the widget (clicks, opens, etc)."
 msgstr ""
 
-#: includes/admin/views/widget-stats.php:75
+#: includes/Admin/Views/widget-stats.php:75
 msgid "Recent Activity"
 msgstr ""
 
-#: includes/class-event-hooks.php:141
-msgid "Published"
-msgstr ""
-
-#: includes/class-event-hooks.php:144
-msgid "Un-published"
-msgstr ""
-
-#: includes/class-event-hooks.php:147
-msgid "Status Updated"
-msgstr ""
-
-#: includes/class-event-hooks.php:166
-msgid "Content Updated"
-msgstr ""
-
-#: includes/class-event-hooks.php:184
-msgid "Open Trigger Changed"
-msgstr ""
-
-#: includes/class-event-hooks.php:199
-msgid "Styling Updated"
-msgstr ""
-
-#: includes/class-fooconvert-compatibility.php:55
+#: includes/Compatibility.php:55
 msgid "Compatibility settings for FooConvert."
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:37
+#: includes/DisplayRules.php:37
 msgid "Display rules for FooConvert."
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:76
-#: includes/class-fooconvert-display-rules.php:83
-#: includes/class-fooconvert-display-rules.php:92
+#: includes/DisplayRules.php:76
+#: includes/DisplayRules.php:83
+#: includes/DisplayRules.php:92
 msgid "Display Rules"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:93
+#: includes/DisplayRules.php:93
 msgid "Table ordered by display rules."
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:110
+#: includes/DisplayRules.php:110
 #: assets/editor.js:4
 msgid "Set"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:112
+#: includes/DisplayRules.php:112
 msgid "Not set!"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:237
+#: includes/DisplayRules.php:237
 msgid "Entire Site"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:241
+#: includes/DisplayRules.php:241
 msgid "Front Page"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:245
+#: includes/DisplayRules.php:245
 msgid "Blog"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:249
+#: includes/DisplayRules.php:249
 msgid "Search Results"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:253
+#: includes/DisplayRules.php:253
 msgid "No Search Results"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:257
+#: includes/DisplayRules.php:257
 msgid "404 Template"
 msgstr ""
 
 #. Translators: %s refers to the taxonomy that is being searched for. e.g. "Category".
-#: includes/class-fooconvert-display-rules.php:275
-#: includes/class-fooconvert-display-rules.php:301
+#: includes/DisplayRules.php:275
+#: includes/DisplayRules.php:301
 msgid "Type to choose %s..."
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:284
+#: includes/DisplayRules.php:284
 msgid "Specific Posts"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:310
+#: includes/DisplayRules.php:310
 msgid "Specific Taxonomies"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:329
+#: includes/DisplayRules.php:329
 msgid "Post Archives"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:357
+#: includes/DisplayRules.php:357
 msgid "All Users"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:361
+#: includes/DisplayRules.php:361
 msgid "Logged In"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:365
+#: includes/DisplayRules.php:365
 msgid "Logged Out"
 msgstr ""
 
-#: includes/class-fooconvert-display-rules.php:371
+#: includes/DisplayRules.php:371
 msgid "Roles"
 msgstr ""
 
-#: includes/functions.php:270
+#: includes/EventHooks.php:141
+msgid "Published"
+msgstr ""
+
+#: includes/EventHooks.php:144
+msgid "Un-published"
+msgstr ""
+
+#: includes/EventHooks.php:147
+msgid "Status Updated"
+msgstr ""
+
+#: includes/EventHooks.php:166
+msgid "Content Updated"
+msgstr ""
+
+#: includes/EventHooks.php:184
+msgid "Open Trigger Changed"
+msgstr ""
+
+#: includes/EventHooks.php:199
+msgid "Styling Updated"
+msgstr ""
+
+#: includes/functions.php:182
 msgid "engagements"
 msgstr ""
 
-#: includes/functions.php:272
+#: includes/functions.php:184
 msgid "Total number of engagements"
 msgstr ""
 
-#: includes/functions.php:278
+#: includes/functions.php:190
 msgid "views"
 msgstr ""
 
-#: includes/functions.php:280
+#: includes/functions.php:192
 msgid "Total number of views"
 msgstr ""
 
-#: includes/functions.php:320
+#: includes/functions.php:232
 msgid "ago"
 msgstr ""
 
-#: includes/functions.php:348
+#: includes/functions.php:260
 msgid "Never"
 msgstr ""
 
-#: includes/functions.php:395
-#: includes/widgets/class-popup.php:71
+#: includes/functions.php:307
+#: includes/Widgets/Popup.php:71
 msgid "Popup"
 msgstr ""
 
-#: includes/functions.php:397
-#: includes/widgets/class-flyout.php:75
+#: includes/functions.php:309
+#: includes/Widgets/Flyout.php:75
 msgid "Flyout"
 msgstr ""
 
-#: includes/functions.php:399
-#: includes/widgets/class-bar.php:75
+#: includes/functions.php:311
+#: includes/Widgets/Bar.php:75
 msgid "Bar"
 msgstr ""
 
@@ -833,165 +854,399 @@ msgstr ""
 msgid "Update WordPress now."
 msgstr ""
 
-#: includes/widgets/class-bar.php:74
-#: includes/widgets/class-bar.php:84
+#: includes/Widgets/Bar.php:74
+#: includes/Widgets/Bar.php:84
 msgid "Bars"
 msgstr ""
 
-#: includes/widgets/class-bar.php:76
+#: includes/Widgets/Bar.php:76
 msgid "Add Bar"
 msgstr ""
 
-#: includes/widgets/class-bar.php:77
+#: includes/Widgets/Bar.php:77
 msgid "Add New Bar"
 msgstr ""
 
-#: includes/widgets/class-bar.php:78
+#: includes/Widgets/Bar.php:78
 msgid "Edit Bar"
 msgstr ""
 
-#: includes/widgets/class-bar.php:79
+#: includes/Widgets/Bar.php:79
 msgid "New Bar"
 msgstr ""
 
-#: includes/widgets/class-bar.php:80
+#: includes/Widgets/Bar.php:80
 msgid "View Bars"
 msgstr ""
 
-#: includes/widgets/class-bar.php:81
+#: includes/Widgets/Bar.php:81
 msgid "Search Bars"
 msgstr ""
 
-#: includes/widgets/class-bar.php:82
+#: includes/Widgets/Bar.php:82
 msgid "No Bars found"
 msgstr ""
 
-#: includes/widgets/class-bar.php:83
+#: includes/Widgets/Bar.php:83
 msgid "No Bars found in Trash"
 msgstr ""
 
-#: includes/widgets/class-bar.php:106
-#: includes/widgets/class-flyout.php:106
-#: includes/widgets/class-popup.php:102
+#: includes/Widgets/Bar.php:106
+#: includes/Widgets/Flyout.php:106
+#: includes/Widgets/Popup.php:102
 msgid "Empty"
 msgstr ""
 
-#: includes/widgets/class-bar.php:107
+#: includes/Widgets/Bar.php:107
 msgid "A blank slate that you can use to build your own bar from scratch."
 msgstr ""
 
-#: includes/widgets/class-bar.php:126
+#: includes/Widgets/Bar.php:126
 msgid "Black Friday Bar"
 msgstr ""
 
-#: includes/widgets/class-bar.php:127
+#: includes/Widgets/Bar.php:127
 msgid "A typical Black Friday bar to help drive sales."
 msgstr ""
 
-#: includes/widgets/class-bar.php:231
+#: includes/Widgets/Bar.php:231
 msgid "Cookie Consent Bar"
 msgstr ""
 
-#: includes/widgets/class-bar.php:232
+#: includes/Widgets/Bar.php:232
 msgid "A simple bottom bar that is dismissed when the button is clicked."
 msgstr ""
 
-#: includes/widgets/class-flyout.php:74
-#: includes/widgets/class-flyout.php:84
+#: includes/Widgets/Flyout.php:74
+#: includes/Widgets/Flyout.php:84
 msgid "Flyouts"
 msgstr ""
 
-#: includes/widgets/class-flyout.php:76
+#: includes/Widgets/Flyout.php:76
 msgid "Add Flyout"
 msgstr ""
 
-#: includes/widgets/class-flyout.php:77
+#: includes/Widgets/Flyout.php:77
 msgid "Add New Flyout"
 msgstr ""
 
-#: includes/widgets/class-flyout.php:78
+#: includes/Widgets/Flyout.php:78
 msgid "Edit Flyout"
 msgstr ""
 
-#: includes/widgets/class-flyout.php:79
+#: includes/Widgets/Flyout.php:79
 msgid "New Flyout"
 msgstr ""
 
-#: includes/widgets/class-flyout.php:80
+#: includes/Widgets/Flyout.php:80
 msgid "View Flyouts"
 msgstr ""
 
-#: includes/widgets/class-flyout.php:81
+#: includes/Widgets/Flyout.php:81
 msgid "Search Flyouts"
 msgstr ""
 
-#: includes/widgets/class-flyout.php:82
+#: includes/Widgets/Flyout.php:82
 msgid "No Flyouts found"
 msgstr ""
 
-#: includes/widgets/class-flyout.php:83
+#: includes/Widgets/Flyout.php:83
 msgid "No Flyouts found in Trash"
 msgstr ""
 
-#: includes/widgets/class-flyout.php:107
+#: includes/Widgets/Flyout.php:107
 msgid "A blank slate that you can use to build your own flyout from scratch."
 msgstr ""
 
-#: includes/widgets/class-flyout.php:126
+#: includes/Widgets/Flyout.php:126
 msgid "Black Friday Flyout"
 msgstr ""
 
-#: includes/widgets/class-flyout.php:127
+#: includes/Widgets/Flyout.php:127
 msgid "A typical Black Friday flyout to help drive sales."
 msgstr ""
 
-#: includes/widgets/class-popup.php:70
-#: includes/widgets/class-popup.php:80
+#: includes/Widgets/Popup.php:70
+#: includes/Widgets/Popup.php:80
 msgid "Popups"
 msgstr ""
 
-#: includes/widgets/class-popup.php:72
+#: includes/Widgets/Popup.php:72
 msgid "Add Popup"
 msgstr ""
 
-#: includes/widgets/class-popup.php:73
+#: includes/Widgets/Popup.php:73
 msgid "Add New Popup"
 msgstr ""
 
-#: includes/widgets/class-popup.php:74
+#: includes/Widgets/Popup.php:74
 msgid "Edit Popup"
 msgstr ""
 
-#: includes/widgets/class-popup.php:75
+#: includes/Widgets/Popup.php:75
 msgid "New Popup"
 msgstr ""
 
-#: includes/widgets/class-popup.php:76
+#: includes/Widgets/Popup.php:76
 msgid "View Popups"
 msgstr ""
 
-#: includes/widgets/class-popup.php:77
+#: includes/Widgets/Popup.php:77
 msgid "Search Popups"
 msgstr ""
 
-#: includes/widgets/class-popup.php:78
+#: includes/Widgets/Popup.php:78
 msgid "No Popups found"
 msgstr ""
 
-#: includes/widgets/class-popup.php:79
+#: includes/Widgets/Popup.php:79
 msgid "No Popups found in Trash"
 msgstr ""
 
-#: includes/widgets/class-popup.php:103
+#: includes/Widgets/Popup.php:103
 msgid "A blank slate that you can use to build your own popup from scratch."
 msgstr ""
 
-#: includes/widgets/class-popup.php:121
+#: includes/Widgets/Popup.php:121
 msgid "Black Friday Popup"
 msgstr ""
 
-#: includes/widgets/class-popup.php:122
+#: includes/Widgets/Popup.php:122
 msgid "A typical Black Friday popup to help drive sales."
+msgstr ""
+
+#: pro/includes/Admin/Init.php:28
+msgid "Recent"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/special_offer.php:5
+#: pro/includes/Admin/Templates/flyouts/special_offer.php:5
+#: pro/includes/Admin/Templates/popups/special_offer.php:5
+msgid "Special Offer"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/special_offer.php:6
+#: pro/includes/Admin/Templates/flyouts/special_offer.php:6
+#: pro/includes/Admin/Templates/popups/special_offer.php:6
+msgid "Guide visitors to specific specials."
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/special_offer.php:87
+#: pro/includes/Admin/Templates/flyouts/special_offer.php:116
+#: pro/includes/Admin/Templates/popups/special_offer.php:58
+msgid "Special Offer:"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/special_offer.php:116
+#: pro/includes/Admin/Templates/flyouts/special_offer.php:146
+#: pro/includes/Admin/Templates/popups/special_offer.php:103
+msgid "Add special offer..."
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/special_offer.php:155
+#: pro/includes/Admin/Templates/flyouts/special_offer.php:187
+#: pro/includes/Admin/Templates/popups/special_offer.php:162
+msgid "Let's Go!"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/watch_the_video.php:5
+#: pro/includes/Admin/Templates/flyouts/watch_the_video.php:5
+#: pro/includes/Admin/Templates/popups/watch_the_video.php:5
+msgid "Watch the Video"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/watch_the_video.php:6
+#: pro/includes/Admin/Templates/flyouts/watch_the_video.php:6
+#: pro/includes/Admin/Templates/popups/watch_the_video.php:6
+msgid "Guide visitors to a watch a specific video."
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/watch_the_video.php:88
+#: pro/includes/Admin/Templates/flyouts/watch_the_video.php:83
+#: pro/includes/Admin/Templates/popups/watch_the_video.php:58
+msgid "Add video description..."
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/watch_the_video.php:124
+#: pro/includes/Admin/Templates/flyouts/watch_the_video.php:131
+#: pro/includes/Admin/Templates/popups/watch_the_video.php:108
+msgid "Watch the video"
+msgstr ""
+
+#: pro/includes/Admin/Views/dashboard-panel-recent.php:20
+msgid "Recently Updated Widgets"
+msgstr ""
+
+#. translators: %s: refers to the time last modified.
+#: pro/includes/Admin/Views/dashboard-panel-recent.php:49
+msgid "modified %s ago"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:312
+msgid "Very Positive"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:314
+msgid "Mostly Positive"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:316
+msgid "Slightly Positive"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:318
+msgid "Very Negative"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:320
+msgid "Mostly Negative"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:322
+msgid "Slightly Negative"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:324
+msgid "Neutral"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:339
+msgid "engagement rate"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:341
+msgid "Engagement rate % = total number of engagements / total number of views"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:348
+msgid "clicks"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:349
+#: pro/includes/Analytics/RecentActivity.php:144
+msgid "Clicks"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:350
+msgid "Total number of clicks"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:357
+msgid "click rate"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:358
+msgid "Click Rate"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:359
+msgid "Click rate % = total number of clicks / total number of views"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:366
+msgid "conversions"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:367
+#: pro/includes/Analytics/RecentActivity.php:167
+msgid "Conversions"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:368
+msgid "Total number of conversions"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:375
+msgid "conversion rate"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:377
+msgid "Conversion rate % = total number of conversions / total number of views"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:384
+msgid "change in views"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:385
+msgid "Change in Views"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:386
+msgid "Change in Views (This Week vs Last)"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:392
+msgid "change in views %"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:393
+msgid "Change in Views %"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:394
+msgid "Change in Views (This Week vs Last) as a percentage"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:400
+msgid "change in engagements"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:401
+msgid "Change in Engagements"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:402
+msgid "Change in Engagements (This Week vs Last) as a percentage"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:408
+msgid "change in clicks"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:409
+msgid "Change in Clicks"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:410
+msgid "Change in Clicks (This Week vs Last) as a percentage"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:416
+msgid "change in conversions"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:417
+msgid "Change in Conversions"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:418
+msgid "Change in Conversions (This Week vs Last) as a percentage"
+msgstr ""
+
+#: pro/includes/Analytics/RecentActivity.php:79
+msgid "Updated"
+msgstr ""
+
+#. Translators: %d refers to the number of days.
+#: pro/includes/Analytics/RecentActivity.php:127
+msgid "Last %d days"
+msgstr ""
+
+#: pro/includes/Analytics/RecentActivity.php:176
+msgid "Closes"
+msgstr ""
+
+#: pro/includes/EventsFilter.php:87
+msgid "Exclude Roles"
+msgstr ""
+
+#: pro/includes/EventsFilter.php:88
+msgid "Which user roles to exclude for client side event tracking."
+msgstr ""
+
+#: pro/includes/Retention.php:50
+msgid "The number of days before data is deleted. The higher this is, the more data you will store in the database. We do not recommend more than 100 days."
 msgstr ""
 
 #: assets/blocks/example-block/editor/index.js:1

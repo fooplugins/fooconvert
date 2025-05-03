@@ -35,13 +35,15 @@ const files = [
     "!{.github,.github/**,.github/**/*}",
     "!{.chatgpt,.chatgpt/**,.chatgpt/**/*}",
     "!.gitignore",
+    "!.gitmodules",
     "!fs-config.json",
     "!gulpfile.js",
     "!make-pot.mjs",
     "!copy-assets.mjs",
     "!package.json",
     "!package-lock.json",
-    "!webpack.config.js"
+    "!webpack.config.js",
+    "!repomix.config.json"
 ];
 
 // create a .zip containing just the production code for the plugin

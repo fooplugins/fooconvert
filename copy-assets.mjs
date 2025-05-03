@@ -1,6 +1,6 @@
 import { globby } from "globby";
 import { dirname, join } from "path";
-import { copyFile, mkdir } from "fs/promises";
+import { copyFile, mkdir, rm } from "fs/promises";
 
 const toShortTime = timespan => {
     if ( timespan > 1000 ) {
@@ -26,5 +26,30 @@ const performCopy = async(source, target, patterns) => {
     }
 };
 
+const performMove = async(source, target, patterns, clean = true) => {
+    const started = Date.now();
+    try {
+        console.log( `moving "${ source }" to "${ target }"...` );
+        const found = await globby( patterns, { cwd: source } );
+        await Promise.all( found.map( file => {
+            const input = join( source, file );
+            const output = join( target, file );
+            return mkdir( dirname( output ), { recursive: true } )
+                .then( () => copyFile( input, output ) )
+                .then( () => rm( input, { force: true, recursive: true } ) );
+        } ) );
+        if ( clean ) {
+            await rm( source, { force: true, recursive: true } );
+        }
+        console.log( `moved "${ source }" in ${ toShortTime( Date.now() - started ) }` );
+    } catch ( err ) {
+        console.error( `move error: ${ err.message }` );
+    }
+};
+
 await performCopy( "./src/media", "./assets/media", [ '**/*' ] );
 await performCopy( "./src/admin", "./assets/admin", [ '**/*' ] );
+await performCopy( "./pro/src/media", "./pro/assets/media", [ '**/*' ] );
+await performMove( "./assets/pro", "./pro/assets", [ '**/*' ] );
+await performMove( "./assets", "./pro/assets", [ 'editor-pro*.*', 'frontend-pro*.*' ], false );
+await performCopy( "./pro/src", "./pro/assets", [ '**/block.json' ] );
