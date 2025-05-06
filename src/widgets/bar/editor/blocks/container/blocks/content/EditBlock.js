@@ -19,7 +19,7 @@ const EditBlock = props => {
 
     const { hasInnerBlocks } = useInnerBlocks( clientId );
 
-    const inlineStyles = useStyles( styles, { background: 'background', text: 'color' } );
+    const inlineStyles = useStyles( styles );
     const blockProps = useBlockProps( {
         className: classnames( CONTENT_CLASS_NAME, {
             'show-inserter': !hasInnerBlocks,

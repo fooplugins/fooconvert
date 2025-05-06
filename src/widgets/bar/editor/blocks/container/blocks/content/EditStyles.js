@@ -1,14 +1,11 @@
 import { InspectorControls } from "@wordpress/block-editor";
 import { __ } from "@wordpress/i18n";
 import {
+    BackgroundImagePanel,
     BorderToolsPanel,
     ColorToolsPanel,
-    DimensionToolsPanel,
-    SizeControl, ToggleSelectControl,
-    ToolsPanelItem,
+    DimensionToolsPanel
 } from "#editor";
-import { PanelBody, PanelRow } from "@wordpress/components";
-import { alignCenter, alignLeft, alignRight } from "@wordpress/icons";
 
 const EditStyles = props => {
     const {
@@ -40,6 +37,12 @@ const EditStyles = props => {
                 onChange={ setColor }
                 options={ colors }
                 defaults={ stylesDefaults?.color }
+            />
+            <BackgroundImagePanel
+                panelId={ clientId }
+                value={ styles }
+                defaultValues={ stylesDefaults }
+                onChange={ setStyles }
             />
             <BorderToolsPanel
                 panelId={ clientId }
