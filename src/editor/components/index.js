@@ -31,3 +31,5 @@ export * from "./compatibility";
 export * from "./icons-picker-control";
 export * from "./icons-dropdown";
 export * from "./icon-tools-panel";
+
+export * from "./background-image-panel";

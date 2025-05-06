@@ -2,6 +2,7 @@
 
 namespace FooPlugins\FooConvert;
 
+use FooPlugins\FooConvert\Components\BackgroundImagePanel;
 use FooPlugins\FooConvert\Components\BorderControl;
 use FooPlugins\FooConvert\Components\BorderRadiusControl;
 use FooPlugins\FooConvert\Components\BorderToolsPanel;
@@ -29,6 +30,7 @@ class Components {
         $this->box_unit_control = new BoxUnitControl();
 
         // composite controls
+        $this->background_image_panel = new BackgroundImagePanel();
         $this->border_tools_panel = new BorderToolsPanel( $this->border_control, $this->border_radius_control );
         $this->color_tools_panel = new ColorToolsPanel();
         $this->dimensions_tools_panel = new DimensionsToolsPanel( $this->box_unit_control );
@@ -40,6 +42,7 @@ class Components {
     public BorderRadiusControl $border_radius_control;
     public BoxUnitControl $box_unit_control;
 
+    public BackgroundImagePanel $background_image_panel;
     public BorderToolsPanel $border_tools_panel;
     public ColorToolsPanel $color_tools_panel;
     public DimensionsToolsPanel $dimensions_tools_panel;
@@ -56,6 +59,10 @@ class Components {
             $color = Utils::get_array( $styles_attribute, 'color' );
             if ( !empty( $color ) ) {
                 $styles = array_merge( $styles, $this->color_tools_panel->get_styles( $color, !empty( $color_map ) ? $color_map : $prefix ) );
+            }
+            $background = Utils::get_array( $styles_attribute, 'background' );
+            if ( !empty( $background ) ) {
+                $styles = array_merge( $styles, $this->background_image_panel->get_styles( $background, $prefix ) );
             }
             $dimensions = Utils::get_array( $styles_attribute, 'dimensions' );
             if ( !empty( $dimensions ) ) {

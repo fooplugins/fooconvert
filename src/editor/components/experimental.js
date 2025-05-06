@@ -19,6 +19,14 @@ import {
     ToggleGroupControlOptionIcon as stableToggleGroupControlOptionIcon,
     __experimentalNumberControl,
     NumberControl as stableNumberControl,
+    __experimentalVStack,
+    VStack as stableVStack,
+    __experimentalHStack,
+    HStack as stableHStack,
+    __experimentalTruncate,
+    Truncate as stableTruncate,
+    __experimentalDropdownContentWrapper,
+    DropdownContentWrapper as stableDropdownContentWrapper
 } from "@wordpress/components";
 
 import {
@@ -108,6 +116,30 @@ export const ToggleGroupControlOptionIcon = import_x(
 export const NumberControl = import_x(
     __experimentalNumberControl, '__experimentalNumberControl',
     stableNumberControl, 'NumberControl',
+    '@wordpress/components'
+);
+
+export const VStack = import_x(
+    __experimentalVStack, '__experimentalVStack',
+    stableVStack, 'VStack',
+    '@wordpress/components'
+);
+
+export const HStack = import_x(
+    __experimentalHStack, '__experimentalHStack',
+    stableHStack, 'HStack',
+    '@wordpress/components'
+);
+
+export const Truncate = import_x(
+    __experimentalTruncate, '__experimentalTruncate',
+    stableTruncate, 'Truncate',
+    '@wordpress/components'
+);
+
+export const DropdownContentWrapper = import_x(
+    __experimentalDropdownContentWrapper, '__experimentalDropdownContentWrapper',
+    stableDropdownContentWrapper, 'DropdownContentWrapper',
     '@wordpress/components'
 );
 

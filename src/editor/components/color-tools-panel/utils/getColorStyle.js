@@ -2,7 +2,7 @@ import { isPlainObject, isString } from "@steveush/utils";
 
 const KNOWN = {
     text: 'color',
-    background: 'background',
+    background: 'backgroundColor',
     icon: 'fill'
 };
 

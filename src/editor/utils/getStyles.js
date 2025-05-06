@@ -4,7 +4,8 @@ import {
     getColorStyle,
     getDimensionStyle,
     getTypographyStyle,
-    getBoxShadowStyle
+    getBoxShadowStyle,
+    getBackgroundImageStyle
 } from "../components";
 
 const getStyles = ( value, colorMap ) => {
@@ -13,6 +14,7 @@ const getStyles = ( value, colorMap ) => {
         ...getBorderRadiusStyle( value?.border?.radius, true ),
         ...getBoxShadowStyle( value?.border?.shadow ),
         ...getColorStyle( value?.color, colorMap ),
+        ...getBackgroundImageStyle( value ),
         ...getDimensionStyle( value?.dimensions ),
         ...getTypographyStyle( value?.typography )
     };
