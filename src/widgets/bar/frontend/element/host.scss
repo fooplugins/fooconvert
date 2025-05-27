@@ -25,6 +25,7 @@
     height: 100%;
     max-width: 100%;
     max-height: 100%;
+    align-items: center;
   }
 
   &::part(open-button) {
@@ -43,10 +44,6 @@
     color: #000000;
     padding: 6px;
     margin: 24px;
-    //border: solid 1px #DDDDDD;
-    //border-radius: 4px;
-    //padding: 0;
-    //margin: 0;
     border: none;
     border-radius: 0;
     outline: none;
@@ -186,9 +183,6 @@
 
 :host(:not([open-button])),
 :host([open-button=right]) {
-  &::part(inner) {
-    align-items: flex-end;
-  }
   &::part(open-button) {
     right: 0;
     left: unset;
@@ -196,9 +190,6 @@
 }
 
 :host([open-button=left]) {
-  &::part(inner) {
-    align-items: flex-start;
-  }
   &::part(open-button) {
     right: unset;
     left: 0;

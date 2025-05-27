@@ -453,6 +453,8 @@ class Bar extends BaseWidget {
 
         $root = array();
         $styles_attribute = Utils::get_array( $attributes, 'styles' );
+        $settings_attribute = $this->get_settings( $attributes );
+
         if ( !empty( $styles_attribute ) ) {
             $root = array_merge( $root, $components->get_styles( $styles_attribute ) );
         }
@@ -463,6 +465,12 @@ class Bar extends BaseWidget {
             $container_styles_attribute = Utils::get_array( $container_attribute, 'styles' );
             if ( !empty( $container_styles_attribute ) ) {
                 $container = array_merge( $container, $components->get_styles( $container_styles_attribute ) );
+            }
+        }
+        if ( !empty( $settings_attribute ) ) {
+            $settings_max_width = Utils::get_string( $settings_attribute, 'maxWidth' );
+            if ( !empty( $settings_max_width ) ) {
+                $container['max-width'] = $settings_max_width;
             }
         }
 
