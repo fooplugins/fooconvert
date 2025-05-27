@@ -20,3 +20,16 @@
     gap: 1rem;
   }
 }
+
+.fc-text-shadow {
+  text-shadow: 3px 3px 5px #23366E;
+}
+
+.fc-text-shadow-stroke {
+  text-shadow:
+          -1px -1px 0 #FFFFFF,
+          1px -1px 0 #FFFFFF,
+          -1px 1px 0 #FFFFFF,
+          1px 1px 0 #FFFFFF,
+          3px 3px 5px #23366E;
+}
