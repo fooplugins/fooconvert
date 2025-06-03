@@ -1,7 +1,10 @@
 export { default as contextNS } from "./contextNS";
 export { default as debounce } from "./debounce";
+export { default as getBackgroundAndColorStyles } from "./getBackgroundAndColorStyles";
+export { default as getCSSBackgroundProperty } from "./getCSSBackgroundProperty";
 export { default as getBlockSettings } from "./getBlockSettings";
 export { default as getEditorDocument } from "./getEditorDocument";
+export { default as isCSSGradient } from "./isCSSGradient";
 export { default as isStringNotEmpty } from "./isStringNotEmpty";
 export { default as isStringOrUndefined } from "./isStringOrUndefined";
 export { default as noop } from "./noop";

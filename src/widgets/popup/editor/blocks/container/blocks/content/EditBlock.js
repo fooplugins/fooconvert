@@ -1,9 +1,6 @@
 import { useBlockProps, useInnerBlocksProps } from "@wordpress/block-editor";
 import classnames from "classnames";
 import {
-    useBorderStyle,
-    useColorStyle,
-    useDimensionStyle,
     useInnerBlocks, useStyles
 } from "#editor";
 import ContentAppender from "./ContentAppender";

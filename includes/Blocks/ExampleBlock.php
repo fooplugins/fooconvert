@@ -59,7 +59,7 @@ class ExampleBlock extends BaseBlock {
         if ( !empty( $styles_attribute ) ) {
             $root = array_merge(
                 $root,
-                FooConvert::plugin()->components->get_styles( $styles_attribute, '', array(
+                FooConvert::plugin()->components->get_styles( $styles_attribute, array(
                     'background' => 'background',
                     'text'       => 'color'
                 ) )

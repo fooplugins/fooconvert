@@ -49,29 +49,45 @@ class Components {
     public OpenTriggerPanel $open_trigger_panel;
     public TypographyToolsPanel $typography_tools_panel;
 
-    function get_styles( array $styles_attribute, string $prefix = '', array $color_map = array() ): array {
+    function get_styles( array $styles_attribute, array $color_map = array() ): array {
         $styles = array();
         if ( !empty( $styles_attribute ) ) {
             $border = Utils::get_array( $styles_attribute, 'border' );
             if ( !empty( $border ) ) {
-                $styles = array_merge( $styles, $this->border_tools_panel->get_styles( $border, $prefix ) );
+                $styles = array_merge( $styles, $this->border_tools_panel->get_styles( $border ) );
             }
-            $color = Utils::get_array( $styles_attribute, 'color' );
-            if ( !empty( $color ) ) {
-                $styles = array_merge( $styles, $this->color_tools_panel->get_styles( $color, !empty( $color_map ) ? $color_map : $prefix ) );
-            }
-            $background = Utils::get_array( $styles_attribute, 'background' );
-            if ( !empty( $background ) ) {
-                $styles = array_merge( $styles, $this->background_image_panel->get_styles( $background, $prefix ) );
+            $background_and_color_styles = $this->get_background_and_color_styles( $styles_attribute, $color_map );
+            if ( !empty( $background_and_color_styles ) ) {
+                $styles = array_merge( $styles, $background_and_color_styles );
             }
             $dimensions = Utils::get_array( $styles_attribute, 'dimensions' );
             if ( !empty( $dimensions ) ) {
-                $styles = array_merge( $styles, $this->dimensions_tools_panel->get_styles( $dimensions, $prefix ) );
+                $styles = array_merge( $styles, $this->dimensions_tools_panel->get_styles( $dimensions ) );
             }
             $typography = Utils::get_array( $styles_attribute, 'typography' );
             if ( !empty( $typography ) ) {
-                $styles = array_merge( $styles, $this->typography_tools_panel->get_styles( $typography, $prefix ) );
+                $styles = array_merge( $styles, $this->typography_tools_panel->get_styles( $typography ) );
             }
+        }
+        return $styles;
+    }
+
+    function get_background_and_color_styles( array $styles_attribute, array $color_map = array() ): array {
+        $styles = array();
+        $color = Utils::get_array( $styles_attribute, 'color' );
+        $color_styles = array();
+        if ( !empty( $color ) ) {
+            $color_styles = $this->color_tools_panel->get_styles( $color, $color_map );
+            $styles = array_merge( $styles, $color_styles );
+        }
+        $background = Utils::get_array( $styles_attribute, 'background' );
+        $background_styles = array();
+        if ( !empty( $background ) ) {
+            $background_styles = $this->background_image_panel->get_styles( $background );
+            $styles = array_merge( $styles, $background_styles );
+        }
+        if ( array_key_exists( 'background-image', $color_styles ) && array_key_exists( 'background-image', $background_styles ) ) {
+            $styles['background-image'] = $background_styles['background-image'] . ',' . $color_styles['background-image'];
         }
         return $styles;
     }

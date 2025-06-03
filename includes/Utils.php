@@ -518,6 +518,28 @@ if ( !class_exists( __NAMESPACE__ . '\Utils' ) ) {
 
         //endregion
 
+        //region General Utils
+
+        /**
+         * Checks if a CSS value is a gradient.
+         * @param string $value
+         * @return bool
+         */
+        public static function is_css_gradient( string $value ): bool {
+            return preg_match( '/^(linear|radial|conic|repeating-linear|repeating-radial|repeating-conic)-gradient\(/', $value ) === 1;
+        }
+
+        /**
+         * Get the CSS background property to use based on the value.
+         * @param string $value
+         * @return string
+         */
+        public static function get_css_background_property( string $value ): string {
+            return self::is_css_gradient( $value ) ? 'background-image' : 'background-color';
+        }
+
+        //endregion
+
         //region Post Type - functions to help with various post type related things :P
 
         /**

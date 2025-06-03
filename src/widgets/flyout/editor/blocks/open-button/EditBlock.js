@@ -1,5 +1,5 @@
 import { useBlockProps } from "@wordpress/block-editor";
-import { SlugIcon, useStyles } from "#editor";
+import { getCSSBackgroundProperty, SlugIcon, useStyles } from "#editor";
 
 export const OPEN_BUTTON_CLASS_NAME = 'fc--flyout-open-button';
 
@@ -16,7 +16,7 @@ const EditBlock = props => {
     } = props;
 
     const buttonStyles = useStyles( styles, {
-        background: 'background',
+        background: getCSSBackgroundProperty,
         icon: 'color'
     } );
 

@@ -393,10 +393,7 @@ class Flyout extends BaseWidget {
         if ( !empty( $content_attribute ) ) {
             $content_styles_attribute = Utils::get_array( $content_attribute, 'styles' );
             if ( !empty( $content_styles_attribute ) ) {
-                $content = array_merge( $content, $components->get_styles( $content_styles_attribute, '', array(
-                    'background' => 'background',
-                    'text'       => 'color'
-                ) ) );
+                $content = array_merge( $content, $components->get_styles( $content_styles_attribute ) );
 
                 $content_width = Utils::get_string( $content_styles_attribute, 'width', '480px' );
                 if ( !empty( $content_width ) && $content_width !== '480px' ) {
@@ -410,8 +407,8 @@ class Flyout extends BaseWidget {
         if ( !empty( $close_button_attribute ) ) {
             $close_button_styles_attribute = Utils::get_array( $close_button_attribute, 'styles' );
             if ( !empty( $close_button_styles_attribute ) ) {
-                $close_button = array_merge( $close_button, $components->get_styles( $close_button_styles_attribute, '', array(
-                    'background' => 'background',
+                $close_button = array_merge( $close_button, $components->get_styles( $close_button_styles_attribute, array(
+                    'background' => array( Utils::class, 'get_css_background_property' ),
                     'icon'       => 'color'
                 ) ) );
             }
@@ -433,8 +430,8 @@ class Flyout extends BaseWidget {
         if ( !empty( $open_button_attribute ) ) {
             $open_button_styles_attribute = Utils::get_array( $open_button_attribute, 'styles' );
             if ( !empty( $open_button_styles_attribute ) ) {
-                $open_button = array_merge( $open_button, $components->get_styles( $open_button_styles_attribute, '', array(
-                    'background' => 'background',
+                $open_button = array_merge( $open_button, $components->get_styles( $open_button_styles_attribute, array(
+                    'background' => array( Utils::class, 'get_css_background_property' ),
                     'icon'       => 'color'
                 ) ) );
             }

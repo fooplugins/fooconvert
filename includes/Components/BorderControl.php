@@ -60,11 +60,11 @@ class BorderControl extends BaseComponent {
         return '';
     }
 
-    function get_styles( $value, string $prefix = '', bool $style_required = false ): array {
+    function get_styles( $value, bool $style_required = false ): array {
         $styles = array();
         $border = $this->get_css_value( $value );
         if ( !empty( $border ) ) {
-            $styles["{$prefix}border"] = $border;
+            $styles['border'] = $border;
         } elseif ( $this->is_possible_box_value( $value ) ) {
             list(
                 'top' => $top,
@@ -75,22 +75,22 @@ class BorderControl extends BaseComponent {
 
             $borderTop = $this->get_css_value( $top, $style_required );
             if ( !empty( $borderTop ) ) {
-                $styles["{$prefix}border-top"] = $borderTop;
+                $styles['border-top'] = $borderTop;
             }
 
             $borderRight = $this->get_css_value( $right, $style_required );
             if ( !empty( $borderRight ) ) {
-                $styles["{$prefix}border-right"] = $borderRight;
+                $styles['border-right'] = $borderRight;
             }
 
             $borderBottom = $this->get_css_value( $bottom, $style_required );
             if ( !empty( $borderBottom ) ) {
-                $styles["{$prefix}border-bottom"] = $borderBottom;
+                $styles['border-bottom'] = $borderBottom;
             }
 
             $borderLeft = $this->get_css_value( $left, $style_required );
             if ( !empty( $borderLeft ) ) {
-                $styles["{$prefix}border-left"] = $borderLeft;
+                $styles['border-left'] = $borderLeft;
             }
         }
         return $styles;

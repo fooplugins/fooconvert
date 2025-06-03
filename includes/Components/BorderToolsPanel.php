@@ -15,22 +15,22 @@ class BorderToolsPanel extends BaseComponent {
         $this->border_radius_control = $border_radius_control;
     }
 
-    function get_styles( array $value, string $prefix = '', bool $style_required = false ): array {
+    function get_styles( array $value, bool $style_required = false ): array {
         $styles = array();
         $shadow = Utils::get_string( $value, 'shadow' );
         if ( !empty( $shadow ) ) {
-            $styles["{$prefix}box-shadow"] = $shadow;
+            $styles['box-shadow'] = $shadow;
         }
         $radius = Utils::get_key( $value, 'radius' );
         if ( !empty( $radius ) ) {
             $styles = array_merge(
                 $styles,
-                $this->border_radius_control->get_styles( $radius, $prefix )
+                $this->border_radius_control->get_styles( $radius )
             );
         }
         return array_merge(
             $styles,
-            $this->border_control->get_styles( $value, $prefix, $style_required )
+            $this->border_control->get_styles( $value, $style_required )
         );
     }
 }

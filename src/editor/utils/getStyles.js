@@ -1,20 +1,18 @@
 import {
     getBorderRadiusStyle,
     getBorderStyle,
-    getColorStyle,
     getDimensionStyle,
     getTypographyStyle,
-    getBoxShadowStyle,
-    getBackgroundImageStyle
+    getBoxShadowStyle
 } from "../components";
+import getBackgroundAndColorStyles from "./getBackgroundAndColorStyles";
 
 const getStyles = ( value, colorMap ) => {
     return {
         ...getBorderStyle( value?.border ),
         ...getBorderRadiusStyle( value?.border?.radius, true ),
         ...getBoxShadowStyle( value?.border?.shadow ),
-        ...getColorStyle( value?.color, colorMap ),
-        ...getBackgroundImageStyle( value ),
+        ...getBackgroundAndColorStyles( value, colorMap ),
         ...getDimensionStyle( value?.dimensions ),
         ...getTypographyStyle( value?.typography )
     };

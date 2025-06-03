@@ -48,11 +48,11 @@ class BorderRadiusControl extends BaseComponent {
         return '';
     }
 
-    function get_styles( $value, string $prefix = '' ): array {
+    function get_styles( $value ): array {
         $styles = array();
         $border_radius = $this->get_css_value( $value );
         if ( !empty( $border_radius ) ) {
-            $styles["{$prefix}border-radius"] = $border_radius;
+            $styles['border-radius'] = $border_radius;
         }
         return $styles;
     }

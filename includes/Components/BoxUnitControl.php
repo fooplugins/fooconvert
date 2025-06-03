@@ -46,11 +46,11 @@ class BoxUnitControl extends BaseComponent {
         return $this->make_box_unit( $value, array_merge( array(), $this->default_box_unit_size, $defaults ) );
     }
 
-    function get_styles( $value, string $css_Basename, string $prefix = '' ): array {
+    function get_styles( $value, string $css_basename ): array {
         $styles = array();
 
         if ( Utils::is_string( $value, true ) ) {
-            $styles["$prefix$css_Basename"] = $value;
+            $styles["$css_basename"] = $value;
         } elseif ( $this->is_possible_box_unit( $value ) ) {
             list(
                 'top' => $top,
@@ -60,16 +60,16 @@ class BoxUnitControl extends BaseComponent {
                 ) = $this->make_box_unit( $value, $this->default_box_unit );
 
             if ( !empty( $top ) ) {
-                $styles["$prefix$css_Basename-top"] = $top;
+                $styles["$css_basename-top"] = $top;
             }
             if ( !empty( $right ) ) {
-                $styles["$prefix$css_Basename-right"] = $right;
+                $styles["$css_basename-right"] = $right;
             }
             if ( !empty( $bottom ) ) {
-                $styles["$prefix$css_Basename-bottom"] = $bottom;
+                $styles["$css_basename-bottom"] = $bottom;
             }
             if ( !empty( $left ) ) {
-                $styles["$prefix$css_Basename-left"] = $left;
+                $styles["$css_basename-left"] = $left;
             }
         }
 
