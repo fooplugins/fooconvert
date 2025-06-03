@@ -37,6 +37,7 @@ const TriggerControls = () => {
     const setTrigger = ( value ) => setSettings( { trigger: value } );
     const setCloseAnchor = value => setSettings( { closeAnchor: isString( value, true ) && value !== settingsDefaults?.closeAnchor ? value : undefined } );
     const setBackdropIgnore = value => setSettings( { backdropIgnore: value !== settingsDefaults?.backdropIgnore ? value : undefined } );
+    const setCloseOnSubmit = value => setSettings( { closeOnSubmit: value !== settingsDefaults?.closeOnSubmit ? value : undefined } );
 
     const setCloseButtonHidden = value => setCloseButtonSettings( { hidden: value !== closeButtonSettingsDefaults?.hidden ? value : undefined } );
 
@@ -52,23 +53,31 @@ const TriggerControls = () => {
                     />
                 </PanelRow>
             </PluginDocumentSettingPanel>
-            <PluginDocumentSettingPanel name="fc--close-trigger" title={ __( 'Close Trigger', 'fooconvert' ) } initialOpen={ false }>
+            <PluginDocumentSettingPanel name="fc--close-trigger" title={ __( 'Close Trigger', 'fooconvert' ) }>
                 <PanelRow>
                     <ToggleControl
                         label={ __( 'Hide close button', 'fooconvert' ) }
                         help={ __( 'Hide the default close button.', 'fooconvert' ) }
-                        checked={ closeButtonSettings?.hidden ?? closeButtonSettingsDefaults?.hidden ?? false  }
+                        checked={ closeButtonSettings?.hidden ?? closeButtonSettingsDefaults?.hidden ?? false }
                         onChange={ setCloseButtonHidden }
                     />
                 </PanelRow>
                 <PanelRow>
                     <ToggleControl
-                        label={ __( 'Ignore backdrop click', 'fooconvert' ) }
-                        help={ __( 'Do not close the popup when the backdrop is clicked.', 'fooconvert' ) }
-                        checked={ settings?.backdropIgnore ?? settingsDefaults?.backdropIgnore ?? false  }
-                        onChange={ setBackdropIgnore }
+                        label={ __( 'Close on backdrop click', 'fooconvert' ) }
+                        help={ __( 'Close the popup when the backdrop is clicked.', 'fooconvert' ) }
+                        checked={ !( settings?.backdropIgnore ?? settingsDefaults?.backdropIgnore ?? false ) }
+                        onChange={ value => setBackdropIgnore( !value ) }
                     />
                 </PanelRow>
+                {/*<PanelRow>*/}
+                {/*    <ToggleControl*/}
+                {/*        label={ __( 'Close on form submit', 'fooconvert' ) }*/}
+                {/*        help={ __( 'Close the popup when a child form is submitted.', 'fooconvert' ) }*/}
+                {/*        checked={ settings?.closeOnSubmit ?? settingsDefaults?.closeOnSubmit ?? false }*/}
+                {/*        onChange={ setCloseOnSubmit }*/}
+                {/*    />*/}
+                {/*</PanelRow>*/}
                 <PanelRow>
                     <ToggleControl
                         label={ __( 'Close on anchor click', 'fooconvert' ) }

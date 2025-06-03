@@ -1,4 +1,4 @@
-import { BaseControl, RangeControl, SelectControl, TextControl } from "@wordpress/components";
+import { BaseControl, RangeControl, SelectControl, TextControl, ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { cleanObject, isNumberWithin, isString } from "@steveush/utils";
 
@@ -9,7 +9,7 @@ import "./Component.scss";
  */
 
 /**
- * @typedef {{value: TriggerType, label: import('react').ReactNode, help?: import('react').ReactNode, dataLabel?: import('react').ReactNode, dataHelp?: import('react').ReactNode}} Trigger
+ * @typedef {{value: TriggerType, label: import('react').ReactNode, help?: import('react').ReactNode, dataLabel?: import('react').ReactNode, dataHelp?: import('react').ReactNode, once?: boolean}} Trigger
  */
 
 /**
@@ -22,7 +22,8 @@ const TRIGGERS = [ {
 }, {
     value: 'immediate',
     label: __( 'On page load', 'fooconvert' ),
-    help: __( 'Open immediately on page load.', 'fooconvert' )
+    help: __( 'Open immediately on page load.', 'fooconvert' ),
+    once: true
 }, {
     value: 'anchor',
     label: __( 'On anchor click', 'fooconvert' ),
@@ -34,7 +35,8 @@ const TRIGGERS = [ {
     label: __( 'On anchor visible', 'fooconvert' ),
     help: __( 'Open when an anchor becomes visible within the window.', 'fooconvert' ),
     dataLabel: __( 'Anchor', 'fooconvert' ),
-    dataHelp: __( 'Add an anchor to a block and then insert the same value here.', 'fooconvert' )
+    dataHelp: __( 'Add an anchor to a block and then insert the same value here.', 'fooconvert' ),
+    once: true
 }, {
     value: 'element',
     label: __( 'On element click', 'fooconvert' ),
@@ -46,19 +48,22 @@ const TRIGGERS = [ {
     label: __( 'On exit intent', 'fooconvert' ),
     help: __( 'Open when the mouse exits the top of the window.', 'fooconvert' ),
     dataLabel: __( 'Wait time in seconds', 'fooconvert' ),
-    dataHelp: __( 'Only detect after the a user has been on the page for the specified amount of time.', 'fooconvert' )
+    dataHelp: __( 'Only detect after the a user has been on the page for the specified amount of time.', 'fooconvert' ),
+    once: true
 }, {
     value: 'scroll',
     label: __( 'On page scroll', 'fooconvert' ),
     help: __( 'Open after the page has been scrolled.', 'fooconvert' ),
     dataLabel: __( 'Scroll percent', 'fooconvert' ),
-    dataHelp: __( 'The percentage of the page to scroll before opening.', 'fooconvert' )
+    dataHelp: __( 'The percentage of the page to scroll before opening.', 'fooconvert' ),
+    once: true
 }, {
     value: 'timer',
     label: __( 'On timer elapsed', 'fooconvert' ),
     help: __( 'Open after a specified amount of time.', 'fooconvert' ),
     dataLabel: __( 'Wait time in seconds', 'fooconvert' ),
-    dataHelp: __( 'The amount of time to wait before opening.', 'fooconvert' )
+    dataHelp: __( 'The amount of time to wait before opening.', 'fooconvert' ),
+    once: true
 } ];
 
 const OpenTriggerComponent = ( props ) => {
@@ -71,7 +76,7 @@ const OpenTriggerComponent = ( props ) => {
         hideLabelFromVision
     } = props;
 
-    const { type, data } = value ?? {};
+    const { type, data, once } = value ?? {};
 
     let options = [ ...TRIGGERS ];
     if ( !allowEmpty ) {
@@ -80,7 +85,8 @@ const OpenTriggerComponent = ( props ) => {
 
     const selected = options.find( o => o.value === type ) ?? options.at( 0 );
 
-    const setTrigger = ( type, data ) => {
+    const setTrigger = ( type, data, once ) => {
+        once = Boolean( once );
         switch ( type ) {
             case "anchor":
             case "element":
@@ -95,7 +101,7 @@ const OpenTriggerComponent = ( props ) => {
                 data = isNumberWithin( data, 0, 100 ) ? data : 15;
                 break;
         }
-        onChange( cleanObject( { type, data } ) );
+        onChange( cleanObject( { type, data, once } ) );
     };
 
     const renderType = () => {
@@ -134,7 +140,7 @@ const OpenTriggerComponent = ( props ) => {
                         label={ selected.dataLabel }
                         help={ selected?.dataHelp }
                         value={ data ?? "" }
-                        onChange={ value => setTrigger( selected.value, value ) }
+                        onChange={ value => setTrigger( selected.value, value, once ) }
                         __nextHasNoMarginBottom
                     />
                 );
@@ -149,7 +155,7 @@ const OpenTriggerComponent = ( props ) => {
                         initialPosition={ selected.value === 'scroll' ? 20 : 15 }
                         min={ selected.value === 'scroll' ? 1 : 0 }
                         max={ 100 }
-                        onChange={ value => setTrigger( selected.value, value ) }
+                        onChange={ value => setTrigger( selected.value, value, once ) }
                         __nextHasNoMarginBottom
                     />
                 );
@@ -157,10 +163,24 @@ const OpenTriggerComponent = ( props ) => {
         return null;
     };
 
+    const renderOnce = () => {
+        if ( selected.once ) {
+            return (
+                <ToggleControl
+                    label={ __( 'Only show once', 'fooconvert' ) }
+                    help={ __( 'Once closed will not be shown to a user again.', 'fooconvert' ) }
+                    checked={ once ?? false  }
+                    onChange={ value => setTrigger( selected.value, data, value ) }
+                />
+            )
+        }
+    };
+
     return (
         <div className="fc--open-trigger-component">
             { renderType() }
             { renderData() }
+            { renderOnce() }
         </div>
     );
 };

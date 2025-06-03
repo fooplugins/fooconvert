@@ -13,3 +13,8 @@ export { default as logEvent, LOG_EVENT_TYPES } from "./logEvent";
 export { default as setCookie } from "./setCookie";
 export { default as stringOrUndefined } from "./stringOrUndefined";
 export { default as getParentWidgetElement } from "./getParentWidgetElement";
+export { default as getSeen } from "./getSeen";
+export { default as setSeen } from "./setSeen";
+export { default as resetSeen } from "./resetSeen";
+export { default as getLocalData } from "./getLocalData";
+export { default as setLocalData } from "./setLocalData";

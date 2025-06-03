@@ -69,6 +69,8 @@ class OpenTriggerPanel extends BaseComponent {
                 }
                 break;
         }
+        $trigger_once = Utils::get_bool( $attr_value, 'once' );
+        $data['triggerOnce'] = $trigger_once;
         return $data;
     }
 }

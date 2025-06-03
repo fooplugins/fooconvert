@@ -104,7 +104,7 @@ const EditPlaceholder = props => {
         <VariationPicker
             label={ __( "Choose a template", "fooconvert" ) }
             instructions={ __( "Select a template to start with.", "fooconvert" ) }
-            reset={ { variation: undefined } }
+            reset={ { template: undefined } }
             media="thumbnail"
             { ...props }
         />

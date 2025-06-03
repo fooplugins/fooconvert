@@ -18,7 +18,7 @@ const EditSettings = props => {
         settingsDefaults,
         styles,
         setStyles,
-        stylesDefaults,
+        stylesDefaults
     } = props;
 
     const setTransitions = value => setSettings( { transitions: value !== settingsDefaults?.transitions ? value : undefined } );
@@ -38,7 +38,7 @@ const EditSettings = props => {
     return (
         <>
             <InspectorControls group="settings">
-                <PanelBody title={ __( 'Behavior', 'fooconvert' ) } initialOpen={ false }>
+                <PanelBody title={ __( 'Behavior', 'fooconvert' ) } initialOpen={ true }>
                     <PanelRow>
                         <ToggleControl
                             label={ __( 'Maximize on mobile', 'fooconvert' ) }

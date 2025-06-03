@@ -1,6 +1,6 @@
 import WidgetElement from "./WidgetElement";
 import { isFunction, isNumber, isPlainObject, isString, isUndefined, strim } from "@steveush/utils";
-import { getClickableData, getDocumentScrollPercent, LOG_EVENT_TYPES, isSelector } from "../utils";
+import { getClickableData, getDocumentScrollPercent, LOG_EVENT_TYPES, isSelector, getSeen, setSeen } from "../utils";
 
 /**
  *
@@ -65,6 +65,10 @@ class TriggeredElement extends WidgetElement {
             }
         }
         return null;
+    }
+
+    get triggerOnce() {
+        return this.config?.triggerOnce ?? false;
     }
 
     get open() {
@@ -181,7 +185,15 @@ class TriggeredElement extends WidgetElement {
         if ( !this.isConfigurationInitialized ) {
             this.initializeConfiguration();
         }
-        const { postType } = this.config;
+        const { postId, postType } = this.config;
+        if ( this.triggerOnce && state && getSeen( postId ) ) {
+            // this.#openData = { silent: true };
+            // this.open = false;
+            console.log( 'Not allowed, shown once already' );
+            this.remove();
+            return;
+        }
+
         if ( isString( postType, true ) ) {
             this.ownerDocument.documentElement.classList.toggle( `${ postType }__open`, state );
         }
@@ -202,8 +214,14 @@ class TriggeredElement extends WidgetElement {
             }
         }
 
-        this.dispatch( state ? "open" : "close" );
-        this.log( state ? LOG_EVENT_TYPES.OPEN : LOG_EVENT_TYPES.CLOSE, data );
+        if ( this.triggerOnce && !state ) {
+            setSeen( postId );
+        }
+
+        if ( !data.silent ) {
+            this.dispatch( state ? "open" : "close" );
+            this.log( state ? LOG_EVENT_TYPES.OPEN : LOG_EVENT_TYPES.CLOSE, data );
+        }
         this.#openData = null;
     }
 
