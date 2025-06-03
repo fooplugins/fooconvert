@@ -60,7 +60,7 @@ class DisplayRules extends BaseComponent {
             if ( $hook_suffix === 'edit.php' && isset( $_GET['post_type'] ) ) {
                 $current_post_type = sanitize_key( $_GET['post_type'] );
                 if ( $current_post_type === $post_type ) {
-                    wp_add_inline_style( 'common', '.column-fc-bar_display_rules { width: 10%; }' );
+                    wp_add_inline_style( 'common', ".column-{$post_type}_display_rules { width: 10%; }" );
                 }
             }
         } );
