@@ -32,6 +32,7 @@ define( 'FOOCONVERT_EVENT_TYPE_OPEN', 'open' );
 define( 'FOOCONVERT_EVENT_TYPE_CLOSE', 'close' );
 define( 'FOOCONVERT_EVENT_TYPE_CLICK', 'click' );
 define( 'FOOCONVERT_EVENT_TYPE_UPDATE', 'update' );
+define( 'FOOCONVERT_EVENT_TYPE_CONVERSION', 'conversion' );
 define( 'FOOCONVERT_EVENT_SUBTYPE_ENGAGEMENT', 'engagement' );
 
 //other

@@ -107,6 +107,10 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
                     }
 
                     break;
+                case FOOCONVERT_EVENT_TYPE_CONVERSION:
+                    $conversion = true;
+                    $data['sentiment'] = 1; // positive sentiment.
+                    break;
             }
 
             if ( $conversion ) {
@@ -126,6 +130,16 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
         public function store_post_update_event( $post_id, $post_after, $post_before ) {
             // Verify post type
             if ( !fooconvert_is_valid_post_type( $post_after->post_type ) ) {
+                return;
+            }
+
+            // Verify post is not a revision
+            if ( $post_after->post_type === 'revision' ) {
+                return;
+            }
+
+            // Detect auto-save
+            if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
                 return;
             }
 
