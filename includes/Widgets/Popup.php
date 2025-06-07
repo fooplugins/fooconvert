@@ -101,6 +101,7 @@ class Popup extends BaseWidget {
                 'name'        => 'empty',
                 'title'       => __( 'Empty', 'fooconvert' ),
                 'description' => __( 'A blank slate that you can use to build your own popup from scratch.', 'fooconvert' ),
+                'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__blank.png',
                 'attributes'  => array(
                     'content'     => array(
                         'styles' => array(
@@ -130,8 +131,7 @@ class Popup extends BaseWidget {
                 'name'        => 'black_friday_popup',
                 'title'       => __( 'Black Friday Popup', 'fooconvert' ),
                 'description' => __( 'A typical Black Friday popup to help drive sales.', 'fooconvert' ),
-                'icon'        => '',
-                'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/black_friday_popup.png',
+                'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__black_friday.png',
                 'attributes'  => array(
                     'settings'    => array(
                         'transitions'    => true,

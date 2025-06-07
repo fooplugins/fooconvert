@@ -1,6 +1,9 @@
 import { globby } from "globby";
 import { dirname, join } from "path";
 import { copyFile, mkdir, rm } from "fs/promises";
+import sharp from "sharp";
+import { readdir } from "fs/promises";
+import { extname, basename } from "path";
 
 const toShortTime = timespan => {
     if ( timespan > 1000 ) {
@@ -47,9 +50,32 @@ const performMove = async(source, target, patterns, clean = true) => {
     }
 };
 
-await performCopy( "./src/media", "./assets/media", [ '**/*' ] );
+const resizeTemplates = async (sourceDir, destDir, width = 150, height = 150) => {
+    try {
+        const files = await readdir(sourceDir);
+        const imageFiles = files.filter(file => /\.(jpe?g|png)$/i.test(file));
+
+        await Promise.all(imageFiles.map(file => {
+            const inputPath = `${sourceDir}/${file}`;
+            const outputPath = `${destDir}/${file}`;
+            return mkdir(dirname(outputPath), { recursive: true })
+                .then(() => sharp(inputPath)
+                    .resize(width, height, { fit: "cover" })
+                    .toFile(outputPath));
+        }));
+
+        console.log(`Resized ${imageFiles.length} image(s) from "${sourceDir}" → "${destDir}" (${width}x${height})`);
+    } catch (err) {
+        console.error(`Image resize error for "${sourceDir}": ${err.message}`);
+    }
+};
+
+await resizeTemplates("./src/media/templates/fullsize", "./src/media/templates");
+await resizeTemplates("./pro/src/media/templates/fullsize", "./pro/src/media/templates");
+
+await performCopy( "./src/media", "./assets/media", [ '**/*.{png,jpg,jpeg,gif,webp,svg}', '!templates/fullsize/**' ] );
 await performCopy( "./src/admin", "./assets/admin", [ '**/*' ] );
-await performCopy( "./pro/src/media", "./pro/assets/media", [ '**/*' ] );
+await performCopy( "./pro/src/media", "./pro/assets/media", [ '**/*.{png,jpg,jpeg,gif,webp,svg}', '!templates/fullsize/**' ] );
 await performMove( "./assets/pro", "./pro/assets", [ '**/*' ] );
 await performMove( "./assets", "./pro/assets", [ 'editor-pro*.*', 'frontend-pro*.*' ], false );
 await performCopy( "./pro/src", "./pro/assets", [ '**/block.json' ] );

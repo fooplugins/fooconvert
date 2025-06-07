@@ -58,10 +58,11 @@
     "clsx": "^2.1.1",
     "fast-glob": "^3.3.3",
     "globby": "^14.0.2",
-    "gulp": "^5.0.0",
+    "gulp": "^5.0.1",
     "gulp-freemius-deploy": "^1.0.11",
     "gulp-zip": "^6.0.0",
     "raw-loader": "^4.0.2",
-    "repomix": "^0.2.25"
+    "repomix": "^0.2.25",
+    "sharp": "^0.34.2"
   }
 }
