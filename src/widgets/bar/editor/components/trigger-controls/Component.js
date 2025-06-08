@@ -17,11 +17,20 @@ const TriggerControls = () => {
         closeButton,
     } = attributes;
 
-    const [ closeAnchorChecked, setCloseAnchorChecked ] = useState( isString( settings?.closeAnchor, true ) );
-
     useEffect( () => {
         dispatch( editorStore )?.toggleEditorPanelOpened( 'fc/fc--open-trigger' );
     }, [] );
+
+    const closeAnchor = settings?.closeAnchor;
+    const setCloseAnchor = value => setSettings( { closeAnchor: isString( value, true ) && value !== settingsDefaults?.closeAnchor ? value : undefined } );
+    const hasCloseAnchor = isString( closeAnchor, true );
+    const [ closeAnchorChecked, setCloseAnchorChecked ] = useState( hasCloseAnchor );
+
+    useEffect( () => {
+        if ( !closeAnchorChecked && hasCloseAnchor ) {
+            setCloseAnchor( undefined );
+        }
+    }, [ closeAnchor, closeAnchorChecked ] );
 
     const attributesDefaults = { ...BAR_DEFAULTS };
 
@@ -43,7 +52,6 @@ const TriggerControls = () => {
     const closeButtonSettingsDefaults = { ...( closeButtonDefaults?.settings ?? {} ) };
 
     const setTrigger = ( value ) => setSettings( { trigger: value } );
-    const setCloseAnchor = value => setSettings( { closeAnchor: isString( value, true ) && value !== settingsDefaults?.closeAnchor ? value : undefined } );
 
     const setCloseButtonHidden = value => setCloseButtonSettings( { hidden: value !== closeButtonSettingsDefaults?.hidden ? value : undefined } );
     const setOpenButtonHidden = value => setOpenButtonSettings( { hidden: value !== openButtonSettingsDefaults?.hidden ? value : undefined } );
