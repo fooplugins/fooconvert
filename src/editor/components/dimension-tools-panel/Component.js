@@ -74,6 +74,7 @@ const DimensionToolsPanel = ( {
                         label={ __( "Margin", "fooconvert" ) }
                         value={ margin ?? defaults?.margin }
                         onChange={ setMargin }
+                        min={ -100 }
                     />
                 </ToolsPanelItem>
             ) }
