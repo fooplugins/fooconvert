@@ -102,9 +102,10 @@ class Flyout extends BaseWidget {
     function get_editor_variations(): array {
         return apply_filters( 'fooconvert_editor_variations-' . $this->get_post_type(), array(
             array(
-                'name'        => 'empty',
+                'name'        => 'empty_flyout',
                 'title'       => __( 'Empty', 'fooconvert' ),
                 'description' => __( 'A blank slate that you can use to build your own flyout from scratch.', 'fooconvert' ),
+                'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__blank.png',
                 'attributes'  => array(
                     'openButton'  => array(
                         'styles' => array(
@@ -126,7 +127,7 @@ class Flyout extends BaseWidget {
                             )
                         )
                     ),
-                    'template' => 'empty'
+                    'template' => 'empty_flyout'
                 ),
                 'innerBlocks' => array(
                     array( 'fc/flyout-open-button' ),
@@ -145,7 +146,7 @@ class Flyout extends BaseWidget {
                 'name'        => 'black_friday_flyout',
                 'title'       => __( 'Black Friday Flyout', 'fooconvert' ),
                 'description' => __( 'A typical Black Friday flyout to help drive sales.', 'fooconvert' ),
-                'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/black_friday_flyout.png',
+                'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__black_friday.png',
                 'attributes'  => array(
                     'viewState'   => 'open',
                     'settings'    => array(
