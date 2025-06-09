@@ -68,6 +68,7 @@ const TriggerControls = () => {
                         help={ __( 'Hide the default close button.', 'fooconvert' ) }
                         checked={ closeButtonSettings?.hidden ?? closeButtonSettingsDefaults?.hidden ?? false }
                         onChange={ setCloseButtonHidden }
+                        __nextHasNoMarginBottom
                     />
                 </PanelRow>
                 <PanelRow>
@@ -76,6 +77,7 @@ const TriggerControls = () => {
                         help={ __( 'Close the popup when the backdrop is clicked.', 'fooconvert' ) }
                         checked={ !( settings?.backdropIgnore ?? settingsDefaults?.backdropIgnore ?? false ) }
                         onChange={ value => setBackdropIgnore( !value ) }
+                        __nextHasNoMarginBottom
                     />
                 </PanelRow>
                 {/*<PanelRow>*/}
@@ -92,6 +94,7 @@ const TriggerControls = () => {
                         help={ __( 'Clicking specific anchors closes the popup.', 'fooconvert' ) }
                         checked={ closeAnchorChecked }
                         onChange={ value => setCloseAnchorChecked( value ) }
+                        __nextHasNoMarginBottom
                     />
                 </PanelRow>
                 { closeAnchorChecked && (

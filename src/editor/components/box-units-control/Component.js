@@ -82,7 +82,8 @@ const BoxUnitsControl = ( props ) => {
         className: classnames( CLASS_NAME, className, {
             "is-linked": !isUnlinked,
             "is-unlinked": isUnlinked
-        } )
+        } ),
+        __nextHasNoMarginBottom: true
     } );
 
     // Common properties regardless of the current view.
@@ -179,7 +180,7 @@ const BoxUnitsControl = ( props ) => {
 
     // noinspection JSValidateTypes - baseControlProps warning despite basic usage as per example -> https://developer.wordpress.org/block-editor/reference-guides/components/base-control/
     return (
-        <BaseControl { ...baseControlProps } __nextHasNoMarginBottom={ true }>
+        <BaseControl { ...baseControlProps }>
             { isUnlinked ? renderUnlinked() : renderLinked() }
         </BaseControl>
     );

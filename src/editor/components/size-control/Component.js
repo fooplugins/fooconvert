@@ -76,7 +76,8 @@ const SizeControl = ( props ) => {
         className: classnames( CLASS_NAME, className, {
             "is-default": isDefault,
             "is-custom": !isDefault
-        } )
+        } ),
+        __nextHasNoMarginBottom: true
     } );
 
     const setSize = nextValue => {
@@ -94,7 +95,8 @@ const SizeControl = ( props ) => {
                 isBlock={ true }
                 isDeselectable={ true }
                 hideLabelFromVision={ true }
-                __nextHasNoMarginBottom={ true }
+                __nextHasNoMarginBottom
+                __next40pxDefaultSize
             >
                 { sizes.map( size => (
                     <ToggleGroupControlOption

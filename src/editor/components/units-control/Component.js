@@ -85,7 +85,8 @@ const UnitsControl = ( props ) => {
         className: classnames( CLASS_NAME, className, {
             "has-before": hasBefore,
             "has-after": hasAfter
-        } )
+        } ),
+        __nextHasNoMarginBottom: true
     } );
 
     const [ quantity, parsedUnit = "px" ] = parseQuantityAndUnitFromRawValue( value, units );
@@ -114,7 +115,7 @@ const UnitsControl = ( props ) => {
                         max={ unit?.max ?? max }
                         step={ unit?.step ?? step }
                         placeholder={ placeholder }
-                        __nextHasNoMarginBottom={ true }
+                        __nextHasNoMarginBottom
                     />
                     <RangeControl
                         className={ `${ CLASS_NAME }__range-control` }
@@ -127,7 +128,8 @@ const UnitsControl = ( props ) => {
                         min={ unit?.min ?? min }
                         max={ unit?.max ?? max }
                         step={ unit?.step ?? step }
-                        __nextHasNoMarginBottom={ true }
+                        __nextHasNoMarginBottom
+                        __next40pxDefaultSize
                     />
                 </div>
                 { hasAfter && after() }

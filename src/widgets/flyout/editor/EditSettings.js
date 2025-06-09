@@ -40,6 +40,7 @@ const EditSettings = props => {
                             help={ __( 'Expand the flyout on mobile to use as much screen space as possible.', 'fooconvert' ) }
                             checked={ settings?.maxOnMobile ?? settingsDefaults?.maxOnMobile ?? false }
                             onChange={ setMaxOnMobile }
+                            __nextHasNoMarginBottom
                         />
                     </PanelRow>
                 </PanelBody>
@@ -50,6 +51,7 @@ const EditSettings = props => {
                             help={ __( 'Choose if transitions are used when toggling the bar.', 'fooconvert' ) }
                             checked={ settings?.transitions ?? settingsDefaults?.transitions ?? false }
                             onChange={ setTransitions }
+                            __nextHasNoMarginBottom
                         />
                     </PanelRow>
                 </PanelBody>

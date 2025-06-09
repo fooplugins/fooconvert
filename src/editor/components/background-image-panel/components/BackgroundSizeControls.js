@@ -159,6 +159,7 @@ const BackgroundSizeControls = ({
             />
             <ToggleGroupControl
                 __nextHasNoMarginBottom
+                __next40pxDefaultSize
                 size="__unstable-large"
                 label={ __( 'Size' ) }
                 value={ currentValueForToggle }

@@ -209,7 +209,8 @@ const TypographyToolsPanel = ( props ) => {
                         onChange={ setTextDecoration }
                         isDeselectable={ true }
                         isBlock={ true }
-                        __nextHasNoMarginBottom={ true }
+                        __nextHasNoMarginBottom
+                        __next40pxDefaultSize
                     >
                         <ToggleGroupControlOption
                             value="none"
@@ -242,7 +243,8 @@ const TypographyToolsPanel = ( props ) => {
                         value={ textTransform ?? defaults?.textTransform }
                         onChange={ setTextTransform }
                         isDeselectable={ true }
-                        __nextHasNoMarginBottom={ true }
+                        __nextHasNoMarginBottom
+                        __next40pxDefaultSize
                     >
                         <ToggleGroupControlOption
                             value="none"

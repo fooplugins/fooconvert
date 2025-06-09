@@ -106,6 +106,7 @@ const OpenTriggerPanel = ( props ) => {
                     value={ selected.value }
                     options={ TRIGGERS }
                     onChange={ nextValue => setTrigger( nextValue ) }
+                    __next40pxDefaultSize
                 />
             </PanelRow>
         );
@@ -138,6 +139,8 @@ const OpenTriggerPanel = ( props ) => {
                             min={ selected.value === 'scroll' ? 1 : 0 }
                             max={ 100 }
                             onChange={ value => setTrigger( selected.value, value ) }
+                            __nextHasNoMarginBottom
+                            __next40pxDefaultSize
                         />
                     </PanelRow>
                 );

@@ -160,6 +160,7 @@ const EntityRecordControl = ( {
                 __experimentalRenderItem={ renderItem }
                 __experimentalShowHowTo={ false }
                 __nextHasNoMarginBottom
+                __next40pxDefaultSize
             />
             { ( isResolving || noResults ) && (
                 <div className={ `${ rootClass }__popup` }>

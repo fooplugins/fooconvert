@@ -126,6 +126,7 @@ const OpenTriggerComponent = ( props ) => {
                 options={ options.map( opt => ({ label: opt.label, value: opt.value }) ) }
                 onChange={ nextValue => setTrigger( nextValue ) }
                 __nextHasNoMarginBottom
+                __next40pxDefaultSize
             />
         );
     };
@@ -157,6 +158,7 @@ const OpenTriggerComponent = ( props ) => {
                         max={ 100 }
                         onChange={ value => setTrigger( selected.value, value, once ) }
                         __nextHasNoMarginBottom
+                        __next40pxDefaultSize
                     />
                 );
         }
@@ -171,6 +173,7 @@ const OpenTriggerComponent = ( props ) => {
                     help={ __( 'Once closed will not be shown to a user again.', 'fooconvert' ) }
                     checked={ once ?? false  }
                     onChange={ value => setTrigger( selected.value, data, value ) }
+                    __nextHasNoMarginBottom
                 />
             )
         }

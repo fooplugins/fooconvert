@@ -73,6 +73,7 @@ const TriggerControls = () => {
                         help={ __( 'Hide the default open button.', 'fooconvert' ) }
                         checked={ openButtonSettings?.hidden ?? openButtonSettingsDefaults?.hidden ?? false }
                         onChange={ setOpenButtonHidden }
+                        __nextHasNoMarginBottom
                     />
                 </PanelRow>
             </PluginDocumentSettingPanel>
@@ -83,6 +84,7 @@ const TriggerControls = () => {
                         help={ __( 'Hide the default close button.', 'fooconvert' ) }
                         checked={ closeButtonSettings?.hidden ?? closeButtonSettingsDefaults?.hidden ?? false  }
                         onChange={ setCloseButtonHidden }
+                        __nextHasNoMarginBottom
                     />
                 </PanelRow>
                 <PanelRow>
@@ -91,6 +93,7 @@ const TriggerControls = () => {
                         help={ __( 'Clicking specific anchors closes the bar.', 'fooconvert' ) }
                         checked={ closeAnchorChecked }
                         onChange={ value => setCloseAnchorChecked( value ) }
+                        __nextHasNoMarginBottom
                     />
                 </PanelRow>
                 { closeAnchorChecked && (

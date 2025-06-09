@@ -20,7 +20,8 @@ const BoxShadowControl = ( props ) => {
     const { baseControlProps, controlProps } = useBaseControlProps( {
         ...restProps,
         label: label,
-        className: classnames( CLASS_NAME, className )
+        className: classnames( CLASS_NAME, className ),
+        __nextHasNoMarginBottom: true
     } );
 
     const setValue = nextValue => {

@@ -44,6 +44,7 @@ const GroupedSelectControl = ( {
 
     return (
         <SelectControl
+            __next40pxDefaultSize
             className={ classnames( 'fc-grouped-select-control', className ) }
             value={ value }
             onChange={ onChange }

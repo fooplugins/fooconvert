@@ -13,7 +13,7 @@ const ToggleSelectControl = props => {
         options = [],
         className,
         iconOnly = false,
-        __next40pxDefaultSize,
+        __next40pxDefaultSize = true,
         ...restProps
     } = props;
 

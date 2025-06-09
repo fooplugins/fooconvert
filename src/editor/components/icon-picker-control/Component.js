@@ -25,7 +25,8 @@ const IconPickerControl = ( props ) => {
 
     const { baseControlProps, controlProps } = useBaseControlProps( {
         ...restProps,
-        className: classnames( CLASS_NAME, className )
+        className: classnames( CLASS_NAME, className ),
+        __nextHasNoMarginBottom: true
     } );
 
     // noinspection JSValidateTypes

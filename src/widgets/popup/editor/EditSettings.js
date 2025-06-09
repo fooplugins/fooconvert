@@ -45,6 +45,7 @@ const EditSettings = props => {
                             help={ __( 'Expand the popup on mobile to use all available screen space.', 'fooconvert' ) }
                             checked={ settings?.maxOnMobile ?? settingsDefaults?.maxOnMobile ?? false }
                             onChange={ setMaxOnMobile }
+                            __nextHasNoMarginBottom
                         />
                     </PanelRow>
                     <PanelRow>
@@ -53,6 +54,7 @@ const EditSettings = props => {
                             help={ __( 'Choose if transitions are used when toggling the popup.', 'fooconvert' ) }
                             checked={ settings?.transitions ?? settingsDefaults?.transitions ?? false }
                             onChange={ setTransitions }
+                            __nextHasNoMarginBottom
                         />
                     </PanelRow>
                     <PanelRow>
@@ -61,6 +63,7 @@ const EditSettings = props => {
                             help={ __( 'Hide the page scrollbar when open.', 'fooconvert' ) }
                             checked={ settings?.hideScrollbar ?? settingsDefaults?.hideScrollbar ?? false }
                             onChange={ setHideScrollbar }
+                            __nextHasNoMarginBottom
                         />
                     </PanelRow>
                 </PanelBody>

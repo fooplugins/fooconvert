@@ -41,6 +41,7 @@ const EditSettings = props => {
                             help={ __( 'Choose if transitions are used when toggling the bar.', 'fooconvert' ) }
                             checked={ settings?.transitions ?? settingsDefaults?.transitions ?? false }
                             onChange={ setTransitions }
+                            __nextHasNoMarginBottom
                         />
                     </PanelRow>
                 </PanelBody>
