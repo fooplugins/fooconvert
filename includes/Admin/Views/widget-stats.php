@@ -22,7 +22,7 @@ if ( $widget_id ) {
         $widget_type = fooconvert_get_widget_post_type_label( $widget );
         // Translators: %s refers to the link to edit the widget.
         $edit_link = '<a class="button" href="' . esc_url( $edit_url ) . '">' . esc_html( sprintf( __( 'Edit %s', 'fooconvert' ), $widget_type ) ) . '</a>';
-
+        // Translators: %s refers to the link to preview the widget.
         $preview_link = '<a id="fooconvert-widget-preview" class="button" href="#preview">' . esc_html( sprintf( __( 'Preview %s', 'fooconvert' ), $widget_type ) ) . '</a>';
     }
 } else {
