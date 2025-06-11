@@ -123,9 +123,21 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 
 == Changelog ==
 
-= 1.1.2 =
-* Date Updated : 29 Mar 2025
+= 1.2.1 =
+* Date Updated : 8 Jun 2025
+[//]: # fs_premium_only_begin
+* New : Added leads admin page to show all captured leads, including export option.
+[//]: # fs_premium_only_end
 
+= 1.2.0 =
+* Date Updated : 8 Jun 2025
+* New : Added editor controls to add BG images to widgets.
+* New : Added new widget setting to only show once per user.
+[//]: # fs_premium_only_begin
+* New : Added 5 new professionally designed templates!
+[//]: # fs_premium_only_end
+* Fixed : multiple bugs and issues found when testing.
+* Updated to Freemius SDK 2.12.0
 
 = 1.1.1 =
 * Date Updated : 8 Feb 2025

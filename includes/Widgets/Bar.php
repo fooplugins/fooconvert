@@ -102,7 +102,7 @@ class Bar extends BaseWidget {
     function get_editor_variations(): array {
         return apply_filters( 'fooconvert_editor_variations-' . $this->get_post_type(), array(
             array(
-                'name'        => 'empty',
+                'name'        => 'empty_bar',
                 'title'       => __( 'Empty', 'fooconvert' ),
                 'description' => __( 'A blank slate that you can use to build your own bar from scratch.', 'fooconvert' ),
                 'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__blank.png',
@@ -127,7 +127,7 @@ class Bar extends BaseWidget {
                             )
                         )
                     ),
-                    'template' => 'empty'
+                    'template' => 'empty_bar'
                 ),
                 'innerBlocks' => array(
                     array( 'fc/bar-open-button' ),
