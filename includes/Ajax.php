@@ -93,6 +93,19 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
                 if ( is_string( $extra_data['name'] ) ) {
                     // optional name has been supplied
                 }
+
+                $lead = new Lead();
+
+                $lead_data = [
+                    'widget_id' => $widget_id,
+                    'email' => $extra_data['email'],
+                    'name' => $extra_data['name'],
+                    'metadata' => $extra_data,
+                    'page_url' => $page_url
+                ];
+
+                $lead->create( $lead_data );
+
                 // check for existence?
                 $email_exists = false;
                 if ( $email_exists === true ) {

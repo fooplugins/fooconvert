@@ -2,40 +2,45 @@
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: FooConvert - Boost Conversions & Lead Generation 1.1.1\n"
+"Project-Id-Version: FooConvert - Boost Conversions & Lead Generation 1.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/fooplugins/fooconvert/issues\n"
 "Last-Translator: FooPlugins <info@fooplugins.com>\n"
 "Language-Team: FooPlugins <info@fooplugins.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-08T18:06:51+00:00\n"
+"POT-Creation-Date: 2025-06-10T17:18:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: fooconvert\n"
 
 #. Plugin Name of the plugin
+#: fooconvert.php
 msgid "FooConvert - Boost Conversions & Lead Generation"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: fooconvert.php
 msgid "https://fooplugins.com/fooconvert/"
 msgstr ""
 
 #. Description of the plugin
+#: fooconvert.php
 msgid "Turn clicks into conversions, visitors into customers – FooConvert is the ultimate catalyst for online success!"
 msgstr ""
 
 #. Author of the plugin
+#: fooconvert.php
 msgid "FooPlugins"
 msgstr ""
 
 #. Author URI of the plugin
+#: fooconvert.php
 msgid "https://fooplugins.com/"
 msgstr ""
 
 #: includes/Admin/Dashboard.php:43
-#: includes/Admin/Stats.php:42
+#: includes/Admin/Stats.php:72
 msgid "Invalid nonce!!"
 msgstr ""
 
@@ -44,7 +49,7 @@ msgid "You do not have permission to access this page."
 msgstr ""
 
 #: includes/Admin/Dashboard.php:55
-#: includes/Admin/Stats.php:153
+#: includes/Admin/Stats.php:183
 msgid "Nonce is not set."
 msgstr ""
 
@@ -70,6 +75,7 @@ msgstr ""
 
 #. Translators: %d refers to the number of demo widgets created.
 #: includes/Admin/Dashboard.php:189
+#, php-format
 msgid "%d demo widgets created successfully!"
 msgstr ""
 
@@ -99,400 +105,404 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
+#: includes/Admin/Init.php:60
 #: includes/Admin/Init.php:61
-#: includes/Admin/Init.php:62
 msgid "FooConvert"
 msgstr ""
 
-#: includes/Admin/Promotions.php:70
-#: includes/Admin/Settings.php:36
+#: includes/Admin/Promotions.php:105
+#: includes/Admin/Settings.php:38
 msgid "Premium Addons"
 msgstr ""
 
-#: includes/Admin/Promotions.php:80
-#: includes/Admin/Views/dashboard-panel-getting-started.php:13
-#: includes/Admin/Views/dashboard-panel-help.php:12
-#: pro/includes/Admin/Views/dashboard-panel-recent.php:22
+#: includes/Admin/Promotions.php:116
+#: includes/Admin/Views/dashboard-panel-getting-started.php:14
+#: includes/Admin/Views/dashboard-panel-help.php:13
+#: pro/includes/Admin/Views/dashboard-panel-recent.php:23
 msgid "Hide Panel"
 msgstr ""
 
-#: includes/Admin/Promotions.php:134
+#: includes/Admin/Promotions.php:170
 msgid "Buy Now!"
 msgstr ""
 
-#: includes/Admin/Promotions.php:158
+#: includes/Admin/Promotions.php:194
 #: pro/includes/Analytics/Metrics.php:41
 msgid "Total Clicks"
 msgstr ""
 
-#: includes/Admin/Promotions.php:160
+#: includes/Admin/Promotions.php:196
 #: pro/includes/Analytics/Metrics.php:43
 msgid "Total number of clicks made within the widget."
 msgstr ""
 
-#: includes/Admin/Promotions.php:166
+#: includes/Admin/Promotions.php:202
 #: pro/includes/Analytics/Metrics.php:49
 msgid "Click Through Rate"
 msgstr ""
 
-#: includes/Admin/Promotions.php:168
+#: includes/Admin/Promotions.php:204
 #: pro/includes/Analytics/Metrics.php:51
 msgid "Click Through Rate for the widget."
 msgstr ""
 
-#: includes/Admin/Promotions.php:174
+#: includes/Admin/Promotions.php:210
 #: pro/includes/Analytics/Metrics.php:57
 msgid "Total Conversions"
 msgstr ""
 
-#: includes/Admin/Promotions.php:176
+#: includes/Admin/Promotions.php:212
 #: pro/includes/Analytics/Metrics.php:59
 msgid "Total number of conversions for the widget."
 msgstr ""
 
-#: includes/Admin/Promotions.php:182
+#: includes/Admin/Promotions.php:218
 #: pro/includes/Analytics/Metrics.php:65
-#: pro/includes/Analytics/Metrics.php:376
+#: pro/includes/Analytics/Metrics.php:377
 msgid "Conversion Rate"
 msgstr ""
 
-#: includes/Admin/Promotions.php:184
+#: includes/Admin/Promotions.php:220
 #: pro/includes/Analytics/Metrics.php:67
 msgid "Conversion Rate for the widget."
 msgstr ""
 
-#: includes/Admin/Promotions.php:190
+#: includes/Admin/Promotions.php:226
 #: pro/includes/Analytics/Metrics.php:73
-#: pro/includes/Analytics/Metrics.php:340
+#: pro/includes/Analytics/Metrics.php:341
 msgid "Engagement Rate"
 msgstr ""
 
-#: includes/Admin/Promotions.php:192
+#: includes/Admin/Promotions.php:228
 #: pro/includes/Analytics/Metrics.php:75
 msgid "Engagement Rate for the widget."
 msgstr ""
 
-#: includes/Admin/Promotions.php:198
+#: includes/Admin/Promotions.php:234
 #: pro/includes/Analytics/Metrics.php:81
 msgid "Positive Engagements"
 msgstr ""
 
-#: includes/Admin/Promotions.php:200
+#: includes/Admin/Promotions.php:236
 #: pro/includes/Analytics/Metrics.php:83
 msgid "Total number of positive engagements for the widget (like clicks)."
 msgstr ""
 
-#: includes/Admin/Promotions.php:206
+#: includes/Admin/Promotions.php:242
 #: pro/includes/Analytics/Metrics.php:89
 msgid "Negative Engagements"
 msgstr ""
 
-#: includes/Admin/Promotions.php:208
+#: includes/Admin/Promotions.php:244
 #: pro/includes/Analytics/Metrics.php:91
 msgid "Total number of negative engagements for the widget (like dismissals)."
 msgstr ""
 
-#: includes/Admin/Promotions.php:214
+#: includes/Admin/Promotions.php:250
 #: pro/includes/Analytics/Metrics.php:97
 msgid "Overall Sentiment"
 msgstr ""
 
-#: includes/Admin/Promotions.php:216
+#: includes/Admin/Promotions.php:252
 #: pro/includes/Analytics/Metrics.php:99
 msgid "Overall sentiment for the widget which ranges from very negative to very positive. It can also be unknown if there are no engagements, or neutral."
 msgstr ""
 
-#: includes/Admin/Promotions.php:224
+#: includes/Admin/Promotions.php:260
 msgid "These advanced metrics are available in FooConvert PRO."
 msgstr ""
 
-#: includes/Admin/Promotions.php:225
+#: includes/Admin/Promotions.php:261
 #: includes/Admin/Views/dashboard-top-performers.php:16
 msgid "Buy FooConvert PRO!"
 msgstr ""
 
-#: includes/Admin/Promotions.php:239
+#: includes/Admin/Promotions.php:275
 msgid "engagement rate (PRO)"
 msgstr ""
 
-#: includes/Admin/Promotions.php:241
+#: includes/Admin/Promotions.php:277
 msgid "Top performers by engagement rate is only available in FooConvert PRO."
 msgstr ""
 
-#: includes/Admin/Promotions.php:245
+#: includes/Admin/Promotions.php:281
 msgid "clicks (PRO)"
 msgstr ""
 
-#: includes/Admin/Promotions.php:247
+#: includes/Admin/Promotions.php:283
 msgid "Top performers by clicks is only available in FooConvert PRO."
 msgstr ""
 
-#: includes/Admin/Promotions.php:251
+#: includes/Admin/Promotions.php:287
 msgid "click rate (PRO)"
 msgstr ""
 
-#: includes/Admin/Promotions.php:253
+#: includes/Admin/Promotions.php:289
 msgid "Top performers by click rate is only available in FooConvert PRO."
 msgstr ""
 
-#: includes/Admin/Promotions.php:257
+#: includes/Admin/Promotions.php:293
 msgid "conversions (PRO)"
 msgstr ""
 
-#: includes/Admin/Promotions.php:259
+#: includes/Admin/Promotions.php:295
 msgid "Top performers by conversions is only available in FooConvert PRO."
 msgstr ""
 
-#: includes/Admin/Promotions.php:263
+#: includes/Admin/Promotions.php:299
 msgid "conversion rate (PRO)"
 msgstr ""
 
-#: includes/Admin/Promotions.php:265
+#: includes/Admin/Promotions.php:301
 msgid "Top performers by conversion rate is only available in FooConvert PRO."
 msgstr ""
 
-#: includes/Admin/Settings.php:21
+#: includes/Admin/Settings.php:28
 msgid "FooConvert Settings"
 msgstr ""
 
-#: includes/Admin/Settings.php:22
-#: includes/Admin/Settings.php:309
-msgid "Settings"
+#: includes/Admin/Settings.php:33
+msgid "FooConvert PRO"
 msgstr ""
 
-#: includes/Admin/Settings.php:31
-msgid "Analytics PRO Addon"
-msgstr ""
-
-#: includes/Admin/Settings.php:34
+#: includes/Admin/Settings.php:36
 msgid "Getting Started"
 msgstr ""
 
-#: includes/Admin/Settings.php:35
+#: includes/Admin/Settings.php:37
 msgid "Help"
 msgstr ""
 
-#: includes/Admin/Settings.php:41
-#: includes/DisplayRules.php:233
-#: includes/DisplayRules.php:353
+#: includes/Admin/Settings.php:43
+#: includes/DisplayRules.php:234
+#: includes/DisplayRules.php:354
 msgid "General"
 msgstr ""
 
-#: includes/Admin/Settings.php:49
+#: includes/Admin/Settings.php:51
 msgid "Retention Period"
 msgstr ""
 
-#: includes/Admin/Settings.php:50
+#: includes/Admin/Settings.php:52
 msgid "days"
 msgstr ""
 
-#. Translators: %s refers to the link to the Analytics PRO Addon.
-#: includes/Admin/Settings.php:52
+#. Translators: %s refers to the link to the FooConvert PRO Pricing page.
+#: includes/Admin/Settings.php:54
 msgid "The number of days before data is deleted."
 msgstr ""
 
-#. Translators: %s refers to the link to the Analytics PRO Addon.
-#: includes/Admin/Settings.php:52
-msgid "This can only be changed with the %s."
+#. Translators: %s refers to the link to the FooConvert PRO Pricing page.
+#: includes/Admin/Settings.php:54
+#, php-format
+msgid "This can only be changed with %s."
 msgstr ""
 
-#: includes/Admin/Settings.php:58
+#: includes/Admin/Settings.php:60
 msgid "Enable Debug Mode"
 msgstr ""
 
-#: includes/Admin/Settings.php:59
+#: includes/Admin/Settings.php:61
 msgid "Helps to debug problems and diagnose issues. Enable debugging if you need support for an issue you are having."
 msgstr ""
 
-#: includes/Admin/Settings.php:65
+#: includes/Admin/Settings.php:67
 msgid "Hide Promos"
 msgstr ""
 
-#: includes/Admin/Settings.php:66
-msgid "If enabled, will hide all promotional messages within the admin area, including the dashboard Addons panel."
-msgstr ""
-
-#: includes/Admin/Settings.php:72
-msgid "Hide Dashboard Panels"
+#: includes/Admin/Settings.php:68
+msgid "If enabled, will hide all promotional messages within the admin area, including the free trial admin banners."
 msgstr ""
 
 #: includes/Admin/Settings.php:74
+msgid "Hide Dashboard Panels"
+msgstr ""
+
+#: includes/Admin/Settings.php:76
 msgid "Will hide specific dashboard panel if checked."
 msgstr ""
 
-#: includes/Admin/Settings.php:80
+#: includes/Admin/Settings.php:82
 msgid "Demo Content Created"
 msgstr ""
 
-#: includes/Admin/Settings.php:81
+#: includes/Admin/Settings.php:83
 msgid "If the demo content has been created, then this will be checked. You can uncheck this to allow for demo content to be created again."
 msgstr ""
 
-#: includes/Admin/Settings.php:88
-#: includes/Admin/Settings.php:307
+#: includes/Admin/Settings.php:90
+#: includes/Admin/Settings.php:309
 msgid "Database"
 msgstr ""
 
-#: includes/Admin/Settings.php:101
+#: includes/Admin/Settings.php:103
 msgid "Database Error"
 msgstr ""
 
-#: includes/Admin/Settings.php:102
+#: includes/Admin/Settings.php:104
 msgid "Event Table Does Not Exist!"
 msgstr ""
 
-#: includes/Admin/Settings.php:112
+#: includes/Admin/Settings.php:114
 msgid "Database Data"
 msgstr ""
 
-#: includes/Admin/Settings.php:125
+#: includes/Admin/Settings.php:127
 msgid "Table"
 msgstr ""
 
-#: includes/Admin/Settings.php:129
+#: includes/Admin/Settings.php:131
 msgid "Table Size (MB)"
 msgstr ""
 
-#: includes/Admin/Settings.php:133
+#: includes/Admin/Settings.php:135
 msgid "Event Row Count"
 msgstr ""
 
-#: includes/Admin/Settings.php:137
+#: includes/Admin/Settings.php:139
 msgid "Widget Count With Events"
 msgstr ""
 
-#: includes/Admin/Settings.php:141
+#: includes/Admin/Settings.php:143
 msgid "Orphaned Event Count"
 msgstr ""
 
-#: includes/Admin/Settings.php:153
+#: includes/Admin/Settings.php:155
 msgid "Orphaned Widget Count"
 msgstr ""
 
-#: includes/Admin/Settings.php:161
+#: includes/Admin/Settings.php:163
 msgid "Database Stats"
 msgstr ""
 
-#: includes/Admin/Settings.php:169
+#: includes/Admin/Settings.php:171
 msgid "Delete Old Events"
 msgstr ""
 
-#: includes/Admin/Settings.php:170
+#: includes/Admin/Settings.php:172
 msgid "This will permanently delete all events older than the retention period."
 msgstr ""
 
-#: includes/Admin/Settings.php:170
+#: includes/Admin/Settings.php:172
 msgid "Currently :"
 msgstr ""
 
-#: includes/Admin/Settings.php:170
+#: includes/Admin/Settings.php:172
 msgid "days."
 msgstr ""
 
-#: includes/Admin/Settings.php:177
+#: includes/Admin/Settings.php:179
 msgid "Delete All Events"
 msgstr ""
 
-#: includes/Admin/Settings.php:178
+#: includes/Admin/Settings.php:180
 msgid "This will permanently delete all events."
 msgstr ""
 
-#: includes/Admin/Settings.php:186
+#: includes/Admin/Settings.php:188
 msgid "Delete Orphaned Data"
 msgstr ""
 
-#: includes/Admin/Settings.php:194
+#: includes/Admin/Settings.php:196
 msgid "System Info"
 msgstr ""
 
-#: includes/Admin/Settings.php:200
+#: includes/Admin/Settings.php:202
 msgid "Your System Information"
 msgstr ""
 
-#: includes/Admin/Settings.php:201
+#: includes/Admin/Settings.php:203
 msgid "The below system info can be used when submitting a support ticket, to help us replicate your environment."
 msgstr ""
 
 #. Translators: %d refers to the number of orphaned events that were deleted.
-#: includes/Admin/Settings.php:233
+#: includes/Admin/Settings.php:235
+#, php-format
 msgid "Successfully deleted %d orphaned events."
 msgstr ""
 
 #. Translators: %d refers to the number of events that were deleted.
-#: includes/Admin/Settings.php:250
-#: includes/Admin/Settings.php:267
+#: includes/Admin/Settings.php:252
+#: includes/Admin/Settings.php:269
+#, php-format
 msgid "Successfully deleted %d events."
 msgstr ""
 
-#: includes/Admin/Settings.php:292
+#: includes/Admin/Settings.php:294
 msgid "ERROR : The events table does not exist!"
 msgstr ""
 
-#: includes/Admin/Settings.php:300
+#: includes/Admin/Settings.php:302
 msgid "FooConvert version"
 msgstr ""
 
-#: includes/Admin/Settings.php:301
+#: includes/Admin/Settings.php:303
 msgid "WordPress version"
 msgstr ""
 
-#: includes/Admin/Settings.php:302
+#: includes/Admin/Settings.php:304
 msgid "Activated Theme"
 msgstr ""
 
-#: includes/Admin/Settings.php:303
+#: includes/Admin/Settings.php:305
 msgid "WordPress URL"
 msgstr ""
 
-#: includes/Admin/Settings.php:304
+#: includes/Admin/Settings.php:306
 msgid "PHP version"
 msgstr ""
 
-#: includes/Admin/Settings.php:305
+#: includes/Admin/Settings.php:307
 msgid "Retention"
 msgstr ""
 
-#: includes/Admin/Settings.php:306
+#: includes/Admin/Settings.php:308
 msgid "Cron Jobs"
 msgstr ""
 
-#: includes/Admin/Settings.php:308
+#: includes/Admin/Settings.php:310
 msgid "Active Plugins"
 msgstr ""
 
-#: includes/Admin/Stats.php:61
+#: includes/Admin/Settings.php:311
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Settings"
+msgstr ""
+
+#: includes/Admin/Stats.php:91
 msgid "Invalid widget ID!!"
 msgstr ""
 
-#: includes/Admin/Stats.php:77
+#: includes/Admin/Stats.php:107
 msgid "Events"
 msgstr ""
 
-#: includes/Admin/Stats.php:85
-#: includes/functions.php:191
+#: includes/Admin/Stats.php:115
+#: includes/functions.php:182
 msgid "Views"
 msgstr ""
 
-#: includes/Admin/Stats.php:93
-#: includes/functions.php:183
+#: includes/Admin/Stats.php:123
+#: includes/functions.php:174
 msgid "Engagements"
 msgstr ""
 
-#: includes/Admin/Stats.php:101
+#: includes/Admin/Stats.php:131
 msgid "Unique Visitors"
 msgstr ""
 
-#: includes/Admin/Stats.php:191
-#: includes/Admin/Stats.php:198
+#: includes/Admin/Stats.php:221
+#: includes/Admin/Stats.php:228
 msgid "Stats"
 msgstr ""
 
-#: includes/Admin/Stats.php:218
+#: includes/Admin/Stats.php:248
+#: pro/assets/editor-pro.js:1
 msgid "View Stats"
 msgstr ""
 
-#: includes/Admin/Stats.php:235
-#: includes/Admin/Stats.php:236
+#: includes/Admin/Stats.php:265
+#: includes/Admin/Stats.php:266
 msgid "Widget Stats"
 msgstr ""
 
@@ -500,83 +510,83 @@ msgstr ""
 msgid "Getting Started with FooConvert!"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:21
+#: includes/Admin/Views/dashboard-panel-getting-started.php:22
 msgid "The easiest way to get started is by creating demo widgets, which will create 4 draft bars, flyouts and popups."
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:22
+#: includes/Admin/Views/dashboard-panel-getting-started.php:23
 msgid "It's also the best way to see the top performers in action!"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:26
+#: includes/Admin/Views/dashboard-panel-getting-started.php:27
 msgid "Create Demo Widgets"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:31
+#: includes/Admin/Views/dashboard-panel-getting-started.php:32
 msgid "Do not worry"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:32
+#: includes/Admin/Views/dashboard-panel-getting-started.php:33
 msgid "the demo widgets will NOT be visible to your site visitors :)"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:38
+#: includes/Admin/Views/dashboard-panel-getting-started.php:39
 msgid "Awesome, you have already created the demo widgets!"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:42
+#: includes/Admin/Views/dashboard-panel-getting-started.php:43
 msgid "Delete Demo Widgets"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:47
+#: includes/Admin/Views/dashboard-panel-getting-started.php:48
 msgid "Deleting the demo widgets will also delete all stats for the widgets."
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:52
+#: includes/Admin/Views/dashboard-panel-getting-started.php:53
 msgid "OR"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:54
+#: includes/Admin/Views/dashboard-panel-getting-started.php:55
 msgid "Create your own unique widget by following these simple steps:"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:58
+#: includes/Admin/Views/dashboard-panel-getting-started.php:59
 msgid "Create a new widget."
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:59
+#: includes/Admin/Views/dashboard-panel-getting-started.php:61
 msgid "create a new bar"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:62
+#: includes/Admin/Views/dashboard-panel-getting-started.php:64
 msgid "Select a pre-made template."
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:63
+#: includes/Admin/Views/dashboard-panel-getting-started.php:65
 msgid "e.g. Black Friday Bar"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:66
+#: includes/Admin/Views/dashboard-panel-getting-started.php:68
 msgid "Customize the look and feel &amp; change the content to your liking!"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:69
+#: includes/Admin/Views/dashboard-panel-getting-started.php:71
 msgid "Set the Display Rules locations."
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:70
+#: includes/Admin/Views/dashboard-panel-getting-started.php:72
 msgid "e.g. either \"Entire Site\" or \"Front Page\""
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:73
+#: includes/Admin/Views/dashboard-panel-getting-started.php:75
 msgid "Select an Open Trigger."
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:74
+#: includes/Admin/Views/dashboard-panel-getting-started.php:76
 msgid "e.g. on page load, or exit intent"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:77
+#: includes/Admin/Views/dashboard-panel-getting-started.php:79
 msgid "Publish and you're done!"
 msgstr ""
 
@@ -584,11 +594,11 @@ msgstr ""
 msgid "Need Help? We're here for you!"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-help.php:21
+#: includes/Admin/Views/dashboard-panel-help.php:22
 msgid "Read FooConvert documentation"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-help.php:26
+#: includes/Admin/Views/dashboard-panel-help.php:27
 msgid "Get Support"
 msgstr ""
 
@@ -608,33 +618,34 @@ msgstr ""
 msgid "Last Updated : "
 msgstr ""
 
-#: includes/Admin/Views/dashboard-top-performers.php:19
+#: includes/Admin/Views/dashboard-top-performers.php:18
 msgid "No top performers found!"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-top-performers.php:21
+#: includes/Admin/Views/dashboard-top-performers.php:20
 msgid "Please update stats in order to see top performers."
 msgstr ""
 
-#: includes/Admin/Views/dashboard-top-performers.php:27
+#: includes/Admin/Views/dashboard-top-performers.php:26
 msgid "Rank"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-top-performers.php:28
+#: includes/Admin/Views/dashboard-top-performers.php:27
+#: pro/includes/Admin/LeadsTable.php:41
 msgid "Widget"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-top-performers.php:30
+#: includes/Admin/Views/dashboard-top-performers.php:29
 msgid "Metric"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-top-performers.php:40
-#: pro/includes/Admin/Views/dashboard-panel-recent.php:42
+#: includes/Admin/Views/dashboard-top-performers.php:39
+#: pro/includes/Admin/Views/dashboard-panel-recent.php:43
 msgid "Edit Widget"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-top-performers.php:42
-#: pro/includes/Admin/Views/dashboard-panel-recent.php:44
+#: includes/Admin/Views/dashboard-top-performers.php:41
+#: pro/includes/Admin/Views/dashboard-panel-recent.php:45
 msgid "View Widget Stats"
 msgstr ""
 
@@ -642,211 +653,232 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:7
+#: includes/Admin/Views/widget-stats.php:9
+msgid "Last day"
+msgstr ""
+
+#: includes/Admin/Views/widget-stats.php:10
+msgid "Last 2 days"
+msgstr ""
+
+#: includes/Admin/Views/widget-stats.php:11
 msgid "Last 7 days"
 msgstr ""
 
 #. Translators: %s refers to the link to edit the widget.
-#: includes/Admin/Views/widget-stats.php:17
+#: includes/Admin/Views/widget-stats.php:24
+#, php-format
 msgid "Edit %s"
 msgstr ""
 
+#. Translators: %s refers to the link to preview the widget.
+#: includes/Admin/Views/widget-stats.php:26
+#, php-format
+msgid "Preview %s"
+msgstr ""
+
 #. Translators: %s refers to the title of the widget.
-#: includes/Admin/Views/widget-stats.php:30
+#: includes/Admin/Views/widget-stats.php:39
+#, php-format
 msgid "Stats for %s"
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:43
+#: includes/Admin/Views/widget-stats.php:61
 msgid "Total Events"
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:44
-msgid "Total events logged for the widget for it's lifetime."
+#: includes/Admin/Views/widget-stats.php:63
+msgid "Total events logged for the widget over the time period."
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:50
+#: includes/Admin/Views/widget-stats.php:69
 msgid "Total Views"
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:51
+#: includes/Admin/Views/widget-stats.php:71
 msgid "Total number of times the widget has been viewed by a visitor."
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:57
+#: includes/Admin/Views/widget-stats.php:77
 msgid "Total Visitors"
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:58
+#: includes/Admin/Views/widget-stats.php:79
 msgid "Total number of unique visitors that have viewed the widget."
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:64
+#: includes/Admin/Views/widget-stats.php:85
 msgid "Total Engagements"
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:65
+#: includes/Admin/Views/widget-stats.php:87
 msgid "Total number of engagements that have been made with the widget (clicks, opens, etc)."
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:75
-msgid "Recent Activity"
+#. Translators: %s refers to the widget type.
+#: includes/Admin/Views/widget-stats.php:99
+#, php-format
+msgid "%s Activity"
 msgstr ""
 
 #: includes/Compatibility.php:55
 msgid "Compatibility settings for FooConvert."
 msgstr ""
 
-#: includes/DisplayRules.php:37
+#: includes/DisplayRules.php:38
 msgid "Display rules for FooConvert."
 msgstr ""
 
-#: includes/DisplayRules.php:76
-#: includes/DisplayRules.php:83
-#: includes/DisplayRules.php:92
+#: includes/DisplayRules.php:77
+#: includes/DisplayRules.php:84
+#: includes/DisplayRules.php:93
 msgid "Display Rules"
 msgstr ""
 
-#: includes/DisplayRules.php:93
+#: includes/DisplayRules.php:94
 msgid "Table ordered by display rules."
 msgstr ""
 
-#: includes/DisplayRules.php:110
+#: includes/DisplayRules.php:111
 #: assets/editor.js:4
 msgid "Set"
 msgstr ""
 
-#: includes/DisplayRules.php:112
+#: includes/DisplayRules.php:113
 msgid "Not set!"
 msgstr ""
 
-#: includes/DisplayRules.php:237
+#: includes/DisplayRules.php:238
 msgid "Entire Site"
 msgstr ""
 
-#: includes/DisplayRules.php:241
+#: includes/DisplayRules.php:242
 msgid "Front Page"
 msgstr ""
 
-#: includes/DisplayRules.php:245
+#: includes/DisplayRules.php:246
 msgid "Blog"
 msgstr ""
 
-#: includes/DisplayRules.php:249
+#: includes/DisplayRules.php:250
 msgid "Search Results"
 msgstr ""
 
-#: includes/DisplayRules.php:253
+#: includes/DisplayRules.php:254
 msgid "No Search Results"
 msgstr ""
 
-#: includes/DisplayRules.php:257
+#: includes/DisplayRules.php:258
 msgid "404 Template"
 msgstr ""
 
 #. Translators: %s refers to the taxonomy that is being searched for. e.g. "Category".
-#: includes/DisplayRules.php:275
-#: includes/DisplayRules.php:301
+#: includes/DisplayRules.php:276
+#: includes/DisplayRules.php:302
+#, php-format
 msgid "Type to choose %s..."
 msgstr ""
 
-#: includes/DisplayRules.php:284
+#: includes/DisplayRules.php:285
 msgid "Specific Posts"
 msgstr ""
 
-#: includes/DisplayRules.php:310
+#: includes/DisplayRules.php:311
 msgid "Specific Taxonomies"
 msgstr ""
 
-#: includes/DisplayRules.php:329
+#: includes/DisplayRules.php:330
 msgid "Post Archives"
 msgstr ""
 
-#: includes/DisplayRules.php:357
+#: includes/DisplayRules.php:358
 msgid "All Users"
 msgstr ""
 
-#: includes/DisplayRules.php:361
+#: includes/DisplayRules.php:362
 msgid "Logged In"
 msgstr ""
 
-#: includes/DisplayRules.php:365
+#: includes/DisplayRules.php:366
 msgid "Logged Out"
 msgstr ""
 
-#: includes/DisplayRules.php:371
+#: includes/DisplayRules.php:372
 msgid "Roles"
 msgstr ""
 
-#: includes/EventHooks.php:141
+#: includes/EventHooks.php:155
 msgid "Published"
 msgstr ""
 
-#: includes/EventHooks.php:144
+#: includes/EventHooks.php:158
 msgid "Un-published"
 msgstr ""
 
-#: includes/EventHooks.php:147
+#: includes/EventHooks.php:161
 msgid "Status Updated"
 msgstr ""
 
-#: includes/EventHooks.php:166
+#: includes/EventHooks.php:180
 msgid "Content Updated"
 msgstr ""
 
-#: includes/EventHooks.php:184
+#: includes/EventHooks.php:198
 msgid "Open Trigger Changed"
 msgstr ""
 
-#: includes/EventHooks.php:199
+#: includes/EventHooks.php:213
 msgid "Styling Updated"
 msgstr ""
 
-#: includes/functions.php:182
+#: includes/functions.php:173
 msgid "engagements"
 msgstr ""
 
-#: includes/functions.php:184
+#: includes/functions.php:175
 msgid "Total number of engagements"
 msgstr ""
 
-#: includes/functions.php:190
+#: includes/functions.php:181
 msgid "views"
 msgstr ""
 
-#: includes/functions.php:192
+#: includes/functions.php:183
 msgid "Total number of views"
 msgstr ""
 
-#: includes/functions.php:232
+#: includes/functions.php:223
 msgid "ago"
 msgstr ""
 
-#: includes/functions.php:260
+#: includes/functions.php:251
 msgid "Never"
 msgstr ""
 
-#: includes/functions.php:307
+#: includes/functions.php:298
 #: includes/Widgets/Popup.php:71
 msgid "Popup"
 msgstr ""
 
-#: includes/functions.php:309
+#: includes/functions.php:300
 #: includes/Widgets/Flyout.php:75
 msgid "Flyout"
 msgstr ""
 
-#: includes/functions.php:311
+#: includes/functions.php:302
 #: includes/Widgets/Bar.php:75
 msgid "Bar"
 msgstr ""
 
 #. translators: %1$s = Plugin name; %2$s = Minimum PHP version; %3$s = Current PHP version
 #: includes/startup-checks.php:20
+#, php-format
 msgid "%1$s could not be initialized because you need to be running at least PHP version %2$s, and you are running version %3$s"
 msgstr ""
 
 #. translators: %1$s = Plugin name; %2$s = Minimum WP version; %3$s = Current WP version
 #: includes/startup-checks.php:44
+#, php-format
 msgid "%1$s could not be initialized because you need WordPress to be at least version %2$s, and you are running version %3$s"
 msgstr ""
 
@@ -901,19 +933,19 @@ msgstr ""
 msgid "A blank slate that you can use to build your own bar from scratch."
 msgstr ""
 
-#: includes/Widgets/Bar.php:126
+#: includes/Widgets/Bar.php:147
 msgid "Black Friday Bar"
 msgstr ""
 
-#: includes/Widgets/Bar.php:127
+#: includes/Widgets/Bar.php:148
 msgid "A typical Black Friday bar to help drive sales."
 msgstr ""
 
-#: includes/Widgets/Bar.php:231
+#: includes/Widgets/Bar.php:252
 msgid "Cookie Consent Bar"
 msgstr ""
 
-#: includes/Widgets/Bar.php:232
+#: includes/Widgets/Bar.php:253
 msgid "A simple bottom bar that is dismissed when the button is clicked."
 msgstr ""
 
@@ -958,11 +990,11 @@ msgstr ""
 msgid "A blank slate that you can use to build your own flyout from scratch."
 msgstr ""
 
-#: includes/Widgets/Flyout.php:126
+#: includes/Widgets/Flyout.php:147
 msgid "Black Friday Flyout"
 msgstr ""
 
-#: includes/Widgets/Flyout.php:127
+#: includes/Widgets/Flyout.php:148
 msgid "A typical Black Friday flyout to help drive sales."
 msgstr ""
 
@@ -1007,16 +1039,148 @@ msgstr ""
 msgid "A blank slate that you can use to build your own popup from scratch."
 msgstr ""
 
-#: includes/Widgets/Popup.php:121
+#: includes/Widgets/Popup.php:132
 msgid "Black Friday Popup"
 msgstr ""
 
-#: includes/Widgets/Popup.php:122
+#: includes/Widgets/Popup.php:133
 msgid "A typical Black Friday popup to help drive sales."
 msgstr ""
 
-#: pro/includes/Admin/Init.php:28
+#: pro/includes/Admin/Init.php:30
 msgid "Recent"
+msgstr ""
+
+#: pro/includes/Admin/LeadsMenu.php:25
+#: pro/includes/Admin/LeadsMenu.php:26
+msgid "Leads"
+msgstr ""
+
+#: pro/includes/Admin/LeadsTable.php:38
+msgid "ID"
+msgstr ""
+
+#: pro/includes/Admin/LeadsTable.php:39
+#: pro/includes/Blocks/SignUp.php:59
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Email"
+msgstr ""
+
+#: pro/includes/Admin/LeadsTable.php:40
+#: pro/includes/Blocks/SignUp.php:55
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Name"
+msgstr ""
+
+#: pro/includes/Admin/LeadsTable.php:42
+msgid "Page"
+msgstr ""
+
+#: pro/includes/Admin/LeadsTable.php:43
+msgid "Date Added"
+msgstr ""
+
+#: pro/includes/Admin/LeadsTable.php:118
+msgid "Delete"
+msgstr ""
+
+#: pro/includes/Admin/LeadsTable.php:119
+msgid "Export"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/digital_download_signup.php:5
+#: pro/includes/Admin/Templates/flyouts/digital_download_signup.php:5
+#: pro/includes/Admin/Templates/popups/digital_download_signup.php:5
+msgid "Digital Download Signup"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/digital_download_signup.php:6
+msgid "Digital download signup lead magnet bar."
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/digital_download_signup.php:105
+msgid "Grow Your Traffic in 7 Days – Download our FREE Guide!"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/digital_download_signup.php:124
+msgid "Thanks! Please check your inbox."
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/digital_download_signup.php:131
+msgid "Enter your email..."
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/digital_download_signup.php:161
+msgid "Download"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/digital_download_signup.php:203
+msgid "Proven tips used by 7,000+ brands to boost traffic!"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:5
+#: pro/includes/Admin/Templates/flyouts/newsletter_subscribe.php:5
+#: pro/includes/Admin/Templates/popups/newsletter_subscribe.php:5
+msgid "Newsletter Subscribe"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:6
+msgid "Newsletter Subscribe marketing themed bar."
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:140
+#: pro/includes/Admin/Templates/flyouts/newsletter_subscribe.php:106
+msgid "Get FREE Weekly Tips to help Grow Your business..."
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:168
+#: pro/includes/Admin/Templates/flyouts/newsletter_subscribe.php:123
+msgid "Join 5,000+ readers getting exclusive content &amp; tools."
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:201
+#: pro/includes/Admin/Templates/flyouts/newsletter_subscribe.php:173
+msgid "Your email address"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:233
+#: pro/includes/Admin/Templates/flyouts/newsletter_subscribe.php:166
+msgid "Thanks for joining!"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:238
+#: pro/includes/Admin/Templates/flyouts/newsletter_subscribe.php:205
+msgid "Join The List"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/smart_exit_offer.php:5
+#: pro/includes/Admin/Templates/flyouts/smart_exit_offer.php:5
+#: pro/includes/Admin/Templates/popups/smart_exit_offer.php:5
+msgid "Smart Exit Offer"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/smart_exit_offer.php:6
+msgid "A smart exit offer bar lead magnet to help prevent visitors from leaving your site."
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/smart_exit_offer.php:121
+#: pro/includes/Admin/Templates/popups/smart_exit_offer.php:111
+msgid "HEY... Don’t Go Yet!"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/smart_exit_offer.php:150
+#: pro/includes/Admin/Templates/popups/smart_exit_offer.php:145
+msgid "Take 10% Off Your First Order – Our Treat!"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/smart_exit_offer.php:182
+#: pro/includes/Admin/Templates/popups/smart_exit_offer.php:178
+msgid "Claim Now!"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/smart_exit_offer.php:216
+#: pro/includes/Admin/Templates/popups/smart_exit_offer.php:214
+msgid "Only available while you’re still here..."
 msgstr ""
 
 #: pro/includes/Admin/Templates/bars/special_offer.php:5
@@ -1031,21 +1195,21 @@ msgstr ""
 msgid "Guide visitors to specific specials."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/special_offer.php:87
-#: pro/includes/Admin/Templates/flyouts/special_offer.php:116
-#: pro/includes/Admin/Templates/popups/special_offer.php:58
+#: pro/includes/Admin/Templates/bars/special_offer.php:93
+#: pro/includes/Admin/Templates/flyouts/special_offer.php:122
+#: pro/includes/Admin/Templates/popups/special_offer.php:62
 msgid "Special Offer:"
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/special_offer.php:116
-#: pro/includes/Admin/Templates/flyouts/special_offer.php:146
-#: pro/includes/Admin/Templates/popups/special_offer.php:103
+#: pro/includes/Admin/Templates/bars/special_offer.php:122
+#: pro/includes/Admin/Templates/flyouts/special_offer.php:152
+#: pro/includes/Admin/Templates/popups/special_offer.php:107
 msgid "Add special offer..."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/special_offer.php:155
-#: pro/includes/Admin/Templates/flyouts/special_offer.php:187
-#: pro/includes/Admin/Templates/popups/special_offer.php:162
+#: pro/includes/Admin/Templates/bars/special_offer.php:161
+#: pro/includes/Admin/Templates/flyouts/special_offer.php:193
+#: pro/includes/Admin/Templates/popups/special_offer.php:166
 msgid "Let's Go!"
 msgstr ""
 
@@ -1061,16 +1225,56 @@ msgstr ""
 msgid "Guide visitors to a watch a specific video."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/watch_the_video.php:88
-#: pro/includes/Admin/Templates/flyouts/watch_the_video.php:83
+#: pro/includes/Admin/Templates/bars/watch_the_video.php:92
+#: pro/includes/Admin/Templates/flyouts/watch_the_video.php:82
 #: pro/includes/Admin/Templates/popups/watch_the_video.php:58
 msgid "Add video description..."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/watch_the_video.php:124
-#: pro/includes/Admin/Templates/flyouts/watch_the_video.php:131
+#: pro/includes/Admin/Templates/bars/watch_the_video.php:128
+#: pro/includes/Admin/Templates/flyouts/watch_the_video.php:130
 #: pro/includes/Admin/Templates/popups/watch_the_video.php:108
 msgid "Watch the video"
+msgstr ""
+
+#: pro/includes/Admin/Templates/flyouts/digital_download_signup.php:6
+msgid "Digital download signup themed flyout."
+msgstr ""
+
+#: pro/includes/Admin/Templates/flyouts/newsletter_subscribe.php:6
+msgid "Newsletter subscribe themed flyout."
+msgstr ""
+
+#: pro/includes/Admin/Templates/flyouts/smart_exit_offer.php:6
+msgid "A smart exit offer flyout lead magnet to help prevent visitors from leaving your site."
+msgstr ""
+
+#: pro/includes/Admin/Templates/popups/digital_download_signup.php:6
+msgid "Digital download signup themed popup."
+msgstr ""
+
+#: pro/includes/Admin/Templates/popups/digital_download_signup.php:197
+msgid "Digital Marketing"
+msgstr ""
+
+#: pro/includes/Admin/Templates/popups/digital_download_signup.php:198
+msgid "Digital marketing themed popup."
+msgstr ""
+
+#: pro/includes/Admin/Templates/popups/newsletter_subscribe.php:6
+msgid "Newsletter Subscribe marketing themed popup."
+msgstr ""
+
+#: pro/includes/Admin/Templates/popups/newsletter_subscribe.php:264
+msgid "i-Cafe"
+msgstr ""
+
+#: pro/includes/Admin/Templates/popups/newsletter_subscribe.php:265
+msgid "i-Cafe marketing themed popup."
+msgstr ""
+
+#: pro/includes/Admin/Templates/popups/smart_exit_offer.php:6
+msgid "Smart exit offer themed popup."
 msgstr ""
 
 #: pro/includes/Admin/Views/dashboard-panel-recent.php:20
@@ -1078,149 +1282,174 @@ msgid "Recently Updated Widgets"
 msgstr ""
 
 #. translators: %s: refers to the time last modified.
-#: pro/includes/Admin/Views/dashboard-panel-recent.php:49
+#: pro/includes/Admin/Views/dashboard-panel-recent.php:50
+#, php-format
 msgid "modified %s ago"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:312
+#: pro/includes/Admin/Views/leads.php:15
+msgid "Last 24 Hours"
+msgstr ""
+
+#: pro/includes/Admin/Views/leads.php:18
+msgid "Last 7 Days"
+msgstr ""
+
+#: pro/includes/Admin/Views/leads.php:21
+msgid "Last 30 Days"
+msgstr ""
+
+#: pro/includes/Admin/Views/leads.php:24
+msgid "All Time"
+msgstr ""
+
+#: pro/includes/Admin/Views/leads.php:27
+msgid "Filter"
+msgstr ""
+
+#: pro/includes/Admin/Views/leads.php:32
+msgid "Export All Leads"
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:313
 msgid "Very Positive"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:314
+#: pro/includes/Analytics/Metrics.php:315
 msgid "Mostly Positive"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:316
+#: pro/includes/Analytics/Metrics.php:317
 msgid "Slightly Positive"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:318
+#: pro/includes/Analytics/Metrics.php:319
 msgid "Very Negative"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:320
+#: pro/includes/Analytics/Metrics.php:321
 msgid "Mostly Negative"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:322
+#: pro/includes/Analytics/Metrics.php:323
 msgid "Slightly Negative"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:324
+#: pro/includes/Analytics/Metrics.php:325
 msgid "Neutral"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:339
+#: pro/includes/Analytics/Metrics.php:340
 msgid "engagement rate"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:341
+#: pro/includes/Analytics/Metrics.php:342
 msgid "Engagement rate % = total number of engagements / total number of views"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:348
+#: pro/includes/Analytics/Metrics.php:349
 msgid "clicks"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:349
+#: pro/includes/Analytics/Metrics.php:350
 #: pro/includes/Analytics/RecentActivity.php:144
 msgid "Clicks"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:350
+#: pro/includes/Analytics/Metrics.php:351
 msgid "Total number of clicks"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:357
+#: pro/includes/Analytics/Metrics.php:358
 msgid "click rate"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:358
+#: pro/includes/Analytics/Metrics.php:359
 msgid "Click Rate"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:359
+#: pro/includes/Analytics/Metrics.php:360
 msgid "Click rate % = total number of clicks / total number of views"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:366
+#: pro/includes/Analytics/Metrics.php:367
 msgid "conversions"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:367
+#: pro/includes/Analytics/Metrics.php:368
 #: pro/includes/Analytics/RecentActivity.php:167
 msgid "Conversions"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:368
+#: pro/includes/Analytics/Metrics.php:369
 msgid "Total number of conversions"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:375
+#: pro/includes/Analytics/Metrics.php:376
 msgid "conversion rate"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:377
+#: pro/includes/Analytics/Metrics.php:378
 msgid "Conversion rate % = total number of conversions / total number of views"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:384
+#: pro/includes/Analytics/Metrics.php:385
 msgid "change in views"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:385
+#: pro/includes/Analytics/Metrics.php:386
 msgid "Change in Views"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:386
+#: pro/includes/Analytics/Metrics.php:387
 msgid "Change in Views (This Week vs Last)"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:392
+#: pro/includes/Analytics/Metrics.php:393
 msgid "change in views %"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:393
+#: pro/includes/Analytics/Metrics.php:394
 msgid "Change in Views %"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:394
+#: pro/includes/Analytics/Metrics.php:395
 msgid "Change in Views (This Week vs Last) as a percentage"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:400
+#: pro/includes/Analytics/Metrics.php:401
 msgid "change in engagements"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:401
+#: pro/includes/Analytics/Metrics.php:402
 msgid "Change in Engagements"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:402
+#: pro/includes/Analytics/Metrics.php:403
 msgid "Change in Engagements (This Week vs Last) as a percentage"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:408
+#: pro/includes/Analytics/Metrics.php:409
 msgid "change in clicks"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:409
+#: pro/includes/Analytics/Metrics.php:410
 msgid "Change in Clicks"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:410
+#: pro/includes/Analytics/Metrics.php:411
 msgid "Change in Clicks (This Week vs Last) as a percentage"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:416
+#: pro/includes/Analytics/Metrics.php:417
 msgid "change in conversions"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:417
+#: pro/includes/Analytics/Metrics.php:418
 msgid "Change in Conversions"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:418
+#: pro/includes/Analytics/Metrics.php:419
 msgid "Change in Conversions (This Week vs Last) as a percentage"
 msgstr ""
 
@@ -1230,11 +1459,22 @@ msgstr ""
 
 #. Translators: %d refers to the number of days.
 #: pro/includes/Analytics/RecentActivity.php:127
+#, php-format
 msgid "Last %d days"
 msgstr ""
 
 #: pro/includes/Analytics/RecentActivity.php:176
 msgid "Closes"
+msgstr ""
+
+#: pro/includes/Blocks/SignUp.php:68
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Submit"
+msgstr ""
+
+#: pro/includes/Blocks/SignUp.php:85
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Thanks!"
 msgstr ""
 
 #: pro/includes/EventsFilter.php:87
@@ -1245,26 +1485,62 @@ msgstr ""
 msgid "Which user roles to exclude for client side event tracking."
 msgstr ""
 
+#: pro/includes/Fonts.php:39
+msgid "Fonts"
+msgstr ""
+
+#: pro/includes/Fonts.php:45
+msgid "Font Help"
+msgstr ""
+
+#: pro/includes/Fonts.php:46
+msgid "All fonts added here will be made available in the editor when you are editing your widgets."
+msgstr ""
+
+#: pro/includes/Fonts.php:52
+msgid "Add Font"
+msgstr ""
+
+#: pro/includes/Fonts.php:60
+msgid "Font Name"
+msgstr ""
+
+#: pro/includes/Fonts.php:61
+msgid "The name of the font"
+msgstr ""
+
+#: pro/includes/Fonts.php:66
+msgid "Google Font URL"
+msgstr ""
+
+#: pro/includes/Fonts.php:67
+msgid "This is the full URL of the Google Font"
+msgstr ""
+
 #: pro/includes/Retention.php:50
 msgid "The number of days before data is deleted. The higher this is, the more data you will store in the database. We do not recommend more than 100 days."
 msgstr ""
 
 #: assets/blocks/example-block/editor/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/example-block-2/editor/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Background"
 msgstr ""
 
 #: assets/blocks/example-block/editor/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/example-block-2/editor/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Text"
 msgstr ""
 
@@ -1354,54 +1630,56 @@ msgid "Shadow"
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
 msgid "Top"
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Right"
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
 msgid "Bottom"
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Left"
 msgstr ""
 
@@ -1442,6 +1720,7 @@ msgid "Sizes"
 msgstr ""
 
 #: assets/editor.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Dimensions"
 msgstr ""
 
@@ -1459,57 +1738,65 @@ msgstr ""
 
 #: assets/editor.js:1
 #: assets/editor.js:4
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "S"
 msgstr ""
 
 #: assets/editor.js:1
 #: assets/editor.js:4
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Small"
 msgstr ""
 
 #: assets/editor.js:1
 #: assets/editor.js:4
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "M"
 msgstr ""
 
 #: assets/editor.js:1
 #: assets/editor.js:4
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Medium"
 msgstr ""
 
 #: assets/editor.js:1
 #: assets/editor.js:4
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "L"
 msgstr ""
 
 #: assets/editor.js:1
 #: assets/editor.js:4
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Large"
 msgstr ""
 
 #: assets/editor.js:1
 #: assets/editor.js:4
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "XL"
 msgstr ""
 
 #: assets/editor.js:1
 #: assets/editor.js:4
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Extra Large"
 msgstr ""
 
@@ -1606,7 +1893,7 @@ msgid "Select..."
 msgstr ""
 
 #: assets/editor.js:1
-msgid "JSON"
+msgid "JS"
 msgstr ""
 
 #: assets/editor.js:1
@@ -1618,7 +1905,7 @@ msgid "Inner Blocks"
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/editor.js:7
+#: assets/editor.js:8
 msgid "Title"
 msgstr ""
 
@@ -1653,16 +1940,16 @@ msgid "Open when an anchor is clicked."
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 #: assets/widgets/popup/editor/index.js:1
@@ -1742,16 +2029,16 @@ msgid "The amount of time to wait before opening."
 msgstr ""
 
 #: assets/editor.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 #: assets/widgets/popup/editor/index.js:1
@@ -1759,7 +2046,11 @@ msgid "Open Trigger"
 msgstr ""
 
 #: assets/editor.js:1
-msgid "Type"
+msgid "Only show once"
+msgstr ""
+
+#: assets/editor.js:1
+msgid "Once closed will not be shown to a user again."
 msgstr ""
 
 #: assets/editor.js:1
@@ -1841,6 +2132,7 @@ msgstr ""
 
 #. translators: %s: post singular_label
 #: assets/editor.js:4
+#, js-format
 msgid "Set where and to whom this %s will be visible."
 msgstr ""
 
@@ -1989,15 +2281,21 @@ msgid "Plus Small"
 msgstr ""
 
 #: assets/editor.js:4
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
+msgid "Send"
+msgstr ""
+
+#: assets/editor.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Icon"
 msgstr ""
 
 #: assets/editor.js:4
+#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Choose the icon to display."
 msgstr ""
 
@@ -2005,244 +2303,22 @@ msgstr ""
 msgid "Set the size of the icon."
 msgstr ""
 
+#: assets/editor.js:4
+msgid "Image covers the space evenly."
+msgstr ""
+
+#: assets/editor.js:4
+msgid "Image is contained without distortion."
+msgstr ""
+
+#: assets/editor.js:4
+msgid "Image has a fixed width."
+msgstr ""
+
 #. translators: %s: post singular_label
-#: assets/editor.js:7
+#: assets/editor.js:8
+#, js-format
 msgid "Set the title for the %s"
-msgstr ""
-
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-msgid "Position"
-msgstr ""
-
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/popup/editor/index.js:1
-msgid "Behavior"
-msgstr ""
-
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/popup/editor/index.js:1
-msgid "Enable transitions"
-msgstr ""
-
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-msgid "Choose if transitions are used when toggling the bar."
-msgstr ""
-
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/popup/editor/index.js:1
-msgid "Make Variation"
-msgstr ""
-
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/popup/editor/index.js:1
-msgid "Choose a template"
-msgstr ""
-
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/popup/editor/index.js:1
-msgid "Select a template to start with."
-msgstr ""
-
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-msgid "Horizontal"
-msgstr ""
-
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-msgid "Choose which side of the bar to display the button."
-msgstr ""
-
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-msgid "Choose where to display the bar within the page."
-msgstr ""
-
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-msgid "Hide open button"
-msgstr ""
-
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-msgid "Hide the default open button."
-msgstr ""
-
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/popup/editor/index.js:1
-msgid "Close Trigger"
-msgstr ""
-
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/popup/editor/index.js:1
-msgid "Hide close button"
-msgstr ""
-
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/popup/editor/index.js:1
-msgid "Hide the default close button."
-msgstr ""
-
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/popup/editor/index.js:1
-msgid "Close on anchor click"
-msgstr ""
-
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-msgid "Clicking specific anchors closes the bar."
-msgstr ""
-
-#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/bar/editor/blocks/container/index.js:1
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
-#: assets/widgets/bar/editor/index.js:1
-msgid "Add an anchor to a button block and then insert the same value here to close the bar on click."
 msgstr ""
 
 #: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
@@ -2282,6 +2358,7 @@ msgstr ""
 #: assets/widgets/flyout/editor/blocks/container/index.js:4
 #: assets/widgets/flyout/editor/blocks/open-button/index.js:4
 #: assets/widgets/flyout/editor/index.js:4
+#, js-format
 msgid "%s View"
 msgstr ""
 
@@ -2298,94 +2375,341 @@ msgstr ""
 msgid "Toggle View"
 msgstr ""
 
-#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+msgid "Choose where to display the bar within the page."
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
+#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Position"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
+msgid "Horizontal"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+msgid "Choose which side of the bar to display the button."
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
+msgid "Hide open button"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
+msgid "Hide the default open button."
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
+#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/popup/editor/index.js:1
+msgid "Close Trigger"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
+#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/popup/editor/index.js:1
+msgid "Hide close button"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
+#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/popup/editor/index.js:1
+msgid "Hide the default close button."
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
+#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/popup/editor/index.js:1
+msgid "Close on anchor click"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+msgid "Clicking specific anchors closes the bar."
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+msgid "Add an anchor to a button block and then insert the same value here to close the bar on click."
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
+#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/popup/editor/index.js:1
+msgid "Behavior"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
+#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/popup/editor/index.js:1
+msgid "Enable transitions"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
+msgid "Choose if transitions are used when toggling the bar."
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
+#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/popup/editor/index.js:1
+msgid "Make Variation"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
+#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/popup/editor/index.js:1
+msgid "Choose a template"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
+#: assets/widgets/bar/editor/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
+#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/popup/editor/index.js:1
+msgid "Select a template to start with."
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 msgid "Add block"
 msgstr ""
 
-#: assets/widgets/bar/editor/blocks/open-button/index.js:1
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+msgid "Max Width"
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/container/index.js:4
+msgid "Set the maximum width of the bar."
+msgstr ""
+
+#: assets/widgets/bar/editor/blocks/open-button/index.js:4
 msgid "Choose which side of the viewport to display the button."
 msgstr ""
 
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+msgid "Choose which side the button is displayed."
+msgstr ""
+
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
+msgid "Choose where to display the flyout within the page."
+msgstr ""
+
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Center"
+msgstr ""
+
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
+msgid "Vertical"
+msgstr ""
+
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 #: assets/widgets/popup/editor/index.js:1
 msgid "Maximize on mobile"
 msgstr ""
 
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
 msgid "Expand the flyout on mobile to use as much screen space as possible."
 msgstr ""
 
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
 msgid "Clicking specific anchors closes the flyout."
 msgstr ""
 
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
+#: assets/widgets/flyout/editor/blocks/container/index.js:4
+#: assets/widgets/flyout/editor/blocks/open-button/index.js:4
+#: assets/widgets/flyout/editor/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 #: assets/widgets/popup/editor/index.js:1
 msgid "Add an anchor to a button block and then insert the same value here to close the flyout on click."
 msgstr ""
 
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
-msgid "Choose which side the button is displayed."
-msgstr ""
-
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-msgid "Choose where to display the flyout within the page."
-msgstr ""
-
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-msgid "Center"
-msgstr ""
-
-#: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
-#: assets/widgets/flyout/editor/blocks/container/index.js:1
-#: assets/widgets/flyout/editor/blocks/open-button/index.js:1
-#: assets/widgets/flyout/editor/index.js:1
-msgid "Vertical"
-msgstr ""
-
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Width"
 msgstr ""
 
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Fit"
 msgstr ""
 
-#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:1
+#: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 msgid "Fit Content"
 msgstr ""
@@ -2423,13 +2747,13 @@ msgstr ""
 #: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 #: assets/widgets/popup/editor/index.js:1
-msgid "Ignore backdrop click"
+msgid "Close on backdrop click"
 msgstr ""
 
 #: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
 #: assets/widgets/popup/editor/index.js:1
-msgid "Do not close the popup when the backdrop is clicked."
+msgid "Close the popup when the backdrop is clicked."
 msgstr ""
 
 #: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
@@ -2438,12 +2762,157 @@ msgstr ""
 msgid "Clicking specific anchors closes the popup."
 msgstr ""
 
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Add placeholder..."
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Add label..."
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Row"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Stack"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Form"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Layout"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "The overall layout of elements in the form."
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Success Message"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "A short message displayed after a successful sign-up."
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Close on success"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Close the parent widget after a successful sign-up."
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Add name placeholder..."
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Add email placeholder..."
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Inputs"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Email only"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Hide the name input."
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Hide labels"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Hides the labels for the input elements."
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Stack labels"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Display labels above the input elements."
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Placeholder"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Add text..."
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "25%"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "50%"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "75%"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "100%"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Text only"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Icon only"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Icon before text"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Text before icon"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Button"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "The layout of the text and/or icon in the button."
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Horizontal position of the button in the form."
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "The width for the button within the form."
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Icon Size"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Styles"
+msgstr ""
+
 #: assets/blocks/example-block/block.json
 msgctxt "block title"
 msgid "FooConvert - Example Block"
 msgstr ""
 
 #: assets/blocks/example-block/block.json
+#: pro/assets/blocks/example-block-2/block.json
 msgctxt "block description"
 msgid "This block serves no purpose other than to be an example."
 msgstr ""
@@ -2554,4 +3023,19 @@ msgstr ""
 #: assets/widgets/popup/editor/blocks/container/blocks/content/block.json
 msgctxt "block description"
 msgid "The primary content container of the popup."
+msgstr ""
+
+#: pro/assets/blocks/example-block-2/block.json
+msgctxt "block title"
+msgid "FooConvert - Example Block 2"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/block.json
+msgctxt "block title"
+msgid "Sign Up"
+msgstr ""
+
+#: pro/assets/blocks/sign-up/block.json
+msgctxt "block description"
+msgid "A simple email sign up form."
 msgstr ""

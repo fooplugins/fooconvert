@@ -13,6 +13,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
 
     class Schema extends Base {
         const FOOCONVERT_TABLE = 'fooconvert_events';
+        const FOOCONVERT_LEADS_TABLE = 'fooconvert_leads';
 
         /**
          * @return array<array-key, mixed>|false Table creation results, or false.
@@ -23,15 +24,19 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
                 $version_create_table = get_option( FOOCONVERT_OPTION_VERSION_CREATE_TABLE, '0.0.0' );
                 if ( version_compare( $current_version, $version_create_table, '>' ) ) {
 
-                    // Create the table.
+                    // Create the tables.
                     $table_creation_results = $this->create_event_table_and_indexes();
+                    $leads_creation_results = $this->create_leads_table_and_indexes();
 
                     // TODO : Run any necessary migrations.
 
                     // update the version in the database
                     update_option( FOOCONVERT_OPTION_VERSION_CREATE_TABLE, $current_version );
 
-                    return $table_creation_results;
+                    return [
+                        'events' => $table_creation_results,
+                        'leads' => $leads_creation_results
+                    ];
                 }
                 return false;
             }
@@ -132,6 +137,42 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
              * Purpose : Many metrics, such as unique visitors, conversion rate, and dismissal rate, rely on distinct counts of either user_id or anonymous_user_guid for each widget_id.
              */
             parent::safe_create_index( $table_name, 'idx_widget_user', 'widget_id, user_id, anonymous_user_guid' );
+
+            return $db_delta_result;
+        }
+
+        /**
+         * @return array<array-key, mixed> dbDelta result
+         * @global wpdb $wpdb The WordPress database class instance.
+         *
+         */
+        public function create_leads_table_and_indexes() {
+            global $wpdb;
+
+            $charset_collate = $wpdb->get_charset_collate();
+            $table_name = parent::get_table_name( self::FOOCONVERT_LEADS_TABLE );
+            $timestamp_default = parent::get_timestamp_default();
+
+            $sql = "CREATE TABLE $table_name (
+                id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                widget_id bigint(20) unsigned NOT NULL,
+                email varchar(255) NOT NULL,
+                name varchar(255) DEFAULT NULL,
+                metadata longtext DEFAULT NULL,
+                page_url text DEFAULT NULL,
+                timestamp datetime DEFAULT $timestamp_default,
+                PRIMARY KEY (id)
+            ) $charset_collate;";
+
+            $db_delta_result = parent::safe_dbDelta( $sql );
+
+            // Log the results of the table creation.
+            $this->log_table_creation_results( $db_delta_result, $sql, $table_name );
+
+            // Create indexes
+            parent::safe_create_index( $table_name, 'idx_widget', 'widget_id' );
+            parent::safe_create_index( $table_name, 'idx_email', 'email' );
+            parent::safe_create_index( $table_name, 'idx_page_url', 'page_url(191)' ); // Using prefix length for text column
 
             return $db_delta_result;
         }
