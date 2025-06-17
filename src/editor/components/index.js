@@ -33,3 +33,4 @@ export * from "./icons-dropdown";
 export * from "./icon-tools-panel";
 
 export * from "./background-image-panel";
+export * from "./date-time-control";

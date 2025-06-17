@@ -15,3 +15,4 @@ export { default as $string } from "./$string";
 export { default as resolveCSSVars } from "./resolveCSSVars";
 export { default as isPossibleGradient } from "./isPossibleGradient";
 export { default as setImmutably } from "./setImmutably";
+export { default as makePropsFromObjectAttribute } from "./makePropsFromObjectAttribute";
