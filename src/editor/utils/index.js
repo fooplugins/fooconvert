@@ -16,3 +16,4 @@ export { default as resolveCSSVars } from "./resolveCSSVars";
 export { default as isPossibleGradient } from "./isPossibleGradient";
 export { default as setImmutably } from "./setImmutably";
 export { default as makePropsFromObjectAttribute } from "./makePropsFromObjectAttribute";
+export { default as generateGUID } from "./generateGUID";
