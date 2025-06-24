@@ -7,7 +7,7 @@ import { isBoxShadow, BoxShadowControl } from "../box-shadow-control";
 
 /**
  * @typedef {Omit<import('@wordpress/components/build-types/tools-panel/types').ToolsPanelProps, "children", "resetAll">} FCBorderToolsPanelProps
- * @property {string}
+ * @property {("border"|"borderRadius"|"shadow")[]} [shownByDefault]
  */
 
 
@@ -17,9 +17,10 @@ const BorderToolsPanel = ( {
                                panelId,
                                title,
                                defaults = {},
-    showShadow = true,
+                               shownByDefault = [],
+                               allowShadow = true,
                                ...props
-} ) => {
+                           } ) => {
     const {} = props;
 
     const colorGradientSettings = useMultipleOriginColorsAndGradients();
@@ -61,7 +62,7 @@ const BorderToolsPanel = ( {
 
     return (
         <ToolsPanel
-            label={ title ?? showShadow ? __( "Border & Shadow", "fooconvert" ) : __( "Border", "fooconvert" ) }
+            label={ title ?? allowShadow ? __( "Border & Shadow", "fooconvert" ) : __( "Border", "fooconvert" ) }
             resetAll={ resetAll }
             panelId={ panelId }
             { ...props }
@@ -71,11 +72,11 @@ const BorderToolsPanel = ( {
                 hasValue={ () => hasBorder }
                 label={ __( "Border", "fooconvert" ) }
                 onDeselect={ () => setBorder( undefined ) }
-                isShownByDefault
+                isShownByDefault={ shownByDefault.includes( 'border' ) }
             >
                 <BorderBoxControl
                     label={ __( "Border", "fooconvert" ) }
-                    hideLabelFromVision={ !showShadow }
+                    hideLabelFromVision={ !allowShadow }
                     value={ Object.keys( border ).length > 0 ? border : defaultBorder }
                     onChange={ setBorder }
                     size={ "__unstable-large" }
@@ -90,7 +91,7 @@ const BorderToolsPanel = ( {
                 hasValue={ () => hasBorderRadius }
                 label={ __( "Radius", "fooconvert" ) }
                 onDeselect={ () => setBorderRadius( undefined ) }
-                isShownByDefault
+                isShownByDefault={ shownByDefault.includes( 'borderRadius' ) }
             >
                 <BorderRadiusControl
                     label={ __( "Radius", "fooconvert" ) }
@@ -98,12 +99,13 @@ const BorderToolsPanel = ( {
                     onChange={ setBorderRadius }
                 />
             </ToolsPanelItem>
-            { showShadow && (
+            { allowShadow && (
                 <ToolsPanelItem
                     panelId={ panelId }
                     hasValue={ () => hasBoxShadow }
                     label={ __( "Shadow", "fooconvert" ) }
                     onDeselect={ () => setBoxShadow( undefined ) }
+                    isShownByDefault={ shownByDefault.includes( 'borderRadius' ) }
                 >
                     <BoxShadowControl
                         label={ __( 'Shadow', 'fooconvert' ) }
