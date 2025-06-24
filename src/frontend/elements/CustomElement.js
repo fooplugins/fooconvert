@@ -38,11 +38,16 @@ class CustomElement extends HTMLElement {
      * @returns {{}}
      */
     get config() {
+        if ( !this.#isConfigurationInitialized ) {
+            const config = getElementConfiguration( this.id );
+            if ( isPlainObject( config ) ) {
+                this.#config = config;
+            } else {
+                console.warn( `[FooConvert] No configuration found for element ID '${ this.id }'. Falling back to defaults.` );
+            }
+            this.#isConfigurationInitialized = true;
+        }
         return this.#config;
-    }
-
-    get isConfigurationInitialized() {
-        return this.#isConfigurationInitialized;
     }
 
     /**
@@ -60,7 +65,6 @@ class CustomElement extends HTMLElement {
     // noinspection JSUnusedGlobalSymbols
     connectedCallback(){
         if ( !this.isInitialized ) {
-            this.initializeConfiguration();
             this.initialize();
             this.#isInitialized = true;
         }
@@ -94,18 +98,6 @@ class CustomElement extends HTMLElement {
     //endregion
 
     //region Helpers
-
-    initializeConfiguration() {
-        if ( !this.#isConfigurationInitialized ) {
-            const config = getElementConfiguration( this.id );
-            if ( isPlainObject( config ) ) {
-                this.#config = config;
-            } else {
-                console.warn( `[FooConvert] No configuration found for element ID '${ this.id }'. Falling back to defaults.` );
-            }
-            this.#isConfigurationInitialized = true;
-        }
-    }
 
     /**
      *

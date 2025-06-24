@@ -16,9 +16,6 @@ class WidgetElement extends CustomElement {
      * @returns {Promise<LogEventResult>}
      */
     log( type, data ) {
-        if ( !this.isConfigurationInitialized ) {
-            this.initializeConfiguration();
-        }
         const { postId, postType, template = '' } = this.config;
         return logEvent( postId, postType, template, type, data );
     }

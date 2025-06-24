@@ -182,9 +182,6 @@ class TriggeredElement extends WidgetElement {
     #openTimestamp = null;
 
     onOpenChanged( state ) {
-        if ( !this.isConfigurationInitialized ) {
-            this.initializeConfiguration();
-        }
         const { postId, postType } = this.config;
         if ( this.triggerOnce && state && getSeen( postId ) ) {
             // this.#openData = { silent: true };
