@@ -64,10 +64,12 @@ const Edit = props => {
     const {
         setAttributes,
         context: {
-            postId
+            postId,
+            postType
         },
         attributes: {
             postId: storedPostId,
+            postType: storedPostType,
             viewState,
             settings,
             styles
@@ -80,6 +82,12 @@ const Edit = props => {
             setAttributes( { postId } );
         }
     }, [ postId, storedPostId ] );
+
+    useEffect( () => {
+        if ( postType !== storedPostType ) {
+            setAttributes( { postType } );
+        }
+    }, [ postType, storedPostType ] );
 
     const attributesDefaults = { ...FLYOUT_DEFAULTS };
 

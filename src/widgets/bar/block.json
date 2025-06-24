@@ -16,11 +16,14 @@
     "html": false
   },
   "attributes": {
-    "template": {
-      "type": "string"
-    },
     "postId": {
       "type": "number"
+    },
+    "postType": {
+      "type": "string"
+    },
+    "template": {
+      "type": "string"
     },
     "viewState": {
       "type": "string",
@@ -42,9 +45,11 @@
       "type": "object"
     }
   },
-  "usesContext": [ "postId" ],
+  "usesContext": [ "postId", "postType" ],
   "providesContext": {
     "fc/postId": "postId",
+    "fc/postType": "postType",
+    "fc/template": "template",
     "fc-bar/viewState": "viewState",
     "fc-bar/settings": "settings",
     "fc-bar/styles": "styles",

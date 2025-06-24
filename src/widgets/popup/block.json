@@ -16,11 +16,14 @@
     "html": false
   },
   "attributes": {
-    "template": {
-      "type": "string"
-    },
     "postId": {
       "type": "number"
+    },
+    "postType": {
+      "type": "string"
+    },
+    "template": {
+      "type": "string"
     },
     "styles": {
       "type": "object"
@@ -35,9 +38,11 @@
       "type": "object"
     }
   },
-  "usesContext": [ "postId" ],
+  "usesContext": [ "postId", "postType" ],
   "providesContext": {
     "fc/postId": "postId",
+    "fc/postType": "postType",
+    "fc/template": "template",
     "fc-popup/settings": "settings",
     "fc-popup/styles": "styles",
     "fc-popup/closeButton": "closeButton",

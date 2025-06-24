@@ -212,7 +212,11 @@ abstract class BaseBlock {
      *
      * @since 1.0.0
      */
-    function create_instance_id(): string {
+    function create_instance_id( array $attributes ): string {
+        $uniqueId = Utils::get_string( $attributes, 'uniqueId' );
+        if ( !empty( $uniqueId ) ) {
+            return $this->get_tag_name() . '-' . $uniqueId;
+        }
         return wp_unique_prefixed_id( $this->get_tag_name() . '-' );
     }
 
@@ -330,7 +334,7 @@ abstract class BaseBlock {
      */
     function render( array $attributes, string $content, WP_Block $block ) {
         $tag_name = $this->get_tag_name();
-        $instance_id = $this->create_instance_id();
+        $instance_id = $this->create_instance_id( $attributes );
 
         $attributes = apply_filters( 'fooconvert-widget-frontend-attributes', $attributes, $instance_id, $tag_name, $block );
 
@@ -363,7 +367,7 @@ abstract class BaseBlock {
         return $this->kses( $attributes, FooConvert::plugin()->do_content( trim( $content ) ), $block, 'check_compatibility' );
     }
 
-    public function get_post_id( array $attributes, WP_Block $block ): int {
+    public function get_widget_post_id( array $attributes, WP_Block $block ): int {
         $post_id = Utils::get_int( $attributes, 'postId' );
         if ( !empty( $post_id ) ) {
             return $post_id;
@@ -371,9 +375,25 @@ abstract class BaseBlock {
         return Utils::get_int( $block->context, 'fc/postId' );
     }
 
+    public function get_widget_post_type( array $attributes, WP_Block $block ): string {
+        $post_type = Utils::get_string( $attributes, 'postType' );
+        if ( !empty( $post_type ) ) {
+            return $post_type;
+        }
+        return Utils::get_string( $block->context, 'fc/postType' );
+    }
+
+    public function get_widget_template( array $attributes, WP_Block $block ): string {
+        $template = Utils::get_string( $attributes, 'template' );
+        if ( !empty( $template ) ) {
+            return $template;
+        }
+        return Utils::get_string( $block->context, 'fc/template' );
+    }
+
     function kses( array $attributes, string $content, WP_Block $block, string $context = '' ): string {
         if ( $this->supports( 'compatibility' ) ) {
-            $post_id = $this->get_post_id( $attributes, $block );
+            $post_id = $this->get_widget_post_id( $attributes, $block );
             if ( !empty( $post_id ) ) {
                 $compatibility_mode = FooConvert::plugin()->compatibility->is_enabled( $post_id );
                 if ( $context === 'check_compatibility' ) {
