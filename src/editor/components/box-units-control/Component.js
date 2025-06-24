@@ -117,6 +117,7 @@ const BoxUnitsControl = ( props ) => {
                 label={ __( 'All sides', 'fooconvert' ) }
                 placeholder={ mixed ? __( 'Mixed', 'fooconvert' ) : placeholder }
                 after={ renderToggle }
+                initialPosition={ initialPosition }
                 { ...commonProps }
             />
         );
