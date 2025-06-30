@@ -85,13 +85,16 @@ class TriggeredElement extends WidgetElement {
 
     connected() {
         super.connected();
-        this.addEventListener( "request-close", this.onRequestClose );
-        this.connectTrigger();
-        this.connectClickable();
+        if ( this.dispatch( "can-connect", { cancelable: true } ) ) {
+            this.addEventListener( "request-close", this.onRequestClose );
+            this.connectTrigger();
+            this.connectClickable();
+        }
     }
 
     disconnected() {
         super.disconnected();
+        this.removeEventListener( "request-close", this.onRequestClose );
         this.disconnectTrigger();
         this.disconnectClickable();
     }
