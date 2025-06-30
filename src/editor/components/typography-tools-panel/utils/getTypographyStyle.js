@@ -1,10 +1,13 @@
 import { isString } from "@steveush/utils";
 import { isFontAppearance } from "../../font-appearance-control";
+import isFontFamily from "../../font-family-control/utils/isFontFamily";
 
 export const getTypographyStyle = ( typography ) => {
     const css = {};
     if ( isString( typography?.fontFamily, true ) ) {
         css.fontFamily = typography.fontFamily;
+    } else if ( isFontFamily( typography?.fontFamily ) && typography?.style?.fontFamily ) {
+        css.fontFamily = typography.style.fontFamily;
     }
     if ( isString( typography?.fontSize, true ) ) {
         css.fontSize = typography.fontSize;

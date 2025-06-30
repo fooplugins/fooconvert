@@ -1,8 +1,7 @@
-import { isString } from "@steveush/utils";
-import { FONT_FAMILY_OPTIONS_DEFAULTS } from "../Component";
+import { hasKeys, isString, isUndefined } from "@steveush/utils";
 
-const isFontFamily = ( value, options = FONT_FAMILY_OPTIONS_DEFAULTS ) => isString( value, true )
-    && Array.isArray( options )
-    && options.some( option => option?.style?.fontFamily === value );
+const isFontFamilyStyle = value => isUndefined( value ) || hasKeys( value, 'fontFamily' );
+
+const isFontFamily = ( value ) => hasKeys( value, { key: isString, name: isString, style: isFontFamilyStyle } );
 
 export default isFontFamily;

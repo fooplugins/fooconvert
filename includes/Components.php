@@ -91,4 +91,23 @@ class Components {
         }
         return $styles;
     }
+
+    function get_font_family_classnames( array $attributes, array $paths ): array {
+        $classes = array();
+        if ( !empty( $attributes ) ) {
+            foreach ( $paths as $path ) {
+                $styles_attribute = Utils::get_key_path( $attributes, $path );
+                if ( !empty( $styles_attribute ) ) {
+                    $typography = Utils::get_array( $styles_attribute, 'typography' );
+                    if ( !empty( $typography ) ) {
+                        $classname = $this->typography_tools_panel->get_font_family_classname( $typography );
+                        if ( !empty( $classname ) && !in_array( $classname, $classes ) ) {
+                            $classes[] = $classname;
+                        }
+                    }
+                }
+            }
+        }
+        return $classes;
+    }
 }

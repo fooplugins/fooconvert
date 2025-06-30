@@ -3,23 +3,7 @@ import { __ } from "@wordpress/i18n";
 import classnames from "classnames";
 import { isString } from "@steveush/utils";
 import { useFontFamilies } from "./hooks";
-
-export const FONT_FAMILY_OPTIONS_DEFAULTS = [
-    {
-        key: '',
-        name: __( 'Default', 'fooconvert' )
-    },
-    {
-        key: 'system-font',
-        name: __( 'System Font', 'fooconvert' ),
-        style: { fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif' }
-    },
-    {
-        key: 'source-serif-pro',
-        name: __( 'Source Serif Pro', 'fooconvert' ),
-        style: { fontFamily: '"Source Serif Pro", serif' }
-    }
-];
+import isFontFamily from "./utils/isFontFamily";
 
 const CLASS_NAME = 'fc--font-family-control';
 
@@ -44,10 +28,16 @@ const FontFamilyControl = ( props ) => {
         ...fontFamilies,
     ];
 
-    const found = isString( value, true ) ? options.find( option => option?.style?.fontFamily === value ) : undefined;
+    let found;
+    if ( isString( value ) ) {
+        found = options.find( option => option?.style?.fontFamily === value );
+    } else if ( isFontFamily( value ) ) {
+        found = options.find( option => option?.key === value?.key );
+    }
+
     const selected = found ?? options.at( 0 );
 
-    const setFontFamily = ( { selectedItem } ) => onChange( selectedItem?.style?.fontFamily );
+    const setFontFamily = ( { selectedItem } ) => onChange( selectedItem );
 
     return (
         <CustomSelectControl

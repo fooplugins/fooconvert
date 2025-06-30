@@ -18,6 +18,7 @@ import { FontFamilyControl } from "../font-family-control";
 import "./Component.scss";
 import { Icon, formatUnderline, formatStrikethrough, formatUppercase, formatLowercase, formatCapitalize, reset } from "@wordpress/icons";
 import { renderToString } from "@wordpress/element";
+import isFontFamily from "../font-family-control/utils/isFontFamily";
 
 const CLASS_NAME = 'fc--typography-tools-panel';
 
@@ -74,7 +75,7 @@ const TypographyToolsPanel = ( props ) => {
     } = value ?? {};
     let fontAppearance = { fontStyle, fontWeight };
 
-    const hasFontFamily = isString( fontFamily, true );
+    const hasFontFamily = isString( fontFamily, true ) || isFontFamily( fontFamily );
     const hasFontSize = isString( fontSize, true );
     const hasFontAppearance = isFontAppearance( fontAppearance );
     const hasLineHeight = isString( lineHeight, true );

@@ -12,6 +12,11 @@ class TypographyToolsPanel extends BaseComponent {
         $font_family = Utils::get_string( $attr_value, 'fontFamily' );
         if ( !empty( $font_family ) ) {
             $styles['font-family'] = $font_family;
+        } else {
+            $font_family = Utils::get_key_path( $attr_value, 'fontFamily.style.fontFamily' );
+            if ( !empty( $font_family ) ) {
+                $styles['font-family'] = $font_family;
+            }
         }
 
         $font_size = Utils::get_string( $attr_value, 'fontSize' );
@@ -48,5 +53,13 @@ class TypographyToolsPanel extends BaseComponent {
         }
 
         return $styles;
+    }
+
+    public function get_font_family_classname( $attr_value ) : ?string {
+        $font_family = Utils::get_key_path( $attr_value, 'fontFamily.key' );
+        if ( Utils::is_string( $font_family, true ) ) {
+            return "uses-$font_family-font-family";
+        }
+        return null;
     }
 }
