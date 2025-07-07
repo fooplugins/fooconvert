@@ -11,6 +11,7 @@ import chevronRight from './chevron-right.js';
 import chevronUp from './chevron-up.js';
 import close from './close.js';
 import closeSmall from './close-small.js';
+import copy from "./copy";
 import plus from './plus.js';
 import plusCircle from './plus-circle.js';
 import plusCircleFilled from './plus-circle-filled.js';
@@ -36,6 +37,7 @@ export default {
         { name: 'chevron-up', label: __( 'Chevron Up', 'fooconvert' ), value: chevronUp },
         { name: 'close', label: __( 'Close', 'fooconvert' ), value: close },
         { name: 'close-small', label: __( 'Close Small', 'fooconvert' ), value: closeSmall },
+        { name: 'copy', label: __( 'Copy', 'fooconvert' ), value: copy },
         { name: 'plus', label: __( 'Plus', 'fooconvert' ), value: plus },
         { name: 'plus-circle', label: __( 'Plus Circle', 'fooconvert' ), value: plusCircle },
         { name: 'plus-circle-filled', label: __( 'Plus Circle Filled', 'fooconvert' ), value: plusCircleFilled },
