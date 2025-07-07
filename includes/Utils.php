@@ -35,6 +35,32 @@ if ( !class_exists( __NAMESPACE__ . '\Utils' ) ) {
             return self::get_key( $target_array, $target_key, $default );
         }
 
+        /**
+         * Check if the key path exists in the given array or object.
+         *
+         * @param array|object $array_or_object The array or object to interrogate.
+         * @param string|string[] $key_path The array key or object property path to fetch.
+         *
+         * @return bool True if the key exists, otherwise false.
+         *
+         * @since 1.0.0
+         */
+        public static function has_key_path( $array_or_object, $key_path ): bool {
+            if ( is_array( $key_path ) ) {
+                $key_path = implode( '.', $key_path );
+            }
+            $keys = explode( '.', $key_path );
+            $target_key = array_pop( $keys );
+            $target_array = $array_or_object;
+            foreach ( $keys as $key ) {
+                if ( !self::has_key( $target_array, $key ) ) {
+                    return false;
+                }
+                $target_array = self::get_array( $target_array, $key );
+            }
+            return self::has_key( $target_array, $target_key );
+        }
+
         //region Mixed - functions for dealing with mixed values
 
         /**
