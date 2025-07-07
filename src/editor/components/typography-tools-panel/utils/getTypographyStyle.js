@@ -6,8 +6,8 @@ export const getTypographyStyle = ( typography ) => {
     const css = {};
     if ( isString( typography?.fontFamily, true ) ) {
         css.fontFamily = typography.fontFamily;
-    } else if ( isFontFamily( typography?.fontFamily ) && typography?.style?.fontFamily ) {
-        css.fontFamily = typography.style.fontFamily;
+    } else if ( isString( typography?.fontFamily?.style?.fontFamily, true ) ) {
+        css.fontFamily = typography.fontFamily.style.fontFamily;
     }
     if ( isString( typography?.fontSize, true ) ) {
         css.fontSize = typography.fontSize;
