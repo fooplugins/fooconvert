@@ -108,6 +108,7 @@ const FontAppearanceControl = ( props ) => {
             value={ selected }
             options={ options }
             onChange={ setFontAppearance }
+            __next40pxDefaultSize
             { ...restProps }
         />
     );

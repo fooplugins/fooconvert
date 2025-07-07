@@ -47,6 +47,7 @@ const FontFamilyControl = ( props ) => {
             options={ options }
             onChange={ setFontFamily }
             size={ size }
+            __next40pxDefaultSize
             { ...restProps }
         />
     );
