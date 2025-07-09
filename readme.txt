@@ -58,7 +58,7 @@ FooConvert is a powerful WordPress plugin designed to help you optimize your web
 
 = FooConvert PRO Features =
 
-PRO gives you insights into your widget performance and saves you time! Features include:
+PRO features that make FooConvert even more powerful! Features include:
 
 - Longer retention period for widget analytics. You can now track widget performance as long as your like!
 - More advanced widget analytics, including:
@@ -68,10 +68,20 @@ PRO gives you insights into your widget performance and saves you time! Features
   - Daily activity charts for clicks, conversions and engagements.
 - More dashboard metrics, including:
   - Top Performers by Engagement Rate, Clicks, Click Rate, Conversions, Conversion Rate.
-- 9 professionally designed templates:
+- 15 professionally designed templates:
   - No design skills needed!
   - Proven to convert and grab attention!
   - Create stunning, high-converting widgets in minutes – just pick, customize, publish!
+- More widget blocks:
+  - Sign-up Block : capture leads from your site visitors.
+  - Countdown Block : add a countdown timer to create FOMO.
+  - Coupon Copy Block : allow visitors to easily copy coupon codes to their clipboard.
+- Exclude roles from logging widget events for analytics.
+  - Use case : exclude administrator widget tests from skewing your widget analytics.
+- Google Font Support
+  - Use case : use any available Google Font within your widgets.
+- Lead Capture Management
+  - Use case : manage or export all leads captured by your widgets.
 
 == Installation ==
 
