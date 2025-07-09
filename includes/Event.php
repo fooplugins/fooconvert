@@ -193,9 +193,20 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
         public function get_widget_daily_activity( $widget_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
             // Sanitize input
             $widget_id = intval( $widget_id );
-            $days = max( 1, (int)$days ); // Ensure days is at least 1
 
             $results = Data\Query::get_widget_daily_activity( $widget_id, $days );
+
+            if ( count( $results ) > 0 && $days < 0 ) {
+                // calculate how many days ago the first event was
+                $first = new \DateTime( $results[0]['event_date'] );
+                $today = new \DateTime('now');
+                $interval = $today->diff($first);
+                $days = (int)$interval->format('%a');
+            }
+
+            if ( $days > 180 ) {
+                $days = 180; // ensure we never go back more than 180 days!
+            }
 
             // Loop through the data and ensure dates with no data are set to 0
             $final_data = [];

@@ -136,13 +136,17 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             $days       = intval( $days );
 
             $query = apply_filters( 'fooconvert_get_widget_metrics_query', "SELECT 
-                    COUNT(*) as total_events,
+                    COUNT(CASE WHEN event_type != 'update' THEN 1 END) as total_events,
                     COUNT(CASE WHEN event_type = 'open' THEN 1 END) as total_views,
                     COUNT(CASE WHEN event_subtype = 'engagement' THEN 1 END) as total_engagements,
                     COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as total_unique_visitors
                     FROM {$table_name}
-                    WHERE widget_id = %d
-                    AND `timestamp` >= NOW() - INTERVAL %d DAY", $table_name );
+                    WHERE widget_id = %d", $table_name );
+
+            //Add a filter by days.
+            if ( $days > 0 ) {
+                $query .= " AND `timestamp` >= NOW() - INTERVAL %d DAY";
+            }
 
             // Prepare SQL query to return high-level statistics
             return $wpdb->get_row(
@@ -177,14 +181,19 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
 
             $query = apply_filters( 'fooconvert_get_widget_daily_activity_query', "SELECT 
                     DATE(timestamp) as event_date,
-                    COUNT(*) as events,
+                    COUNT(CASE WHEN event_type != 'update' THEN 1 END) as events,
                     COUNT(CASE WHEN event_type = 'open' THEN 1 END) as views,
                     COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as unique_visitors,
                     COUNT(CASE WHEN event_subtype = 'engagement' THEN 1 END) as engagements
                     FROM {$table_name}
-                    WHERE widget_id = %d AND timestamp >= DATE_SUB(NOW(), INTERVAL %d DAY)
-                    GROUP BY event_date
-                    ORDER BY event_date ASC", $table_name );
+                    WHERE widget_id = %d", $table_name );
+
+            //Add a filter by days.
+            if ( $days > 0 ) {
+                $query .= " AND timestamp >= DATE_SUB(NOW(), INTERVAL %d DAY)";
+            }
+
+            $query .= ' GROUP BY event_date ORDER BY event_date ASC';
 
             // Prepare recent activity for the last X days
             return $wpdb->get_results(
@@ -461,7 +470,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
 
             $query = apply_filters( 'fooconvert_get_all_widget_metrics_query', "SELECT
                     widget_id,  
-                    COUNT(*) as total_events,
+                    COUNT(CASE WHEN event_type != 'update' THEN 1 END) as total_events,
                     COUNT(CASE WHEN event_type = 'open' THEN 1 END) as total_views,
                     COUNT(CASE WHEN event_subtype = 'engagement' THEN 1 END) as total_engagements,
                     COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as total_unique_visitors
