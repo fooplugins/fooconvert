@@ -280,7 +280,23 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
          * @return array An associative array of widget metrics.
          */
         public function get_all_widget_metrics() {
-            return Data\Query::get_all_widget_metrics();
+            $metrics = Data\Query::get_all_widget_metrics();
+
+            if ( empty( $metrics ) ) {
+                return [];
+            }
+
+            $enriched_metrics = [];
+
+            foreach( $metrics as $metric ) {
+                $enriched_metrics[] = apply_filters( 
+                    'fooconvert_widget_metrics',
+                    $metric,
+                    $metric['widget_id']
+                );
+            }
+
+            return $enriched_metrics;
         }
 
         /**

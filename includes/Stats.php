@@ -27,6 +27,8 @@ if ( !class_exists( __NAMESPACE__ . '\Stats' ) ) {
             // Find all widgets with events.
             $all_widgets_metrics = $event->get_all_widget_metrics();
 
+            $ingore_list = [ 0, '0', '0%', 'NA', 'N/A', null ];
+
             foreach ( $all_widgets_metrics as $metrics ) {
                 $widget_id = intval( $metrics['widget_id'] );
 
@@ -43,7 +45,8 @@ if ( !class_exists( __NAMESPACE__ . '\Stats' ) ) {
                             $metric_value = call_user_func( $option['function'], $metrics );
                         }
                     }
-                    if ( $metric_value !== 0 ) {
+
+                    if ( !in_array( $metric_value, $ingore_list ) ) {
                         update_post_meta( $widget_id, $option['meta_key'], $metric_value );
                     } else {
                         delete_post_meta( $widget_id, $option['meta_key'] );
