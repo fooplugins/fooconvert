@@ -92,11 +92,12 @@
 .fooconvert-flex {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
 .fooconvert-panel .spinner {
     float: none;
-    margin: 0 10px 0;
+    margin: 0;
 }
 
 .fooconvert-panel .spinner.panel-hide-spinner {

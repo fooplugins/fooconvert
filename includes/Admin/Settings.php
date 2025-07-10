@@ -33,6 +33,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
             $pro_link = '<a href="' . fooconvert_admin_url_pricing() . '" target="_blank">' . __( 'FooConvert PRO', 'fooconvert' ) . '</a>';
 
             $hide_dashboard_panels_choices = apply_filters( 'fooconvert_hide_dashboard_panels_choices', array(
+                'recent'          => __( 'Recent', 'fooconvert' ),
                 'getting-started' => __( 'Getting Started', 'fooconvert' ),
                 'help'            => __( 'Help', 'fooconvert' ),
                 'pro-features'    => __( 'PRO Features', 'fooconvert' ),
