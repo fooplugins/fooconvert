@@ -27,7 +27,16 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
          * @return bool Whether promotions should be hidden.
          */
         private function must_hide_promos() {
-            return 'on' === fooconvert_get_setting( 'hide_promos' );
+            if ( 'on' === fooconvert_get_setting( 'hide_promos' ) ) {
+                return true;
+            }
+
+            // If in trial mode, skip showing promotions
+            if ( fooconvert_fs()->is_trial() ) {
+                return true;
+            }
+
+            return false;
         }
 
         /**
@@ -36,15 +45,34 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
          * @since 1.0.0
          */
         public function init_promotions() {
-
             // If hide_promos is enabled, do not show any promotions!
             if ( $this->must_hide_promos() ) {
                 return;
             }
 
+            // Add the PRO Features panel to the dashboard
+            add_action( 'fooconvert_admin_dashboard_right', function() {
+                include_once __DIR__ . '/Views/dashboard-panel-pro-features.php';
+            });
+
             add_action( 'fooconvert_admin_dashboard_right', array( $this, 'render_addons_panel' ) );
             add_action( 'fooconvert_widget_stats_html-metrics', array( $this, 'render_metrics' ), 10, 2 );
             add_filter( 'fooconvert_widget_metric_options', array( $this, 'adjust_widget_metric_options' ) );
+
+            // PRO Bar templates
+            add_filter( 'fooconvert_editor_variations-fc-bar', function( $variations ) {
+                return array_merge( $variations, include __DIR__ . '/Templates/ProBarTemplates.php' );
+            }, 99 );
+
+            // PRO Flyout templates
+            add_filter( 'fooconvert_editor_variations-fc-flyout', function( $variations ) {
+                return array_merge( $variations, include __DIR__ . '/Templates/ProFlyoutTemplates.php' );
+            }, 99 );
+
+            // PRO Popup templates
+            add_filter( 'fooconvert_editor_variations-fc-popup', function( $variations ) {
+                return array_merge( $variations, include __DIR__ . '/Templates/ProPopupTemplates.php' );
+            }, 99 );
         }
 
         /**
@@ -190,7 +218,7 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
         public function render_metrics( $widget_id, $widget ) {
             ?>
             <div class="metric pro-feature">
-                <p><?php esc_html( wp_rand( 0, 100 ) ); ?></p>
+                <p><?php echo esc_html( wp_rand( 0, 100 ) ); ?></p>
                 <h2><?php esc_html_e( 'Total Clicks', 'fooconvert' ); ?></h2>
                 <span data-balloon-pos="down"
                       aria-label="<?php esc_attr_e( 'Total number of clicks made within the widget.', 'fooconvert' ); ?>">
@@ -198,7 +226,7 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
                 </span>
             </div>
             <div class="metric pro-feature">
-                <p><?php esc_html( wp_rand( 0, 100 ) ); ?>%</p>
+                <p><?php echo esc_html( wp_rand( 0, 100 ) ); ?>%</p>
                 <h2><?php esc_html_e( 'Click Through Rate', 'fooconvert' ); ?></h2>
                 <span data-balloon-pos="down"
                       aria-label="<?php esc_attr_e( 'Click Through Rate for the widget.', 'fooconvert' ); ?>">
@@ -206,7 +234,7 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
                 </span>
             </div>
             <div class="metric pro-feature">
-                <p><?php esc_html( wp_rand( 0, 100 ) ); ?></p>
+                <p><?php echo esc_html( wp_rand( 0, 100 ) ); ?></p>
                 <h2><?php esc_html_e( 'Total Conversions', 'fooconvert' ); ?></h2>
                 <span data-balloon-pos="down"
                       aria-label="<?php esc_attr_e( 'Total number of conversions for the widget.', 'fooconvert' ); ?>">
@@ -214,7 +242,7 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
                 </span>
             </div>
             <div class="metric pro-feature">
-                <p><?php esc_html( wp_rand( 0, 100 ) ); ?>%</p>
+                <p><?php echo esc_html( wp_rand( 0, 100 ) ); ?>%</p>
                 <h2><?php esc_html_e( 'Conversion Rate', 'fooconvert' ); ?></h2>
                 <span data-balloon-pos="down"
                       aria-label="<?php esc_attr_e( 'Conversion Rate for the widget.', 'fooconvert' ); ?>">
@@ -222,7 +250,7 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
                 </span>
             </div>
             <div class="metric pro-feature">
-                <p><?php esc_html( wp_rand( 0, 100 ) ); ?>%</p>
+                <p><?php echo esc_html( wp_rand( 0, 100 ) ); ?>%</p>
                 <h2><?php esc_html_e( 'Engagement Rate', 'fooconvert' ); ?></h2>
                 <span data-balloon-pos="down"
                       aria-label="<?php esc_attr_e( 'Engagement Rate for the widget.', 'fooconvert' ); ?>">
@@ -230,7 +258,7 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
                 </span>
             </div>
             <div class="metric pro-feature">
-                <p><?php esc_html( wp_rand( 0, 100 ) ); ?></p>
+                <p><?php echo esc_html( wp_rand( 0, 100 ) ); ?></p>
                 <h2><?php esc_html_e( 'Positive Engagements', 'fooconvert' ); ?></h2>
                 <span data-balloon-pos="down"
                       aria-label="<?php esc_attr_e( 'Total number of positive engagements for the widget (like clicks).', 'fooconvert' ); ?>">
@@ -238,7 +266,7 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
                 </span>
             </div>
             <div class="metric pro-feature">
-                <p><?php esc_html( wp_rand( 0, 100 ) ); ?></p>
+                <p><?php echo esc_html( wp_rand( 0, 100 ) ); ?></p>
                 <h2><?php esc_html_e( 'Negative Engagements', 'fooconvert' ); ?></h2>
                 <span data-balloon-pos="down"
                       aria-label="<?php esc_attr_e( 'Total number of negative engagements for the widget (like dismissals).', 'fooconvert' ); ?>">

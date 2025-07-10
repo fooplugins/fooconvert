@@ -121,6 +121,13 @@ function fooconvert_admin_url_pricing() {
 }
 
 /**
+ * Returns the trial URL within the admin.
+ */
+function fooconvert_admin_url_trial() {
+    return fooconvert_fs()->get_trial_url();
+}
+
+/**
  * Retrieves the base URL for the FooConvert Widget Stats admin page.
  *
  * This function constructs and returns the base URL for accessing the
@@ -318,4 +325,55 @@ function fooconvert_is_admin_stats_page() {
     return is_admin() &&
         isset( $_GET['page'] ) && $_GET['page'] === 'fooconvert-widget-stats' &&
         isset( $_GET['widget_id'] ) && is_numeric( $_GET['widget_id'] );
+}
+
+/**
+ * Returns an array of PRO features for FooConvert.
+ * Each feature has a 'title', 'feature', and optional 'link'.
+ *
+ * @return array[]
+ */
+function fooconvert_pro_features_list() {
+    return [
+        [
+            'title'   => __( 'Ready-to-use PRO Templates', 'fooconvert' ),
+            'feature' => __( '15 professionally designed templates: No design skills needed, proven to convert, create stunning widgets in minutes.', 'fooconvert' ),
+            'link'    => '',
+        ],
+        [
+            'title'   => __( 'PRO Widget Blocks', 'fooconvert' ),
+            'feature' => __( 'Sign-up Block, Countdown Block, Coupon Copy Block.', 'fooconvert' ),
+            'link'    => '',
+        ],
+        [
+            'title'   => __( 'Lead Capture Management', 'fooconvert' ),
+            'feature' => __( 'Manage or export all leads captured by your widgets.', 'fooconvert' ),
+            'link'    => '',
+        ],
+        [
+            'title'   => __( 'Longer Retention', 'fooconvert' ),
+            'feature' => __( 'Longer retention period for widget analytics. Track widget performance as long as you like!', 'fooconvert' ),
+            'link'    => '',
+        ],
+        [
+            'title'   => __( 'Advanced Analytics', 'fooconvert' ),
+            'feature' => __( 'Advanced widget analytics: Clicks, click-through-rates, conversions, conversion rates, engagement sentiment, engagement ratios, daily activity charts.', 'fooconvert' ),
+            'link'    => '',
+        ],
+        [
+            'title'   => __( 'More Dashboard Metrics', 'fooconvert' ),
+            'feature' => __( 'Top Performers by Engagement Rate, Clicks, Click Rate, Conversions, Conversion Rate.', 'fooconvert' ),
+            'link'    => '',
+        ],
+        [
+            'title'   => __( 'Role Exclusion', 'fooconvert' ),
+            'feature' => __( 'Exclude roles from logging widget events for analytics (e.g., exclude admin tests).', 'fooconvert' ),
+            'link'    => '',
+        ],
+        [
+            'title'   => __( 'Google Font Support', 'fooconvert' ),
+            'feature' => __( 'Use any available Google Font within your widgets.', 'fooconvert' ),
+            'link'    => '',
+        ]
+    ];
 }

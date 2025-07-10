@@ -35,6 +35,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
             $hide_dashboard_panels_choices = apply_filters( 'fooconvert_hide_dashboard_panels_choices', array(
                 'getting-started' => __( 'Getting Started', 'fooconvert' ),
                 'help'            => __( 'Help', 'fooconvert' ),
+                'pro-features'    => __( 'PRO Features', 'fooconvert' ),
                 'premium'         => __( 'Premium Addons', 'fooconvert' )
             ) );
 
