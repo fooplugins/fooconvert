@@ -10,6 +10,15 @@ return array(
         'description' => __( 'Digital download signup lead magnet bar.', 'fooconvert' ),
         'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/template__digital_download_signup.png',
         'pro' => true,
+        'upsell' => array(
+            'heading' => 'example heading',
+            'description' => 'example description',
+            'image' => FOOCONVERT_ASSETS_URL . 'media/templates/sample.png',
+            'primary_button_text' => 'example button text',
+            'primary_button_url' => 'example button url',
+            'secondary_button_text' => 'example button text',
+            'secondary_button_url' => 'example button url',
+        )
     ),
     array(
         'name' => 'bar__newsletter_subscribe',
