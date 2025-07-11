@@ -11,6 +11,7 @@ if ( !class_exists( __NAMESPACE__ . '\Repeater' ) ) {
 
         protected $add_button_text;
         protected $no_data_message;
+        protected $no_data_message_escape;
         protected $table_class;
         protected $fields = false;
         protected $show_header = true;
@@ -28,12 +29,20 @@ if ( !class_exists( __NAMESPACE__ . '\Repeater' ) ) {
             // phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain
             $this->add_button_text = isset( $field_config['add_button_text'] ) ? $field_config['add_button_text'] : __( 'Add', $container->manager->text_domain );
             $this->no_data_message = isset( $field_config['no_data_message'] ) ? $field_config['no_data_message'] : __( 'Nothing found', $container->manager->text_domain );
+            $this->no_data_message_escape = isset( $field_config['no_data_message_escape'] ) ? $field_config['no_data_message_escape'] : true;
             // phpcs:enable
             $this->table_class = isset( $field_config['table_class'] ) ? $field_config['table_class'] : 'wp-list-table widefat striped';
             $this->show_header = isset( $field_config['show_header'] ) ? $field_config['show_header'] : true;
             if ( isset( $field_config['fields'] ) ) {
                 $this->fields = $field_config['fields'];
             }
+        }
+
+        function get_fields() {
+            if ( false === $this->fields ) {
+                return array();
+            }
+            return $this->fields;
         }
 
         /**
@@ -74,9 +83,13 @@ if ( !class_exists( __NAMESPACE__ . '\Repeater' ) ) {
 
             $has_rows = is_array( $value ) && count( $value ) > 0;
 
-            self::render_html_tag( 'p', array(
-                'class' => 'foofields-repeater-no-data-message'
-            ), $this->no_data_message );
+            self::render_html_tag( 
+                'p', 
+                array( 'class' => 'foofields-repeater-no-data-message'), 
+                $this->no_data_message,
+                true,
+                $this->no_data_message_escape
+            );
 
             self::render_html_tag( 'table', array(
                 'class' => $this->table_class
@@ -87,7 +100,7 @@ if ( !class_exists( __NAMESPACE__ . '\Repeater' ) ) {
                 //render the table column headers
                 echo '<thead><tr>';
                 self::render_html_tag( 'th', array() );
-                foreach ( $this->fields as $child_field ) {
+                foreach ( $this->get_fields() as $child_field ) {
                     $column_attributes = array();
                     if ( isset( $child_field['width'] ) ) {
                         $column_attributes['width'] = $child_field['width'];
@@ -107,7 +120,7 @@ if ( !class_exists( __NAMESPACE__ . '\Repeater' ) ) {
                     echo '<td>';
                     $this->render_row_metadata_fields( $row, $row_index );
                     echo '</td>';
-                    foreach ( $this->fields as $child_field ) {
+                    foreach ( $this->get_fields() as $child_field ) {
                         echo '<td>';
                         $this->render_row_field( $child_field, $row, $row_index );
                         echo '</td>';
@@ -126,7 +139,7 @@ if ( !class_exists( __NAMESPACE__ . '\Repeater' ) ) {
             $this->render_row_metadata_fields();
             echo '</td>';
 
-            foreach ( $this->fields as $child_field ) {
+            foreach ( $this->get_fields() as $child_field ) {
                 echo '<td>';
                 $this->render_row_field( $child_field );
                 echo '</td>';
@@ -258,6 +271,13 @@ if ( !class_exists( __NAMESPACE__ . '\Repeater' ) ) {
                     } else {
                         $result['__updated'] = time();
                         $result['__updated_by'] = $current_username;
+                    }
+                    foreach ( $this->get_fields() as $field ) {
+                        $field_object = $this->container->create_field_instance( $field['type'], $field );
+                        $field_id = $field_object->id;
+                        if ( isset( $result[$field_id] ) ) {
+                            $result[$field_id] = $field_object->get_posted_value( $result );
+                        }
                     }
                 }
             }

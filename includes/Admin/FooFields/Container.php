@@ -822,6 +822,9 @@ if ( !class_exists( __NAMESPACE__ . '\Container' ) ) {
             $sanitized_data = $this->safe_get_from_request( $this->container_id(), array(), false );
 
             $posted_data = array();
+
+            $this->load_fields();
+            
             //loop through our flat list of fields and get all the data
             foreach ( $this->fields as $field ) {
                 $posted_field_data = $field->get_posted_value( $sanitized_data );

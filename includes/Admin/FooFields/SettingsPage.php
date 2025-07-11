@@ -171,16 +171,25 @@ if ( !class_exists( __NAMESPACE__ . '\SettingsPage' ) ) {
          * @return bool
          */
         function is_settings_page() {
+            // If AJAX, bail early
             if ( $this->is_settings_page_ajax() ) {
-
                 return true;
-
-            } else {
-                $screen = get_current_screen();
-
-                //make sure we are on the correct settings page
-                return is_object( $screen ) && strpos( $screen->id, $this->container_id() ) > 0;
             }
+
+            // On normal admin screen load
+            if ( function_exists('get_current_screen') ) {
+                $screen = get_current_screen();
+                if ( is_object($screen) && strpos($screen->id, $this->container_id()) !== false ) {
+                    return true;
+                }
+            }
+
+            if ( isset($_POST['option_page']) && $_POST['option_page'] === $this->container_id() ) {
+                // This IS your settings page save
+                return true;
+            }
+
+            return false;
         }
 
         /**
@@ -240,6 +249,12 @@ if ( !class_exists( __NAMESPACE__ . '\SettingsPage' ) ) {
                 );
 
                 return false;
+            } else {
+                $settings_data = $this->get_posted_data();
+
+                if ( is_array( $settings_data ) ) {
+                    $input = $settings_data;
+                }
             }
 
             return $input;
