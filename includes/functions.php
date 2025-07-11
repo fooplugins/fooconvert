@@ -335,45 +335,58 @@ function fooconvert_is_admin_stats_page() {
  */
 function fooconvert_pro_features_list() {
     return [
-        [
+        'templates' => [
             'title'   => __( 'Ready-to-use PRO Templates', 'fooconvert' ),
             'feature' => __( '15 professionally designed templates: No design skills needed, proven to convert, create stunning widgets in minutes.', 'fooconvert' ),
-            'link'    => '',
+            'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/pro-templates/',
         ],
-        [
+        'blocks' => [
             'title'   => __( 'PRO Widget Blocks', 'fooconvert' ),
             'feature' => __( 'Sign-up Block, Countdown Block, Coupon Copy Block.', 'fooconvert' ),
-            'link'    => '',
+            'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/pro-widgets/',
         ],
-        [
+        'leads' => [
             'title'   => __( 'Lead Capture Management', 'fooconvert' ),
             'feature' => __( 'Manage or export all leads captured by your widgets.', 'fooconvert' ),
-            'link'    => '',
+            'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/gathering-leads/',
         ],
-        [
+        'retention' => [
             'title'   => __( 'Longer Retention', 'fooconvert' ),
             'feature' => __( 'Longer retention period for widget analytics. Track widget performance as long as you like!', 'fooconvert' ),
-            'link'    => '',
+            'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/pro-analytics/#retention',
         ],
-        [
+        'analytics' => [
             'title'   => __( 'Advanced Analytics', 'fooconvert' ),
             'feature' => __( 'Advanced widget analytics: Clicks, click-through-rates, conversions, conversion rates, engagement sentiment, engagement ratios, daily activity charts.', 'fooconvert' ),
-            'link'    => '',
+            'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/pro-analytics/',
         ],
-        [
+        'metrics' => [
             'title'   => __( 'More Dashboard Metrics', 'fooconvert' ),
             'feature' => __( 'Top Performers by Engagement Rate, Clicks, Click Rate, Conversions, Conversion Rate.', 'fooconvert' ),
-            'link'    => '',
+            'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/pro-analytics/',
         ],
-        [
+        'exclusions' => [
             'title'   => __( 'Role Exclusion', 'fooconvert' ),
             'feature' => __( 'Exclude roles from logging widget events for analytics (e.g., exclude admin tests).', 'fooconvert' ),
-            'link'    => '',
+            'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/exclude-roles/',
         ],
-        [
+        'fonts' => [
             'title'   => __( 'Google Font Support', 'fooconvert' ),
             'feature' => __( 'Use any available Google Font within your widgets.', 'fooconvert' ),
-            'link'    => '',
+            'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/adding-google-font/',
         ]
     ];
+}
+
+/**
+ * Tries to get the docs URL for a specific feature, with a fallback to the default.
+ */
+function fooconvert_pro_feature_docs_url( $feature ) {
+    $features = fooconvert_pro_features_list();
+
+    if ( isset( $features[ $feature ] ) ) {
+        return $features[ $feature ]['link'];
+    }
+
+    return FOOCONVERT_DOCS_URL;
 }
