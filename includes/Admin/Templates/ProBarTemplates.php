@@ -11,13 +11,17 @@ return array(
         'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/template__digital_download_signup.png',
         'pro' => true,
         'upsell' => array(
-            'heading' => 'example heading',
-            'description' => 'example description',
-            'image' => FOOCONVERT_ASSETS_URL . 'media/templates/sample.png',
-            'primary_button_text' => 'example button text',
-            'primary_button_url' => 'example button url',
-            'secondary_button_text' => 'example button text',
-            'secondary_button_url' => 'example button url',
+            'title' => 'Digital Download Signup',
+            'content' => '<p>example description <a href="#link">with a link</a></p>',
+            'image' => FOOCONVERT_ASSETS_URL . 'media/templates/template__digital_download_signup.png',
+            'primary' => array(
+                'text' => 'View PRO Pricing',
+                'href' => '#view_pro_pricing_url',
+            ),
+            'secondary' => array(
+                'text' => 'Start Free Trial',
+                'href' => '#start_free_trial_url',
+            )
         )
     ),
     array(
