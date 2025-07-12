@@ -17,7 +17,6 @@ const EditBlock = props => {
 
     const { hasInnerBlocks } = useInnerBlocks( clientId );
 
-    console.log( styles?.background );
     const inlineStyles = useStyles( styles );
     const width = styles?.width ?? stylesDefaults?.width;
     const widthStyle = {};
