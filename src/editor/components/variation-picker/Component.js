@@ -1,9 +1,9 @@
 import { useVariations } from "./hooks";
-import { isBoolean, isString, isUndefined } from "@steveush/utils";
+import { isBoolean, isPlainObject, isString, isUndefined } from "@steveush/utils";
 import classNames from "classnames";
 
 import "./Component.scss";
-import { Button } from "@wordpress/components";
+import { Button, Modal } from "@wordpress/components";
 import { grid, list } from "@wordpress/icons";
 import { useState } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
@@ -17,6 +17,8 @@ const modes = [ 'grid', 'list' ];
 const DEFAULT_MODE = 'grid';
 const medias = [ 'icon', 'thumbnail' ];
 const DEFAULT_MEDIA = 'icon';
+
+const CLASS_NAME = 'fc--variation-picker';
 
 const VariationPicker = ( {
                               clientId,
@@ -34,6 +36,19 @@ const VariationPicker = ( {
 
     const [ mode, setMode ] = useState( initialMode );
     const [ search, setSearch ] = useState( '' );
+    const [ proModal, setProModal ] = useState( { open: false, upsell: undefined } );
+
+    const openProModal = ( variation ) => {
+        if ( isPlainObject( variation?.upsell ) ) {
+            setProModal( { open: true, upsell: variation?.upsell } );
+        } else {
+            console.error( 'Pro variation is missing the "upsell" object.', variation );
+        }
+    };
+
+    const closeProModal = () => {
+        setProModal( { open: false } );
+    };
 
     const { editPost } = useDispatch( editorStore );
     const { defaultVariation, blockVariations, setVariation } = useVariations( clientId, reset );
@@ -66,12 +81,21 @@ const VariationPicker = ( {
     }
 
     const renderVariation = ( variation, i ) => {
+        const isPro = variation?.pro ?? false;
+        const onClick = () => {
+            if ( isPro ) {
+                openProModal( variation );
+            } else {
+                onChange( variation );
+            }
+        };
+
         return (
             <button
                 type="button"
                 key={ i }
-                className="fc-variation-picker__variation"
-                onClick={ () => onChange( variation ) }
+                className={ classNames( "fc-variation-picker__variation", { "fc-variation-picker__pro-only": isPro } ) }
+                onClick={ onClick }
             >
                 <div className="fc-variation-picker__variation__media">
                     { renderMedia( variation ) }
@@ -117,6 +141,18 @@ const VariationPicker = ( {
         );
     };
 
+    const ProModalButton = ({ value, ...props }) => {
+        const { text = '', href = '' } = value ?? {};
+        if ( isString( text, true ) && isString( href, true ) ) {
+            return (
+                <Button { ...props } href={ href }>
+                    { text }
+                </Button>
+            );
+        }
+        return null;
+    };
+
     return (
         <div className={ classes }>
             <div className="fc-variation-picker__toolbar">
@@ -128,6 +164,26 @@ const VariationPicker = ( {
             <div className="fc-variation-picker__variations">
                 { variations.map( renderVariation ) }
             </div>
+            { proModal.open && (
+                <Modal
+                    className={ `${ CLASS_NAME }__pro-modal` }
+                    title={ proModal.upsell.title }
+                    onRequestClose={ closeProModal }>
+                    <div className={ `${ CLASS_NAME }__pro-modal__body` }>
+                        <div className={ `${ CLASS_NAME }__pro-modal__upsell-image` }>
+                            <img src={ proModal.upsell.image } alt={ proModal.upsell.title } />
+                        </div>
+                        <div className={ `${ CLASS_NAME }__pro-modal__upsell-content` } dangerouslySetInnerHTML={{ __html: proModal.upsell.content }}></div>
+                    </div>
+                    <div className={ `${ CLASS_NAME }__pro-modal__footer` }>
+                        <ProModalButton variant="primary" value={ proModal.upsell.primary }></ProModalButton>
+                        <ProModalButton variant="secondary" value={ proModal.upsell.secondary }></ProModalButton>
+                        <Button variant="secondary" isDestructive onClick={ closeProModal }>
+                            { __( 'Close', 'fooconvert' ) }
+                        </Button>
+                    </div>
+                </Modal>
+            ) }
         </div>
     );
 };
