@@ -71,15 +71,15 @@ const InnerBlocksButton = ( { children, targetClientId, prepareAttributes = prep
 
     const tabs = [
         {
+            name: 'php',
+            title: __( 'PHP', 'fooconvert' ),
+            className: `${ rootClass }__php-tab`
+        },
+        {
             name: 'json',
             title: __( 'JS', 'fooconvert' ),
             className: `${ rootClass }__json-tab`
         },
-        {
-            name: 'php',
-            title: __( 'PHP', 'fooconvert' ),
-            className: `${ rootClass }__php-tab`
-        }
     ];
 
     return (
@@ -91,18 +91,18 @@ const InnerBlocksButton = ( { children, targetClientId, prepareAttributes = prep
             { isOpen && (
                 <Modal className={ `${ rootClass }__modal` } title={ __( 'Inner Blocks', 'fooconvert' ) }
                        onRequestClose={ closeModal }>
-                    <div className={ `${ rootClass }__input` }>
-                        <TextControl
-                            label={ __( 'Title', 'fooconvert' ) }
-                            value={ title }
-                            onChange={ setTitle }
-                        />
-                        <TextareaControl
-                            label={ __( 'Description', 'fooconvert' ) }
-                            value={ description }
-                            onChange={ setDescription }
-                        />
-                    </div>
+                    {/*<div className={ `${ rootClass }__input` }>*/}
+                    {/*    <TextControl*/}
+                    {/*        label={ __( 'Title', 'fooconvert' ) }*/}
+                    {/*        value={ title }*/}
+                    {/*        onChange={ setTitle }*/}
+                    {/*    />*/}
+                    {/*    <TextareaControl*/}
+                    {/*        label={ __( 'Description', 'fooconvert' ) }*/}
+                    {/*        value={ description }*/}
+                    {/*        onChange={ setDescription }*/}
+                    {/*    />*/}
+                    {/*</div>*/}
                     <TabPanel
                         className={ `${ rootClass }__modal-tabs` }
                         tabs={ tabs }
@@ -112,13 +112,13 @@ const InnerBlocksButton = ( { children, targetClientId, prepareAttributes = prep
                                 case "json":
                                     return (
                                         <textarea className={ `${ rootClass }__json-output` }
-                                                  value={ getInnerBlocksJSON() } rows={ 15 }
+                                                  value={ getInnerBlocksJSON() } rows={ 30 }
                                                   readOnly={ true }></textarea>
                                     );
                                 case "php":
                                     return (
                                         <textarea className={ `${ rootClass }__php-output` }
-                                                  value={ getInnerBlocksPHP() } rows={ 15 }
+                                                  value={ getInnerBlocksPHP() } rows={ 30 }
                                                   readOnly={ true }></textarea>
                                     );
                             }
