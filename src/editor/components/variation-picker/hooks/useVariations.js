@@ -14,29 +14,32 @@ const useVariations = ( clientId, resetAttributes = {} ) => {
     const block = useSelect( select => select( blockEditorStore ).getBlock( clientId ), [ clientId ] );
     const canReset = hasKeys( resetAttributes );
     const { replaceInnerBlocks, updateBlockAttributes } = useDispatch( blockEditorStore );
-    return useSelect( select => {
+    const { defaultVariation, blockVariations } = useSelect( select => {
         const { getBlockVariations, getDefaultBlockVariation } = select( blocksStore );
-        const blockVariations = getBlockVariations( block.name );
         return {
-            canReset,
             defaultVariation: getDefaultBlockVariation( block.name ),
-            blockVariations,
-            setVariation: async( value ) => {
-                let innerBlocks = [];
-                let attributes;
-                if ( value ) {
-                    innerBlocks = createBlocksFromInnerBlocksTemplate( value?.innerBlocks ?? [] );
-                    attributes = value?.attributes ?? {};
-                } else {
-                    attributes = resetAttributes;
-                }
-                // noinspection JSCheckFunctionSignatures
-                await replaceInnerBlocks( clientId, innerBlocks, false );
-                // noinspection JSCheckFunctionSignatures
-                await updateBlockAttributes( clientId, attributes, false );
-            }
+            blockVariations: getBlockVariations( block.name )
         };
-    }, [ block.name, canReset ] );
+    }, [ block.name ] );
+    return {
+        canReset,
+        defaultVariation,
+        blockVariations,
+        setVariation: async( value ) => {
+            let innerBlocks = [];
+            let attributes;
+            if ( value ) {
+                innerBlocks = createBlocksFromInnerBlocksTemplate( value?.innerBlocks ?? [] );
+                attributes = value?.attributes ?? {};
+            } else {
+                attributes = resetAttributes;
+            }
+            // noinspection JSCheckFunctionSignatures
+            await replaceInnerBlocks( clientId, innerBlocks, false );
+            // noinspection JSCheckFunctionSignatures
+            await updateBlockAttributes( clientId, attributes, false );
+        }
+    };
 };
 
 export default useVariations;
