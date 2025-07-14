@@ -7,22 +7,9 @@ return array(
     array(
         'name' => 'bar__digital_download_signup',
         'title' => __( 'Digital Download Signup', 'fooconvert' ),
-        'description' => __( 'Digital download signup lead magnet bar.', 'fooconvert' ),
+        'description' => __( 'The "Digital Download Signup" bar template is a lead magnet help you grow your mailing list by offering a free download (e.g. an e-book, PDF, etc). All leads are also captured under FooConvert -> Leads.', 'fooconvert' ),
         'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/template__digital_download_signup.png',
-        'pro' => true,
-        'upsell' => array(
-            'title' => 'Digital Download Signup',
-            'content' => '<p>example description <a href="#link">with a link</a></p>',
-            'image' => FOOCONVERT_ASSETS_URL . 'media/templates/template__digital_download_signup.png',
-            'primary' => array(
-                'text' => 'View PRO Pricing',
-                'href' => '#view_pro_pricing_url',
-            ),
-            'secondary' => array(
-                'text' => 'Start Free Trial',
-                'href' => '#start_free_trial_url',
-            )
-        )
+        'pro' => true
     ),
     array(
         'name' => 'bar__newsletter_subscribe',
