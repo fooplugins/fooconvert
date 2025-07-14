@@ -1,18 +1,29 @@
-=== FooConvert - Boost Conversions & Lead Generation ===
+=== Popup Builder + Bar Builder + Flyout Builder - FooConvert for Lead Generation ===
 Contributors: fooplugins, bradvin, steveush
-Tags: sales-optimization,conversion-tools,lead-generation,marketing,wordpress-ecommerce
+Tags: popups,bars,flyouts,conversion,marketing
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 6.8
-Stable tag: 1.1.1
+Stable tag: 1.2.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Turn clicks into conversions, visitors into customers – FooConvert is the ultimate catalyst for online success!
+Build your own Popups, Bars & Flouts with FooConvert in the Gutenberg Block Editor!
 
 == Description ==
 
-FooConvert is a powerful WordPress plugin designed to help you optimize your website for maximum conversions. With high-converting widgets and advanced analytics, FooConvert helps you generate more leads, boost sales, and enhance customer engagement effortlessly.
+Quickly build great looking Popups, Bars and Flyouts inside the Gutenberg block editor with FooConvert.
+Having the right "attention-grabbing" popup/bar/flyout generates more leads, increases sales and ultimately grows your business!
+FooConvert only has 1 mission - to maximise your website's conversions, to help you grow your online business.
+
+This is what you can build with FooConvert FREE:
+- Lightbox Popups
+- Exit-intent Popups
+- Floating Bars
+- Sticky Bars
+- Slide-in Flyouts
+- Sidebar Forms
+- Scroll Boxes
 
 [Launch Your Own FooConvert Demo](https://app.instawp.io/launch?t=fooconvert-free-demo&d=v2)
 
@@ -132,6 +143,17 @@ No, FooConvert is optimized for performance and has minimal impact on your websi
 The source code for this plugin is available publicly on GitHub [here](https://github.com/fooplugins/fooconvert).
 
 == Changelog ==
+
+= 1.2.2 =
+* Date Updated : 11 Jul 2025
+[//]: # fs_premium_only_begin
+* New : Updated the PRO templates to use new blocks.
+* New : Added Signup block for capturing signup forms.
+* New : Added Countdown block for countdown timers.
+* New : Added Coupon block for easily copying coupon codes.
+[//]: # fs_premium_only_end
+* Fixed : multiple bugs and issues found when testing.
+* Updated to Freemius SDK 2.12.1
 
 = 1.2.1 =
 * Date Updated : 8 Jun 2025
