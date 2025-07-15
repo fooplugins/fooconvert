@@ -342,7 +342,7 @@ function fooconvert_pro_features_list() {
         ],
         'blocks' => [
             'title'   => __( 'PRO Widget Blocks', 'fooconvert' ),
-            'feature' => __( 'Sign-up Block, Countdown Block, Coupon Copy Block.', 'fooconvert' ),
+            'feature' => __( 'Sign-up Block, Countdown Block, Coupon Copy Block. Use them in any widget you build!', 'fooconvert' ),
             'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/pro-widgets/',
         ],
         'leads' => [
