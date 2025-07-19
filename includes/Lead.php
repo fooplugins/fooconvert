@@ -40,7 +40,14 @@ if ( !class_exists( __NAMESPACE__ . '\Lead' ) ) {
             $data = apply_filters( 'fooconvert_lead_data', $data );
 
             if ( !empty( $data ) && is_array( $data ) ) {
-                return Data\QueryLead::insert_lead_data( $data );
+                $lead_id = Data\QueryLead::insert_lead_data( $data );
+
+                if ( is_int( $lead_id ) ) {
+                    $data['id'] = $lead_id;
+                    do_action( 'fooconvert_lead_captured', $data );
+
+                    return $lead_id;
+                }
             }
 
             return 0;
