@@ -36,6 +36,11 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
                 return true;
             }
 
+            // If paying, skip showing promotions
+            if ( !fooconvert_fs()->is_not_paying() ) {
+                return true;
+            }
+
             return false;
         }
 
