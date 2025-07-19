@@ -37,6 +37,11 @@ if ( !class_exists( __NAMESPACE__ . '\Container' ) ) {
         protected $state = null;
 
         /**
+         * @var array
+         */
+        protected $temp_field_values = array();
+
+        /**
          * Config validation errors
          *
          * @var array
@@ -84,7 +89,7 @@ if ( !class_exists( __NAMESPACE__ . '\Container' ) ) {
             $error_field = array(
                 'id'    => 'validation_error_' . count( $this->config_validation_errors ),
                 'type'  => 'error',
-                'text'  => $error_message,
+                'html'  => $error_message,
                 'order' => -1
             );
 
@@ -164,6 +169,8 @@ if ( !class_exists( __NAMESPACE__ . '\Container' ) ) {
                 if ( '===' === $show_rule_operator ) {
                     if ( $show_rule_value === $show_rule_field_value ) {
                         return true;
+                    } else if ( $show_rule_field->type === 'checkbox' && $show_rule_value ) {
+                        return $show_rule_field_value === 'on';
                     }
                 } else if ( '!==' === $show_rule_operator ) {
                     if ( $show_rule_value !== $show_rule_field_value ) {
@@ -737,7 +744,7 @@ if ( !class_exists( __NAMESPACE__ . '\Container' ) ) {
                         $error_field_config = array(
                             'id'    => 'errors_' . $parent_id,
                             'type'  => 'error',
-                            'text'  => $error_message,
+                            'html'  => $error_message,
                             'class' => 'foofields-colspan-4'
                         );
 
@@ -782,6 +789,12 @@ if ( !class_exists( __NAMESPACE__ . '\Container' ) ) {
          * @return mixed|string
          */
         function get_state_value( $field_config ) {
+
+            //check if we have a temp value for the field. Temp values are stored as the posted_data is being built up after being posted.
+            if ( isset( $this->temp_field_values[$field_config['id']] ) ) {
+                return $this->temp_field_values[$field_config['id']];
+            }
+
             $state = $this->get_state();
 
             if ( is_array( $state ) && array_key_exists( $field_config['id'], $state ) ) {
@@ -828,6 +841,7 @@ if ( !class_exists( __NAMESPACE__ . '\Container' ) ) {
             //loop through our flat list of fields and get all the data
             foreach ( $this->fields as $field ) {
                 $posted_field_data = $field->get_posted_value( $sanitized_data );
+                $field_key = $field->field_data_key();
 
                 //validate the field
                 if ( !$field->validate( $posted_field_data ) ) {
@@ -836,14 +850,15 @@ if ( !class_exists( __NAMESPACE__ . '\Container' ) ) {
                     if ( !isset( $posted_data['__errors'] ) ) {
                         $posted_data['__errors'] = array();
                     }
-                    $posted_data['__errors'][$field->field_data_key()] = array(
+                    $posted_data['__errors'][$field_key] = array(
                         'message' => $field->error
                     );
                 }
 
                 //if we got a value then add it to our posted_data
                 if ( isset( $posted_field_data ) ) {
-                    $posted_data[$field->field_data_key()] = $posted_field_data;
+                    $posted_data[$field_key] = $posted_field_data;
+                    $this->temp_field_values[$field_key] = $posted_field_data;
                 }
             }
 

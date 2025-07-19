@@ -506,6 +506,11 @@ if ( !class_exists( __NAMESPACE__ . '\Field' ) ) {
 
             //check for required fields
             if ( isset( $this->required ) ) {
+
+                $is_visible = $this->visible();
+                if ( !$is_visible ) {
+                    return true;
+                }
                 // phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain
                 $text_domain = $this->container->manager->text_domain;
                 if ( true === $this->required && empty( $posted_value ) ) {

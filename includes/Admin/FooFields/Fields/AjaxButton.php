@@ -37,6 +37,10 @@ if ( !class_exists( __NAMESPACE__ . '\AjaxButton' ) ) {
                 'href'  => '#' . $this->unique_id
             );
 
+            if ( isset( $this->config['disabled'] ) && $this->config['disabled'] ) {
+                $attributes['disabled'] = true;
+            }
+
             $value = $this->value();
             if ( isset( $value ) ) {
                 $attributes['data-value'] = $value;

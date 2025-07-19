@@ -21,6 +21,12 @@ if ( !class_exists( __NAMESPACE__ . '\Icon' ) ) {
         protected $text;
 
         /**
+         * If the text is html
+         * @var bool
+         */
+        protected $is_html = false;
+
+        /**
          * Field constructor.
          *
          * @param $container Container
@@ -41,6 +47,10 @@ if ( !class_exists( __NAMESPACE__ . '\Icon' ) ) {
                 $this->classes[] = 'icon-red';
             }
             $this->text = isset( $field_config['text'] ) ? $field_config['text'] : '';
+            if ( isset( $field_config['html'] ) ) {
+                $this->is_html = true;
+                $this->text = wp_kses_post( $field_config['html'] );
+            }
         }
 
         function render_label() {
@@ -53,8 +63,8 @@ if ( !class_exists( __NAMESPACE__ . '\Icon' ) ) {
 
         function render_input( $override_attributes = false ) {
             self::render_html_tag( 'span', array( 'class' => 'dashicons ' . $this->icon ) );
-
-            echo esc_html( $this->text );
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            echo $this->is_html ? $this->text : esc_html( $this->text );
         }
     }
 }
