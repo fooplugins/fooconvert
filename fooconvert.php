@@ -2,7 +2,7 @@
 /*
 Plugin Name: FooConvert - Boost Conversions & Lead Generation
 Description: Turn clicks into conversions, visitors into customers – FooConvert is the ultimate catalyst for online success!
-Version:     1.2.3
+Version:     1.2.4
 Author:      fooplugins
 Plugin URI:  https://fooplugins.com/fooconvert/
 Author URI:  https://fooplugins.com/

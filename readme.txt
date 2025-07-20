@@ -144,6 +144,13 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 
 == Changelog ==
 
+= 1.2.4 =
+* Date Updated : 19 Jul 2025
+[//]: # fs_premium_only_begin
+* New : Added Mailchimp integration for leads.
+* New : Added webhook integration for leads. (Zapier, N8N, Make.com, etc)
+[//]: # fs_premium_only_end
+
 = 1.2.3 =
 * Date Updated : 14 Jul 2025
 * Fixed : fixed template selector when creating a new widget.
