@@ -346,7 +346,7 @@ class Popup extends BaseWidget {
         $root = array();
         $styles_attribute = Utils::get_array( $attributes, 'styles' );
         if ( !empty( $styles_attribute ) ) {
-            $root = array_merge( $root, $components->get_styles( $styles_attribute ) );
+            $root = array_merge( $root, $components->get_styles( $styles_attribute, array( 'backdrop' => 'background' ) ) );
         }
 
         $content = array();
