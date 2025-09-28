@@ -1,15 +1,15 @@
-# Copyright (C) 2025 FooPlugins
+# Copyright (C) 2025 fooplugins
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: FooConvert - Boost Conversions & Lead Generation 1.2.1\n"
+"Project-Id-Version: FooConvert - Boost Conversions & Lead Generation 1.2.5\n"
 "Report-Msgid-Bugs-To: https://github.com/fooplugins/fooconvert/issues\n"
 "Last-Translator: FooPlugins <info@fooplugins.com>\n"
 "Language-Team: FooPlugins <info@fooplugins.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-10T17:18:27+00:00\n"
+"POT-Creation-Date: 2025-09-28T09:35:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: fooconvert\n"
@@ -31,7 +31,7 @@ msgstr ""
 
 #. Author of the plugin
 #: fooconvert.php
-msgid "FooPlugins"
+msgid "fooplugins"
 msgstr ""
 
 #. Author URI of the plugin
@@ -110,150 +110,172 @@ msgstr ""
 msgid "FooConvert"
 msgstr ""
 
-#: includes/Admin/Promotions.php:105
-#: includes/Admin/Settings.php:38
+#: includes/Admin/Promotions.php:93
+msgid "PRO Template"
+msgstr ""
+
+#: includes/Admin/Promotions.php:94
+msgid "This template is only available in the PRO version of FooConvert."
+msgstr ""
+
+#: includes/Admin/Promotions.php:96
+msgid "Upgrade to PRO now to unlock this template."
+msgstr ""
+
+#: includes/Admin/Promotions.php:99
+#: includes/Admin/Views/dashboard-panel-pro-features.php:39
+msgid "View PRO Pricing"
+msgstr ""
+
+#: includes/Admin/Promotions.php:103
+msgid "Start Free Trial"
+msgstr ""
+
+#: includes/Admin/Promotions.php:168
+#: includes/Admin/Settings.php:40
 msgid "Premium Addons"
 msgstr ""
 
-#: includes/Admin/Promotions.php:116
+#: includes/Admin/Promotions.php:179
 #: includes/Admin/Views/dashboard-panel-getting-started.php:14
 #: includes/Admin/Views/dashboard-panel-help.php:13
-#: pro/includes/Admin/Views/dashboard-panel-recent.php:23
+#: includes/Admin/Views/dashboard-panel-pro-features.php:13
+#: includes/Admin/Views/dashboard-panel-recent.php:28
 msgid "Hide Panel"
 msgstr ""
 
-#: includes/Admin/Promotions.php:170
+#: includes/Admin/Promotions.php:233
 msgid "Buy Now!"
 msgstr ""
 
-#: includes/Admin/Promotions.php:194
+#: includes/Admin/Promotions.php:257
 #: pro/includes/Analytics/Metrics.php:41
 msgid "Total Clicks"
 msgstr ""
 
-#: includes/Admin/Promotions.php:196
+#: includes/Admin/Promotions.php:259
 #: pro/includes/Analytics/Metrics.php:43
 msgid "Total number of clicks made within the widget."
 msgstr ""
 
-#: includes/Admin/Promotions.php:202
+#: includes/Admin/Promotions.php:265
 #: pro/includes/Analytics/Metrics.php:49
 msgid "Click Through Rate"
 msgstr ""
 
-#: includes/Admin/Promotions.php:204
+#: includes/Admin/Promotions.php:267
 #: pro/includes/Analytics/Metrics.php:51
 msgid "Click Through Rate for the widget."
 msgstr ""
 
-#: includes/Admin/Promotions.php:210
+#: includes/Admin/Promotions.php:273
 #: pro/includes/Analytics/Metrics.php:57
 msgid "Total Conversions"
 msgstr ""
 
-#: includes/Admin/Promotions.php:212
+#: includes/Admin/Promotions.php:275
 #: pro/includes/Analytics/Metrics.php:59
 msgid "Total number of conversions for the widget."
 msgstr ""
 
-#: includes/Admin/Promotions.php:218
+#: includes/Admin/Promotions.php:281
 #: pro/includes/Analytics/Metrics.php:65
-#: pro/includes/Analytics/Metrics.php:377
+#: pro/includes/Analytics/Metrics.php:374
 msgid "Conversion Rate"
 msgstr ""
 
-#: includes/Admin/Promotions.php:220
+#: includes/Admin/Promotions.php:283
 #: pro/includes/Analytics/Metrics.php:67
 msgid "Conversion Rate for the widget."
 msgstr ""
 
-#: includes/Admin/Promotions.php:226
+#: includes/Admin/Promotions.php:289
 #: pro/includes/Analytics/Metrics.php:73
-#: pro/includes/Analytics/Metrics.php:341
+#: pro/includes/Analytics/Metrics.php:338
 msgid "Engagement Rate"
 msgstr ""
 
-#: includes/Admin/Promotions.php:228
+#: includes/Admin/Promotions.php:291
 #: pro/includes/Analytics/Metrics.php:75
 msgid "Engagement Rate for the widget."
 msgstr ""
 
-#: includes/Admin/Promotions.php:234
+#: includes/Admin/Promotions.php:297
 #: pro/includes/Analytics/Metrics.php:81
 msgid "Positive Engagements"
 msgstr ""
 
-#: includes/Admin/Promotions.php:236
+#: includes/Admin/Promotions.php:299
 #: pro/includes/Analytics/Metrics.php:83
 msgid "Total number of positive engagements for the widget (like clicks)."
 msgstr ""
 
-#: includes/Admin/Promotions.php:242
+#: includes/Admin/Promotions.php:305
 #: pro/includes/Analytics/Metrics.php:89
 msgid "Negative Engagements"
 msgstr ""
 
-#: includes/Admin/Promotions.php:244
+#: includes/Admin/Promotions.php:307
 #: pro/includes/Analytics/Metrics.php:91
 msgid "Total number of negative engagements for the widget (like dismissals)."
 msgstr ""
 
-#: includes/Admin/Promotions.php:250
+#: includes/Admin/Promotions.php:313
 #: pro/includes/Analytics/Metrics.php:97
 msgid "Overall Sentiment"
 msgstr ""
 
-#: includes/Admin/Promotions.php:252
+#: includes/Admin/Promotions.php:315
 #: pro/includes/Analytics/Metrics.php:99
 msgid "Overall sentiment for the widget which ranges from very negative to very positive. It can also be unknown if there are no engagements, or neutral."
 msgstr ""
 
-#: includes/Admin/Promotions.php:260
+#: includes/Admin/Promotions.php:323
 msgid "These advanced metrics are available in FooConvert PRO."
 msgstr ""
 
-#: includes/Admin/Promotions.php:261
+#: includes/Admin/Promotions.php:324
 #: includes/Admin/Views/dashboard-top-performers.php:16
 msgid "Buy FooConvert PRO!"
 msgstr ""
 
-#: includes/Admin/Promotions.php:275
+#: includes/Admin/Promotions.php:338
 msgid "engagement rate (PRO)"
 msgstr ""
 
-#: includes/Admin/Promotions.php:277
+#: includes/Admin/Promotions.php:340
 msgid "Top performers by engagement rate is only available in FooConvert PRO."
 msgstr ""
 
-#: includes/Admin/Promotions.php:281
+#: includes/Admin/Promotions.php:344
 msgid "clicks (PRO)"
 msgstr ""
 
-#: includes/Admin/Promotions.php:283
+#: includes/Admin/Promotions.php:346
 msgid "Top performers by clicks is only available in FooConvert PRO."
 msgstr ""
 
-#: includes/Admin/Promotions.php:287
+#: includes/Admin/Promotions.php:350
 msgid "click rate (PRO)"
 msgstr ""
 
-#: includes/Admin/Promotions.php:289
+#: includes/Admin/Promotions.php:352
 msgid "Top performers by click rate is only available in FooConvert PRO."
 msgstr ""
 
-#: includes/Admin/Promotions.php:293
+#: includes/Admin/Promotions.php:356
 msgid "conversions (PRO)"
 msgstr ""
 
-#: includes/Admin/Promotions.php:295
+#: includes/Admin/Promotions.php:358
 msgid "Top performers by conversions is only available in FooConvert PRO."
 msgstr ""
 
-#: includes/Admin/Promotions.php:299
+#: includes/Admin/Promotions.php:362
 msgid "conversion rate (PRO)"
 msgstr ""
 
-#: includes/Admin/Promotions.php:301
+#: includes/Admin/Promotions.php:364
 msgid "Top performers by conversion rate is only available in FooConvert PRO."
 msgstr ""
 
@@ -266,205 +288,216 @@ msgid "FooConvert PRO"
 msgstr ""
 
 #: includes/Admin/Settings.php:36
-msgid "Getting Started"
+msgid "Recent"
 msgstr ""
 
 #: includes/Admin/Settings.php:37
+msgid "Getting Started"
+msgstr ""
+
+#: includes/Admin/Settings.php:38
 msgid "Help"
 msgstr ""
 
-#: includes/Admin/Settings.php:43
+#: includes/Admin/Settings.php:39
+#: includes/Admin/Views/dashboard-panel-pro-features.php:10
+msgid "PRO Features"
+msgstr ""
+
+#: includes/Admin/Settings.php:45
 #: includes/DisplayRules.php:234
 #: includes/DisplayRules.php:354
 msgid "General"
 msgstr ""
 
-#: includes/Admin/Settings.php:51
+#: includes/Admin/Settings.php:53
 msgid "Retention Period"
 msgstr ""
 
-#: includes/Admin/Settings.php:52
+#: includes/Admin/Settings.php:54
 msgid "days"
 msgstr ""
 
 #. Translators: %s refers to the link to the FooConvert PRO Pricing page.
-#: includes/Admin/Settings.php:54
+#: includes/Admin/Settings.php:56
 msgid "The number of days before data is deleted."
 msgstr ""
 
 #. Translators: %s refers to the link to the FooConvert PRO Pricing page.
-#: includes/Admin/Settings.php:54
+#: includes/Admin/Settings.php:56
 #, php-format
 msgid "This can only be changed with %s."
 msgstr ""
 
-#: includes/Admin/Settings.php:60
+#: includes/Admin/Settings.php:62
 msgid "Enable Debug Mode"
 msgstr ""
 
-#: includes/Admin/Settings.php:61
+#: includes/Admin/Settings.php:63
 msgid "Helps to debug problems and diagnose issues. Enable debugging if you need support for an issue you are having."
 msgstr ""
 
-#: includes/Admin/Settings.php:67
+#: includes/Admin/Settings.php:69
 msgid "Hide Promos"
 msgstr ""
 
-#: includes/Admin/Settings.php:68
+#: includes/Admin/Settings.php:70
 msgid "If enabled, will hide all promotional messages within the admin area, including the free trial admin banners."
 msgstr ""
 
-#: includes/Admin/Settings.php:74
+#: includes/Admin/Settings.php:76
 msgid "Hide Dashboard Panels"
 msgstr ""
 
-#: includes/Admin/Settings.php:76
+#: includes/Admin/Settings.php:78
 msgid "Will hide specific dashboard panel if checked."
 msgstr ""
 
-#: includes/Admin/Settings.php:82
+#: includes/Admin/Settings.php:84
 msgid "Demo Content Created"
 msgstr ""
 
-#: includes/Admin/Settings.php:83
+#: includes/Admin/Settings.php:85
 msgid "If the demo content has been created, then this will be checked. You can uncheck this to allow for demo content to be created again."
 msgstr ""
 
-#: includes/Admin/Settings.php:90
-#: includes/Admin/Settings.php:309
+#: includes/Admin/Settings.php:92
+#: includes/Admin/Settings.php:311
 msgid "Database"
 msgstr ""
 
-#: includes/Admin/Settings.php:103
+#: includes/Admin/Settings.php:105
 msgid "Database Error"
 msgstr ""
 
-#: includes/Admin/Settings.php:104
+#: includes/Admin/Settings.php:106
 msgid "Event Table Does Not Exist!"
 msgstr ""
 
-#: includes/Admin/Settings.php:114
+#: includes/Admin/Settings.php:116
 msgid "Database Data"
 msgstr ""
 
-#: includes/Admin/Settings.php:127
+#: includes/Admin/Settings.php:129
 msgid "Table"
 msgstr ""
 
-#: includes/Admin/Settings.php:131
+#: includes/Admin/Settings.php:133
 msgid "Table Size (MB)"
 msgstr ""
 
-#: includes/Admin/Settings.php:135
+#: includes/Admin/Settings.php:137
 msgid "Event Row Count"
 msgstr ""
 
-#: includes/Admin/Settings.php:139
+#: includes/Admin/Settings.php:141
 msgid "Widget Count With Events"
 msgstr ""
 
-#: includes/Admin/Settings.php:143
+#: includes/Admin/Settings.php:145
 msgid "Orphaned Event Count"
 msgstr ""
 
-#: includes/Admin/Settings.php:155
+#: includes/Admin/Settings.php:157
 msgid "Orphaned Widget Count"
 msgstr ""
 
-#: includes/Admin/Settings.php:163
+#: includes/Admin/Settings.php:165
 msgid "Database Stats"
 msgstr ""
 
-#: includes/Admin/Settings.php:171
+#: includes/Admin/Settings.php:173
 msgid "Delete Old Events"
 msgstr ""
 
-#: includes/Admin/Settings.php:172
+#: includes/Admin/Settings.php:174
 msgid "This will permanently delete all events older than the retention period."
 msgstr ""
 
-#: includes/Admin/Settings.php:172
+#: includes/Admin/Settings.php:174
 msgid "Currently :"
 msgstr ""
 
-#: includes/Admin/Settings.php:172
+#: includes/Admin/Settings.php:174
 msgid "days."
 msgstr ""
 
-#: includes/Admin/Settings.php:179
+#: includes/Admin/Settings.php:181
 msgid "Delete All Events"
 msgstr ""
 
-#: includes/Admin/Settings.php:180
+#: includes/Admin/Settings.php:182
 msgid "This will permanently delete all events."
 msgstr ""
 
-#: includes/Admin/Settings.php:188
+#: includes/Admin/Settings.php:190
 msgid "Delete Orphaned Data"
 msgstr ""
 
-#: includes/Admin/Settings.php:196
+#: includes/Admin/Settings.php:198
 msgid "System Info"
 msgstr ""
 
-#: includes/Admin/Settings.php:202
+#: includes/Admin/Settings.php:204
 msgid "Your System Information"
 msgstr ""
 
-#: includes/Admin/Settings.php:203
+#: includes/Admin/Settings.php:205
 msgid "The below system info can be used when submitting a support ticket, to help us replicate your environment."
 msgstr ""
 
 #. Translators: %d refers to the number of orphaned events that were deleted.
-#: includes/Admin/Settings.php:235
+#: includes/Admin/Settings.php:237
 #, php-format
 msgid "Successfully deleted %d orphaned events."
 msgstr ""
 
 #. Translators: %d refers to the number of events that were deleted.
-#: includes/Admin/Settings.php:252
-#: includes/Admin/Settings.php:269
+#: includes/Admin/Settings.php:254
+#: includes/Admin/Settings.php:271
 #, php-format
 msgid "Successfully deleted %d events."
 msgstr ""
 
-#: includes/Admin/Settings.php:294
+#: includes/Admin/Settings.php:296
 msgid "ERROR : The events table does not exist!"
 msgstr ""
 
-#: includes/Admin/Settings.php:302
+#: includes/Admin/Settings.php:304
 msgid "FooConvert version"
 msgstr ""
 
-#: includes/Admin/Settings.php:303
+#: includes/Admin/Settings.php:305
 msgid "WordPress version"
 msgstr ""
 
-#: includes/Admin/Settings.php:304
+#: includes/Admin/Settings.php:306
 msgid "Activated Theme"
 msgstr ""
 
-#: includes/Admin/Settings.php:305
+#: includes/Admin/Settings.php:307
 msgid "WordPress URL"
 msgstr ""
 
-#: includes/Admin/Settings.php:306
+#: includes/Admin/Settings.php:308
 msgid "PHP version"
 msgstr ""
 
-#: includes/Admin/Settings.php:307
+#: includes/Admin/Settings.php:309
 msgid "Retention"
 msgstr ""
 
-#: includes/Admin/Settings.php:308
+#: includes/Admin/Settings.php:310
 msgid "Cron Jobs"
 msgstr ""
 
-#: includes/Admin/Settings.php:310
+#: includes/Admin/Settings.php:312
 msgid "Active Plugins"
 msgstr ""
 
-#: includes/Admin/Settings.php:311
+#: includes/Admin/Settings.php:313
+#: pro/assets/blocks/countdown/editor/index.js:1
+#: pro/assets/blocks/coupon/editor/index.js:1
 #: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Settings"
 msgstr ""
@@ -478,12 +511,12 @@ msgid "Events"
 msgstr ""
 
 #: includes/Admin/Stats.php:115
-#: includes/functions.php:182
+#: includes/functions.php:189
 msgid "Views"
 msgstr ""
 
 #: includes/Admin/Stats.php:123
-#: includes/functions.php:174
+#: includes/functions.php:181
 msgid "Engagements"
 msgstr ""
 
@@ -504,6 +537,111 @@ msgstr ""
 #: includes/Admin/Stats.php:265
 #: includes/Admin/Stats.php:266
 msgid "Widget Stats"
+msgstr ""
+
+#: includes/Admin/Templates/ProBarTemplates.php:9
+#: includes/Admin/Templates/ProFlyoutTemplates.php:9
+#: includes/Admin/Templates/ProPopupTemplates.php:9
+#: pro/includes/Admin/Templates/bars/watch_the_video.php:5
+#: pro/includes/Admin/Templates/flyouts/watch_the_video.php:5
+#: pro/includes/Admin/Templates/popups/watch_the_video.php:5
+msgid "Watch the Video"
+msgstr ""
+
+#: includes/Admin/Templates/ProBarTemplates.php:10
+msgid "The \"Watch the Video\" bar templates guides visitors to watch a specific video. Get more views to your YouTube channel!"
+msgstr ""
+
+#: includes/Admin/Templates/ProBarTemplates.php:16
+#: includes/Admin/Templates/ProFlyoutTemplates.php:16
+#: includes/Admin/Templates/ProPopupTemplates.php:16
+#: pro/includes/Admin/Templates/bars/special_offer.php:5
+#: pro/includes/Admin/Templates/flyouts/special_offer.php:5
+#: pro/includes/Admin/Templates/popups/special_offer.php:5
+msgid "Special Offer Countdown"
+msgstr ""
+
+#: includes/Admin/Templates/ProBarTemplates.php:17
+msgid "The \"Special Offer Countdown\" bar templates guides visitors to a specific offer with an awesome looking countdown timer."
+msgstr ""
+
+#: includes/Admin/Templates/ProBarTemplates.php:23
+#: includes/Admin/Templates/ProFlyoutTemplates.php:23
+#: includes/Admin/Templates/ProPopupTemplates.php:23
+#: pro/includes/Admin/Templates/bars/digital_download_signup.php:5
+#: pro/includes/Admin/Templates/flyouts/digital_download_signup.php:5
+#: pro/includes/Admin/Templates/popups/digital_download_signup.php:5
+msgid "Digital Download Signup"
+msgstr ""
+
+#: includes/Admin/Templates/ProBarTemplates.php:24
+msgid "The \"Digital Download Signup\" bar template is a lead magnet to help you grow your mailing list by offering a free download (e.g. an e-book, PDF, etc). All leads are also captured under FooConvert -> Leads."
+msgstr ""
+
+#: includes/Admin/Templates/ProBarTemplates.php:30
+#: includes/Admin/Templates/ProFlyoutTemplates.php:30
+#: includes/Admin/Templates/ProPopupTemplates.php:30
+#: pro/includes/Admin/Templates/bars/smart_exit_offer.php:5
+#: pro/includes/Admin/Templates/flyouts/smart_exit_offer.php:5
+#: pro/includes/Admin/Templates/popups/smart_exit_offer.php:5
+msgid "Smart Exit Offer"
+msgstr ""
+
+#: includes/Admin/Templates/ProBarTemplates.php:31
+msgid "The \"Smart Exit Offer\" bar templates is an exit intent bar that guides visitors to copy and use a specific coupon code to help persuade visitors to stay on your site."
+msgstr ""
+
+#: includes/Admin/Templates/ProBarTemplates.php:37
+#: includes/Admin/Templates/ProFlyoutTemplates.php:37
+#: includes/Admin/Templates/ProPopupTemplates.php:37
+#: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:5
+#: pro/includes/Admin/Templates/flyouts/newsletter_subscribe.php:5
+#: pro/includes/Admin/Templates/popups/newsletter_subscribe.php:5
+msgid "Newsletter Subscribe"
+msgstr ""
+
+#: includes/Admin/Templates/ProBarTemplates.php:38
+msgid "The \"Newsletter Subscribe\" bar template captures leads for your newsletter. All leads are also captured under FooConvert -> Leads."
+msgstr ""
+
+#: includes/Admin/Templates/ProFlyoutTemplates.php:10
+msgid "The \"Watch the Video\" flyout templates guides visitors to watch a specific video. Get more views to your YouTube channel!"
+msgstr ""
+
+#: includes/Admin/Templates/ProFlyoutTemplates.php:17
+msgid "The \"Special Offer Countdown\" flyout templates guides visitors to a specific offer with an awesome looking countdown timer."
+msgstr ""
+
+#: includes/Admin/Templates/ProFlyoutTemplates.php:24
+msgid "The \"Digital Download Signup\" flyout template is a lead magnet to help you grow your mailing list by offering a free download (e.g. an e-book, PDF, etc). All leads are also captured under FooConvert -> Leads."
+msgstr ""
+
+#: includes/Admin/Templates/ProFlyoutTemplates.php:31
+msgid "The \"Smart Exit Offer\" flyout templates is an exit intent bar that guides visitors to copy and use a specific coupon code to help persuade visitors to stay on your site."
+msgstr ""
+
+#: includes/Admin/Templates/ProFlyoutTemplates.php:38
+msgid "The \"Newsletter Subscribe\" flyout template captures leads for your newsletter. All leads are also captured under FooConvert -> Leads."
+msgstr ""
+
+#: includes/Admin/Templates/ProPopupTemplates.php:10
+msgid "The \"Watch the Video\" popup templates guides visitors to watch a specific video. Get more views to your YouTube channel!"
+msgstr ""
+
+#: includes/Admin/Templates/ProPopupTemplates.php:17
+msgid "The \"Special Offer Countdown\" popup templates guides visitors to a specific offer with an awesome looking countdown timer."
+msgstr ""
+
+#: includes/Admin/Templates/ProPopupTemplates.php:24
+msgid "The \"Digital Download Signup\" popup template is a lead magnet to help you grow your mailing list by offering a free download (e.g. an e-book, PDF, etc). All leads are also captured under FooConvert -> Leads."
+msgstr ""
+
+#: includes/Admin/Templates/ProPopupTemplates.php:31
+msgid "The \"Smart Exit Offer\" popup templates is an exit intent bar that guides visitors to copy and use a specific coupon code to help persuade visitors to stay on your site."
+msgstr ""
+
+#: includes/Admin/Templates/ProPopupTemplates.php:38
+msgid "The \"Newsletter Subscribe\" popup template captures leads for your newsletter. All leads are also captured under FooConvert -> Leads."
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:11
@@ -602,6 +740,57 @@ msgstr ""
 msgid "Get Support"
 msgstr ""
 
+#: includes/Admin/Views/dashboard-panel-pro-features.php:19
+msgid "Unlock these PRO features:"
+msgstr ""
+
+#: includes/Admin/Views/dashboard-panel-pro-features.php:27
+msgid "Read more"
+msgstr ""
+
+#: includes/Admin/Views/dashboard-panel-pro-features.php:36
+msgid "Upgrade to PRO and Supercharge Your Conversions!"
+msgstr ""
+
+#: includes/Admin/Views/dashboard-panel-pro-features.php:42
+msgid "Start a Free Trial"
+msgstr ""
+
+#: includes/Admin/Views/dashboard-panel-recent.php:25
+msgid "Recently Updated Widgets"
+msgstr ""
+
+#: includes/Admin/Views/dashboard-panel-recent.php:48
+#: includes/Admin/Views/dashboard-top-performers.php:39
+msgid "Edit Widget"
+msgstr ""
+
+#: includes/Admin/Views/dashboard-panel-recent.php:50
+#: includes/Admin/Views/dashboard-top-performers.php:41
+msgid "View Widget Stats"
+msgstr ""
+
+#. translators: %s: refers to the time last modified.
+#: includes/Admin/Views/dashboard-panel-recent.php:55
+#, php-format
+msgid "modified %s ago"
+msgstr ""
+
+#: includes/Admin/Views/dashboard-panel-recent.php:75
+#: includes/Widgets/Bar.php:77
+msgid "Add New Bar"
+msgstr ""
+
+#: includes/Admin/Views/dashboard-panel-recent.php:78
+#: includes/Widgets/Flyout.php:77
+msgid "Add New Flyout"
+msgstr ""
+
+#: includes/Admin/Views/dashboard-panel-recent.php:81
+#: includes/Widgets/Popup.php:73
+msgid "Add New Popup"
+msgstr ""
+
 #: includes/Admin/Views/dashboard-panel-top-performers.php:8
 msgid "Top Performers"
 msgstr ""
@@ -637,16 +826,6 @@ msgstr ""
 
 #: includes/Admin/Views/dashboard-top-performers.php:29
 msgid "Metric"
-msgstr ""
-
-#: includes/Admin/Views/dashboard-top-performers.php:39
-#: pro/includes/Admin/Views/dashboard-panel-recent.php:43
-msgid "Edit Widget"
-msgstr ""
-
-#: includes/Admin/Views/dashboard-top-performers.php:41
-#: pro/includes/Admin/Views/dashboard-panel-recent.php:45
-msgid "View Widget Stats"
 msgstr ""
 
 #: includes/Admin/Views/widget-stats.php:5
@@ -831,43 +1010,107 @@ msgstr ""
 msgid "Styling Updated"
 msgstr ""
 
-#: includes/functions.php:173
+#: includes/functions.php:180
 msgid "engagements"
 msgstr ""
 
-#: includes/functions.php:175
+#: includes/functions.php:182
 msgid "Total number of engagements"
 msgstr ""
 
-#: includes/functions.php:181
+#: includes/functions.php:188
 msgid "views"
 msgstr ""
 
-#: includes/functions.php:183
+#: includes/functions.php:190
 msgid "Total number of views"
 msgstr ""
 
-#: includes/functions.php:223
+#: includes/functions.php:230
 msgid "ago"
 msgstr ""
 
-#: includes/functions.php:251
+#: includes/functions.php:258
 msgid "Never"
 msgstr ""
 
-#: includes/functions.php:298
+#: includes/functions.php:305
 #: includes/Widgets/Popup.php:71
 msgid "Popup"
 msgstr ""
 
-#: includes/functions.php:300
+#: includes/functions.php:307
 #: includes/Widgets/Flyout.php:75
 msgid "Flyout"
 msgstr ""
 
-#: includes/functions.php:302
+#: includes/functions.php:309
 #: includes/Widgets/Bar.php:75
 msgid "Bar"
+msgstr ""
+
+#: includes/functions.php:339
+msgid "Ready-to-use PRO Templates"
+msgstr ""
+
+#: includes/functions.php:340
+msgid "15 professionally designed templates: No design skills needed, proven to convert, create stunning widgets in minutes."
+msgstr ""
+
+#: includes/functions.php:344
+msgid "PRO Widget Blocks"
+msgstr ""
+
+#: includes/functions.php:345
+msgid "Sign-up Block, Countdown Block, Coupon Copy Block. Use them in any widget you build!"
+msgstr ""
+
+#: includes/functions.php:349
+msgid "Lead Capture Management"
+msgstr ""
+
+#: includes/functions.php:350
+msgid "Manage or export all leads captured by your widgets."
+msgstr ""
+
+#: includes/functions.php:354
+msgid "Longer Retention"
+msgstr ""
+
+#: includes/functions.php:355
+msgid "Longer retention period for widget analytics. Track widget performance as long as you like!"
+msgstr ""
+
+#: includes/functions.php:359
+msgid "Advanced Analytics"
+msgstr ""
+
+#: includes/functions.php:360
+msgid "Advanced widget analytics: Clicks, click-through-rates, conversions, conversion rates, engagement sentiment, engagement ratios, daily activity charts."
+msgstr ""
+
+#: includes/functions.php:364
+msgid "More Dashboard Metrics"
+msgstr ""
+
+#: includes/functions.php:365
+msgid "Top Performers by Engagement Rate, Clicks, Click Rate, Conversions, Conversion Rate."
+msgstr ""
+
+#: includes/functions.php:369
+msgid "Role Exclusion"
+msgstr ""
+
+#: includes/functions.php:370
+msgid "Exclude roles from logging widget events for analytics (e.g., exclude admin tests)."
+msgstr ""
+
+#: includes/functions.php:374
+msgid "Google Font Support"
+msgstr ""
+
+#: includes/functions.php:375
+msgid "Use any available Google Font within your widgets."
 msgstr ""
 
 #. translators: %1$s = Plugin name; %2$s = Minimum PHP version; %3$s = Current PHP version
@@ -893,10 +1136,6 @@ msgstr ""
 
 #: includes/Widgets/Bar.php:76
 msgid "Add Bar"
-msgstr ""
-
-#: includes/Widgets/Bar.php:77
-msgid "Add New Bar"
 msgstr ""
 
 #: includes/Widgets/Bar.php:78
@@ -958,10 +1197,6 @@ msgstr ""
 msgid "Add Flyout"
 msgstr ""
 
-#: includes/Widgets/Flyout.php:77
-msgid "Add New Flyout"
-msgstr ""
-
 #: includes/Widgets/Flyout.php:78
 msgid "Edit Flyout"
 msgstr ""
@@ -1007,10 +1242,6 @@ msgstr ""
 msgid "Add Popup"
 msgstr ""
 
-#: includes/Widgets/Popup.php:73
-msgid "Add New Popup"
-msgstr ""
-
 #: includes/Widgets/Popup.php:74
 msgid "Edit Popup"
 msgstr ""
@@ -1047,12 +1278,9 @@ msgstr ""
 msgid "A typical Black Friday popup to help drive sales."
 msgstr ""
 
-#: pro/includes/Admin/Init.php:30
-msgid "Recent"
-msgstr ""
-
 #: pro/includes/Admin/LeadsMenu.php:25
 #: pro/includes/Admin/LeadsMenu.php:26
+#: pro/includes/Leads/Init.php:70
 msgid "Leads"
 msgstr ""
 
@@ -1088,135 +1316,82 @@ msgstr ""
 msgid "Export"
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/digital_download_signup.php:5
-#: pro/includes/Admin/Templates/flyouts/digital_download_signup.php:5
-#: pro/includes/Admin/Templates/popups/digital_download_signup.php:5
-msgid "Digital Download Signup"
-msgstr ""
-
 #: pro/includes/Admin/Templates/bars/digital_download_signup.php:6
 msgid "Digital download signup lead magnet bar."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/digital_download_signup.php:105
+#: pro/includes/Admin/Templates/bars/digital_download_signup.php:108
 msgid "Grow Your Traffic in 7 Days – Download our FREE Guide!"
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/digital_download_signup.php:124
+#: pro/includes/Admin/Templates/bars/digital_download_signup.php:127
 msgid "Thanks! Please check your inbox."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/digital_download_signup.php:131
+#: pro/includes/Admin/Templates/bars/digital_download_signup.php:134
 msgid "Enter your email..."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/digital_download_signup.php:161
+#: pro/includes/Admin/Templates/bars/digital_download_signup.php:164
 msgid "Download"
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/digital_download_signup.php:203
+#: pro/includes/Admin/Templates/bars/digital_download_signup.php:206
 msgid "Proven tips used by 7,000+ brands to boost traffic!"
-msgstr ""
-
-#: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:5
-#: pro/includes/Admin/Templates/flyouts/newsletter_subscribe.php:5
-#: pro/includes/Admin/Templates/popups/newsletter_subscribe.php:5
-msgid "Newsletter Subscribe"
 msgstr ""
 
 #: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:6
 msgid "Newsletter Subscribe marketing themed bar."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:140
+#: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:143
 #: pro/includes/Admin/Templates/flyouts/newsletter_subscribe.php:106
 msgid "Get FREE Weekly Tips to help Grow Your business..."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:168
+#: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:171
 #: pro/includes/Admin/Templates/flyouts/newsletter_subscribe.php:123
 msgid "Join 5,000+ readers getting exclusive content &amp; tools."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:201
+#: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:204
 #: pro/includes/Admin/Templates/flyouts/newsletter_subscribe.php:173
 msgid "Your email address"
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:233
+#: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:236
 #: pro/includes/Admin/Templates/flyouts/newsletter_subscribe.php:166
 msgid "Thanks for joining!"
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:238
+#: pro/includes/Admin/Templates/bars/newsletter_subscribe.php:241
 #: pro/includes/Admin/Templates/flyouts/newsletter_subscribe.php:205
 msgid "Join The List"
-msgstr ""
-
-#: pro/includes/Admin/Templates/bars/smart_exit_offer.php:5
-#: pro/includes/Admin/Templates/flyouts/smart_exit_offer.php:5
-#: pro/includes/Admin/Templates/popups/smart_exit_offer.php:5
-msgid "Smart Exit Offer"
 msgstr ""
 
 #: pro/includes/Admin/Templates/bars/smart_exit_offer.php:6
 msgid "A smart exit offer bar lead magnet to help prevent visitors from leaving your site."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/smart_exit_offer.php:121
+#: pro/includes/Admin/Templates/bars/smart_exit_offer.php:124
 #: pro/includes/Admin/Templates/popups/smart_exit_offer.php:111
 msgid "HEY... Don’t Go Yet!"
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/smart_exit_offer.php:150
+#: pro/includes/Admin/Templates/bars/smart_exit_offer.php:153
 #: pro/includes/Admin/Templates/popups/smart_exit_offer.php:145
 msgid "Take 10% Off Your First Order – Our Treat!"
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/smart_exit_offer.php:182
-#: pro/includes/Admin/Templates/popups/smart_exit_offer.php:178
-msgid "Claim Now!"
-msgstr ""
-
-#: pro/includes/Admin/Templates/bars/smart_exit_offer.php:216
-#: pro/includes/Admin/Templates/popups/smart_exit_offer.php:214
+#: pro/includes/Admin/Templates/bars/smart_exit_offer.php:252
+#: pro/includes/Admin/Templates/popups/smart_exit_offer.php:245
 msgid "Only available while you’re still here..."
-msgstr ""
-
-#: pro/includes/Admin/Templates/bars/special_offer.php:5
-#: pro/includes/Admin/Templates/flyouts/special_offer.php:5
-#: pro/includes/Admin/Templates/popups/special_offer.php:5
-msgid "Special Offer"
 msgstr ""
 
 #: pro/includes/Admin/Templates/bars/special_offer.php:6
 #: pro/includes/Admin/Templates/flyouts/special_offer.php:6
 #: pro/includes/Admin/Templates/popups/special_offer.php:6
-msgid "Guide visitors to specific specials."
-msgstr ""
-
-#: pro/includes/Admin/Templates/bars/special_offer.php:93
-#: pro/includes/Admin/Templates/flyouts/special_offer.php:122
-#: pro/includes/Admin/Templates/popups/special_offer.php:62
-msgid "Special Offer:"
-msgstr ""
-
-#: pro/includes/Admin/Templates/bars/special_offer.php:122
-#: pro/includes/Admin/Templates/flyouts/special_offer.php:152
-#: pro/includes/Admin/Templates/popups/special_offer.php:107
-msgid "Add special offer..."
-msgstr ""
-
-#: pro/includes/Admin/Templates/bars/special_offer.php:161
-#: pro/includes/Admin/Templates/flyouts/special_offer.php:193
-#: pro/includes/Admin/Templates/popups/special_offer.php:166
-msgid "Let's Go!"
-msgstr ""
-
-#: pro/includes/Admin/Templates/bars/watch_the_video.php:5
-#: pro/includes/Admin/Templates/flyouts/watch_the_video.php:5
-#: pro/includes/Admin/Templates/popups/watch_the_video.php:5
-msgid "Watch the Video"
+msgid "Guide visitors to specific offer with a countdown timer."
 msgstr ""
 
 #: pro/includes/Admin/Templates/bars/watch_the_video.php:6
@@ -1225,14 +1400,14 @@ msgstr ""
 msgid "Guide visitors to a watch a specific video."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/watch_the_video.php:92
-#: pro/includes/Admin/Templates/flyouts/watch_the_video.php:82
+#: pro/includes/Admin/Templates/bars/watch_the_video.php:95
+#: pro/includes/Admin/Templates/flyouts/watch_the_video.php:85
 #: pro/includes/Admin/Templates/popups/watch_the_video.php:58
 msgid "Add video description..."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/watch_the_video.php:128
-#: pro/includes/Admin/Templates/flyouts/watch_the_video.php:130
+#: pro/includes/Admin/Templates/bars/watch_the_video.php:131
+#: pro/includes/Admin/Templates/flyouts/watch_the_video.php:133
 #: pro/includes/Admin/Templates/popups/watch_the_video.php:108
 msgid "Watch the video"
 msgstr ""
@@ -1277,179 +1452,186 @@ msgstr ""
 msgid "Smart exit offer themed popup."
 msgstr ""
 
-#: pro/includes/Admin/Views/dashboard-panel-recent.php:20
-msgid "Recently Updated Widgets"
+#: pro/includes/Admin/Views/leads.php:17
+msgid "Leads (unique emails)"
 msgstr ""
 
-#. translators: %s: refers to the time last modified.
-#: pro/includes/Admin/Views/dashboard-panel-recent.php:50
-#, php-format
-msgid "modified %s ago"
-msgstr ""
-
-#: pro/includes/Admin/Views/leads.php:15
-msgid "Last 24 Hours"
-msgstr ""
-
-#: pro/includes/Admin/Views/leads.php:18
-msgid "Last 7 Days"
+#: pro/includes/Admin/Views/leads.php:19
+msgid "Total Leads"
 msgstr ""
 
 #: pro/includes/Admin/Views/leads.php:21
+msgid "Unique Emails"
+msgstr ""
+
+#: pro/includes/Admin/Views/leads.php:31
+msgid "Last 24 Hours"
+msgstr ""
+
+#: pro/includes/Admin/Views/leads.php:34
+msgid "Last 7 Days"
+msgstr ""
+
+#: pro/includes/Admin/Views/leads.php:37
 msgid "Last 30 Days"
 msgstr ""
 
-#: pro/includes/Admin/Views/leads.php:24
+#: pro/includes/Admin/Views/leads.php:40
+#: pro/includes/Analytics/RecentActivity.php:133
 msgid "All Time"
 msgstr ""
 
-#: pro/includes/Admin/Views/leads.php:27
+#: pro/includes/Admin/Views/leads.php:43
 msgid "Filter"
 msgstr ""
 
-#: pro/includes/Admin/Views/leads.php:32
+#: pro/includes/Admin/Views/leads.php:48
 msgid "Export All Leads"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:313
+#: pro/includes/Admin/Views/leads.php:67
+msgid "No leads found for the current filter. Try changing the filter above to see more leads."
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:310
 msgid "Very Positive"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:315
+#: pro/includes/Analytics/Metrics.php:312
 msgid "Mostly Positive"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:317
+#: pro/includes/Analytics/Metrics.php:314
 msgid "Slightly Positive"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:319
+#: pro/includes/Analytics/Metrics.php:316
 msgid "Very Negative"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:321
+#: pro/includes/Analytics/Metrics.php:318
 msgid "Mostly Negative"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:323
+#: pro/includes/Analytics/Metrics.php:320
 msgid "Slightly Negative"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:325
+#: pro/includes/Analytics/Metrics.php:322
 msgid "Neutral"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:340
+#: pro/includes/Analytics/Metrics.php:337
 msgid "engagement rate"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:342
+#: pro/includes/Analytics/Metrics.php:339
 msgid "Engagement rate % = total number of engagements / total number of views"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:349
+#: pro/includes/Analytics/Metrics.php:346
 msgid "clicks"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:350
-#: pro/includes/Analytics/RecentActivity.php:144
+#: pro/includes/Analytics/Metrics.php:347
+#: pro/includes/Analytics/RecentActivity.php:146
 msgid "Clicks"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:351
+#: pro/includes/Analytics/Metrics.php:348
 msgid "Total number of clicks"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:358
+#: pro/includes/Analytics/Metrics.php:355
 msgid "click rate"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:359
+#: pro/includes/Analytics/Metrics.php:356
 msgid "Click Rate"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:360
+#: pro/includes/Analytics/Metrics.php:357
 msgid "Click rate % = total number of clicks / total number of views"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:367
+#: pro/includes/Analytics/Metrics.php:364
 msgid "conversions"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:368
-#: pro/includes/Analytics/RecentActivity.php:167
+#: pro/includes/Analytics/Metrics.php:365
+#: pro/includes/Analytics/RecentActivity.php:169
 msgid "Conversions"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:369
+#: pro/includes/Analytics/Metrics.php:366
 msgid "Total number of conversions"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:376
+#: pro/includes/Analytics/Metrics.php:373
 msgid "conversion rate"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:378
+#: pro/includes/Analytics/Metrics.php:375
 msgid "Conversion rate % = total number of conversions / total number of views"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:385
+#: pro/includes/Analytics/Metrics.php:382
 msgid "change in views"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:386
+#: pro/includes/Analytics/Metrics.php:383
 msgid "Change in Views"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:387
+#: pro/includes/Analytics/Metrics.php:384
 msgid "Change in Views (This Week vs Last)"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:393
+#: pro/includes/Analytics/Metrics.php:390
 msgid "change in views %"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:394
+#: pro/includes/Analytics/Metrics.php:391
 msgid "Change in Views %"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:395
+#: pro/includes/Analytics/Metrics.php:392
 msgid "Change in Views (This Week vs Last) as a percentage"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:401
+#: pro/includes/Analytics/Metrics.php:398
 msgid "change in engagements"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:402
+#: pro/includes/Analytics/Metrics.php:399
 msgid "Change in Engagements"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:403
+#: pro/includes/Analytics/Metrics.php:400
 msgid "Change in Engagements (This Week vs Last) as a percentage"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:409
+#: pro/includes/Analytics/Metrics.php:406
 msgid "change in clicks"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:410
+#: pro/includes/Analytics/Metrics.php:407
 msgid "Change in Clicks"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:411
+#: pro/includes/Analytics/Metrics.php:408
 msgid "Change in Clicks (This Week vs Last) as a percentage"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:417
+#: pro/includes/Analytics/Metrics.php:414
 msgid "change in conversions"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:418
+#: pro/includes/Analytics/Metrics.php:415
 msgid "Change in Conversions"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:419
+#: pro/includes/Analytics/Metrics.php:416
 msgid "Change in Conversions (This Week vs Last) as a percentage"
 msgstr ""
 
@@ -1463,8 +1645,39 @@ msgstr ""
 msgid "Last %d days"
 msgstr ""
 
-#: pro/includes/Analytics/RecentActivity.php:176
+#: pro/includes/Analytics/RecentActivity.php:178
 msgid "Closes"
+msgstr ""
+
+#: pro/includes/Blocks/Countdown.php:53
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Days"
+msgstr ""
+
+#: pro/includes/Blocks/Countdown.php:57
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Hours"
+msgstr ""
+
+#: pro/includes/Blocks/Countdown.php:61
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Minutes"
+msgstr ""
+
+#: pro/includes/Blocks/Countdown.php:65
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Seconds"
+msgstr ""
+
+#: pro/includes/Blocks/Coupon.php:60
+#: assets/editor.js:4
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "Copy"
+msgstr ""
+
+#: pro/includes/Blocks/Coupon.php:78
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "Copied!"
 msgstr ""
 
 #: pro/includes/Blocks/SignUp.php:68
@@ -1486,35 +1699,229 @@ msgid "Which user roles to exclude for client side event tracking."
 msgstr ""
 
 #: pro/includes/Fonts.php:39
+msgid "Learn How To Add Google Fonts"
+msgstr ""
+
+#: pro/includes/Fonts.php:43
 msgid "Fonts"
 msgstr ""
 
-#: pro/includes/Fonts.php:45
+#: pro/includes/Fonts.php:49
 msgid "Font Help"
 msgstr ""
 
-#: pro/includes/Fonts.php:46
+#: pro/includes/Fonts.php:50
 msgid "All fonts added here will be made available in the editor when you are editing your widgets."
 msgstr ""
 
-#: pro/includes/Fonts.php:52
+#: pro/includes/Fonts.php:56
 msgid "Add Font"
 msgstr ""
 
-#: pro/includes/Fonts.php:60
-msgid "Font Name"
-msgstr ""
-
-#: pro/includes/Fonts.php:61
-msgid "The name of the font"
+#: pro/includes/Fonts.php:57
+msgid "No Google fonts have been added."
 msgstr ""
 
 #: pro/includes/Fonts.php:66
-msgid "Google Font URL"
+msgid "Font Name"
 msgstr ""
 
 #: pro/includes/Fonts.php:67
-msgid "This is the full URL of the Google Font"
+msgid "The name of the font"
+msgstr ""
+
+#: pro/includes/Fonts.php:72
+msgid "Font Family"
+msgstr ""
+
+#: pro/includes/Fonts.php:73
+msgid "This is the Google Font family code (e.g. \"Caveat:wght@400..700\" or \"Handlee\" or \"Montserrat:ital,wght@0,100..900;1,100..900\")"
+msgstr ""
+
+#: pro/includes/Leads/Init.php:78
+msgid "Configure automatic distribution of leads to external services after they are saved in your database."
+msgstr ""
+
+#: pro/includes/Leads/Init.php:93
+msgid "Integration Error Log"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:143
+msgid "Mailchimp Integration"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:147
+msgid "Send to Mailchimp"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:148
+msgid "Automatically subscribe leads to your selected Mailchimp audience"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:154
+msgid "API Key"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:155
+msgid "Format: xxxxxxxxxxxxxxxxxxx-usXX"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:166
+msgid "Mailchimp API key is required when integration is enabled"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:172
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:115
+msgid "List"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:173
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:116
+msgid "Select the list to which leads will be added."
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:176
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:119
+msgid "Select a list"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:193
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:138
+msgid "No lists found. Please get lists via the \"Get Lists\" button."
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:200
+msgid "Test Mailchimp"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:202
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:147
+#: pro/includes/Leads/Integrations/WebhookIntegration.php:204
+msgid "Test Connection"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:216
+#: pro/includes/Leads/Integrations/WebhookIntegration.php:218
+msgid "Please save settings to test the connection."
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:224
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:226
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:162
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:164
+msgid "Get Lists"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:252
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:275
+msgid "Please enter your Mailchimp API key"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:258
+msgid "Successfully connected to Mailchimp!"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:260
+msgid "Failed to connect to Mailchimp. Please check your API key."
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:281
+msgid "Failed to extract server prefix from API key"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:302
+msgid "Failed to retrieve lists. Please check your API key."
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:310
+msgid "Unexpected API response. Please try again."
+msgstr ""
+
+#. Translators: %d is the number of lists retrieved.
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:325
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:221
+#, php-format
+msgid "%d lists retrieved successfully! Refresh the page to see the lists."
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:102
+msgid "MailPoet Integration"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:106
+msgid "Send to MailPoet"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:107
+msgid "Automatically subscribe leads to your selected MailPoet list"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:145
+msgid "Test MailPoet"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:189
+msgid "Successfully connected to MailPoet!"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:191
+msgid "Failed to connect to MailPoet. Do you have MailPoet installed and configured correctly?"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:223
+msgid "Failed to retrieve lists. Please try again."
+msgstr ""
+
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:226
+msgid "You do not have MailPoet installed or configured correctly."
+msgstr ""
+
+#: pro/includes/Leads/Integrations/WebhookIntegration.php:155
+msgid "Webhook Integration"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/WebhookIntegration.php:159
+msgid "Send via Webhook"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/WebhookIntegration.php:160
+msgid "Deliver leads to any custom webhook endpoint (Zapier, Make.com, N8N, custom scripts, etc.)"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/WebhookIntegration.php:166
+msgid "Webhook URL"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/WebhookIntegration.php:167
+msgid "Your webhook endpoint (https://your-site.com/webhook)"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/WebhookIntegration.php:178
+msgid "Valid webhook URL is required"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/WebhookIntegration.php:182
+msgid "Custom Headers"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/WebhookIntegration.php:183
+msgid "Optional HTTP headers (Authorization, X-API-Key, etc.)"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/WebhookIntegration.php:202
+msgid "Test Webhook"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/WebhookIntegration.php:237
+msgid "Please enter the webhook URL"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/WebhookIntegration.php:243
+msgid "Webhook is accessible!"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/WebhookIntegration.php:245
+msgid "Could not connect to the webhook URL"
 msgstr ""
 
 #: pro/includes/Retention.php:50
@@ -1530,6 +1937,8 @@ msgstr ""
 #: assets/widgets/flyout/editor/blocks/open-button/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/countdown/editor/index.js:1
+#: pro/assets/blocks/coupon/editor/index.js:1
 #: pro/assets/blocks/example-block-2/editor/index.js:1
 #: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Background"
@@ -1539,6 +1948,8 @@ msgstr ""
 #: assets/widgets/bar/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/countdown/editor/index.js:1
+#: pro/assets/blocks/coupon/editor/index.js:1
 #: pro/assets/blocks/example-block-2/editor/index.js:1
 #: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Text"
@@ -1652,6 +2063,7 @@ msgstr ""
 #: assets/widgets/flyout/editor/blocks/open-button/index.js:4
 #: assets/widgets/flyout/editor/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: pro/assets/blocks/coupon/editor/index.js:1
 #: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Right"
 msgstr ""
@@ -1679,6 +2091,7 @@ msgstr ""
 #: assets/widgets/flyout/editor/blocks/open-button/index.js:4
 #: assets/widgets/flyout/editor/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: pro/assets/blocks/coupon/editor/index.js:1
 #: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Left"
 msgstr ""
@@ -1720,6 +2133,8 @@ msgid "Sizes"
 msgstr ""
 
 #: assets/editor.js:1
+#: pro/assets/blocks/countdown/editor/index.js:1
+#: pro/assets/blocks/coupon/editor/index.js:1
 #: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Dimensions"
 msgstr ""
@@ -1740,6 +2155,7 @@ msgstr ""
 #: assets/editor.js:4
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/coupon/editor/index.js:1
 #: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "S"
 msgstr ""
@@ -1748,6 +2164,7 @@ msgstr ""
 #: assets/editor.js:4
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/coupon/editor/index.js:1
 #: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Small"
 msgstr ""
@@ -1756,6 +2173,7 @@ msgstr ""
 #: assets/editor.js:4
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/coupon/editor/index.js:1
 #: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "M"
 msgstr ""
@@ -1764,6 +2182,7 @@ msgstr ""
 #: assets/editor.js:4
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/coupon/editor/index.js:1
 #: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Medium"
 msgstr ""
@@ -1772,6 +2191,7 @@ msgstr ""
 #: assets/editor.js:4
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/coupon/editor/index.js:1
 #: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "L"
 msgstr ""
@@ -1780,6 +2200,7 @@ msgstr ""
 #: assets/editor.js:4
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/coupon/editor/index.js:1
 #: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Large"
 msgstr ""
@@ -1788,6 +2209,7 @@ msgstr ""
 #: assets/editor.js:4
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/coupon/editor/index.js:1
 #: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "XL"
 msgstr ""
@@ -1796,6 +2218,7 @@ msgstr ""
 #: assets/editor.js:4
 #: assets/widgets/flyout/editor/blocks/container/blocks/content/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/content/index.js:1
+#: pro/assets/blocks/coupon/editor/index.js:1
 #: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Extra Large"
 msgstr ""
@@ -1877,14 +2300,6 @@ msgid "Appearance"
 msgstr ""
 
 #: assets/editor.js:1
-msgid "System Font"
-msgstr ""
-
-#: assets/editor.js:1
-msgid "Source Serif Pro"
-msgstr ""
-
-#: assets/editor.js:1
 msgid "Font"
 msgstr ""
 
@@ -1893,24 +2308,15 @@ msgid "Select..."
 msgstr ""
 
 #: assets/editor.js:1
-msgid "JS"
-msgstr ""
-
-#: assets/editor.js:1
 msgid "PHP"
 msgstr ""
 
 #: assets/editor.js:1
+msgid "JS"
+msgstr ""
+
+#: assets/editor.js:1
 msgid "Inner Blocks"
-msgstr ""
-
-#: assets/editor.js:1
-#: assets/editor.js:8
-msgid "Title"
-msgstr ""
-
-#: assets/editor.js:1
-msgid "Description"
 msgstr ""
 
 #: assets/editor.js:1
@@ -2196,7 +2602,9 @@ msgstr ""
 msgid "Display rules"
 msgstr ""
 
+#. translators: %s: file name
 #: assets/editor.js:4
+#: assets/editor.js:5
 msgid "Not set"
 msgstr ""
 
@@ -2290,11 +2698,13 @@ msgstr ""
 #: assets/widgets/flyout/editor/blocks/container/blocks/close-button/index.js:4
 #: assets/widgets/flyout/editor/blocks/open-button/index.js:4
 #: assets/widgets/popup/editor/blocks/container/blocks/close-button/index.js:1
+#: pro/assets/blocks/coupon/editor/index.js:1
 #: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Icon"
 msgstr ""
 
 #: assets/editor.js:4
+#: pro/assets/blocks/coupon/editor/index.js:1
 #: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Choose the icon to display."
 msgstr ""
@@ -2319,6 +2729,10 @@ msgstr ""
 #: assets/editor.js:8
 #, js-format
 msgid "Set the title for the %s"
+msgstr ""
+
+#: assets/editor.js:8
+msgid "Title"
 msgstr ""
 
 #: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1
@@ -2647,6 +3061,7 @@ msgstr ""
 #: assets/widgets/flyout/editor/blocks/container/index.js:4
 #: assets/widgets/flyout/editor/blocks/open-button/index.js:4
 #: assets/widgets/flyout/editor/index.js:4
+#: pro/assets/blocks/coupon/editor/index.js:1
 #: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Center"
 msgstr ""
@@ -2762,6 +3177,239 @@ msgstr ""
 msgid "Clicking specific anchors closes the popup."
 msgstr ""
 
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Under"
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Inline"
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "FOMO"
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Specific"
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Session"
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Persist"
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Mode"
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Change how the countdown functions."
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Date & time"
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "The date and time the block will count down to."
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "The number of minutes counting down for first time viewers."
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Expiry"
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Change how an expired countdown is stored."
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Close on expire"
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Close the parent widget after the countdown expires."
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Text Position"
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "The position of the text relative to the digit."
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Pad Single Digits"
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Add a zero before single digits."
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Digits"
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Typography (Digits)"
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Container"
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+msgid "Segment"
+msgstr ""
+
+#: pro/assets/blocks/countdown/editor/index.js:1
+#: pro/assets/blocks/coupon/editor/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Styles"
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Row"
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Stack"
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Layout"
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "The overall layout of elements in the coupon."
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "Text Align"
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "The general text alignment within the coupon."
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "Copied Message"
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "A short message displayed after the coupon is copied."
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "Close on copy"
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "Close the parent widget after the coupon is copied."
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "Redirect on copy"
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "Redirect to the supplied URL after the coupon is copied."
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "Redirect URL"
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "The URL to redirect to after the coupon is copied."
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "Hide label"
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "Hide the label for the coupon."
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "Add code..."
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "Coupon"
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "The text alignment for the coupon code."
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "Override Copied Text"
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "If supplied, this text will be copied to the clipboard instead of the text displayed by the element."
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "Inner Padding"
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Add text..."
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Text only"
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Icon only"
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Icon before text"
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Text before icon"
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Button"
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "The layout of the text and/or icon in the button."
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+#: pro/assets/blocks/sign-up/editor/index.js:1
+msgid "Icon Size"
+msgstr ""
+
+#: pro/assets/blocks/coupon/editor/index.js:1
+msgid "Block"
+msgstr ""
+
 #: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Add placeholder..."
 msgstr ""
@@ -2771,19 +3419,7 @@ msgid "Add label..."
 msgstr ""
 
 #: pro/assets/blocks/sign-up/editor/index.js:1
-msgid "Row"
-msgstr ""
-
-#: pro/assets/blocks/sign-up/editor/index.js:1
-msgid "Stack"
-msgstr ""
-
-#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Form"
-msgstr ""
-
-#: pro/assets/blocks/sign-up/editor/index.js:1
-msgid "Layout"
 msgstr ""
 
 #: pro/assets/blocks/sign-up/editor/index.js:1
@@ -2847,10 +3483,6 @@ msgid "Placeholder"
 msgstr ""
 
 #: pro/assets/blocks/sign-up/editor/index.js:1
-msgid "Add text..."
-msgstr ""
-
-#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "25%"
 msgstr ""
 
@@ -2867,43 +3499,11 @@ msgid "100%"
 msgstr ""
 
 #: pro/assets/blocks/sign-up/editor/index.js:1
-msgid "Text only"
-msgstr ""
-
-#: pro/assets/blocks/sign-up/editor/index.js:1
-msgid "Icon only"
-msgstr ""
-
-#: pro/assets/blocks/sign-up/editor/index.js:1
-msgid "Icon before text"
-msgstr ""
-
-#: pro/assets/blocks/sign-up/editor/index.js:1
-msgid "Text before icon"
-msgstr ""
-
-#: pro/assets/blocks/sign-up/editor/index.js:1
-msgid "Button"
-msgstr ""
-
-#: pro/assets/blocks/sign-up/editor/index.js:1
-msgid "The layout of the text and/or icon in the button."
-msgstr ""
-
-#: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "Horizontal position of the button in the form."
 msgstr ""
 
 #: pro/assets/blocks/sign-up/editor/index.js:1
 msgid "The width for the button within the form."
-msgstr ""
-
-#: pro/assets/blocks/sign-up/editor/index.js:1
-msgid "Icon Size"
-msgstr ""
-
-#: pro/assets/blocks/sign-up/editor/index.js:1
-msgid "Styles"
 msgstr ""
 
 #: assets/blocks/example-block/block.json
@@ -3023,6 +3623,26 @@ msgstr ""
 #: assets/widgets/popup/editor/blocks/container/blocks/content/block.json
 msgctxt "block description"
 msgid "The primary content container of the popup."
+msgstr ""
+
+#: pro/assets/blocks/countdown/block.json
+msgctxt "block title"
+msgid "Countdown"
+msgstr ""
+
+#: pro/assets/blocks/countdown/block.json
+msgctxt "block description"
+msgid "A countdown block."
+msgstr ""
+
+#: pro/assets/blocks/coupon/block.json
+msgctxt "block title"
+msgid "Coupon"
+msgstr ""
+
+#: pro/assets/blocks/coupon/block.json
+msgctxt "block description"
+msgid "A coupon block."
 msgstr ""
 
 #: pro/assets/blocks/example-block-2/block.json

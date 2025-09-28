@@ -4,7 +4,7 @@ Tags: popups,bars,flyouts,conversion,marketing
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 6.8
-Stable tag: 1.2.2
+Stable tag: 1.2.5
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -143,6 +143,13 @@ No, FooConvert is optimized for performance and has minimal impact on your websi
 The source code for this plugin is available publicly on GitHub [here](https://github.com/fooplugins/fooconvert).
 
 == Changelog ==
+
+= 1.2.5 =
+* Date Updated : 28 Sep 2025
+* Updated to Freemius SDK 2.12.2
+[//]: # fs_premium_only_begin
+* New : Added MailPoet integration for leads.
+[//]: # fs_premium_only_end
 
 = 1.2.4 =
 * Date Updated : 19 Jul 2025

@@ -90,9 +90,6 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
             // TODO: handle email sign-up
             if ( is_string( $extra_data['source'] ) && is_string( $extra_data['email'] ) ) {
                 // we have the minimum required for sign-up
-                if ( is_string( $extra_data['name'] ) ) {
-                    // optional name has been supplied
-                }
 
                 $lead = new Lead();
 
