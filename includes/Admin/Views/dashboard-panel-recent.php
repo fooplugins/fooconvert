@@ -71,13 +71,13 @@ if ( empty( $widgets ) || count( $widgets ) === 0 ) {
     </div>
     <div class="fooconvert-panel-section fooconvert-panel-section-flex">
         <p class="fooconvert-flex">
-            <a href="<?php echo admin_url( 'post-new.php?post_type=fc-bar' ); ?>" class="button button-secondary">
+            <a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=fc-bar' ) ); ?>" class="button button-secondary">
                 <?php esc_html_e( 'Add New Bar', 'fooconvert' ); ?>
             </a>
-            <a href="<?php echo admin_url( 'post-new.php?post_type=fc-flyout' ); ?>" class="button button-secondary">
+            <a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=fc-flyout' ) ); ?>" class="button button-secondary">
                 <?php esc_html_e( 'Add New Flyout', 'fooconvert' ); ?>
             </a>
-            <a href="<?php echo admin_url( 'post-new.php?post_type=fc-popup' ); ?>" class="button button-secondary">
+            <a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=fc-popup' ) ); ?>" class="button button-secondary">
                 <?php esc_html_e( 'Add New Popup', 'fooconvert' ); ?>
             </a>
         </p>
