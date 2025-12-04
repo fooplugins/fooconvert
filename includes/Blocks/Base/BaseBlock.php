@@ -349,7 +349,9 @@ abstract class BaseBlock {
         // @formatter:off
         ob_start();?><<?php echo esc_html( $tag_name ); ?> id="<?php echo esc_attr( $instance_id ) ?>" <?php echo wp_kses_data( get_block_wrapper_attributes( $frontend_attributes ) ); ?>><?php
         $this->render_frontend_icons( $instance_id, $frontend_icons );
-        ?><?php echo $this->kses( $attributes, do_blocks( $content ), $block, 'root' );
+        ?><?php
+        // phpcs:ignore WordPress.Security.EscapeOutput
+        echo $this->kses( $attributes, do_blocks( $content ), $block, 'root' );
         ?></<?php echo esc_html( $tag_name ); ?>><?php
         return ob_get_clean();
         // @formatter:on
