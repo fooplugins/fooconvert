@@ -3,8 +3,7 @@
 namespace FooPlugins\FooConvert;
 
 /**
- * FooConvert Init Class
- * Runs all classes that need to run at startup
+ * FooConvert Activation Class
  */
 
 if ( !class_exists( __NAMESPACE__ . '\Activation' ) ) {
