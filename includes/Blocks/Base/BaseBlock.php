@@ -347,13 +347,13 @@ abstract class BaseBlock {
         $this->enqueue_frontend_data( $instance_id, $frontend_data );
 
         // @formatter:off
+        // phpcs:disable WordPress.Security.EscapeOutput - the content is sanitized by the kses method
         ob_start();?><<?php echo esc_html( $tag_name ); ?> id="<?php echo esc_attr( $instance_id ) ?>" <?php echo wp_kses_data( get_block_wrapper_attributes( $frontend_attributes ) ); ?>><?php
         $this->render_frontend_icons( $instance_id, $frontend_icons );
-        ?><?php
-        // phpcs:ignore WordPress.Security.EscapeOutput
-        echo $this->kses( $attributes, do_blocks( $content ), $block, 'root' );
+        ?><?php echo $this->kses( $attributes, do_blocks( $content ), $block, 'root' );
         ?></<?php echo esc_html( $tag_name ); ?>><?php
         return ob_get_clean();
+        // phpcs:enable
         // @formatter:on
     }
 
