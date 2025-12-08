@@ -1,7 +1,7 @@
 import { useRootAttributes } from "#editor";
 import { BlockControls } from "@wordpress/block-editor";
 import { ToolbarButton, ToolbarGroup } from "@wordpress/components";
-import { __ } from "@wordpress/i18n";
+import { __, sprintf } from "@wordpress/i18n";
 
 const ViewStateControls = () => {
     const [ attributes, setAttributes ] = useRootAttributes( 'fc/flyout' );
