@@ -1,4 +1,4 @@
-=== Popup Builder + Bar Builder + Flyout Builder - FooConvert for Lead Generation ===
+=== Popup Builder for Block Editor - FooConvert ===
 Contributors: fooplugins, bradvin, steveush
 Tags: popups,bars,flyouts,conversion,marketing
 Requires at least: 6.5
@@ -31,19 +31,19 @@ This is what you can build with FooConvert FREE:
 
 = FooConvert Key Features =
 
-- Add high converting widgets to your pages:
+- Add high converting popups to your pages:
   - Popups
   - Bars
-  - Flyouts
-- Design and edit your widgets within the Gutenberg block editor.
-  - Customize widget appearance, colors, and positioning.
-  - Add any blocks to your widgets content.
-  - Add shortcodes within widget content.
-- Widget display rules:
+  - Flyouts (slideins)
+- Design and edit your popups within the Gutenberg block editor.
+  - Customize appearance, colors, and positioning.
+  - Add any blocks to your popups.
+  - Add shortcodes within popup content.
+- Display rules:
   - locations (e.g. entire site, homepage, specific pages, etc)
   - exclusions (e.g. exclude certain pages or taxonomies)
   - users (e.g. logged-in users only, non-logged-in users, specific roles, etc)
-- Widget open triggers:
+- Open triggers:
   - Page load
   - Exit intent
   - Page scroll
@@ -51,12 +51,12 @@ This is what you can build with FooConvert FREE:
   - Anchor click
   - Element click
   - Anchor visible
-- Track widget analytics:
+- Track analytics:
   - Base metrics : views, visitors, engagements.
   - Daily activity charts for views, visitors and engagements.
 - Analytics Dashboard:
   - Top Performers by Views and Engagement.
-- Widget data retention for 14 days only.
+- Data retention for 14 days only.
   - Longer retention period available with FooConvert PRO.
 
 = FooConvert Benefits =
@@ -64,15 +64,15 @@ This is what you can build with FooConvert FREE:
 - Increase Conversion Rates: Turn more visitors into paying customers!
 - Boost Lead Generation: Capture more qualified leads for your business!
 - Optimize Sales Funnel: Streamline your sales process for better results!
-- Sell More Products: Generate more revenue with high-converting widgets!
+- Sell More Products: Generate more revenue with high-converting popups!
 - Data-Driven Decisions: Make informed choices based on real-time analytics!
 
 = FooConvert PRO Features =
 
 PRO features that make FooConvert even more powerful! Features include:
 
-- Longer retention period for widget analytics. You can now track widget performance as long as your like!
-- More advanced widget analytics, including:
+- Longer retention period for analytics. You can now track performance as long as your like!
+- More advanced analytics, including:
   - Clicks and click-through-rates.
   - Conversions and conversion rates.
   - Engagement sentiment and engagement ratios (positive and negative).
@@ -82,17 +82,17 @@ PRO features that make FooConvert even more powerful! Features include:
 - 15 professionally designed templates:
   - No design skills needed!
   - Proven to convert and grab attention!
-  - Create stunning, high-converting widgets in minutes – just pick, customize, publish!
-- More widget blocks:
+  - Create stunning, high-converting popups in minutes – just pick, customize, publish!
+- More blocks:
   - Sign-up Block : capture leads from your site visitors.
   - Countdown Block : add a countdown timer to create FOMO.
   - Coupon Copy Block : allow visitors to easily copy coupon codes to their clipboard.
-- Exclude roles from logging widget events for analytics.
-  - Use case : exclude administrator widget tests from skewing your widget analytics.
+- Exclude roles from logging events for analytics.
+  - Use case : exclude administrator tests from skewing your analytics.
 - Google Font Support
-  - Use case : use any available Google Font within your widgets.
+  - Use case : use any available Google Font within your popups.
 - Lead Capture Management
-  - Use case : manage or export all leads captured by your widgets.
+  - Use case : manage or export all leads captured by your popups.
 
 == Installation ==
 
@@ -103,14 +103,14 @@ PRO features that make FooConvert even more powerful! Features include:
 
 == Frequently Asked Questions ==
 
-= Are there any limitations? (Number of widgets or views?)=
+= Are there any limitations? (Number of popups or views?)=
 
-There is NO limit to the number of widgets you can create.
-There is NO limit to the number of views each widget can have.
-Most alternative conversion solutions limit how many widgets you can create or limit how many times each widget is displayed. Not FooConvert!
+There is NO limit to the number of popups you can create.
+There is NO limit to the number of views each popup can have.
+Most alternative conversion solutions limit how many popups you can create or limit how many times each popup is displayed. Not FooConvert!
 
-The only limitation is the data retention for widget analytics. The data is stored for 14 days only.
-FooConvert PRO has a longer retention period for widget analytics, so you can track widget performance as long as your like!
+The only limitation is the data retention for popup analytics. The data is stored for 14 days only.
+FooConvert PRO has a longer retention period for popup analytics, so you can track performance as long as your like!
 
 = Is FooConvert compatible with my theme? =
 
@@ -118,8 +118,8 @@ FooConvert is designed to work with most WordPress themes. If you encounter any 
 
 = Is FooConvert compatible with Classic Editor plugin? =
 
-Not really. The FooConvert widget designer is built on top of the Gutenberg block editor, which means you need to enable the block editor to create and edit widgets. You will not be able to easily create or edit widgets using the Classic Editor.
-If you have the Classic Editor plugin installed, You will need to enable the setting "Allow users to switch editors" from Settings -> Writing, so that you can switch to the block editor when adding or editing FooConvert widgets.
+Not really. The FooConvert designer is built on top of the Gutenberg block editor, which means you need to enable the block editor to create and edit popups. You will not be able to easily create or edit popups using the Classic Editor.
+If you have the Classic Editor plugin installed, You will need to enable the setting "Allow users to switch editors" from Settings -> Writing, so that you can switch to the block editor when adding or editing FooConvert popups.
 
 = Can I use FooConvert with other e-commerce plugins? =
 
@@ -131,9 +131,9 @@ No, FooConvert is optimized for performance and has minimal impact on your websi
 
 == Screenshots ==
 
-1. Widget Editor
+1. Popup Editor
 2. FooConvert Dashboard
-3. Widget Stats
+3. Stats
 4. FooConvert Settings
 5. Template Selector
 6. Editor Settings
@@ -143,6 +143,12 @@ No, FooConvert is optimized for performance and has minimal impact on your websi
 The source code for this plugin is available publicly on GitHub [here](https://github.com/fooplugins/fooconvert).
 
 == Changelog ==
+
+= 1.2.6 =
+* Date Updated : 09 Dec 2025
+* Fixed : Fixed error when creating bars and flyouts in block editor.
+* Fixed : In block editor, disabled autosave for our custom post types.
+* Fixed : Updated Freemius SDK to 2.12.3
 
 = 1.2.5 =
 * Date Updated : 28 Sep 2025
@@ -160,7 +166,7 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 
 = 1.2.3 =
 * Date Updated : 14 Jul 2025
-* Fixed : fixed template selector when creating a new widget.
+* Fixed : fixed template selector when creating a new popup.
 
 = 1.2.2 =
 * Date Updated : 11 Jul 2025
@@ -181,8 +187,8 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 
 = 1.2.0 =
 * Date Updated : 8 Jun 2025
-* New : Added editor controls to add BG images to widgets.
-* New : Added new widget setting to only show once per user.
+* New : Added editor controls to add BG images to popups.
+* New : Added new popup setting to only show once per user.
 [//]: # fs_premium_only_begin
 * New : Added 5 new professionally designed templates!
 [//]: # fs_premium_only_end
@@ -197,23 +203,23 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 
 = 1.0.1 =
 * Date Updated : 27 Jan 2025
-* Added support for embeds within widget content.
+* Added support for embeds within popup content.
 * Added new filter 'fooconvert_can_create_event' to allow for disabling event creation.
 * Added setting to hide Dashboard panels.
-* Updated the widget metrics update job to be faster!
+* Updated the popup metrics update job to be faster!
 * Fixed default width of popups.
 * Updated to Freemius SDK 2.11.0
 
 = 1.0.0 =
 * Date Updated : 7 Jan 2025
-* Fixed bug with widgets closing anchors not working as expected.
-* Added support for shortcodes within widget content.
+* Fixed bug with popups closing anchors not working as expected.
+* Added support for shortcodes within popup content.
 
 = 0.0.26 =
 * Date Updated : 26 Dec 2024
 * Added demo content (black friday scroll flyout & black friday exit intent popup).
 * Added top performer panel to the dashboard.
-* Added cron job to calculate widget stats (for top performers panel).
+* Added cron job to calculate popup stats (for top performers panel).
 * Added cron job to delete old events (outside of retention period).
 * Added box shadow to border tools panel in block editor.
 * Updated template selector popup.
@@ -221,7 +227,7 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 
 = 0.0.16 =
 * Date Updated : 3 Dec 2024
-* Added compatability mode on widgets, so that blocks that generate scripts will now work.
+* Added compatability mode on popups, so that blocks that generate scripts will now work.
 * Events now have a conversion bool field.
 * Updated to Freemius SDK 2.9.0.
 * Lots of updates and bug fixes!
@@ -234,12 +240,12 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 
 = 0.0.12 =
 * Date Updated : 9 Nov 2024
-* Added event table to the database to store conversion events for each widget.
+* Added event table to the database to store conversion events for each popup.
 
 = 0.0.11 =
 * Date Updated : 2 Nov 2024
 * Fixed demo content.
-* Lots of updates to the widgets!
+* Lots of updates to the popups!
 
 = 0.0.10 =
 * Fixed wrong redirect after plugin activation.
