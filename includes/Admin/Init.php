@@ -31,6 +31,22 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                 // Only run this code if the PRO version is not running.
                 new namespace\Promotions();
             }
+
+			// Disable autosave for our custom post types.
+			add_filter( 'block_editor_settings_all', function( $settings, $context ) {
+
+				// Make sure we have a post object
+				if ( FooConvert::plugin()->widgets->is_editor() ) {
+					// Disable local browser autosave
+					$settings['localAutosaveInterval'] = 0;
+
+					// Optional: disable server autosave too
+					$settings['autosaveInterval'] = 0;
+				}
+
+				return $settings;
+			}, 10, 2 );
+
         }
 
         /**
