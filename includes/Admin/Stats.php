@@ -262,8 +262,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
             // Register the widget stats page
             add_submenu_page(
                 FOOCONVERT_MENU_SLUG,
-                __( 'Widget Stats', 'fooconvert' ),
-                __( 'Widget Stats', 'fooconvert' ),
+                __( 'Stats', 'fooconvert' ),
+                __( 'Stats', 'fooconvert' ),
                 'manage_options',
                 FOOCONVERT_MENU_SLUG_WIDGET_STATS,
                 function () {

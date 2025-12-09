@@ -73,7 +73,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
             // check the widget ID
             $widget_id = isset( $data['widgetId'] ) ? intval( $data['widgetId'] ) : 0;
             if ( $widget_id === 0 ) {
-                wp_send_json_error( 'Missing widget ID!' );
+                wp_send_json_error( 'Missing ID!' );
                 exit;
             }
 

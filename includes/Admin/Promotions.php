@@ -256,7 +256,7 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
                 <p><?php echo esc_html( wp_rand( 0, 100 ) ); ?></p>
                 <h2><?php esc_html_e( 'Total Clicks', 'fooconvert' ); ?></h2>
                 <span data-balloon-pos="down"
-                      aria-label="<?php esc_attr_e( 'Total number of clicks made within the widget.', 'fooconvert' ); ?>">
+                      aria-label="<?php esc_attr_e( 'Total number of clicks made.', 'fooconvert' ); ?>">
                     <i class="dashicons dashicons-editor-help"></i>
                 </span>
             </div>
@@ -264,7 +264,7 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
                 <p><?php echo esc_html( wp_rand( 0, 100 ) ); ?>%</p>
                 <h2><?php esc_html_e( 'Click Through Rate', 'fooconvert' ); ?></h2>
                 <span data-balloon-pos="down"
-                      aria-label="<?php esc_attr_e( 'Click Through Rate for the widget.', 'fooconvert' ); ?>">
+                      aria-label="<?php esc_attr_e( 'Click Through Rate for the popup.', 'fooconvert' ); ?>">
                     <i class="dashicons dashicons-editor-help"></i>
                 </span>
             </div>
@@ -272,7 +272,7 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
                 <p><?php echo esc_html( wp_rand( 0, 100 ) ); ?></p>
                 <h2><?php esc_html_e( 'Total Conversions', 'fooconvert' ); ?></h2>
                 <span data-balloon-pos="down"
-                      aria-label="<?php esc_attr_e( 'Total number of conversions for the widget.', 'fooconvert' ); ?>">
+                      aria-label="<?php esc_attr_e( 'Total number of successul conversions made.', 'fooconvert' ); ?>">
                     <i class="dashicons dashicons-editor-help"></i>
                 </span>
             </div>
@@ -280,7 +280,7 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
                 <p><?php echo esc_html( wp_rand( 0, 100 ) ); ?>%</p>
                 <h2><?php esc_html_e( 'Conversion Rate', 'fooconvert' ); ?></h2>
                 <span data-balloon-pos="down"
-                      aria-label="<?php esc_attr_e( 'Conversion Rate for the widget.', 'fooconvert' ); ?>">
+                      aria-label="<?php esc_attr_e( 'Conversion Rate.', 'fooconvert' ); ?>">
                     <i class="dashicons dashicons-editor-help"></i>
                 </span>
             </div>
@@ -288,7 +288,7 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
                 <p><?php echo esc_html( wp_rand( 0, 100 ) ); ?>%</p>
                 <h2><?php esc_html_e( 'Engagement Rate', 'fooconvert' ); ?></h2>
                 <span data-balloon-pos="down"
-                      aria-label="<?php esc_attr_e( 'Engagement Rate for the widget.', 'fooconvert' ); ?>">
+                      aria-label="<?php esc_attr_e( 'Engagement Rate.', 'fooconvert' ); ?>">
                     <i class="dashicons dashicons-editor-help"></i>
                 </span>
             </div>
@@ -296,7 +296,7 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
                 <p><?php echo esc_html( wp_rand( 0, 100 ) ); ?></p>
                 <h2><?php esc_html_e( 'Positive Engagements', 'fooconvert' ); ?></h2>
                 <span data-balloon-pos="down"
-                      aria-label="<?php esc_attr_e( 'Total number of positive engagements for the widget (like clicks).', 'fooconvert' ); ?>">
+                      aria-label="<?php esc_attr_e( 'Total number of positive engagements (like clicks).', 'fooconvert' ); ?>">
                     <i class="dashicons dashicons-editor-help"></i>
                 </span>
             </div>
@@ -304,7 +304,7 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
                 <p><?php echo esc_html( wp_rand( 0, 100 ) ); ?></p>
                 <h2><?php esc_html_e( 'Negative Engagements', 'fooconvert' ); ?></h2>
                 <span data-balloon-pos="down"
-                      aria-label="<?php esc_attr_e( 'Total number of negative engagements for the widget (like dismissals).', 'fooconvert' ); ?>">
+                      aria-label="<?php esc_attr_e( 'Total number of negative engagements (like dismissals).', 'fooconvert' ); ?>">
                     <i class="dashicons dashicons-editor-help"></i>
                 </span>
             </div>
@@ -312,7 +312,7 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
                 <p>Sentiment</p>
                 <h2><?php esc_html_e( 'Overall Sentiment', 'fooconvert' ); ?></h2>
                 <span data-balloon-pos="down"
-                      aria-label="<?php esc_attr_e( 'Overall sentiment for the widget which ranges from very negative to very positive. It can also be unknown if there are no engagements, or neutral.', 'fooconvert' ); ?>">
+                      aria-label="<?php esc_attr_e( 'Overall sentiment which ranges from very negative to very positive. It can also be unknown if there are no engagements, or neutral.', 'fooconvert' ); ?>">
                     <i class="dashicons dashicons-editor-help"></i>
                 </span>
             </div>
