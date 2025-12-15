@@ -22,7 +22,7 @@ if ( empty( $widgets ) || count( $widgets ) === 0 ) {
 ?>
 <div class="fooconvert-panel" data-panel="recent">
     <div class="fooconvert-panel-section fooconvert-panel-header">
-        <h2>📅 <?php esc_html_e( 'Recently Updated Widgets', 'fooconvert' ); ?></h2>
+        <h2>📅 <?php esc_html_e( 'Recently Updated', 'fooconvert' ); ?></h2>
         <div class="fooconvert-panel-section-right">
             <a class="fooconvert-hide-panel" data-panel="recent" href="#hide"
                title="<?php esc_html_e( 'Hide Panel', 'fooconvert' ); ?>">
