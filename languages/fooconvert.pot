@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: FooConvert - Boost Conversions & Lead Generation 1.2.5\n"
+"Project-Id-Version: FooConvert - Boost Conversions & Lead Generation 1.2.6\n"
 "Report-Msgid-Bugs-To: https://github.com/fooplugins/fooconvert/issues\n"
 "Last-Translator: FooPlugins <info@fooplugins.com>\n"
 "Language-Team: FooPlugins <info@fooplugins.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-09-28T09:35:58+00:00\n"
+"POT-Creation-Date: 2025-12-15T10:36:44+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: fooconvert\n"
@@ -105,8 +105,8 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: includes/Admin/Init.php:60
-#: includes/Admin/Init.php:61
+#: includes/Admin/Init.php:76
+#: includes/Admin/Init.php:77
 msgid "FooConvert"
 msgstr ""
 
@@ -154,8 +154,7 @@ msgid "Total Clicks"
 msgstr ""
 
 #: includes/Admin/Promotions.php:259
-#: pro/includes/Analytics/Metrics.php:43
-msgid "Total number of clicks made within the widget."
+msgid "Total number of clicks made."
 msgstr ""
 
 #: includes/Admin/Promotions.php:265
@@ -164,8 +163,7 @@ msgid "Click Through Rate"
 msgstr ""
 
 #: includes/Admin/Promotions.php:267
-#: pro/includes/Analytics/Metrics.php:51
-msgid "Click Through Rate for the widget."
+msgid "Click Through Rate for the popup."
 msgstr ""
 
 #: includes/Admin/Promotions.php:273
@@ -174,8 +172,7 @@ msgid "Total Conversions"
 msgstr ""
 
 #: includes/Admin/Promotions.php:275
-#: pro/includes/Analytics/Metrics.php:59
-msgid "Total number of conversions for the widget."
+msgid "Total number of successul conversions made."
 msgstr ""
 
 #: includes/Admin/Promotions.php:281
@@ -185,8 +182,7 @@ msgid "Conversion Rate"
 msgstr ""
 
 #: includes/Admin/Promotions.php:283
-#: pro/includes/Analytics/Metrics.php:67
-msgid "Conversion Rate for the widget."
+msgid "Conversion Rate."
 msgstr ""
 
 #: includes/Admin/Promotions.php:289
@@ -196,8 +192,7 @@ msgid "Engagement Rate"
 msgstr ""
 
 #: includes/Admin/Promotions.php:291
-#: pro/includes/Analytics/Metrics.php:75
-msgid "Engagement Rate for the widget."
+msgid "Engagement Rate."
 msgstr ""
 
 #: includes/Admin/Promotions.php:297
@@ -206,8 +201,7 @@ msgid "Positive Engagements"
 msgstr ""
 
 #: includes/Admin/Promotions.php:299
-#: pro/includes/Analytics/Metrics.php:83
-msgid "Total number of positive engagements for the widget (like clicks)."
+msgid "Total number of positive engagements (like clicks)."
 msgstr ""
 
 #: includes/Admin/Promotions.php:305
@@ -216,8 +210,7 @@ msgid "Negative Engagements"
 msgstr ""
 
 #: includes/Admin/Promotions.php:307
-#: pro/includes/Analytics/Metrics.php:91
-msgid "Total number of negative engagements for the widget (like dismissals)."
+msgid "Total number of negative engagements (like dismissals)."
 msgstr ""
 
 #: includes/Admin/Promotions.php:313
@@ -226,8 +219,7 @@ msgid "Overall Sentiment"
 msgstr ""
 
 #: includes/Admin/Promotions.php:315
-#: pro/includes/Analytics/Metrics.php:99
-msgid "Overall sentiment for the widget which ranges from very negative to very positive. It can also be unknown if there are no engagements, or neutral."
+msgid "Overall sentiment which ranges from very negative to very positive. It can also be unknown if there are no engagements, or neutral."
 msgstr ""
 
 #: includes/Admin/Promotions.php:323
@@ -526,17 +518,14 @@ msgstr ""
 
 #: includes/Admin/Stats.php:221
 #: includes/Admin/Stats.php:228
+#: includes/Admin/Stats.php:265
+#: includes/Admin/Stats.php:266
 msgid "Stats"
 msgstr ""
 
 #: includes/Admin/Stats.php:248
 #: pro/assets/editor-pro.js:1
 msgid "View Stats"
-msgstr ""
-
-#: includes/Admin/Stats.php:265
-#: includes/Admin/Stats.php:266
-msgid "Widget Stats"
 msgstr ""
 
 #: includes/Admin/Templates/ProBarTemplates.php:9
@@ -649,7 +638,7 @@ msgid "Getting Started with FooConvert!"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:22
-msgid "The easiest way to get started is by creating demo widgets, which will create 4 draft bars, flyouts and popups."
+msgid "The easiest way to get started is by creating demo content, which will create 4 draft bars, flyouts and popups."
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:23
@@ -657,7 +646,7 @@ msgid "It's also the best way to see the top performers in action!"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:27
-msgid "Create Demo Widgets"
+msgid "Create Demo Content"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:32
@@ -665,19 +654,19 @@ msgid "Do not worry"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:33
-msgid "the demo widgets will NOT be visible to your site visitors :)"
+msgid "the demo content will NOT be visible to your site visitors :)"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:39
-msgid "Awesome, you have already created the demo widgets!"
+msgid "Awesome, you have already created the demo content!"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:43
-msgid "Delete Demo Widgets"
+msgid "Delete Demo Content"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:48
-msgid "Deleting the demo widgets will also delete all stats for the widgets."
+msgid "Deleting the demo content will also delete all stats."
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:53
@@ -685,11 +674,11 @@ msgid "OR"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:55
-msgid "Create your own unique widget by following these simple steps:"
+msgid "Create your own unique bar by following these simple steps:"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:59
-msgid "Create a new widget."
+msgid "Create a new bar."
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:61
@@ -757,7 +746,7 @@ msgid "Start a Free Trial"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-recent.php:25
-msgid "Recently Updated Widgets"
+msgid "Recently Updated"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-recent.php:48
@@ -820,8 +809,8 @@ msgid "Rank"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-top-performers.php:27
-#: pro/includes/Admin/LeadsTable.php:41
-msgid "Widget"
+#: assets/editor.js:8
+msgid "Title"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-top-performers.php:29
@@ -1036,6 +1025,7 @@ msgstr ""
 
 #: includes/functions.php:305
 #: includes/Widgets/Popup.php:71
+#: pro/includes/Admin/LeadsTable.php:41
 msgid "Popup"
 msgstr ""
 
@@ -1491,6 +1481,38 @@ msgstr ""
 
 #: pro/includes/Admin/Views/leads.php:67
 msgid "No leads found for the current filter. Try changing the filter above to see more leads."
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:43
+msgid "Total number of clicks made within the widget."
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:51
+msgid "Click Through Rate for the widget."
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:59
+msgid "Total number of conversions for the widget."
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:67
+msgid "Conversion Rate for the widget."
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:75
+msgid "Engagement Rate for the widget."
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:83
+msgid "Total number of positive engagements for the widget (like clicks)."
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:91
+msgid "Total number of negative engagements for the widget (like dismissals)."
+msgstr ""
+
+#: pro/includes/Analytics/Metrics.php:99
+msgid "Overall sentiment for the widget which ranges from very negative to very positive. It can also be unknown if there are no engagements, or neutral."
 msgstr ""
 
 #: pro/includes/Analytics/Metrics.php:310
@@ -2729,10 +2751,6 @@ msgstr ""
 #: assets/editor.js:8
 #, js-format
 msgid "Set the title for the %s"
-msgstr ""
-
-#: assets/editor.js:8
-msgid "Title"
 msgstr ""
 
 #: assets/widgets/bar/editor/blocks/container/blocks/close-button/index.js:1

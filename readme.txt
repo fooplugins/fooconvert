@@ -3,20 +3,24 @@ Contributors: fooplugins, bradvin, steveush
 Tags: popups,bars,flyouts,conversion,marketing
 Requires at least: 6.5
 Requires PHP: 7.4
-Tested up to: 6.8
-Stable tag: 1.2.5
+Tested up to: 7.0
+Stable tag: 1.2.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Build your own Popups, Bars & Flouts with FooConvert in the Gutenberg Block Editor!
+FooConvert is a powerful Popup, Bar, and Flyout Builder for WordPress that helps you turn more visitors into leads, subscribers, and customers.
 
 == Description ==
 
-Quickly build great looking Popups, Bars and Flyouts inside the Gutenberg block editor with FooConvert.
-Having the right "attention-grabbing" popup/bar/flyout generates more leads, increases sales and ultimately grows your business!
-FooConvert only has 1 mission - to maximise your website's conversions, to help you grow your online business.
+Create beautiful, high-converting popups, floating bars, exit-intent offers, slide-in flyouts, scroll boxes, and more — all inside the WordPress block editor.
+Whether you want to grow your email list, promote a sale, increase conversions, or highlight important announcements, FooConvert makes it easy with flexible targeting, smart triggers, and built-in performance analytics.
 
-This is what you can build with FooConvert FREE:
+[Launch Your Own FooConvert Demo](https://app.instawp.io/launch?t=fooconvert-free-demo&d=v2)
+
+[Visit the FooConvert Homepage](https://fooplugins.com/fooconvert/)
+
+= Build High-Converting Popup, Bar, and Flyout  (Free Version Includes): =
+
 - Lightbox Popups
 - Exit-intent Popups
 - Floating Bars
@@ -25,74 +29,67 @@ This is what you can build with FooConvert FREE:
 - Sidebar Forms
 - Scroll Boxes
 
-[Launch Your Own FooConvert Demo](https://app.instawp.io/launch?t=fooconvert-free-demo&d=v2)
+= Why FooConvert? =
 
-[Visit the FooConvert Homepage](https://fooplugins.com/fooconvert/)
+Your website visitors won’t convert unless you grab their attention at the right time.
+FooConvert gives you the tools to do exactly that, without slowing down your site or requiring separate editors, bulky page builders, or complicated setup.
+
+FooConvert’s mission is simple:
+
+*Maximize your conversions and help your business grow.*
 
 = FooConvert Key Features =
 
-- Add high converting popups to your pages:
-  - Popups
-  - Bars
-  - Flyouts (slideins)
-- Design and edit your popups within the Gutenberg block editor.
-  - Customize appearance, colors, and positioning.
-  - Add any blocks to your popups.
-  - Add shortcodes within popup content.
-- Display rules:
-  - locations (e.g. entire site, homepage, specific pages, etc)
-  - exclusions (e.g. exclude certain pages or taxonomies)
-  - users (e.g. logged-in users only, non-logged-in users, specific roles, etc)
-- Open triggers:
-  - Page load
-  - Exit intent
-  - Page scroll
-  - Timer
-  - Anchor click
-  - Element click
-  - Anchor visible
-- Track analytics:
-  - Base metrics : views, visitors, engagements.
-  - Daily activity charts for views, visitors and engagements.
-- Analytics Dashboard:
-  - Top Performers by Views and Engagement.
-- Data retention for 14 days only.
-  - Longer retention period available with FooConvert PRO.
+- Customize popup, bar & flyout design, color, spacing, and positioning.
+- Add any core or third-party WordPress blocks.
+- Add shortcodes inside popup content.
+- Build responsive widgets that look great on all devices.
 
-= FooConvert Benefits =
+= Advanced Display Rules =
 
-- Increase Conversion Rates: Turn more visitors into paying customers!
-- Boost Lead Generation: Capture more qualified leads for your business!
-- Optimize Sales Funnel: Streamline your sales process for better results!
-- Sell More Products: Generate more revenue with high-converting popups!
-- Data-Driven Decisions: Make informed choices based on real-time analytics!
+Show Popups, Bars, and Flyouts based on:
 
-= FooConvert PRO Features =
+- Page location (entire site, homepage, specific URLs, posts, taxonomies, WooCommerce pages, etc.)
+- Exclusions (skip pages or user flows you don’t want to interrupt)
+- User targeting (logged-in only, logged-out only, specific user roles)
 
-PRO features that make FooConvert even more powerful! Features include:
+= Smart Trigger Options =
 
-- Longer retention period for analytics. You can now track performance as long as your like!
-- More advanced analytics, including:
-  - Clicks and click-through-rates.
-  - Conversions and conversion rates.
-  - Engagement sentiment and engagement ratios (positive and negative).
-  - Daily activity charts for clicks, conversions and engagements.
-- More dashboard metrics, including:
-  - Top Performers by Engagement Rate, Clicks, Click Rate, Conversions, Conversion Rate.
-- 15 professionally designed templates:
-  - No design skills needed!
-  - Proven to convert and grab attention!
-  - Create stunning, high-converting popups in minutes – just pick, customize, publish!
-- More blocks:
-  - Sign-up Block : capture leads from your site visitors.
-  - Countdown Block : add a countdown timer to create FOMO.
-  - Coupon Copy Block : allow visitors to easily copy coupon codes to their clipboard.
-- Exclude roles from logging events for analytics.
-  - Use case : exclude administrator tests from skewing your analytics.
-- Google Font Support
-  - Use case : use any available Google Font within your popups.
-- Lead Capture Management
-  - Use case : manage or export all leads captured by your popups.
+Open Popups, Bars, and Flyouts based on:
+
+- Page load
+- Exit intent
+- Scroll depth
+- Timer
+- Anchor click
+- Element click
+- Element visible
+
+= Built-In Analytics = 
+
+Free version includes:
+
+- Views
+- Visitors
+- Engagements
+- Daily performance charts
+
+= Data Retention = 
+
+Free: 14-day analytics history
+Pro: Unlimited history
+
+= Benefits for Your Website =
+
+- *Increase Conversion Rates* – Turn passive visitors into engaged leads
+- *Boost Lead Generation* – Grow your list with targeted offers
+- *Sell More Products* – Promote discounts, sales, & cross-sell offers
+- *Optimize Your Funnel* – Personalize messages based on user behavior
+- *Make Data-Driven Decisions* – See exactly which widgets perform best
+
+[Launch Your Own FooConvert Demo](https://app.instawp.io/launch?t=fooconvert-free-demo&d=v2)
+
+[Visit the FooConvert Homepage](https://fooplugins.com/fooconvert/)
 
 == Installation ==
 
@@ -145,10 +142,11 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 == Changelog ==
 
 = 1.2.6 =
-* Date Updated : 09 Dec 2025
+* Date Updated : 15 Dec 2025
 * Fixed : Fixed error when creating bars and flyouts in block editor.
 * Fixed : In block editor, disabled autosave for our custom post types.
 * Fixed : Updated Freemius SDK to 2.12.3
+* Fixed : Updated dashboard & reworded all admin screens to make more sense (removed wording for 'widget')
 
 = 1.2.5 =
 * Date Updated : 28 Sep 2025

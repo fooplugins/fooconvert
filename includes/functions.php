@@ -341,8 +341,8 @@ function fooconvert_pro_features_list() {
             'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/pro-templates/',
         ],
         'blocks' => [
-            'title'   => __( 'PRO Widget Blocks', 'fooconvert' ),
-            'feature' => __( 'Sign-up Block, Countdown Block, Coupon Copy Block. Use them in any widget you build!', 'fooconvert' ),
+            'title'   => __( 'PRO Blocks', 'fooconvert' ),
+            'feature' => __( 'Sign-up Block, Countdown Block, Coupon Copy Block. Use them in any popup, bar or flyout you build!', 'fooconvert' ),
             'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/pro-widgets/',
         ],
         'leads' => [
