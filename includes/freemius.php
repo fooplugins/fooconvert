@@ -21,8 +21,9 @@ if ( !function_exists( 'fooconvert_fs' ) ) {
                 'is_premium'          => true,
                 'premium_suffix'      => 'PRO',
                 'has_premium_version' => true,
-                'has_addons'          => true,
+                'has_addons'          => false,
                 'has_paid_plans'      => true,
+                'has_affiliation'     => 'selected',
                 'trial'               => array(
                     'days'               => 7,
                     'is_require_payment' => false,
@@ -45,4 +46,6 @@ if ( !function_exists( 'fooconvert_fs' ) ) {
     fooconvert_fs()->add_filter( 'plugin_icon', function ( $icon ) {
         return FOOCONVERT_ASSETS_PATH . 'media/icon.png';
     }, 10, 1 );
+
+    fooconvert_fs()->add_filter( 'show_affiliate_program_notice', '__return_false' );
 }
