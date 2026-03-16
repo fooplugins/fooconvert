@@ -5,6 +5,8 @@ import sharp from "sharp";
 import { readdir } from "fs/promises";
 import { extname, basename } from "path";
 
+const BUILD_SCOPE = process.env.BUILD_SCOPE === "pro" ? "pro" : "free";
+
 const toShortTime = timespan => {
     if ( timespan > 1000 ) {
         return ( timespan / 1000 ).toFixed( 3 )
@@ -71,11 +73,14 @@ const resizeTemplates = async (sourceDir, destDir, width = 150, height = 150) =>
 };
 
 await resizeTemplates("./src/media/templates/fullsize", "./src/media/templates");
-await resizeTemplates("./pro/src/media/templates/fullsize", "./pro/src/media/templates");
 
 await performCopy( "./src/media", "./assets/media", [ '**/*.{png,jpg,jpeg,gif,webp,svg}', '!templates/fullsize/**' ] );
 await performCopy( "./src/admin", "./assets/admin", [ '**/*' ] );
-await performCopy( "./pro/src/media", "./pro/assets/media", [ '**/*.{png,jpg,jpeg,gif,webp,svg}', '!templates/fullsize/**' ] );
-await performMove( "./assets/pro", "./pro/assets", [ '**/*' ] );
-await performMove( "./assets", "./pro/assets", [ 'editor-pro*.*', 'frontend-pro*.*' ], false );
-await performCopy( "./pro/src", "./pro/assets", [ '**/block.json' ] );
+
+if ( BUILD_SCOPE === "pro" ) {
+    await resizeTemplates("./pro/src/media/templates/fullsize", "./pro/src/media/templates");
+    await performCopy( "./pro/src/media", "./pro/assets/media", [ '**/*.{png,jpg,jpeg,gif,webp,svg}', '!templates/fullsize/**' ] );
+    await performMove( "./assets/pro", "./pro/assets", [ '**/*' ] );
+    await performMove( "./assets", "./pro/assets", [ 'editor-pro*.*', 'frontend-pro*.*' ], false );
+    await performCopy( "./pro/src", "./pro/assets", [ '**/block.json' ] );
+}
