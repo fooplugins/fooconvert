@@ -151,8 +151,20 @@ class Bar extends BaseWidget {
                     'viewState'   => 'open',
                     'settings'    => array(
                         'trigger'     => array(
-                            'type' => 'timer',
-                            'data' => 3
+                            'version'   => 2,
+                            'lifetime'  => 'page',
+                            'frequency' => array(
+                                'mode'            => 'once',
+                                'cooldownSeconds' => 0
+                            ),
+                            'steps'     => array(
+                                array(
+                                    'event' => 'fc.timer.elapsed',
+                                    'where' => array(
+                                        'seconds' => 3
+                                    )
+                                )
+                            )
                         ),
                         'transitions' => true
                     ),
@@ -259,7 +271,18 @@ class Bar extends BaseWidget {
                         'position'    => 'bottom',
                         'transitions' => true,
                         'trigger'     => array(
-                            'type' => 'immediate'
+                            'version'   => 2,
+                            'lifetime'  => 'page',
+                            'frequency' => array(
+                                'mode'            => 'once',
+                                'cooldownSeconds' => 0
+                            ),
+                            'steps'     => array(
+                                array(
+                                    'event' => 'fc.immediate',
+                                    'where' => array()
+                                )
+                            )
                         ),
                         'closeAnchor' => 'accept'
                     ),

@@ -14,7 +14,18 @@ export const POPUP_CLASS_NAME = 'fc--popup';
 export const POPUP_DEFAULTS = {
     settings: {
         trigger: {
-            type: 'anchor'
+            version: 2,
+            lifetime: "page",
+            frequency: {
+                mode: "repeat",
+                cooldownSeconds: 0
+            },
+            steps: [ {
+                event: "fc.anchor.click",
+                where: {
+                    ids: []
+                }
+            } ]
         },
         transitions: false,
         maxOnMobile: false
