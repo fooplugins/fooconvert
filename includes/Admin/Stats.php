@@ -28,8 +28,20 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
         function override_widget_attributes( $attributes, $instance_id, $tag_name, $block ) {
             if ( fooconvert_is_admin_stats_page() ) {
                 $attributes['settings']['trigger'] = [
-                    'type' => 'anchor',
-                    'data' => 'fooconvert-widget-preview'
+                    'version'   => 2,
+                    'lifetime'  => 'page',
+                    'frequency' => [
+                        'mode'            => 'repeat',
+                        'cooldownSeconds' => 0
+                    ],
+                    'steps'     => [
+                        [
+                            'event' => 'fc.anchor.click',
+                            'where' => [
+                                'ids' => [ 'fooconvert-widget-preview' ]
+                            ]
+                        ]
+                    ]
                 ];
             }
 

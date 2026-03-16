@@ -6,6 +6,8 @@ const { fromProjectRoot, hasProjectFile } = require( "@wordpress/scripts/utils/f
 const { readFileSync } = require( "fs" );
 const { getBlockJsonScriptFields, getBlockJsonModuleFields } = require( "@wordpress/scripts/utils/block-json" );
 
+const BUILD_SCOPE = process.env.BUILD_SCOPE === "pro" ? "pro" : "free";
+
 /**
  *
  * @param root
@@ -156,21 +158,23 @@ const getBlockEntries = ( root, buildType = 'script' ) => {
 const entry = () => {
     // get the default config entries
     const defaultEntries = defaultConfig.entry();
-    const proEntries = getBlockEntries( 'pro' );
+    const proEntries = BUILD_SCOPE === "pro" ? getBlockEntries( 'pro' ) : {};
     const blockEntries = { ...defaultEntries, ...proEntries };
     // create our custom entry points to match the `pkg.imports` values
     const entries = {
         "editor": "./src/editor/index.js",
         "frontend": "./src/frontend/index.js",
-        "editor-pro": {
+    };
+    if ( BUILD_SCOPE === "pro" ) {
+        entries[ "editor-pro" ] = {
             "import": "./pro/src/editor/index.js",
             "dependOn": [ "editor" ]
-        },
-        "frontend-pro": {
+        };
+        entries[ "frontend-pro" ] = {
             "import": "./pro/src/frontend/index.js",
             "dependOn": [ "frontend" ]
-        },
-    };
+        };
+    }
     // iterate the default entries and add them to our new entries object
     return Object.entries( blockEntries ).reduce( ( acc, [ key, value ] ) => {
         if ( key.startsWith( "pro/" ) && key.includes( "/editor/" ) ) {

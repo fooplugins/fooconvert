@@ -1,6 +1,7 @@
 import WidgetElement from "./WidgetElement";
-import { isFunction, isNumber, isPlainObject, isString, isUndefined, strim } from "@steveush/utils";
-import { getClickableData, getDocumentScrollPercent, LOG_EVENT_TYPES, isSelector, getSeen, setSeen } from "../utils";
+import { isFunction, isNumber, isPlainObject, isString, strim } from "@steveush/utils";
+import { getClickableData, LOG_EVENT_TYPES, isSelector, getSeen, setSeen } from "../utils";
+import { getEventBus, observeVisibilityIds } from "../triggers";
 
 /**
  *
@@ -13,21 +14,20 @@ class TriggeredElement extends WidgetElement {
         return [ "open" ];
     }
 
-    /**
-     *
-     * @returns {TriggerType[]}
-     */
-    static get triggerTypes() {
-        return [ "immediate", "anchor", "element", "scroll", "timer", "visible", "exit-intent" ];
+    static get triggerEvents() {
+        return [
+            "fc.immediate",
+            "fc.anchor.click",
+            "fc.element.click",
+            "fc.scroll.percent",
+            "fc.timer.elapsed",
+            "fc.element.visible",
+            "fc.exit_intent"
+        ];
     }
 
-    /**
-     *
-     * @param {any} value
-     * @returns {value is TriggerType}
-     */
-    static isTriggerType( value ) {
-        return TriggeredElement.triggerTypes.includes( value );
+    static isTriggerEvent( value ) {
+        return TriggeredElement.triggerEvents.includes( value );
     }
 
     constructor() {
@@ -37,38 +37,26 @@ class TriggeredElement extends WidgetElement {
         this.onClickableClicked = this.onClickableClicked.bind( this );
     }
 
-    /**
-     *
-     * @returns {?TriggerType}
-     */
-    get trigger() {
-        const trigger = this.config.trigger;
-        return this.constructor.isTriggerType( trigger ) ? trigger : null;
+    get triggerConfig() {
+        return isPlainObject( this.config?.triggerConfig ) ? this.config.triggerConfig : null;
     }
 
-    /**
-     *
-     * @returns {number|string|null}
-     */
-    get triggerData() {
-        const data = this.config.triggerData;
-        if ( !isUndefined( data ) ) {
-            switch ( this.trigger ) {
-                case "anchor":
-                case "element":
-                case "visible":
-                    return isString( data, true ) ? data : null;
-                case "exit-intent":
-                case "timer":
-                case "scroll":
-                    return isNumber( data ) ? data : null;
-            }
-        }
-        return null;
+    get triggerStep() {
+        const steps = this.triggerConfig?.steps;
+        return Array.isArray( steps ) && isPlainObject( steps.at( 0 ) ) ? steps.at( 0 ) : null;
+    }
+
+    get triggerEvent() {
+        const event = this.triggerStep?.event;
+        return this.constructor.isTriggerEvent( event ) ? event : null;
+    }
+
+    get triggerWhere() {
+        return isPlainObject( this.triggerStep?.where ) ? this.triggerStep.where : {};
     }
 
     get triggerOnce() {
-        return this.config?.triggerOnce ?? false;
+        return this.triggerConfig?.frequency?.mode === "once";
     }
 
     get open() {
@@ -151,16 +139,18 @@ class TriggeredElement extends WidgetElement {
 
     createClickableSelector() {
         const selectors = [ 'a,button,input,textarea,select' ];
-        if ( [ 'anchor', 'visible' ].includes( this.trigger ) ) {
-            if ( isString( this.triggerData, true ) ) {
-                const idToSelector = strim( this.triggerData, ',' ).map( a => `#${ a }` ).join( ',' );
+        if ( [ "fc.anchor.click", "fc.element.visible" ].includes( this.triggerEvent ) ) {
+            const ids = Array.isArray( this.triggerWhere?.ids ) ? this.triggerWhere.ids : [];
+            if ( ids.length > 0 ) {
+                const idToSelector = ids.map( id => `#${ id }` ).join( ',' );
                 if ( isSelector( idToSelector ) ) {
                     selectors.push( idToSelector );
                 }
             }
-        } else if ( this.trigger === 'element' ) {
-            if ( isSelector( this.triggerData ) ) {
-                selectors.push( this.triggerData );
+        } else if ( this.triggerEvent === "fc.element.click" ) {
+            const selector = this.triggerWhere?.selector;
+            if ( isSelector( selector ) ) {
+                selectors.push( selector );
             }
         }
         return selectors.join( ',' );
@@ -225,11 +215,6 @@ class TriggeredElement extends WidgetElement {
         this.#openData = null;
     }
 
-    /**
-     *
-     * @param {TriggerType} trigger
-     * @param {(number|string|null|undefined)} [triggerData]
-     */
     onOpenTrigger( trigger, triggerData ) {
         this.setOpen( true, { trigger, triggerData } );
     }
@@ -242,31 +227,7 @@ class TriggeredElement extends WidgetElement {
 
     connectTrigger() {
         this.disconnectTrigger();
-        switch ( this.trigger ) {
-            case "immediate":
-                this.#destroyOpenTrigger = this.initImmediateTrigger( this.onOpenTrigger );
-                break;
-            case "anchor":
-                this.#destroyOpenTrigger = this.initAnchorTrigger( this.triggerData, this.onOpenTrigger );
-                break;
-            case "element":
-                this.#destroyOpenTrigger = this.initElementTrigger( this.triggerData, this.onOpenTrigger );
-                break;
-            case "exit-intent":
-                this.#destroyOpenTrigger = this.initExitIntentTrigger( this.triggerData, this.onOpenTrigger );
-                break;
-            case "scroll":
-                this.#destroyOpenTrigger = this.initScrollTrigger( this.triggerData, this.onOpenTrigger );
-                break;
-            case "timer":
-                this.#destroyOpenTrigger = this.initTimerTrigger( this.triggerData, this.onOpenTrigger );
-                break;
-            case "visible":
-                this.#destroyOpenTrigger = this.initVisibleTrigger( this.triggerData, this.onOpenTrigger );
-                break;
-            default:
-                this.#destroyOpenTrigger = null;
-        }
+        this.#destroyOpenTrigger = this.connectTriggerEvent();
     }
 
     disconnectTrigger() {
@@ -276,18 +237,103 @@ class TriggeredElement extends WidgetElement {
         }
     }
 
-    /**
-     *
-     * @param {(trigger:string, triggerData?:(number|string|null)) => void} callback
-     * @returns {?function}
-     */
-    initImmediateTrigger( callback ) {
-        const handle = globalThis.requestAnimationFrame( () => {
-            callback( "immediate" );
-        } );
-        return () => {
-            globalThis.cancelAnimationFrame( handle );
+    connectTriggerEvent() {
+        const eventBus = getEventBus();
+        const event = this.triggerEvent;
+        const where = this.triggerWhere;
+        const createOneShotListener = ( eventName, callback ) => {
+            let unsubscribe = null;
+            unsubscribe = eventBus.on( eventName, payload => {
+                const handled = callback( payload, () => {
+                    if ( isFunction( unsubscribe ) ) {
+                        unsubscribe();
+                        unsubscribe = null;
+                    }
+                } );
+                if ( handled && isFunction( unsubscribe ) ) {
+                    unsubscribe();
+                    unsubscribe = null;
+                }
+            } );
+            return unsubscribe;
         };
+
+        if ( !isString( event, true ) ) {
+            return null;
+        }
+
+        switch ( event ) {
+            case "fc.immediate":
+                return eventBus.on( event, () => this.onOpenTrigger( event ) );
+            case "fc.anchor.click": {
+                const ids = new Set( Array.isArray( where?.ids ) ? where.ids : [] );
+                return eventBus.on( event, payload => {
+                    const id = payload?.id;
+                    if ( ids.size === 0 || ids.has( id ) ) {
+                        this.onOpenTrigger( event, id ?? null );
+                    }
+                } );
+            }
+            case "fc.element.click": {
+                const selector = isString( where?.selector, true ) ? where.selector : null;
+                return eventBus.on( event, payload => {
+                    const target = payload?.target instanceof Element ? payload.target : null;
+                    if ( target && selector && target.closest( selector ) ) {
+                        this.onOpenTrigger( event, selector );
+                    }
+                } );
+            }
+            case "fc.element.visible": {
+                const ids = new Set( Array.isArray( where?.ids ) ? where.ids : [] );
+                observeVisibilityIds( [ ...ids ] );
+                return createOneShotListener( event, payload => {
+                    const id = payload?.id;
+                    if ( ids.size === 0 || ids.has( id ) ) {
+                        this.onOpenTrigger( event, id ?? null );
+                        return true;
+                    }
+                    return false;
+                } );
+            }
+            case "fc.scroll.percent": {
+                const threshold = Number( where?.percent );
+                if ( !Number.isFinite( threshold ) ) {
+                    return null;
+                }
+                return createOneShotListener( event, ( payload, destroy ) => {
+                    const percent = Number( payload?.percent );
+                    if ( Number.isFinite( percent ) && percent >= threshold ) {
+                        this.onOpenTrigger( event, threshold );
+                        destroy();
+                    }
+                } );
+            }
+            case "fc.timer.elapsed": {
+                const threshold = Number( where?.seconds );
+                if ( !Number.isFinite( threshold ) ) {
+                    return null;
+                }
+                return createOneShotListener( "fc.timer.tick", ( payload, destroy ) => {
+                    const elapsed = Number( payload?.elapsedSeconds );
+                    if ( Number.isFinite( elapsed ) && elapsed >= threshold ) {
+                        this.onOpenTrigger( event, threshold );
+                        destroy();
+                    }
+                } );
+            }
+            case "fc.exit_intent": {
+                const delay = Number( where?.delaySeconds ?? 0 );
+                return createOneShotListener( event, ( payload, destroy ) => {
+                    const secondsOnPage = Number( payload?.secondsOnPage ?? 0 );
+                    if ( secondsOnPage >= delay ) {
+                        this.onOpenTrigger( event, delay );
+                        destroy();
+                    }
+                } );
+            }
+            default:
+                return eventBus.on( event, payload => this.onOpenTrigger( event, payload ?? null ) );
+        }
     }
 
     /**
@@ -314,134 +360,6 @@ class TriggeredElement extends WidgetElement {
             return () => {
                 targets.forEach( element => element.removeEventListener( "click", listener ) );
             };
-        }
-    }
-
-    /**
-     *
-     * @param {string} target
-     * @param {(trigger:string, triggerData?:(number|string|null)) => void} callback
-     * @returns {?function}
-     */
-    initElementTrigger( target, callback ) {
-        if ( isSelector( target ) ) {
-            const listener = event => {
-                event.stopPropagation();
-                callback( "element", target );
-            };
-            const targets = [];
-            this.ownerDocument.querySelectorAll( target )?.forEach( element => {
-                element.addEventListener( "click", listener );
-                targets.push( element );
-            } );
-            return () => {
-                targets.forEach( element => element.removeEventListener( "click", listener ) );
-            };
-        }
-    }
-
-    /**
-     *
-     * @param {number} delay
-     * @param {(trigger:string, triggerData?:(number|string|null)) => void} callback
-     * @returns {?function}
-     */
-    initExitIntentTrigger( delay, callback ) {
-        if ( isNumber( delay ) ) {
-            const listener = event => {
-                if ( event.clientY < 0 ) {
-                    this.ownerDocument.body.removeEventListener( "mouseleave", listener );
-                    callback( "exit-intent", delay );
-                }
-            };
-            const init = () => {
-                this.ownerDocument.body.addEventListener( "mouseleave", listener, { passive: true } );
-            };
-            const destroy = () => {
-                this.ownerDocument.body.removeEventListener( "mouseleave", listener );
-            };
-            if ( delay > 0 ) {
-                const timeoutId = globalThis.setTimeout( init, delay * 1000 );
-                return () => {
-                    globalThis.clearTimeout( timeoutId );
-                    destroy();
-                };
-            }
-            init();
-            return destroy;
-        }
-    }
-
-    /**
-     *
-     * @param {number} timeout
-     * @param {(trigger:string, triggerData?:(number|string|null)) => void} callback
-     * @returns {?function}
-     */
-    initTimerTrigger( timeout, callback ) {
-        if ( isNumber( timeout ) ) {
-            const timeoutId = globalThis.setTimeout( () => {
-                callback( "timer", timeout );
-            }, timeout * 1000 );
-            return () => {
-                globalThis.clearTimeout( timeoutId );
-            };
-        }
-    }
-
-    /**
-     *
-     * @param {number} percent
-     * @param {(trigger:string, triggerData?:(number|string|null)) => void} callback
-     * @returns {?function}
-     */
-    initScrollTrigger( percent, callback ) {
-        if ( isNumber( percent ) ) {
-            if ( getDocumentScrollPercent() > percent ) {
-                callback( "scroll", percent );
-            } else {
-                const listener = () => {
-                    if ( getDocumentScrollPercent() > percent ) {
-                        this.ownerDocument.removeEventListener( "scroll", listener );
-                        callback( "scroll", percent );
-                    }
-                };
-                this.ownerDocument.addEventListener( "scroll", listener, { passive: true } );
-                return () => {
-                    this.ownerDocument.removeEventListener( "scroll", listener );
-                };
-            }
-        }
-    }
-
-    /**
-     *
-     * @param {string} target
-     * @param {(trigger:string, triggerData?:(number|string|null)) => void} callback
-     * @returns {?function}
-     */
-    initVisibleTrigger( target, callback ) {
-        if ( isString( target, true ) ) {
-            const targets = strim( target, "," ).reduce( ( acc, id ) => {
-                const element = this.ownerDocument.getElementById( id );
-                if ( element instanceof globalThis.HTMLElement ) {
-                    acc.push( element );
-                }
-                return acc;
-            }, [] );
-            if ( targets.length > 0 ) {
-                const observer = new globalThis.IntersectionObserver( entries => {
-                    const visible = entries.find( entry => entry.isIntersecting );
-                    if ( visible ) {
-                        observer.disconnect();
-                        callback( "visible", target );
-                    }
-                }, { root: this.ownerDocument } );
-                targets.forEach( element => observer.observe( element ) );
-                return () => {
-                    observer.disconnect();
-                };
-            }
         }
     }
 }

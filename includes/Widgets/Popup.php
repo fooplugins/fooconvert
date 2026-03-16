@@ -138,8 +138,20 @@ class Popup extends BaseWidget {
                         'hideScrollbar'  => true,
                         'maxOnMobile'    => true,
                         'trigger'        => array(
-                            'type' => 'exit-intent',
-                            'data' => 5
+                            'version'   => 2,
+                            'lifetime'  => 'page',
+                            'frequency' => array(
+                                'mode'            => 'once',
+                                'cooldownSeconds' => 0
+                            ),
+                            'steps'     => array(
+                                array(
+                                    'event' => 'fc.exit_intent',
+                                    'where' => array(
+                                        'delaySeconds' => 5
+                                    )
+                                )
+                            )
                         ),
                         'backdropIgnore' => false
                     ),

@@ -12,3 +12,4 @@ package-lock.json
 assets
 !/src/admin/vendor
 .idea
+.plans

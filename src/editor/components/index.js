@@ -14,7 +14,6 @@ export * from "./icon-picker-control";
 export * from "./icon-sets-dropdown";
 export * from "./inner-blocks-button";
 export * from "./open-trigger-component";
-// export * from "./open-trigger-panel";
 export * from "./raw-svg";
 export * from "./repeater-control";
 export * from "./size-control";

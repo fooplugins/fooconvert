@@ -151,8 +151,20 @@ class Flyout extends BaseWidget {
                     'viewState'   => 'open',
                     'settings'    => array(
                         'trigger'     => array(
-                            'type' => 'scroll',
-                            'data' => 20
+                            'version'   => 2,
+                            'lifetime'  => 'page',
+                            'frequency' => array(
+                                'mode'            => 'once',
+                                'cooldownSeconds' => 0
+                            ),
+                            'steps'     => array(
+                                array(
+                                    'event' => 'fc.scroll.percent',
+                                    'where' => array(
+                                        'percent' => 20
+                                    )
+                                )
+                            )
                         ),
                         'transitions' => true
                     ),

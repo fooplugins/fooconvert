@@ -192,12 +192,20 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
                 $trigger_before = !empty( $settings_before['trigger'] ) ? $settings_before['trigger'] : [];
                 $trigger_after = !empty( $settings_after['trigger'] ) ? $settings_after['trigger'] : [];
 
+                $trigger_before_type = !empty( $trigger_before['type'] )
+                    ? $trigger_before['type']
+                    : ( !empty( $trigger_before['steps'][0]['event'] ) ? $trigger_before['steps'][0]['event'] : null );
+                $trigger_after_type = !empty( $trigger_after['type'] )
+                    ? $trigger_after['type']
+                    : ( !empty( $trigger_after['steps'][0]['event'] ) ? $trigger_after['steps'][0]['event'] : null );
+
                 if ( !empty( $trigger_before ) && !empty( $trigger_after )
-                    && $trigger_before['type'] !== $trigger_after['type'] ) {
+                    && !empty( $trigger_before_type ) && !empty( $trigger_after_type )
+                    && $trigger_before_type !== $trigger_after_type ) {
                     $change = [
                         'reason'    => __( 'Open Trigger Changed', 'fooconvert' ),
                         'has_value' => true,
-                        'value'     => $trigger_after['type']
+                        'value'     => $trigger_after_type
                     ];
                     $extra_data['changes'][] = $change;
                 }
