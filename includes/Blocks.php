@@ -3,12 +3,16 @@
 namespace FooPlugins\FooConvert;
 
 use FooPlugins\FooConvert\Blocks\Base\BaseBlock;
-use FooPlugins\FooConvert\Blocks\ExampleBlock;
+use FooPlugins\FooConvert\Blocks\Countdown;
+use FooPlugins\FooConvert\Blocks\Coupon;
+use FooPlugins\FooConvert\Blocks\SignUp;
 
 class Blocks {
     function __construct() {
         $this->instances = array(
-            new ExampleBlock()
+            new Countdown(),
+            new Coupon(),
+            new SignUp()
         );
     }
 

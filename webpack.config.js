@@ -5,8 +5,73 @@ const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extrac
 const { fromProjectRoot, hasProjectFile } = require( "@wordpress/scripts/utils/file" );
 const { readFileSync } = require( "fs" );
 const { getBlockJsonScriptFields, getBlockJsonModuleFields } = require( "@wordpress/scripts/utils/block-json" );
+const { RawSource } = require( 'webpack' ).sources;
 
 const BUILD_SCOPE = process.env.BUILD_SCOPE === "pro" ? "pro" : "free";
+
+class FooConvertEntryAssetDependenciesPlugin {
+    static entryToHandle = {
+        "editor": "fc-editor",
+        "frontend": "fc-frontend",
+        "editor-pro": "fc-editor-pro",
+        "frontend-pro": "fc-frontend-pro"
+    };
+
+    apply( compiler ) {
+        compiler.hooks.thisCompilation.tap( this.constructor.name, compilation => {
+            compilation.hooks.processAssets.tap(
+                {
+                    name: this.constructor.name,
+                    stage: compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_ANALYSE + 1,
+                },
+                () => this.patchAssets( compilation )
+            );
+        } );
+    }
+
+    patchAssets( compilation ) {
+        for ( const [ entryName, entrypoint ] of compilation.entrypoints.entries() ) {
+            const dependOn = entrypoint.options?.dependOn;
+            const entryDependencies = Array.isArray( dependOn ) ? dependOn : ( typeof dependOn === "string" ? [ dependOn ] : [] );
+            if ( entryDependencies.length === 0 ) {
+                continue;
+            }
+
+            const handles = entryDependencies
+                .map( dependency => FooConvertEntryAssetDependenciesPlugin.entryToHandle[ dependency ] )
+                .filter( Boolean );
+
+            if ( handles.length === 0 ) {
+                continue;
+            }
+
+            const assetFilename = entrypoint.getFiles().find( file => file.endsWith( '.asset.php' ) );
+            if ( !assetFilename ) {
+                continue;
+            }
+
+            const asset = compilation.getAsset( assetFilename );
+            if ( !asset ) {
+                continue;
+            }
+
+            const source = asset.source.source().toString();
+            const dependencyMatch = source.match( /'dependencies'\s*=>\s*array\(([^)]*)\)/s );
+            if ( !dependencyMatch ) {
+                continue;
+            }
+
+            const existingDependencies = [ ...dependencyMatch[1].matchAll( /'([^']+)'/g ) ].map( ( [ , value ] ) => value );
+            const dependencies = [ ...new Set( [ ...handles, ...existingDependencies ] ) ];
+            const replacement = `'dependencies' => array(${ dependencies.map( value => `'${ value }'` ).join( ', ' ) })`;
+            const nextSource = source.replace( /'dependencies'\s*=>\s*array\(([^)]*)\)/s, replacement );
+
+            if ( nextSource !== source ) {
+                compilation.updateAsset( assetFilename, new RawSource( nextSource ) );
+            }
+        }
+    }
+}
 
 /**
  *
@@ -178,31 +243,26 @@ const entry = () => {
     // iterate the default entries and add them to our new entries object
     return Object.entries( blockEntries ).reduce( ( acc, [ key, value ] ) => {
         if ( key.startsWith( "pro/" ) && key.includes( "/editor/" ) ) {
-            // if the current entry path includes /editor/ then add it as a dependency.
             acc[ key ] = {
                 import: value,
                 dependOn: [ "editor", "editor-pro" ]
             };
         } else if ( key.startsWith( "pro/" ) && key.includes( "/frontend/" ) ) {
-            // if the current entry path includes /frontend/ then add it as a dependency.
             acc[ key ] = {
                 import: value,
                 dependOn: [ "frontend", "frontend-pro" ]
             };
         } else if ( key.includes( "/frontend/" ) ) {
-            // if the current entry path includes /frontend/ then add it as a dependency.
             acc[ key ] = {
                 import: value,
                 dependOn: [ "frontend" ]
             };
         } else if ( key.includes( "/editor/" ) ) {
-            // if the current entry path includes /editor/ then add it as a dependency.
             acc[ key ] = {
                 import: value,
                 dependOn: [ "editor" ]
             };
         } else {
-            // otherwise leave it as is
             acc[ key ] = value;
         }
         return acc;
@@ -308,6 +368,7 @@ module.exports = {
     // CopyPlugin to allow simple copying of files within the media folder.
     plugins: [
         ...defaultConfig.plugins.filter( plugin => plugin.constructor.name !== 'DependencyExtractionWebpackPlugin' ),
-        !process.env.WP_NO_EXTERNALS && new DependencyExtractionWebpackPlugin( dependencyExtractionWebpackPluginOptions )
+        !process.env.WP_NO_EXTERNALS && new DependencyExtractionWebpackPlugin( dependencyExtractionWebpackPluginOptions ),
+        new FooConvertEntryAssetDependenciesPlugin()
     ].filter( Boolean )
 };

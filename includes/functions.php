@@ -173,6 +173,37 @@ function fooconvert_top_performers_sort() {
     return get_option( FOOCONVERT_OPTION_TOP_PERFORMERS_SORT, 'engagements' );
 }
 
+/**
+ * Adds a Google font to the list of fonts used in the editor and frontend.
+ *
+ * @param array $fonts The list of fonts.
+ * @param string $name The display name of the font.
+ * @param string $url The Google Fonts family string.
+ * @param bool $overwrite Whether to overwrite an existing font entry.
+ */
+function fooconvert_add_font( array &$fonts, string $name, string $url, bool $overwrite = false ) {
+    $slug = sanitize_title( $name );
+    $exists = array_key_exists( $slug, $fonts );
+    if ( $overwrite || !$exists ) {
+        $fonts[ $slug ] = [
+            'slug' => $slug,
+            'url'  => $url,
+            'name' => $name
+        ];
+    }
+}
+
+/**
+ * Strips unnecessary parts from a Google Fonts URL if the full URL was pasted.
+ *
+ * @param string $google_font_value The saved font family value.
+ * @return string
+ */
+function fooconvert_fix_google_font_url( $google_font_value ) {
+    $array_to_strip = [ 'https://fonts.googleapis.com/css2?family=', '&display=swap' ];
+    return str_replace( $array_to_strip, '', $google_font_value );
+}
+
 function fooconvert_widget_metric_options() {
     // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key
     return apply_filters( 'fooconvert_widget_metric_options', array(
@@ -335,19 +366,9 @@ function fooconvert_is_admin_stats_page() {
  */
 function fooconvert_pro_features_list() {
     return [
-        'templates' => [
-            'title'   => __( 'Ready-to-use PRO Templates', 'fooconvert' ),
-            'feature' => __( '15 professionally designed templates: No design skills needed, proven to convert, create stunning widgets in minutes.', 'fooconvert' ),
-            'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/pro-templates/',
-        ],
-        'blocks' => [
-            'title'   => __( 'PRO Blocks', 'fooconvert' ),
-            'feature' => __( 'Sign-up Block, Countdown Block, Coupon Copy Block. Use them in any popup, bar or flyout you build!', 'fooconvert' ),
-            'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/pro-widgets/',
-        ],
         'leads' => [
-            'title'   => __( 'Lead Capture Management', 'fooconvert' ),
-            'feature' => __( 'Manage or export all leads captured by your widgets.', 'fooconvert' ),
+            'title'   => __( 'Lead Integrations', 'fooconvert' ),
+            'feature' => __( 'Send captured leads to Mailchimp, MailPoet, or custom webhook integrations.', 'fooconvert' ),
             'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/gathering-leads/',
         ],
         'retention' => [
@@ -370,11 +391,6 @@ function fooconvert_pro_features_list() {
             'feature' => __( 'Exclude roles from logging widget events for analytics (e.g., exclude admin tests).', 'fooconvert' ),
             'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/exclude-roles/',
         ],
-        'fonts' => [
-            'title'   => __( 'Google Font Support', 'fooconvert' ),
-            'feature' => __( 'Use any available Google Font within your widgets.', 'fooconvert' ),
-            'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/adding-google-font/',
-        ]
     ];
 }
 

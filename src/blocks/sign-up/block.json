@@ -1,0 +1,34 @@
+{
+  "apiVersion": 3,
+  "name": "fc/sign-up",
+  "title": "Sign Up",
+  "description": "A simple email sign up form.",
+  "category": "fooconvert",
+  "editorScript": "file:./editor/index.js",
+  "editorStyle": "file:./editor/index.css",
+  "viewScript": "file:./frontend/index.js",
+  "viewStyle": "file:./frontend/index.css",
+  "supports": {
+    "lock": false,
+    "multiple": false,
+    "reusable": false,
+    "className": false,
+    "customClassName": false,
+    "html": false
+  },
+  "attributes": {
+    "styles": {
+      "type": "object"
+    },
+    "settings": {
+      "type": "object"
+    },
+    "inputs": {
+      "type": "object"
+    },
+    "button": {
+      "type": "object"
+    }
+  },
+  "usesContext": [ "fc/postId", "fc/postType", "fc/template" ]
+}

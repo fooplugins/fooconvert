@@ -1,0 +1,44 @@
+.fc--coupon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  &, & * {
+    box-sizing: border-box;
+  }
+
+  &.fc--coupon__stack {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .fc--coupon__label {
+    display: block;
+    width: 100%;
+    flex: 1;
+    min-width: fit-content;
+    font-size: inherit;
+  }
+
+  &.fc--coupon__no-label {
+    .fc--coupon__label {
+      display: none;
+    }
+  }
+
+  &.fc--coupon__align-left {
+    align-items: flex-start;
+  }
+
+  &.fc--coupon__align-center {
+    align-items: center;
+  }
+
+  &.fc--coupon__align-right {
+    align-items: flex-end;
+  }
+
+}

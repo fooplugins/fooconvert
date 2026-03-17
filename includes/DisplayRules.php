@@ -758,7 +758,7 @@ class DisplayRules extends BaseComponent {
                 foreach ( $display_rules as $compiled ) {
                     if ( $this->match_compiled( $compiled, $current_location, $current_user_roles ) ) {
                         $matched_id = $compiled['post_id'];
-                        $matched_content = get_post_field( 'post_content', $matched_id );
+                        $matched_content = FooConvert::plugin()->content_migration->get_post_content( $matched_id );
                         $matched_compatibility_mode = Utils::get_bool( $compiled, 'compatibility_mode' );
                         if ( Utils::is_string( $matched_content, true ) ) {
                             $this->enqueued[] = array(
@@ -788,7 +788,7 @@ class DisplayRules extends BaseComponent {
     }
 
     public function get_queueable( int $post_id ): array {
-        $content = get_post_field( 'post_content', $post_id );
+        $content = FooConvert::plugin()->content_migration->get_post_content( $post_id );
         if ( !empty( $content ) ) {
             $compatibility_mode = FooConvert::plugin()->compatibility->is_enabled( $post_id );
             return array(

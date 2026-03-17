@@ -1,0 +1,21 @@
+.fc--countdown {
+  --digits-color: currentColor;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  gap: 0;
+
+  &, & * {
+    box-sizing: border-box;
+  }
+
+  .fc--countdown__segments {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
+    gap: inherit;
+    padding: 0;
+  }
+}

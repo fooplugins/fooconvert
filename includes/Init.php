@@ -28,6 +28,8 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
 
             new EventHooks();
             new Cron();
+            new Fonts();
+            new Admin\Templates\Init();
 
             if ( fooconvert_fs()->can_use_premium_code__premium_only() ) {
                 // Check if the PRO version is running and run the PRO code.

@@ -13,7 +13,8 @@
     "multiple": false,
     "reusable": false,
     "className": false,
-    "html": false
+    "html": false,
+    "inserter": false
   },
   "attributes": {
     "postId": {

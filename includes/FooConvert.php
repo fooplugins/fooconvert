@@ -52,6 +52,7 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
 
             $this->components = new Components();
             $this->compatibility = new Compatibility();
+            $this->content_migration = new ContentMigration();
             $this->display_rules = new DisplayRules();
             $this->blocks = new Blocks();
             $this->widgets = new Widgets();
@@ -98,6 +99,8 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         public Components $components;
 
         public Compatibility $compatibility;
+
+        public ContentMigration $content_migration;
 
         /**
          * Contains the logic for the widget display rules.

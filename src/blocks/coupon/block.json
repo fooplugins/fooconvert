@@ -1,0 +1,37 @@
+{
+  "apiVersion": 3,
+  "name": "fc/coupon",
+  "title": "Coupon",
+  "description": "A coupon block.",
+  "category": "fooconvert",
+  "editorScript": "file:./editor/index.js",
+  "editorStyle": "file:./editor/index.css",
+  "viewScript": "file:./frontend/index.js",
+  "viewStyle": "file:./frontend/index.css",
+  "supports": {
+    "lock": false,
+    "multiple": true,
+    "reusable": false,
+    "className": false,
+    "customClassName": false,
+    "html": false
+  },
+  "attributes": {
+    "uniqueId": {
+      "type": "string"
+    },
+    "styles": {
+      "type": "object"
+    },
+    "settings": {
+      "type": "object"
+    },
+    "code": {
+      "type": "object"
+    },
+    "button": {
+      "type": "object"
+    }
+  },
+  "usesContext": [ "fc/postId", "fc/postType", "fc/template" ]
+}

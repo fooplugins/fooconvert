@@ -1,0 +1,112 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  & ::slotted(span[slot^='copy-button__text']) {
+    box-sizing: border-box;
+    white-space: nowrap;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+  }
+
+  & ::slotted(svg[slot^='copy-button__icon']) {
+    box-sizing: border-box;
+    display: inline-block;
+    stroke-width: 0;
+    fill: var(--icon-color);
+  }
+
+  &::part(label) {
+    display: block;
+    width: 100%;
+    flex: 1;
+    min-width: fit-content;
+    font-size: inherit;
+  }
+
+  &::part(code) {
+    flex: 2;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    line-height: 2;
+    min-height: 30px;
+    box-shadow: none;
+    border-radius: 2px;
+    border: solid 1px #949494;
+    background-color: #fff;
+    color: #000;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  &::part(code__text) {
+    flex: 1;
+    padding: 0.2em 0.8em;
+  }
+
+  &::part(copy-button) {
+    --icon-color: currentColor;
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
+    background-color: #444;
+    color: #fff;
+    border-radius: 0;
+    border: none;
+    padding: 6px 16px;
+    font-size: inherit;
+    line-height: 2;
+    min-height: 30px;
+    cursor: copy;
+    z-index: 2;
+    height: 100%;
+  }
+
+  &::part(result) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    background-color: inherit;
+    color: inherit;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: visibility .2s ease, opacity .2s ease;
+  }
+
+  &::part(result show) {
+    pointer-events: auto;
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+:host([layout="stack"]) {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+:host([no-label]) {
+  &::part(label) {
+    display: none;
+  }
+}

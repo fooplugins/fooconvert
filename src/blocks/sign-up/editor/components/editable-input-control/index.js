@@ -1,0 +1,1 @@
+export { default as EditableInputControl } from "./Component";

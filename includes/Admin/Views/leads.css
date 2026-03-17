@@ -1,0 +1,10 @@
+.wp-list-table .metadata {
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.date-picker {
+    max-width: 150px;
+}

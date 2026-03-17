@@ -1,0 +1,22 @@
+.fc--coupon__code {
+  flex: 2;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  line-height: 2;
+  min-height: 30px;
+  box-shadow: none;
+  border-radius: 2px;
+  border: solid 1px #949494;
+  background-color: #fff;
+  color: #000;
+  width: 100%;
+  overflow: hidden;
+
+  .fc--coupon__code-text {
+    flex: 1;
+    padding: 0.2em 0.8em;
+  }
+}

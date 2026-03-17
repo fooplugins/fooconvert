@@ -1,0 +1,50 @@
+.fc--sign-up__editable-input {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: inherit;
+  width: 100%;
+
+  .fc--sign-up__input-label {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    flex: 1;
+    min-width: fit-content;
+    font-size: inherit;
+  }
+
+  .fc--sign-up__input {
+    --placeholder-color: #ababab;
+    box-sizing: border-box;
+    width: 100%;
+    flex: 2;
+    padding: 0.2em 0.8em;
+    line-height: 2;
+    min-height: 30px;
+    box-shadow: none;
+    border-radius: 2px;
+    border: solid 1px #949494;
+    background-color: #fff;
+    color: var(--placeholder-color,#ababab);
+    font-size: inherit;
+
+    &::placeholder {
+      color: var(--placeholder-color,#ababab);
+    }
+  }
+
+  &.fc--sign-up__no-label {
+    .fc--sign-up__input-label {
+      display: none;
+    }
+  }
+
+  &.fc--sign-up__stack-label {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

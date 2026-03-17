@@ -1,0 +1,200 @@
+:host {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  & ::slotted(span[slot^='input-label__']) {
+    box-sizing: border-box;
+    display: inline-block;
+    width: 100%;
+    min-width: fit-content;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+  }
+
+  & ::slotted(span[slot^='submit-button__text']) {
+    box-sizing: border-box;
+    white-space: nowrap;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+  }
+
+  & ::slotted(svg[slot^='submit-button__']) {
+    box-sizing: border-box;
+    display: inline-block;
+    stroke-width: 0;
+    fill: var(--icon-color);
+  }
+
+  &::part(inputs) {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    gap: inherit;
+    width: 100%;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &::part(input-wrapper) {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: inherit;
+    width: 100%;
+  }
+
+  &::part(input-label) {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    flex: 1;
+    min-width: fit-content;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+  }
+
+  &::part(input) {
+    --placeholder-color: #ababab;
+    box-sizing: border-box;
+    width: 100%;
+    flex: 2;
+    padding: 0.2em 0.8em;
+    line-height: 2;
+    min-height: 30px;
+    box-shadow: none;
+    border-radius: 2px;
+    border: solid 1px #949494;
+    background-color: #fff;
+    color: #222;
+    font-size: inherit;
+    outline: none;
+
+    &::placeholder {
+      color: var(--placeholder-color);
+    }
+  }
+  &::part(input invalid) {
+    outline: solid 1px #ff0000;
+  }
+
+  &::part(buttons) {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: inherit;
+    width: fit-content;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &::part(submit-button) {
+    --icon-color: currentColor;
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
+    background-color: #444;
+    color: #fff;
+    border-radius: 2px;
+    border: none;
+    padding: 6px 16px;
+    font-size: inherit;
+    line-height: 2;
+    min-height: 30px;
+    cursor: pointer;
+    z-index: 2;
+
+    //todo: add way to select hover color
+    //&:hover {
+    //  opacity: 0.9;
+    //}
+  }
+
+  &::part(result) {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+  }
+}
+
+:host([layout='stack']) {
+  flex-direction: column;
+
+  &::part(inputs) {
+    flex-direction: column;
+  }
+  &::part(buttons) {
+    width: 100%;
+  }
+}
+
+:host([email-only]) {
+  &::part(input-wrapper name) {
+    display: none;
+  }
+}
+
+:host([no-icon]) {
+  slot[name='submit-button__icon'] {
+    display: none;
+  }
+}
+
+:host([button-layout='text-only']),
+:host(:not([button-layout='icon-only'],[button-layout='icon-text'],[button-layout='text-icon'])) {
+  slot[name='submit-button__icon'] {
+    display: none;
+  }
+}
+
+:host([no-labels]) {
+  &::part(input-label) {
+    display: none;
+  }
+}
+
+:host([stack-labels]) {
+  &::part(inputs) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+:host([is-submitted]) {
+  &::part(inputs),
+  &::part(buttons) {
+    visibility: hidden;
+    opacity: 0;
+  }
+  &::part(result) {
+    visibility: visible;
+    opacity: 1;
+  }
+}

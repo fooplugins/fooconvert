@@ -1,0 +1,23 @@
+<div part="inputs">
+    <label part="input-wrapper name">
+        <slot part="input-label name" name="input-label__name">
+        </slot>
+        <input part="input name" type="text"/>
+    </label>
+    <label part="input-wrapper email">
+        <slot part="input-label email" name="input-label__email">
+        </slot>
+        <input part="input email" type="email"/>
+    </label>
+</div>
+<div part="buttons">
+    <button part="submit-button" type="button">
+        <slot name="submit-button__icon">
+        </slot>
+        <slot name="submit-button__text">
+        </slot>
+    </button>
+</div>
+<div part="result">
+    <span part="result__text"></span>
+</div>

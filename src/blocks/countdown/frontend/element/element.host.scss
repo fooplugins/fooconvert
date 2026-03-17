@@ -1,0 +1,64 @@
+* {
+  box-sizing: border-box;
+}
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  gap: 0;
+
+  background-color: inherit;
+  color: inherit;
+  margin: 0;
+  text-align: center;
+  font-family: inherit;
+
+  &::part(segments) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
+    gap: inherit;
+    padding: 0;
+  }
+
+  &::part(segment) {
+    display: flex;
+    flex-direction: column;
+    min-width: 5rem;
+    width: fit-content;
+    font-size: 1rem;
+    line-height: 1;
+    list-style-type: none;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5em;
+    color: inherit;
+    gap: 0;
+    flex: 1;
+  }
+
+  &::part(segment-value) {
+    display: block;
+    font-size: 3em;
+    color: var(--digits-color, currentColor);
+  }
+
+  & ::slotted(span[slot^='segment-text__']) {
+    box-sizing: border-box;
+    display: inline-block;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+  }
+}
+
+:host([layout="row"]) {
+  &::part(segment) {
+    flex-direction: row;
+    align-items: baseline;
+    min-width: fit-content;
+  }
+}

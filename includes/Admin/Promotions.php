@@ -63,52 +63,8 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
             add_action( 'fooconvert_admin_dashboard_right', array( $this, 'render_addons_panel' ) );
             add_action( 'fooconvert_widget_stats_html-metrics', array( $this, 'render_metrics' ), 10, 2 );
             add_filter( 'fooconvert_widget_metric_options', array( $this, 'adjust_widget_metric_options' ) );
-
-            // PRO Bar templates
-            add_filter( 'fooconvert_editor_variations-fc-bar', function( $variations ) {
-                $pro_templates = $this->add_promotioanl_attributes( include __DIR__ . '/Templates/ProBarTemplates.php' );
-                return array_merge( $variations, $pro_templates );
-            }, 99 );
-
-            // PRO Flyout templates
-            add_filter( 'fooconvert_editor_variations-fc-flyout', function( $variations ) {
-                $pro_templates = $this->add_promotioanl_attributes( include __DIR__ . '/Templates/ProFlyoutTemplates.php' );
-                return array_merge( $variations, $pro_templates );
-            }, 99 );
-
-            // PRO Popup templates
-            add_filter( 'fooconvert_editor_variations-fc-popup', function( $variations ) {
-                $pro_templates = $this->add_promotioanl_attributes( include __DIR__ . '/Templates/ProPopupTemplates.php' );
-                return array_merge( $variations, $pro_templates );
-            }, 99 );
         }
 
-        function add_promotioanl_attributes( $templates ) {
-            foreach ( $templates as &$template ) {
-                if ( isset( $template['pro']) && true === $template['pro'] ) {
-                    if ( isset( $template['upsell'] ) ) {
-                        continue;
-                    }
-                    $template['upsell'] = array(
-                        'title' => $template['title'] . ' ' . __ ( 'PRO Template', 'fooconvert' ),
-                        'content' => '<p>' . __( 'This template is only available in the PRO version of FooConvert.', 'fooconvert' ) . '</p><p>' . 
-                            $template['description'] . '</p><p>' .
-                            __( 'Upgrade to PRO now to unlock this template.', 'fooconvert' ) . '</p>',
-                        'image' => $template['thumbnail'],
-                        'primary' => array(
-                            'text' => __( 'View PRO Pricing', 'fooconvert' ),
-                            'href' => fooconvert_admin_url_pricing(),
-                        ),
-                        'secondary' => array(
-                            'text' => __( 'Start Free Trial', 'fooconvert' ),
-                            'href' => fooconvert_admin_url_trial(),
-                        )
-                    );
-                }
-            }
-
-            return $templates;
-        }
 
         /**
          * Make sure the trail banner admin notice is not shown
