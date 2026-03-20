@@ -1,18 +1,35 @@
 This file outlines how data is stored within FooConvert.
 
-FooConvert allows you to create 3 different types of widgets, which are stored as custom post types within WordPress.
+FooConvert creates 3 widget custom post types in WordPress:
+- Bar widgets use `fc-bar`
+- Flyout widgets use `fc-flyout`
+- Popup widgets use `fc-popup`
 
-Bar widgets use the post type "fc-bar".
+Each widget stores its editor content in the standard WordPress `post_content` field for its custom post type entry.
+That content contains the widget root block plus any nested blocks used inside the widget.
 
-Flyout widgets use the post type "fc-flyout".
+The free plugin now owns these content blocks:
+- `fc/countdown`
+- `fc/coupon`
+- `fc/sign-up`
 
-Popup widgets use the post type "fc-popup".
+The free plugin also owns the migrated former PRO templates, template media, template fonts, and basic lead-management UI.
 
-The FooConvert plugin creates a single custom database table in the database when the plugin is installed.
+Saved widget content may contain baked-in asset URLs.
+On this branch, FooConvert includes a one-time content migration that rewrites stale saved media URLs from:
+- `plugins/fooconvert/pro/assets/media/`
+to:
+- `plugins/fooconvert/assets/media/`
 
-The table is called "fooconvert_events", and it's purpose is to store events for widgets analytics.
+The migration records completion in the WordPress option:
+- `fooconvert-content-migrations`
 
-The SQL statement for creating the "fooconvert_events" table is:
+FooConvert creates a custom database table for analytics events:
+- `fooconvert_events`
+
+Its purpose is to store widget analytics and engagement/conversion event data.
+
+The SQL shape is:
 
 CREATE TABLE fooconvert_events (
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -30,18 +47,23 @@ CREATE TABLE fooconvert_events (
     PRIMARY KEY (id)
 );
 
-An explanation of each field in the "fooconvert_events" table:
- - "id" is the primary key.
- - "widget_id" is the id of the widget that created the event. this is a foreign key to the WordPress post table.
- - "event_type" is the type of event. This is the most important field. It must be one of: 'open', 'click', 'close', 'update'.
- - "event_subtype" is the subtype of the event. Can be either 'engagement' or NULL.
- - "conversion" is a boolean that is true if the event is a conversion.
- - "sentiment" is a boolean that is true if the event sentiment is positive, false if it is negative, and null if it is neutral.
- - "page_url" is the url of the page that created the event.
- - "device_type" is the type of device when the event happened.
- - "user_id" is the WordPress user when the event happened. Will be null if not logged in.
- - "anonymous_user_guid" is the unique id of an anonymous user from the frontend. Will be null if logged in.
- - "extra_data" holds any extra data associated with the event. It can hold specific info about a conversion or an update.
- - "timestamp" is when the event happened.
+Field summary:
+- `id`: primary key
+- `widget_id`: widget post ID associated with the event
+- `event_type`: core event type such as `open`, `click`, `close`, or `update`
+- `event_subtype`: subtype such as `engagement`, or `NULL`
+- `conversion`: whether the event counts as a conversion
+- `sentiment`: positive/negative/neutral sentiment marker
+- `page_url`: URL where the event occurred
+- `device_type`: device classification for the event
+- `user_id`: logged-in WordPress user ID, if available
+- `anonymous_user_guid`: anonymous frontend visitor identifier when no user is logged in
+- `extra_data`: extra event payload such as conversion metadata
+- `timestamp`: when the event occurred
 
-There is a default retention period of 14 days for widget analytics. All event data older than the retention period is deleted in a daily cron job.
+Lead capture writes through free plugin code.
+Basic lead viewing and export are now also owned by the free plugin.
+PRO keeps only lead integrations and advanced premium lead/analytics extensions.
+
+There is a default analytics retention period of 14 days.
+Older event data is removed by a scheduled cron cleanup, while PRO can extend the retention behavior.

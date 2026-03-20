@@ -1,23 +1,42 @@
-This file outlines what the FooConvert plugin does.
+This file outlines what the FooConvert plugin does and how the free/PRO split currently works.
 
-FooConvert allows you to create 3 different types of widgets: bars, flyouts, and popups.
+FooConvert allows you to create 3 different types of widgets:
+- bars
+- flyouts
+- popups
 
-FooConvert has a widget designer, which allows you to create and edit widgets using the Gutenberg block editor.
+These widgets are designed and edited with the Gutenberg block editor through custom widget post types.
 
-When you create a new widget, you can choose to start from a predefined template or start from scratch.
+When you create a new widget, you can either start from scratch or choose from predefined templates.
+The free plugin now includes the migrated former PRO template pack across all widget types.
 
-You can customize the appearance and behavior of each widget, with the following options:
- - Display Rules : this controls where the widget is displayed. Examples : all pages, on a specific page, on a specific post type, etc.
- - Open Trigger : this controls when the widget is opened. Examples : on page load, on page scroll, on timer, on anchor click, on exit intent, etc.
- - Appearance : you control the style, colors, size and layout of the widget.
- - Content : you can embed any block or shortcode within the widget.
+You can customize the appearance and behavior of each widget with:
+- Display Rules: controls where the widget is displayed, for example all pages, a specific page, or a specific post type.
+- Open Trigger: controls when the widget is opened, for example immediate, timer, scroll, anchor click, or exit intent.
+- Appearance: controls style, colors, size, layout, fonts, and media.
+- Content: allows any supported block or shortcode inside the widget content area.
 
-FooConvert has an admin dashboard, which displays the following panels:
- - Getting started : a quick way to create demo widgets, or how to get started and create your first widget.
- - Top Performers : displays the top performing widgets (for example by engagements and views).
- - Help : links to support and documentation.
- - Premium Addons : a list of premium addons that extend the functionality of FooConvert.
+The free plugin now owns these migrated content features:
+- `fc/countdown`
+- `fc/coupon`
+- `fc/sign-up`
+- the migrated template pack and required template media
+- Google font settings/runtime, including template-required fonts
+- lead capture
+- basic leads viewer
+- lead export
 
-There is also an admin page for Widget Stats, which shows the metrics and a recent activity chart for your widgets.
-Metrics include total events, views, visitors and engagements.
-The recent activity chart shows the daily number of events, views, visitors and engagements for the last 14 days.
+The PRO plugin now focuses on premium extensions:
+- WooCommerce-oriented functionality and future Woo trigger/runtime work
+- lead integrations such as Mailchimp, MailPoet, and Webhook
+- advanced analytics
+- longer retention and other premium analytics-related features
+
+FooConvert has an admin dashboard with panels such as:
+- Getting Started
+- Top Performers
+- Help
+- Premium Addons / premium feature discovery
+
+There is also an admin page for widget stats, which shows metrics and recent activity for widgets.
+Metrics include events, views, visitors, and engagements, with PRO extending analytics beyond the basic free surface.
