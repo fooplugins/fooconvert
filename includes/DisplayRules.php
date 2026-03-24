@@ -687,7 +687,19 @@ class DisplayRules extends BaseComponent {
      * @since 1.0.0
      */
     public function is_enqueued( int $post_id ): bool {
-        return in_array( $post_id, $this->enqueued );
+        foreach ( $this->enqueued as $widget ) {
+            if ( is_array( $widget ) ) {
+                $source_post_id = isset( $widget['source_post_id'] ) ? absint( $widget['source_post_id'] ) : 0;
+                $resolved_post_id = isset( $widget['post_id'] ) ? absint( $widget['post_id'] ) : 0;
+                if ( $source_post_id === $post_id || $resolved_post_id === $post_id ) {
+                    return true;
+                }
+            } elseif ( absint( $widget ) === $post_id ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -707,12 +719,19 @@ class DisplayRules extends BaseComponent {
      */
     public function render_enqueued() {
         foreach ( $this->enqueued as $widget ) {
-            // Reviewers:
-            // The content is passed through wp_kses with an extended post allowed HTML list that includes
-            // the custom elements for the plugin.
             // phpcs:ignore WordPress.Security.EscapeOutput
-            echo FooConvert::plugin()->kses_post( $widget['content'], $widget['compatibility_mode'] );
+            echo $this->render_queueable( $widget );
         }
+    }
+
+    public function render_queueable( array $widget ): string {
+        if ( empty( $widget['content'] ) ) {
+            return '';
+        }
+
+        $compatibility_mode = Utils::get_bool( $widget, 'compatibility_mode' );
+
+        return FooConvert::plugin()->kses_post( $widget['content'], $compatibility_mode );
     }
 
     /**
@@ -758,14 +777,9 @@ class DisplayRules extends BaseComponent {
                 foreach ( $display_rules as $compiled ) {
                     if ( $this->match_compiled( $compiled, $current_location, $current_user_roles ) ) {
                         $matched_id = $compiled['post_id'];
-                        $matched_content = FooConvert::plugin()->content_migration->get_post_content( $matched_id );
-                        $matched_compatibility_mode = Utils::get_bool( $compiled, 'compatibility_mode' );
-                        if ( Utils::is_string( $matched_content, true ) ) {
-                            $this->enqueued[] = array(
-                                'post_id'            => $matched_id,
-                                'content'            => do_blocks( $matched_content ),
-                                'compatibility_mode' => $matched_compatibility_mode,
-                            );
+                        $queueable = $this->get_queueable( $matched_id, 'display_rules' );
+                        if ( !empty( $queueable ) && !$this->is_enqueued( absint( $queueable['source_post_id'] ?? $matched_id ) ) ) {
+                            $this->enqueued[] = $queueable;
                         }
                     }
                 }
@@ -783,16 +797,31 @@ class DisplayRules extends BaseComponent {
      *
      * @since 1.0.0
      */
-    public function add_to_queue( int $post_id ) {
-        $this->enqueued[] = $this->get_queueable( $post_id );
+    public function add_to_queue( int $post_id, string $context = 'manual' ) {
+        $queueable = $this->get_queueable( $post_id, $context );
+        if ( !empty( $queueable ) && !$this->is_enqueued( absint( $queueable['source_post_id'] ?? $post_id ) ) ) {
+            $this->enqueued[] = $queueable;
+        }
     }
 
-    public function get_queueable( int $post_id ): array {
-        $content = FooConvert::plugin()->content_migration->get_post_content( $post_id );
+    public function get_queueable( int $post_id, string $context = 'display_rules' ): array {
+        $source_post_id = $post_id;
+        $resolved_post_id = apply_filters( 'fooconvert_resolve_widget_post_id', $post_id, array(
+            'context'        => $context,
+            'source_post_id' => $source_post_id,
+            'post_type'      => get_post_type( $source_post_id ),
+        ) );
+        $resolved_post_id = intval( $resolved_post_id );
+        if ( $resolved_post_id <= 0 ) {
+            $resolved_post_id = $source_post_id;
+        }
+
+        $content = FooConvert::plugin()->content_migration->get_post_content( $resolved_post_id );
         if ( !empty( $content ) ) {
-            $compatibility_mode = FooConvert::plugin()->compatibility->is_enabled( $post_id );
+            $compatibility_mode = FooConvert::plugin()->compatibility->is_enabled( $resolved_post_id );
             return array(
-                'post_id'            => $post_id,
+                'source_post_id'     => $source_post_id,
+                'post_id'            => $resolved_post_id,
                 'content'            => do_blocks( $content ),
                 'compatibility_mode' => $compatibility_mode,
             );
