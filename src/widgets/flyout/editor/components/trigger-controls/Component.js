@@ -1,7 +1,7 @@
-import { PanelRow, TextControl, ToggleControl } from "@wordpress/components";
+import { Notice, PanelRow, TextControl, ToggleControl } from "@wordpress/components";
 import { PluginDocumentSettingPanel, store as editorStore } from "@wordpress/editor";
-import { __ } from "@wordpress/i18n";
-import { $object, OpenTriggerComponent, useRootAttributes } from "#editor";
+import { __, sprintf } from "@wordpress/i18n";
+import { $object, OpenTriggerComponent, useExperimentVariantLock, useRootAttributes } from "#editor";
 import { useEffect, useState } from "@wordpress/element";
 import { isString } from "@steveush/utils";
 import { FLYOUT_DEFAULTS } from "../../Edit";
@@ -16,6 +16,7 @@ const TriggerControls = () => {
         openButton,
         closeButton,
     } = attributes;
+    const { isLocked, label } = useExperimentVariantLock();
 
     useEffect( () => {
         dispatch( editorStore )?.toggleEditorPanelOpened( 'fc/fc--open-trigger' );
@@ -55,14 +56,28 @@ const TriggerControls = () => {
 
     const setCloseButtonHidden = value => setCloseButtonSettings( { hidden: value !== closeButtonSettingsDefaults?.hidden ? value : undefined } );
     const setOpenButtonHidden = value => setOpenButtonSettings( { hidden: value !== openButtonSettingsDefaults?.hidden ? value : undefined } );
+    const lockedMessage = label
+        ? sprintf(
+            __( "Variant %s inherits trigger and button behaviour from the experiment control widget.", "fooconvert" ),
+            label.toUpperCase()
+        )
+        : __( "This experiment variant inherits trigger and button behaviour from the control widget.", "fooconvert" );
 
     return (
         <>
             <PluginDocumentSettingPanel name="fc--open-trigger" title={ __( 'Open Trigger', 'fooconvert' ) }>
+                { isLocked && (
+                    <PanelRow>
+                        <Notice status="info" isDismissible={ false }>
+                            { lockedMessage }
+                        </Notice>
+                    </PanelRow>
+                ) }
                 <PanelRow>
                     <OpenTriggerComponent
                         value={ settings?.trigger ?? settingsDefaults?.trigger }
                         onChange={ setTrigger }
+                        locked={ isLocked }
                         allowEmpty={ true }
                         hideLabelFromVision
                     />
@@ -73,6 +88,7 @@ const TriggerControls = () => {
                         help={ __( 'Hide the default open button.', 'fooconvert' ) }
                         checked={ openButtonSettings?.hidden ?? openButtonSettingsDefaults?.hidden ?? false }
                         onChange={ setOpenButtonHidden }
+                        disabled={ isLocked }
                         __nextHasNoMarginBottom
                     />
                 </PanelRow>
@@ -84,6 +100,7 @@ const TriggerControls = () => {
                         help={ __( 'Hide the default close button.', 'fooconvert' ) }
                         checked={ closeButtonSettings?.hidden ?? closeButtonSettingsDefaults?.hidden ?? false  }
                         onChange={ setCloseButtonHidden }
+                        disabled={ isLocked }
                         __nextHasNoMarginBottom
                     />
                 </PanelRow>
@@ -93,6 +110,7 @@ const TriggerControls = () => {
                         help={ __( 'Clicking specific anchors closes the flyout.', 'fooconvert' ) }
                         checked={ closeAnchorChecked }
                         onChange={ value => setCloseAnchorChecked( value ) }
+                        disabled={ isLocked }
                         __nextHasNoMarginBottom
                     />
                 </PanelRow>
@@ -103,6 +121,7 @@ const TriggerControls = () => {
                             help={ __( 'Add an anchor to a button block and then insert the same value here to close the flyout on click.', 'fooconvert' ) }
                             value={ settings?.closeAnchor ?? settingsDefaults?.closeAnchor ?? "" }
                             onChange={ setCloseAnchor }
+                            disabled={ isLocked }
                         />
                     </PanelRow>
                 ) }

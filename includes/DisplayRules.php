@@ -123,7 +123,14 @@ class DisplayRules extends BaseComponent {
      * @since 1.0.0
      */
     public function auth_callback(): bool {
-        return current_user_can( 'edit_posts' );
+        if ( !current_user_can( 'edit_posts' ) ) {
+            return false;
+        }
+
+        $args = func_get_args();
+        $post_id = isset( $args[2] ) ? absint( $args[2] ) : 0;
+
+        return !$this->is_experiment_variant( $post_id );
     }
 
     /**
@@ -868,6 +875,21 @@ class DisplayRules extends BaseComponent {
             return true;
         }
         return count( array_intersect( $compiled_user_roles, $current_user_roles ) ) > 0;
+    }
+
+    private function is_experiment_variant( int $post_id ): bool {
+        if ( $post_id <= 0 ) {
+            return false;
+        }
+
+        if ( !defined( 'FOOCONVERT_WIDGET_META_KEY_EXPERIMENT_ID' ) || !defined( 'FOOCONVERT_WIDGET_META_KEY_EXPERIMENT_ROLE' ) ) {
+            return false;
+        }
+
+        $experiment_id = absint( get_post_meta( $post_id, FOOCONVERT_WIDGET_META_KEY_EXPERIMENT_ID, true ) );
+        $role = (string) get_post_meta( $post_id, FOOCONVERT_WIDGET_META_KEY_EXPERIMENT_ROLE, true );
+
+        return $experiment_id > 0 && $role === 'variant';
     }
 
     //endregion
