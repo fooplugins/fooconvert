@@ -1,7 +1,7 @@
 import { Notice, PanelRow, TextControl, ToggleControl } from "@wordpress/components";
 import { PluginDocumentSettingPanel, store as editorStore } from "@wordpress/editor";
-import { __, sprintf } from "@wordpress/i18n";
-import { $object, OpenTriggerComponent, useExperimentVariantLock, useRootAttributes } from "#editor";
+import { __ } from "@wordpress/i18n";
+import { $object, ExperimentPanel, OpenTriggerComponent, useExperimentVariantLock, useRootAttributes } from "#editor";
 import { useEffect, useState } from "@wordpress/element";
 import { isString } from "@steveush/utils";
 import { BAR_DEFAULTS } from "../../Edit";
@@ -16,7 +16,7 @@ const TriggerControls = () => {
         openButton,
         closeButton,
     } = attributes;
-    const { isLocked, label } = useExperimentVariantLock();
+    const { isLocked } = useExperimentVariantLock();
 
     useEffect( () => {
         dispatch( editorStore )?.toggleEditorPanelOpened( 'fc/fc--open-trigger' );
@@ -56,20 +56,15 @@ const TriggerControls = () => {
 
     const setCloseButtonHidden = value => setCloseButtonSettings( { hidden: value !== closeButtonSettingsDefaults?.hidden ? value : undefined } );
     const setOpenButtonHidden = value => setOpenButtonSettings( { hidden: value !== openButtonSettingsDefaults?.hidden ? value : undefined } );
-    const lockedMessage = label
-        ? sprintf(
-            __( "Variant %s inherits trigger and button behaviour from the experiment control widget.", "fooconvert" ),
-            label.toUpperCase()
-        )
-        : __( "This experiment variant inherits trigger and button behaviour from the control widget.", "fooconvert" );
 
     return (
         <>
+            <ExperimentPanel/>
             <PluginDocumentSettingPanel name="fc--open-trigger" title={ __( 'Open Trigger', 'fooconvert' ) }>
                 { isLocked && (
                     <PanelRow>
                         <Notice status="info" isDismissible={ false }>
-                            { lockedMessage }
+                            { __( "Inherits open trigger from control.", "fooconvert" ) }
                         </Notice>
                     </PanelRow>
                 ) }
@@ -94,6 +89,13 @@ const TriggerControls = () => {
                 </PanelRow>
             </PluginDocumentSettingPanel>
             <PluginDocumentSettingPanel name="fc--close-trigger" title={ __( 'Close Trigger', 'fooconvert' ) } initialOpen={ false }>
+                { isLocked && (
+                    <PanelRow>
+                        <Notice status="info" isDismissible={ false }>
+                            { __( "Inherits close trigger from control.", "fooconvert" ) }
+                        </Notice>
+                    </PanelRow>
+                ) }
                 <PanelRow>
                     <ToggleControl
                         label={ __( 'Hide close button', 'fooconvert' ) }
