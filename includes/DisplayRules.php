@@ -550,10 +550,7 @@ class DisplayRules extends BaseComponent {
             // otherwise go through the locations and 'flatten' them
             return array_reduce( $locations, function ( $result, $location ) {
                 $type = Utils::get_string( $location, 'type' );
-                if ( str_starts_with( $type, 'general:' ) || str_starts_with( $type, 'archive:' ) ) {
-                    // general & archive locations have no additional checks, they are static
-                    $result[$type] = true;
-                } elseif ( str_starts_with( $type, 'specific:' ) ) {
+                if ( str_starts_with( $type, 'specific:' ) ) {
                     // specific locations require post_ids that must be matched, so extract them out
                     $data = Utils::get_array( $location, 'data' );
                     $post_ids = array_reduce( $data, function ( $result, $data_value ) {
@@ -566,6 +563,9 @@ class DisplayRules extends BaseComponent {
                     if ( !empty( $post_ids ) ) {
                         $result[$type] = $post_ids;
                     }
+                } elseif ( $type !== '' ) {
+                    // all non-specific locations are stored as static flags and can be matched by extensions.
+                    $result[$type] = true;
                 }
                 return $result;
             }, array() );
@@ -862,12 +862,36 @@ class DisplayRules extends BaseComponent {
         return $match;
     }
 
+    /**
+     * Match a compiled set of include or exclude locations against the current request.
+     *
+     * Built-in general, archive, and specific locations are matched directly. Any custom
+     * static location flags that need runtime evaluation can be handled by extensions via
+     * the `fooconvert_display_rules_match_locations` filter.
+     *
+     * @param array $compiled_locations The flattened compiled locations for the include or exclude branch.
+     * @param array{type:string,data:int|null} $current_location The current request location.
+     * @return bool
+     */
     public function match_compiled_locations( array $compiled_locations, array $current_location ): bool {
         if ( array_key_exists( 'general:entire_site', $compiled_locations ) ) {
             return true;
         }
         list( 'type' => $type, 'data' => $data ) = $current_location;
-        return array_key_exists( $type, $compiled_locations ) && ( !is_int( $data ) || in_array( $data, $compiled_locations[$type], true ) );
+        $matched = array_key_exists( $type, $compiled_locations ) && ( !is_int( $data ) || in_array( $data, $compiled_locations[$type], true ) );
+        if ( $matched ) {
+            return true;
+        }
+
+        /**
+         * Allows extensions to evaluate custom compiled location types against the current request.
+         *
+         * @param bool $matched Defaults to `false` when no built-in location matched.
+         * @param array $compiled_locations The flattened compiled locations for the include or exclude branch.
+         * @param array{type:string,data:int|null} $current_location The current request location.
+         * @param DisplayRules $display_rules The display rules component instance.
+         */
+        return (bool) apply_filters( 'fooconvert_display_rules_match_locations', false, $compiled_locations, $current_location, $this );
     }
 
     public function match_compiled_user_roles( array $compiled_user_roles, array $current_user_roles ): bool {
