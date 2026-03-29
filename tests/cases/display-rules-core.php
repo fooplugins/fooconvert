@@ -6,6 +6,9 @@ namespace FooPlugins\FooConvert\Components\Base {
      * Minimal stub for the component base class used by DisplayRules.
      */
     class BaseComponent {
+        /**
+         * Stub constructor for component compatibility in tests.
+         */
         public function __construct() {}
     }
 }

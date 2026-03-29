@@ -8,14 +8,37 @@ use WP_REST_Response;
 
 if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
 
+    /**
+     * Migrates stored widget content to updated asset paths on read.
+     */
     class ContentMigration {
 
+        /**
+         * Migration key used to mark media URL updates as completed.
+         *
+         * @var string
+         */
         private const MIGRATION_MOVE_PRO_MEDIA_URLS = 'move_pro_media_urls_to_free';
 
+        /**
+         * Legacy media path stored in migrated widget content.
+         *
+         * @var string
+         */
         private const OLD_MEDIA_PATH = 'plugins/fooconvert/pro/assets/media/';
 
+        /**
+         * Current media path used by the free plugin.
+         *
+         * @var string
+         */
         private const NEW_MEDIA_PATH = 'plugins/fooconvert/assets/media/';
 
+        /**
+         * Hooks the content migration into widget reads and REST responses.
+         *
+         * @return void
+         */
         public function __construct() {
             add_action( 'init', array( $this, 'maybe_migrate_widget_content' ), 20 );
 
@@ -24,6 +47,11 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
             }
         }
 
+        /**
+         * Migrates stored widget content once for all widget post types.
+         *
+         * @return void
+         */
         public function maybe_migrate_widget_content() {
             if ( $this->is_completed( self::MIGRATION_MOVE_PRO_MEDIA_URLS ) ) {
                 return;
@@ -36,6 +64,12 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
             $this->mark_completed( self::MIGRATION_MOVE_PRO_MEDIA_URLS );
         }
 
+        /**
+         * Returns widget content after applying any pending path migrations.
+         *
+         * @param int $post_id Widget post ID.
+         * @return string
+         */
         public function get_post_content( int $post_id ): string {
             $content = get_post_field( 'post_content', $post_id );
             if ( !is_string( $content ) || $content === '' ) {
@@ -49,6 +83,14 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
             return $this->maybe_migrate_post_content( $post_id, $content );
         }
 
+        /**
+         * Updates REST responses so editors receive migrated widget content.
+         *
+         * @param mixed           $response REST response object.
+         * @param WP_Post         $post The prepared post.
+         * @param WP_REST_Request $request The current REST request.
+         * @return mixed
+         */
         public function maybe_migrate_rest_post( $response, WP_Post $post, WP_REST_Request $request ) {
             if ( !$response instanceof WP_REST_Response || !in_array( $post->post_type, $this->get_widget_post_types(), true ) ) {
                 return $response;
@@ -76,6 +118,12 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
             return $response;
         }
 
+        /**
+         * Rewrites legacy media paths in widget content.
+         *
+         * @param string $content Raw widget content.
+         * @return string
+         */
         public function normalize_content( string $content ): string {
             return str_replace(
                 array(
@@ -90,6 +138,13 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
             );
         }
 
+        /**
+         * Migrates content for a single widget post when changes are required.
+         *
+         * @param int    $post_id Widget post ID.
+         * @param string $content Raw widget content.
+         * @return string
+         */
         private function maybe_migrate_post_content( int $post_id, string $content ): string {
             $migrated_content = $this->normalize_content( $content );
             if ( $migrated_content !== $content ) {
@@ -99,6 +154,13 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
             return $migrated_content;
         }
 
+        /**
+         * Persists migrated widget content back to the posts table.
+         *
+         * @param int    $post_id Widget post ID.
+         * @param string $content Migrated content.
+         * @return void
+         */
         private function persist_migrated_content( int $post_id, string $content ): void {
             global $wpdb;
 
@@ -113,6 +175,11 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
             clean_post_cache( $post_id );
         }
 
+        /**
+         * Returns the IDs of widget posts eligible for migration.
+         *
+         * @return int[]
+         */
         private function get_widget_ids(): array {
             global $wpdb;
 
@@ -131,6 +198,11 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
             return array_map( 'intval', is_array( $results ) ? $results : array() );
         }
 
+        /**
+         * Returns the widget post types tracked by this migration.
+         *
+         * @return string[]
+         */
         private function get_widget_post_types(): array {
             return array(
                 FOOCONVERT_CPT_BAR,
@@ -139,20 +211,42 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
             );
         }
 
+        /**
+         * Returns the list of completed content migration keys.
+         *
+         * @return string[]
+         */
         private function get_completed(): array {
             $completed = get_option( FOOCONVERT_OPTION_CONTENT_MIGRATIONS, array() );
 
             return is_array( $completed ) ? $completed : array();
         }
 
+        /**
+         * Checks whether a migration key has already been completed.
+         *
+         * @param string $migration Migration key.
+         * @return bool
+         */
         private function is_completed( string $migration ): bool {
             return in_array( $migration, $this->get_completed(), true );
         }
 
+        /**
+         * Checks whether the media URL migration has already run.
+         *
+         * @return bool
+         */
         private function is_media_url_migration_completed(): bool {
             return $this->is_completed( self::MIGRATION_MOVE_PRO_MEDIA_URLS );
         }
 
+        /**
+         * Stores a migration key as completed.
+         *
+         * @param string $migration Migration key.
+         * @return void
+         */
         private function mark_completed( string $migration ): void {
             $completed = $this->get_completed();
             if ( !in_array( $migration, $completed, true ) ) {

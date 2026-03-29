@@ -7,8 +7,16 @@ namespace FooPlugins\FooConvert;
 
 if ( !class_exists( __NAMESPACE__ . '\Fonts' ) ) {
 
+    /**
+     * Registers configured Google Fonts for FooConvert editor and frontend output.
+     */
     class Fonts {
 
+        /**
+         * Hooks font registration into the admin and frontend asset lifecycle.
+         *
+         * @return void
+         */
         public function __construct() {
             if ( is_admin() ) {
                 add_filter( 'fooconvert_admin_settings', array( $this, 'change_settings' ) );
@@ -19,6 +27,12 @@ if ( !class_exists( __NAMESPACE__ . '\Fonts' ) ) {
             add_action( 'fooconvert_enqueue_assets', array( $this, 'enqueue_assets' ) );
         }
 
+        /**
+         * Adds the fonts settings tab to the admin settings configuration.
+         *
+         * @param array $settings Existing settings configuration.
+         * @return array
+         */
         function change_settings( $settings ) {
             $fonts_tab = array(
                 'id'     => 'fonts',
@@ -70,6 +84,11 @@ if ( !class_exists( __NAMESPACE__ . '\Fonts' ) ) {
             return $settings;
         }
 
+        /**
+         * Enqueues configured Google Fonts inside the block editor.
+         *
+         * @return void
+         */
         function enqueue_fonts_in_editor() {
             if ( !function_exists( 'get_current_screen' ) ) {
                 return;
@@ -84,6 +103,12 @@ if ( !class_exists( __NAMESPACE__ . '\Fonts' ) ) {
             $this->enqueue_font_styles( 'fooconvert-google-fonts-editor', $this->get_fonts(), true );
         }
 
+        /**
+         * Registers configured fonts with the editor typography settings.
+         *
+         * @param array $editor_settings Existing editor settings.
+         * @return array
+         */
         function register_fonts_editor( $editor_settings ) {
             if ( !isset( $editor_settings['__experimentalFeatures'] ) ) {
                 $editor_settings['__experimentalFeatures'] = [];
@@ -112,6 +137,11 @@ if ( !class_exists( __NAMESPACE__ . '\Fonts' ) ) {
             return $editor_settings;
         }
 
+        /**
+         * Returns the configured Google Font definitions.
+         *
+         * @return array<string,array<string,string>>
+         */
         function get_fonts() {
             $fonts_from_settings = fooconvert_get_setting( 'fonts', [] );
 
@@ -124,6 +154,12 @@ if ( !class_exists( __NAMESPACE__ . '\Fonts' ) ) {
             return apply_filters( 'fooconvert_get_fonts', $fonts );
         }
 
+        /**
+         * Enqueues the subset of configured fonts used by the queued widgets.
+         *
+         * @param array $widgets Widgets being rendered on the current request.
+         * @return void
+         */
         function enqueue_assets( $widgets ) {
             if ( empty( $widgets ) ) {
                 return;
@@ -158,6 +194,14 @@ if ( !class_exists( __NAMESPACE__ . '\Fonts' ) ) {
             $this->enqueue_font_styles( 'fooconvert-google-fonts', $used_fonts );
         }
 
+        /**
+         * Enqueues a Google Fonts stylesheet and matching utility classes.
+         *
+         * @param string $handle Style handle to enqueue.
+         * @param array  $fonts Font definitions keyed by slug.
+         * @param bool   $include_editor_selector Whether editor-specific selectors should be added.
+         * @return void
+         */
         private function enqueue_font_styles( string $handle, array $fonts, bool $include_editor_selector = false ) {
             if ( empty( $fonts ) ) {
                 return;

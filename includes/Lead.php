@@ -56,6 +56,12 @@ if ( !class_exists( __NAMESPACE__ . '\Lead' ) ) {
             return Data\QueryLead::get_leads( $args );
         }
 
+        /**
+         * Counts leads using the supplied query filters.
+         *
+         * @param array $args Lead query arguments.
+         * @return int
+         */
         public function count_leads( $args = array() ): int {
             $defaults = array(
                 'email'      => '',
@@ -72,6 +78,13 @@ if ( !class_exists( __NAMESPACE__ . '\Lead' ) ) {
             return Data\QueryLead::get_leads_by_ids( $ids );
         }
 
+        /**
+         * Returns lead metrics for a single widget over the requested time window.
+         *
+         * @param int $widget_id Widget post ID.
+         * @param int $days Number of days to include in the metrics window.
+         * @return array<string,mixed>
+         */
         public function get_widget_lead_metrics( $widget_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
             $metric_defaults = apply_filters( 'fooconvert_widget_lead_metrics_defaults', [
                 'total_leads' => 0,

@@ -731,6 +731,12 @@ class DisplayRules extends BaseComponent {
         }
     }
 
+    /**
+     * Sanitizes queued widget content before it is printed in the footer.
+     *
+     * @param array $widget Queueable widget payload.
+     * @return string
+     */
     public function render_queueable( array $widget ): string {
         if ( empty( $widget['content'] ) ) {
             return '';
@@ -811,6 +817,13 @@ class DisplayRules extends BaseComponent {
         }
     }
 
+    /**
+     * Builds a queueable widget payload for rendering and asset enqueueing.
+     *
+     * @param int    $post_id Widget post ID.
+     * @param string $context Context describing why the widget is being queued.
+     * @return array<string,mixed>
+     */
     public function get_queueable( int $post_id, string $context = 'display_rules' ): array {
         $source_post_id = $post_id;
         $resolved_post_id = apply_filters( 'fooconvert_resolve_widget_post_id', $post_id, array(
@@ -894,6 +907,13 @@ class DisplayRules extends BaseComponent {
         return (bool) apply_filters( 'fooconvert_display_rules_match_locations', false, $compiled_locations, $current_location, $this );
     }
 
+    /**
+     * Checks whether the current user roles satisfy the compiled user rules.
+     *
+     * @param array $compiled_user_roles Allowed compiled user role keys.
+     * @param array $current_user_roles The current user's role keys.
+     * @return bool
+     */
     public function match_compiled_user_roles( array $compiled_user_roles, array $current_user_roles ): bool {
         if ( in_array( 'general:all_users', $compiled_user_roles ) ) {
             return true;
@@ -901,6 +921,12 @@ class DisplayRules extends BaseComponent {
         return count( array_intersect( $compiled_user_roles, $current_user_roles ) ) > 0;
     }
 
+    /**
+     * Determines whether a widget post belongs to an experiment variant.
+     *
+     * @param int $post_id Widget post ID.
+     * @return bool
+     */
     private function is_experiment_variant( int $post_id ): bool {
         if ( $post_id <= 0 ) {
             return false;

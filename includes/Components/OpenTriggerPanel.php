@@ -464,6 +464,12 @@ class OpenTriggerPanel extends BaseComponent {
         return is_array( $definitions ) ? array_values( $definitions ) : array();
     }
 
+    /**
+     * Looks up a trigger definition by event name.
+     *
+     * @param string $event Event identifier.
+     * @return array<string,mixed>
+     */
     private function get_trigger_definition_by_event( string $event ): array {
         foreach ( $this->get_trigger_definitions() as $definition ) {
             if ( isset( $definition['event'] ) && $definition['event'] === $event ) {
@@ -473,6 +479,12 @@ class OpenTriggerPanel extends BaseComponent {
         return array();
     }
 
+    /**
+     * Looks up a trigger definition by legacy trigger type.
+     *
+     * @param string $legacy_type Legacy trigger type.
+     * @return array<string,mixed>
+     */
     private function get_trigger_definition_by_legacy_type( string $legacy_type ): array {
         foreach ( $this->get_trigger_definitions() as $definition ) {
             if ( isset( $definition['legacyType'] ) && $definition['legacyType'] === $legacy_type ) {
@@ -482,6 +494,13 @@ class OpenTriggerPanel extends BaseComponent {
         return array();
     }
 
+    /**
+     * Sanitizes a trigger field value according to its field definition.
+     *
+     * @param array $field Field definition metadata.
+     * @param mixed $value Raw field value.
+     * @return mixed
+     */
     private function sanitize_field_value( array $field, $value ) {
         $type = isset( $field['type'] ) ? strval( $field['type'] ) : '';
         $default = $field['default'] ?? null;
@@ -523,6 +542,13 @@ class OpenTriggerPanel extends BaseComponent {
         return $default;
     }
 
+    /**
+     * Reads a nested value from an array using dot notation.
+     *
+     * @param array  $array Source array.
+     * @param string $path Dot-notated path.
+     * @return mixed
+     */
     private function get_nested_value( array $array, string $path ) {
         $segments = explode( '.', $path );
         $value = $array;
@@ -537,6 +563,14 @@ class OpenTriggerPanel extends BaseComponent {
         return $value;
     }
 
+    /**
+     * Writes a nested value into an array using dot notation.
+     *
+     * @param array  $array Source array.
+     * @param string $path Dot-notated path.
+     * @param mixed  $value Value to assign.
+     * @return array
+     */
     private function set_nested_value( array $array, string $path, $value ): array {
         $segments = explode( '.', $path );
         $pointer = &$array;
