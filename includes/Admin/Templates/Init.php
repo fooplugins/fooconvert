@@ -4,7 +4,15 @@ namespace FooPlugins\FooConvert\Admin\Templates;
 
 if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
 
+    /**
+     * Registers bundled widget templates and their supporting fonts.
+     */
     class Init {
+        /**
+         * Hooks the template variations into the editor configuration.
+         *
+         * @return void
+         */
         function __construct() {
             add_filter( 'fooconvert_editor_variations-fc-bar', array( $this, 'add_editor_bar_variations' ) );
             add_filter( 'fooconvert_editor_variations-fc-flyout', array( $this, 'add_editor_flyout_variations' ) );
@@ -12,6 +20,11 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
             add_filter( 'fooconvert_get_fonts', array( $this, 'add_fonts' ) );
         }
 
+        /**
+         * Returns the extra Google Fonts required by the bundled templates.
+         *
+         * @return array<string,array<string,string>>
+         */
         private function get_fonts(): array {
             return array(
                 'handlee' => array(
@@ -27,10 +40,22 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
             );
         }
 
+        /**
+         * Merges the bundled template fonts into the registered font list.
+         *
+         * @param array<string,array<string,string>> $fonts Existing font definitions.
+         * @return array<string,array<string,string>>
+         */
         function add_fonts( $fonts ) {
             return array_merge( $fonts, $this->get_fonts() );
         }
 
+        /**
+         * Appends bundled bar template variations for the editor.
+         *
+         * @param array<int,array<string,mixed>> $variations Existing block variations.
+         * @return array<int,array<string,mixed>>
+         */
         function add_editor_bar_variations( $variations ) {
             $variations[] = require __DIR__ . '/bars/watch_the_video.php';
             $variations[] = require __DIR__ . '/bars/special_offer.php';
@@ -41,6 +66,12 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
             return $variations;
         }
 
+        /**
+         * Appends bundled popup template variations for the editor.
+         *
+         * @param array<int,array<string,mixed>> $variations Existing block variations.
+         * @return array<int,array<string,mixed>>
+         */
         function add_editor_popup_variations( $variations ) {
             $variations[] = require __DIR__ . '/popups/watch_the_video.php';
             $variations[] = require __DIR__ . '/popups/special_offer.php';
@@ -51,6 +82,12 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
             return $variations;
         }
 
+        /**
+         * Appends bundled flyout template variations for the editor.
+         *
+         * @param array<int,array<string,mixed>> $variations Existing block variations.
+         * @return array<int,array<string,mixed>>
+         */
         function add_editor_flyout_variations( $variations ) {
             $variations[] = require __DIR__ . '/flyouts/watch_the_video.php';
             $variations[] = require __DIR__ . '/flyouts/special_offer.php';
@@ -62,4 +99,3 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
         }
     }
 }
-

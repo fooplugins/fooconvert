@@ -5,27 +5,67 @@ namespace FooPlugins\FooConvert\Components;
 use FooPlugins\FooConvert\Components\Base\BaseComponent;
 use FooPlugins\FooConvert\Utils;
 
+/**
+ * Normalizes widget open-trigger settings for editor and frontend consumers.
+ */
 class OpenTriggerPanel extends BaseComponent {
+    /**
+     * Schema version used for normalized trigger payloads.
+     *
+     * @var int
+     */
     private const V2_VERSION = 2;
 
+    /**
+     * Supported trigger lifetime modes.
+     *
+     * @var string[]
+     */
     private const LIFETIMES = array( 'page', 'session', 'visit' );
 
+    /**
+     * Supported trigger frequency modes.
+     *
+     * @var string[]
+     */
     private const FREQUENCY_MODES = array( 'once', 'repeat' );
 
+    /**
+     * Returns the JavaScript settings key for this component.
+     *
+     * @return string
+     */
     function get_component_data_name(): string {
         return 'FC_OPEN_TRIGGER';
     }
 
+    /**
+     * Returns the editor data required to configure trigger controls.
+     *
+     * @return array<string,mixed>
+     */
     function get_component_data(): array {
         return array(
             'triggers' => $this->get_trigger_definitions()
         );
     }
 
+    /**
+     * Returns HTML attributes for the trigger panel component.
+     *
+     * @param array $attr_value Component attributes.
+     * @return array<string,mixed>
+     */
     function get_attributes( array $attr_value ): array {
         return array();
     }
 
+    /**
+     * Returns normalized frontend data for the trigger configuration.
+     *
+     * @param array $attr_value Component attributes.
+     * @return array<string,mixed>
+     */
     function get_data( array $attr_value ): array {
         $data = array();
         $trigger = $this->normalize_trigger( $attr_value );
@@ -35,6 +75,12 @@ class OpenTriggerPanel extends BaseComponent {
         return $data;
     }
 
+    /**
+     * Normalizes a trigger payload from either legacy or V2 formats.
+     *
+     * @param array $attr_value Raw trigger configuration.
+     * @return array<string,mixed>
+     */
     private function normalize_trigger( array $attr_value ): array {
         $version = Utils::get_int( $attr_value, 'version' );
         if ( $version === self::V2_VERSION ) {
@@ -43,6 +89,12 @@ class OpenTriggerPanel extends BaseComponent {
         return $this->normalize_legacy_trigger( $attr_value );
     }
 
+    /**
+     * Normalizes a V2 trigger configuration payload.
+     *
+     * @param array $trigger Raw trigger configuration.
+     * @return array<string,mixed>
+     */
     private function normalize_v2_trigger( array $trigger ): array {
         $steps = Utils::get_array( $trigger, 'steps' );
         if ( empty( $steps ) ) {
@@ -90,6 +142,12 @@ class OpenTriggerPanel extends BaseComponent {
         );
     }
 
+    /**
+     * Normalizes a legacy trigger payload into the V2 structure.
+     *
+     * @param array $trigger Raw legacy trigger configuration.
+     * @return array<string,mixed>
+     */
     private function normalize_legacy_trigger( array $trigger ): array {
         $trigger_type = Utils::get_string( $trigger, 'type' );
         $trigger_data = Utils::get_key( $trigger, 'data' );
@@ -186,6 +244,12 @@ class OpenTriggerPanel extends BaseComponent {
         );
     }
 
+    /**
+     * Normalizes a single trigger step.
+     *
+     * @param array $step Raw step definition.
+     * @return array<string,mixed>
+     */
     private function normalize_step( array $step ): array {
         $event = Utils::get_string( $step, 'event' );
         $definition = $this->get_trigger_definition_by_event( $event );
@@ -209,6 +273,13 @@ class OpenTriggerPanel extends BaseComponent {
         return $normalized;
     }
 
+    /**
+     * Normalizes the `where` clause for a trigger step.
+     *
+     * @param array $definition Trigger definition metadata.
+     * @param array $where Raw `where` values.
+     * @return array<string,mixed>
+     */
     private function normalize_where( array $definition, array $where ): array {
         $normalized = array();
         $fields = isset( $definition['fields'] ) && is_array( $definition['fields'] ) ? $definition['fields'] : array();
@@ -227,6 +298,12 @@ class OpenTriggerPanel extends BaseComponent {
         return $normalized;
     }
 
+    /**
+     * Converts a mixed value into a unique list of strings.
+     *
+     * @param mixed $value Raw string or list value.
+     * @return string[]
+     */
     private function normalize_string_array( $value ): array {
         $values = is_array( $value ) ? $value : explode( ',', strval( $value ) );
         $result = array();
@@ -239,6 +316,12 @@ class OpenTriggerPanel extends BaseComponent {
         return array_values( array_unique( $result ) );
     }
 
+    /**
+     * Converts a mixed value into a unique list of positive integers.
+     *
+     * @param mixed $value Raw numeric or list value.
+     * @return int[]
+     */
     private function normalize_int_array( $value ): array {
         $values = is_array( $value ) ? $value : explode( ',', strval( $value ) );
         $result = array();
@@ -251,6 +334,11 @@ class OpenTriggerPanel extends BaseComponent {
         return array_values( array_unique( $result ) );
     }
 
+    /**
+     * Returns the trigger definitions available to the editor.
+     *
+     * @return array<int,array<string,mixed>>
+     */
     private function get_trigger_definitions(): array {
         $definitions = array(
             array(

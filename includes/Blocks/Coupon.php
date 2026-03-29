@@ -7,8 +7,16 @@ use FooPlugins\FooConvert\FooConvert;
 use FooPlugins\FooConvert\Utils;
 use WP_Block;
 
+/**
+ * Dynamic renderer for the coupon block.
+ */
 class Coupon extends BaseBlock {
 
+    /**
+     * Returns the KSES schema for the coupon custom element.
+     *
+     * @return array<string,array<string,bool>>
+     */
     public function kses_definition(): array {
         return array(
             $this->get_tag_name() => array(
@@ -23,14 +31,29 @@ class Coupon extends BaseBlock {
         );
     }
 
+    /**
+     * Returns the block name used during registration.
+     *
+     * @return string
+     */
     function get_block_name(): string {
         return 'fc/coupon';
     }
 
+    /**
+     * Returns the custom element tag rendered on the frontend.
+     *
+     * @return string
+     */
     function get_tag_name(): string {
         return 'fc-coupon';
     }
 
+    /**
+     * Registers the coupon block for supported widget post types.
+     *
+     * @return false|array
+     */
     function register_blocks() {
         $post_types = FooConvert::plugin()->widgets->get_post_types();
         return Utils::register_post_type_blocks( $post_types, array(
@@ -43,6 +66,14 @@ class Coupon extends BaseBlock {
         ) );
     }
 
+    /**
+     * Injects slot content for the configured coupon label and button text.
+     *
+     * @param array    $attributes The current block attributes.
+     * @param string   $content Unused inner block content.
+     * @param WP_Block $block The current block instance.
+     * @return string
+     */
     function render( array $attributes, string $content, WP_Block $block ) {
         $content = '';
 
@@ -68,6 +99,14 @@ class Coupon extends BaseBlock {
         );
     }
 
+    /**
+     * Returns frontend data used by the coupon interaction script.
+     *
+     * @param string   $instance_id The block instance ID.
+     * @param array    $attributes The current block attributes.
+     * @param WP_Block $block The current block instance.
+     * @return array<string,mixed>
+     */
     public function get_frontend_data( string $instance_id, array $attributes, WP_Block $block ): array {
         $data = array();
 
@@ -90,6 +129,14 @@ class Coupon extends BaseBlock {
         return $data;
     }
 
+    /**
+     * Returns the frontend attributes applied to the coupon element.
+     *
+     * @param string   $instance_id The block instance ID.
+     * @param array    $attributes The current block attributes.
+     * @param WP_Block $block The current block instance.
+     * @return array<string,mixed>
+     */
     function get_frontend_attributes( string $instance_id, array $attributes, WP_Block $block ): array {
         $attr = array();
         $settings = $this->get_settings( $attributes );
@@ -128,6 +175,14 @@ class Coupon extends BaseBlock {
         return $attr;
     }
 
+    /**
+     * Builds the frontend style rules for the coupon block.
+     *
+     * @param string   $instance_id The block instance ID.
+     * @param array    $attributes The current block attributes.
+     * @param WP_Block $block The current block instance.
+     * @return array<string,array<string,mixed>>
+     */
     function get_frontend_styles( string $instance_id, array $attributes, WP_Block $block ): array {
 
         $components = FooConvert::plugin()->components;
@@ -202,6 +257,14 @@ class Coupon extends BaseBlock {
         return $styles;
     }
 
+    /**
+     * Returns the icons required by the coupon block.
+     *
+     * @param string   $instance_id The block instance ID.
+     * @param array    $attributes The current block attributes.
+     * @param WP_Block $block The current block instance.
+     * @return array<int,array<string,mixed>>
+     */
     public function get_frontend_icons( string $instance_id, array $attributes, WP_Block $block ): array {
         $icons = [];
 

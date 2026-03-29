@@ -7,8 +7,16 @@ use FooPlugins\FooConvert\FooConvert;
 use FooPlugins\FooConvert\Utils;
 use WP_Block;
 
+/**
+ * Dynamic renderer for the countdown block.
+ */
 class Countdown extends BaseBlock {
 
+    /**
+     * Returns the KSES schema for the countdown custom element.
+     *
+     * @return array<string,array<string,bool>>
+     */
     public function kses_definition(): array {
         return array(
             $this->get_tag_name() => array(
@@ -24,14 +32,29 @@ class Countdown extends BaseBlock {
         );
     }
 
+    /**
+     * Returns the block name used during registration.
+     *
+     * @return string
+     */
     function get_block_name(): string {
         return 'fc/countdown';
     }
 
+    /**
+     * Returns the custom element tag rendered on the frontend.
+     *
+     * @return string
+     */
     function get_tag_name(): string {
         return 'fc-countdown';
     }
 
+    /**
+     * Registers the countdown block for supported widget post types.
+     *
+     * @return false|array
+     */
     function register_blocks() {
         $post_types = FooConvert::plugin()->widgets->get_post_types();
         return Utils::register_post_type_blocks( $post_types, array(
@@ -44,6 +67,14 @@ class Countdown extends BaseBlock {
         ) );
     }
 
+    /**
+     * Injects slot content for the configured countdown labels.
+     *
+     * @param array    $attributes The current block attributes.
+     * @param string   $content Unused inner block content.
+     * @param WP_Block $block The current block instance.
+     * @return string
+     */
     function render( array $attributes, string $content, WP_Block $block ) {
         $content = '';
 
@@ -72,10 +103,26 @@ class Countdown extends BaseBlock {
         );
     }
 
+    /**
+     * Returns frontend data for the countdown block.
+     *
+     * @param string   $instance_id The block instance ID.
+     * @param array    $attributes The current block attributes.
+     * @param WP_Block $block The current block instance.
+     * @return array<string,mixed>
+     */
     public function get_frontend_data( string $instance_id, array $attributes, WP_Block $block ): array {
         return array();
     }
 
+    /**
+     * Returns the frontend attributes applied to the countdown element.
+     *
+     * @param string   $instance_id The block instance ID.
+     * @param array    $attributes The current block attributes.
+     * @param WP_Block $block The current block instance.
+     * @return array<string,mixed>
+     */
     function get_frontend_attributes( string $instance_id, array $attributes, WP_Block $block ): array {
         $attr = array();
         $settings = $this->get_settings( $attributes );
@@ -119,6 +166,14 @@ class Countdown extends BaseBlock {
         return $attr;
     }
 
+    /**
+     * Builds the frontend style rules for the countdown block.
+     *
+     * @param string   $instance_id The block instance ID.
+     * @param array    $attributes The current block attributes.
+     * @param WP_Block $block The current block instance.
+     * @return array<string,array<string,mixed>>
+     */
     function get_frontend_styles( string $instance_id, array $attributes, WP_Block $block ): array {
 
         $components = FooConvert::plugin()->components;
@@ -167,6 +222,14 @@ class Countdown extends BaseBlock {
         return $styles;
     }
 
+    /**
+     * Returns any font utility classes required by the countdown block.
+     *
+     * @param string   $instance_id The block instance ID.
+     * @param array    $attributes The current block attributes.
+     * @param WP_Block $block The current block instance.
+     * @return string
+     */
     function get_font_classes( string $instance_id, array $attributes, WP_Block $block ): string {
 
         $font_slugs = array();
