@@ -1,7 +1,7 @@
 const { basename, dirname, extname, join, sep } = require( 'path' );
 const { sync: glob } = require( 'fast-glob' );
 const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
-const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
+const DependencyExtractionWebpackPlugin = require( '@woocommerce/dependency-extraction-webpack-plugin' );
 const { fromProjectRoot, hasProjectFile } = require( "@wordpress/scripts/utils/file" );
 const { readFileSync } = require( "fs" );
 const { getBlockJsonScriptFields, getBlockJsonModuleFields } = require( "@wordpress/scripts/utils/block-json" );

@@ -22,7 +22,9 @@ class TriggeredElement extends WidgetElement {
             "fc.scroll.percent",
             "fc.timer.elapsed",
             "fc.element.visible",
-            "fc.exit_intent"
+            "fc.exit_intent",
+            "cart.add",
+            "cart.updated"
         ];
     }
 
@@ -241,6 +243,57 @@ class TriggeredElement extends WidgetElement {
         const eventBus = getEventBus();
         const event = this.triggerEvent;
         const where = this.triggerWhere;
+        const parseCurrencyAmountToMinor = ( value, minorUnit = 2 ) => {
+            if ( value === null || value === undefined || value === "" ) {
+                return null;
+            }
+            const normalized = Number( `${ value }`.replace( /,/g, "" ) );
+            if ( !Number.isFinite( normalized ) ) {
+                return null;
+            }
+            const precision = Number.isInteger( minorUnit ) && minorUnit >= 0 ? minorUnit : 2;
+            return Math.round( normalized * ( 10 ** precision ) );
+        };
+        const matchesCartAddWhere = payload => {
+            const productIds = Array.isArray( where?.productIds )
+                ? where.productIds.map( value => Number( value ) ).filter( Number.isInteger )
+                : [];
+            if ( productIds.length === 0 ) {
+                return true;
+            }
+
+            const addedItems = Array.isArray( payload?.delta?.addedItems ) ? payload.delta.addedItems : [];
+            return addedItems.some( item => productIds.includes( Number( item?.id ) ) );
+        };
+        const matchesCartUpdatedWhere = payload => {
+            const operator = isString( where?.subtotal?.operator, true ) ? where.subtotal.operator : "";
+            const amountMinor = parseCurrencyAmountToMinor(
+                where?.subtotal?.amount,
+                Number( payload?.current?.totals?.currency?.minorUnit ?? 2 )
+            );
+
+            if ( !operator || amountMinor === null ) {
+                return true;
+            }
+
+            const subtotalMinor = Number( payload?.current?.totals?.subtotalMinor );
+            if ( !Number.isFinite( subtotalMinor ) ) {
+                return false;
+            }
+
+            switch ( operator ) {
+                case "gt":
+                    return subtotalMinor > amountMinor;
+                case "gte":
+                    return subtotalMinor >= amountMinor;
+                case "lt":
+                    return subtotalMinor < amountMinor;
+                case "lte":
+                    return subtotalMinor <= amountMinor;
+                default:
+                    return true;
+            }
+        };
         const createOneShotListener = ( eventName, callback ) => {
             let unsubscribe = null;
             unsubscribe = eventBus.on( eventName, payload => {
@@ -331,6 +384,18 @@ class TriggeredElement extends WidgetElement {
                     }
                 } );
             }
+            case "cart.add":
+                return eventBus.on( event, payload => {
+                    if ( matchesCartAddWhere( payload ) ) {
+                        this.onOpenTrigger( event, payload ?? null );
+                    }
+                } );
+            case "cart.updated":
+                return eventBus.on( event, payload => {
+                    if ( matchesCartUpdatedWhere( payload ) ) {
+                        this.onOpenTrigger( event, payload ?? null );
+                    }
+                } );
             default:
                 return eventBus.on( event, payload => this.onOpenTrigger( event, payload ?? null ) );
         }

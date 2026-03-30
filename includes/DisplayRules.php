@@ -771,6 +771,8 @@ class DisplayRules extends BaseComponent {
                 }
             }
         }
+
+        do_action( 'fooconvert_enqueue_required_assets', $this->enqueued );
     }
 
     /**
