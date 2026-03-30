@@ -12,6 +12,12 @@ class QueryLead extends Base {
         return parent::get_table_name( Schema::FOOCONVERT_LEADS_TABLE );
     }
 
+    /**
+     * Builds the SQL WHERE fragments used by lead queries.
+     *
+     * @param array $args Lead query arguments.
+     * @return array{0:array<int,string>,1:array<int,mixed>}
+     */
     private static function get_where_parts( array $args ): array {
         $where_clauses = array();
         $where_params = array();
@@ -104,6 +110,12 @@ class QueryLead extends Base {
         return $wpdb->get_results( $wpdb->prepare( $query, $ids ), ARRAY_A );
     }
 
+    /**
+     * Returns leads that match the supplied filters and pagination arguments.
+     *
+     * @param array $args Lead query arguments.
+     * @return array<int,array<string,mixed>>
+     */
     public static function get_leads( $args = array() ) {
         global $wpdb;
 
@@ -144,6 +156,12 @@ class QueryLead extends Base {
         return $wpdb->get_results( $wpdb->prepare( $query, $where_params ), ARRAY_A );
     }
 
+    /**
+     * Counts leads that match the supplied filters.
+     *
+     * @param array $args Lead query arguments.
+     * @return int
+     */
     public static function count_leads( $args = array() ): int {
         global $wpdb;
 
@@ -202,6 +220,12 @@ class QueryLead extends Base {
         return $wpdb->delete( $table_name, array() );
     }
 
+    /**
+     * Deletes all leads associated with a single widget.
+     *
+     * @param int $widget_id Widget post ID.
+     * @return int|false
+     */
     public static function delete_widget_leads( $widget_id ) {
         global $wpdb;
 
@@ -209,6 +233,12 @@ class QueryLead extends Base {
         return $wpdb->delete( $table_name, array( 'widget_id' => $widget_id ) );
     }
 
+    /**
+     * Deletes a single lead by its database ID.
+     *
+     * @param int $id Lead ID.
+     * @return int|false
+     */
     public static function delete_lead( $id ) {
         global $wpdb;
 
@@ -216,6 +246,11 @@ class QueryLead extends Base {
         return $wpdb->delete( $table_name, array( 'id' => $id ) );
     }
 
+    /**
+     * Returns aggregate row, widget, email, and table size statistics.
+     *
+     * @return array<string,mixed>
+     */
     public static function get_leads_table_stats() {
         global $wpdb;
 
@@ -241,4 +276,3 @@ class QueryLead extends Base {
         return array_merge( $stats, $table_size );
     }
 }
-

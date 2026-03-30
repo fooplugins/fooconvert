@@ -18,6 +18,7 @@
   ],
   "scripts": {
     "check-updates": "npx npm-check-updates",
+    "test:php": "php tests/run.php",
     "build:dev": "cross-env BUILD_SCOPE=free NODE_ENV=development wp-scripts build --output-path=assets && npm run copy:free",
     "build": "cross-env BUILD_SCOPE=free wp-scripts build --output-path=assets && npm run copy:free",
     "build:pro": "cross-env BUILD_SCOPE=pro wp-scripts build --output-path=assets && npm run copy:pro",

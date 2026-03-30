@@ -209,6 +209,7 @@ const getTriggerOptions = allowEmpty => {
 const renderField = ( definition, field, where, once, setTrigger ) => {
     const value = getNestedValue( where, field.path );
     const setValue = nextValue => setTrigger( definition.event, setNestedValue( where, field.path, nextValue ), once );
+    const isLocked = definition?.locked === true;
 
     switch ( field?.type ) {
         case "string-list":
@@ -220,6 +221,7 @@ const renderField = ( definition, field, where, once, setTrigger ) => {
                     help={ field.help }
                     value={ Array.isArray( value ) ? value.join( "," ) : "" }
                     onChange={ nextValue => setValue( field.type === "int-list" ? parseIntList( nextValue ) : parseStringList( nextValue ) ) }
+                    disabled={ isLocked }
                     __nextHasNoMarginBottom
                 />
             );
@@ -231,6 +233,7 @@ const renderField = ( definition, field, where, once, setTrigger ) => {
                     help={ field.help }
                     value={ value ?? "" }
                     onChange={ setValue }
+                    disabled={ isLocked }
                     __nextHasNoMarginBottom
                 />
             );
@@ -243,6 +246,7 @@ const renderField = ( definition, field, where, once, setTrigger ) => {
                     value={ `${ value ?? field?.default ?? "" }` }
                     options={ Array.isArray( field?.options ) ? field.options : [] }
                     onChange={ setValue }
+                    disabled={ isLocked }
                     __nextHasNoMarginBottom
                     __next40pxDefaultSize
                 />
@@ -257,6 +261,7 @@ const renderField = ( definition, field, where, once, setTrigger ) => {
                     min={ Number( field?.min ?? 0 ) }
                     max={ Number( field?.max ?? 100 ) }
                     onChange={ setValue }
+                    disabled={ isLocked }
                     __nextHasNoMarginBottom
                     __next40pxDefaultSize
                 />
@@ -335,7 +340,7 @@ const OpenTriggerComponent = props => {
         }
 
         const controls = selectedDefinition.fields
-            .map( field => renderField( selectedDefinition, field, where, once, setTrigger ) )
+            .map( field => renderField( { ...selectedDefinition, locked }, field, where, once, setTrigger ) )
             .filter( Boolean );
 
         if ( controls.length === 0 ) {
@@ -356,6 +361,7 @@ const OpenTriggerComponent = props => {
                 help={ __( "Once closed will not be shown to a user again.", "fooconvert" ) }
                 checked={ once ?? false }
                 onChange={ nextValue => setTrigger( selectedDefinition.event, where, nextValue ) }
+                disabled={ locked }
                 __nextHasNoMarginBottom
             />
         );

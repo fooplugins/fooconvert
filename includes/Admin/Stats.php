@@ -61,7 +61,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 $widget_id = absint( $_GET['widget_id'] );
 
                 // We need to make sure the widget is enqueued for the admin stats page.
-                FooConvert::plugin()->display_rules->add_to_queue( $widget_id );
+                FooConvert::plugin()->display_rules->add_to_queue( $widget_id, 'admin_stats_preview' );
             }
         }
 

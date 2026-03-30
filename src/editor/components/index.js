@@ -7,6 +7,7 @@ export * from "./color-tools-panel";
 export * from "./dimension-tools-panel";
 // export * from "./display-rules-button";
 export * from "./entity-record-control";
+export * from "./experiment-panel";
 export * from "./font-appearance-control";
 export * from "./font-family-control";
 export * from "./grouped-select-control";

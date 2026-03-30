@@ -7,7 +7,6 @@ use FooPlugins\FooConvert\Widgets\Base\BaseWidget;
 use FooPlugins\FooConvert\Widgets\Bar;
 use FooPlugins\FooConvert\Widgets\Flyout;
 use FooPlugins\FooConvert\Widgets\Popup;
-use WP_Query;
 
 /**
  * This class both initializes and contains high level management utilities for plugin widgets.
@@ -126,15 +125,9 @@ class Widgets extends BaseComponent {
         $attributes = shortcode_atts( [ 'id' => 0 ], $attributes, $tag );
         $post_id = (int)$attributes['id'];
         if ( !empty( $post_id ) && !FooConvert::plugin()->display_rules->is_enqueued( $post_id ) ) {
-            $args = [ 'post_type' => $tag, 'p' => $post_id ];
-            $query = new WP_Query( $args );
-            if ( $query->have_posts() ) {
-                ob_start();
-                while ( $query->have_posts() ) : $query->the_post();
-                    the_content();
-                endwhile;
-                wp_reset_postdata();
-                return ob_get_clean();
+            $queueable = FooConvert::plugin()->display_rules->get_queueable( $post_id, 'shortcode' );
+            if ( !empty( $queueable ) ) {
+                return FooConvert::plugin()->display_rules->render_queueable( $queueable );
             }
         }
         return false;

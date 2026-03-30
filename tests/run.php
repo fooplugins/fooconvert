@@ -1,0 +1,34 @@
+<?php
+declare(strict_types=1);
+
+/**
+ * Minimal test runner for the PHP display-rules smoke tests.
+ *
+ * Each test case is executed in a separate PHP process so it can define its own
+ * WordPress function stubs without colliding with other cases.
+ */
+
+$cases = array(
+    __DIR__ . '/cases/display-rules-core.php',
+    __DIR__ . '/cases/display-rules-woocommerce.php',
+);
+
+$failures = 0;
+
+foreach ( $cases as $case ) {
+    $command = escapeshellarg( PHP_BINARY ) . ' ' . escapeshellarg( $case );
+
+    echo 'Running ' . basename( $case ) . "...\n";
+    passthru( $command, $exit_code );
+
+    if ( $exit_code !== 0 ) {
+        $failures++;
+    }
+}
+
+if ( $failures > 0 ) {
+    fwrite( STDERR, sprintf( "%d test case(s) failed.\n", $failures ) );
+    exit( 1 );
+}
+
+echo "All PHP tests passed.\n";

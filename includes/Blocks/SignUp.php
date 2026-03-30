@@ -7,8 +7,16 @@ use FooPlugins\FooConvert\FooConvert;
 use FooPlugins\FooConvert\Utils;
 use WP_Block;
 
+/**
+ * Dynamic renderer for the sign-up block.
+ */
 class SignUp extends BaseBlock {
 
+    /**
+     * Returns the KSES schema for the sign-up custom element.
+     *
+     * @return array<string,array<string,bool>>
+     */
     public function kses_definition(): array {
         return array(
             $this->get_tag_name() => array(
@@ -26,14 +34,29 @@ class SignUp extends BaseBlock {
         );
     }
 
+    /**
+     * Returns the block name used during registration.
+     *
+     * @return string
+     */
     function get_block_name(): string {
         return 'fc/sign-up';
     }
 
+    /**
+     * Returns the custom element tag rendered on the frontend.
+     *
+     * @return string
+     */
     function get_tag_name(): string {
         return 'fc-sign-up';
     }
 
+    /**
+     * Registers the sign-up block for supported widget post types.
+     *
+     * @return false|array
+     */
     function register_blocks() {
         $post_types = FooConvert::plugin()->widgets->get_post_types();
         return Utils::register_post_type_blocks( $post_types, array(
@@ -46,6 +69,14 @@ class SignUp extends BaseBlock {
         ) );
     }
 
+    /**
+     * Injects slot content for sign-up labels and button text.
+     *
+     * @param array    $attributes The current block attributes.
+     * @param string   $content Unused inner block content.
+     * @param WP_Block $block The current block instance.
+     * @return string
+     */
     function render( array $attributes, string $content, WP_Block $block ) {
         $content = '';
 
@@ -76,6 +107,14 @@ class SignUp extends BaseBlock {
         );
     }
 
+    /**
+     * Returns frontend data used by the sign-up interaction script.
+     *
+     * @param string   $instance_id The block instance ID.
+     * @param array    $attributes The current block attributes.
+     * @param WP_Block $block The current block instance.
+     * @return array<string,mixed>
+     */
     public function get_frontend_data( string $instance_id, array $attributes, WP_Block $block ): array {
         $data = array();
 
@@ -98,6 +137,14 @@ class SignUp extends BaseBlock {
         return $data;
     }
 
+    /**
+     * Returns the frontend attributes applied to the sign-up element.
+     *
+     * @param string   $instance_id The block instance ID.
+     * @param array    $attributes The current block attributes.
+     * @param WP_Block $block The current block instance.
+     * @return array<string,mixed>
+     */
     function get_frontend_attributes( string $instance_id, array $attributes, WP_Block $block ): array {
         $attr = array();
         $settings = $this->get_settings( $attributes );
@@ -154,6 +201,14 @@ class SignUp extends BaseBlock {
         return $attr;
     }
 
+    /**
+     * Builds the frontend style rules for the sign-up block.
+     *
+     * @param string   $instance_id The block instance ID.
+     * @param array    $attributes The current block attributes.
+     * @param WP_Block $block The current block instance.
+     * @return array<string,array<string,mixed>>
+     */
     function get_frontend_styles( string $instance_id, array $attributes, WP_Block $block ): array {
 
         $components = FooConvert::plugin()->components;
@@ -223,6 +278,14 @@ class SignUp extends BaseBlock {
         return $styles;
     }
 
+    /**
+     * Returns the icons required by the sign-up block.
+     *
+     * @param string   $instance_id The block instance ID.
+     * @param array    $attributes The current block attributes.
+     * @param WP_Block $block The current block instance.
+     * @return array<int,array<string,mixed>>
+     */
     public function get_frontend_icons( string $instance_id, array $attributes, WP_Block $block ): array {
         $icons = [];
 

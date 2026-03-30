@@ -7,10 +7,27 @@ use WP_List_Table;
 
 if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
 
+    /**
+     * Displays captured leads in a WordPress list table.
+     */
     class LeadsTable extends WP_List_Table {
+        /**
+         * Lead service used to fetch and mutate rows.
+         *
+         * @var Lead
+         */
         private Lead $lead;
+
+        /**
+         * Total number of leads matching the current filters.
+         *
+         * @var int
+         */
         private int $total_items = 0;
 
+        /**
+         * Sets up the list table labels and lead service.
+         */
         public function __construct() {
             parent::__construct( array(
                 'singular' => 'lead',
@@ -21,6 +38,11 @@ if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
             $this->lead = new Lead();
         }
 
+        /**
+         * Returns the columns displayed in the leads table.
+         *
+         * @return array<string,string>
+         */
         public function get_columns() {
             return array(
                 'cb'           => '<input type="checkbox" />',
@@ -33,10 +55,20 @@ if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
             );
         }
 
+        /**
+         * Returns the columns that should remain hidden by default.
+         *
+         * @return string[]
+         */
         public function get_hidden_columns() {
             return array( 'id' );
         }
 
+        /**
+         * Returns the sortable columns for the leads table.
+         *
+         * @return array<string,array{0:string,1:bool}>
+         */
         public function get_sortable_columns() {
             return array(
                 'email'        => array( 'email', false ),
@@ -46,6 +78,12 @@ if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
             );
         }
 
+        /**
+         * Builds sanitized query arguments from the current request.
+         *
+         * @param bool $with_pagination Whether pagination arguments should be added.
+         * @return array<string,mixed>
+         */
         private function get_query_args( bool $with_pagination = true ): array {
             $per_page = max( 1, $this->get_items_per_page( 'leads_per_page', 20 ) );
 
@@ -64,10 +102,20 @@ if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
             return $args;
         }
 
+        /**
+         * Fetches the current page of leads for the table.
+         *
+         * @return array<int,array<string,mixed>>
+         */
         private function table_data(): array {
             return $this->lead->get_leads( $this->get_query_args() );
         }
 
+        /**
+         * Populates the list table items and pagination state.
+         *
+         * @return void
+         */
         public function prepare_items() {
             $this->_column_headers = array(
                 $this->get_columns(),
@@ -88,6 +136,11 @@ if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
             ) );
         }
 
+        /**
+         * Returns the bulk actions available for lead rows.
+         *
+         * @return array<string,string>
+         */
         protected function get_bulk_actions() {
             return array(
                 'delete' => __( 'Delete', 'fooconvert' ),
@@ -95,6 +148,13 @@ if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
             );
         }
 
+        /**
+         * Renders the default output for a table column.
+         *
+         * @param array<string,mixed> $item The current lead row.
+         * @param string              $column_name The column being rendered.
+         * @return string
+         */
         public function column_default( $item, $column_name ) {
             switch ( $column_name ) {
                 case 'email':
@@ -109,6 +169,12 @@ if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
             }
         }
 
+        /**
+         * Renders the checkbox column for bulk actions.
+         *
+         * @param array<string,mixed> $item The current lead row.
+         * @return string
+         */
         public function column_cb( $item ) {
             return sprintf(
                 '<input type="checkbox" name="leads[]" value="%s" />',
@@ -116,6 +182,11 @@ if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
             );
         }
 
+        /**
+         * Handles delete and export bulk actions for the selected leads.
+         *
+         * @return void
+         */
         public function process_bulk_action() {
             $lead_ids = isset( $_REQUEST['leads'] ) ? array_map( 'intval', (array) wp_unslash( $_REQUEST['leads'] ) ) : array();
 
@@ -130,6 +201,12 @@ if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
             }
         }
 
+        /**
+         * Streams the selected leads as a CSV download.
+         *
+         * @param int[] $lead_ids Lead IDs to export.
+         * @return void
+         */
         private function export_leads( array $lead_ids ) {
             if ( ob_get_length() ) {
                 ob_end_clean();

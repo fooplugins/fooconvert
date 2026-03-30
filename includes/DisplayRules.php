@@ -123,7 +123,14 @@ class DisplayRules extends BaseComponent {
      * @since 1.0.0
      */
     public function auth_callback(): bool {
-        return current_user_can( 'edit_posts' );
+        if ( !current_user_can( 'edit_posts' ) ) {
+            return false;
+        }
+
+        $args = func_get_args();
+        $post_id = isset( $args[2] ) ? absint( $args[2] ) : 0;
+
+        return !$this->is_experiment_variant( $post_id );
     }
 
     /**
@@ -543,10 +550,7 @@ class DisplayRules extends BaseComponent {
             // otherwise go through the locations and 'flatten' them
             return array_reduce( $locations, function ( $result, $location ) {
                 $type = Utils::get_string( $location, 'type' );
-                if ( str_starts_with( $type, 'general:' ) || str_starts_with( $type, 'archive:' ) ) {
-                    // general & archive locations have no additional checks, they are static
-                    $result[$type] = true;
-                } elseif ( str_starts_with( $type, 'specific:' ) ) {
+                if ( str_starts_with( $type, 'specific:' ) ) {
                     // specific locations require post_ids that must be matched, so extract them out
                     $data = Utils::get_array( $location, 'data' );
                     $post_ids = array_reduce( $data, function ( $result, $data_value ) {
@@ -559,6 +563,9 @@ class DisplayRules extends BaseComponent {
                     if ( !empty( $post_ids ) ) {
                         $result[$type] = $post_ids;
                     }
+                } elseif ( $type !== '' ) {
+                    // all non-specific locations are stored as static flags and can be matched by extensions.
+                    $result[$type] = true;
                 }
                 return $result;
             }, array() );
@@ -687,7 +694,19 @@ class DisplayRules extends BaseComponent {
      * @since 1.0.0
      */
     public function is_enqueued( int $post_id ): bool {
-        return in_array( $post_id, $this->enqueued );
+        foreach ( $this->enqueued as $widget ) {
+            if ( is_array( $widget ) ) {
+                $source_post_id = isset( $widget['source_post_id'] ) ? absint( $widget['source_post_id'] ) : 0;
+                $resolved_post_id = isset( $widget['post_id'] ) ? absint( $widget['post_id'] ) : 0;
+                if ( $source_post_id === $post_id || $resolved_post_id === $post_id ) {
+                    return true;
+                }
+            } elseif ( absint( $widget ) === $post_id ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -707,12 +726,25 @@ class DisplayRules extends BaseComponent {
      */
     public function render_enqueued() {
         foreach ( $this->enqueued as $widget ) {
-            // Reviewers:
-            // The content is passed through wp_kses with an extended post allowed HTML list that includes
-            // the custom elements for the plugin.
             // phpcs:ignore WordPress.Security.EscapeOutput
-            echo FooConvert::plugin()->kses_post( $widget['content'], $widget['compatibility_mode'] );
+            echo $this->render_queueable( $widget );
         }
+    }
+
+    /**
+     * Sanitizes queued widget content before it is printed in the footer.
+     *
+     * @param array $widget Queueable widget payload.
+     * @return string
+     */
+    public function render_queueable( array $widget ): string {
+        if ( empty( $widget['content'] ) ) {
+            return '';
+        }
+
+        $compatibility_mode = Utils::get_bool( $widget, 'compatibility_mode' );
+
+        return FooConvert::plugin()->kses_post( $widget['content'], $compatibility_mode );
     }
 
     /**
@@ -758,14 +790,9 @@ class DisplayRules extends BaseComponent {
                 foreach ( $display_rules as $compiled ) {
                     if ( $this->match_compiled( $compiled, $current_location, $current_user_roles ) ) {
                         $matched_id = $compiled['post_id'];
-                        $matched_content = FooConvert::plugin()->content_migration->get_post_content( $matched_id );
-                        $matched_compatibility_mode = Utils::get_bool( $compiled, 'compatibility_mode' );
-                        if ( Utils::is_string( $matched_content, true ) ) {
-                            $this->enqueued[] = array(
-                                'post_id'            => $matched_id,
-                                'content'            => do_blocks( $matched_content ),
-                                'compatibility_mode' => $matched_compatibility_mode,
-                            );
+                        $queueable = $this->get_queueable( $matched_id, 'display_rules' );
+                        if ( !empty( $queueable ) && !$this->is_enqueued( absint( $queueable['source_post_id'] ?? $matched_id ) ) ) {
+                            $this->enqueued[] = $queueable;
                         }
                     }
                 }
@@ -785,16 +812,38 @@ class DisplayRules extends BaseComponent {
      *
      * @since 1.0.0
      */
-    public function add_to_queue( int $post_id ) {
-        $this->enqueued[] = $this->get_queueable( $post_id );
+    public function add_to_queue( int $post_id, string $context = 'manual' ) {
+        $queueable = $this->get_queueable( $post_id, $context );
+        if ( !empty( $queueable ) && !$this->is_enqueued( absint( $queueable['source_post_id'] ?? $post_id ) ) ) {
+            $this->enqueued[] = $queueable;
+        }
     }
 
-    public function get_queueable( int $post_id ): array {
-        $content = FooConvert::plugin()->content_migration->get_post_content( $post_id );
+    /**
+     * Builds a queueable widget payload for rendering and asset enqueueing.
+     *
+     * @param int    $post_id Widget post ID.
+     * @param string $context Context describing why the widget is being queued.
+     * @return array<string,mixed>
+     */
+    public function get_queueable( int $post_id, string $context = 'display_rules' ): array {
+        $source_post_id = $post_id;
+        $resolved_post_id = apply_filters( 'fooconvert_resolve_widget_post_id', $post_id, array(
+            'context'        => $context,
+            'source_post_id' => $source_post_id,
+            'post_type'      => get_post_type( $source_post_id ),
+        ) );
+        $resolved_post_id = intval( $resolved_post_id );
+        if ( $resolved_post_id <= 0 ) {
+            $resolved_post_id = $source_post_id;
+        }
+
+        $content = FooConvert::plugin()->content_migration->get_post_content( $resolved_post_id );
         if ( !empty( $content ) ) {
-            $compatibility_mode = FooConvert::plugin()->compatibility->is_enabled( $post_id );
+            $compatibility_mode = FooConvert::plugin()->compatibility->is_enabled( $resolved_post_id );
             return array(
-                'post_id'            => $post_id,
+                'source_post_id'     => $source_post_id,
+                'post_id'            => $resolved_post_id,
                 'content'            => do_blocks( $content ),
                 'compatibility_mode' => $compatibility_mode,
             );
@@ -828,19 +877,71 @@ class DisplayRules extends BaseComponent {
         return $match;
     }
 
+    /**
+     * Match a compiled set of include or exclude locations against the current request.
+     *
+     * Built-in general, archive, and specific locations are matched directly. Any custom
+     * static location flags that need runtime evaluation can be handled by extensions via
+     * the `fooconvert_display_rules_match_locations` filter.
+     *
+     * @param array $compiled_locations The flattened compiled locations for the include or exclude branch.
+     * @param array{type:string,data:int|null} $current_location The current request location.
+     * @return bool
+     */
     public function match_compiled_locations( array $compiled_locations, array $current_location ): bool {
         if ( array_key_exists( 'general:entire_site', $compiled_locations ) ) {
             return true;
         }
         list( 'type' => $type, 'data' => $data ) = $current_location;
-        return array_key_exists( $type, $compiled_locations ) && ( !is_int( $data ) || in_array( $data, $compiled_locations[$type], true ) );
+        $matched = array_key_exists( $type, $compiled_locations ) && ( !is_int( $data ) || in_array( $data, $compiled_locations[$type], true ) );
+        if ( $matched ) {
+            return true;
+        }
+
+        /**
+         * Allows extensions to evaluate custom compiled location types against the current request.
+         *
+         * @param bool $matched Defaults to `false` when no built-in location matched.
+         * @param array $compiled_locations The flattened compiled locations for the include or exclude branch.
+         * @param array{type:string,data:int|null} $current_location The current request location.
+         * @param DisplayRules $display_rules The display rules component instance.
+         */
+        return (bool) apply_filters( 'fooconvert_display_rules_match_locations', false, $compiled_locations, $current_location, $this );
     }
 
+    /**
+     * Checks whether the current user roles satisfy the compiled user rules.
+     *
+     * @param array $compiled_user_roles Allowed compiled user role keys.
+     * @param array $current_user_roles The current user's role keys.
+     * @return bool
+     */
     public function match_compiled_user_roles( array $compiled_user_roles, array $current_user_roles ): bool {
         if ( in_array( 'general:all_users', $compiled_user_roles ) ) {
             return true;
         }
         return count( array_intersect( $compiled_user_roles, $current_user_roles ) ) > 0;
+    }
+
+    /**
+     * Determines whether a widget post belongs to an experiment variant.
+     *
+     * @param int $post_id Widget post ID.
+     * @return bool
+     */
+    private function is_experiment_variant( int $post_id ): bool {
+        if ( $post_id <= 0 ) {
+            return false;
+        }
+
+        if ( !defined( 'FOOCONVERT_WIDGET_META_KEY_EXPERIMENT_ID' ) || !defined( 'FOOCONVERT_WIDGET_META_KEY_EXPERIMENT_ROLE' ) ) {
+            return false;
+        }
+
+        $experiment_id = absint( get_post_meta( $post_id, FOOCONVERT_WIDGET_META_KEY_EXPERIMENT_ID, true ) );
+        $role = (string) get_post_meta( $post_id, FOOCONVERT_WIDGET_META_KEY_EXPERIMENT_ROLE, true );
+
+        return $experiment_id > 0 && $role === 'variant';
     }
 
     //endregion

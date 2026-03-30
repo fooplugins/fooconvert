@@ -1,7 +1,7 @@
-import { PanelRow, TextControl, ToggleControl } from "@wordpress/components";
+import { Notice, PanelRow, TextControl, ToggleControl } from "@wordpress/components";
 import { PluginDocumentSettingPanel, store as editorStore } from "@wordpress/editor";
 import { __ } from "@wordpress/i18n";
-import { $object, OpenTriggerComponent, useRootAttributes } from "#editor";
+import { $object, ExperimentPanel, OpenTriggerComponent, useExperimentVariantLock, useRootAttributes } from "#editor";
 import { useEffect, useState } from "@wordpress/element";
 import { isString } from "@steveush/utils";
 import { POPUP_DEFAULTS } from "../../Edit";
@@ -15,6 +15,7 @@ const TriggerControls = () => {
         settings,
         closeButton,
     } = attributes;
+    const { isLocked } = useExperimentVariantLock();
 
     useEffect( () => {
         dispatch( editorStore )?.toggleEditorPanelOpened( 'fc/fc--open-trigger' );
@@ -51,23 +52,40 @@ const TriggerControls = () => {
 
     return (
         <>
+            <ExperimentPanel/>
             <PluginDocumentSettingPanel name="fc--open-trigger" title={ __( 'Open Trigger', 'fooconvert' ) }>
+                { isLocked && (
+                    <PanelRow>
+                        <Notice status="info" isDismissible={ false }>
+                            { __( "Inherits open trigger from control.", "fooconvert" ) }
+                        </Notice>
+                    </PanelRow>
+                ) }
                 <PanelRow>
                     <OpenTriggerComponent
                         value={ settings?.trigger ?? settingsDefaults?.trigger }
                         onChange={ setTrigger }
+                        locked={ isLocked }
                         allowEmpty={ true }
                         hideLabelFromVision
                     />
                 </PanelRow>
             </PluginDocumentSettingPanel>
             <PluginDocumentSettingPanel name="fc--close-trigger" title={ __( 'Close Trigger', 'fooconvert' ) }>
+                { isLocked && (
+                    <PanelRow>
+                        <Notice status="info" isDismissible={ false }>
+                            { __( "Inherits close trigger from control.", "fooconvert" ) }
+                        </Notice>
+                    </PanelRow>
+                ) }
                 <PanelRow>
                     <ToggleControl
                         label={ __( 'Hide close button', 'fooconvert' ) }
                         help={ __( 'Hide the default close button.', 'fooconvert' ) }
                         checked={ closeButtonSettings?.hidden ?? closeButtonSettingsDefaults?.hidden ?? false }
                         onChange={ setCloseButtonHidden }
+                        disabled={ isLocked }
                         __nextHasNoMarginBottom
                     />
                 </PanelRow>
@@ -77,6 +95,7 @@ const TriggerControls = () => {
                         help={ __( 'Close the popup when the backdrop is clicked.', 'fooconvert' ) }
                         checked={ !( settings?.backdropIgnore ?? settingsDefaults?.backdropIgnore ?? false ) }
                         onChange={ value => setBackdropIgnore( !value ) }
+                        disabled={ isLocked }
                         __nextHasNoMarginBottom
                     />
                 </PanelRow>
@@ -94,6 +113,7 @@ const TriggerControls = () => {
                         help={ __( 'Clicking specific anchors closes the popup.', 'fooconvert' ) }
                         checked={ closeAnchorChecked }
                         onChange={ value => setCloseAnchorChecked( value ) }
+                        disabled={ isLocked }
                         __nextHasNoMarginBottom
                     />
                 </PanelRow>
@@ -104,6 +124,7 @@ const TriggerControls = () => {
                             help={ __( 'Add an anchor to a button block and then insert the same value here to close the flyout on click.', 'fooconvert' ) }
                             value={ settings?.closeAnchor ?? settingsDefaults?.closeAnchor ?? "" }
                             onChange={ setCloseAnchor }
+                            disabled={ isLocked }
                         />
                     </PanelRow>
                 ) }

@@ -98,8 +98,24 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          */
         public Components $components;
 
+        /**
+         * Compatibility helpers for rendering widgets in legacy themes and builders.
+         *
+         * @var Compatibility
+         * @access public
+         *
+         * @since 1.0.0
+         */
         public Compatibility $compatibility;
 
+        /**
+         * Content migration helpers used when widget content is loaded.
+         *
+         * @var ContentMigration
+         * @access public
+         *
+         * @since 1.0.0
+         */
         public ContentMigration $content_migration;
 
         /**
