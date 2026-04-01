@@ -16,31 +16,50 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
         const FOOCONVERT_LEADS_TABLE = 'fooconvert_leads';
 
         /**
+         * Create or upgrade the plugin tables when the stored schema version is out of date.
+         *
+         * @param string|null $target_version Target plugin version to migrate to.
          * @return array<array-key, mixed>|false Table creation results, or false.
          */
-        public function create_event_table_if_needed() {
-            if ( defined( 'FOOCONVERT_VERSION' ) ) {
-                $current_version = FOOCONVERT_VERSION;
-                $version_create_table = get_option( FOOCONVERT_OPTION_VERSION_CREATE_TABLE, '0.0.0' );
-                if ( version_compare( $current_version, $version_create_table, '>' ) ) {
+        public function create_event_table_if_needed( ?string $target_version = null ) {
+            static $results = array();
 
-                    // Create the tables.
-                    $table_creation_results = $this->create_event_table_and_indexes();
-                    $leads_creation_results = $this->create_leads_table_and_indexes();
+            $current_version = is_string( $target_version ) && '' !== trim( $target_version )
+                ? trim( $target_version )
+                : ( defined( 'FOOCONVERT_VERSION' ) ? FOOCONVERT_VERSION : null );
 
-                    // TODO : Run any necessary migrations.
-
-                    // update the version in the database
-                    update_option( FOOCONVERT_OPTION_VERSION_CREATE_TABLE, $current_version );
-
-                    return [
-                        'events' => $table_creation_results,
-                        'leads' => $leads_creation_results
-                    ];
-                }
-                return false;
+            $cache_key = is_string( $current_version ) && '' !== $current_version ? $current_version : '__undefined__';
+            if ( array_key_exists( $cache_key, $results ) ) {
+                return $results[ $cache_key ];
             }
-            return false;
+
+            if ( !is_string( $current_version ) || '' === $current_version ) {
+                $results[ $cache_key ] = false;
+                return $results[ $cache_key ];
+            }
+
+            $version_create_table = (string) get_option( FOOCONVERT_OPTION_VERSION_CREATE_TABLE, '0.0.0' );
+
+            if ( $version_create_table === $current_version || version_compare( $current_version, $version_create_table, '<=' ) ) {
+                $results[ $cache_key ] = false;
+                return $results[ $cache_key ];
+            }
+
+            // Create the tables.
+            $table_creation_results = $this->create_event_table_and_indexes();
+            $leads_creation_results = $this->create_leads_table_and_indexes();
+
+            // TODO : Run any necessary migrations.
+
+            // Keep this option autoloaded because it is checked on every request.
+            update_option( FOOCONVERT_OPTION_VERSION_CREATE_TABLE, $current_version, true );
+
+            $results[ $cache_key ] = [
+                'events' => $table_creation_results,
+                'leads' => $leads_creation_results
+            ];
+
+            return $results[ $cache_key ];
         }
 
         /**
