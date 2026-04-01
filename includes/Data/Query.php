@@ -46,6 +46,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          * @type string|null $session_id The ID of the browser session.
          * @type string|null $anonymous_user_guid The GUID of the anonymous user.
          * @type array|null $extra_data An array or extra event data.
+         * @type float|null $event_value Optional numeric value associated with the event.
          * @type string $timestamp The timestamp of the event.
          * }
          *
@@ -96,14 +97,23 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                 return new WP_Error( 'invalid_event_data_no_user', 'No user ID or anonymous user GUID was provided.' );
             }
 
-            // 8. Serialize extra_data if provided.
+            // 8. Validate event_value if provided.
+            if ( isset( $data['event_value'] ) && null !== $data['event_value'] ) {
+                if ( !is_numeric( $data['event_value'] ) ) {
+                    return new WP_Error( 'invalid_event_data_event_value', 'The event value is not valid.' );
+                }
+
+                $data['event_value'] = round( (float) $data['event_value'], 4 );
+            }
+
+            // 9. Serialize extra_data if provided.
             if ( isset( $data['extra_data'] ) && is_array( $data['extra_data'] ) && !empty( $data['extra_data'] ) ) {
                 $data['extra_data'] = maybe_serialize( $data['extra_data'] );
             } else {
                 $data['extra_data'] = null;
             }
 
-            // 9. Ensure timestamp is set.
+            // 10. Ensure timestamp is set.
             if ( !isset( $data['timestamp'] ) ) {
                 $data['timestamp'] = current_time( 'mysql', true );
             }
@@ -557,6 +567,189 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                 $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 ARRAY_A
             );
+        }
+
+        /**
+         * Returns the latest qualifying attribution event before the supplied cutoff.
+         *
+         * @param array $criteria {
+         *     Optional query criteria.
+         *
+         * @type int|null $user_id Logged-in user ID to match.
+         * @type string|null $anonymous_user_guid Anonymous visitor GUID to match.
+         * @type string|null $session_id Session ID to match.
+         * @type string|null $cutoff_gmt Upper timestamp bound in GMT.
+         * @type int|null $lookback_days Lookback window in days.
+         * }
+         *
+         * @return array|null
+         */
+        public static function get_latest_qualifying_event( $criteria = array() ) {
+            global $wpdb;
+
+            $table_name = self::get_events_table_name();
+            $user_id = isset( $criteria['user_id'] ) ? intval( $criteria['user_id'] ) : 0;
+            $anonymous_user_guid = isset( $criteria['anonymous_user_guid'] ) ? sanitize_text_field( $criteria['anonymous_user_guid'] ) : '';
+            $session_id = isset( $criteria['session_id'] ) ? sanitize_text_field( $criteria['session_id'] ) : '';
+            $cutoff_gmt = isset( $criteria['cutoff_gmt'] ) ? sanitize_text_field( $criteria['cutoff_gmt'] ) : current_time( 'mysql', true );
+            $lookback_days = isset( $criteria['lookback_days'] ) ? max( 1, intval( $criteria['lookback_days'] ) ) : FOOCONVERT_METRICS_DAYS_DEFAULT;
+
+            $where = array(
+                "event_type IN ('" . esc_sql( FOOCONVERT_EVENT_TYPE_CLICK ) . "', '" . esc_sql( FOOCONVERT_EVENT_TYPE_CONVERSION ) . "')",
+                'sentiment = 1',
+                'timestamp <= %s',
+                'timestamp >= DATE_SUB(%s, INTERVAL %d DAY)',
+            );
+            $args = array( $cutoff_gmt, $cutoff_gmt, $lookback_days );
+
+            if ( $user_id > 0 ) {
+                $where[] = 'user_id = %d';
+                $args[] = $user_id;
+            } elseif ( $anonymous_user_guid !== '' ) {
+                $where[] = 'anonymous_user_guid = %s';
+                $args[] = $anonymous_user_guid;
+            } else {
+                return null;
+            }
+
+            if ( $session_id !== '' ) {
+                $where[] = 'session_id = %s';
+                $args[] = $session_id;
+            }
+
+            $query = "SELECT *
+                    FROM {$table_name}
+                    WHERE " . implode( ' AND ', $where ) . '
+                    ORDER BY timestamp DESC, id DESC
+                    LIMIT 1';
+
+            return $wpdb->get_row(
+                $wpdb->prepare( $query, $args ), // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                ARRAY_A
+            );
+        }
+
+        /**
+         * Checks if a sale event already exists for the supplied dedupe scope.
+         *
+         * @param string $dedupe_mode Dedupe mode.
+         * @param int $widget_id Widget ID.
+         * @param string|null $session_id Session ID.
+         * @return bool
+         */
+        public static function sale_exists_for_scope( $dedupe_mode, $widget_id, $session_id = null ) {
+            global $wpdb;
+
+            $table_name = self::get_events_table_name();
+            $widget_id = intval( $widget_id );
+            $session_id = is_string( $session_id ) ? sanitize_text_field( $session_id ) : '';
+
+            if ( $session_id === '' ) {
+                return false;
+            }
+
+            $query = "SELECT id
+                    FROM {$table_name}
+                    WHERE event_type = %s
+                      AND session_id = %s";
+            $args = array( FOOCONVERT_EVENT_TYPE_SALE, $session_id );
+
+            if ( $dedupe_mode === FOOCONVERT_SALE_DEDUPE_MODE_WIDGET_SESSION ) {
+                $query .= ' AND widget_id = %d';
+                $args[] = $widget_id;
+            }
+
+            $query .= ' LIMIT 1';
+
+            $result = $wpdb->get_var(
+                $wpdb->prepare( $query, $args ) // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+            );
+
+            return !empty( $result );
+        }
+
+        /**
+         * Retrieves sale events for a widget.
+         *
+         * @param int $widget_id Widget ID.
+         * @param int $days Lookback in days. Values less than 1 mean all time.
+         * @return array<int,array<string,mixed>>
+         */
+        public static function get_widget_sales( $widget_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
+            global $wpdb;
+
+            $table_name = self::get_events_table_name();
+            $widget_id = intval( $widget_id );
+            $days = intval( $days );
+
+            $query = "SELECT *
+                    FROM {$table_name}
+                    WHERE widget_id = %d
+                      AND event_type = %s";
+            $args = array( $widget_id, FOOCONVERT_EVENT_TYPE_SALE );
+
+            if ( $days > 0 ) {
+                $query .= ' AND timestamp >= DATE_SUB(NOW(), INTERVAL %d DAY)';
+                $args[] = $days;
+            }
+
+            $query .= ' ORDER BY timestamp DESC, id DESC';
+
+            return $wpdb->get_results(
+                $wpdb->prepare( $query, $args ), // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                ARRAY_A
+            );
+        }
+
+        /**
+         * Retrieves the most recent sale events globally.
+         *
+         * @param int $limit Max number of sale events to return.
+         * @return array<int,array<string,mixed>>
+         */
+        public static function get_recent_sales( $limit = 10 ) {
+            global $wpdb;
+
+            $table_name = self::get_events_table_name();
+            $limit = max( 1, intval( $limit ) );
+
+            $query = $wpdb->prepare(
+                "SELECT *
+                FROM {$table_name}
+                WHERE event_type = %s
+                ORDER BY timestamp DESC, id DESC
+                LIMIT %d",
+                FOOCONVERT_EVENT_TYPE_SALE,
+                $limit
+            );
+
+            return $wpdb->get_results( $query, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        }
+
+        /**
+         * Retrieves revenue totals grouped by widget.
+         *
+         * @param int $limit Max number of widgets to return.
+         * @return array<int,array<string,mixed>>
+         */
+        public static function get_sales_totals_by_widget( $limit = 10 ) {
+            global $wpdb;
+
+            $table_name = self::get_events_table_name();
+            $limit = max( 1, intval( $limit ) );
+
+            $query = $wpdb->prepare(
+                "SELECT widget_id, COUNT(*) as sale_count, COALESCE(SUM(event_value), 0) as total_sales
+                FROM {$table_name}
+                WHERE event_type = %s
+                GROUP BY widget_id
+                ORDER BY total_sales DESC, sale_count DESC
+                LIMIT %d",
+                FOOCONVERT_EVENT_TYPE_SALE,
+                $limit
+            );
+
+            return $wpdb->get_results( $query, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         }
 
         // phpcs:enable

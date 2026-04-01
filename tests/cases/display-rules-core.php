@@ -92,6 +92,7 @@ namespace {
     }
 
     require_once __DIR__ . '/../support/Assertions.php';
+    require_once dirname( __DIR__, 2 ) . '/includes/functions.php';
     require_once dirname( __DIR__, 2 ) . '/includes/DisplayRules.php';
 
     $display_rules = new DisplayRules();

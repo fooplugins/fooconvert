@@ -87,12 +87,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
              *  - user_id who was the user when the event happened. Will be null if not logged in.
              *  - session_id identifies the current browser session for this visitor. Will be null for server-side events.
              *  - anonymous_user_guid the unique id of an anonymous user from the frontend. Will be null if logged in.
+             *  - event_value stores the optional numeric value associated with the event, such as WooCommerce sale revenue.
              *  - extra_data is all the extra data associated with the event.
-             *      If event_type = 'conversion', then this will be the conversion data like the order id and value.
-             *      The conversion will always be linked to the widget with the most recent interaction that was not a dismissal or view.
-             *      This linking will be done using the user_id or anonymous_user_guid, whichever is present.
-             *          eg. if an order is for a logged in user, then this is trivial.
-             *          eg. if an order is for an anonymous user, then we need to use the anonymous_user_guid. If this is not available, then we do nothing.
              *  - timestamp is when the event happened
              */
 
@@ -108,6 +104,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
                 session_id varchar(255) DEFAULT NULL,
                 anonymous_user_guid varchar(255) DEFAULT NULL,
                 user_id bigint(20) unsigned DEFAULT NULL,
+                event_value decimal(19,4) DEFAULT NULL,
                 extra_data longtext DEFAULT NULL,
                 timestamp datetime DEFAULT $timestamp_default,
                 PRIMARY KEY (id)
@@ -158,6 +155,26 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
              * Purpose : Session-based analytics need to efficiently group visits by widget and browser session.
              */
             parent::safe_create_index( $table_name, 'idx_widget_session', 'widget_id, session_id(191)' );
+
+            /*
+             * Purpose : Attribute WooCommerce sales using the latest qualifying session event before checkout.
+             */
+            parent::safe_create_index( $table_name, 'idx_session_event_lookup', 'session_id(191), event_type, sentiment, timestamp' );
+
+            /*
+             * Purpose : Attribute WooCommerce sales using logged-in customer history.
+             */
+            parent::safe_create_index( $table_name, 'idx_user_event_lookup', 'user_id, event_type, sentiment, timestamp' );
+
+            /*
+             * Purpose : Attribute WooCommerce sales using anonymous visitor history.
+             */
+            parent::safe_create_index( $table_name, 'idx_anonymous_event_lookup', 'anonymous_user_guid(191), event_type, sentiment, timestamp' );
+
+            /*
+             * Purpose : Deduplicate sale events by session or widget/session.
+             */
+            parent::safe_create_index( $table_name, 'idx_event_type_session', 'event_type, session_id(191)' );
 
             /*
              * Purpose : Many metrics, such as unique visitors, conversion rate, and dismissal rate, rely on distinct counts of either user_id or anonymous_user_guid for each widget_id.

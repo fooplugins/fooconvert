@@ -51,7 +51,7 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
                 foreach ( $data as $key => $value ) {
                     if ( is_array( $value ) && empty( $value ) ) {
                         $data[$key] = null;
-                    } else if ( $value === '' || $value === 0 || $value === '0' ) {
+                    } else if ( $value === '' || ( $key !== 'event_value' && ( $value === 0 || $value === '0' ) ) ) {
                         $data[$key] = null;
                     }
                 }

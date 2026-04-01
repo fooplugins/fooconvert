@@ -138,6 +138,15 @@ function fooconvert_is_valid_post_type( $post_type ) {
 }
 
 /**
+ * Checks whether WooCommerce is active.
+ *
+ * @return bool
+ */
+function fooconvert_is_woocommerce_active() {
+    return class_exists( 'WooCommerce' );
+}
+
+/**
  * Retrieves the retention period for FooConvert data.
  *
  * The retention period is the number of days FooConvert will store its data.
