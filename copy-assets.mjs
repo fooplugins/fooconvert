@@ -3,7 +3,6 @@ import { dirname, join } from "path";
 import { copyFile, mkdir, rm } from "fs/promises";
 import sharp from "sharp";
 import { readdir } from "fs/promises";
-import { extname, basename } from "path";
 
 const BUILD_SCOPE = process.env.BUILD_SCOPE === "pro" ? "pro" : "free";
 
@@ -68,6 +67,9 @@ const resizeTemplates = async (sourceDir, destDir, width = 150, height = 150) =>
 
         console.log(`Resized ${imageFiles.length} image(s) from "${sourceDir}" → "${destDir}" (${width}x${height})`);
     } catch (err) {
+        if ( err?.code === "ENOENT" ) {
+            return;
+        }
         console.error(`Image resize error for "${sourceDir}": ${err.message}`);
     }
 };
@@ -78,9 +80,9 @@ await performCopy( "./src/media", "./assets/media", [ '**/*.{png,jpg,jpeg,gif,we
 await performCopy( "./src/admin", "./assets/admin", [ '**/*' ] );
 
 if ( BUILD_SCOPE === "pro" ) {
+    await rm( "./assets/pro", { force: true, recursive: true } );
+    await rm( "./pro/assets/blocks", { force: true, recursive: true } );
     await resizeTemplates("./pro/src/media/templates/fullsize", "./pro/src/media/templates");
     await performCopy( "./pro/src/media", "./pro/assets/media", [ '**/*.{png,jpg,jpeg,gif,webp,svg}', '!templates/fullsize/**' ] );
-    await performMove( "./assets/pro", "./pro/assets", [ '**/*' ] );
     await performMove( "./assets", "./pro/assets", [ 'editor-pro*.*', 'frontend-pro*.*' ], false );
-    await performCopy( "./pro/src", "./pro/assets", [ '**/block.json' ] );
 }

@@ -99,7 +99,7 @@ fooconvert/
 - **Countdown**: Countdown timer block
 - **Coupon**: Discount code display
 - **SignUp**: Newsletter signup forms
-- **Advanced blocks** in pro/src/blocks/
+- Premium editor plugins live in `pro/src/editor/plugins/`
 
 #### Custom Post Types
 - `fc-bar`: Bar widgets
