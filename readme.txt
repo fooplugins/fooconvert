@@ -145,6 +145,7 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 * Date Updated : 1 Apr 2026
 
 
+
 = 1.2.6 =
 * Date Updated : 15 Dec 2025
 * Fixed : Fixed error when creating bars and flyouts in block editor.
