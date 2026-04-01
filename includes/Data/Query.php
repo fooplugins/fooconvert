@@ -43,6 +43,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          * @type string|null $page_url The URL of the page where the event occurred.
          * @type string|null $device_type The type of device (e.g. 'desktop', 'mobile', 'tablet').
          * @type int|null $user_id The ID of the user (if logged in).
+         * @type string|null $session_id The ID of the browser session.
          * @type string|null $anonymous_user_guid The GUID of the anonymous user.
          * @type array|null $extra_data An array or extra event data.
          * @type string $timestamp The timestamp of the event.
@@ -85,19 +86,24 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                 return new WP_Error( 'invalid_event_data_user_id', 'The user ID must be a positive integer or null.' );
             }
 
-            // 6. Validate we have either a user_id or anonymous_user_guid
+            // 6. Validate session_id if provided (should be a string)
+            if ( isset( $data['session_id'] ) && !is_string( $data['session_id'] ) ) {
+                return new WP_Error( 'invalid_event_data_session_id', 'The session ID is not valid.' );
+            }
+
+            // 7. Validate we have either a user_id or anonymous_user_guid
             if ( !isset( $data['user_id'] ) && !isset( $data['anonymous_user_guid'] ) ) {
                 return new WP_Error( 'invalid_event_data_no_user', 'No user ID or anonymous user GUID was provided.' );
             }
 
-            // 7. Serialize extra_data if provided.
+            // 8. Serialize extra_data if provided.
             if ( isset( $data['extra_data'] ) && is_array( $data['extra_data'] ) && !empty( $data['extra_data'] ) ) {
                 $data['extra_data'] = maybe_serialize( $data['extra_data'] );
             } else {
                 $data['extra_data'] = null;
             }
 
-            // 8. Ensure timestamp is set.
+            // 9. Ensure timestamp is set.
             if ( !isset( $data['timestamp'] ) ) {
                 $data['timestamp'] = current_time( 'mysql', true );
             }
@@ -126,6 +132,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          * @type int $total_views The total number of views.
          * @type int $total_clicks The total number of clicks.
          * @type int $total_unique_visitors The total number of unique visitors.
+         * @type int $total_unique_sessions The total number of unique sessions.
+         * @type int $total_returning_visitors The total number of visitors with two or more sessions.
          * }
          */
         public static function get_widget_metrics( $widget_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
@@ -134,28 +142,61 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             $table_name = self::get_events_table_name();
             $widget_id  = intval( $widget_id );
             $days       = intval( $days );
+            $days_clause = $days > 0 ? ' AND timestamp >= NOW() - INTERVAL %d DAY' : '';
 
-            $query = apply_filters( 'fooconvert_get_widget_metrics_query', "SELECT 
-                    COUNT(CASE WHEN event_type != 'update' THEN 1 END) as total_events,
-                    COUNT(CASE WHEN event_type = 'open' THEN 1 END) as total_views,
-                    COUNT(CASE WHEN event_subtype = 'engagement' THEN 1 END) as total_engagements,
-                    COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as total_unique_visitors
-                    FROM {$table_name}
-                    WHERE widget_id = %d", $table_name );
+            $query = apply_filters(
+                'fooconvert_get_widget_metrics_query',
+                "SELECT 
+                    metrics.total_events,
+                    metrics.total_views,
+                    metrics.total_engagements,
+                    metrics.total_unique_visitors,
+                    metrics.total_unique_sessions,
+                    IFNULL(returning_visitors.total_returning_visitors, 0) as total_returning_visitors
+                    FROM (
+                        SELECT
+                            COUNT(CASE WHEN event_type != 'update' THEN 1 END) as total_events,
+                            COUNT(CASE WHEN event_type = 'open' THEN 1 END) as total_views,
+                            COUNT(CASE WHEN event_subtype = 'engagement' THEN 1 END) as total_engagements,
+                            COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as total_unique_visitors,
+                            COUNT(DISTINCT CASE WHEN event_type != 'update' AND session_id IS NOT NULL THEN session_id END) as total_unique_sessions
+                        FROM {$table_name}
+                        WHERE widget_id = %d{$days_clause}
+                    ) metrics
+                    LEFT JOIN (
+                        SELECT COUNT(*) as total_returning_visitors
+                        FROM (
+                            SELECT
+                                CASE
+                                    WHEN user_id IS NOT NULL THEN CONCAT('u:', user_id)
+                                    WHEN anonymous_user_guid IS NOT NULL THEN CONCAT('a:', anonymous_user_guid)
+                                    ELSE NULL
+                                END as visitor_key
+                            FROM {$table_name}
+                            WHERE widget_id = %d
+                                AND event_type != 'update'
+                                AND session_id IS NOT NULL
+                                AND ( user_id IS NOT NULL OR anonymous_user_guid IS NOT NULL ){$days_clause}
+                            GROUP BY visitor_key
+                            HAVING COUNT(DISTINCT session_id) >= 2
+                        ) returning_visitor_groups
+                    ) returning_visitors ON 1 = 1",
+                $table_name,
+                $days_clause
+            );
 
-            //Add a filter by days.
+            $query_args = [ $widget_id ];
             if ( $days > 0 ) {
-                $query .= " AND `timestamp` >= NOW() - INTERVAL %d DAY";
+                $query_args[] = $days;
+            }
+            $query_args[] = $widget_id;
+            if ( $days > 0 ) {
+                $query_args[] = $days;
             }
 
             // Prepare SQL query to return high-level statistics
             return $wpdb->get_row(
-
-                $wpdb->prepare(
-                    $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-                    $widget_id,
-                    $days
-                ),
+                $wpdb->prepare( $query, $query_args ), // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 ARRAY_A
             );
         }
@@ -194,15 +235,14 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             }
 
             $query .= ' GROUP BY event_date ORDER BY event_date ASC';
+            $query_args = [ $widget_id ];
+            if ( $days > 0 ) {
+                $query_args[] = $days;
+            }
 
             // Prepare recent activity for the last X days
             return $wpdb->get_results(
-
-                $wpdb->prepare(
-                    $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-                    $widget_id,
-                    $days
-                ),
+                $wpdb->prepare( $query, $query_args ), // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 ARRAY_A
             );
         }
@@ -460,6 +500,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          *     'total_views' => int The total number of views.
          *     'total_engagements' => int The total number of engagements.
          *     'total_unique_visitors' => int The total number of unique visitors.
+         *     'total_unique_sessions' => int The total number of unique sessions.
+         *     'total_returning_visitors' => int The total number of visitors with two or more sessions.
          *
          * @return array[] An array of arrays, each containing the metrics for a single widget.
          */
@@ -469,13 +511,46 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             $table_name = self::get_events_table_name();
 
             $query = apply_filters( 'fooconvert_get_all_widget_metrics_query', "SELECT
-                    widget_id,  
-                    COUNT(CASE WHEN event_type != 'update' THEN 1 END) as total_events,
-                    COUNT(CASE WHEN event_type = 'open' THEN 1 END) as total_views,
-                    COUNT(CASE WHEN event_subtype = 'engagement' THEN 1 END) as total_engagements,
-                    COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as total_unique_visitors
-                    FROM {$table_name}
-                    GROUP BY widget_id", $table_name );
+                    widget_totals.widget_id,
+                    widget_totals.total_events,
+                    widget_totals.total_views,
+                    widget_totals.total_engagements,
+                    widget_totals.total_unique_visitors,
+                    widget_totals.total_unique_sessions,
+                    IFNULL(returning_visitors.total_returning_visitors, 0) as total_returning_visitors
+                    FROM (
+                        SELECT
+                            widget_id,
+                            COUNT(CASE WHEN event_type != 'update' THEN 1 END) as total_events,
+                            COUNT(CASE WHEN event_type = 'open' THEN 1 END) as total_views,
+                            COUNT(CASE WHEN event_subtype = 'engagement' THEN 1 END) as total_engagements,
+                            COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as total_unique_visitors,
+                            COUNT(DISTINCT CASE WHEN event_type != 'update' AND session_id IS NOT NULL THEN session_id END) as total_unique_sessions
+                        FROM {$table_name}
+                        GROUP BY widget_id
+                    ) widget_totals
+                    LEFT JOIN (
+                        SELECT
+                            widget_id,
+                            COUNT(*) as total_returning_visitors
+                        FROM (
+                            SELECT
+                                widget_id,
+                                CASE
+                                    WHEN user_id IS NOT NULL THEN CONCAT('u:', user_id)
+                                    WHEN anonymous_user_guid IS NOT NULL THEN CONCAT('a:', anonymous_user_guid)
+                                    ELSE NULL
+                                END as visitor_key
+                            FROM {$table_name}
+                            WHERE event_type != 'update'
+                                AND session_id IS NOT NULL
+                                AND ( user_id IS NOT NULL OR anonymous_user_guid IS NOT NULL )
+                            GROUP BY widget_id, visitor_key
+                            HAVING COUNT(DISTINCT session_id) >= 2
+                        ) returning_visitor_groups
+                        GROUP BY widget_id
+                    ) returning_visitors
+                    ON widget_totals.widget_id = returning_visitors.widget_id", $table_name );
 
             // Prepare SQL query to return high-level statistics
             return $wpdb->get_results(

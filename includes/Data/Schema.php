@@ -66,6 +66,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
              *  - page_url is the url of the page that created the event
              *  - device_type is the type of device that was used for the event
              *  - user_id who was the user when the event happened. Will be null if not logged in.
+             *  - session_id identifies the current browser session for this visitor. Will be null for server-side events.
              *  - anonymous_user_guid the unique id of an anonymous user from the frontend. Will be null if logged in.
              *  - extra_data is all the extra data associated with the event.
              *      If event_type = 'conversion', then this will be the conversion data like the order id and value.
@@ -85,6 +86,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
                 sentiment tinyint(1) DEFAULT NULL,
                 page_url text DEFAULT NULL,
                 device_type varchar(50) DEFAULT NULL,
+                session_id varchar(255) DEFAULT NULL,
                 anonymous_user_guid varchar(255) DEFAULT NULL,
                 user_id bigint(20) unsigned DEFAULT NULL,
                 extra_data longtext DEFAULT NULL,
@@ -132,6 +134,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
              * This will be useful for metrics that need to count or filter specific event types (like view, click, conversion, and dismiss) within a time range.
              */
             parent::safe_create_index( $table_name, 'idx_widget_event_type_timestamp', 'widget_id, event_type, timestamp' );
+
+            /*
+             * Purpose : Session-based analytics need to efficiently group visits by widget and browser session.
+             */
+            parent::safe_create_index( $table_name, 'idx_widget_session', 'widget_id, session_id(191)' );
 
             /*
              * Purpose : Many metrics, such as unique visitors, conversion rate, and dismissal rate, rely on distinct counts of either user_id or anonymous_user_guid for each widget_id.

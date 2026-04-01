@@ -124,6 +124,8 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
                 'total_events'          => 0,
                 'total_views'           => 0,
                 'total_unique_visitors' => 0,
+                'total_unique_sessions' => 0,
+                'total_returning_visitors' => 0,
                 'total_engagements'     => 0,
             ] );
 
