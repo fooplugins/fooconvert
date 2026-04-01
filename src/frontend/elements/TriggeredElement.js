@@ -24,7 +24,12 @@ class TriggeredElement extends WidgetElement {
             "fc.element.visible",
             "fc.exit_intent",
             "cart.add",
-            "cart.updated"
+            "cart.updated",
+            "cart.remove",
+            "coupon.applied",
+            "coupon.invalid",
+            "checkout.error",
+            "checkout.payment_failed"
         ];
     }
 
@@ -294,6 +299,28 @@ class TriggeredElement extends WidgetElement {
                     return true;
             }
         };
+        const matchesCartRemoveWhere = payload => {
+            const productIds = Array.isArray( where?.productIds )
+                ? where.productIds.map( value => Number( value ) ).filter( Number.isInteger )
+                : [];
+            if ( productIds.length === 0 ) {
+                return true;
+            }
+
+            const removedItems = Array.isArray( payload?.delta?.removedItems ) ? payload.delta.removedItems : [];
+            return removedItems.some( item => productIds.includes( Number( item?.id ) ) );
+        };
+        const matchesCouponAppliedWhere = payload => {
+            const couponCodes = Array.isArray( where?.couponCodes )
+                ? where.couponCodes.map( value => `${ value ?? "" }`.trim().toLowerCase() ).filter( Boolean )
+                : [];
+            if ( couponCodes.length === 0 ) {
+                return true;
+            }
+
+            const couponCode = `${ payload?.couponCode ?? "" }`.trim().toLowerCase();
+            return couponCode !== "" && couponCodes.includes( couponCode );
+        };
         const createOneShotListener = ( eventName, callback ) => {
             let unsubscribe = null;
             unsubscribe = eventBus.on( eventName, payload => {
@@ -393,6 +420,18 @@ class TriggeredElement extends WidgetElement {
             case "cart.updated":
                 return eventBus.on( event, payload => {
                     if ( matchesCartUpdatedWhere( payload ) ) {
+                        this.onOpenTrigger( event, payload ?? null );
+                    }
+                } );
+            case "cart.remove":
+                return eventBus.on( event, payload => {
+                    if ( matchesCartRemoveWhere( payload ) ) {
+                        this.onOpenTrigger( event, payload ?? null );
+                    }
+                } );
+            case "coupon.applied":
+                return eventBus.on( event, payload => {
+                    if ( matchesCouponAppliedWhere( payload ) ) {
                         this.onOpenTrigger( event, payload ?? null );
                     }
                 } );
