@@ -69,9 +69,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             if ( function_exists( 'get_current_screen' ) ) {
                 $current_screen = get_current_screen();
 
-                if ( str_contains( $current_screen->id, 'fooconvert-pricing' ) ) {
+                if ( fooconvert_str_contains( $current_screen->id, 'fooconvert-pricing' ) ) {
                     return false;
-                } else if ( str_contains( $current_screen->id, FOOCONVERT_MENU_SLUG ) ) {
+                } else if ( fooconvert_str_contains( $current_screen->id, FOOCONVERT_MENU_SLUG ) ) {
                     return true;
                 }
 
@@ -103,7 +103,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                 $pages = array( 'contact', 'pricing' );
                 foreach ( $pages as $page ) {
                     $check = FOOCONVERT_MENU_SLUG . '-' . $page;
-                    if ( str_contains( $current_screen->id, $check ) ) {
+                    if ( fooconvert_str_contains( $current_screen->id, $check ) ) {
                         $drop = 'drop';
                         break;
                     }

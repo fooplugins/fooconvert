@@ -550,7 +550,7 @@ class DisplayRules extends BaseComponent {
             // otherwise go through the locations and 'flatten' them
             return array_reduce( $locations, function ( $result, $location ) {
                 $type = Utils::get_string( $location, 'type' );
-                if ( str_starts_with( $type, 'specific:' ) ) {
+                if ( fooconvert_str_starts_with( $type, 'specific:' ) ) {
                     // specific locations require post_ids that must be matched, so extract them out
                     $data = Utils::get_array( $location, 'data' );
                     $post_ids = array_reduce( $data, function ( $result, $data_value ) {
