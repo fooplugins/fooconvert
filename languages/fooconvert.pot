@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: FooConvert - Boost Conversions & Lead Generation 1.2.6\n"
+"Project-Id-Version: FooConvert - Boost Conversions & Lead Generation 2.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/fooplugins/fooconvert/issues\n"
 "Last-Translator: FooPlugins <info@fooplugins.com>\n"
 "Language-Team: FooPlugins <info@fooplugins.com>\n"
