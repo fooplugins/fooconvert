@@ -158,7 +158,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 foreach ( $daily_activity as $day ) {
                     $recent_activity_chart_data['labels'][] = $day['event_date'];
                     foreach ( $activity_meta_data as $key => $meta_data ) {
-                        $value = intval( $day[$key] );
+                        $raw_value = isset( $day[$key] ) ? $day[$key] : 0;
+                        $value = isset( $meta_data['value_type'] ) && $meta_data['value_type'] === 'float'
+                            ? (float) $raw_value
+                            : intval( $raw_value );
                         $activity_meta_data[$key]['data'][] = $value;
                         if ( $value < $min ) {
                             $min = $value;

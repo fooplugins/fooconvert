@@ -190,6 +190,11 @@ ol.fooconvert-ordered-list li::before {
     text-decoration: none;
 }
 
+.fooconvert-dashboard-table-amount {
+    text-align: right;
+    white-space: nowrap;
+}
+
 .fooconvert-tooltip {
     color: #aaa;
 }
@@ -202,6 +207,10 @@ ol.fooconvert-ordered-list li::before {
     padding: 2px 8px;
     font-size: 10px;
     text-transform: uppercase;
+}
+
+.fooconvert-dashboard-pill-row {
+    margin-top: 4px;
 }
 
 /* Top-level container for the slider */

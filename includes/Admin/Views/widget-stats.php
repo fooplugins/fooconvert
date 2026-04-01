@@ -102,4 +102,8 @@ if ( $widget_id ) {
         <canvas id="recentActivityChart"></canvas>
     </div>
 
+    <div class="fooconvert-sales-table-container loading">
+        <div class="fooconvert-sales-table-content"></div>
+    </div>
+
 </div>

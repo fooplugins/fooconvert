@@ -40,6 +40,9 @@ if ( empty( $top_performers ) ) {
         $stats_url = fooconvert_admin_url_widget_stats( $id );
         $stats_link = '<a href="' . esc_url( $stats_url ) . '"><i class="dashicons dashicons-chart-bar" title="' . esc_attr__( 'View Widget Stats', 'fooconvert' ) . '"></i></a>';
         $score = $top_performer['score'];
+        if ( isset( $sort_object['format'] ) && $sort_object['format'] === 'currency' ) {
+            $score = fooconvert_format_revenue( $score );
+        }
         $post_type = fooconvert_get_widget_post_type_label( $top_performer['post_type'] );
         echo '<tr>';
         echo '<td>#' . esc_attr( $index ) . '</td>';
@@ -57,5 +60,4 @@ if ( empty( $top_performers ) ) {
     echo '</tbody>';
     echo '</table>';
 }
-
 
