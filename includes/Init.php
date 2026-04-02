@@ -11,8 +11,12 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
 
     class Init {
 
+        /**
+         * Register startup hooks and initialize runtime services.
+         *
+         * @return void
+         */
         public function __construct() {
-
             // Load the plugin text domain for translations.
             add_action( 'init', function () {
                 $plugin_rel_path = dirname( plugin_basename( FOOCONVERT_FILE ) ) . '/languages/';
@@ -30,6 +34,7 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
             new Cron();
             new Fonts();
             new Admin\Templates\Init();
+            new Updater();
 
             if ( fooconvert_fs()->can_use_premium_code__premium_only() ) {
                 // Check if the PRO version is running and run the PRO code.

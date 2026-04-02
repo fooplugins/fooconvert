@@ -64,7 +64,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
             }
 
             // check the event type
-            $event_type = is_string( $data['eventType'] ) ? sanitize_text_field( $data['eventType'] ) : null;
+            $event_type = isset( $data['eventType'] ) && is_string( $data['eventType'] ) ? sanitize_text_field( $data['eventType'] ) : null;
             if ( empty( $event_type ) ) {
                 wp_send_json_error( 'Missing event type!' );
                 exit;
@@ -78,17 +78,23 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
             }
 
             // get other data
-            $device_type = is_string( $data['deviceType'] ) ? sanitize_text_field( $data['deviceType'] ) : null;
-            $page_url = is_string( $data['pageURL'] ) ? esc_url_raw( $data['pageURL'] ) : null;
-            $anonymous_user_guid = is_string( $data['uniqueID'] ) ? sanitize_text_field( $data['uniqueID'] ) : null;
-            $post_type = is_string( $data['postType'] ) ? sanitize_text_field( $data['postType'] ) : null;
-            $template = is_string( $data['template'] ) ? sanitize_text_field( $data['template'] ) : null;
+            $device_type = isset( $data['deviceType'] ) && is_string( $data['deviceType'] ) ? sanitize_text_field( $data['deviceType'] ) : null;
+            $page_url = isset( $data['pageURL'] ) && is_string( $data['pageURL'] ) ? esc_url_raw( $data['pageURL'] ) : null;
+            $session_id = isset( $data['sessionID'] ) && is_string( $data['sessionID'] ) ? sanitize_text_field( $data['sessionID'] ) : null;
+            $anonymous_user_guid = isset( $data['uniqueID'] ) && is_string( $data['uniqueID'] ) ? sanitize_text_field( $data['uniqueID'] ) : null;
+            $post_type = isset( $data['postType'] ) && is_string( $data['postType'] ) ? sanitize_text_field( $data['postType'] ) : null;
+            $template = isset( $data['template'] ) && is_string( $data['template'] ) ? sanitize_text_field( $data['template'] ) : null;
 
             // TODO: sanitize?
             $extra_data = isset( $data['extraData'] ) && is_array( $data['extraData'] ) ? $data['extraData'] : null;
 
             // TODO: handle email sign-up
-            if ( is_string( $extra_data['source'] ) && is_string( $extra_data['email'] ) ) {
+            if (
+                is_array( $extra_data )
+                && isset( $extra_data['source'], $extra_data['email'] )
+                && is_string( $extra_data['source'] )
+                && is_string( $extra_data['email'] )
+            ) {
                 // we have the minimum required for sign-up
 
                 $lead = new Lead();
@@ -116,6 +122,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
                 'event_type'          => $event_type,
                 'page_url'            => $page_url,
                 'device_type'         => $device_type,
+                'session_id'          => $session_id,
                 'anonymous_user_guid' => $anonymous_user_guid,
                 'extra_data'          => $extra_data
             ];
@@ -133,4 +140,3 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
         }
     }
 }
-

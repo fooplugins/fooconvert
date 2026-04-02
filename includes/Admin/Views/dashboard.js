@@ -22,6 +22,29 @@ jQuery(document).ready(function ($) {
         });
     }
 
+    function refreshSalesPanel() {
+        var $panel = $('.fooconvert-panel[data-panel="recent-sales"]');
+
+        if (!$panel.length || !$panel.is(':visible')) {
+            return;
+        }
+
+        $.ajax({
+            url: fooconvertData.ajaxUrl,
+            method: 'POST',
+            data: {
+                action: 'fooconvert_dashboard_task',
+                task: 'fetch_sales_panel',
+                nonce: fooconvertData.nonce
+            },
+            success: function (response) {
+                if (response.html) {
+                    $panel.replaceWith(response.html);
+                }
+            }
+        });
+    }
+
     // Fetch and display the dashboard data on page load
     fetchDashboardData();
 
@@ -49,6 +72,7 @@ jQuery(document).ready(function ($) {
                 $button.removeAttr('disabled');
                 $('.fooconvert-last-updated').html(response.message);
                 fetchDashboardData();
+                refreshSalesPanel();
             },
             error: function () {
                 $spinner.removeClass('is-active');
@@ -109,7 +133,7 @@ jQuery(document).ready(function ($) {
     });
 
     // Hide panel
-    $('.fooconvert-hide-panel').click(function (e) {
+    $(document).on('click', '.fooconvert-hide-panel', function (e) {
         e.preventDefault();
         var $spinner = $('<span class="spinner is-active panel-hide-spinner"></span>'),
             panel = $(this).data('panel'),

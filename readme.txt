@@ -4,7 +4,7 @@ Tags: popups,bars,flyouts,conversion,marketing
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 7.0
-Stable tag: 1.2.6
+Stable tag: 2.0.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -140,6 +140,11 @@ No, FooConvert is optimized for performance and has minimal impact on your websi
 The source code for this plugin is available publicly on GitHub [here](https://github.com/fooplugins/fooconvert).
 
 == Changelog ==
+
+= 2.0.0 =
+* Date Updated : 1 Apr 2026
+
+
 
 = 1.2.6 =
 * Date Updated : 15 Dec 2025

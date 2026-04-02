@@ -2,14 +2,12 @@
 
 namespace FooPlugins\FooConvert\Admin;
 
-use FooPlugins\FooConvert\Data\Schema;
 use FooPlugins\FooConvert\FooConvert;
 
 if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
 
     class Init {
         function __construct() {
-            add_action( 'admin_init', array( $this, 'check_database' ) );
             add_action( 'admin_menu', array( $this, 'register_menu' ) );
             add_action( 'in_admin_header', array( $this, 'add_custom_header' ) );
             add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueues' ) );
@@ -31,11 +29,6 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
 
                 return $settings;
             }, 10, 2 );
-        }
-
-        public function check_database() {
-            $schema = new Schema();
-            $schema->create_event_table_if_needed();
         }
 
         public function register_menu() {
@@ -76,9 +69,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             if ( function_exists( 'get_current_screen' ) ) {
                 $current_screen = get_current_screen();
 
-                if ( str_contains( $current_screen->id, 'fooconvert-pricing' ) ) {
+                if ( fooconvert_str_contains( $current_screen->id, 'fooconvert-pricing' ) ) {
                     return false;
-                } else if ( str_contains( $current_screen->id, FOOCONVERT_MENU_SLUG ) ) {
+                } else if ( fooconvert_str_contains( $current_screen->id, FOOCONVERT_MENU_SLUG ) ) {
                     return true;
                 }
 
@@ -110,7 +103,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                 $pages = array( 'contact', 'pricing' );
                 foreach ( $pages as $page ) {
                     $check = FOOCONVERT_MENU_SLUG . '-' . $page;
-                    if ( str_contains( $current_screen->id, $check ) ) {
+                    if ( fooconvert_str_contains( $current_screen->id, $check ) ) {
                         $drop = 'drop';
                         break;
                     }

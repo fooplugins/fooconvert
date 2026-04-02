@@ -133,6 +133,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
                     $this->hide_panel();
                     break;
                 default:
+                    $task_action = 'fooconvert_dashboard_task_' . sanitize_key( $task );
+                    if ( has_action( $task_action ) ) {
+                        do_action( $task_action, $this );
+                        return;
+                    }
+
                     wp_die( esc_html__( 'Invalid dashboard task!', 'fooconvert' ) );
 
             }

@@ -1,6 +1,7 @@
 import { isNumber, isPlainObject, isString } from "@steveush/utils";
 
 import getDeviceType from "./getDeviceType";
+import getSessionID from "./getSessionID";
 import getUniqueID from "./getUniqueID";
 import cfg from "../config";
 
@@ -36,9 +37,10 @@ export const LOG_EVENT_TYPES = {
 const logEvent = ( widgetId, postType, template, eventType, extraData ) => {
     if ( isNumber( widgetId ) && isString( postType ) && isString( template ) && isString( eventType ) ) {
         const deviceType = getDeviceType();
+        const sessionID = getSessionID();
         const uniqueID = getUniqueID();
         const pageURL = globalThis?.window?.location?.href;
-        if ( isString( uniqueID ) && isString( pageURL ) ) {
+        if ( isString( uniqueID ) && isString( sessionID ) && isString( pageURL ) ) {
             const data = {
                 widgetId,
                 postType,
@@ -46,6 +48,7 @@ const logEvent = ( widgetId, postType, template, eventType, extraData ) => {
                 eventType,
                 deviceType,
                 pageURL,
+                sessionID,
                 uniqueID
             };
 

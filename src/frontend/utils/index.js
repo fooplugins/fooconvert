@@ -7,6 +7,7 @@ export { default as getCookie } from "./getCookie";
 export { default as getDeviceType } from "./getDeviceType";
 export { default as getDocumentScrollPercent } from "./getDocumentScrollPercent";
 export { default as getElementConfiguration } from "./getElementConfiguration";
+export { default as getSessionID } from "./getSessionID";
 export { default as getTimeDifference } from "./getTimeDifference";
 export { default as getUniqueID } from "./getUniqueID";
 export { default as getValidationAttributes } from "./getValidationAttributes";

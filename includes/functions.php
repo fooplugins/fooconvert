@@ -22,6 +22,55 @@ function fooconvert_safe_get_from_array( $key, $array, $default ) {
 }
 
 /**
+ * Polyfill wrapper for str_contains().
+ *
+ * @param string $haystack The string to search in.
+ * @param string $needle The substring to search for.
+ * @return bool True when the needle is found in the haystack.
+ */
+function fooconvert_str_contains( $haystack, $needle ) {
+    if ( function_exists( 'str_contains' ) ) {
+        return str_contains( $haystack, $needle );
+    }
+
+    return '' === $needle || false !== strpos( $haystack, $needle );
+}
+
+/**
+ * Polyfill wrapper for str_starts_with().
+ *
+ * @param string $haystack The string to inspect.
+ * @param string $needle The prefix to look for.
+ * @return bool True when the haystack starts with the needle.
+ */
+function fooconvert_str_starts_with( $haystack, $needle ) {
+    if ( function_exists( 'str_starts_with' ) ) {
+        return str_starts_with( $haystack, $needle );
+    }
+
+    return 0 === strncmp( $haystack, $needle, strlen( $needle ) );
+}
+
+/**
+ * Polyfill wrapper for str_ends_with().
+ *
+ * @param string $haystack The string to inspect.
+ * @param string $needle The suffix to look for.
+ * @return bool True when the haystack ends with the needle.
+ */
+function fooconvert_str_ends_with( $haystack, $needle ) {
+    if ( function_exists( 'str_ends_with' ) ) {
+        return str_ends_with( $haystack, $needle );
+    }
+
+    if ( '' === $needle ) {
+        return true;
+    }
+
+    return 0 === substr_compare( $haystack, $needle, -strlen( $needle ) );
+}
+
+/**
  * Returns the fooconvert settings from options table
  */
 function fooconvert_get_settings() {
@@ -86,6 +135,15 @@ function fooconvert_get_post_types() {
  */
 function fooconvert_is_valid_post_type( $post_type ) {
     return in_array( $post_type, fooconvert_get_post_types() );
+}
+
+/**
+ * Checks whether WooCommerce is active.
+ *
+ * @return bool
+ */
+function fooconvert_is_woocommerce_active() {
+    return class_exists( 'WooCommerce' );
 }
 
 /**

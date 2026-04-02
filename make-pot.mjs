@@ -10,7 +10,7 @@ const headers = {
 };
 
 console.info( `Creating '${ output }' file...` );
-exec( `wp i18n make-pot . ${ output } --exclude=src`, async ( error, stdout, stderr ) => {
+exec( `wp i18n make-pot . ${ output } --exclude=assets,pro/assets,node_modules,vendor,tests`, async ( error, stdout, stderr ) => {
     if ( error ) {
         console.error( 'An error occurred executing the make-pot command.', error );
         process.exitCode = 1;

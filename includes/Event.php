@@ -51,7 +51,7 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
                 foreach ( $data as $key => $value ) {
                     if ( is_array( $value ) && empty( $value ) ) {
                         $data[$key] = null;
-                    } else if ( $value === '' || $value === 0 || $value === '0' ) {
+                    } else if ( $value === '' || ( $key !== 'event_value' && ( $value === 0 || $value === '0' ) ) ) {
                         $data[$key] = null;
                     }
                 }
@@ -124,6 +124,8 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
                 'total_events'          => 0,
                 'total_views'           => 0,
                 'total_unique_visitors' => 0,
+                'total_unique_sessions' => 0,
+                'total_returning_visitors' => 0,
                 'total_engagements'     => 0,
             ] );
 

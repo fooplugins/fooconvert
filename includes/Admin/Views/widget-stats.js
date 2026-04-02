@@ -25,9 +25,14 @@ jQuery(document).ready(function ($) {
 
                 // Remove loading state from chart container before rendering
                 $('.fooconvert-recent-activity-container').removeClass('loading');
+                $('.fooconvert-sales-table-container').removeClass('loading');
 
                 // Render chart for recent activity
                 renderRecentActivityChart(response);
+
+                if (response.sales_table_html) {
+                    $('.fooconvert-sales-table-content').html(response.sales_table_html);
+                }
 
                 // Render PRO metrics if available
                 // $('#conversion-rate').text(response.conversion_rate + '%');
@@ -40,7 +45,7 @@ jQuery(document).ready(function ($) {
             },
             error: function () {
                 // Remove loading states even on error to show empty state
-                $('.metric, .fooconvert-recent-activity-container').removeClass('loading');
+                $('.metric, .fooconvert-recent-activity-container, .fooconvert-sales-table-container').removeClass('loading');
                 console.error("Failed to fetch stats.");
             }
         });
@@ -88,6 +93,36 @@ jQuery(document).ready(function ($) {
                 ...overrideOptions.scales,
             }
         };
+
+        if (response.currency && finalOptions.scales && finalOptions.scales.ySales) {
+            const formatter = new Intl.NumberFormat(undefined, {
+                style: 'currency',
+                currency: response.currency.code || 'USD'
+            });
+            finalOptions.scales.ySales = {
+                ...finalOptions.scales.ySales,
+                ticks: {
+                    ...(finalOptions.scales.ySales.ticks || {}),
+                    callback: value => formatter.format(Number(value || 0))
+                }
+            };
+            finalOptions.plugins = {
+                ...finalOptions.plugins,
+                tooltip: {
+                    ...(finalOptions.plugins?.tooltip || {}),
+                    callbacks: {
+                        ...(finalOptions.plugins?.tooltip?.callbacks || {}),
+                        label: context => {
+                            if (context?.dataset?.yAxisID === 'ySales') {
+                                return `${context.dataset.label}: ${formatter.format(Number(context.parsed?.y || 0))}`;
+                            }
+
+                            return `${context.dataset.label}: ${context.formattedValue}`;
+                        }
+                    }
+                }
+            };
+        }
 
         // Create a new chart instance
         window.recentActivityChartInstance = new Chart(ctx, {
@@ -183,6 +218,7 @@ jQuery(document).ready(function ($) {
 
     $('.fooconvert-recent-activity-days').change(function () {
         $('.fooconvert-recent-activity-container').addClass('loading');
+        $('.fooconvert-sales-table-container').addClass('loading');
         $('.metric').addClass('loading');
         fetchStats();
     });

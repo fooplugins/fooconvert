@@ -25,12 +25,14 @@ const ExperimentPanel = () => {
     const roleLabel = role === "control" ? __( "Control", "fooconvert" ) : __( "Variant", "fooconvert" );
     const participantLabel = label || roleLabel;
     const singularName = labels?.singular_name || __( "Widget", "fooconvert" );
+    /* translators: %s is the singular widget label, for example "Popup". */
+    const experimentDescription = sprintf( __( "This %s is part of an A/B test experiement", "fooconvert" ), singularName );
 
     return (
         <PluginDocumentSettingPanel name="fc--experiment" title={ __( "Experiment", "fooconvert" ) }>
             <PanelRow>
                 <div className="fc-experiment-panel__description">
-                    { sprintf( __( "This %s is part of an A/B test experiement", "fooconvert" ), singularName ) }
+                    { experimentDescription }
                 </div>
             </PanelRow>
             <PanelRow>
