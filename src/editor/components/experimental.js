@@ -47,19 +47,19 @@ import {
  * @param {Stable} stable - The value from importing the expected stable variable.
  * @param {string} stableName - The name of the stable variable.
  * @param {string} pkgName - The package the experimental and stable variables were imported from.
- * @returns {Experimental extends undefined ? (Stable extends undefined ? never : Stable) : Experimental}
+ * @returns {Stable extends undefined ? Experimental : Stable}
  * @throws Error If both the experimental and stable variables are undefined.
  */
 const import_x = ( experimental, experimentalName, stable, stableName, pkgName ) => {
     if ( typeof experimental !== 'undefined' ) {
         if ( typeof stable !== 'undefined' ) {
-            console.warn( `Using '${ experimentalName }' from '${ pkgName }' when '${ stableName }' is defined.` );
+            console.info( `FooConvert: Using '${ stableName }' from '${ pkgName }' because '${ experimentalName }' is deprecated.` );
             return stable;
         }
         return experimental;
     }
     if ( typeof stable !== 'undefined' ) {
-        console.warn( `Removed '${ experimentalName }' from '${ pkgName }', use '${ stableName }' instead.` );
+        console.info( `FooConvert: Using '${ stableName }' from '${ pkgName }' because '${ experimentalName }' has been removed.` );
         return stable;
     }
     throw new Error( `Could not import '${ experimentalName }' or '${ stableName }' from '${ pkgName }'.` );

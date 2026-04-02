@@ -67,6 +67,7 @@ const TriggerControls = () => {
                         onChange={ setTrigger }
                         locked={ isLocked }
                         allowEmpty={ true }
+                        help={ __( 'Select how the popup is opened.', 'fooconvert' ) }
                         hideLabelFromVision
                     />
                 </PanelRow>

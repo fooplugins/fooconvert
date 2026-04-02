@@ -98,5 +98,6 @@ export const initCoreAdapter = () => {
     document.body?.addEventListener( "mouseleave", onMouseLeave, { passive: true } );
 
     eventBus.emit( "fc.immediate", { source: "core" } );
+    eventBus.emit( "fc.scroll.percent", { percent: getDocumentScrollPercent() } );
     ensureVisibilityObserver();
 };

@@ -74,6 +74,8 @@ const TriggerControls = () => {
                         onChange={ setTrigger }
                         locked={ isLocked }
                         allowEmpty={ true }
+                        help={ __( 'Select how the flyout is opened.', 'fooconvert' ) }
+                        showDivider
                         hideLabelFromVision
                     />
                 </PanelRow>
