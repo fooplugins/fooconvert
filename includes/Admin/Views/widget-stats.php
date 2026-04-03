@@ -32,7 +32,9 @@ if ( $widget_id ) {
 }
 ?>
 
-<div class="fooconvert-stats-container" data-widget-id="<?php echo esc_attr( $widget_id ); ?>">
+<?php $has_sales_panel = false !== has_action( 'fooconvert_widget_stats_html-sales_panel' ); ?>
+
+<div class="fooconvert-stats-container<?php echo $has_sales_panel ? ' has-sales-panel' : ''; ?>" data-widget-id="<?php echo esc_attr( $widget_id ); ?>">
     <div class="fooconvert-stats-header">
         <h2><?php
             // Translators: %s refers to the title of the widget.
@@ -102,8 +104,10 @@ if ( $widget_id ) {
         <canvas id="recentActivityChart"></canvas>
     </div>
 
-    <div class="fooconvert-sales-table-container loading">
-        <div class="fooconvert-sales-table-content"></div>
-    </div>
+    <?php if ( $has_sales_panel ) : ?>
+        <div class="fooconvert-sales-panel-container fooconvert-sales-table-container loading">
+            <?php do_action( 'fooconvert_widget_stats_html-sales_panel', $widget_id, $widget ); ?>
+        </div>
+    <?php endif; ?>
 
 </div>
