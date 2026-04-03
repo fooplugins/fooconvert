@@ -74,6 +74,8 @@ const TriggerControls = () => {
                         onChange={ setTrigger }
                         locked={ isLocked }
                         allowEmpty={ true }
+                        help={ __( 'Select how the bar is opened.', 'fooconvert' ) }
+                        showDivider
                         hideLabelFromVision
                     />
                 </PanelRow>

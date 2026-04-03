@@ -116,15 +116,18 @@ class OpenTriggerPanel extends BaseComponent {
             return array();
         }
 
+        $first_event = isset( $normalized_steps[0]['event'] ) ? strval( $normalized_steps[0]['event'] ) : '';
+        $definition = !empty( $first_event ) ? $this->get_trigger_definition_by_event( $first_event ) : array();
+
         $lifetime = Utils::get_string( $trigger, 'lifetime', 'page' );
         if ( !in_array( $lifetime, self::LIFETIMES, true ) ) {
             $lifetime = 'page';
         }
 
         $frequency = Utils::get_array( $trigger, 'frequency' );
-        $frequency_mode = Utils::get_string( $frequency, 'mode', 'repeat' );
+        $frequency_mode = Utils::get_string( $frequency, 'mode', $this->get_default_frequency_mode( $definition ) );
         if ( !in_array( $frequency_mode, self::FREQUENCY_MODES, true ) ) {
-            $frequency_mode = 'repeat';
+            $frequency_mode = $this->get_default_frequency_mode( $definition );
         }
         $cooldown_seconds = Utils::get_int( $frequency, 'cooldownSeconds' );
         if ( $cooldown_seconds < 0 ) {
@@ -245,6 +248,16 @@ class OpenTriggerPanel extends BaseComponent {
     }
 
     /**
+     * Returns the default frequency mode for a trigger definition.
+     *
+     * @param array $definition Trigger definition metadata.
+     * @return string
+     */
+    private function get_default_frequency_mode( array $definition ): string {
+        return !empty( $definition['defaultOnce'] ) ? 'once' : 'repeat';
+    }
+
+    /**
      * Normalizes a single trigger step.
      *
      * @param array $step Raw step definition.
@@ -282,7 +295,9 @@ class OpenTriggerPanel extends BaseComponent {
      */
     private function normalize_where( array $definition, array $where ): array {
         $normalized = array();
-        $fields = isset( $definition['fields'] ) && is_array( $definition['fields'] ) ? $definition['fields'] : array();
+        $fields = $this->get_leaf_fields(
+            isset( $definition['fields'] ) && is_array( $definition['fields'] ) ? $definition['fields'] : array()
+        );
 
         foreach ( $fields as $field ) {
             $path = isset( $field['path'] ) ? strval( $field['path'] ) : '';
@@ -296,6 +311,43 @@ class OpenTriggerPanel extends BaseComponent {
         }
 
         return $normalized;
+    }
+
+    /**
+     * Flattens nested section fields into a list of input fields.
+     *
+     * @param array $fields Trigger field definitions.
+     * @return array<int,array<string,mixed>>
+     */
+    private function get_leaf_fields( array $fields ): array {
+        $result = array();
+
+        foreach ( $fields as $field ) {
+            if ( !is_array( $field ) ) {
+                continue;
+            }
+
+            $type = isset( $field['type'] ) ? strval( $field['type'] ) : '';
+            if ( $type === 'section' ) {
+                $children = isset( $field['fields'] ) && is_array( $field['fields'] ) ? $field['fields'] : array();
+                $result = array_merge( $result, $this->get_leaf_fields( $children ) );
+                continue;
+            }
+            if ( $type === 'rules' ) {
+                $groups = isset( $field['groups'] ) && is_array( $field['groups'] ) ? $field['groups'] : array();
+                foreach ( $groups as $group ) {
+                    if ( is_array( $group ) ) {
+                        $children = isset( $group['fields'] ) && is_array( $group['fields'] ) ? $group['fields'] : array();
+                        $result   = array_merge( $result, $this->get_leaf_fields( $children ) );
+                    }
+                }
+                continue;
+            }
+
+            $result[] = $field;
+        }
+
+        return $result;
     }
 
     /**
@@ -342,6 +394,7 @@ class OpenTriggerPanel extends BaseComponent {
     private function get_trigger_definitions(): array {
         $definitions = array(
             array(
+                'group'        => __( 'General', 'fooconvert' ),
                 'event'        => 'fc.immediate',
                 'label'        => __( 'On page load', 'fooconvert' ),
                 'help'         => __( 'Open immediately on page load.', 'fooconvert' ),
@@ -351,6 +404,7 @@ class OpenTriggerPanel extends BaseComponent {
                 'fields'       => array()
             ),
             array(
+                'group'        => __( 'Elements', 'fooconvert' ),
                 'event'        => 'fc.anchor.click',
                 'label'        => __( 'On anchor click', 'fooconvert' ),
                 'help'         => __( 'Open when an anchor is clicked.', 'fooconvert' ),
@@ -368,6 +422,7 @@ class OpenTriggerPanel extends BaseComponent {
                 )
             ),
             array(
+                'group'        => __( 'Elements', 'fooconvert' ),
                 'event'        => 'fc.element.visible',
                 'label'        => __( 'On anchor visible', 'fooconvert' ),
                 'help'         => __( 'Open when an anchor becomes visible within the window.', 'fooconvert' ),
@@ -385,6 +440,7 @@ class OpenTriggerPanel extends BaseComponent {
                 )
             ),
             array(
+                'group'        => __( 'Elements', 'fooconvert' ),
                 'event'        => 'fc.element.click',
                 'label'        => __( 'On element click', 'fooconvert' ),
                 'help'         => __( 'Open when an element is clicked.', 'fooconvert' ),
@@ -402,6 +458,7 @@ class OpenTriggerPanel extends BaseComponent {
                 )
             ),
             array(
+                'group'        => __( 'Behavior', 'fooconvert' ),
                 'event'        => 'fc.exit_intent',
                 'label'        => __( 'On exit intent', 'fooconvert' ),
                 'help'         => __( 'Open when the mouse exits the top of the window.', 'fooconvert' ),
@@ -421,6 +478,7 @@ class OpenTriggerPanel extends BaseComponent {
                 )
             ),
             array(
+                'group'        => __( 'Behavior', 'fooconvert' ),
                 'event'        => 'fc.scroll.percent',
                 'label'        => __( 'On page scroll', 'fooconvert' ),
                 'help'         => __( 'Open after the page has been scrolled.', 'fooconvert' ),
@@ -440,6 +498,7 @@ class OpenTriggerPanel extends BaseComponent {
                 )
             ),
             array(
+                'group'        => __( 'Behavior', 'fooconvert' ),
                 'event'        => 'fc.timer.elapsed',
                 'label'        => __( 'On timer elapsed', 'fooconvert' ),
                 'help'         => __( 'Open after a specified amount of time.', 'fooconvert' ),
@@ -510,6 +569,8 @@ class OpenTriggerPanel extends BaseComponent {
                 return $this->normalize_string_array( $value );
             case 'int-list':
                 return $this->normalize_int_array( $value );
+            case 'entity-record-list':
+                return $this->normalize_entity_record_ids( $value );
             case 'text':
                 return Utils::is_string( $value ) ? strval( $value ) : strval( $default ?? '' );
             case 'select':
@@ -540,6 +601,33 @@ class OpenTriggerPanel extends BaseComponent {
         }
 
         return $default;
+    }
+
+    /**
+     * Converts an array of entity-record tokens or IDs into unique positive integers.
+     *
+     * @param mixed $value Raw entity token or ID list.
+     * @return int[]
+     */
+    private function normalize_entity_record_ids( $value ): array {
+        if ( !is_array( $value ) ) {
+            return $this->normalize_int_array( $value );
+        }
+
+        $result = array();
+        foreach ( $value as $entry ) {
+            if ( is_array( $entry ) && isset( $entry['id'] ) ) {
+                $int = intval( $entry['id'] );
+            } else {
+                $int = intval( $entry );
+            }
+
+            if ( $int > 0 ) {
+                $result[] = $int;
+            }
+        }
+
+        return array_values( array_unique( $result ) );
     }
 
     /**

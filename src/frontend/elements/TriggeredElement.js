@@ -24,7 +24,17 @@ class TriggeredElement extends WidgetElement {
             "fc.element.visible",
             "fc.exit_intent",
             "cart.add",
-            "cart.updated"
+            "cart.updated",
+            "cart.remove",
+            "coupon.applied",
+            "coupon.invalid",
+            "checkout.error",
+            "checkout.payment_failed",
+            "cart.idle",
+            "checkout.enter",
+            "checkout.exit",
+            "product.view",
+            "product.high_intent"
         ];
     }
 
@@ -243,6 +253,30 @@ class TriggeredElement extends WidgetElement {
         const eventBus = getEventBus();
         const event = this.triggerEvent;
         const where = this.triggerWhere;
+        const getWooConfig = () => globalThis?.FooConvert?.config?.woo ?? {};
+        const getWooPage = () => {
+            const page = getWooConfig()?.page;
+            return isPlainObject( page ) ? page : {};
+        };
+        const getWooProduct = () => {
+            const product = getWooConfig()?.product;
+            return isPlainObject( product ) ? product : {};
+        };
+        const defer = callback => {
+            if ( typeof queueMicrotask === "function" ) {
+                queueMicrotask( callback );
+            } else {
+                setTimeout( callback, 0 );
+            }
+        };
+        const getCurrentProductId = () => Number( getWooProduct()?.id ?? 0 );
+        const getCurrentProductViewCount = () => Number( getWooProduct()?.viewCountInSession ?? 0 );
+        const matchesConfiguredProductIds = productId => {
+            const productIds = Array.isArray( where?.productIds )
+                ? where.productIds.map( value => Number( value ) ).filter( Number.isInteger )
+                : [];
+            return productIds.length === 0 || productIds.includes( Number( productId ) );
+        };
         const parseCurrencyAmountToMinor = ( value, minorUnit = 2 ) => {
             if ( value === null || value === undefined || value === "" ) {
                 return null;
@@ -293,6 +327,59 @@ class TriggeredElement extends WidgetElement {
                 default:
                     return true;
             }
+        };
+        const matchesCartRemoveWhere = payload => {
+            const productIds = Array.isArray( where?.productIds )
+                ? where.productIds.map( value => Number( value ) ).filter( Number.isInteger )
+                : [];
+            if ( productIds.length === 0 ) {
+                return true;
+            }
+
+            const removedItems = Array.isArray( payload?.delta?.removedItems ) ? payload.delta.removedItems : [];
+            return removedItems.some( item => productIds.includes( Number( item?.id ) ) );
+        };
+        const matchesCouponAppliedWhere = payload => {
+            const couponCodes = Array.isArray( where?.couponCodes )
+                ? where.couponCodes.map( value => `${ value ?? "" }`.trim().toLowerCase() ).filter( Boolean )
+                : [];
+            if ( couponCodes.length === 0 ) {
+                return true;
+            }
+
+            const couponCode = `${ payload?.couponCode ?? "" }`.trim().toLowerCase();
+            return couponCode !== "" && couponCodes.includes( couponCode );
+        };
+        const createActivityTracker = onActivity => {
+            let lastActivityAt = Date.now();
+            const markActive = () => {
+                lastActivityAt = Date.now();
+                if ( isFunction( onActivity ) ) {
+                    onActivity();
+                }
+            };
+            const passiveOptions = { passive: true };
+            const events = [
+                [ "click", passiveOptions ],
+                [ "scroll", passiveOptions ],
+                [ "keydown", passiveOptions ],
+                [ "input", passiveOptions ],
+                [ "change", passiveOptions ]
+            ];
+            events.forEach( ( [ name, options ] ) => {
+                document.addEventListener( name, markActive, options );
+            } );
+
+            return {
+                getIdleSeconds() {
+                    return Math.floor( ( Date.now() - lastActivityAt ) / 1000 );
+                },
+                destroy() {
+                    events.forEach( ( [ name, options ] ) => {
+                        document.removeEventListener( name, markActive, options );
+                    } );
+                }
+            };
         };
         const createOneShotListener = ( eventName, callback ) => {
             let unsubscribe = null;
@@ -396,6 +483,158 @@ class TriggeredElement extends WidgetElement {
                         this.onOpenTrigger( event, payload ?? null );
                     }
                 } );
+            case "cart.remove":
+                return eventBus.on( event, payload => {
+                    if ( matchesCartRemoveWhere( payload ) ) {
+                        this.onOpenTrigger( event, payload ?? null );
+                    }
+                } );
+            case "coupon.applied":
+                return eventBus.on( event, payload => {
+                    if ( matchesCouponAppliedWhere( payload ) ) {
+                        this.onOpenTrigger( event, payload ?? null );
+                    }
+                } );
+            case "cart.idle": {
+                const page = getWooPage();
+                if ( !page?.isCartPage && !page?.isCheckoutPage ) {
+                    return null;
+                }
+
+                const delaySeconds = Number( where?.delaySeconds ?? 60 );
+                if ( !Number.isFinite( delaySeconds ) || delaySeconds < 1 ) {
+                    return null;
+                }
+
+                let armed = true;
+                const activity = createActivityTracker( () => {
+                    armed = true;
+                } );
+                const stopListening = eventBus.on( "fc.timer.tick", payload => {
+                    const elapsedSeconds = Number( payload?.elapsedSeconds );
+                    if ( armed && Number.isFinite( elapsedSeconds ) && activity.getIdleSeconds() >= delaySeconds ) {
+                        armed = false;
+                        this.onOpenTrigger( event, {
+                            delaySeconds,
+                            idleSeconds: activity.getIdleSeconds(),
+                            page
+                        } );
+                    }
+                } );
+
+                return () => {
+                    activity.destroy();
+                    if ( isFunction( stopListening ) ) {
+                        stopListening();
+                    }
+                };
+            }
+            case "checkout.enter": {
+                const page = getWooPage();
+                if ( page?.isCheckoutPage ) {
+                    defer( () => this.onOpenTrigger( event, { page } ) );
+                }
+                return null;
+            }
+            case "checkout.exit": {
+                const page = getWooPage();
+                if ( !page?.isCheckoutPage ) {
+                    return null;
+                }
+
+                const listener = payload => {
+                    this.onOpenTrigger( event, {
+                        ...payload,
+                        page
+                    } );
+                };
+
+                return createOneShotListener( "fc.exit_intent", payload => {
+                    listener( payload );
+                    return true;
+                } );
+            }
+            case "product.view": {
+                const page = getWooPage();
+                const productId = getCurrentProductId();
+                if ( page?.isProductPage && Number.isInteger( productId ) && productId > 0 && matchesConfiguredProductIds( productId ) ) {
+                    defer( () => this.onOpenTrigger( event, {
+                        productId,
+                        viewCountInSession: getCurrentProductViewCount(),
+                        page
+                    } ) );
+                }
+                return null;
+            }
+            case "product.high_intent": {
+                const page = getWooPage();
+                const productId = getCurrentProductId();
+                if ( !page?.isProductPage || !Number.isInteger( productId ) || productId <= 0 || !matchesConfiguredProductIds( productId ) ) {
+                    return null;
+                }
+
+                const scrollPercentThreshold = Number( where?.scrollPercent ?? 70 );
+                const timeSecondsThreshold = Number( where?.timeSeconds ?? 30 );
+                const viewCountThreshold = Number( where?.viewCount ?? 2 );
+                let currentScrollPercent = 0;
+                let currentSecondsOnPage = 0;
+                const evaluate = reason => {
+                    const viewCountInSession = getCurrentProductViewCount();
+                    const hasEngagementMatch = currentScrollPercent > scrollPercentThreshold && currentSecondsOnPage > timeSecondsThreshold;
+                    const hasRepeatViewMatch = viewCountInSession >= viewCountThreshold;
+                    if ( hasEngagementMatch || hasRepeatViewMatch ) {
+                        this.onOpenTrigger( event, {
+                            productId,
+                            scrollPercent: currentScrollPercent,
+                            secondsOnPage: currentSecondsOnPage,
+                            viewCountInSession,
+                            reason: hasRepeatViewMatch && !hasEngagementMatch ? "repeat_view" : ( reason ?? "engagement" ),
+                            page
+                        } );
+                        return true;
+                    }
+                    return false;
+                };
+
+                if ( evaluate( "repeat_view" ) ) {
+                    return null;
+                }
+
+                let destroyScroll = null;
+                let destroyTimer = null;
+                const destroyAll = () => {
+                    if ( isFunction( destroyScroll ) ) {
+                        destroyScroll();
+                        destroyScroll = null;
+                    }
+                    if ( isFunction( destroyTimer ) ) {
+                        destroyTimer();
+                        destroyTimer = null;
+                    }
+                };
+
+                destroyScroll = eventBus.on( "fc.scroll.percent", payload => {
+                    const percent = Number( payload?.percent );
+                    if ( Number.isFinite( percent ) ) {
+                        currentScrollPercent = Math.max( currentScrollPercent, percent );
+                        if ( evaluate( "engagement" ) ) {
+                            destroyAll();
+                        }
+                    }
+                } );
+
+                destroyTimer = eventBus.on( "fc.timer.tick", payload => {
+                    const elapsedSeconds = Number( payload?.elapsedSeconds );
+                    if ( Number.isFinite( elapsedSeconds ) ) {
+                        currentSecondsOnPage = Math.max( currentSecondsOnPage, elapsedSeconds );
+                        if ( evaluate( "engagement" ) ) {
+                            destroyAll();
+                        }
+                    }
+                } );
+
+                return destroyAll;
+            }
             default:
                 return eventBus.on( event, payload => this.onOpenTrigger( event, payload ?? null ) );
         }
