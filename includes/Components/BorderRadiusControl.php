@@ -69,4 +69,4 @@ class BorderRadiusControl extends BaseComponent {
         return $styles;
     }
 
-};
+}

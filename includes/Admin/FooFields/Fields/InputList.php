@@ -45,6 +45,28 @@ if ( !class_exists( __NAMESPACE__ . '\InputList' ) ) {
         }
 
         /**
+         * Preserve an intentionally empty checkbox list submission.
+         *
+         * Browsers omit unchecked checkbox groups from the request entirely, so
+         * falling back to the field default here would make "save none selected"
+         * impossible for checkbox lists.
+         *
+         * @param array $sanitized_form_data
+         *
+         * @return mixed
+         */
+        public function get_posted_value( $sanitized_form_data ) {
+            if ( 'checkboxlist' === $this->type
+                 && isset( $sanitized_form_data )
+                 && is_array( $sanitized_form_data )
+                 && !array_key_exists( $this->id, $sanitized_form_data ) ) {
+                return [];
+            }
+
+            return parent::get_posted_value( $sanitized_form_data );
+        }
+
+        /**
          * Renders input.
          */
         function render_input( $override_attributes = false ) {
