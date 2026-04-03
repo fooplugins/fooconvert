@@ -4,6 +4,9 @@
  */
 if ( !function_exists( 'fooconvert_fs' ) ) {
 
+    /**
+     * Handles fs.
+     */
     function fooconvert_fs() {
         global $fooconvert_fs;
 

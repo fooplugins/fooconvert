@@ -11,6 +11,9 @@ use FooPlugins\FooConvert\FooConvert;
 
 if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
 
+    /**
+     * Class Stats.
+     */
     class Stats {
         /**
          * Init constructor.
@@ -25,6 +28,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
             add_filter( 'fooconvert-widget-frontend-attributes', array( $this, 'override_widget_attributes' ), 10, 4 );
         }
 
+        /**
+         * Overrides widget attributes.
+         */
         function override_widget_attributes( $attributes, $instance_id, $tag_name, $block ) {
             if ( fooconvert_is_admin_stats_page() ) {
                 $attributes['settings']['trigger'] = [
@@ -48,10 +54,16 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
             return $attributes;
         }
 
+        /**
+         * Renders enqueued.
+         */
         function render_enqueued() {
             FooConvert::plugin()->display_rules->render_enqueued();
         }
 
+        /**
+         * Enqueues widget.
+         */
         function enqueue_widget() {
             if ( fooconvert_is_admin_stats_page() ) {
                 // This is what the block editor loads behind the scenes

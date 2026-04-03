@@ -6,6 +6,9 @@ use FooPlugins\FooConvert\Admin\FooFields\Container;
 
 if ( !class_exists( __NAMESPACE__ . '\DateTime' ) ) {
 
+    /**
+     * Class DateTime.
+     */
     class DateTime extends Field {
 
         /**
@@ -27,6 +30,9 @@ if ( !class_exists( __NAMESPACE__ . '\DateTime' ) ) {
             $this->adjust_timezone = isset( $field_config['adjust_timezone'] ) ? $field_config['adjust_timezone'] : true;
         }
 
+        /**
+         * Renders input.
+         */
         function render_input( $override_attributes = false ) {
 
             $timestamp = intval( $this->value() );
@@ -60,6 +66,9 @@ if ( !class_exists( __NAMESPACE__ . '\DateTime' ) ) {
 
         }
 
+        /**
+         * Renders component.
+         */
         function render_component( $type, $suffix, $value = 0, $max = 0 ) {
 
             $unique_id = $this->unique_id . '_' . $type;
@@ -121,6 +130,9 @@ if ( !class_exists( __NAMESPACE__ . '\DateTime' ) ) {
             return $timestamp;
         }
 
+        /**
+         * Handles validate.
+         */
         function validate( $posted_value ) {
             $timestamp = intval( $posted_value );
 //			if ( $this->adjust_timezone ) {

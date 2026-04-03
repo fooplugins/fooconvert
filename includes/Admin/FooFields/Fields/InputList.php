@@ -6,6 +6,9 @@ use FooPlugins\FooConvert\Admin\FooFields\Container;
 
 if ( !class_exists( __NAMESPACE__ . '\InputList' ) ) {
 
+    /**
+     * Class InputList.
+     */
     class InputList extends Field {
 
         protected $list_type = 'radio';
@@ -31,6 +34,9 @@ if ( !class_exists( __NAMESPACE__ . '\InputList' ) ) {
             $this->stacked = isset( $field_config['stacked'] ) && $field_config['stacked'];
         }
 
+        /**
+         * Handles pre render.
+         */
         function pre_render() {
             parent::pre_render();
             if ( $this->stacked ) {
@@ -38,6 +44,9 @@ if ( !class_exists( __NAMESPACE__ . '\InputList' ) ) {
             }
         }
 
+        /**
+         * Renders input.
+         */
         function render_input( $override_attributes = false ) {
             $i = 0;
             foreach ( $this->config['choices'] as $value => $item ) {

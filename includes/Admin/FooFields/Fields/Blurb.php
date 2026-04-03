@@ -7,6 +7,9 @@ use FooPlugins\FooConvert\Utils;
 
 if ( !class_exists( __NAMESPACE__ . '\Blurb' ) ) {
 
+    /**
+     * Class Blurb.
+     */
     class Blurb extends Field {
 
         public $title;
@@ -14,6 +17,9 @@ if ( !class_exists( __NAMESPACE__ . '\Blurb' ) ) {
         public $summary;
         public $images;
 
+        /**
+         * Initializes the Blurb.
+         */
         public function __construct( $container, $type, $field_config ) {
             parent::__construct( $container, $type, $field_config );
             $this->title = Utils::get_string( 'title', $field_config );
@@ -25,6 +31,9 @@ if ( !class_exists( __NAMESPACE__ . '\Blurb' ) ) {
             $this->images = Utils::get_array( 'images', $field_config );
         }
 
+        /**
+         * Handles pre render.
+         */
         function pre_render() {
             parent::pre_render();
             if ( isset( $this->images ) ) {
@@ -32,8 +41,14 @@ if ( !class_exists( __NAMESPACE__ . '\Blurb' ) ) {
             }
         }
 
+        /**
+         * Renders label.
+         */
         function render_label() {}
 
+        /**
+         * Renders input container.
+         */
         function render_input_container( $override_attributes = false ) {
             $this->render_text_container();
             if ( isset( $this->images ) ) {
@@ -41,6 +56,9 @@ if ( !class_exists( __NAMESPACE__ . '\Blurb' ) ) {
             }
         }
 
+        /**
+         * Renders text container.
+         */
         function render_text_container() {
             self::render_html_tag( 'div', array( 'class' => 'foofields-blurb-text' ), null, false );
             if ( isset( $this->title ) ) {
@@ -62,6 +80,9 @@ if ( !class_exists( __NAMESPACE__ . '\Blurb' ) ) {
             echo '</div>';
         }
 
+        /**
+         * Renders media container.
+         */
         function render_media_container() {
             self::render_html_tag( 'div', array( 'class' => 'foofields-blurb-media' ), null, false );
             foreach ( $this->images as $image ) {

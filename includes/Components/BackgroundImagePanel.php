@@ -5,8 +5,14 @@ namespace FooPlugins\FooConvert\Components;
 use FooPlugins\FooConvert\Components\Base\BaseComponent;
 use FooPlugins\FooConvert\Utils;
 
+/**
+ * Class BackgroundImagePanel.
+ */
 class BackgroundImagePanel extends BaseComponent {
 
+    /**
+     * Returns the styles.
+     */
     function get_styles( array $value ): array {
         $styles = array();
         $background_image = Utils::get_array( $value, 'backgroundImage' );

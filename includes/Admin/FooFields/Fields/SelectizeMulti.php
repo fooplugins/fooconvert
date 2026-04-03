@@ -4,10 +4,16 @@ namespace FooPlugins\FooConvert\Admin\FooFields\Fields;
 
 if ( !class_exists( __NAMESPACE__ . '\SelectizeMulti' ) ) {
 
+    /**
+     * Class SelectizeMulti.
+     */
     class SelectizeMulti extends Field {
 
         protected $selected_values = null;
 
+        /**
+         * Initializes the SelectizeMulti.
+         */
         function __construct( $container, $type, $field_config ) {
             parent::__construct( $container, $type, $field_config );
 
@@ -113,6 +119,9 @@ if ( !class_exists( __NAMESPACE__ . '\SelectizeMulti' ) ) {
             return '';
         }
 
+        /**
+         * Returns the selected values.
+         */
         function get_selected_values() {
             if ( isset( $this->selected_values ) ) {
                 return $this->selected_values;
@@ -145,6 +154,9 @@ if ( !class_exists( __NAMESPACE__ . '\SelectizeMulti' ) ) {
             return $this->selected_values;
         }
 
+        /**
+         * Handles data attributes.
+         */
         function data_attributes() {
             $data_attributes = parent::data_attributes();
 
@@ -200,6 +212,9 @@ if ( !class_exists( __NAMESPACE__ . '\SelectizeMulti' ) ) {
             }
         }
 
+        /**
+         * Determines whether bound to taxonomy.
+         */
         function is_bound_to_taxonomy() {
             return isset( $this->config['binding'] ) &&
                 isset( $this->config['binding']['type'] ) &&
@@ -207,12 +222,18 @@ if ( !class_exists( __NAMESPACE__ . '\SelectizeMulti' ) ) {
                 isset( $this->config['binding']['taxonomy'] );
         }
 
+        /**
+         * Determines whether bound to taxonomy and synced.
+         */
         function is_bound_to_taxonomy_and_synced() {
             return $this->is_bound_to_taxonomy() &&
                 isset( $this->config['binding']['sync_with_post'] ) &&
                 $this->config['binding']['sync_with_post'];
         }
 
+        /**
+         * Determines whether bound to post.
+         */
         function is_bound_to_post() {
             return isset( $this->config['binding'] ) &&
                 isset( $this->config['binding']['type'] ) &&

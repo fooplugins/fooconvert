@@ -6,6 +6,9 @@ use FooPlugins\FooConvert\Admin\FooFields\Container;
 
 if ( !class_exists( __NAMESPACE__ . '\Icon' ) ) {
 
+    /**
+     * Class Icon.
+     */
     class Icon extends Field {
 
         /**
@@ -53,14 +56,23 @@ if ( !class_exists( __NAMESPACE__ . '\Icon' ) ) {
             }
         }
 
+        /**
+         * Renders label.
+         */
         function render_label() {
             return;
         }
 
+        /**
+         * Renders description.
+         */
         function render_description() {
             return;
         }
 
+        /**
+         * Renders input.
+         */
         function render_input( $override_attributes = false ) {
             self::render_html_tag( 'span', array( 'class' => 'dashicons ' . $this->icon ) );
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

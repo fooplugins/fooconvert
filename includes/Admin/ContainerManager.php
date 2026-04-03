@@ -10,8 +10,14 @@ use FooPlugins\FooConvert\Admin\FooFields\Manager;
 
 if ( !class_exists( 'FooPlugins\FooConvert\Admin\ContainerManager' ) ) {
 
+    /**
+     * Class ContainerManager.
+     */
     class ContainerManager extends Manager {
 
+        /**
+         * Initializes the ContainerManager.
+         */
         public function __construct() {
             parent::__construct( array(
                 'id'             => FOOCONVERT_SLUG,

@@ -4,12 +4,18 @@ namespace FooPlugins\FooConvert\Admin\FooFields;
 
 if ( !class_exists( __NAMESPACE__ . '\Metabox' ) ) {
 
+    /**
+     * Class Metabox.
+     */
     abstract class Metabox extends Container {
 
         protected $post;
 
         protected $post_id;
 
+        /**
+         * Initializes the Metabox.
+         */
         function __construct( $config ) {
             parent::__construct( $config );
 
@@ -54,6 +60,9 @@ if ( !class_exists( __NAMESPACE__ . '\Metabox' ) ) {
             return $this->config['post_type'] . '-' . $this->config['metabox_id'];
         }
 
+        /**
+         * Returns the unique id.
+         */
         public function get_unique_id( $config ) {
             if ( !isset( $config['id'] ) && isset( $config['metabox_id'] ) ) {
                 $config['id'] = $config['metabox_id'];
@@ -198,6 +207,9 @@ if ( !class_exists( __NAMESPACE__ . '\Metabox' ) ) {
 
         /***
          * Enqueue the assets needed by the metabox
+         */
+        /**
+         * Enqueues assets.
          */
         function enqueue_assets() {
             if ( $this->is_admin_edit_mode() && $this->is_current_post_type() ) {

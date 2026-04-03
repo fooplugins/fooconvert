@@ -11,6 +11,9 @@ use FooPlugins\FooConvert\FooConvert;
 
 if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
 
+    /**
+     * Class Dashboard.
+     */
     class Dashboard {
         /**
          * Init constructor.

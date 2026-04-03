@@ -8,6 +8,9 @@ namespace FooPlugins\FooConvert;
 
 if ( !class_exists( __NAMESPACE__ . '\Activation' ) ) {
 
+    /**
+     * Class Activation.
+     */
     class Activation {
         /**
          * Callback for the `register_activation_hook` method.

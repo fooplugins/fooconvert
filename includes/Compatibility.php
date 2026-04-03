@@ -4,12 +4,21 @@ namespace FooPlugins\FooConvert;
 
 use FooPlugins\FooConvert\Components\Base\BaseComponent;
 
+/**
+ * Class Compatibility.
+ */
 class Compatibility extends BaseComponent {
 
+    /**
+     * Returns the component data name.
+     */
     function get_component_data_name(): string {
         return 'FC_COMPATIBILITY';
     }
 
+    /**
+     * Returns the component data.
+     */
     function get_component_data(): array {
         return array(
             'meta' => array(
@@ -19,6 +28,9 @@ class Compatibility extends BaseComponent {
         );
     }
 
+    /**
+     * Handles defaults.
+     */
     function defaults(): array {
         return array(
             'required' => false,
@@ -26,6 +38,9 @@ class Compatibility extends BaseComponent {
         );
     }
 
+    /**
+     * Handles schema.
+     */
     function schema(): array {
         return array(
             'type'       => 'object',
@@ -47,6 +62,9 @@ class Compatibility extends BaseComponent {
         return current_user_can( 'edit_posts' );
     }
 
+    /**
+     * Handles register.
+     */
     public function register( string $post_type ): bool {
         return register_meta( 'post', FOOCONVERT_META_KEY_COMPATIBILITY, array(
             'object_subtype' => $post_type,
@@ -59,6 +77,9 @@ class Compatibility extends BaseComponent {
         ) );
     }
 
+    /**
+     * Returns the meta.
+     */
     public function get_meta( int $post_id ): array {
         $meta = get_post_meta( $post_id, FOOCONVERT_META_KEY_COMPATIBILITY, true );
         if ( !Utils::is_array( $meta ) ) {
@@ -67,6 +88,9 @@ class Compatibility extends BaseComponent {
         return array_merge( $this->defaults(), $meta );
     }
 
+    /**
+     * Sets the meta.
+     */
     public function set_meta( int $post_id, array $value, bool $update = false ): bool {
         if ( $update === true ) {
             $meta = $this->get_meta( $post_id );
@@ -76,11 +100,17 @@ class Compatibility extends BaseComponent {
         return !empty( $result );
     }
 
+    /**
+     * Determines whether enabled.
+     */
     public function is_enabled( int $post_id ): bool {
         $meta = $this->get_meta( $post_id );
         return Utils::get_bool( $meta, 'enabled' );
     }
 
+    /**
+     * Checks content.
+     */
     public function check_content( int $post_id, string $content ): bool {
         $required = preg_match( '/<script\b[^>]*>(.*?)<\/script>/is', $content ) === 1;
         return $this->set_meta( $post_id, array( 'required' => $required ), true );

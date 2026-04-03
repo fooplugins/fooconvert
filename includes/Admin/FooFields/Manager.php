@@ -4,6 +4,9 @@ namespace FooPlugins\FooConvert\Admin\FooFields;
 
 if ( !class_exists( __NAMESPACE__ . '\Manager' ) ) {
 
+    /**
+     * Class Manager.
+     */
     abstract class Manager {
         /**
          * @var Container[]
@@ -39,6 +42,9 @@ if ( !class_exists( __NAMESPACE__ . '\Manager' ) ) {
          */
         public $plugin_version;
 
+        /**
+         * Initializes the Manager.
+         */
         function __construct( $config ) {
             $this->config = $config;
             // phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain
@@ -82,6 +88,9 @@ if ( !class_exists( __NAMESPACE__ . '\Manager' ) ) {
             return false;
         }
 
+        /**
+         * Registers myself.
+         */
         private function register_myself() {
             global $foofields_container_managers;
 
@@ -92,6 +101,9 @@ if ( !class_exists( __NAMESPACE__ . '\Manager' ) ) {
             $foofields_container_managers[$this->id] = $this;
         }
 
+        /**
+         * Handles unique field types.
+         */
         private function unique_field_types() {
             $field_types = array();
             foreach ( $this->containers as $container ) {
@@ -101,6 +113,9 @@ if ( !class_exists( __NAMESPACE__ . '\Manager' ) ) {
             return $field_types;
         }
 
+        /**
+         * Determines whether fields.
+         */
         private function has_fields() {
             $has_fields = false;
 
@@ -114,6 +129,9 @@ if ( !class_exists( __NAMESPACE__ . '\Manager' ) ) {
             return $has_fields;
         }
 
+        /**
+         * Enqueues assets.
+         */
         public function enqueue_assets() {
             //enqueue assets if there are any fields
             if ( $this->has_fields() ) {
@@ -156,6 +174,9 @@ if ( !class_exists( __NAMESPACE__ . '\Manager' ) ) {
             }
         }
 
+        /**
+         * Enqueues field translations.
+         */
         function enqueue_field_translations() {
             $translations = array();
 
@@ -171,6 +192,9 @@ if ( !class_exists( __NAMESPACE__ . '\Manager' ) ) {
             }
         }
 
+        /**
+         * Registers container.
+         */
         function register_container( $container ) {
             $this->containers[] = $container;
         }

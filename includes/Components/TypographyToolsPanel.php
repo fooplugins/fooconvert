@@ -5,7 +5,13 @@ namespace FooPlugins\FooConvert\Components;
 use FooPlugins\FooConvert\Components\Base\BaseComponent;
 use FooPlugins\FooConvert\Utils;
 
+/**
+ * Class TypographyToolsPanel.
+ */
 class TypographyToolsPanel extends BaseComponent {
+    /**
+     * Returns the styles.
+     */
     public function get_styles( array $attr_value ): array {
         $styles = [];
 
@@ -55,6 +61,9 @@ class TypographyToolsPanel extends BaseComponent {
         return $styles;
     }
 
+    /**
+     * Returns the font family classname.
+     */
     public function get_font_family_classname( $attr_value ) : ?string {
         $font_family = Utils::get_key_path( $attr_value, 'fontFamily.key' );
         if ( Utils::is_string( $font_family, true ) ) {

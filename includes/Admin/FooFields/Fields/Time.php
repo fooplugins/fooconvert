@@ -4,8 +4,14 @@ namespace FooPlugins\FooConvert\Admin\FooFields\Fields;
 
 if ( !class_exists( __NAMESPACE__ . '\Time' ) ) {
 
+    /**
+     * Class Time.
+     */
     class Time extends Field {
 
+        /**
+         * Renders input.
+         */
         function render_input( $override_attributes = false ) {
 
             $time_in_seconds = intval( $this->value() );
@@ -30,6 +36,9 @@ if ( !class_exists( __NAMESPACE__ . '\Time' ) ) {
             ) );
         }
 
+        /**
+         * Returns the posted value.
+         */
         function get_posted_value( $sanitized_form_data ) {
             $values = parent::get_posted_value( $sanitized_form_data );
 

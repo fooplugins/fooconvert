@@ -7,6 +7,9 @@ use FooPlugins\FooConvert\Utils;
 
 if ( !class_exists( __NAMESPACE__ . '\Button' ) ) {
 
+    /**
+     * Class Button.
+     */
     class Button extends Field {
 
         private $sizes = array(
@@ -25,6 +28,9 @@ if ( !class_exists( __NAMESPACE__ . '\Button' ) ) {
         public $primary = false;
         public $disabled = false;
 
+        /**
+         * Initializes the Button.
+         */
         public function __construct( $container, $type, $field_config ) {
             parent::__construct( $container, $type, $field_config );
             $this->text = Utils::get_string( 'text', $field_config );
@@ -37,6 +43,9 @@ if ( !class_exists( __NAMESPACE__ . '\Button' ) ) {
             $this->disabled = Utils::get_bool( 'disabled', $field_config, false );
         }
 
+        /**
+         * Handles render.
+         */
         function render( $render_label = true, $override_attributes = false ) {
             $is_link = isset( $this->href ) && !$this->submit;
             $classes = array( 'button' );

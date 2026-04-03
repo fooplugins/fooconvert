@@ -9,6 +9,9 @@ namespace FooPlugins\FooConvert;
 
 if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
 
+    /**
+     * Class Init.
+     */
     class Init {
 
         /**

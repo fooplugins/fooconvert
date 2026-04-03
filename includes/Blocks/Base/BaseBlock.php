@@ -23,6 +23,9 @@ abstract class BaseBlock {
      */
     public array $supported = array();
 
+    /**
+     * Initializes the BaseBlock.
+     */
     public function __construct() {
         add_action( 'init', array( $this, 'init' ) );
         add_action( 'fooconvert_enqueued_editor_assets', array( $this, 'enqueue_editor_settings' ) );
@@ -64,6 +67,9 @@ abstract class BaseBlock {
 
     //region ICustomBlock implementation
 
+    /**
+     * Handles kses definition.
+     */
     abstract function kses_definition(): array;
 
     /**
@@ -287,6 +293,9 @@ abstract class BaseBlock {
         return array();
     }
 
+    /**
+     * Returns the frontend icon.
+     */
     function get_frontend_icon( string $slug, string $slot ) {
         list( $set_name, $icon_name ) = explode( '__', $slug );
         $file_path = FOOCONVERT_ASSETS_PATH . "/media/icons/$set_name/$icon_name.svg";
@@ -357,18 +366,30 @@ abstract class BaseBlock {
         // @formatter:on
     }
 
+    /**
+     * Renders empty.
+     */
     function render_empty(): string {
         return '';
     }
 
+    /**
+     * Renders content.
+     */
     function render_content( array $attributes, string $content, WP_Block $block ) {
         return $this->kses( $attributes, do_blocks( $content ), $block, 'content' );
     }
 
+    /**
+     * Renders check compatibility.
+     */
     function render_check_compatibility( array $attributes, string $content, WP_Block $block ) {
         return $this->kses( $attributes, FooConvert::plugin()->do_content( trim( $content ) ), $block, 'check_compatibility' );
     }
 
+    /**
+     * Returns the widget post id.
+     */
     public function get_widget_post_id( array $attributes, WP_Block $block ): int {
         $post_id = Utils::get_int( $attributes, 'postId' );
         if ( !empty( $post_id ) ) {
@@ -377,6 +398,9 @@ abstract class BaseBlock {
         return Utils::get_int( $block->context, 'fc/postId' );
     }
 
+    /**
+     * Returns the widget post type.
+     */
     public function get_widget_post_type( array $attributes, WP_Block $block ): string {
         $post_type = Utils::get_string( $attributes, 'postType' );
         if ( !empty( $post_type ) ) {
@@ -385,6 +409,9 @@ abstract class BaseBlock {
         return Utils::get_string( $block->context, 'fc/postType' );
     }
 
+    /**
+     * Returns the widget template.
+     */
     public function get_widget_template( array $attributes, WP_Block $block ): string {
         $template = Utils::get_string( $attributes, 'template' );
         if ( !empty( $template ) ) {
@@ -393,6 +420,9 @@ abstract class BaseBlock {
         return Utils::get_string( $block->context, 'fc/template' );
     }
 
+    /**
+     * Handles kses.
+     */
     function kses( array $attributes, string $content, WP_Block $block, string $context = '' ): string {
         if ( $this->supports( 'compatibility' ) ) {
             $post_id = $this->get_widget_post_id( $attributes, $block );
@@ -409,6 +439,9 @@ abstract class BaseBlock {
 
     //endregion
 
+    /**
+     * Enqueues editor settings.
+     */
     function enqueue_editor_settings(): bool {
         $js_script = Utils::to_js_script( $this->get_editor_settings_name(), $this->get_editor_settings() );
         if ( !empty( $js_script ) ) {
@@ -424,6 +457,9 @@ abstract class BaseBlock {
         return false;
     }
 
+    /**
+     * Renders frontend icons.
+     */
     function render_frontend_icons( string $instance_id, array $icons ) {
         if ( !empty( $icons ) ) {
             foreach ( $icons as $icon ) {
@@ -438,6 +474,9 @@ abstract class BaseBlock {
         }
     }
 
+    /**
+     * Enqueues frontend styles.
+     */
     function enqueue_frontend_styles( string $instance_id, array $styles ): bool {
         $css_text = Utils::to_css_text( $styles, true );
         if ( !empty( $css_text ) ) {
@@ -449,6 +488,9 @@ abstract class BaseBlock {
         return false;
     }
 
+    /**
+     * Enqueues frontend data.
+     */
     function enqueue_frontend_data( string $instance_id, array $data ): bool {
         $js_script = Utils::to_js_script( $this->get_frontend_data_name( $instance_id ), $data );
         if ( !empty( $js_script ) ) {
@@ -464,6 +506,9 @@ abstract class BaseBlock {
         return false;
     }
 
+    /**
+     * Returns the settings icon.
+     */
     function get_settings_icon( array $icon_settings, string $slot, string $default_slug = '', string $default_size = '24px' ) {
         if ( !empty( $slot ) ) {
             $slug = Utils::get_string( $icon_settings, 'slug', $default_slug );
@@ -482,6 +527,9 @@ abstract class BaseBlock {
         return false;
     }
 
+    /**
+     * Returns the settings.
+     */
     function get_settings( array $attributes, string $child = '' ): array {
         if ( !empty( $child ) ) {
             $child_attributes = Utils::get_array( $attributes, $child );
@@ -490,6 +538,9 @@ abstract class BaseBlock {
         return Utils::get_array( $attributes, 'settings' );
     }
 
+    /**
+     * Returns the styles.
+     */
     function get_styles( array $attributes, string $child = '' ): array {
         if ( !empty( $child ) ) {
             $child_attributes = Utils::get_array( $attributes, $child );

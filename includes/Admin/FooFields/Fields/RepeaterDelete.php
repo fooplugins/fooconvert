@@ -4,11 +4,17 @@ namespace FooPlugins\FooConvert\Admin\FooFields\Fields;
 
 if ( !class_exists( __NAMESPACE__ . '\RepeaterDelete' ) ) {
 
+    /**
+     * Class RepeaterDelete.
+     */
     class RepeaterDelete extends Field {
 
         protected $delete_confirmation_message;
         protected $delete_title;
 
+        /**
+         * Initializes the RepeaterDelete.
+         */
         function __construct( $container, $type, $field_config ) {
             parent::__construct( $container, $type, $field_config );
             // phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain

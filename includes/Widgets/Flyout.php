@@ -7,8 +7,14 @@ use FooPlugins\FooConvert\Widgets\Base\BaseWidget;
 use FooPlugins\FooConvert\Utils;
 use WP_Block;
 
+/**
+ * Class Flyout.
+ */
 class Flyout extends BaseWidget {
 
+    /**
+     * Handles kses definition.
+     */
     public function kses_definition(): array {
         return array(
             $this->get_tag_name() => array(
@@ -31,14 +37,23 @@ class Flyout extends BaseWidget {
         return 'fc-flyout';
     }
 
+    /**
+     * Returns the block name.
+     */
     function get_block_name(): string {
         return 'fc/flyout';
     }
 
+    /**
+     * Returns the tag name.
+     */
     function get_tag_name(): string {
         return 'fc-flyout';
     }
 
+    /**
+     * Registers blocks.
+     */
     function register_blocks() {
         $post_type = $this->get_post_type();
         return Utils::register_post_type_blocks( $post_type, array(
@@ -299,6 +314,9 @@ class Flyout extends BaseWidget {
         ) );
     }
 
+    /**
+     * Returns the frontend attributes.
+     */
     public function get_frontend_attributes( string $instance_id, array $attributes, WP_Block $block ): array {
         $attr = array();
 
@@ -350,6 +368,9 @@ class Flyout extends BaseWidget {
         return $attr;
     }
 
+    /**
+     * Returns the frontend data.
+     */
     public function get_frontend_data( string $instance_id, array $attributes, WP_Block $block ): array {
         $data = array(
             'postType' => $this->get_post_type(),
@@ -382,6 +403,9 @@ class Flyout extends BaseWidget {
         return $data;
     }
 
+    /**
+     * Returns the frontend styles.
+     */
     public function get_frontend_styles( string $instance_id, array $attributes, WP_Block $block ): array {
 
         $components = FooConvert::plugin()->components;
@@ -421,6 +445,9 @@ class Flyout extends BaseWidget {
             $close_button_styles_attribute = Utils::get_array( $close_button_attribute, 'styles' );
             if ( !empty( $close_button_styles_attribute ) ) {
                 $close_button = array_merge( $close_button, $components->get_styles( $close_button_styles_attribute, array(
+                    /**
+                     * Class Utils.
+                     */
                     'background' => array( Utils::class, 'get_css_background_property' ),
                     'icon'       => 'color'
                 ) ) );
@@ -444,6 +471,9 @@ class Flyout extends BaseWidget {
             $open_button_styles_attribute = Utils::get_array( $open_button_attribute, 'styles' );
             if ( !empty( $open_button_styles_attribute ) ) {
                 $open_button = array_merge( $open_button, $components->get_styles( $open_button_styles_attribute, array(
+                    /**
+                     * Class Utils.
+                     */
                     'background' => array( Utils::class, 'get_css_background_property' ),
                     'icon'       => 'color'
                 ) ) );
@@ -480,6 +510,9 @@ class Flyout extends BaseWidget {
         return $styles;
     }
 
+    /**
+     * Returns the frontend icons.
+     */
     public function get_frontend_icons( string $instance_id, array $attributes, WP_Block $block ): array {
         $icons = [];
         $close_icon_slug = Utils::get_key_path( $attributes, 'closeButton.settings.icon.slug' );

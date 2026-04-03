@@ -4,10 +4,16 @@ namespace FooPlugins\FooConvert\Admin\FooFields\Fields;
 
 if ( !class_exists( __NAMESPACE__ . '\Selectize' ) ) {
 
+    /**
+     * Class Selectize.
+     */
     class Selectize extends Field {
 
         protected $query;
 
+        /**
+         * Initializes the Selectize.
+         */
         function __construct( $container, $type, $field_config ) {
             parent::__construct( $container, $type, $field_config );
 

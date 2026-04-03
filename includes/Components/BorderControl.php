@@ -24,6 +24,9 @@ class BorderControl extends BaseComponent {
         'left'   => array()
     );
 
+    /**
+     * Handles make value.
+     */
     private function make_value( array $value, array $defaults ): array {
         $box_value = array();
         foreach ( $defaults as $key => $default_value ) {
@@ -33,18 +36,27 @@ class BorderControl extends BaseComponent {
         return $box_value;
     }
 
+    /**
+     * Determines whether possible value.
+     */
     function is_possible_value( $value ): bool {
         return Utils::some_keys( $value, array_keys( $this->default_value ), function ( $key_value ) {
             return Utils::is_string( $key_value, true );
         } );
     }
 
+    /**
+     * Determines whether possible box value.
+     */
     function is_possible_box_value( $value ): bool {
         return Utils::some_keys( $value, array_keys( $this->default_box_value ), function ( $key_value ) {
             return $this->is_possible_value( $key_value );
         } );
     }
 
+    /**
+     * Returns the css value.
+     */
     function get_css_value( $value, bool $style_required = false ): string {
         if ( $this->is_possible_value( $value ) ) {
             list(
@@ -60,6 +72,9 @@ class BorderControl extends BaseComponent {
         return '';
     }
 
+    /**
+     * Returns the styles.
+     */
     function get_styles( $value, bool $style_required = false ): array {
         $styles = array();
         $border = $this->get_css_value( $value );

@@ -7,6 +7,9 @@ use WP_User;
 
 if ( !class_exists( __NAMESPACE__ . '\Repeater' ) ) {
 
+    /**
+     * Class Repeater.
+     */
     class Repeater extends Field {
 
         protected $add_button_text;
@@ -38,6 +41,9 @@ if ( !class_exists( __NAMESPACE__ . '\Repeater' ) ) {
             }
         }
 
+        /**
+         * Returns the fields.
+         */
         function get_fields() {
             if ( false === $this->fields ) {
                 return array();
@@ -211,6 +217,9 @@ if ( !class_exists( __NAMESPACE__ . '\Repeater' ) ) {
             $field_object->render( false, $in_footer ? array( 'disabled' => 'disabled' ) : false );
         }
 
+        /**
+         * Handles row field name.
+         */
         function row_field_name( $field_id, $row_index ) {
             return $this->name . '[' . $row_index . '][' . $field_id . ']';
         }

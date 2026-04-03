@@ -4,8 +4,14 @@ namespace FooPlugins\FooConvert\Admin\FooFields\Fields;
 
 if ( !class_exists( __NAMESPACE__ . '\Textarea' ) ) {
 
+    /**
+     * Class Textarea.
+     */
     class Textarea extends Field {
 
+        /**
+         * Renders input.
+         */
         function render_input( $override_attributes = false ) {
             $attributes = array(
                 'id'   => $this->unique_id,

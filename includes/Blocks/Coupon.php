@@ -234,6 +234,12 @@ class Coupon extends BaseBlock {
             $button = array_merge(
                 $button,
                 $components->get_styles( $button_styles, array(
+                    /**
+                     * Class count.
+                     */
+                    /**
+                     * Class count.
+                     */
                     'background' => array( Utils::class, 'get_css_background_property' ),
                     'text'       => 'color',
                     'icon'       => '--icon-color'

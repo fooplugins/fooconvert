@@ -11,6 +11,9 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
      */
     class EventHooks {
 
+        /**
+         * Initializes the EventHooks.
+         */
         public function __construct() {
             add_filter( 'fooconvert_event_data', array( $this, 'adjust_event_data' ), 10, 2 );
             add_action( 'before_delete_post', array( $this, 'delete_widget_events' ) );
@@ -240,6 +243,9 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
             );
         }
 
+        /**
+         * Extracts block from content.
+         */
         private function extract_block_from_content( $post_content ) {
             // Parse the blocks in the post content
             $blocks = parse_blocks( $post_content );

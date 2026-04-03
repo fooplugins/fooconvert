@@ -7,7 +7,13 @@ use FooPlugins\FooConvert\Blocks\Countdown;
 use FooPlugins\FooConvert\Blocks\Coupon;
 use FooPlugins\FooConvert\Blocks\SignUp;
 
+/**
+ * Class Blocks.
+ */
 class Blocks {
+    /**
+     * Initializes the Blocks.
+     */
     function __construct() {
         $this->instances = array(
             new Countdown(),
@@ -32,6 +38,9 @@ class Blocks {
         return $this->instances;
     }
 
+    /**
+     * Handles register.
+     */
     function register( $block ) {
         if ( $block instanceof BaseBlock ) {
             $this->instances[] = $block;
@@ -70,6 +79,9 @@ class Blocks {
         )
     );
 
+    /**
+     * Returns the kses definitions.
+     */
     function get_kses_definitions(): array {
         $defs = array();
         $defs = array_merge( $defs, $this->iframe_def );

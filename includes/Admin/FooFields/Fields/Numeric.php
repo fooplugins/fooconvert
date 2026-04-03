@@ -6,6 +6,9 @@ use FooPlugins\FooConvert\Admin\FooFields\Fields\Field;
 
 if ( !class_exists( __NAMESPACE__ . '\Numeric' ) ) {
 
+    /**
+     * Class Numeric.
+     */
     class Numeric extends Field {
 
         public $min;
@@ -14,6 +17,9 @@ if ( !class_exists( __NAMESPACE__ . '\Numeric' ) ) {
         public $prefix;
         public $suffix;
 
+        /**
+         * Initializes the Numeric.
+         */
         public function __construct( $container, $type, $field_config ) {
             parent::__construct( $container, $type, $field_config );
             $this->min = isset( $field_config['min'] ) && is_numeric( $field_config['min'] ) ? $field_config['min'] : 0;
@@ -23,6 +29,9 @@ if ( !class_exists( __NAMESPACE__ . '\Numeric' ) ) {
             $this->suffix = isset( $field_config['suffix'] ) && is_string( $field_config['suffix'] ) ? $field_config['suffix'] : null;
         }
 
+        /**
+         * Renders input.
+         */
         function render_input( $override_attributes = false ) {
 
             $this->render_html_tag( 'label', array(

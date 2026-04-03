@@ -6,7 +6,13 @@ use FooPlugins\FooConvert\FooConvert;
 
 if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
 
+    /**
+     * Class Init.
+     */
     class Init {
+        /**
+         * Initializes the Init.
+         */
         function __construct() {
             add_action( 'admin_menu', array( $this, 'register_menu' ) );
             add_action( 'in_admin_header', array( $this, 'add_custom_header' ) );
@@ -31,6 +37,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             }, 10, 2 );
         }
 
+        /**
+         * Registers menu.
+         */
         public function register_menu() {
             add_menu_page(
                 __( 'FooConvert', 'fooconvert' ),
@@ -65,6 +74,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             do_action( 'fooconvert_admin_menu_after_post_types' );
         }
 
+        /**
+         * Determines whether valid page.
+         */
         private function is_valid_page() {
             if ( function_exists( 'get_current_screen' ) ) {
                 $current_screen = get_current_screen();
@@ -84,6 +96,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             return false;
         }
 
+        /**
+         * Handles admin enqueues.
+         */
         public function admin_enqueues() {
             if ( $this->is_valid_page() ) {
                 wp_enqueue_style(
@@ -95,6 +110,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             }
         }
 
+        /**
+         * Adds custom header.
+         */
         public function add_custom_header() {
             if ( $this->is_valid_page() ) {
                 $current_screen = get_current_screen();

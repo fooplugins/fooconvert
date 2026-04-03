@@ -4,6 +4,9 @@ namespace FooPlugins\FooConvert\Admin\FooFields\Fields;
 
 if ( !class_exists( __NAMESPACE__ . '\EmbedMetabox' ) ) {
 
+    /**
+     * Class EmbedMetabox.
+     */
     class EmbedMetabox extends Field {
 
         /**

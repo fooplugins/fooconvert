@@ -8,6 +8,9 @@ namespace FooPlugins\FooConvert\Admin\FooFields;
 
 if ( !class_exists( __NAMESPACE__ . '\SettingsPage' ) ) {
 
+    /**
+     * Class SettingsPage.
+     */
     abstract class SettingsPage extends Container {
 
         protected $settings_id;
@@ -15,6 +18,9 @@ if ( !class_exists( __NAMESPACE__ . '\SettingsPage' ) ) {
         protected $capability;
         protected $menu_position;
 
+        /**
+         * Initializes the SettingsPage.
+         */
         function __construct( $config ) {
             parent::__construct( $config );
 
@@ -159,6 +165,9 @@ if ( !class_exists( __NAMESPACE__ . '\SettingsPage' ) ) {
         /***
          * Enqueue the assets needed by the metabox
          */
+        /**
+         * Enqueues assets.
+         */
         function enqueue_assets() {
             if ( $this->is_settings_page() ) {
                 // Register, enqueue scripts and styles here
@@ -235,6 +244,9 @@ if ( !class_exists( __NAMESPACE__ . '\SettingsPage' ) ) {
         }
 
         // validate our settings
+        /**
+         * Handles sanitize callback.
+         */
         function sanitize_callback( $input ) {
 
             //check to see if the options were reset

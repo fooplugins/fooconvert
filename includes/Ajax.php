@@ -10,6 +10,9 @@ namespace FooPlugins\FooConvert;
 
 if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
 
+    /**
+     * Class Ajax.
+     */
     class Ajax {
 
         /**
