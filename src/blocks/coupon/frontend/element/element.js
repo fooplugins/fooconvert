@@ -19,16 +19,14 @@ class CouponElement extends ContentElement {
         this.el.copyButton = this.shadowRoot.querySelector( '[part="copy-button"]' );
         this.el.result = this.shadowRoot.querySelector( '[part="result"]' );
         this.el.resultText = this.shadowRoot.querySelector( '[part="result__text"]' );
-        this.el.applyResult = this.shadowRoot.querySelector( '[part="apply-result"]' );
-        this.el.applyResultText = this.shadowRoot.querySelector( '[part="apply-result__text"]' );
 
-        this.onActionButtonClick = this.onActionButtonClick.bind( this );
+        this.onCopyButtonClick = this.onCopyButtonClick.bind( this );
         this.onCopyToClipboard = this.onCopyToClipboard.bind( this );
     }
 
     /**
      *
-     * @type {{ copyButton?: HTMLButtonElement, codeText?: HTMLSpanElement, result?: HTMLDivElement, resultText?: HTMLSpanElement, applyResult?: HTMLDivElement, applyResultText?: HTMLSpanElement }}
+     * @type {{ copyButton?: HTMLButtonElement, codeText?: HTMLSpanElement, result?: HTMLDivElement, resultText?: HTMLSpanElement }}
      */
     el = {};
 
@@ -56,22 +54,6 @@ class CouponElement extends ContentElement {
         return this.config?.copiedMessage ?? '';
     }
 
-    get actionMode() {
-        return this.config?.actionMode === 'apply' ? 'apply' : 'copy';
-    }
-
-    get isApplyMode() {
-        return this.actionMode === 'apply';
-    }
-
-    get applyHandler() {
-        return globalThis?.FooConvertPro?.applyCouponForElement;
-    }
-
-    get applyUnavailableMessage() {
-        return this.config?.applyUnavailableMessage ?? 'Coupon apply unavailable.';
-    }
-
     get override() {
         return this.config?.override ?? '';
     }
@@ -82,14 +64,13 @@ class CouponElement extends ContentElement {
 
     connected() {
         super.connected();
-        this.toggleAttribute( 'apply-mode', this.isApplyMode );
         this.el.codeText.textContent = this.code;
-        this.el.copyButton.addEventListener( 'click', this.onActionButtonClick );
+        this.el.copyButton.addEventListener( 'click', this.onCopyButtonClick );
     }
 
     disconnected() {
         super.disconnected();
-        this.el.copyButton.removeEventListener( 'click', this.onActionButtonClick );
+        this.el.copyButton.removeEventListener( 'click', this.onCopyButtonClick );
     }
 
     get isSuccess() {
@@ -131,7 +112,6 @@ class CouponElement extends ContentElement {
 
     hideResult() {
         this.el.result.part.remove( 'show' );
-        this.el.applyResult.part.remove( 'show' );
         this.clearResultState();
     }
 
@@ -142,11 +122,6 @@ class CouponElement extends ContentElement {
         this.isSuccess = status === 'success';
         this.isError = status === 'error';
         this.isPending = status === 'pending';
-        if ( this.isApplyMode ) {
-            this.el.applyResultText.textContent = text;
-            this.el.applyResult.part.add( 'show' );
-            return;
-        }
         this.el.resultText.textContent = text;
         this.el.result.part.add( 'show' );
     }
@@ -182,15 +157,8 @@ class CouponElement extends ContentElement {
         this.showResult( message, 'pending' );
     }
 
-    onActionButtonClick( event ) {
+    onCopyButtonClick( event ) {
         event?.preventDefault();
-        if ( this.isApplyMode && typeof this.applyHandler === 'function' ) {
-            return this.applyHandler( this, event );
-        }
-        if ( this.isApplyMode ) {
-            this.resolveError( this.applyUnavailableMessage );
-            return;
-        }
         return this.onCopyToClipboard( event );
     }
 

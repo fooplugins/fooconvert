@@ -11,6 +11,8 @@ declare(strict_types=1);
 $cases = array(
     __DIR__ . '/cases/display-rules-core.php',
     __DIR__ . '/cases/display-rules-woocommerce.php',
+    __DIR__ . '/cases/pro-init-woocommerce-bootstrap.php',
+    __DIR__ . '/cases/woocommerce-coupon-search.php',
     __DIR__ . '/cases/sales-attribution-woocommerce.php',
 );
 

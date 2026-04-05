@@ -1,8 +1,65 @@
 const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 const DependencyExtractionWebpackPlugin = require( '@woocommerce/dependency-extraction-webpack-plugin' );
 const { RawSource } = require( 'webpack' ).sources;
+const { readFileSync } = require( 'fs' );
+const { dirname, extname, join, relative, resolve } = require( 'path' );
+const { sync: glob } = require( 'fast-glob' );
 
 const BUILD_SCOPE = process.env.BUILD_SCOPE === "pro" ? "pro" : "free";
+const PRO_SOURCE_PATH = './pro/src';
+
+const getProBlockEntries = () => {
+    if ( BUILD_SCOPE !== 'pro' ) {
+        return {};
+    }
+
+    const sourceRoot = resolve( process.cwd(), PRO_SOURCE_PATH );
+    const blockJsonFiles = glob( '**/block.json', {
+        absolute: true,
+        cwd: sourceRoot,
+    } );
+
+    return blockJsonFiles.reduce( ( entries, blockJsonFile ) => {
+        let parsed;
+
+        try {
+            parsed = JSON.parse( readFileSync( blockJsonFile, 'utf8' ) );
+        } catch ( error ) {
+            return entries;
+        }
+
+        [ 'editorScript', 'script', 'viewScript' ].forEach( ( fieldName ) => {
+            const value = parsed?.[ fieldName ];
+            if ( typeof value !== 'string' || ! value.startsWith( 'file:' ) ) {
+                return;
+            }
+
+            const filepath = join( dirname( blockJsonFile ), value.replace( 'file:', '' ) );
+            const relativePath = relative( sourceRoot, filepath ).replaceAll( '\\', '/' );
+            const entryName = relativePath.replace( extname( relativePath ), '' );
+
+            if ( entryName.includes( '/frontend/' ) ) {
+                entries[ entryName ] = {
+                    import: filepath,
+                    dependOn: [ 'frontend-pro' ],
+                };
+                return;
+            }
+
+            if ( entryName.includes( '/editor/' ) ) {
+                entries[ entryName ] = {
+                    import: filepath,
+                    dependOn: [ 'editor-pro' ],
+                };
+                return;
+            }
+
+            entries[ entryName ] = filepath;
+        } );
+
+        return entries;
+    }, {} );
+};
 
 class FooConvertEntryAssetDependenciesPlugin {
     static entryToHandle = {
@@ -77,6 +134,7 @@ class FooConvertEntryAssetDependenciesPlugin {
 const entry = () => {
     // get the default config entries
     const blockEntries = defaultConfig.entry();
+    const proBlockEntries = getProBlockEntries();
     // create our custom entry points to match the `pkg.imports` values
     const entries = {
         "editor": "./src/editor/index.js",
@@ -93,7 +151,7 @@ const entry = () => {
         };
     }
     // iterate the default entries and add them to our new entries object
-    return Object.entries( blockEntries ).reduce( ( acc, [ key, value ] ) => {
+    const resolvedEntries = Object.entries( blockEntries ).reduce( ( acc, [ key, value ] ) => {
         if ( key.includes( "/frontend/" ) ) {
             acc[ key ] = {
                 import: value,
@@ -109,6 +167,11 @@ const entry = () => {
         }
         return acc;
     }, entries );
+
+    return {
+        ...resolvedEntries,
+        ...proBlockEntries
+    };
 };
 
 /**

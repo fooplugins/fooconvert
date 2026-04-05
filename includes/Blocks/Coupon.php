@@ -105,12 +105,7 @@ class Coupon extends BaseBlock {
      * @return array<string,mixed>
      */
     public function get_editor_data(): array {
-        return apply_filters( 'fooconvert_coupon_editor_data', array(
-            'canApplyCoupons' => false,
-            'couponQueryParam' => 'coupon',
-            'cartUrl' => '',
-            'checkoutUrl' => '',
-        ), $this );
+        return array();
     }
 
     /**
@@ -140,7 +135,7 @@ class Coupon extends BaseBlock {
             $data['override'] = $override_text;
         }
 
-        return apply_filters( 'fooconvert_coupon_frontend_data', $data, $instance_id, $attributes, $block, $this );
+        return $data;
     }
 
     /**
@@ -186,7 +181,7 @@ class Coupon extends BaseBlock {
         if ( !empty( $font_family_classnames ) ) {
             $attr['class'] = implode( ' ', $font_family_classnames );
         }
-        return apply_filters( 'fooconvert_coupon_frontend_attributes', $attr, $instance_id, $attributes, $block, $this );
+        return $attr;
     }
 
     /**

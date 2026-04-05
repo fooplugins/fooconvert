@@ -1,7 +1,6 @@
 import { PanelBody, TextControl, ToggleControl } from "@wordpress/components";
-import { applyFilters } from "@wordpress/hooks";
 import { __ } from "@wordpress/i18n";
-import { DateTimeControl, NumberControl, ToggleSelectControl } from "#editor";
+import { ToggleSelectControl } from "#editor";
 import { alignCenter, alignLeft, alignRight, row, stack } from "@wordpress/icons";
 
 const EditSettings = ( props ) => {
@@ -44,9 +43,6 @@ const EditSettings = ( props ) => {
     const setCopiedMessage = value => setSettings( { copiedMessage: value !== settingsDefaults?.copiedMessage ? value : undefined } );
     const copiedMessage = settings?.copiedMessage ?? settingsDefaults?.copiedMessage ?? '';
 
-    const actionMode = settings?.actionMode ?? settingsDefaults?.actionMode ?? 'copy';
-    const isCopyMode = actionMode !== 'apply';
-
     const setCloseOnCopy = value => setSettings( { closeOnCopy: value !== settingsDefaults?.closeOnCopy ? value : undefined } );
     const closeOnCopy = settings?.closeOnCopy ?? settingsDefaults?.closeOnCopy ?? false;
 
@@ -64,12 +60,6 @@ const EditSettings = ( props ) => {
 
     const setNoLabel = value => setSettings( { noLabel: value !== settingsDefaults?.noLabel ? value : undefined } );
     const noLabel = settings?.noLabel ?? settingsDefaults?.noLabel ?? false;
-
-    const beforeCopiedMessageControls = applyFilters(
-        'fooconvert.coupon.containerSettings.beforeCopiedMessage',
-        [],
-        props
-    );
 
     return (
         <>
@@ -90,46 +80,41 @@ const EditSettings = ( props ) => {
                     iconOnly={ true }
                     help={ __( 'The general text alignment within the coupon.', 'fooconvert' ) }
                 />
-                { beforeCopiedMessageControls }
-                { isCopyMode && (
-                    <>
-                        <TextControl
-                            label={ __( 'Copied Message', 'fooconvert' ) }
-                            value={ copiedMessage }
-                            onChange={ setCopiedMessage }
-                            help={ __( 'A short message displayed after the coupon is copied.', 'fooconvert' ) }
-                            __nextHasNoMarginBottom
-                            __next40pxDefaultSize
-                        />
-                        { !redirectOnCopy && (
-                            <ToggleControl
-                                label={ __( 'Close on copy', 'fooconvert' ) }
-                                help={ __( 'Close the parent widget after the coupon is copied.', 'fooconvert' ) }
-                                checked={ closeOnCopy }
-                                onChange={ setCloseOnCopy }
-                                __nextHasNoMarginBottom
-                            />
-                        ) }
-                        { !closeOnCopy && (
-                            <ToggleControl
-                                label={ __( 'Redirect on copy', 'fooconvert' ) }
-                                help={ __( 'Redirect to the supplied URL after the coupon is copied.', 'fooconvert' ) }
-                                checked={ redirectOnCopy }
-                                onChange={ setRedirectOnCopy }
-                                __nextHasNoMarginBottom
-                            />
-                        ) }
-                        { !closeOnCopy && redirectOnCopy && (
-                            <TextControl
-                                label={ __( 'Redirect URL', 'fooconvert' ) }
-                                value={ redirectURL }
-                                onChange={ setRedirectURL }
-                                help={ __( 'The URL to redirect to after the coupon is copied.', 'fooconvert' ) }
-                                __nextHasNoMarginBottom
-                                __next40pxDefaultSize
-                            />
-                        ) }
-                    </>
+                <TextControl
+                    label={ __( 'Copied Message', 'fooconvert' ) }
+                    value={ copiedMessage }
+                    onChange={ setCopiedMessage }
+                    help={ __( 'A short message displayed after the coupon is copied.', 'fooconvert' ) }
+                    __nextHasNoMarginBottom
+                    __next40pxDefaultSize
+                />
+                { !redirectOnCopy && (
+                    <ToggleControl
+                        label={ __( 'Close on copy', 'fooconvert' ) }
+                        help={ __( 'Close the parent widget after the coupon is copied.', 'fooconvert' ) }
+                        checked={ closeOnCopy }
+                        onChange={ setCloseOnCopy }
+                        __nextHasNoMarginBottom
+                    />
+                ) }
+                { !closeOnCopy && (
+                    <ToggleControl
+                        label={ __( 'Redirect on copy', 'fooconvert' ) }
+                        help={ __( 'Redirect to the supplied URL after the coupon is copied.', 'fooconvert' ) }
+                        checked={ redirectOnCopy }
+                        onChange={ setRedirectOnCopy }
+                        __nextHasNoMarginBottom
+                    />
+                ) }
+                { !closeOnCopy && redirectOnCopy && (
+                    <TextControl
+                        label={ __( 'Redirect URL', 'fooconvert' ) }
+                        value={ redirectURL }
+                        onChange={ setRedirectURL }
+                        help={ __( 'The URL to redirect to after the coupon is copied.', 'fooconvert' ) }
+                        __nextHasNoMarginBottom
+                        __next40pxDefaultSize
+                    />
                 ) }
                 <ToggleControl
                     label={ __( 'Hide label', 'fooconvert' ) }

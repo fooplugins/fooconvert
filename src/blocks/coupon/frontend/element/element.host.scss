@@ -98,28 +98,11 @@
     visibility: visible;
     opacity: 1;
   }
-
-  &::part(apply-result) {
-    display: none;
-    width: 100%;
-    box-sizing: border-box;
-    margin-top: -4px;
-    font-size: 0.9em;
-    line-height: 1.4;
-  }
-
-  &::part(apply-result show) {
-    display: block;
-  }
 }
 
 :host([is-success]) {
   &::part(result) {
     background-color: #ecfdf3;
-    color: #166534;
-  }
-
-  &::part(apply-result) {
     color: #166534;
   }
 }
@@ -129,26 +112,12 @@
     background-color: #fef2f2;
     color: #b91c1c;
   }
-
-  &::part(apply-result) {
-    color: #b91c1c;
-  }
 }
 
 :host([is-pending]) {
   &::part(result) {
     background-color: #eff6ff;
     color: #1d4ed8;
-  }
-
-  &::part(apply-result) {
-    color: #1d4ed8;
-  }
-}
-
-:host([apply-mode]) {
-  &::part(code) {
-    flex: 1 1 100%;
   }
 }
 
