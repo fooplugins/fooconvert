@@ -54,7 +54,7 @@ Use three categories:
 
 ## Existing blocks to evolve
 
-These blocks already exist and should be extended before creating too many near-duplicates.
+These blocks already exist and are still part of the WooCommerce widget toolkit.
 
 ### `fc/coupon`
 
@@ -65,12 +65,16 @@ Current role:
 - optionally close widget
 - optionally redirect
 
-Upgrade path:
+Current scope:
 
-- add direct Woo coupon application mode
-- add applied, invalid, and removed states
-- add optional cart/checkout auto-apply
-- support coupon reveal, apply, and apply-then-redirect modes
+- remains the clipboard-oriented coupon block
+- does not own Woo apply behavior anymore
+- should be used for reveal/copy/promo-code handoff patterns
+
+Notes:
+
+- direct Woo coupon application now lives in the standalone PRO block `fc/apply-coupon`
+- future work on `fc/coupon` should stay focused on copy/reveal UX, not mixed copy/apply modes
 
 ### `fc/sign-up`
 
@@ -98,6 +102,45 @@ Upgrade path:
 - support cart expiry windows
 - support coupon expiry windows
 - support product sale expiry and campaign windows
+
+### `fc/apply-coupon`
+
+Current role:
+
+- PRO-only WooCommerce action block
+- applies a selected WooCommerce coupon directly from a FooConvert widget
+- supports close-on-apply and redirect-on-apply flows
+- shares the visual language of `fc/coupon` but is apply-only
+
+Current implementation:
+
+- registered as `fc/apply-coupon`
+- rendered as the custom element `fc-apply-coupon`
+- registered from PRO so saved widget content does not depend on `fc/coupon` apply mode
+- uses a WooCommerce coupon selector in the editor rather than manual freeform coupon entry
+
+Current editor behavior:
+
+- merchant selects a published WooCommerce coupon using async search
+- search is powered by `GET /fooconvert/v1/woocommerce/coupons?search=<term>`
+- search is gated by the Woo capability `edit_shop_coupons`
+- selected coupon persists both the coupon ID and coupon code
+- button text, icon, layout, label visibility, text alignment, close-on-apply, and redirect behavior are configurable
+
+Current runtime behavior:
+
+- applies through Woo Blocks / Store API when available
+- falls back to classic checkout and classic cart coupon endpoints when needed
+- queues coupon handoff in session storage plus query param when the current page cannot apply immediately
+- shows pending, success, and error result states
+- supports redirect destinations of cart, checkout, or a custom URL
+
+Known limits of the current implementation:
+
+- single coupon only
+- apply only, not remove
+- searches published coupons by code
+- no freeform manual coupon entry in v1
 
 ## New dynamic blocks
 
@@ -248,14 +291,14 @@ Apply a WooCommerce coupon directly from a FooConvert widget.
 
 ### Why it should be a block
 
-The current coupon block is closer to a clipboard helper. A first-class Woo flow needs real apply/remove behavior.
+The existing copy-oriented coupon block is a clipboard helper. Applying a coupon requires Woo-aware runtime logic, editor-side coupon lookup, and page-context-specific fallbacks.
 
 ### Relationship to existing blocks
 
-This can be:
+This is now a standalone PRO sibling to `fc/coupon`.
 
-- a major upgrade to `fc/coupon`
-- or a sibling block if backward compatibility pressure is high
+- `fc/coupon` stays copy-only
+- `fc/apply-coupon` owns Woo apply behavior
 
 ### Primary placements
 
@@ -266,43 +309,49 @@ This can be:
 
 ### Core inputs
 
-- coupon code
-- optional reveal code
+- selected WooCommerce coupon
+- selected coupon code and coupon ID
+- optional override applied text
 - apply destination
-- redirect behavior
+- close and redirect behavior
 
 ### Required actions
 
 - apply coupon through Woo Blocks / Store API when available
 - fallback to classic coupon form handling when needed
-- reflect current coupon state
+- queue handoff when coupon application must happen later in the journey
 
 ### UI states
 
-- hidden code / revealed code
 - ready to apply
 - applying
 - applied
 - invalid
-- removed
+- queued for handoff
 
 ### MVP
 
+- shipped as a standalone PRO block
 - apply coupon
-- show success and error states
-- support redirect after success
+- async coupon selector with search
+- show success, pending, and error states
+- support close on success
+- support redirect after success or queued handoff
 
 ### V2
 
 - remove coupon
 - auto-apply on widget open
-- show stack/compatibility messaging
+- show already-applied state
+- show compatibility or stacking guidance
 - multi-coupon support where store rules allow it
 
 ### Dependencies
 
 - Woo cart store
-- optional AJAX fallback for classic contexts
+- classic Woo coupon AJAX endpoints
+- FooConvert session handoff utility
+- admin REST coupon search endpoint
 
 ## 4. `fc/delivery-promise`
 
@@ -694,4 +743,3 @@ If it does not meet that threshold, ship it as a widget template built from:
 - static content
 - core blocks
 - existing FooConvert blocks
-
