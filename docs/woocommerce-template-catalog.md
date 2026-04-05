@@ -134,7 +134,7 @@ Recover abandonment by giving the shopper a clear, limited-time incentive.
 
 ### MVP notes
 
-If coupon application is not ready, this can temporarily ship with the existing `fc/coupon` copy-to-clipboard block plus redirect behavior.
+This template should use `fc/apply-coupon` for direct WooCommerce application. If a merchant only wants a reveal/copy flow instead of direct application, that should be treated as a separate `fc/coupon` variant rather than the default implementation.
 
 ## 3. Checkout Reassurance Bar
 
@@ -297,7 +297,7 @@ Capture leads from high-intent product or cart visitors in exchange for an offer
 ### Composition
 
 - `fc/sign-up`
-- `fc/apply-coupon` or existing `fc/coupon`
+- `fc/apply-coupon` for direct apply flows
 - Heading
 - Paragraph
 - optional hero image
@@ -311,7 +311,7 @@ Capture leads from high-intent product or cart visitors in exchange for an offer
 ### Dynamic content
 
 - lead capture
-- coupon apply state if supported
+- coupon apply state
 
 ### Optional Woo content
 
@@ -319,7 +319,12 @@ Capture leads from high-intent product or cart visitors in exchange for an offer
 
 ### MVP notes
 
-This template is very close to existing FooConvert capabilities and can ship early, even before direct coupon application lands.
+This template now has two clear variants:
+
+- apply-after-signup uses `fc/apply-coupon`
+- reveal/copy-after-signup uses `fc/coupon`
+
+The direct-apply variant is now a valid first-class WooCommerce template, not a future placeholder.
 
 ## 7. Thank You Account Claim Flyout
 
@@ -806,4 +811,3 @@ A WooCommerce widget template is worth shipping when it has:
 - reusable messaging that merchants can quickly customize
 
 If a template needs many live data sources, many action states, and heavy business logic, split that behavior into one or more dynamic blocks first.
-
