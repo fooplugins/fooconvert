@@ -359,7 +359,7 @@ namespace {
      * @return string
      */
     function fooconvert_get_sale_attribution_timing(): string {
-        return $GLOBALS['fc_sale_attribution_timing'] ?? FOOCONVERT_SALE_ATTRIBUTION_TIMING_PAYMENT_MADE;
+        return $GLOBALS['fc_sale_attribution_timing'] ?? FOOCONVERT_SALE_ATTRIBUTION_TIMING_ORDER_CREATED;
     }
 
     /**
@@ -376,11 +376,19 @@ namespace {
         return $GLOBALS['fc_sale_dedupe_mode'] ?? FOOCONVERT_SALE_DEDUPE_MODE_WIDGET_SESSION;
     }
 
+    /**
+     * @return bool
+     */
+    function fooconvert_get_sale_allow_multiple_orders_per_session(): bool {
+        return $GLOBALS['fc_sale_allow_multiple_orders_per_session'] ?? true;
+    }
+
     define( 'FOOCONVERT_EVENT_TYPE_SALE', 'sale' );
     define( 'FOOCONVERT_SALE_ATTRIBUTION_TIMING_PAYMENT_MADE', 'payment_made' );
     define( 'FOOCONVERT_SALE_ATTRIBUTION_TIMING_ORDER_CREATED', 'order_created' );
     define( 'FOOCONVERT_SALE_DEDUPE_MODE_WIDGET_SESSION', 'widget_session' );
     define( 'FOOCONVERT_SALE_DEDUPE_MODE_SESSION_ONLY', 'session_only' );
+    define( 'FOOCONVERT_SETTING_SALE_ALLOW_MULTIPLE_ORDERS_PER_SESSION', 'sale_allow_multiple_orders_per_session' );
     define( 'FOOCONVERT_WC_ORDER_META_SESSION_ID', '_fooconvert_session_id' );
     define( 'FOOCONVERT_WC_ORDER_META_ANONYMOUS_USER_GUID', '_fooconvert_anonymous_user_guid' );
     define( 'FOOCONVERT_WC_ORDER_META_ORDER_CREATED_AT_GMT', '_fooconvert_order_created_at_gmt' );
@@ -402,9 +410,10 @@ namespace {
         Event::reset();
         $GLOBALS['fc_request_session_id'] = null;
         $GLOBALS['fc_request_anonymous_user_guid'] = null;
-        $GLOBALS['fc_sale_attribution_timing'] = FOOCONVERT_SALE_ATTRIBUTION_TIMING_PAYMENT_MADE;
+        unset( $GLOBALS['fc_sale_attribution_timing'] );
         $GLOBALS['fc_sale_attribution_lookback_days'] = 7;
         $GLOBALS['fc_sale_dedupe_mode'] = FOOCONVERT_SALE_DEDUPE_MODE_WIDGET_SESSION;
+        unset( $GLOBALS['fc_sale_allow_multiple_orders_per_session'] );
     }
 
     reset_sales_test_state();
@@ -422,6 +431,8 @@ namespace {
 
     $GLOBALS['fc_request_session_id'] = 'sess-guest';
     $GLOBALS['fc_request_anonymous_user_guid'] = 'anon-guest';
+    $GLOBALS['fc_sale_attribution_timing'] = FOOCONVERT_SALE_ATTRIBUTION_TIMING_PAYMENT_MADE;
+    $GLOBALS['fc_sale_allow_multiple_orders_per_session'] = false;
 
     $service->handle_order_created( $guest_order );
 
@@ -547,7 +558,6 @@ namespace {
 
     reset_sales_test_state();
 
-    $GLOBALS['fc_sale_attribution_timing'] = FOOCONVERT_SALE_ATTRIBUTION_TIMING_ORDER_CREATED;
     $GLOBALS['fc_request_session_id'] = 'sess-created';
     $GLOBALS['fc_request_anonymous_user_guid'] = 'anon-created';
 
@@ -584,24 +594,101 @@ namespace {
     Assertions::same(
         1,
         count( Event::$created ),
-        'Order-created timing should write the sale once and remain idempotent on later payment hooks.'
+        'Default order-created timing should write the sale once and remain idempotent on later payment hooks.'
     );
 
     Assertions::same(
         FOOCONVERT_SALE_ATTRIBUTION_TIMING_ORDER_CREATED,
         Event::$created[0]['extra_data']['attribution_timing'],
-        'Order-created attribution should mark the resulting sale event with the order_created timing.'
+        'Default attribution should mark the resulting sale event with the order_created timing.'
     );
 
     Assertions::same(
         1,
         $order_created_order->get_meta( FOOCONVERT_WC_ORDER_META_SALE_EVENT_ID, true ),
-        'Order-created timing should still persist the sale event ID on the order.'
+        'Default order-created timing should still persist the sale event ID on the order.'
     );
 
     reset_sales_test_state();
 
+    $GLOBALS['fc_request_session_id'] = 'sess-multi';
+    $GLOBALS['fc_request_anonymous_user_guid'] = 'anon-multi';
+
+    $first_multi_order = new WC_Order(
+        250,
+        10.00,
+        'pending',
+        'GBP',
+        0,
+        new WC_DateTime( '2026-04-03 11:15:00', new DateTimeZone( 'UTC' ) )
+    );
+
+    Query::queue_latest_response(
+        array(
+            'anonymous_user_guid' => 'anon-multi',
+            'session_id'          => 'sess-multi',
+            'cutoff_gmt'          => '2026-04-03 11:15:00',
+            'lookback_days'       => 7,
+        ),
+        array(
+            'id'                  => 140,
+            'widget_id'           => 91,
+            'session_id'          => 'sess-multi',
+            'anonymous_user_guid' => 'anon-multi',
+            'event_type'          => 'conversion',
+            'timestamp'           => '2026-04-03 11:10:00',
+            'page_url'            => 'https://example.com/offer-a',
+        )
+    );
+
+    $service->handle_order_created( $first_multi_order );
+
+    $second_multi_order = new WC_Order(
+        251,
+        15.00,
+        'pending',
+        'GBP',
+        0,
+        new WC_DateTime( '2026-04-03 11:20:00', new DateTimeZone( 'UTC' ) )
+    );
+
+    Query::queue_latest_response(
+        array(
+            'anonymous_user_guid' => 'anon-multi',
+            'session_id'          => 'sess-multi',
+            'cutoff_gmt'          => '2026-04-03 11:20:00',
+            'lookback_days'       => 7,
+        ),
+        array(
+            'id'                  => 141,
+            'widget_id'           => 91,
+            'session_id'          => 'sess-multi',
+            'anonymous_user_guid' => 'anon-multi',
+            'event_type'          => 'conversion',
+            'timestamp'           => '2026-04-03 11:18:00',
+            'page_url'            => 'https://example.com/offer-b',
+        )
+    );
+
+    $service->handle_order_created( $second_multi_order );
+
+    Assertions::same(
+        2,
+        count( Event::$created ),
+        'Allow multiple orders per session should attribute more than one order in the same session by default.'
+    );
+
+    Assertions::same(
+        0,
+        count( Query::$sale_scope_calls ),
+        'When multiple orders per session are allowed, the legacy session dedupe query should be skipped.'
+    );
+
+    reset_sales_test_state();
+
+    $GLOBALS['fc_sale_attribution_timing'] = FOOCONVERT_SALE_ATTRIBUTION_TIMING_PAYMENT_MADE;
     $GLOBALS['fc_sale_dedupe_mode'] = FOOCONVERT_SALE_DEDUPE_MODE_SESSION_ONLY;
+    $GLOBALS['fc_sale_allow_multiple_orders_per_session'] = false;
     $GLOBALS['fc_request_session_id'] = 'sess-dedupe';
     $GLOBALS['fc_request_anonymous_user_guid'] = 'anon-dedupe';
     Query::$sale_exists = true;
@@ -661,6 +748,7 @@ namespace {
 
     reset_sales_test_state();
 
+    $GLOBALS['fc_sale_attribution_timing'] = FOOCONVERT_SALE_ATTRIBUTION_TIMING_PAYMENT_MADE;
     $GLOBALS['fc_request_session_id'] = 'sess-user';
     $GLOBALS['fc_request_anonymous_user_guid'] = 'anon-user';
 
