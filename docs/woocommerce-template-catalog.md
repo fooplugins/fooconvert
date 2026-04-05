@@ -88,7 +88,11 @@ Increase average order value immediately after add to cart.
 
 `fc/free-shipping-progress` is now available in PRO, so the core progress portion of this template is implementable today.
 
+The block can now resolve the current cart on non-Blocks pages via the FooConvert Woo cart endpoint, so it is not limited to native Woo cart/checkout block surfaces.
+
 The full merchandising version still depends on `fc/product-recommendations` or a shortcode-based fallback for filler products.
+
+Current limit: on classic/non-Blocks pages the cart resolution is a one-shot REST snapshot, not a fully live cart-fragments bridge.
 
 ## 2. Cart Rescue Offer Popup
 

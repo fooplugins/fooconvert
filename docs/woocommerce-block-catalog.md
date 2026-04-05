@@ -35,6 +35,7 @@ The current plugin already has a useful foundation:
 - WooCommerce page display rules
 - WooCommerce open triggers for `cart.add` and `cart.updated`
 - frontend subscriptions to Woo Blocks data stores
+- a FooConvert REST cart snapshot fallback for non-Blocks pages
 - server-side WooCommerce sale attribution
 
 The new blocks should build on that model instead of inventing a parallel runtime.
@@ -178,7 +179,7 @@ This is not just template copy. It needs live cart data, threshold math, currenc
 - locked: "You're $12 away from free shipping"
 - almost there: progress emphasis
 - unlocked: "Free shipping unlocked"
-- unavailable: hidden or fallback copy when threshold is unknown
+- unavailable: hidden or fallback copy when threshold is unknown or Woo cart state cannot be resolved
 
 ### Optional settings
 
@@ -193,7 +194,8 @@ This is not just template copy. It needs live cart data, threshold math, currenc
 - shipped as a standalone PRO block
 - registered as `fc/free-shipping-progress`
 - rendered as the custom element `fc-free-shipping-progress`
-- reads live subtotal data from the existing Woo Blocks cart store runtime
+- reads live subtotal data from the Woo Blocks cart store when present
+- falls back to `GET /fooconvert/v1/woocommerce/cart` when the page does not expose the Woo Blocks cart store
 - uses a merchant-configured threshold amount instead of auto-reading shipping zones
 - supports `locked`, `almost`, `unlocked`, and `unavailable` states
 - supports message tokens `{remaining}`, `{threshold}`, and `{subtotal}`
@@ -224,13 +226,13 @@ This is not just template copy. It needs live cart data, threshold math, currenc
 
 ### Dependencies
 
-- Woo cart store access
+- Woo cart state access from either the Woo Blocks store or the FooConvert REST fallback
 - currency formatting helper
 
 ### Known limits of the current implementation
 
 - PRO-only
-- live state depends on Woo Blocks cart store availability
+- non-Blocks pages currently use a one-shot REST cart snapshot fallback instead of live classic cart syncing
 - no classic cart-fragments bridge in v1
 - no auto-read shipping zone thresholds in v1
 - no per-country messaging in v1

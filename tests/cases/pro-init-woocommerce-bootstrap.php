@@ -45,6 +45,15 @@ namespace FooPlugins\FooConvert\Pro\Analytics {
 }
 
 namespace FooPlugins\FooConvert\Pro\WooCommerce {
+    class CartState {
+        /** @var int */
+        public static $instances = 0;
+
+        public function __construct() {
+            self::$instances++;
+        }
+    }
+
     class CouponSearch {
         /** @var int */
         public static $instances = 0;
@@ -135,6 +144,7 @@ namespace {
     use FooPlugins\FooConvert\Pro\Blocks\FreeShippingProgress;
     use FooPlugins\FooConvert\Pro\DisplayRules\WooCommerce as DisplayRulesWooCommerce;
     use FooPlugins\FooConvert\Pro\Init;
+    use FooPlugins\FooConvert\Pro\WooCommerce\CartState;
     use FooPlugins\FooConvert\Pro\WooCommerce\CouponSearch;
     use FooPlugins\FooConvert\Pro\WooCommerce\Sales as WooCommerceSales;
     use FooPlugins\FooConvert\Pro\WooCommerce\Triggers as WooCommerceTriggers;
@@ -182,6 +192,7 @@ namespace {
         FooConvert::reset();
         ApplyCoupon::$instances = 0;
         FreeShippingProgress::$instances = 0;
+        CartState::$instances = 0;
         CouponSearch::$instances = 0;
         DisplayRulesWooCommerce::$instances = 0;
         WooCommerceTriggers::$instances = 0;
@@ -236,6 +247,12 @@ namespace {
         1,
         FreeShippingProgress::$instances,
         'Init should always instantiate and register the PRO free shipping progress block.'
+    );
+
+    Assertions::same(
+        1,
+        CartState::$instances,
+        'Init should always bootstrap the public cart state REST service.'
     );
 
     Assertions::same(
@@ -318,6 +335,12 @@ namespace {
         1,
         FreeShippingProgress::$instances,
         'Each Init instance should register the free shipping progress block exactly once.'
+    );
+
+    Assertions::same(
+        1,
+        CartState::$instances,
+        'Each Init instance should bootstrap the public cart state REST service exactly once.'
     );
 
     Assertions::same(
