@@ -77,7 +77,8 @@ Increase average order value immediately after add to cart.
 
 - subtotal progress
 - amount remaining
-- recommended filler products
+- free-shipping threshold label
+- recommended filler products when available
 
 ### Optional Woo content
 
@@ -85,7 +86,9 @@ Increase average order value immediately after add to cart.
 
 ### MVP notes
 
-This is the highest-priority Woo template because it pairs with the existing `cart.add` trigger model and produces obvious shopper value.
+`fc/free-shipping-progress` is now available in PRO, so the core progress portion of this template is implementable today.
+
+The full merchandising version still depends on `fc/product-recommendations` or a shortcode-based fallback for filler products.
 
 ## 2. Cart Rescue Offer Popup
 

@@ -19,6 +19,15 @@ namespace FooPlugins\FooConvert\Pro\Blocks {
             self::$instances++;
         }
     }
+
+    class FreeShippingProgress {
+        /** @var int */
+        public static $instances = 0;
+
+        public function __construct() {
+            self::$instances++;
+        }
+    }
 }
 
 namespace FooPlugins\FooConvert\Pro\Experiments {
@@ -123,6 +132,7 @@ namespace FooPlugins\FooConvert {
 namespace {
     use FooPlugins\FooConvert\FooConvert;
     use FooPlugins\FooConvert\Pro\Blocks\ApplyCoupon;
+    use FooPlugins\FooConvert\Pro\Blocks\FreeShippingProgress;
     use FooPlugins\FooConvert\Pro\DisplayRules\WooCommerce as DisplayRulesWooCommerce;
     use FooPlugins\FooConvert\Pro\Init;
     use FooPlugins\FooConvert\Pro\WooCommerce\CouponSearch;
@@ -171,6 +181,7 @@ namespace {
         $GLOBALS['fc_test_actions'] = array();
         FooConvert::reset();
         ApplyCoupon::$instances = 0;
+        FreeShippingProgress::$instances = 0;
         CouponSearch::$instances = 0;
         DisplayRulesWooCommerce::$instances = 0;
         WooCommerceTriggers::$instances = 0;
@@ -219,6 +230,12 @@ namespace {
         1,
         ApplyCoupon::$instances,
         'Init should always instantiate and register the PRO apply coupon block.'
+    );
+
+    Assertions::same(
+        1,
+        FreeShippingProgress::$instances,
+        'Init should always instantiate and register the PRO free shipping progress block.'
     );
 
     Assertions::same(
@@ -295,6 +312,12 @@ namespace {
         1,
         ApplyCoupon::$instances,
         'Each Init instance should register the apply coupon block exactly once.'
+    );
+
+    Assertions::same(
+        1,
+        FreeShippingProgress::$instances,
+        'Each Init instance should register the free shipping progress block exactly once.'
     );
 
     Assertions::same(

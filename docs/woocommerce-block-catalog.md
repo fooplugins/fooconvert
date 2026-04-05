@@ -188,6 +188,19 @@ This is not just template copy. It needs live cart data, threshold math, currenc
 - recommended filler products on/off
 - minimum and maximum visibility ranges
 
+### Current implementation
+
+- shipped as a standalone PRO block
+- registered as `fc/free-shipping-progress`
+- rendered as the custom element `fc-free-shipping-progress`
+- reads live subtotal data from the existing Woo Blocks cart store runtime
+- uses a merchant-configured threshold amount instead of auto-reading shipping zones
+- supports `locked`, `almost`, `unlocked`, and `unavailable` states
+- supports message tokens `{remaining}`, `{threshold}`, and `{subtotal}`
+- shows fallback copy for `unavailable` instead of hiding
+- supports optional progress bar and threshold label toggles
+- exposes editor preview states for styling without persisting runtime state
+
 ### Useful triggers and rules
 
 - display on cart and checkout pages
@@ -213,6 +226,16 @@ This is not just template copy. It needs live cart data, threshold math, currenc
 
 - Woo cart store access
 - currency formatting helper
+
+### Known limits of the current implementation
+
+- PRO-only
+- live state depends on Woo Blocks cart store availability
+- no classic cart-fragments bridge in v1
+- no auto-read shipping zone thresholds in v1
+- no per-country messaging in v1
+- no filler product suggestions in v1
+- no excluded shipping class or destination logic in v1
 
 ## 2. `fc/cart-offer-unlock`
 
@@ -703,14 +726,17 @@ These may not need to be v1 dynamic blocks if core blocks and theme styles can c
 
 ## Recommended implementation order
 
-## Phase 1
+## Implemented today
 
 - `fc/free-shipping-progress`
 - `fc/apply-coupon`
+
+## Phase 1
+
 - `fc/review-snapshot`
 - `fc/product-recommendations`
 
-These unlock the most useful widget templates immediately.
+These complete the next most useful widget templates on top of the blocks already shipped.
 
 ## Phase 2
 
