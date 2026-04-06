@@ -147,6 +147,10 @@ namespace {
         return abs( (int) $value );
     }
 
+    function wc_get_checkout_url(): string {
+        return 'https://example.com/checkout/';
+    }
+
     require_once __DIR__ . '/../support/Assertions.php';
     require_once dirname( __DIR__, 2 ) . '/pro/includes/Blocks/FreeShippingProgress.php';
 
@@ -209,21 +213,28 @@ namespace {
 
     $configured_attributes = array(
         'settings' => array(
-            'thresholdAmount'    => '50',
-            'almostTherePercent' => 85,
-            'showProgressBar'    => false,
-            'showThresholdLabel' => true,
-            'lockedMessage'      => 'Locked at {remaining}',
-            'almostMessage'      => 'Almost at {remaining}',
-            'unlockedMessage'    => 'Unlocked',
-            'unavailableMessage' => 'Spend {threshold} to unlock free shipping.',
+            'thresholdAmount'              => '49.80',
+            'almostTherePercent'           => 85,
+            'showProgressBar'              => false,
+            'showProgressPercent'          => true,
+            'showThresholdLabel'           => true,
+            'showProceedToCheckoutButton'  => true,
+            'lockedMessage'                => 'Locked at {remaining}',
+            'almostMessage'                => 'Almost at {remaining}',
+            'unlockedMessage'              => 'Unlocked',
+            'unavailableMessage'           => 'Spend {threshold} to unlock free shipping.',
+            'stateDisplayOverrides'        => array(
+                'unlocked' => array(
+                    'showProceedToCheckoutButton' => 'hide',
+                ),
+            ),
         ),
     );
 
     $frontend_data = $block->get_frontend_data( 'fc-free-shipping-progress-test', $configured_attributes, new WP_Block() );
 
     Assertions::same(
-        '50',
+        '49.80',
         $frontend_data['thresholdAmount'],
         'FreeShippingProgress should expose the configured threshold amount to the frontend.'
     );
@@ -239,16 +250,62 @@ namespace {
         'FreeShippingProgress should expose the configured progress-bar toggle to the frontend.'
     );
 
-    $configured_render = $block->render( $configured_attributes, '', new WP_Block() );
-
     Assertions::true(
-        strpos( $configured_render, 'Spend $50.00 to unlock free shipping.' ) !== false,
-        'FreeShippingProgress should render the unavailable fallback copy using the configured threshold token.'
+        $frontend_data['showProgressPercent'],
+        'FreeShippingProgress should expose the configured progress-percent toggle to the frontend.'
     );
 
     Assertions::true(
-        strpos( $configured_render, 'Free shipping at $50.00' ) !== false,
+        $frontend_data['showProceedToCheckoutButton'],
+        'FreeShippingProgress should expose the configured proceed-button toggle to the frontend.'
+    );
+
+    Assertions::same(
+        'Proceed to checkout',
+        $frontend_data['proceedToCheckoutLabel'],
+        'FreeShippingProgress should expose the proceed button label to the frontend.'
+    );
+
+    Assertions::same(
+        'https://example.com/checkout/',
+        $frontend_data['checkoutUrl'],
+        'FreeShippingProgress should expose the checkout URL to the frontend.'
+    );
+
+    Assertions::same(
+        'hide',
+        $frontend_data['stateDisplayOverrides']['unlocked']['showProceedToCheckoutButton'],
+        'FreeShippingProgress should expose sanitized state display overrides to the frontend.'
+    );
+
+    $configured_render = $block->render( $configured_attributes, '', new WP_Block() );
+
+    Assertions::true(
+        strpos( $configured_render, 'Spend $50 to unlock free shipping.' ) !== false,
+        'FreeShippingProgress should round fallback amount tokens by default.'
+    );
+
+    Assertions::true(
+        strpos( $configured_render, 'Free shipping at $50' ) !== false,
         'FreeShippingProgress should render the threshold label when it is enabled and a threshold exists.'
+    );
+
+    $unrounded_render = $block->render(
+        array(
+            'settings' => array(
+                'thresholdAmount'      => '49.80',
+                'roundTotals'          => false,
+                'unavailableMessage'   => 'Spend {threshold} to unlock free shipping.',
+                'showThresholdLabel'   => true,
+            ),
+        ),
+        '',
+        new WP_Block()
+    );
+
+    Assertions::true(
+        strpos( $unrounded_render, 'Spend $49.80 to unlock free shipping.' ) !== false,
+        'FreeShippingProgress should preserve decimal amounts when round totals is disabled.'
     );
 
     $missing_threshold_render = $block->render(
