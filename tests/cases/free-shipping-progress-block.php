@@ -99,7 +99,9 @@ namespace FooPlugins\FooConvert {
 }
 
 namespace {
+    use FooPlugins\FooConvert\Pro\Blocks\FreeShippingBar;
     use FooPlugins\FooConvert\Pro\Blocks\FreeShippingProgress;
+    use FooPlugins\FooConvert\Pro\Blocks\FreeShippingText;
     use FooPlugins\FooConvert\Tests\Support\Assertions;
 
     class WP_Block {
@@ -147,39 +149,45 @@ namespace {
         return abs( (int) $value );
     }
 
-    function wc_get_checkout_url(): string {
-        return 'https://example.com/checkout/';
-    }
-
     require_once __DIR__ . '/../support/Assertions.php';
     require_once dirname( __DIR__, 2 ) . '/pro/includes/Blocks/FreeShippingProgress.php';
+    require_once dirname( __DIR__, 2 ) . '/pro/includes/Blocks/FreeShippingText.php';
+    require_once dirname( __DIR__, 2 ) . '/pro/includes/Blocks/FreeShippingBar.php';
 
     $GLOBALS['fc_test_options'] = array(
         'woocommerce_currency'     => 'USD',
         'woocommerce_currency_pos' => 'left',
     );
 
-    $block = new FreeShippingProgress();
+    $parent_block = new FreeShippingProgress();
+    $text_block = new FreeShippingText();
+    $bar_block = new FreeShippingBar();
 
     Assertions::same(
         'fc/free-shipping-progress',
-        $block->get_block_name(),
+        $parent_block->get_block_name(),
         'FreeShippingProgress should register the expected block name.'
     );
 
     Assertions::same(
         'fc-free-shipping-progress',
-        $block->get_tag_name(),
+        $parent_block->get_tag_name(),
         'FreeShippingProgress should render the expected custom element tag.'
     );
 
-    $editor_data = $block->get_editor_data();
+    Assertions::same(
+        'fc/free-shipping-text',
+        $text_block->get_block_name(),
+        'FreeShippingText should register the expected block name.'
+    );
 
     Assertions::same(
-        'Free shipping at {threshold}',
-        $editor_data['thresholdLabelTemplate'],
-        'FreeShippingProgress should expose the default threshold label template to the editor.'
+        'fc/free-shipping-bar',
+        $bar_block->get_block_name(),
+        'FreeShippingBar should register the expected block name.'
     );
+
+    $editor_data = $parent_block->get_editor_data();
 
     Assertions::same(
         '$',
@@ -192,7 +200,7 @@ namespace {
         'woocommerce_currency_pos' => 'left',
     );
 
-    $gbp_editor_data = $block->get_editor_data();
+    $gbp_editor_data = $parent_block->get_editor_data();
 
     Assertions::same(
         '£',
@@ -213,25 +221,13 @@ namespace {
 
     $configured_attributes = array(
         'settings' => array(
-            'thresholdAmount'              => '49.80',
-            'almostTherePercent'           => 85,
-            'showProgressBar'              => false,
-            'showProgressPercent'          => true,
-            'showThresholdLabel'           => true,
-            'showProceedToCheckoutButton'  => true,
-            'lockedMessage'                => 'Locked at {remaining}',
-            'almostMessage'                => 'Almost at {remaining}',
-            'unlockedMessage'              => 'Unlocked',
-            'unavailableMessage'           => 'Spend {threshold} to unlock free shipping.',
-            'stateDisplayOverrides'        => array(
-                'unlocked' => array(
-                    'showProceedToCheckoutButton' => 'hide',
-                ),
-            ),
+            'thresholdAmount'    => '49.80',
+            'almostTherePercent' => 85,
+            'roundTotals'        => false,
         ),
     );
 
-    $frontend_data = $block->get_frontend_data( 'fc-free-shipping-progress-test', $configured_attributes, new WP_Block() );
+    $frontend_data = $parent_block->get_frontend_data( 'fc-free-shipping-progress-test', $configured_attributes, new WP_Block() );
 
     Assertions::same(
         '49.80',
@@ -246,84 +242,128 @@ namespace {
     );
 
     Assertions::false(
-        $frontend_data['showProgressBar'],
-        'FreeShippingProgress should expose the configured progress-bar toggle to the frontend.'
-    );
-
-    Assertions::true(
-        $frontend_data['showProgressPercent'],
-        'FreeShippingProgress should expose the configured progress-percent toggle to the frontend.'
-    );
-
-    Assertions::true(
-        $frontend_data['showProceedToCheckoutButton'],
-        'FreeShippingProgress should expose the configured proceed-button toggle to the frontend.'
+        $frontend_data['roundTotals'],
+        'FreeShippingProgress should expose the configured round-totals toggle to the frontend.'
     );
 
     Assertions::same(
-        'Proceed to checkout',
-        $frontend_data['proceedToCheckoutLabel'],
-        'FreeShippingProgress should expose the proceed button label to the frontend.'
+        'unavailable',
+        $parent_block->get_frontend_attributes( 'fc-free-shipping-progress-test', array(), new WP_Block() )['data-active-state'],
+        'FreeShippingProgress should default to the unavailable state before frontend runtime initializes.'
     );
 
-    Assertions::same(
-        'https://example.com/checkout/',
-        $frontend_data['checkoutUrl'],
-        'FreeShippingProgress should expose the checkout URL to the frontend.'
+    $text_attributes = array(
+        'content' => 'Spend <strong>{threshold}</strong> now. <a href="{threshold}">{subtotal}</a> {remaining} {progress_percent}',
+    );
+    $text_context_block = new WP_Block();
+    $text_context_block->context['fc/free-shipping-progress/settings'] = array(
+        'thresholdAmount' => '49.80',
     );
 
-    Assertions::same(
-        'hide',
-        $frontend_data['stateDisplayOverrides']['unlocked']['showProceedToCheckoutButton'],
-        'FreeShippingProgress should expose sanitized state display overrides to the frontend.'
-    );
-
-    $configured_render = $block->render( $configured_attributes, '', new WP_Block() );
+    $text_render = $text_block->render( $text_attributes, '', $text_context_block );
 
     Assertions::true(
-        strpos( $configured_render, 'Spend $50 to unlock free shipping.' ) !== false,
-        'FreeShippingProgress should round fallback amount tokens by default.'
+        strpos( $text_render, 'Spend <strong>$50</strong> now.' ) !== false,
+        'FreeShippingText should resolve threshold tokens from the parent settings using rounded totals by default.'
     );
 
     Assertions::true(
-        strpos( $configured_render, 'Free shipping at $50' ) !== false,
-        'FreeShippingProgress should render the threshold label when it is enabled and a threshold exists.'
+        strpos( $text_render, '<a href="{threshold}"></a>' ) !== false,
+        'FreeShippingText should replace tokens inside text nodes only and preserve HTML attributes.'
     );
 
-    $unrounded_render = $block->render(
+    Assertions::true(
+        strpos( $text_render, '{remaining}' ) === false && strpos( $text_render, '{progress_percent}' ) === false,
+        'FreeShippingText should collapse subtotal-dependent tokens when no live cart subtotal is available.'
+    );
+
+    $unrounded_context_block = new WP_Block();
+    $unrounded_context_block->context['fc/free-shipping-progress/settings'] = array(
+        'thresholdAmount' => '49.80',
+        'roundTotals'     => false,
+    );
+
+    $unrounded_render = $text_block->render(
         array(
-            'settings' => array(
-                'thresholdAmount'      => '49.80',
-                'roundTotals'          => false,
-                'unavailableMessage'   => 'Spend {threshold} to unlock free shipping.',
-                'showThresholdLabel'   => true,
-            ),
+            'content' => 'Free shipping at {threshold}',
         ),
         '',
+        $unrounded_context_block
+    );
+
+    Assertions::true(
+        strpos( $unrounded_render, 'Free shipping at $49.80' ) !== false,
+        'FreeShippingText should preserve decimal amounts when round totals is disabled.'
+    );
+
+    $text_frontend_data = $text_block->get_frontend_data(
+        'fc-free-shipping-text-test',
+        $text_attributes,
+        $text_context_block
+    );
+
+    Assertions::same(
+        $text_attributes['content'],
+        $text_frontend_data['content'],
+        'FreeShippingText should expose the raw token template to the frontend.'
+    );
+
+    $bar_frontend_data = $bar_block->get_frontend_data(
+        'fc-free-shipping-bar-test',
+        array(
+            'settings' => array(
+                'showPercent' => true,
+            ),
+        ),
         new WP_Block()
     );
 
     Assertions::true(
-        strpos( $unrounded_render, 'Spend $49.80 to unlock free shipping.' ) !== false,
-        'FreeShippingProgress should preserve decimal amounts when round totals is disabled.'
+        $bar_frontend_data['showPercent'],
+        'FreeShippingBar should expose the show-percent toggle to the frontend.'
     );
 
-    $missing_threshold_render = $block->render(
+    $bar_styles = $bar_block->get_frontend_styles(
+        'fc-free-shipping-bar-test',
         array(
-            'settings' => array(
-                'unavailableMessage' => 'Free shipping is unavailable right now.',
-                'showThresholdLabel' => true,
+            'styles' => array(
+                'color' => '#111111',
+            ),
+            'track'  => array(
+                'styles' => array(
+                    'background-color' => '#eeeeee',
+                ),
+            ),
+            'fill'   => array(
+                'styles' => array(
+                    'background-color' => '#111111',
+                ),
             ),
         ),
-        '',
         new WP_Block()
     );
 
     Assertions::same(
-        '<span slot="message__text">Free shipping is unavailable right now.</span>',
-        $missing_threshold_render,
-        'FreeShippingProgress should omit the threshold label when no valid threshold is configured.'
+        '#eeeeee',
+        $bar_styles['#fc-free-shipping-bar-test .fc--free-shipping-bar__track']['background-color'],
+        'FreeShippingBar should target track styles with the expected selector.'
     );
 
-    echo "free-shipping-progress-block: ok\n";
+    Assertions::same(
+        '#111111',
+        $bar_styles['#fc-free-shipping-bar-test .fc--free-shipping-bar__fill']['background-color'],
+        'FreeShippingBar should target fill styles with the expected selector.'
+    );
+
+    $bar_render = $bar_block->render( array(), '', new WP_Block() );
+
+    Assertions::true(
+        strpos( $bar_render, 'fc--free-shipping-bar__track' ) !== false,
+        'FreeShippingBar should render the expected fallback track markup.'
+    );
+
+    Assertions::true(
+        strpos( $bar_render, 'fc--free-shipping-bar__percent' ) !== false,
+        'FreeShippingBar should render the percent span for runtime updates.'
+    );
 }

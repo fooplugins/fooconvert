@@ -29,6 +29,24 @@ namespace FooPlugins\FooConvert\Pro\Blocks {
         }
     }
 
+    class FreeShippingText {
+        /** @var int */
+        public static $instances = 0;
+
+        public function __construct() {
+            self::$instances++;
+        }
+    }
+
+    class FreeShippingBar {
+        /** @var int */
+        public static $instances = 0;
+
+        public function __construct() {
+            self::$instances++;
+        }
+    }
+
     class Confetti {
         /** @var int */
         public static $instances = 0;
@@ -151,7 +169,9 @@ namespace {
     use FooPlugins\FooConvert\FooConvert;
     use FooPlugins\FooConvert\Pro\Blocks\ApplyCoupon;
     use FooPlugins\FooConvert\Pro\Blocks\Confetti;
+    use FooPlugins\FooConvert\Pro\Blocks\FreeShippingBar;
     use FooPlugins\FooConvert\Pro\Blocks\FreeShippingProgress;
+    use FooPlugins\FooConvert\Pro\Blocks\FreeShippingText;
     use FooPlugins\FooConvert\Pro\DisplayRules\WooCommerce as DisplayRulesWooCommerce;
     use FooPlugins\FooConvert\Pro\Init;
     use FooPlugins\FooConvert\Pro\WooCommerce\CartState;
@@ -241,6 +261,8 @@ namespace {
         ApplyCoupon::$instances = 0;
         Confetti::$instances = 0;
         FreeShippingProgress::$instances = 0;
+        FreeShippingText::$instances = 0;
+        FreeShippingBar::$instances = 0;
         CartState::$instances = 0;
         CouponSearch::$instances = 0;
         DisplayRulesWooCommerce::$instances = 0;
@@ -302,6 +324,18 @@ namespace {
         1,
         FreeShippingProgress::$instances,
         'Init should always instantiate and register the PRO free shipping progress block.'
+    );
+
+    Assertions::same(
+        1,
+        FreeShippingText::$instances,
+        'Init should always instantiate and register the PRO free shipping text block.'
+    );
+
+    Assertions::same(
+        1,
+        FreeShippingBar::$instances,
+        'Init should always instantiate and register the PRO free shipping bar block.'
     );
 
     Assertions::same(
@@ -396,6 +430,18 @@ namespace {
         1,
         FreeShippingProgress::$instances,
         'Each Init instance should register the free shipping progress block exactly once.'
+    );
+
+    Assertions::same(
+        1,
+        FreeShippingText::$instances,
+        'Each Init instance should register the free shipping text block exactly once.'
+    );
+
+    Assertions::same(
+        1,
+        FreeShippingBar::$instances,
+        'Each Init instance should register the free shipping bar block exactly once.'
     );
 
     Assertions::same(
