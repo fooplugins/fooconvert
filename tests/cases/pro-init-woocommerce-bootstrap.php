@@ -152,6 +152,32 @@ namespace {
 
     /** @var array<string,array<int,array{callback:mixed,priority:int,args:int}>> */
     $GLOBALS['fc_test_actions'] = array();
+    $GLOBALS['fc_test_wp_scripts'] = null;
+
+    if ( !class_exists( 'WP_Dependencies', false ) ) {
+        class WP_Dependencies {
+            /** @var array<string,mixed> */
+            public $registered = array();
+        }
+    }
+
+    if ( !class_exists( 'WP_Scripts', false ) ) {
+        class WP_Scripts extends WP_Dependencies {}
+    }
+
+    if ( !class_exists( ' _WP_Dependency', false ) ) {
+        class _WP_Dependency {
+            /** @var array<int,string> */
+            public $deps = array();
+
+            /**
+             * @param array<int,string> $deps Script dependencies.
+             */
+            public function __construct( array $deps = array() ) {
+                $this->deps = $deps;
+            }
+        }
+    }
 
     /**
      * @param string $hook Hook name.
@@ -176,6 +202,17 @@ namespace {
     }
 
     /**
+     * @return WP_Scripts
+     */
+    function wp_scripts(): WP_Scripts {
+        if ( !( $GLOBALS['fc_test_wp_scripts'] instanceof WP_Scripts ) ) {
+            $GLOBALS['fc_test_wp_scripts'] = new WP_Scripts();
+        }
+
+        return $GLOBALS['fc_test_wp_scripts'];
+    }
+
+    /**
      * @return bool
      */
     function fooconvert_is_woocommerce_active(): bool {
@@ -189,6 +226,7 @@ namespace {
      */
     function reset_pro_init_bootstrap_state(): void {
         $GLOBALS['fc_test_actions'] = array();
+        $GLOBALS['fc_test_wp_scripts'] = null;
         FooConvert::reset();
         ApplyCoupon::$instances = 0;
         FreeShippingProgress::$instances = 0;
@@ -353,6 +391,22 @@ namespace {
         0,
         count( $GLOBALS['fc_test_actions']['plugins_loaded'] ?? array() ),
         'Init should not register a deferred plugins_loaded callback when WooCommerce is already available.'
+    );
+
+    Assertions::true(
+        isset( $GLOBALS['fc_test_actions']['wp_enqueue_scripts'] ),
+        'Init should register a wp_enqueue_scripts hook for WooCommerce script dependency compatibility.'
+    );
+
+    $scripts = wp_scripts();
+    $scripts->registered['wc-order-attribution'] = new \_WP_Dependency( array( 'sourcebuster-js' ) );
+    $scripts->registered['wc-blocks-data-store'] = new \_WP_Dependency();
+
+    run_hook( 'wp_enqueue_scripts' );
+
+    Assertions::true(
+        in_array( 'wc-blocks-data-store', $scripts->registered['wc-order-attribution']->deps, true ),
+        'Init should add wc-blocks-data-store as a dependency of wc-order-attribution when the blocks data store handle is registered.'
     );
 
     echo "pro-init-woocommerce-bootstrap: ok\n";
