@@ -112,7 +112,7 @@ namespace {
     }
 
     function get_option( string $key, $default = null ) {
-        $options = array(
+        $options = $GLOBALS['fc_test_options'] ?? array(
             'woocommerce_currency'     => 'USD',
             'woocommerce_currency_pos' => 'left',
         );
@@ -121,7 +121,14 @@ namespace {
     }
 
     function get_woocommerce_currency_symbol( string $currency ): string {
-        return $currency === 'USD' ? '$' : $currency;
+        if ( $currency === 'USD' ) {
+            return '$';
+        }
+        if ( $currency === 'GBP' ) {
+            return '&pound;';
+        }
+
+        return $currency;
     }
 
     function wc_get_price_decimals(): int {
@@ -142,6 +149,11 @@ namespace {
 
     require_once __DIR__ . '/../support/Assertions.php';
     require_once dirname( __DIR__, 2 ) . '/pro/includes/Blocks/FreeShippingProgress.php';
+
+    $GLOBALS['fc_test_options'] = array(
+        'woocommerce_currency'     => 'USD',
+        'woocommerce_currency_pos' => 'left',
+    );
 
     $block = new FreeShippingProgress();
 
@@ -169,6 +181,30 @@ namespace {
         '$',
         $editor_data['currencyDefaults']['symbol'],
         'FreeShippingProgress should expose server-side currency defaults to the editor.'
+    );
+
+    $GLOBALS['fc_test_options'] = array(
+        'woocommerce_currency'     => 'GBP',
+        'woocommerce_currency_pos' => 'left',
+    );
+
+    $gbp_editor_data = $block->get_editor_data();
+
+    Assertions::same(
+        '£',
+        $gbp_editor_data['currencyDefaults']['symbol'],
+        'FreeShippingProgress should decode HTML currency entities before exposing currency defaults.'
+    );
+
+    Assertions::same(
+        '£',
+        $gbp_editor_data['currencyDefaults']['prefix'],
+        'FreeShippingProgress should decode HTML currency entities before building currency prefixes.'
+    );
+
+    $GLOBALS['fc_test_options'] = array(
+        'woocommerce_currency'     => 'USD',
+        'woocommerce_currency_pos' => 'left',
     );
 
     $configured_attributes = array(
