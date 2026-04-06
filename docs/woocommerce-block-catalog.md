@@ -239,7 +239,55 @@ This is not just template copy. It needs live cart data, threshold math, currenc
 - no filler product suggestions in v1
 - no excluded shipping class or destination logic in v1
 
-## 2. `fc/cart-offer-unlock`
+## 2. `fc/confetti`
+
+### Category
+
+Support behavior block
+
+### Purpose
+
+Add a lightweight celebration effect to a widget without rendering any visible frontend UI.
+
+### Why it should be a block
+
+This is reusable behavior, not content. Merchants should be able to drop it into a widget composition the same way they add any other FooConvert block.
+
+### Primary placements
+
+- signup success popups
+- coupon reveal bars
+- flash-sale flyouts
+- post-action celebration widgets
+
+### Current implementation
+
+- shipped as a standalone PRO block
+- registered as `fc/confetti`
+- rendered as the custom element `fc-confetti`
+- has no visible frontend output
+- listens for the parent widget `open` event and triggers `canvas-confetti`
+- anchors the confetti origin to the current widget position in the viewport
+
+### Useful triggers and rules
+
+- pair with `fc.immediate` for launch-style announcement widgets
+- pair with `cart.add` for celebration flyouts
+- pair with signup or coupon templates that open after a conversion step
+
+### MVP
+
+- invisible support block
+- trigger confetti each time the parent widget opens
+- ship the confetti runtime with the plugin bundle
+
+### Known limits of the current implementation
+
+- PRO-only
+- no merchant-facing controls in v1
+- tied to widget open events, not downstream submit/apply success events
+
+## 3. `fc/cart-offer-unlock`
 
 ### Category
 
@@ -304,7 +352,7 @@ Merchants will want one generalized unlock system for:
 - Woo cart data
 - optional shared unlock-rules utility
 
-## 3. `fc/apply-coupon`
+## 4. `fc/apply-coupon`
 
 ### Category
 
@@ -378,7 +426,7 @@ This is now a standalone PRO sibling to `fc/coupon`.
 - FooConvert session handoff utility
 - admin REST coupon search endpoint
 
-## 4. `fc/delivery-promise`
+## 5. `fc/delivery-promise`
 
 ### Category
 
@@ -424,7 +472,7 @@ Reduce shipping hesitation by showing arrival expectations and fulfillment benef
 
 - may begin as partially dynamic plus merchant-configured content
 
-## 5. `fc/review-snapshot`
+## 6. `fc/review-snapshot`
 
 ### Category
 
@@ -468,7 +516,7 @@ Summarize product trust signals in a compact format suitable for widgets.
 - product context resolver
 - optional review adapter
 
-## 6. `fc/product-recommendations`
+## 7. `fc/product-recommendations`
 
 ### Category
 
@@ -517,7 +565,7 @@ Show contextual product cards inside FooConvert widgets.
 
 - Woo product query utility
 
-## 7. `fc/bundle-builder`
+## 8. `fc/bundle-builder`
 
 ### Category
 
@@ -560,7 +608,7 @@ Allow a shopper to add a starter bundle, complete-the-set selection, or accessor
 
 - multi-add-to-cart action support
 
-## 8. `fc/post-purchase-account-claim`
+## 9. `fc/post-purchase-account-claim`
 
 ### Category
 
@@ -605,7 +653,7 @@ Convert guest buyers into account holders immediately after purchase.
 
 - order or thank-you page context
 
-## 9. `fc/reorder-or-subscribe`
+## 10. `fc/reorder-or-subscribe`
 
 ### Category
 
@@ -643,7 +691,7 @@ Encourage repeat purchase or subscription enrollment for replenishable products.
 
 - may require compatibility layer with Woo Subscriptions or equivalent
 
-## 10. `fc/instant-answer`
+## 11. `fc/instant-answer`
 
 ### Category
 

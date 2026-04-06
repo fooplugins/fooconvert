@@ -14,6 +14,7 @@ $cases = array(
     __DIR__ . '/cases/pro-init-woocommerce-bootstrap.php',
     __DIR__ . '/cases/woocommerce-cart-state.php',
     __DIR__ . '/cases/woocommerce-coupon-search.php',
+    __DIR__ . '/cases/confetti-block.php',
     __DIR__ . '/cases/free-shipping-progress-block.php',
     __DIR__ . '/cases/sales-attribution-woocommerce.php',
 );

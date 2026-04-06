@@ -28,6 +28,15 @@ namespace FooPlugins\FooConvert\Pro\Blocks {
             self::$instances++;
         }
     }
+
+    class Confetti {
+        /** @var int */
+        public static $instances = 0;
+
+        public function __construct() {
+            self::$instances++;
+        }
+    }
 }
 
 namespace FooPlugins\FooConvert\Pro\Experiments {
@@ -141,6 +150,7 @@ namespace FooPlugins\FooConvert {
 namespace {
     use FooPlugins\FooConvert\FooConvert;
     use FooPlugins\FooConvert\Pro\Blocks\ApplyCoupon;
+    use FooPlugins\FooConvert\Pro\Blocks\Confetti;
     use FooPlugins\FooConvert\Pro\Blocks\FreeShippingProgress;
     use FooPlugins\FooConvert\Pro\DisplayRules\WooCommerce as DisplayRulesWooCommerce;
     use FooPlugins\FooConvert\Pro\Init;
@@ -229,6 +239,7 @@ namespace {
         $GLOBALS['fc_test_wp_scripts'] = null;
         FooConvert::reset();
         ApplyCoupon::$instances = 0;
+        Confetti::$instances = 0;
         FreeShippingProgress::$instances = 0;
         CartState::$instances = 0;
         CouponSearch::$instances = 0;
@@ -279,6 +290,12 @@ namespace {
         1,
         ApplyCoupon::$instances,
         'Init should always instantiate and register the PRO apply coupon block.'
+    );
+
+    Assertions::same(
+        1,
+        Confetti::$instances,
+        'Init should always instantiate and register the PRO confetti block.'
     );
 
     Assertions::same(
@@ -367,6 +384,12 @@ namespace {
         1,
         ApplyCoupon::$instances,
         'Each Init instance should register the apply coupon block exactly once.'
+    );
+
+    Assertions::same(
+        1,
+        Confetti::$instances,
+        'Each Init instance should register the confetti block exactly once.'
     );
 
     Assertions::same(
