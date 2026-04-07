@@ -7,7 +7,6 @@ use FooPlugins\FooConvert\Widgets\Base\BaseWidget;
 use FooPlugins\FooConvert\Widgets\Bar;
 use FooPlugins\FooConvert\Widgets\Flyout;
 use FooPlugins\FooConvert\Widgets\Popup;
-use WP_Post;
 
 /**
  * This class both initializes and contains high level management utilities for plugin widgets.
@@ -39,17 +38,6 @@ class Widgets extends BaseComponent {
     //region General
 
     /**
-     * Get all widget instances.
-     *
-     * @return BaseWidget[]
-     *
-     * @since 1.0.0
-     */
-    function get_instances(): array {
-        return $this->instances;
-    }
-
-    /**
      * Get the tag names for all widgets.
      *
      * @return string[] A string array of tag names for all widgets.
@@ -63,26 +51,6 @@ class Widgets extends BaseComponent {
         return $this->tag_names = Utils::array_map( $this->instances, function ( $widget ) {
             return $widget->get_tag_name();
         } );
-    }
-
-    /**
-     * Returns the instance.
-     */
-    function get_instance( $thing ): ?BaseWidget {
-        if ( $thing instanceof WP_Post || is_numeric( $thing ) ) {
-            $post_type = fooconvert_get_widget_logical_post_type( $thing );
-        } else if ( is_string( $thing ) ) {
-            $post_type = fooconvert_get_widget_logical_post_type( $thing );
-        } else {
-            $post_type = '';
-        }
-
-        foreach ( $this->instances as $instance ) {
-            if ( $instance->get_post_type() === $post_type ) {
-                return $instance;
-            }
-        }
-        return null;
     }
 
     /**

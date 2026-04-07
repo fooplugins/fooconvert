@@ -474,16 +474,15 @@ class DisplayRules extends BaseComponent {
             return;
         }
 
+        if ( $post->post_type !== FOOCONVERT_CPT_POPUP ) {
+            return;
+        }
+
         // otherwise if this is OR was a published widget post
         $was_published = $post_before instanceof WP_Post && $post_before->post_status === 'publish';
         $is_published = $post->post_status === 'publish';
         if ( $was_published || $is_published ) {
-            $widget = FooConvert::plugin()->widgets->get_instance( $post );
-            // and this is a widget that supports display rules
-            if ( $widget && $widget->supports( 'display-rules' ) ) {
-                // compile them!
-                $this->compile( $post_id, $is_published );
-            }
+            $this->compile( $post_id, $is_published );
         }
     }
 
