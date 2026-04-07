@@ -156,21 +156,9 @@ namespace {
     );
 
     Assertions::same(
-        FOOCONVERT_CPT_BAR,
-        fooconvert_get_widget_logical_post_type( 101 ),
-        'Logical widget post type should map popup type meta back to the legacy widget surface.'
-    );
-
-    Assertions::same(
         FOOCONVERT_POPUP_TYPE_FLYOUT,
         fooconvert_get_widget_popup_type( 102 ),
         'Popup type resolution should fall back to the root block when popup type meta is missing.'
-    );
-
-    Assertions::same(
-        FOOCONVERT_CPT_FLYOUT,
-        fooconvert_get_widget_logical_post_type( 102 ),
-        'Logical widget post type should use the block fallback when popup type meta is missing.'
     );
 
     Assertions::same(

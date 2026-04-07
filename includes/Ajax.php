@@ -85,7 +85,6 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
             $page_url = isset( $data['pageURL'] ) && is_string( $data['pageURL'] ) ? esc_url_raw( $data['pageURL'] ) : null;
             $session_id = isset( $data['sessionID'] ) && is_string( $data['sessionID'] ) ? sanitize_text_field( $data['sessionID'] ) : null;
             $anonymous_user_guid = isset( $data['uniqueID'] ) && is_string( $data['uniqueID'] ) ? sanitize_text_field( $data['uniqueID'] ) : null;
-            $post_type = isset( $data['postType'] ) && is_string( $data['postType'] ) ? sanitize_text_field( $data['postType'] ) : null;
             $template = isset( $data['template'] ) && is_string( $data['template'] ) ? sanitize_text_field( $data['template'] ) : null;
 
             // TODO: sanitize?
@@ -131,7 +130,6 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
             ];
 
             $meta = [
-                'post_type' => $post_type,
                 'template'  => $template
             ];
 

@@ -56,20 +56,14 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
                     }
                 }
 
-                $post_type = null;
                 $template = null;
 
                 if ( is_array( $meta ) ) {
-                    $post_type = isset( $meta['post_type'] ) ? $meta['post_type'] : null;
                     $template = isset( $meta['template'] ) ? $meta['template'] : null;
                 }
 
                 // Allow others to alter the event data.
                 $data = apply_filters( 'fooconvert_event_data', $data, $meta );
-
-                if ( !empty( $post_type ) ) {
-                    $data = apply_filters( 'fooconvert_event_data_by_post_type-' . $post_type, $data, $meta );
-                }
 
                 if ( !empty( $template ) ) {
                     $data = apply_filters( 'fooconvert_event_data_by_template-' . $template, $data, $meta );

@@ -277,25 +277,6 @@ function fooconvert_get_widget_popup_type( $thing ) {
 }
 
 /**
- * Resolves the logical widget post type for a widget.
- *
- * @param WP_Post|int|string $thing Widget post, ID, or logical type identifier.
- * @return string
- */
-function fooconvert_get_widget_logical_post_type( $thing ) {
-    $popup_type = fooconvert_get_widget_popup_type( $thing );
-    if ( $popup_type !== '' ) {
-        return fooconvert_get_popup_type_post_type( $popup_type );
-    }
-
-    if ( $thing instanceof WP_Post ) {
-        return (string) $thing->post_type;
-    }
-
-    return is_string( $thing ) ? $thing : '';
-}
-
-/**
  * Returns the popup type requested in the current admin request.
  *
  * @return string

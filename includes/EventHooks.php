@@ -42,9 +42,7 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
          * Allows adjusting the event data before it is saved.
          *
          * @param array $data The event data to be saved.
-         * @param string $post_type The type of post that the event is associated with.
-         * @param string $template The name of the template that the event is associated with.
-         *
+         * @param array $meta Event metadata passed through the create call.
          */
         function adjust_event_data( $data, $meta ) {
             // We want to override event_type in certain scenarios.
@@ -61,10 +59,6 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
             if ( empty( $meta ) ) {
                 $meta = [];
             }
-
-            // Post type and template not used at the moment.
-            //$post_type = isset( $meta['post_type'] ) ? $meta['post_type'] : null;
-            //$template = isset( $meta['template'] ) ? $meta['template'] : null;
 
             $event_type = isset( $data['event_type'] ) ? $data['event_type'] : null;
             $extra_data = isset( $data['extra_data'] ) ? $data['extra_data'] : [];
@@ -236,9 +230,6 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
                     'widget_id'  => $post_id,
                     'event_type' => FOOCONVERT_EVENT_TYPE_UPDATE,
                     'extra_data' => $extra_data,
-                ],
-                [
-                    'post_type' => fooconvert_get_widget_logical_post_type( $post_after )
                 ]
             );
         }
