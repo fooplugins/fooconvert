@@ -6,7 +6,7 @@ if ( in_array( 'recent', $hidden_panels ) ) {
 }
 
 $recent_widget_args = array(
-    'post_type'      => fooconvert_get_post_types(),
+    'post_type'      => fooconvert_get_registered_post_type(),
     'posts_per_page' => 5,
     'post_status'    => 'any',
     'orderby'        => 'modified', // Orders by the last modified date

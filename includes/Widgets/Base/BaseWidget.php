@@ -6,7 +6,6 @@ use FooPlugins\FooConvert\Blocks\Base\BaseBlock;
 use FooPlugins\FooConvert\FooConvert;
 use FooPlugins\FooConvert\Utils;
 use WP_Block;
-use WP_Error;
 use WP_Post_Type;
 
 /**
@@ -22,14 +21,7 @@ abstract class BaseWidget extends BaseBlock {
     function init() {
         $registered = $this->register_post_type();
         if ( $registered instanceof WP_Post_Type ) {
-            $registered_post_types = array( $registered->name );
-        } else if ( is_array( $registered ) ) {
-            $registered_post_types = $registered;
-        } else {
-            $registered_post_types = array();
-        }
-
-        foreach ( $registered_post_types as $post_type ) {
+            $post_type = $registered->name;
             if ( $this->supports( 'compatibility' ) ) {
                 FooConvert::plugin()->compatibility->register( $post_type );
             }
@@ -56,7 +48,7 @@ abstract class BaseWidget extends BaseBlock {
     /**
      * Register the widget post type.
      *
-     * @return false|string[]|WP_Error|WP_Post_Type
+     * @return false|WP_Post_Type
      *
      * @since 1.0.0
      */

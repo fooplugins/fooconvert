@@ -437,24 +437,19 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             $table_name = self::get_events_table_name();
             $posts_table = $wpdb->prefix . 'posts';
 
-            $post_types = fooconvert_get_post_types();
-
-            // Build the base query with placeholders dynamically
-            $placeholders = array_fill( 0, count( $post_types ), '%s' );
-            $placeholders_string = implode( ', ', $placeholders );
+            $post_type = fooconvert_get_registered_post_type();
 
             $query = "SELECT p.ID AS widget_id
                 FROM %i p
                 LEFT JOIN %i e ON p.ID = e.widget_id
-                WHERE p.post_type IN ($placeholders_string)
+                WHERE p.post_type = %s
                   AND e.widget_id IS NULL";
 
-            // Combine post types into the prepared query
             $prepared_query = $wpdb->prepare(
                 $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 $posts_table,
                 $table_name,
-                ...$post_types
+                $post_type
             );
 
             // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared

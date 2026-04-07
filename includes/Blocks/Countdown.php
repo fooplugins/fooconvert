@@ -51,13 +51,13 @@ class Countdown extends BaseBlock {
     }
 
     /**
-     * Registers the countdown block for supported widget post types.
+     * Registers the countdown block for the popup editor post type.
      *
      * @return false|array
      */
     function register_blocks() {
-        $post_types = FooConvert::plugin()->widgets->get_post_types();
-        return Utils::register_post_type_blocks( $post_types, array(
+        $post_type = FooConvert::plugin()->widgets->get_registered_post_type();
+        return Utils::register_post_type_blocks( $post_type, array(
             array(
                 'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'blocks/countdown/block.json',
                 'args'           => array(

@@ -22,11 +22,6 @@ class Widgets extends BaseComponent {
     /**
      * @var string[]
      */
-    private array $post_types = array();
-
-    /**
-     * @var string[]
-     */
     private array $tag_names = array();
 
     /**
@@ -55,20 +50,21 @@ class Widgets extends BaseComponent {
     }
 
     /**
-     * Get the custom post types for all widgets.
+     * Returns the single registered widget post type.
      *
-     * @return string[] A string array of custom post types for all widgets.
+     * @return string
+     */
+    function get_registered_post_type(): string {
+        return FOOCONVERT_CPT_POPUP;
+    }
+
+    /**
+     * Returns the registered widget post types.
      *
-     * @since 1.0.0
+     * @return string[]
      */
     function get_post_types(): array {
-        if ( !empty( $this->post_types ) ) {
-            return $this->post_types;
-        }
-
-        return $this->post_types = array(
-            FOOCONVERT_CPT_POPUP,
-        );
+        return array( $this->get_registered_post_type() );
     }
 
     /**
@@ -129,7 +125,7 @@ class Widgets extends BaseComponent {
      * @since 1.0.0
      */
     function is_editor(): bool {
-        return Utils::is_post_type_editor( $this->get_post_types() );
+        return Utils::is_post_type_editor( $this->get_registered_post_type() );
     }
 
     //endregion

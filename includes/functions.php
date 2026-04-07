@@ -115,15 +115,23 @@ function fooconvert_is_debug() {
 }
 
 /**
- * Retrieve the custom post types for all FooConvert widgets.
+ * Returns the single registered widget post type used by FooConvert.
  *
- * This function accesses the FooConvert plugin's widgets and retrieves
- * an array of custom post types associated with all widgets.
+ * @return string
+ */
+function fooconvert_get_registered_post_type() {
+    return \FooPlugins\FooConvert\FooConvert::plugin()->widgets->get_registered_post_type();
+}
+
+/**
+ * Returns the registered widget post types.
  *
- * @return string[] An array of custom post type strings.
+ * Kept as a compatibility wrapper around the single registered popup post type.
+ *
+ * @return string[]
  */
 function fooconvert_get_post_types() {
-    return \FooPlugins\FooConvert\FooConvert::plugin()->widgets->get_post_types();
+    return array( fooconvert_get_registered_post_type() );
 }
 
 /**
@@ -134,7 +142,7 @@ function fooconvert_get_post_types() {
  * @return bool True if the post type is valid, false otherwise.
  */
 function fooconvert_is_valid_post_type( $post_type ) {
-    return in_array( $post_type, fooconvert_get_post_types() );
+    return $post_type === fooconvert_get_registered_post_type();
 }
 
 /**

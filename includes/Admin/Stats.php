@@ -220,14 +220,14 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
          * @since 1.0.0
          */
         public function register_columns() {
-            foreach ( FooConvert::plugin()->widgets->get_post_types() as $post_type ) {
-                add_filter( "manage_{$post_type}_posts_columns", function ( $columns ) use ( $post_type ) {
-                    return $this->create_stats_column( $post_type, $columns );
-                } );
-                add_action( "manage_{$post_type}_posts_custom_column", function ( $column_name, $post_id ) use ( $post_type ) {
-                    $this->create_stats_column_content( $post_type, $column_name, $post_id );
-                }, 10, 2 );
-            }
+            $post_type = FooConvert::plugin()->widgets->get_registered_post_type();
+
+            add_filter( "manage_{$post_type}_posts_columns", function ( $columns ) use ( $post_type ) {
+                return $this->create_stats_column( $post_type, $columns );
+            } );
+            add_action( "manage_{$post_type}_posts_custom_column", function ( $column_name, $post_id ) use ( $post_type ) {
+                $this->create_stats_column_content( $post_type, $column_name, $post_id );
+            }, 10, 2 );
         }
 
         /**

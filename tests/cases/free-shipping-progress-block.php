@@ -68,8 +68,8 @@ namespace FooPlugins\FooConvert {
     }
 
     class Widgets {
-        public function get_post_types(): array {
-            return array( 'fc-popup', 'fc-bar', 'fc-flyout' );
+        public function get_registered_post_type(): string {
+            return 'fc-popup';
         }
     }
 

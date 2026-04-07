@@ -54,28 +54,6 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
 
             do_action( 'fooconvert_admin_menu_before_post_types' );
 
-            foreach ( FooConvert::plugin()->widgets->get_post_types() as $post_type ) {
-                if ( post_type_exists( $post_type ) ) {
-                    $post_type_object = get_post_type_object( $post_type );
-                    if ( $post_type_object->show_in_menu === FOOCONVERT_MENU_SLUG ) {
-                        continue;
-                    }
-
-                    $menu_title = $post_type_object->label;
-                    $capability = $post_type_object->cap->edit_posts;
-                    $menu_slug = 'edit.php?post_type=' . $post_type;
-
-                    add_submenu_page(
-                        FOOCONVERT_MENU_SLUG,
-                        $menu_title,
-                        $menu_title,
-                        $capability,
-                        $menu_slug,
-                        null
-                    );
-                }
-            }
-
             add_submenu_page(
                 null,
                 __( 'Choose Widget Type', 'fooconvert' ),
@@ -172,7 +150,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                 }
 
                 $current_post_Type = $current_screen->post_type;
-                if ( in_array( $current_post_Type, FooConvert::plugin()->widgets->get_post_types(), true ) ) {
+                if ( $current_post_Type === FooConvert::plugin()->widgets->get_registered_post_type() ) {
                     return $current_screen->base !== 'post';
                 }
             }

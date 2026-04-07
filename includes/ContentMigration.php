@@ -50,9 +50,7 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
             add_action( 'plugins_loaded', array( $this, 'maybe_migrate_widget_post_types' ), 20 );
             add_action( 'init', array( $this, 'maybe_migrate_widget_content' ), 20 );
 
-            foreach ( $this->get_widget_post_types() as $post_type ) {
-                add_filter( 'rest_prepare_' . $post_type, array( $this, 'maybe_migrate_rest_post' ), 10, 3 );
-            }
+            add_filter( 'rest_prepare_' . $this->get_registered_widget_post_type(), array( $this, 'maybe_migrate_rest_post' ), 10, 3 );
         }
 
         /**
@@ -134,7 +132,7 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
          * @return mixed
          */
         public function maybe_migrate_rest_post( $response, WP_Post $post, WP_REST_Request $request ) {
-            if ( !$response instanceof WP_REST_Response || !in_array( $post->post_type, $this->get_widget_post_types(), true ) ) {
+            if ( !$response instanceof WP_REST_Response || $post->post_type !== $this->get_registered_widget_post_type() ) {
                 return $response;
             }
 
@@ -225,14 +223,12 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         private function get_widget_ids(): array {
             global $wpdb;
 
-            $post_types = $this->get_widget_post_types();
-            $placeholders = implode( ', ', array_fill( 0, count( $post_types ), '%s' ) );
             $query = $wpdb->prepare(
                 "SELECT ID
                  FROM {$wpdb->posts}
-                 WHERE post_type IN ($placeholders)
+                 WHERE post_type = %s
                  AND post_status NOT IN ('auto-draft', 'trash')",
-                ...$post_types
+                $this->get_registered_widget_post_type()
             );
 
             $results = $wpdb->get_col( $query );
@@ -296,16 +292,12 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         }
 
         /**
-         * Returns the widget post types tracked by this migration.
+         * Returns the single registered widget post type tracked by content migrations.
          *
-         * @return string[]
+         * @return string
          */
-        private function get_widget_post_types(): array {
-            return array(
-                FOOCONVERT_CPT_BAR,
-                FOOCONVERT_CPT_FLYOUT,
-                FOOCONVERT_CPT_POPUP,
-            );
+        private function get_registered_widget_post_type(): string {
+            return FOOCONVERT_CPT_POPUP;
         }
 
         /**
