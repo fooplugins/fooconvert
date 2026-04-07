@@ -270,7 +270,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
                 FOOCONVERT_MENU_SLUG,
                 function () {
                     require_once FOOCONVERT_INCLUDES_PATH . 'Admin/Views/dashboard.php';
-                }
+                },
+                1
             );
         }
 

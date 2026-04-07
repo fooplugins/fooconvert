@@ -15,6 +15,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
          */
         function __construct() {
             add_action( 'admin_menu', array( $this, 'register_menu' ) );
+            add_action( 'admin_menu', array( $this, 'reorder_menu' ), 999 );
             add_action( 'in_admin_header', array( $this, 'add_custom_header' ) );
             add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueues' ) );
             add_action( 'load-post-new.php', array( $this, 'maybe_redirect_widget_creation' ) );
@@ -54,6 +55,19 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
 
             do_action( 'fooconvert_admin_menu_before_post_types' );
 
+            $popup_post_type = get_post_type_object( FOOCONVERT_CPT_POPUP );
+            if ( $popup_post_type ) {
+                add_submenu_page(
+                    FOOCONVERT_MENU_SLUG,
+                    $popup_post_type->labels->add_new_item,
+                    $popup_post_type->labels->add_new_item,
+                    $popup_post_type->cap->create_posts,
+                    'post-new.php?post_type=' . FOOCONVERT_CPT_POPUP,
+                    null,
+                    15
+                );
+            }
+
             add_submenu_page(
                 null,
                 __( 'Choose Popup Type', 'fooconvert' ),
@@ -64,6 +78,51 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             );
 
             do_action( 'fooconvert_admin_menu_after_post_types' );
+        }
+
+        /**
+         * Ensures the FooConvert submenu order is Dashboard, Popups, then Add New Popup.
+         *
+         * @return void
+         */
+        public function reorder_menu(): void {
+            global $submenu;
+
+            if ( !isset( $submenu[FOOCONVERT_MENU_SLUG] ) || !is_array( $submenu[FOOCONVERT_MENU_SLUG] ) ) {
+                return;
+            }
+
+            $desired_slugs = array(
+                FOOCONVERT_MENU_SLUG,
+                'edit.php?post_type=' . FOOCONVERT_CPT_POPUP,
+                'post-new.php?post_type=' . FOOCONVERT_CPT_POPUP,
+            );
+
+            $ordered = array();
+            $added = array();
+
+            foreach ( $desired_slugs as $desired_slug ) {
+                foreach ( $submenu[FOOCONVERT_MENU_SLUG] as $item ) {
+                    if ( !isset( $item[2] ) || $item[2] !== $desired_slug ) {
+                        continue;
+                    }
+
+                    $ordered[] = $item;
+                    $added[] = $desired_slug;
+                    break;
+                }
+            }
+
+            foreach ( $submenu[FOOCONVERT_MENU_SLUG] as $item ) {
+                $slug = isset( $item[2] ) ? $item[2] : '';
+                if ( in_array( $slug, $added, true ) ) {
+                    continue;
+                }
+
+                $ordered[] = $item;
+            }
+
+            $submenu[FOOCONVERT_MENU_SLUG] = array_values( $ordered );
         }
 
         /**
