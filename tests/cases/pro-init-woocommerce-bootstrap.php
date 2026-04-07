@@ -66,6 +66,7 @@ namespace FooPlugins\FooConvert\Pro\Leads {
 }
 
 namespace FooPlugins\FooConvert\Pro\Analytics {
+    class DemoContent {}
     class Metrics {}
     class Sales {}
     class RecentActivity {}

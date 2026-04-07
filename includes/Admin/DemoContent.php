@@ -171,11 +171,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                     $conversion = wp_rand( 0, 1 );
                 }
 
-                // TODO : figure out subtype based off event_type.
-                $event_subtype = null;
-
-                // TODO : figure out sentiment, based off event_type.
-                $sentiment = null;
+                $event_subtype = in_array( $event_type, [ FOOCONVERT_EVENT_TYPE_CLICK, FOOCONVERT_EVENT_TYPE_CLOSE ], true )
+                    ? FOOCONVERT_EVENT_SUBTYPE_ENGAGEMENT
+                    : null;
+                $sentiment = FOOCONVERT_EVENT_TYPE_CLICK === $event_type
+                    ? 1
+                    : ( FOOCONVERT_EVENT_TYPE_CLOSE === $event_type ? 0 : null );
 
                 // Random timestamp within the last 30 days
                 $timestamp = gmdate( 'Y-m-d H:i:s', strtotime( "-" . wp_rand( 0, 30 ) . " days -" . wp_rand( 0, 86400 ) . " seconds" ) );
@@ -221,6 +222,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                     $meta
                 );
             }
+
+            do_action( 'fooconvert_demo_content_after_create_events', $widget_id, $meta, $num_events );
         }
 
         // Helper function to select an event type based on weighted probabilities
