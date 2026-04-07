@@ -49,7 +49,7 @@ if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
                 'id'           => __( 'ID', 'fooconvert' ),
                 'email'        => __( 'Email', 'fooconvert' ),
                 'name'         => __( 'Name', 'fooconvert' ),
-                'widget_title' => __( 'Widget', 'fooconvert' ),
+                'widget_title' => __( 'Popup', 'fooconvert' ),
                 'page_url'     => __( 'Page', 'fooconvert' ),
                 'timestamp'    => __( 'Date Added', 'fooconvert' ),
             );
@@ -222,7 +222,7 @@ if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
 
             $fp = fopen( 'php://output', 'w' );
 
-            fputcsv( $fp, array( 'ID', 'Email', 'Name', 'Widget', 'Page URL', 'Date' ) );
+            fputcsv( $fp, array( 'ID', 'Email', 'Name', 'Popup', 'Page URL', 'Date' ) );
 
             foreach ( $leads as $lead ) {
                 fputcsv( $fp, array(

@@ -112,7 +112,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 }
 
                 if ( $widget_id === 0 ) {
-                    wp_die( esc_html__( 'Invalid widget ID!!', 'fooconvert' ) );
+                    wp_die( esc_html__( 'Invalid popup ID!!', 'fooconvert' ) );
                 }
 
                 $event = new Event();

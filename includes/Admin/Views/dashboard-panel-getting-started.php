@@ -52,13 +52,13 @@ if ( in_array( 'getting-started', $hidden_panels ) ) {
     <div class="fooconvert-panel-section">
         <h3 class="fooconvert-center"><?php esc_html_e( 'OR', 'fooconvert' ); ?></h3>
         <p>
-            <?php esc_html_e( 'Create your own unique widget by following these simple steps:', 'fooconvert' ); ?>
+            <?php esc_html_e( 'Create your own unique popup by following these simple steps:', 'fooconvert' ); ?>
         </p>
         <ol class="fooconvert-ordered-list">
             <li>
-                <?php esc_html_e( 'Create a new widget and choose whether it should be a bar, flyout, or popup.', 'fooconvert' ); ?>
+                <?php esc_html_e( 'Create a new popup and choose whether it should be a bar, flyout, or popup.', 'fooconvert' ); ?>
                 (<a href="<?php echo esc_url( fooconvert_admin_url_widget_type_chooser() ); ?>"
-                    target="_blank"><?php esc_html_e( 'create a new widget', 'fooconvert' ); ?></a>)
+                    target="_blank"><?php esc_html_e( 'create a new popup', 'fooconvert' ); ?></a>)
             </li>
             <li>
                 <?php esc_html_e( 'Select a pre-made template.', 'fooconvert' ); ?>

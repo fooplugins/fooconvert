@@ -56,8 +56,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
 
             add_submenu_page(
                 null,
-                __( 'Choose Widget Type', 'fooconvert' ),
-                __( 'Choose Widget Type', 'fooconvert' ),
+                __( 'Choose Popup Type', 'fooconvert' ),
+                __( 'Choose Popup Type', 'fooconvert' ),
                 'manage_options',
                 FOOCONVERT_MENU_SLUG_WIDGET_CHOOSER,
                 array( $this, 'render_widget_type_chooser' )
@@ -107,8 +107,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             );
             ?>
             <div class="wrap fooconvert-widget-chooser">
-                <h1><?php esc_html_e( 'Choose a Widget Type', 'fooconvert' ); ?></h1>
-                <p><?php esc_html_e( 'Pick the kind of widget you want to create before choosing a template.', 'fooconvert' ); ?></p>
+                <h1><?php esc_html_e( 'Choose a Popup Type', 'fooconvert' ); ?></h1>
+                <p><?php esc_html_e( 'Pick the kind of popup you want to create before choosing a template.', 'fooconvert' ); ?></p>
                 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:920px;margin-top:24px;">
                     <?php foreach ( $cards as $popup_type => $card ) : ?>
                         <div class="card" style="margin:0;padding:24px;">
@@ -129,7 +129,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                 </div>
                 <p style="margin-top:24px;">
                     <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=' . FOOCONVERT_CPT_POPUP ) ); ?>">
-                        <?php esc_html_e( 'Back to widgets', 'fooconvert' ); ?>
+                        <?php esc_html_e( 'Back to popups', 'fooconvert' ); ?>
                     </a>
                 </p>
             </div>

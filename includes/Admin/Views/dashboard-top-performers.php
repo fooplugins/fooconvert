@@ -36,9 +36,9 @@ if ( empty( $top_performers ) ) {
     foreach ( $top_performers as $index => $top_performer ) {
         $id = intval( $top_performer['id'] );
         $edit_url = fooconvert_admin_url_widget_edit( $id );
-        $edit_link = '<a href="' . esc_url( $edit_url ) . '"><i class="dashicons dashicons-edit" title="' . esc_attr__( 'Edit Widget', 'fooconvert' ) . '"></i></a>';
+        $edit_link = '<a href="' . esc_url( $edit_url ) . '"><i class="dashicons dashicons-edit" title="' . esc_attr__( 'Edit Popup', 'fooconvert' ) . '"></i></a>';
         $stats_url = fooconvert_admin_url_widget_stats( $id );
-        $stats_link = '<a href="' . esc_url( $stats_url ) . '"><i class="dashicons dashicons-chart-bar" title="' . esc_attr__( 'View Widget Stats', 'fooconvert' ) . '"></i></a>';
+        $stats_link = '<a href="' . esc_url( $stats_url ) . '"><i class="dashicons dashicons-chart-bar" title="' . esc_attr__( 'View Popup Stats', 'fooconvert' ) . '"></i></a>';
         $score = $top_performer['score'];
         if ( isset( $sort_object['format'] ) && $sort_object['format'] === 'currency' ) {
             $score = fooconvert_format_revenue( $score );
@@ -60,4 +60,3 @@ if ( empty( $top_performers ) ) {
     echo '</tbody>';
     echo '</table>';
 }
-

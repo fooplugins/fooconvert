@@ -13,7 +13,7 @@ if ( !class_exists( __NAMESPACE__ . '\Lead' ) ) {
          */
         public function create( $data ) {
             if ( empty( $data['widget_id'] ) || empty( $data['email'] ) ) {
-                return new \WP_Error( 'missing_required_fields', 'Widget ID and email are required fields' );
+                return new \WP_Error( 'missing_required_fields', 'Popup ID and email are required fields' );
             }
 
             $data['widget_id'] = intval( $data['widget_id'] );

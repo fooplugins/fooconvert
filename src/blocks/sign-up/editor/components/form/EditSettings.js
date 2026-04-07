@@ -53,7 +53,7 @@ const EditSettings = ( props ) => {
                 />
                 <ToggleControl
                     label={ __( 'Close on success', 'fooconvert' ) }
-                    help={ __( 'Close the parent widget after a successful sign-up.', 'fooconvert' ) }
+                    help={ __( 'Close the parent popup after a successful sign-up.', 'fooconvert' ) }
                     checked={ closeOnSuccess }
                     onChange={ setCloseOnSuccess }
                     __nextHasNoMarginBottom

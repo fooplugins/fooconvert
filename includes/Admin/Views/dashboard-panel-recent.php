@@ -45,9 +45,9 @@ if ( empty( $widgets ) || count( $widgets ) === 0 ) {
                     $id = intval( $widget->ID );
                     $widget_title = fooconvert_get_widget_title( $widget );
                     $edit_url = fooconvert_admin_url_widget_edit( $id );
-                    $edit_link = '<a href="' . esc_url( $edit_url ) . '"><i class="dashicons dashicons-edit" title="' . esc_attr__( 'Edit Widget', 'fooconvert' ) . '"></i></a>';
+                    $edit_link = '<a href="' . esc_url( $edit_url ) . '"><i class="dashicons dashicons-edit" title="' . esc_attr__( 'Edit Popup', 'fooconvert' ) . '"></i></a>';
                     $stats_url = fooconvert_admin_url_widget_stats( $id );
-                    $stats_link = '<a href="' . esc_url( $stats_url ) . '"><i class="dashicons dashicons-chart-bar" title="' . esc_attr__( 'View Widget Stats', 'fooconvert' ) . '"></i></a>';
+                    $stats_link = '<a href="' . esc_url( $stats_url ) . '"><i class="dashicons dashicons-chart-bar" title="' . esc_attr__( 'View Popup Stats', 'fooconvert' ) . '"></i></a>';
                     $post_type = fooconvert_get_widget_post_type_label( $widget );
                     $modified_time = get_post_modified_time( 'U', false, $widget );               // Get the Unix timestamp of the modified date
                     $modified_diff = human_time_diff( $modified_time, current_time( 'timestamp' ) );

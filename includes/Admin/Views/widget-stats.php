@@ -62,7 +62,7 @@ if ( $widget_id ) {
             <p id="metric-total_events">...</p>
             <h2><?php esc_html_e( 'Total Events', 'fooconvert' ); ?></h2>
             <span data-balloon-pos="down"
-                  aria-label="<?php esc_attr_e( 'Total events logged for the widget over the time period.', 'fooconvert' ); ?>">
+                  aria-label="<?php esc_attr_e( 'Total events logged for the popup over the time period.', 'fooconvert' ); ?>">
                 <i class="dashicons dashicons-editor-help"></i>
             </span>
         </div>
@@ -70,7 +70,7 @@ if ( $widget_id ) {
             <p id="metric-total_views">...</p>
             <h2><?php esc_html_e( 'Total Views', 'fooconvert' ); ?></h2>
             <span data-balloon-pos="down"
-                  aria-label="<?php esc_attr_e( 'Total number of times the widget has been viewed by a visitor.', 'fooconvert' ); ?>">
+                  aria-label="<?php esc_attr_e( 'Total number of times the popup has been viewed by a visitor.', 'fooconvert' ); ?>">
                 <i class="dashicons dashicons-editor-help"></i>
             </span>
         </div>
@@ -78,7 +78,7 @@ if ( $widget_id ) {
             <p id="metric-total_unique_visitors">...</p>
             <h2><?php esc_html_e( 'Total Visitors', 'fooconvert' ); ?></h2>
             <span data-balloon-pos="down"
-                  aria-label="<?php esc_attr_e( 'Total number of unique visitors that have viewed the widget.', 'fooconvert' ); ?>">
+                  aria-label="<?php esc_attr_e( 'Total number of unique visitors that have viewed the popup.', 'fooconvert' ); ?>">
                 <i class="dashicons dashicons-editor-help"></i>
             </span>
         </div>
@@ -86,7 +86,7 @@ if ( $widget_id ) {
             <p id="metric-total_engagements">...</p>
             <h2><?php esc_html_e( 'Total Engagements', 'fooconvert' ); ?></h2>
             <span data-balloon-pos="down"
-                  aria-label="<?php esc_attr_e( 'Total number of engagements that have been made with the widget (clicks, opens, etc).', 'fooconvert' ); ?>">
+                  aria-label="<?php esc_attr_e( 'Total number of engagements that have been made with the popup (clicks, opens, etc).', 'fooconvert' ); ?>">
                 <i class="dashicons dashicons-editor-help"></i>
             </span>
         </div>

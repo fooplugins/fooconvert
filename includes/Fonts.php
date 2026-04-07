@@ -43,7 +43,7 @@ if ( !class_exists( __NAMESPACE__ . '\Fonts' ) ) {
                     array(
                         'id'    => 'font_help',
                         'label' => __( 'Font Help', 'fooconvert' ),
-                        'text'  => __( 'Add Google Fonts here to make them available while editing your widgets.', 'fooconvert' ),
+                        'text'  => __( 'Add Google Fonts here to make them available while editing your popups.', 'fooconvert' ),
                         'type'  => 'help',
                     ),
                     array(

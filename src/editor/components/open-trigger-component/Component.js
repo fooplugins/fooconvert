@@ -692,7 +692,7 @@ const OpenTriggerComponent = props => {
         locked = false,
         allowEmpty = false,
         label = __( "Open Trigger", "fooconvert" ),
-        help = __( "Select how this widget is opened.", "fooconvert" ),
+        help = __( "Select how this popup is opened.", "fooconvert" ),
         showDivider = false,
         hideLabelFromVision
     } = props;

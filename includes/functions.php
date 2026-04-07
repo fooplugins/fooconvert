@@ -635,12 +635,12 @@ function fooconvert_pro_features_list() {
         ],
         'retention' => [
             'title'   => __( 'Longer Retention', 'fooconvert' ),
-            'feature' => __( 'Longer retention period for widget analytics. Track widget performance as long as you like!', 'fooconvert' ),
+            'feature' => __( 'Longer retention period for popup analytics. Track popup performance as long as you like!', 'fooconvert' ),
             'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/pro-analytics/#retention',
         ],
         'analytics' => [
             'title'   => __( 'Advanced Analytics', 'fooconvert' ),
-            'feature' => __( 'Advanced widget analytics: Clicks, click-through-rates, conversions, conversion rates, engagement sentiment, engagement ratios, daily activity charts.', 'fooconvert' ),
+            'feature' => __( 'Advanced popup analytics: Clicks, click-through-rates, conversions, conversion rates, engagement sentiment, engagement ratios, daily activity charts.', 'fooconvert' ),
             'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/pro-analytics/',
         ],
         'metrics' => [
@@ -650,7 +650,7 @@ function fooconvert_pro_features_list() {
         ],
         'exclusions' => [
             'title'   => __( 'Role Exclusion', 'fooconvert' ),
-            'feature' => __( 'Exclude roles from logging widget events for analytics (e.g., exclude admin tests).', 'fooconvert' ),
+            'feature' => __( 'Exclude roles from logging popup events for analytics (e.g., exclude admin tests).', 'fooconvert' ),
             'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/exclude-roles/',
         ],
     ];

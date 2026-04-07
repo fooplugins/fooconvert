@@ -69,7 +69,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
 
             // 1. Validate widget_id (required and should be a positive integer)
             if ( !isset( $data['widget_id'] ) || !is_int( $data['widget_id'] ) || $data['widget_id'] <= 0 ) {
-                return new WP_Error( 'invalid_event_data_widget_id', 'The widget ID must be a positive integer.' );
+                return new WP_Error( 'invalid_event_data_widget_id', 'The popup ID must be a positive integer.' );
             }
 
             // 2. Validate event_type (required and should be a string)

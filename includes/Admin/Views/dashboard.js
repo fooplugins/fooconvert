@@ -102,7 +102,7 @@ jQuery(document).ready(function ($) {
             },
             error: function () {
                 $spinner.removeClass('is-active');
-                alert('Failed to create demo widgets!');
+                alert('Failed to create demo popups!');
             }
         });
     });
@@ -127,7 +127,7 @@ jQuery(document).ready(function ($) {
             },
             error: function () {
                 $spinner.removeClass('is-active');
-                alert('Failed to delete demo widgets!');
+                alert('Failed to delete demo popups!');
             }
         });
     });

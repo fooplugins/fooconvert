@@ -72,7 +72,7 @@ class QueryLead extends Base {
         }
 
         if ( !isset( $data['widget_id'] ) || !is_int( $data['widget_id'] ) || $data['widget_id'] <= 0 ) {
-            return new WP_Error( 'invalid_lead_data_widget_id', 'The widget ID must be a positive integer.' );
+            return new WP_Error( 'invalid_lead_data_widget_id', 'The popup ID must be a positive integer.' );
         }
 
         if ( !isset( $data['email'] ) || !is_string( $data['email'] ) || !is_email( $data['email'] ) ) {

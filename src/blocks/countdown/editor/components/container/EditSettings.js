@@ -112,7 +112,7 @@ const EditSettings = ( props ) => {
                 ) }
                 <ToggleControl
                     label={ __( 'Close on expire', 'fooconvert' ) }
-                    help={ __( 'Close the parent widget after the countdown expires.', 'fooconvert' ) }
+                    help={ __( 'Close the parent popup after the countdown expires.', 'fooconvert' ) }
                     checked={ closeOnExpire }
                     onChange={ setCloseOnExpire }
                     __nextHasNoMarginBottom

@@ -16,7 +16,7 @@ const buildAdminUrl = path => {
 
 const ExperimentPanel = () => {
     const { experimentId, role, label } = useExperimentVariantLock();
-    const labels = usePostTypeLabels( { singular_name: __( "Widget", "fooconvert" ) } );
+    const labels = usePostTypeLabels( { singular_name: __( "Popup", "fooconvert" ) } );
 
     if ( experimentId <= 0 ) {
         return null;
@@ -24,7 +24,7 @@ const ExperimentPanel = () => {
 
     const roleLabel = role === "control" ? __( "Control", "fooconvert" ) : __( "Variant", "fooconvert" );
     const participantLabel = label || roleLabel;
-    const singularName = labels?.singular_name || __( "Widget", "fooconvert" );
+    const singularName = labels?.singular_name || __( "Popup", "fooconvert" );
     /* translators: %s is the singular widget label, for example "Popup". */
     const experimentDescription = sprintf( __( "This %s is part of an A/B test experiement", "fooconvert" ), singularName );
 

@@ -192,10 +192,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
             fooconvert_set_setting( 'demo_content', 'on' );
 
             if ( $created === 0 ) {
-                wp_send_json( [ 'message' => __( 'No widgets created!', 'fooconvert' ) ] );
+                wp_send_json( [ 'message' => __( 'No popups created!', 'fooconvert' ) ] );
             } else {
-                // Translators: %d refers to the number of demo widgets created.
-                wp_send_json( [ 'message' => sprintf( __( '%d demo widgets created successfully!', 'fooconvert' ), $created ) ] );
+                // Translators: %d refers to the number of demo popups created.
+                wp_send_json( [ 'message' => sprintf( __( '%d demo popups created successfully!', 'fooconvert' ), $created ) ] );
             }
         }
 
@@ -213,7 +213,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
 
             fooconvert_set_setting( 'demo_content', '' );
 
-            wp_send_json( [ 'message' => __( 'All demo widgets deleted!', 'fooconvert' ) ] );
+            wp_send_json( [ 'message' => __( 'All demo popups deleted!', 'fooconvert' ) ] );
         }
 
         /**

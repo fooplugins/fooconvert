@@ -91,7 +91,7 @@ const EditSettings = ( props ) => {
                 { !redirectOnCopy && (
                     <ToggleControl
                         label={ __( 'Close on copy', 'fooconvert' ) }
-                        help={ __( 'Close the parent widget after the coupon is copied.', 'fooconvert' ) }
+                        help={ __( 'Close the parent popup after the coupon is copied.', 'fooconvert' ) }
                         checked={ closeOnCopy }
                         onChange={ setCloseOnCopy }
                         __nextHasNoMarginBottom
