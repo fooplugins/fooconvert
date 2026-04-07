@@ -19,7 +19,7 @@ const medias = [ 'icon', 'thumbnail' ];
 const DEFAULT_MEDIA = 'icon';
 
 const CLASS_NAME = 'fc--variation-picker';
-const TYPE_CHOOSER_PATH = 'admin.php?page=fooconvert-widget-chooser';
+const TYPE_CHOOSER_PATH = 'post-new.php?post_type=fc-popup';
 
 const buildAdminUrl = path => {
     if ( typeof window?.ajaxurl === "string" && window.ajaxurl.includes( "admin-ajax.php" ) ) {
@@ -27,6 +27,15 @@ const buildAdminUrl = path => {
     }
 
     return path;
+};
+
+const navigateToTopWindow = url => {
+    if ( typeof url !== "string" || url.length === 0 ) {
+        return;
+    }
+
+    const targetWindow = window?.top ?? window;
+    targetWindow.location.assign( url );
 };
 
 const VariationPicker = ( {
@@ -137,6 +146,14 @@ const VariationPicker = ( {
         className
     );
     const typeChooserUrl = showTypeChooserLink ? buildAdminUrl( TYPE_CHOOSER_PATH ) : '';
+    const handleTypeChooserClick = event => {
+        if ( typeChooserUrl === '' ) {
+            return;
+        }
+
+        event.preventDefault();
+        navigateToTopWindow( typeChooserUrl );
+    };
 
     const ModeButton = ( { value, icon, label } ) => {
         const isActive = value === mode;
@@ -177,7 +194,7 @@ const VariationPicker = ( {
             </div>
             { typeChooserUrl !== '' && (
                 <div className="fc-variation-picker__footer">
-                    <Button variant="link" href={ typeChooserUrl }>
+                    <Button variant="link" href={ typeChooserUrl } target="_top" onClick={ handleTypeChooserClick }>
                         { __( "Choose a different type", "fooconvert" ) }
                     </Button>
                 </div>

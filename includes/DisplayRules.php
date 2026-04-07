@@ -894,8 +894,7 @@ class DisplayRules extends BaseComponent {
         $source_post_id = $post_id;
         $resolved_post_id = apply_filters( 'fooconvert_resolve_widget_post_id', $post_id, array(
             'context'        => $context,
-            'source_post_id' => $source_post_id,
-            'post_type'      => fooconvert_get_widget_logical_post_type( $source_post_id ),
+            'source_post_id' => $source_post_id
         ) );
         $resolved_post_id = intval( $resolved_post_id );
         if ( $resolved_post_id <= 0 ) {
