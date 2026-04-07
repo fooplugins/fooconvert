@@ -254,6 +254,9 @@ namespace {
 
     $text_attributes = array(
         'content' => 'Spend <strong>{threshold}</strong> now. <a href="{threshold}">{subtotal}</a> {remaining} {progress_percent}',
+        'settings' => array(
+            'tagName' => 'h3',
+        ),
     );
     $text_context_block = new WP_Block();
     $text_context_block->context['fc/free-shipping-progress/settings'] = array(
@@ -263,8 +266,8 @@ namespace {
     $text_render = $text_block->render( $text_attributes, '', $text_context_block );
 
     Assertions::true(
-        strpos( $text_render, 'Spend <strong>$50</strong> now.' ) !== false,
-        'FreeShippingText should resolve threshold tokens from the parent settings using rounded totals by default.'
+        strpos( $text_render, '<h3 class="fc--free-shipping-text__content">Spend <strong>$50</strong> now.' ) !== false,
+        'FreeShippingText should wrap resolved content in the configured semantic tag.'
     );
 
     Assertions::true(
@@ -286,13 +289,16 @@ namespace {
     $unrounded_render = $text_block->render(
         array(
             'content' => 'Free shipping at {threshold}',
+            'settings' => array(
+                'tagName' => 'p',
+            ),
         ),
         '',
         $unrounded_context_block
     );
 
     Assertions::true(
-        strpos( $unrounded_render, 'Free shipping at $49.80' ) !== false,
+        strpos( $unrounded_render, '<p class="fc--free-shipping-text__content">Free shipping at $49.80</p>' ) !== false,
         'FreeShippingText should preserve decimal amounts when round totals is disabled.'
     );
 
@@ -306,6 +312,12 @@ namespace {
         $text_attributes['content'],
         $text_frontend_data['content'],
         'FreeShippingText should expose the raw token template to the frontend.'
+    );
+
+    Assertions::same(
+        'h3',
+        $text_frontend_data['tagName'],
+        'FreeShippingText should expose the configured semantic tag to the frontend.'
     );
 
     $bar_frontend_data = $bar_block->get_frontend_data(
