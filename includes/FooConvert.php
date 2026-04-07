@@ -81,6 +81,7 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
                     'endpoint' => $this->ajax->get_endpoint(),
                     'widgets' => $this->widgets->get_tag_names()
                 );
+                $data = apply_filters( 'fooconvert_frontend_config', $data );
                 wp_add_inline_script( FOOCONVERT_FRONTEND_ASSET_HANDLE, Utils::to_js_script( 'FOOCONVERT_CONFIG', $data ), 'before' );
             }
             do_action( 'fooconvert_ensured_frontend_assets_enqueued' );

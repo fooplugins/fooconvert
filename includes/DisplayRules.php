@@ -868,12 +868,24 @@ class DisplayRules extends BaseComponent {
         $content = FooConvert::plugin()->content_migration->get_post_content( $resolved_post_id );
         if ( !empty( $content ) ) {
             $compatibility_mode = FooConvert::plugin()->compatibility->is_enabled( $resolved_post_id );
-            return array(
+            $queueable = array(
                 'source_post_id'     => $source_post_id,
                 'post_id'            => $resolved_post_id,
                 'content'            => do_blocks( $content ),
                 'compatibility_mode' => $compatibility_mode,
             );
+            /**
+             * Allows extensions to attach additional request-time data to queueable widgets.
+             *
+             * @param array<string,mixed> $queueable Queueable widget payload.
+             * @param int $resolved_post_id Widget post ID after any resolver filters are applied.
+             * @param array<string,mixed> $context_data Context describing why the widget was queued.
+             */
+            return apply_filters( 'fooconvert_queueable_widget', $queueable, $resolved_post_id, array(
+                'context'        => $context,
+                'source_post_id' => $source_post_id,
+                'resolved_post_id' => $resolved_post_id,
+            ) );
         }
         return array();
     }

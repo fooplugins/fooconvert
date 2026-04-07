@@ -142,6 +142,7 @@ class Widgets extends BaseComponent {
         if ( !empty( $post_id ) && !FooConvert::plugin()->display_rules->is_enqueued( $post_id ) ) {
             $queueable = FooConvert::plugin()->display_rules->get_queueable( $post_id, 'shortcode' );
             if ( !empty( $queueable ) ) {
+                do_action( 'fooconvert_enqueue_required_assets', array( $queueable ) );
                 return FooConvert::plugin()->display_rules->render_queueable( $queueable );
             }
         }
