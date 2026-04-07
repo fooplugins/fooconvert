@@ -29,7 +29,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             }
 
             add_filter( 'block_editor_settings_all', function( $settings, $context ) {
-                if ( FooConvert::plugin()->widgets->is_editor() ) {
+                if ( FooConvert::plugin()->post_type->is_editor() ) {
                     $settings['localAutosaveInterval'] = 0;
                     $settings['autosaveInterval'] = 0;
                 }
