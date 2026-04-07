@@ -4,10 +4,16 @@ namespace FooPlugins\FooConvert\Admin\FooFields\Fields;
 
 if ( !class_exists( __NAMESPACE__ . '\Suggest' ) ) {
 
+    /**
+     * Class Suggest.
+     */
     class Suggest extends Field {
 
         protected $query;
 
+        /**
+         * Initializes the Suggest.
+         */
         function __construct( $container, $type, $field_config ) {
             parent::__construct( $container, $type, $field_config );
 

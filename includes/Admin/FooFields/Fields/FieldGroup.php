@@ -6,6 +6,9 @@ use FooPlugins\FooConvert\Admin\FooFields\Container;
 
 if ( !class_exists( __NAMESPACE__ . '\FieldGroup' ) ) {
 
+    /**
+     * Class FieldGroup.
+     */
     class FieldGroup extends Field {
 
         protected $fields = false;

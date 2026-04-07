@@ -12,8 +12,14 @@ use wpdb;
 
 if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
 
+    /**
+     * Class Query.
+     */
     class Query extends Base {
 
+        /**
+         * Initializes the Query.
+         */
         private function __construct() {
             // Prevent instantiation.
         }

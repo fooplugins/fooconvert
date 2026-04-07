@@ -2,6 +2,7 @@ import "./EditSettings.scss";
 
 import { InspectorControls } from "@wordpress/block-editor";
 import { TabPanel } from "@wordpress/components";
+import { applyFilters } from "@wordpress/hooks";
 import { __ } from "@wordpress/i18n";
 import { cog, styles } from "@wordpress/icons";
 
@@ -13,6 +14,7 @@ import {
 } from "./components";
 
 const EditSettings = props => {
+    const extensionPanels = applyFilters( 'fooconvert.coupon.editSettings', [], props );
 
     const styleTabs = [{
         name: 'container',
@@ -42,6 +44,7 @@ const EditSettings = props => {
                     <ContainerEditSettings { ...props }/>
                     <CodeEditSettings { ...props }/>
                     <ButtonEditSettings { ...props }/>
+                    { extensionPanels }
                 </>
             );
         }

@@ -8,6 +8,9 @@ namespace FooPlugins\FooConvert;
 
 if ( !class_exists( 'FooPlugins\FooConvert\Cron' ) ) {
 
+    /**
+     * Class Cron.
+     */
     class Cron {
         /**
          * Init constructor.

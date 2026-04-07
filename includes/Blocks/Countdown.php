@@ -193,6 +193,9 @@ class Countdown extends BaseBlock {
             $segments = array_merge(
                 $segments,
                 $components->get_styles( $segment_styles, array(
+                    /**
+                     * Class get_styles.
+                     */
                     'background' => array( Utils::class, 'get_css_background_property' ),
                     'text'       => 'color',
                     'digits' => '--digits-color'

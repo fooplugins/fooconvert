@@ -4,11 +4,17 @@ namespace FooPlugins\FooConvert\Admin\FooFields\Fields;
 
 if ( !class_exists( __NAMESPACE__ . '\RepeaterIndex' ) ) {
 
+    /**
+     * Class RepeaterIndex.
+     */
     class RepeaterIndex extends Field {
 
         protected $format;
         protected $row_index;
 
+        /**
+         * Initializes the RepeaterIndex.
+         */
         function __construct( $container, $type, $field_config ) {
             parent::__construct( $container, $type, $field_config );
             // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
@@ -16,6 +22,9 @@ if ( !class_exists( __NAMESPACE__ . '\RepeaterIndex' ) ) {
             $this->row_index = intval( isset( $field_config['row_index'] ) ? $field_config['row_index'] : -1 );
         }
 
+        /**
+         * Handles data attributes.
+         */
         function data_attributes() {
             $data_attributes = parent::data_attributes();
             $data_attributes['format'] = $this->format;

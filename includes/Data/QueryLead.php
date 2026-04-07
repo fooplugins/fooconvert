@@ -4,10 +4,19 @@ namespace FooPlugins\FooConvert\Data;
 
 use WP_Error;
 
+/**
+ * Class QueryLead.
+ */
 class QueryLead extends Base {
+    /**
+     * Initializes the QueryLead.
+     */
     private function __construct() {
     }
 
+    /**
+     * Returns the leads table name.
+     */
     private static function get_leads_table_name() {
         return parent::get_table_name( Schema::FOOCONVERT_LEADS_TABLE );
     }
@@ -52,6 +61,9 @@ class QueryLead extends Base {
         return array( $where_clauses, $where_params );
     }
 
+    /**
+     * Handles insert lead data.
+     */
     public static function insert_lead_data( $data ) {
         global $wpdb;
 
@@ -87,6 +99,9 @@ class QueryLead extends Base {
         return $wpdb->insert_id;
     }
 
+    /**
+     * Returns the leads by ids.
+     */
     public static function get_leads_by_ids( $ids ) {
         global $wpdb;
 
@@ -187,6 +202,9 @@ class QueryLead extends Base {
         return (int) $wpdb->get_var( $wpdb->prepare( $query, $where_params ) );
     }
 
+    /**
+     * Returns the leads metrics.
+     */
     public static function get_leads_metrics( $args = array() ) {
         global $wpdb;
 
@@ -213,6 +231,9 @@ class QueryLead extends Base {
         return $wpdb->get_row( $wpdb->prepare( $query, $where_params ), ARRAY_A );
     }
 
+    /**
+     * Deletes all leads.
+     */
     public static function delete_all_leads() {
         global $wpdb;
 

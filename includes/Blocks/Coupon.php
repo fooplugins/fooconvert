@@ -100,6 +100,20 @@ class Coupon extends BaseBlock {
     }
 
     /**
+     * Returns editor data used by coupon block extensions.
+     *
+     * @return array<string,mixed>
+     */
+    public function get_editor_data(): array {
+        return apply_filters( 'fooconvert_coupon_editor_data', array(
+            'canApplyCoupons' => false,
+            'couponQueryParam' => 'coupon',
+            'cartUrl' => '',
+            'checkoutUrl' => '',
+        ), $this );
+    }
+
+    /**
      * Returns frontend data used by the coupon interaction script.
      *
      * @param string   $instance_id The block instance ID.
@@ -126,7 +140,7 @@ class Coupon extends BaseBlock {
             $data['override'] = $override_text;
         }
 
-        return $data;
+        return apply_filters( 'fooconvert_coupon_frontend_data', $data, $instance_id, $attributes, $block, $this );
     }
 
     /**
@@ -172,7 +186,7 @@ class Coupon extends BaseBlock {
         if ( !empty( $font_family_classnames ) ) {
             $attr['class'] = implode( ' ', $font_family_classnames );
         }
-        return $attr;
+        return apply_filters( 'fooconvert_coupon_frontend_attributes', $attr, $instance_id, $attributes, $block, $this );
     }
 
     /**
@@ -234,6 +248,12 @@ class Coupon extends BaseBlock {
             $button = array_merge(
                 $button,
                 $components->get_styles( $button_styles, array(
+                    /**
+                     * Class count.
+                     */
+                    /**
+                     * Class count.
+                     */
                     'background' => array( Utils::class, 'get_css_background_property' ),
                     'text'       => 'color',
                     'icon'       => '--icon-color'

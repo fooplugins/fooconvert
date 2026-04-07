@@ -7,6 +7,9 @@ namespace FooPlugins\FooConvert\Admin\FooFields;
 
 if ( !class_exists( __NAMESPACE__ . '\Base' ) ) {
 
+    /**
+     * Class Base.
+     */
     abstract class Base {
 
         /**

@@ -9,6 +9,9 @@ namespace FooPlugins\FooConvert\Admin;
 
 if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
 
+    /**
+     * Class Promotions.
+     */
     class Promotions {
 
         /**

@@ -4,7 +4,13 @@ namespace FooPlugins\FooConvert;
 
 if ( !class_exists( __NAMESPACE__ . '\Lead' ) ) {
 
+    /**
+     * Class Lead.
+     */
     class Lead {
+        /**
+         * Handles create.
+         */
         public function create( $data ) {
             if ( empty( $data['widget_id'] ) || empty( $data['email'] ) ) {
                 return new \WP_Error( 'missing_required_fields', 'Widget ID and email are required fields' );
@@ -40,6 +46,9 @@ if ( !class_exists( __NAMESPACE__ . '\Lead' ) ) {
             return 0;
         }
 
+        /**
+         * Returns the leads.
+         */
         public function get_leads( $args = array() ) {
             $defaults = array(
                 'limit'      => 100,
@@ -74,6 +83,9 @@ if ( !class_exists( __NAMESPACE__ . '\Lead' ) ) {
             return Data\QueryLead::count_leads( $args );
         }
 
+        /**
+         * Returns the leads by ids.
+         */
         public function get_leads_by_ids( $ids ) {
             return Data\QueryLead::get_leads_by_ids( $ids );
         }
@@ -100,22 +112,37 @@ if ( !class_exists( __NAMESPACE__ . '\Lead' ) ) {
             );
         }
 
+        /**
+         * Deletes all leads.
+         */
         public function delete_all_leads() {
             return Data\QueryLead::delete_all_leads();
         }
 
+        /**
+         * Deletes lead.
+         */
         public function delete_lead( $id ) {
             return Data\QueryLead::delete_lead( $id );
         }
 
+        /**
+         * Deletes widget leads.
+         */
         public function delete_widget_leads( $widget_id ) {
             return Data\QueryLead::delete_widget_leads( $widget_id );
         }
 
+        /**
+         * Returns the leads table stats.
+         */
         public function get_leads_table_stats() {
             return Data\QueryLead::get_leads_table_stats();
         }
 
+        /**
+         * Cleans page url.
+         */
         private function clean_page_url( $page_url ) {
             $home_url = home_url();
 

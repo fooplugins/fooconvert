@@ -7,6 +7,9 @@ use FooPlugins\FooConvert\Admin\FooFields\Container;
 
 if ( !class_exists( __NAMESPACE__ . '\Field' ) ) {
 
+    /**
+     * Class Field.
+     */
     class Field extends Base {
 
         /**

@@ -11,8 +11,14 @@ use FooPlugins\FooConvert\Event;
 
 if ( !class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
 
+    /**
+     * Class Settings.
+     */
     class Settings extends SettingsPage {
 
+        /**
+         * Initializes the Settings.
+         */
         public function __construct() {
             parent::__construct(
                 array(
@@ -24,10 +30,16 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
             );
         }
 
+        /**
+         * Returns the page title.
+         */
         function get_page_title() {
             return __( 'FooConvert Settings', 'fooconvert' );
         }
 
+        /**
+         * Returns the tabs.
+         */
         function get_tabs() {
 
             $pro_link = '<a href="' . fooconvert_admin_url_pricing() . '" target="_blank">' . __( 'FooConvert PRO', 'fooconvert' ) . '</a>';

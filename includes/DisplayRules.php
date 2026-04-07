@@ -9,7 +9,13 @@ use WP_Query;
 use WP_Term;
 use WP_User;
 
+/**
+ * Class DisplayRules.
+ */
 class DisplayRules extends BaseComponent {
+    /**
+     * Initializes the DisplayRules.
+     */
     public function __construct() {
         parent::__construct();
 
@@ -42,6 +48,9 @@ class DisplayRules extends BaseComponent {
         ) );
     }
 
+    /**
+     * Registers column.
+     */
     public function register_column( string $post_type ): void {
         add_filter( "manage_{$post_type}_posts_columns", function ( $columns ) use ( $post_type ) {
             return $this->create_column( $post_type, $columns );
@@ -67,6 +76,9 @@ class DisplayRules extends BaseComponent {
         // phpcs:enable
     }
 
+    /**
+     * Creates column.
+     */
     public function create_column( $post_type, $columns ): array {
         // add the column after the default title column
         $updated = array();
@@ -86,6 +98,9 @@ class DisplayRules extends BaseComponent {
         return $updated;
     }
 
+    /**
+     * Handles sortable column.
+     */
     public function sortable_column( $post_type, $columns ) {
         $columns["{$post_type}_display_rules"] = array(
             "{$post_type}_display_rules",
@@ -216,10 +231,16 @@ class DisplayRules extends BaseComponent {
 
     //region Component - Create the data for the display rules component
 
+    /**
+     * Returns the component data name.
+     */
     function get_component_data_name(): string {
         return 'FC_DISPLAY_RULES';
     }
 
+    /**
+     * Returns the component data.
+     */
     function get_component_data(): array {
         return array(
             'meta'     => array(
@@ -234,6 +255,9 @@ class DisplayRules extends BaseComponent {
         );
     }
 
+    /**
+     * Returns the component locations.
+     */
     function get_component_locations( string $context = 'default' ): array {
         $locations = array(
             array(
@@ -347,6 +371,9 @@ class DisplayRules extends BaseComponent {
         return apply_filters( 'fooconvert_display_rules_locations', $locations, $context );
     }
 
+    /**
+     * Returns the component users.
+     */
     function get_component_users(): array {
         $roles = Utils::array_map( wp_roles()->get_names(), function ( $value, $key ) {
             return [ 'value' => "role:$key", 'label' => $value ];

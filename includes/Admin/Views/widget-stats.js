@@ -25,7 +25,7 @@ jQuery(document).ready(function ($) {
 
                 // Remove loading state from chart container before rendering
                 $('.fooconvert-recent-activity-container').removeClass('loading');
-                $('.fooconvert-sales-table-container').removeClass('loading');
+                $('.fooconvert-sales-panel-container').removeClass('loading');
 
                 // Render chart for recent activity
                 renderRecentActivityChart(response);
@@ -45,7 +45,7 @@ jQuery(document).ready(function ($) {
             },
             error: function () {
                 // Remove loading states even on error to show empty state
-                $('.metric, .fooconvert-recent-activity-container, .fooconvert-sales-table-container').removeClass('loading');
+                $('.metric, .fooconvert-recent-activity-container, .fooconvert-sales-panel-container').removeClass('loading');
                 console.error("Failed to fetch stats.");
             }
         });
@@ -218,7 +218,7 @@ jQuery(document).ready(function ($) {
 
     $('.fooconvert-recent-activity-days').change(function () {
         $('.fooconvert-recent-activity-container').addClass('loading');
-        $('.fooconvert-sales-table-container').addClass('loading');
+        $('.fooconvert-sales-panel-container').addClass('loading');
         $('.metric').addClass('loading');
         fetchStats();
     });

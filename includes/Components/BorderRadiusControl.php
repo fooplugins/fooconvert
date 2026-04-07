@@ -18,6 +18,9 @@ class BorderRadiusControl extends BaseComponent {
         'bottomLeft'  => '0px'
     );
 
+    /**
+     * Handles make box value.
+     */
     function make_box_value( array $value ): array {
         $box_value = array();
         foreach ( $this->default_box_value as $key => $default_value ) {
@@ -27,12 +30,18 @@ class BorderRadiusControl extends BaseComponent {
         return $box_value;
     }
 
+    /**
+     * Determines whether possible box value.
+     */
     function is_possible_box_value( $value ): bool {
         return Utils::some_keys( $value, array_keys( $this->default_box_value ), function ( $key_value ) {
             return Utils::is_string( $key_value, true );
         } );
     }
 
+    /**
+     * Returns the css value.
+     */
     function get_css_value( $value ): string {
         if ( is_string( $value ) ) {
             return $value;
@@ -48,6 +57,9 @@ class BorderRadiusControl extends BaseComponent {
         return '';
     }
 
+    /**
+     * Returns the styles.
+     */
     function get_styles( $value ): array {
         $styles = array();
         $border_radius = $this->get_css_value( $value );

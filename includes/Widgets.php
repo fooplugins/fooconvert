@@ -28,6 +28,9 @@ class Widgets extends BaseComponent {
      */
     private array $tag_names = array();
 
+    /**
+     * Initializes the Widgets.
+     */
     function __construct() {
         parent::__construct();
         $this->instances = array(
@@ -82,6 +85,9 @@ class Widgets extends BaseComponent {
         } );
     }
 
+    /**
+     * Returns the instance.
+     */
     function get_instance( string $post_type ): ?BaseWidget {
         foreach ( $this->instances as $instance ) {
             if ( $instance->get_post_type() === $post_type ) {
@@ -91,6 +97,9 @@ class Widgets extends BaseComponent {
         return null;
     }
 
+    /**
+     * Returns the kses definitions.
+     */
     function get_kses_definitions(): array {
         $defs = array();
         foreach ( $this->instances as $instance ) {
@@ -117,10 +126,16 @@ class Widgets extends BaseComponent {
 
     //region Shortcode
 
+    /**
+     * Registers shortcode.
+     */
     public function register_shortcode( string $post_type ) {
         add_shortcode( $post_type, array( $this, 'render_shortcode' ) );
     }
 
+    /**
+     * Renders shortcode.
+     */
     public function render_shortcode( array $attributes, ?string $content, string $tag ) {
         $attributes = shortcode_atts( [ 'id' => 0 ], $attributes, $tag );
         $post_id = (int)$attributes['id'];

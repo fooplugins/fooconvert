@@ -4,8 +4,14 @@ namespace FooPlugins\FooConvert\Admin\FooFields\Fields;
 
 if ( !class_exists( __NAMESPACE__ . '\AjaxButton' ) ) {
 
+    /**
+     * Class AjaxButton.
+     */
     class AjaxButton extends Field {
 
+        /**
+         * Initializes the AjaxButton.
+         */
         function __construct( $container, $type, $field_config ) {
             parent::__construct( $container, $type, $field_config );
 

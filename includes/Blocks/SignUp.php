@@ -228,6 +228,9 @@ class SignUp extends BaseBlock {
             $inputs = array_merge(
                 $inputs,
                 $components->get_styles( $inputs_styles, array(
+                    /**
+                     * Class get_settings.
+                     */
                     'background' => array( Utils::class, 'get_css_background_property' ),
                     'text'       => 'color',
                     'placeholder' => '--placeholder-color'
@@ -255,6 +258,9 @@ class SignUp extends BaseBlock {
             $button = array_merge(
                 $button,
                 $components->get_styles( $button_styles, array(
+                    /**
+                     * Class count.
+                     */
                     'background' => array( Utils::class, 'get_css_background_property' ),
                     'text'       => 'color',
                     'icon'       => '--icon-color'

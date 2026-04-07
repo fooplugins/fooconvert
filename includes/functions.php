@@ -262,6 +262,9 @@ function fooconvert_fix_google_font_url( $google_font_value ) {
     return str_replace( $array_to_strip, '', $google_font_value );
 }
 
+/**
+ * Handles widget metric options.
+ */
 function fooconvert_widget_metric_options() {
     // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key
     return apply_filters( 'fooconvert_widget_metric_options', array(

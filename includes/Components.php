@@ -49,6 +49,9 @@ class Components {
     public OpenTriggerPanel $open_trigger_panel;
     public TypographyToolsPanel $typography_tools_panel;
 
+    /**
+     * Returns the styles.
+     */
     function get_styles( array $styles_attribute, array $color_map = array() ): array {
         $styles = array();
         if ( !empty( $styles_attribute ) ) {
@@ -72,6 +75,9 @@ class Components {
         return $styles;
     }
 
+    /**
+     * Returns the background and color styles.
+     */
     function get_background_and_color_styles( array $styles_attribute, array $color_map = array() ): array {
         $styles = array();
         $color = Utils::get_array( $styles_attribute, 'color' );
@@ -92,6 +98,9 @@ class Components {
         return $styles;
     }
 
+    /**
+     * Returns the font family classnames.
+     */
     function get_font_family_classnames( array $attributes, array $paths ): array {
         $classes = array();
         if ( !empty( $attributes ) ) {

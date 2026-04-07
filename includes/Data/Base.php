@@ -12,6 +12,9 @@ use wpdb;
 
 if ( !class_exists( 'FooPlugins\FooConvert\Data\Base' ) ) {
 
+    /**
+     * Class Base.
+     */
     abstract class Base {
         /**
          * Returns the table name including the prefix.

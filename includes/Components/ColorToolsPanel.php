@@ -5,6 +5,9 @@ namespace FooPlugins\FooConvert\Components;
 use FooPlugins\FooConvert\Components\Base\BaseComponent;
 use FooPlugins\FooConvert\Utils;
 
+/**
+ * Class ColorToolsPanel.
+ */
 class ColorToolsPanel extends BaseComponent {
 
     /**
@@ -17,6 +20,9 @@ class ColorToolsPanel extends BaseComponent {
         if ( !empty( $value ) ) {
             if ( empty( $key_to_css_map ) ) {
                 $key_to_css_map = array(
+                    /**
+                     * Class array_key_exists.
+                     */
                     'background' => array( Utils::class, 'get_css_background_property' ),
                     'text' => 'color'
                 );

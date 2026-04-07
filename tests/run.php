@@ -11,6 +11,7 @@ declare(strict_types=1);
 $cases = array(
     __DIR__ . '/cases/display-rules-core.php',
     __DIR__ . '/cases/display-rules-woocommerce.php',
+    __DIR__ . '/cases/sales-attribution-woocommerce.php',
 );
 
 $failures = 0;

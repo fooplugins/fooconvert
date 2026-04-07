@@ -7,6 +7,9 @@ use WP_Post;
 
 if ( !class_exists( __NAMESPACE__ . '\Utils' ) ) {
 
+    /**
+     * Class Utils.
+     */
     class Utils {
         /**
          * Get the value of a period delimited key path from the given array or object.

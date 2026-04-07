@@ -11,6 +11,9 @@ use wpdb;
 
 if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
 
+    /**
+     * Class Schema.
+     */
     class Schema extends Base {
         const FOOCONVERT_TABLE = 'fooconvert_events';
         const FOOCONVERT_LEADS_TABLE = 'fooconvert_leads';

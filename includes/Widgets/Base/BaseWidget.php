@@ -9,10 +9,16 @@ use WP_Block;
 use WP_Error;
 use WP_Post_Type;
 
+/**
+ * Class BaseWidget.
+ */
 abstract class BaseWidget extends BaseBlock {
 
     public array $supported = array( 'shortcode', 'display-rules', 'compatibility' );
 
+    /**
+     * Handles init.
+     */
     function init() {
         $post_type = $this->register_post_type();
         if ( $post_type instanceof WP_Post_Type ) {

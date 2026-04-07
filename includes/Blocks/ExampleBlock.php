@@ -7,8 +7,14 @@ use FooPlugins\FooConvert\FooConvert;
 use FooPlugins\FooConvert\Utils;
 use WP_Block;
 
+/**
+ * Class ExampleBlock.
+ */
 class ExampleBlock extends BaseBlock {
 
+    /**
+     * Handles kses definition.
+     */
     public function kses_definition(): array {
         return array(
             $this->get_tag_name() => array(
@@ -18,14 +24,23 @@ class ExampleBlock extends BaseBlock {
         );
     }
 
+    /**
+     * Returns the block name.
+     */
     function get_block_name(): string {
         return 'fc/example-block';
     }
 
+    /**
+     * Returns the tag name.
+     */
     function get_tag_name(): string {
         return 'fc-example-block';
     }
 
+    /**
+     * Registers blocks.
+     */
     function register_blocks() {
         $post_types = FooConvert::plugin()->widgets->get_post_types();
         return Utils::register_post_type_blocks( $post_types, array(
@@ -38,6 +53,9 @@ class ExampleBlock extends BaseBlock {
         ) );
     }
 
+    /**
+     * Handles render.
+     */
     function render( array $attributes, string $content, WP_Block $block ) {
         // the rich-text component is configured to store its content in the 'content' attribute,
         // here we simply grab that and replace any supplied content (should be empty!) with our own.
@@ -48,10 +66,16 @@ class ExampleBlock extends BaseBlock {
         );
     }
 
+    /**
+     * Returns the frontend data.
+     */
     public function get_frontend_data( string $instance_id, array $attributes, WP_Block $block ): array {
         return array();
     }
 
+    /**
+     * Returns the frontend styles.
+     */
     function get_frontend_styles( string $instance_id, array $attributes, WP_Block $block ): array {
         $root = array();
 

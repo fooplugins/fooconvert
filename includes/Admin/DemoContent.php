@@ -12,6 +12,9 @@ use FooPlugins\FooConvert\FooConvert;
 
 if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
+    /**
+     * Class DemoContent.
+     */
     class DemoContent {
         /**
          * Init constructor.
@@ -219,6 +222,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
         }
 
         // Helper function to select an event type based on weighted probabilities
+        /**
+         * Handles weighted random event.
+         */
         private function weighted_random_event( $weights ) {
             $rand = wp_rand() / mt_getrandmax();
             $cumulative = 0;
@@ -232,6 +238,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
             return FOOCONVERT_EVENT_TYPE_OPEN;  // Fallback (shouldn’t happen if weights add up to 1)
         }
 
+        /**
+         * Returns the demo content.
+         */
         function get_demo_content() {
             // phpcs:disable WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
             return [

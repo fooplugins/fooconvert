@@ -9,6 +9,9 @@ use FooPlugins\FooConvert\Admin\FooFields\Fields\Field;
 
 if ( !class_exists( __NAMESPACE__ . '\Container' ) ) {
 
+    /**
+     * Class Container.
+     */
     abstract class Container extends Base {
 
         /**
@@ -57,6 +60,9 @@ if ( !class_exists( __NAMESPACE__ . '\Container' ) ) {
             'fields' => array()
         );
 
+        /**
+         * Initializes the Container.
+         */
         function __construct( $config ) {
             $this->config = $config;
 
@@ -149,6 +155,9 @@ if ( !class_exists( __NAMESPACE__ . '\Container' ) ) {
          * @param $type
          *
          * @return bool
+         */
+        /**
+         * Handles show rule is visible.
          */
         function show_rule_is_visible( $unique_id, $type ) {
             if ( array_key_exists( $unique_id, $this->show_rules[$type] ) ) {
@@ -534,10 +543,16 @@ if ( !class_exists( __NAMESPACE__ . '\Container' ) ) {
             $this->render_fields_after();
         }
 
+        /**
+         * Renders fields before.
+         */
         protected function render_fields_before() {
             //does nothing by default
         }
 
+        /**
+         * Renders fields after.
+         */
         protected function render_fields_after() {
             //does nothing by default
         }
@@ -788,6 +803,9 @@ if ( !class_exists( __NAMESPACE__ . '\Container' ) ) {
          *
          * @return mixed|string
          */
+        /**
+         * Returns the state value.
+         */
         function get_state_value( $field_config ) {
 
             //check if we have a temp value for the field. Temp values are stored as the posted_data is being built up after being posted.
@@ -905,6 +923,9 @@ if ( !class_exists( __NAMESPACE__ . '\Container' ) ) {
          * @param $data_attributes
          *
          * @return array
+         */
+        /**
+         * Processes data attributes.
          */
         function process_data_attributes( $data_attributes ) {
             $result = array();

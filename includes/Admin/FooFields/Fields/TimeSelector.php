@@ -6,8 +6,14 @@ use FooPlugins\FooConvert\Admin\FooFields\Fields\Field;
 
 if ( !class_exists( __NAMESPACE__ . '\TimeSelector' ) ) {
 
+    /**
+     * Class TimeSelector.
+     */
     class TimeSelector extends Field {
 
+        /**
+         * Renders input.
+         */
         function render_input( $override_attributes = false ) {
 
             $time_in_seconds = intval( $this->value() );
@@ -26,6 +32,9 @@ if ( !class_exists( __NAMESPACE__ . '\TimeSelector' ) ) {
 
         }
 
+        /**
+         * Renders component.
+         */
         function render_component( $type, $suffix, $value = 0, $max = 0 ) {
 
             $unique_id = $this->unique_id . '_' . $type;
@@ -60,6 +69,9 @@ if ( !class_exists( __NAMESPACE__ . '\TimeSelector' ) ) {
             echo '</label>';
         }
 
+        /**
+         * Returns the posted value.
+         */
         function get_posted_value( $sanitized_form_data ) {
             $values = parent::get_posted_value( $sanitized_form_data );
 
