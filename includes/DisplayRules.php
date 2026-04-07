@@ -14,6 +14,20 @@ use WP_User;
  */
 class DisplayRules extends BaseComponent {
     /**
+     * Prevent duplicate meta registration work per request.
+     *
+     * @var bool
+     */
+    private bool $registered = false;
+
+    /**
+     * Prevent duplicate list table hook registration per request.
+     *
+     * @var bool
+     */
+    private bool $column_registered = false;
+
+    /**
      * Initializes the DisplayRules.
      */
     public function __construct() {
@@ -28,17 +42,20 @@ class DisplayRules extends BaseComponent {
     //region Meta
 
     /**
-     * Registers the display rules meta key for a specific post type.
+     * Registers the display rules meta key for the popup post type.
      *
-     * @param string $post_type The post type to register the meta key for.
      * @return bool True if the meta key was successfully registered in the global array, false if not.
      *
      * @since 1.0.0
      */
-    public function register( string $post_type ): bool {
-        $this->register_column( $post_type );
-        return register_meta( 'post', FOOCONVERT_META_KEY_DISPLAY_RULES, array(
-            'object_subtype' => $post_type,
+    public function register(): bool {
+        if ( $this->registered ) {
+            return true;
+        }
+
+        $this->register_column();
+        $this->registered = register_meta( 'post', FOOCONVERT_META_KEY_DISPLAY_RULES, array(
+            'object_subtype' => FOOCONVERT_CPT_POPUP,
             'single'         => true,
             'type'           => 'object',
             'description'    => __( 'Display rules for FooConvert.', 'fooconvert' ),
@@ -46,54 +63,75 @@ class DisplayRules extends BaseComponent {
             'default'        => $this->defaults(),
             'show_in_rest'   => array( 'schema' => $this->schema() )
         ) );
+
+        return $this->registered;
     }
 
     /**
-     * Registers column.
+     * Returns the popup list table column name.
+     *
+     * @return string
      */
-    public function register_column( string $post_type ): void {
-        add_filter( "manage_{$post_type}_posts_columns", function ( $columns ) use ( $post_type ) {
-            return $this->create_column( $post_type, $columns );
+    private function get_column_name(): string {
+        return FOOCONVERT_CPT_POPUP . '_display_rules';
+    }
+
+    /**
+     * Registers the popup list table column.
+     *
+     * @return void
+     */
+    public function register_column(): void {
+        if ( $this->column_registered ) {
+            return;
+        }
+
+        add_filter( "manage_".FOOCONVERT_CPT_POPUP."_posts_columns", function ( $columns ) {
+            return $this->create_column( $columns );
         } );
 
-        add_filter( "manage_edit-{$post_type}_sortable_columns", function ( $columns ) use ( $post_type ) {
-            return $this->sortable_column( $post_type, $columns );
+        add_filter( "manage_edit-".FOOCONVERT_CPT_POPUP."_sortable_columns", function ( $columns ) {
+            return $this->sortable_column( $columns );
         } );
 
-        add_action( "manage_{$post_type}_posts_custom_column", function ( $column_name, $post_id ) use ( $post_type ) {
-            $this->create_column_content( $post_type, $column_name, $post_id );
+        add_action( "manage_".FOOCONVERT_CPT_POPUP."_posts_custom_column", function ( $column_name, $post_id ) {
+            $this->create_column_content( $column_name, $post_id );
         }, 10, 2 );
 
         // phpcs:disable WordPress.Security.NonceVerification.Recommended
-        add_action( 'admin_enqueue_scripts', function ( $hook_suffix ) use ( $post_type ) {
+        add_action( 'admin_enqueue_scripts', function ( $hook_suffix ) {
             if ( $hook_suffix === 'edit.php' && isset( $_GET['post_type'] ) ) {
                 $current_post_type = sanitize_key( $_GET['post_type'] );
-                if ( $current_post_type === $post_type ) {
-                    wp_add_inline_style( 'common', ".column-{$post_type}_display_rules { width: 10%; }" );
+                if ( $current_post_type === FOOCONVERT_CPT_POPUP ) {
+                    wp_add_inline_style( 'common', ".column-" . $this->get_column_name() . " { width: 10%; }" );
                 }
             }
         } );
         // phpcs:enable
+
+        $this->column_registered = true;
     }
 
     /**
      * Creates column.
      */
-    public function create_column( $post_type, $columns ): array {
+    public function create_column( $columns ): array {
         // add the column after the default title column
         $updated = array();
         $inserted = false;
+        $display_rules_column_name = $this->get_column_name();
+
         foreach ( $columns as $column_name => $column_display_name ) {
-            $updated[$column_name] = $column_display_name;
+            $updated[ $column_name ] = $column_display_name;
             if ( $column_name === 'title' ) {
-                $updated["{$post_type}_display_rules"] = __( 'Display Rules', 'fooconvert' );
+                $updated[ $display_rules_column_name ] = __( 'Display Rules', 'fooconvert' );
                 $inserted = true;
             }
         }
 
         // if for some reason the column was not inserted, add it
         if ( !$inserted ) {
-            $updated["{$post_type}_display_rules"] = __( 'Display Rules', 'fooconvert' );
+            $updated[ $display_rules_column_name ] = __( 'Display Rules', 'fooconvert' );
         }
         return $updated;
     }
@@ -101,9 +139,10 @@ class DisplayRules extends BaseComponent {
     /**
      * Handles sortable column.
      */
-    public function sortable_column( $post_type, $columns ) {
-        $columns["{$post_type}_display_rules"] = array(
-            "{$post_type}_display_rules",
+    public function sortable_column( $columns ) {
+        $column_name = $this->get_column_name();
+        $columns[ $column_name ] = array(
+            $column_name,
             false,
             __( 'Display Rules', 'fooconvert' ),
             __( 'Table ordered by display rules.', 'fooconvert' ),
@@ -112,13 +151,12 @@ class DisplayRules extends BaseComponent {
     }
 
     /**
-     * @param $post_type
-     * @param $column_name
-     * @param $post_id
+     * @param string $column_name The current list table column name.
+     * @param int    $post_id The current post ID.
      * @return void
      */
-    public function create_column_content( $post_type, $column_name, $post_id ): void {
-        if ( $column_name === "{$post_type}_display_rules" ) {
+    public function create_column_content( $column_name, $post_id ): void {
+        if ( $column_name === $this->get_column_name() ) {
             $display_rules = get_post_meta( $post_id, FOOCONVERT_META_KEY_DISPLAY_RULES, true );
             $is_set = !empty( $display_rules ) && !empty( $display_rules['location'] );
 

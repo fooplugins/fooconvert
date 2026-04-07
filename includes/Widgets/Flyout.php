@@ -82,13 +82,6 @@ class Flyout extends BaseWidget {
     /**
      * @inheritDoc
      */
-    function register_post_type() {
-        return false;
-    }
-
-    /**
-     * @inheritDoc
-     */
     function get_editor_variations(): array {
         return apply_filters( 'fooconvert_editor_variations-' . $this->get_post_type(), array(
             array(

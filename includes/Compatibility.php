@@ -65,9 +65,9 @@ class Compatibility extends BaseComponent {
     /**
      * Handles register.
      */
-    public function register( string $post_type ): bool {
+    public function register(): bool {
         return register_meta( 'post', FOOCONVERT_META_KEY_COMPATIBILITY, array(
-            'object_subtype' => $post_type,
+            'object_subtype' => FOOCONVERT_CPT_POPUP,
             'single'         => true,
             'type'           => 'object',
             'description'    => __( 'Compatibility settings for FooConvert.', 'fooconvert' ),

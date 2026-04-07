@@ -6,6 +6,7 @@ use FooPlugins\FooConvert\Components\Base\BaseComponent;
 use FooPlugins\FooConvert\Widgets\Base\BaseWidget;
 use FooPlugins\FooConvert\Widgets\Bar;
 use FooPlugins\FooConvert\Widgets\Flyout;
+use FooPlugins\FooConvert\Widgets\PostType;
 use FooPlugins\FooConvert\Widgets\Popup;
 use WP_Post;
 
@@ -20,6 +21,11 @@ class Widgets extends BaseComponent {
     private array $instances;
 
     /**
+     * @var PostType
+     */
+    private PostType $post_type;
+
+    /**
      * @var string[]
      */
     private array $tag_names = array();
@@ -29,6 +35,7 @@ class Widgets extends BaseComponent {
      */
     function __construct() {
         parent::__construct();
+        $this->post_type = new PostType();
         $this->instances = array(
             new Bar(),
             new Flyout(),
@@ -47,6 +54,15 @@ class Widgets extends BaseComponent {
      */
     function get_instances(): array {
         return $this->instances;
+    }
+
+    /**
+     * Returns the popup post type registrar.
+     *
+     * @return PostType
+     */
+    function get_post_type(): PostType {
+        return $this->post_type;
     }
 
     /**
@@ -108,33 +124,6 @@ class Widgets extends BaseComponent {
      */
     function is_editor(): bool {
         return Utils::is_post_type_editor( FOOCONVERT_CPT_POPUP );
-    }
-
-    //endregion
-
-    //region Shortcode
-
-    /**
-     * Registers shortcode.
-     */
-    public function register_shortcode( string $post_type ) {
-        add_shortcode( $post_type, array( $this, 'render_shortcode' ) );
-    }
-
-    /**
-     * Renders shortcode.
-     */
-    public function render_shortcode( array $attributes, ?string $content, string $tag ) {
-        $attributes = shortcode_atts( [ 'id' => 0 ], $attributes, $tag );
-        $post_id = (int)$attributes['id'];
-        if ( !empty( $post_id ) && !FooConvert::plugin()->display_rules->is_enqueued( $post_id ) ) {
-            $queueable = FooConvert::plugin()->display_rules->get_queueable( $post_id, 'shortcode' );
-            if ( !empty( $queueable ) ) {
-                do_action( 'fooconvert_enqueue_required_assets', array( $queueable ) );
-                return FooConvert::plugin()->display_rules->render_queueable( $queueable );
-            }
-        }
-        return false;
     }
 
     //endregion

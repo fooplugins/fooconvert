@@ -56,6 +56,7 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             $this->display_rules = new DisplayRules();
             $this->blocks = new Blocks();
             $this->widgets = new Widgets();
+            $this->shortcodes = new Shortcodes();
             $this->ajax = new Ajax();
         }
 
@@ -156,6 +157,16 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @since 1.0.0
          */
         public Widgets $widgets;
+
+        /**
+         * Handles FooConvert shortcode registration and rendering.
+         *
+         * @var Shortcodes
+         * @access public
+         *
+         * @since 2.0.0
+         */
+        public Shortcodes $shortcodes;
 
         public Ajax $ajax;
 
