@@ -437,7 +437,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             $table_name = self::get_events_table_name();
             $posts_table = $wpdb->prefix . 'posts';
 
-            $post_type = fooconvert_get_registered_post_type();
+            $post_type = FOOCONVERT_CPT_POPUP;
 
             $query = "SELECT p.ID AS widget_id
                 FROM %i p

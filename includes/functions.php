@@ -115,15 +115,6 @@ function fooconvert_is_debug() {
 }
 
 /**
- * Returns the single registered widget post type used by FooConvert.
- *
- * @return string
- */
-function fooconvert_get_registered_post_type() {
-    return FOOCONVERT_CPT_POPUP;
-}
-
-/**
  * Returns the registered widget post types.
  *
  * Kept as a compatibility wrapper around the single registered popup post type.
@@ -131,7 +122,7 @@ function fooconvert_get_registered_post_type() {
  * @return string[]
  */
 function fooconvert_get_post_types() {
-    return array( fooconvert_get_registered_post_type() );
+    return array( FOOCONVERT_CPT_POPUP );
 }
 
 /**
@@ -142,7 +133,7 @@ function fooconvert_get_post_types() {
  * @return bool True if the post type is valid, false otherwise.
  */
 function fooconvert_is_valid_post_type( $post_type ) {
-    return $post_type === fooconvert_get_registered_post_type();
+    return $post_type === FOOCONVERT_CPT_POPUP;
 }
 
 /**

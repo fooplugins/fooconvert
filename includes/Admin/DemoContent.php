@@ -439,7 +439,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
          * @return string
          */
         public function ensure_registered_widget_post_type() {
-            $widget_post_type = fooconvert_get_registered_post_type();
+            $widget_post_type = FOOCONVERT_CPT_POPUP;
             if ( post_type_exists( $widget_post_type ) ) {
                 return $widget_post_type;
             }
