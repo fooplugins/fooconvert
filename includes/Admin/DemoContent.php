@@ -444,7 +444,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 return $widget_post_type;
             }
 
-            FooConvert::plugin()->widgets->get_post_type()->register();
+            FooConvert::plugin()->post_type->register();
 
             return $widget_post_type;
         }

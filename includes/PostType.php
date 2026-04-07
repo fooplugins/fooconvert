@@ -1,8 +1,7 @@
 <?php
 
-namespace FooPlugins\FooConvert\Widgets;
+namespace FooPlugins\FooConvert;
 
-use FooPlugins\FooConvert\FooConvert;
 use WP_Post_Type;
 
 /**
@@ -92,6 +91,15 @@ class PostType {
         $this->register_admin_hooks();
 
         return $post_type;
+    }
+
+    /**
+     * Check if the current page is the popup editor.
+     *
+     * @return bool True if the current page is the popup editor, otherwise false.
+     */
+    public function is_editor(): bool {
+        return Utils::is_post_type_editor( FOOCONVERT_CPT_POPUP );
     }
 
     /**

@@ -6,7 +6,6 @@ use FooPlugins\FooConvert\Components\Base\BaseComponent;
 use FooPlugins\FooConvert\Widgets\Base\BaseWidget;
 use FooPlugins\FooConvert\Widgets\Bar;
 use FooPlugins\FooConvert\Widgets\Flyout;
-use FooPlugins\FooConvert\Widgets\PostType;
 use FooPlugins\FooConvert\Widgets\Popup;
 use WP_Post;
 
@@ -21,11 +20,6 @@ class Widgets extends BaseComponent {
     private array $instances;
 
     /**
-     * @var PostType
-     */
-    private PostType $post_type;
-
-    /**
      * @var string[]
      */
     private array $tag_names = array();
@@ -35,7 +29,6 @@ class Widgets extends BaseComponent {
      */
     function __construct() {
         parent::__construct();
-        $this->post_type = new PostType();
         $this->instances = array(
             new Bar(),
             new Flyout(),
@@ -54,15 +47,6 @@ class Widgets extends BaseComponent {
      */
     function get_instances(): array {
         return $this->instances;
-    }
-
-    /**
-     * Returns the popup post type registrar.
-     *
-     * @return PostType
-     */
-    function get_post_type(): PostType {
-        return $this->post_type;
     }
 
     /**
@@ -113,17 +97,6 @@ class Widgets extends BaseComponent {
             }
         }
         return $defs;
-    }
-
-    /**
-     * Check if the current page is the popup editor.
-     *
-     * @return bool True if the current page is the popup editor, otherwise false.
-     *
-     * @since 1.0.0
-     */
-    function is_editor(): bool {
-        return Utils::is_post_type_editor( FOOCONVERT_CPT_POPUP );
     }
 
     //endregion

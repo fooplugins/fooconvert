@@ -55,6 +55,7 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             $this->content_migration = new ContentMigration();
             $this->display_rules = new DisplayRules();
             $this->blocks = new Blocks();
+            $this->post_type = new PostType();
             $this->widgets = new Widgets();
             $this->shortcodes = new Shortcodes();
             $this->ajax = new Ajax();
@@ -143,6 +144,16 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @since 1.0.0
          */
         public Blocks $blocks;
+
+        /**
+         * Registers the single popup custom post type and its admin integrations.
+         *
+         * @var PostType
+         * @access public
+         *
+         * @since 2.0.0
+         */
+        public PostType $post_type;
 
         /**
          * Contains utility methods as well as all widget instances for the plugin.
