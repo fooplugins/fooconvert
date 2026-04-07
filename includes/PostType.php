@@ -145,10 +145,7 @@ class PostType {
     public function filter_list_table_columns( array $columns ): array {
         $updated = array();
         $type_label = __( 'Type', 'fooconvert' );
-
-        if ( !array_key_exists( 'cb', $columns ) ) {
-            $updated['fc_popup_type'] = $type_label;
-        }
+        $inserted = false;
 
         foreach ( $columns as $column_name => $label ) {
             if ( $column_name === 'fc_popup_type' ) {
@@ -156,9 +153,14 @@ class PostType {
             }
 
             $updated[ $column_name ] = $label;
-            if ( $column_name === 'cb' ) {
+            if ( $column_name === 'title' ) {
                 $updated['fc_popup_type'] = $type_label;
+                $inserted = true;
             }
+        }
+
+        if ( !$inserted ) {
+            $updated['fc_popup_type'] = $type_label;
         }
 
         return $updated;
