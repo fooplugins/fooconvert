@@ -55,8 +55,7 @@ class Bar extends BaseWidget {
      * Registers blocks.
      */
     function register_blocks() {
-        $post_type = FOOCONVERT_CPT_POPUP;
-        return Utils::register_post_type_blocks( $post_type, array(
+        return Utils::register_widget_blocks( array(
             array(
                 'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'widgets/bar/block.json',
                 'args'           => array( 'render_callback' => array( $this, 'render' ) )

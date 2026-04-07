@@ -52,7 +52,7 @@ namespace FooPlugins\FooConvert {
             return is_bool( $value ) ? $value : $default;
         }
 
-        public static function register_post_type_blocks( $post_type, array $blocks ) {
+        public static function register_widget_blocks( array $blocks ) {
             return $blocks;
         }
     }

@@ -56,7 +56,7 @@ class Countdown extends BaseBlock {
      * @return false|array
      */
     function register_blocks() {
-        return Utils::register_post_type_blocks( FOOCONVERT_CPT_POPUP, array(
+        return Utils::register_widget_blocks( array(
             array(
                 'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'blocks/countdown/block.json',
                 'args'           => array(

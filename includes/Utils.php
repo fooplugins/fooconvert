@@ -615,41 +615,39 @@ if ( !class_exists( __NAMESPACE__ . '\Utils' ) ) {
         }
 
         /**
-         * Register a block from the metadata stored in the `block.json` file for a specific post type(s).
+         * Registers a block from `block.json` for the FooConvert widget editor.
          *
-         * This function registers the block for all pages/posts but when in the admin it only registers the block for the specific post type editor page.
+         * The block remains available on the frontend, but in wp-admin it is only
+         * registered on the popup editor and widget stats preview screens.
          *
-         * This effectively allows the blocks to appear on any page or post on the frontend, but it will only appear in the specific post type editor page.
-         *
-         * @param string|string[] $post_type The post type(s) to register the block for.
          * @param string $file_or_folder Path to the JSON file with metadata definition for the block or path to the folder where the `block.json`
-         *                                        file is located. If providing the path to a JSON file, the filename must end with `block.json`.
+         *                               file is located. If providing the path to a JSON file, the filename must end with `block.json`.
          * @param array $args Optional. Array of block type arguments. Accepts any public property of {@link WP_Block_Type}.
-         *                                        See `WP_Block_Type::__construct()` for information on accepted arguments.
-         *                                        Default `array()`.
+         *                    See `WP_Block_Type::__construct()` for information on accepted arguments.
+         *                    Default `array()`.
          *
          * @return WP_Block_Type|false The registered block type on success, or false on failure.
-         *
-         * @since 1.0.0
          */
-        static function register_post_type_block( $post_type, string $file_or_folder, array $args = array() ) {
-            if ( is_admin() ) {
-                if ( !fooconvert_is_admin_stats_page() && !self::is_post_type_editor( $post_type ) ) return false;
+        static function register_widget_block( string $file_or_folder, array $args = array() ) {
+            if ( is_admin() && !fooconvert_is_admin_stats_page() && !self::is_post_type_editor( FOOCONVERT_CPT_POPUP ) ) {
+                return false;
             }
+
             return register_block_type_from_metadata( $file_or_folder, $args );
         }
 
         /**
-         * @param string|string[] $post_type
+         * Registers multiple blocks for the FooConvert widget editor.
+         *
          * @param array{file_or_folder:string,args:array}[] $blocks
          * @return false|WP_Block_Type[]
          */
-        static function register_post_type_blocks( $post_type, array $blocks ) {
+        static function register_widget_blocks( array $blocks ) {
             $block_types = [];
             foreach ( $blocks as $block ) {
                 $file_or_folder = self::get_string( $block, 'file_or_folder' );
                 if ( !empty( $file_or_folder ) ) {
-                    $result = self::register_post_type_block( $post_type, $file_or_folder, self::get_array( $block, 'args' ) );
+                    $result = self::register_widget_block( $file_or_folder, self::get_array( $block, 'args' ) );
                     if ( $result instanceof WP_Block_Type ) {
                         $block_types[] = $result;
                     } else {
