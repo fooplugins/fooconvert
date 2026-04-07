@@ -21,6 +21,13 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         private const MIGRATION_MOVE_PRO_MEDIA_URLS = 'move_pro_media_urls_to_free';
 
         /**
+         * Migration key used to mark the single popup CPT merge as completed.
+         *
+         * @var string
+         */
+        private const MIGRATION_MERGE_WIDGET_CPTS = 'merge_widget_cpts_into_popup';
+
+        /**
          * Legacy media path stored in migrated widget content.
          *
          * @var string
@@ -40,6 +47,7 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
          * @return void
          */
         public function __construct() {
+            add_action( 'plugins_loaded', array( $this, 'maybe_migrate_widget_post_types' ), 20 );
             add_action( 'init', array( $this, 'maybe_migrate_widget_content' ), 20 );
 
             foreach ( $this->get_widget_post_types() as $post_type ) {
@@ -62,6 +70,40 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
             }
 
             $this->mark_completed( self::MIGRATION_MOVE_PRO_MEDIA_URLS );
+        }
+
+        /**
+         * Migrates legacy widget CPTs into the popup CPT and stores the logical popup type in post meta.
+         *
+         * @return void
+         */
+        public function maybe_migrate_widget_post_types(): void {
+            if ( $this->is_completed( self::MIGRATION_MERGE_WIDGET_CPTS ) ) {
+                return;
+            }
+
+            $updated_ids = array();
+            foreach ( $this->get_legacy_post_type_migration_map() as $legacy_post_type => $popup_type ) {
+                foreach ( $this->get_widget_ids_for_post_type( $legacy_post_type ) as $post_id ) {
+                    if ( $this->update_widget_post_type( $post_id, FOOCONVERT_CPT_POPUP ) ) {
+                        $updated_ids[] = $post_id;
+                    }
+                    update_post_meta( $post_id, FOOCONVERT_META_KEY_POPUP_TYPE, $popup_type );
+                }
+            }
+
+            foreach ( $this->get_widget_ids_for_post_type( FOOCONVERT_CPT_POPUP ) as $post_id ) {
+                $popup_type = fooconvert_normalize_popup_type( get_post_meta( $post_id, FOOCONVERT_META_KEY_POPUP_TYPE, true ) );
+                if ( $popup_type === '' ) {
+                    update_post_meta( $post_id, FOOCONVERT_META_KEY_POPUP_TYPE, FOOCONVERT_POPUP_TYPE_POPUP );
+                }
+            }
+
+            foreach ( array_unique( $updated_ids ) as $post_id ) {
+                clean_post_cache( $post_id );
+            }
+
+            $this->mark_completed( self::MIGRATION_MERGE_WIDGET_CPTS );
         }
 
         /**
@@ -196,6 +238,61 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
             $results = $wpdb->get_col( $query );
 
             return array_map( 'intval', is_array( $results ) ? $results : array() );
+        }
+
+        /**
+         * Returns widget IDs for a specific post type that are eligible for migration.
+         *
+         * @param string $post_type Widget post type.
+         * @return int[]
+         */
+        private function get_widget_ids_for_post_type( string $post_type ): array {
+            global $wpdb;
+
+            $query = $wpdb->prepare(
+                "SELECT ID
+                 FROM {$wpdb->posts}
+                 WHERE post_type = %s
+                 AND post_status NOT IN ('auto-draft', 'trash')",
+                $post_type
+            );
+
+            $results = $wpdb->get_col( $query );
+
+            return array_map( 'intval', is_array( $results ) ? $results : array() );
+        }
+
+        /**
+         * Updates the database post type for a widget.
+         *
+         * @param int    $post_id Widget post ID.
+         * @param string $post_type New post type.
+         * @return bool
+         */
+        private function update_widget_post_type( int $post_id, string $post_type ): bool {
+            global $wpdb;
+
+            $result = $wpdb->update(
+                $wpdb->posts,
+                array( 'post_type' => $post_type ),
+                array( 'ID' => $post_id ),
+                array( '%s' ),
+                array( '%d' )
+            );
+
+            return $result !== false;
+        }
+
+        /**
+         * Returns the legacy widget post types that should be migrated to popups.
+         *
+         * @return array<string,string>
+         */
+        private function get_legacy_post_type_migration_map(): array {
+            return array(
+                FOOCONVERT_CPT_BAR    => FOOCONVERT_POPUP_TYPE_BAR,
+                FOOCONVERT_CPT_FLYOUT => FOOCONVERT_POPUP_TYPE_FLYOUT,
+            );
         }
 
         /**

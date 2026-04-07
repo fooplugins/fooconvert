@@ -52,17 +52,17 @@ if ( in_array( 'getting-started', $hidden_panels ) ) {
     <div class="fooconvert-panel-section">
         <h3 class="fooconvert-center"><?php esc_html_e( 'OR', 'fooconvert' ); ?></h3>
         <p>
-            <?php esc_html_e( 'Create your own unique bar by following these simple steps:', 'fooconvert' ); ?>
+            <?php esc_html_e( 'Create your own unique widget by following these simple steps:', 'fooconvert' ); ?>
         </p>
         <ol class="fooconvert-ordered-list">
             <li>
-                <?php esc_html_e( 'Create a new bar.', 'fooconvert' ); ?>
-                (<a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=fc-bar' ) ); ?>"
-                    target="_blank"><?php esc_html_e( 'create a new bar', 'fooconvert' ); ?></a>)
+                <?php esc_html_e( 'Create a new widget and choose whether it should be a bar, flyout, or popup.', 'fooconvert' ); ?>
+                (<a href="<?php echo esc_url( fooconvert_admin_url_widget_type_chooser() ); ?>"
+                    target="_blank"><?php esc_html_e( 'create a new widget', 'fooconvert' ); ?></a>)
             </li>
             <li>
                 <?php esc_html_e( 'Select a pre-made template.', 'fooconvert' ); ?>
-                (<?php esc_html_e( 'e.g. Black Friday Bar', 'fooconvert' ); ?>)
+                (<?php esc_html_e( 'e.g. Black Friday Bar, Scroll Flyout, or Exit Intent Popup', 'fooconvert' ); ?>)
             </li>
             <li>
                 <?php esc_html_e( 'Customize the look and feel &amp; change the content to your liking!', 'fooconvert' ); ?>

@@ -11,6 +11,7 @@ import ViewStateControls from "./components/view-state-controls";
 import TriggerControls from "./components/trigger-controls/Component";
 
 export const BAR_CLASS_NAME = 'fc--bar';
+const BAR_POST_TYPE = 'fc-bar';
 
 export const BAR_DEFAULTS = {
     settings: {
@@ -68,8 +69,7 @@ const Edit = props => {
     const {
         setAttributes,
         context: {
-            postId,
-            postType
+            postId
         },
         attributes: {
             postId: storedPostId,
@@ -88,10 +88,10 @@ const Edit = props => {
     }, [ postId, storedPostId ] );
 
     useEffect( () => {
-        if ( postType !== storedPostType ) {
-            setAttributes( { postType } );
+        if ( BAR_POST_TYPE !== storedPostType ) {
+            setAttributes( { postType: BAR_POST_TYPE } );
         }
-    }, [ postType, storedPostType ] );
+    }, [ storedPostType ] );
 
     const attributesDefaults = { ...BAR_DEFAULTS };
 
@@ -129,10 +129,11 @@ const Edit = props => {
 const EditPlaceholder = props => {
     return (
         <VariationPicker
-            label={ __( "Choose a template", "fooconvert" ) }
+            label={ __( "Choose a template for your bar", "fooconvert" ) }
             instructions={ __( "Select a template to start with.", "fooconvert" ) }
             reset={ { template: undefined } }
             media="thumbnail"
+            showTypeChooserLink
             { ...props }
         />
     );

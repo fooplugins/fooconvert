@@ -48,7 +48,7 @@ if ( empty( $widgets ) || count( $widgets ) === 0 ) {
                     $edit_link = '<a href="' . esc_url( $edit_url ) . '"><i class="dashicons dashicons-edit" title="' . esc_attr__( 'Edit Widget', 'fooconvert' ) . '"></i></a>';
                     $stats_url = fooconvert_admin_url_widget_stats( $id );
                     $stats_link = '<a href="' . esc_url( $stats_url ) . '"><i class="dashicons dashicons-chart-bar" title="' . esc_attr__( 'View Widget Stats', 'fooconvert' ) . '"></i></a>';
-                    $post_type = fooconvert_get_widget_post_type_label( $widget->post_type );
+                    $post_type = fooconvert_get_widget_post_type_label( $widget );
                     $modified_time = get_post_modified_time( 'U', false, $widget );               // Get the Unix timestamp of the modified date
                     $modified_diff = human_time_diff( $modified_time, current_time( 'timestamp' ) );
                     // translators: %s: refers to the time last modified.
@@ -71,13 +71,13 @@ if ( empty( $widgets ) || count( $widgets ) === 0 ) {
     </div>
     <div class="fooconvert-panel-section fooconvert-panel-section-flex">
         <p class="fooconvert-flex">
-            <a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=fc-bar' ) ); ?>" class="button button-secondary">
+            <a href="<?php echo esc_url( fooconvert_admin_url_widget_new( FOOCONVERT_POPUP_TYPE_BAR ) ); ?>" class="button button-secondary">
                 <?php esc_html_e( 'Add New Bar', 'fooconvert' ); ?>
             </a>
-            <a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=fc-flyout' ) ); ?>" class="button button-secondary">
+            <a href="<?php echo esc_url( fooconvert_admin_url_widget_new( FOOCONVERT_POPUP_TYPE_FLYOUT ) ); ?>" class="button button-secondary">
                 <?php esc_html_e( 'Add New Flyout', 'fooconvert' ); ?>
             </a>
-            <a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=fc-popup' ) ); ?>" class="button button-secondary">
+            <a href="<?php echo esc_url( fooconvert_admin_url_widget_new( FOOCONVERT_POPUP_TYPE_POPUP ) ); ?>" class="button button-secondary">
                 <?php esc_html_e( 'Add New Popup', 'fooconvert' ); ?>
             </a>
         </p>

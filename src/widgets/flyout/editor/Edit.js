@@ -11,6 +11,7 @@ import ViewStateControls from "./components/view-state-controls";
 import TriggerControls from "./components/trigger-controls/Component";
 
 export const FLYOUT_CLASS_NAME = 'fc--flyout';
+const FLYOUT_POST_TYPE = 'fc-flyout';
 
 export const FLYOUT_DEFAULTS = {
     settings: {
@@ -64,8 +65,7 @@ const Edit = props => {
     const {
         setAttributes,
         context: {
-            postId,
-            postType
+            postId
         },
         attributes: {
             postId: storedPostId,
@@ -84,10 +84,10 @@ const Edit = props => {
     }, [ postId, storedPostId ] );
 
     useEffect( () => {
-        if ( postType !== storedPostType ) {
-            setAttributes( { postType } );
+        if ( FLYOUT_POST_TYPE !== storedPostType ) {
+            setAttributes( { postType: FLYOUT_POST_TYPE } );
         }
-    }, [ postType, storedPostType ] );
+    }, [ storedPostType ] );
 
     const attributesDefaults = { ...FLYOUT_DEFAULTS };
 
@@ -125,10 +125,11 @@ const Edit = props => {
 const EditPlaceholder = props => {
     return (
         <VariationPicker
-            label={ __( "Choose a template", "fooconvert" ) }
+            label={ __( "Choose a template for your flyout", "fooconvert" ) }
             instructions={ __( "Select a template to start with.", "fooconvert" ) }
             reset={ { template: undefined } }
             media="thumbnail"
+            showTypeChooserLink
             { ...props }
         />
     );

@@ -55,7 +55,7 @@ class Bar extends BaseWidget {
      * Registers blocks.
      */
     function register_blocks() {
-        $post_type = $this->get_post_type();
+        $post_type = FOOCONVERT_CPT_POPUP;
         return Utils::register_post_type_blocks( $post_type, array(
             array(
                 'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'widgets/bar/block.json',
@@ -84,31 +84,7 @@ class Bar extends BaseWidget {
      * @inheritDoc
      */
     function register_post_type() {
-        return register_post_type( $this->get_post_type(), array(
-            'labels'        => array(
-                'name'               => __( 'Bars', 'fooconvert' ),
-                'singular_name'      => __( 'Bar', 'fooconvert' ),
-                'add_new'            => __( 'Add Bar', 'fooconvert' ),
-                'add_new_item'       => __( 'Add New Bar', 'fooconvert' ),
-                'edit_item'          => __( 'Edit Bar', 'fooconvert' ),
-                'new_item'           => __( 'New Bar', 'fooconvert' ),
-                'view_item'          => __( 'View Bars', 'fooconvert' ),
-                'search_items'       => __( 'Search Bars', 'fooconvert' ),
-                'not_found'          => __( 'No Bars found', 'fooconvert' ),
-                'not_found_in_trash' => __( 'No Bars found in Trash', 'fooconvert' ),
-                'all_items'          => __( 'Bars', 'fooconvert' )
-            ),
-            'has_archive'   => false,
-            'public'        => false,
-            'show_ui'       => true,
-            'show_in_rest'  => true,
-            'show_in_menu'  => false,
-            'supports'      => [ 'title', 'editor', 'author', 'custom-fields' ],
-            'template'      => array(
-                array( $this->get_block_name() )
-            ),
-            'template_lock' => 'all'
-        ) );
+        return false;
     }
 
     /**

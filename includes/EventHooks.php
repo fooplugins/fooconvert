@@ -30,7 +30,7 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
         public function delete_widget_events( $post_id ) {
             // Check post type if necessary
             $post_type = get_post_type( $post_id );
-            if ( !fooconvert_is_valid_post_type( $post_type ) ) {
+            if ( fooconvert_normalize_popup_type( (string) $post_type ) === '' ) {
                 return;
             }
 
@@ -238,7 +238,7 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
                     'extra_data' => $extra_data,
                 ],
                 [
-                    'post_type' => $post_after->post_type
+                    'post_type' => fooconvert_get_widget_logical_post_type( $post_after )
                 ]
             );
         }

@@ -20,19 +20,28 @@ abstract class BaseWidget extends BaseBlock {
      * Handles init.
      */
     function init() {
-        $post_type = $this->register_post_type();
-        if ( $post_type instanceof WP_Post_Type ) {
+        $registered = $this->register_post_type();
+        if ( $registered instanceof WP_Post_Type ) {
+            $registered_post_types = array( $registered->name );
+        } else if ( is_array( $registered ) ) {
+            $registered_post_types = $registered;
+        } else {
+            $registered_post_types = array();
+        }
+
+        foreach ( $registered_post_types as $post_type ) {
             if ( $this->supports( 'compatibility' ) ) {
-                FooConvert::plugin()->compatibility->register( $post_type->name );
+                FooConvert::plugin()->compatibility->register( $post_type );
             }
             if ( $this->supports( 'display-rules' ) ) {
-                FooConvert::plugin()->display_rules->register( $post_type->name );
+                FooConvert::plugin()->display_rules->register( $post_type );
             }
             if ( $this->supports( 'shortcode' ) ) {
-                FooConvert::plugin()->widgets->register_shortcode( $post_type->name );
+                FooConvert::plugin()->widgets->register_shortcode( $post_type );
             }
-            parent::init();
         }
+
+        parent::init();
     }
 
     /**
@@ -47,7 +56,7 @@ abstract class BaseWidget extends BaseBlock {
     /**
      * Register the widget post type.
      *
-     * @return WP_Error|WP_Post_Type
+     * @return false|string[]|WP_Error|WP_Post_Type
      *
      * @since 1.0.0
      */

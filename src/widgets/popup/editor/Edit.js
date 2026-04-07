@@ -10,6 +10,7 @@ import EditSettings from "./EditSettings";
 import { TriggerControls } from "./components/trigger-controls";
 
 export const POPUP_CLASS_NAME = 'fc--popup';
+const POPUP_POST_TYPE = 'fc-popup';
 
 export const POPUP_DEFAULTS = {
     settings: {
@@ -66,8 +67,7 @@ const Edit = props => {
     const {
         setAttributes,
         context: {
-            postId,
-            postType
+            postId
         },
         attributes: {
             postId: storedPostId,
@@ -85,10 +85,10 @@ const Edit = props => {
     }, [ postId, storedPostId ] );
 
     useEffect( () => {
-        if ( postType !== storedPostType ) {
-            setAttributes( { postType } );
+        if ( POPUP_POST_TYPE !== storedPostType ) {
+            setAttributes( { postType: POPUP_POST_TYPE } );
         }
-    }, [ postType, storedPostType ] );
+    }, [ storedPostType ] );
 
     const attributesDefaults = { ...POPUP_DEFAULTS };
 
@@ -121,10 +121,11 @@ const Edit = props => {
 const EditPlaceholder = props => {
     return (
         <VariationPicker
-            label={ __( "Choose a template", "fooconvert" ) }
+            label={ __( "Choose a template for your popup", "fooconvert" ) }
             instructions={ __( "Select a template to start with.", "fooconvert" ) }
             reset={ { template: undefined } }
             media="thumbnail"
+            showTypeChooserLink
             { ...props }
         />
     );

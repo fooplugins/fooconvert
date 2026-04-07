@@ -124,7 +124,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 ) );
 
                 $meta = [
-                    'post_type' => $content_for_insert['post_type'],
+                    'post_type' => fooconvert_get_popup_type_post_type(
+                        $content_for_insert['meta_input'][FOOCONVERT_META_KEY_POPUP_TYPE] ?? FOOCONVERT_POPUP_TYPE_POPUP
+                    ),
                     'template'  => $content_for_insert['template'],
                     'demo'      => true
                 ];
@@ -248,9 +250,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 [
                     'post_title'   => 'Black Friday Bar [Demo]',
                     'post_status'  => 'draft',
-                    'post_type'    => 'fc-bar',
+                    'post_type'    => FOOCONVERT_CPT_POPUP,
                     'template'     => 'black_friday_bar',
                     'meta_input'   => [
+                        FOOCONVERT_META_KEY_POPUP_TYPE => FOOCONVERT_POPUP_TYPE_BAR,
                         FOOCONVERT_META_KEY_DISPLAY_RULES => [
                             'location' => [
                                 [
@@ -286,9 +289,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 [
                     'post_title'   => 'Cookie Consent Bar [Demo]',
                     'post_status'  => 'draft',
-                    'post_type'    => 'fc-bar',
+                    'post_type'    => FOOCONVERT_CPT_POPUP,
                     'template'     => 'cookie_consent_bar',
                     'meta_input'   => [
+                        FOOCONVERT_META_KEY_POPUP_TYPE => FOOCONVERT_POPUP_TYPE_BAR,
                         FOOCONVERT_META_KEY_DISPLAY_RULES => [
                             'location' => [
                                 [
@@ -326,9 +330,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 [
                     'post_title'   => 'Black Friday Scroll Flyout [Demo]',
                     'post_status'  => 'draft',
-                    'post_type'    => 'fc-flyout',
+                    'post_type'    => FOOCONVERT_CPT_POPUP,
                     'template'     => 'black_friday_flyout',
                     'meta_input'   => [
+                        FOOCONVERT_META_KEY_POPUP_TYPE => FOOCONVERT_POPUP_TYPE_FLYOUT,
                         FOOCONVERT_META_KEY_DISPLAY_RULES => [
                             'location' => [
                                 [
@@ -378,9 +383,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 [
                     'post_title'   => 'Black Friday Exit Intent Popup [Demo]',
                     'post_status'  => 'draft',
-                    'post_type'    => 'fc-popup',
+                    'post_type'    => FOOCONVERT_CPT_POPUP,
                     'template'     => 'black_friday_popup',
                     'meta_input'   => [
+                        FOOCONVERT_META_KEY_POPUP_TYPE => FOOCONVERT_POPUP_TYPE_POPUP,
                         FOOCONVERT_META_KEY_DISPLAY_RULES => [
                             'location' => [
                                 [
@@ -432,15 +438,18 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
          * @return array
          */
         public function register_and_get_widget_post_types() {
-            // We need to make sure the CPT's are registered.
-            $widgets = FooConvert::plugin()->widgets->get_instances();
-            foreach ( $widgets as $widget ) {
-                $post_type = $widget->get_post_type();
-                $widget_post_types[] = $post_type;
-                if ( !post_type_exists( $post_type ) ) {
+            $widget_post_types = fooconvert_get_post_types();
+            if ( post_type_exists( FOOCONVERT_CPT_POPUP ) ) {
+                return $widget_post_types;
+            }
+
+            foreach ( FooConvert::plugin()->widgets->get_instances() as $widget ) {
+                if ( $widget->get_post_type() === FOOCONVERT_CPT_POPUP ) {
                     $widget->register_post_type();
+                    break;
                 }
             }
+
             return $widget_post_types;
         }
     }

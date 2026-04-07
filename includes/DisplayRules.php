@@ -440,7 +440,7 @@ class DisplayRules extends BaseComponent {
         $was_published = $post_before instanceof WP_Post && $post_before->post_status === 'publish';
         $is_published = $post->post_status === 'publish';
         if ( $was_published || $is_published ) {
-            $widget = FooConvert::plugin()->widgets->get_instance( $post->post_type );
+            $widget = FooConvert::plugin()->widgets->get_instance( $post );
             // and this is a widget that supports display rules
             if ( $widget && $widget->supports( 'display-rules' ) ) {
                 // compile them!
@@ -858,7 +858,7 @@ class DisplayRules extends BaseComponent {
         $resolved_post_id = apply_filters( 'fooconvert_resolve_widget_post_id', $post_id, array(
             'context'        => $context,
             'source_post_id' => $source_post_id,
-            'post_type'      => get_post_type( $source_post_id ),
+            'post_type'      => fooconvert_get_widget_logical_post_type( $source_post_id ),
         ) );
         $resolved_post_id = intval( $resolved_post_id );
         if ( $resolved_post_id <= 0 ) {

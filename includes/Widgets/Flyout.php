@@ -55,7 +55,7 @@ class Flyout extends BaseWidget {
      * Registers blocks.
      */
     function register_blocks() {
-        $post_type = $this->get_post_type();
+        $post_type = FOOCONVERT_CPT_POPUP;
         return Utils::register_post_type_blocks( $post_type, array(
             array(
                 'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'widgets/flyout/block.json',
@@ -84,31 +84,7 @@ class Flyout extends BaseWidget {
      * @inheritDoc
      */
     function register_post_type() {
-        return register_post_type( $this->get_post_type(), array(
-            'labels'        => array(
-                'name'               => __( 'Flyouts', 'fooconvert' ),
-                'singular_name'      => __( 'Flyout', 'fooconvert' ),
-                'add_new'            => __( 'Add Flyout', 'fooconvert' ),
-                'add_new_item'       => __( 'Add New Flyout', 'fooconvert' ),
-                'edit_item'          => __( 'Edit Flyout', 'fooconvert' ),
-                'new_item'           => __( 'New Flyout', 'fooconvert' ),
-                'view_item'          => __( 'View Flyouts', 'fooconvert' ),
-                'search_items'       => __( 'Search Flyouts', 'fooconvert' ),
-                'not_found'          => __( 'No Flyouts found', 'fooconvert' ),
-                'not_found_in_trash' => __( 'No Flyouts found in Trash', 'fooconvert' ),
-                'all_items'          => __( 'Flyouts', 'fooconvert' )
-            ),
-            'has_archive'   => false,
-            'public'        => false,
-            'show_ui'       => true,
-            'show_in_rest'  => true,
-            'show_in_menu'  => false,
-            'supports'      => [ 'title', 'editor', 'author', 'custom-fields' ],
-            'template'      => array(
-                array( $this->get_block_name() )
-            ),
-            'template_lock' => 'all'
-        ) );
+        return false;
     }
 
     /**

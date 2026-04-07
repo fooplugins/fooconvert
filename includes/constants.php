@@ -22,11 +22,17 @@ define( 'FOOCONVERT_META_KEY_DEMO_CONTENT', '_fooconvert_demo_content' );       
 define( 'FOOCONVERT_META_KEY_METRICS', '_fooconvert_metrics' );                 // Meta key for the widget metrics.
 define( 'FOOCONVERT_META_KEY_METRIC_VIEWS', '_fooconvert_metric_views' );
 define( 'FOOCONVERT_META_KEY_METRIC_ENGAGEMENTS', '_fooconvert_metric_engagements' );
+define( 'FOOCONVERT_META_KEY_POPUP_TYPE', '_fooconvert_popup_type' );
 
 //CPT's
 define( 'FOOCONVERT_CPT_BAR', 'fc-bar' );
 define( 'FOOCONVERT_CPT_FLYOUT', 'fc-flyout' );
 define( 'FOOCONVERT_CPT_POPUP', 'fc-popup' );
+
+// Popup types
+define( 'FOOCONVERT_POPUP_TYPE_BAR', 'bar' );
+define( 'FOOCONVERT_POPUP_TYPE_FLYOUT', 'flyout' );
+define( 'FOOCONVERT_POPUP_TYPE_POPUP', 'popup' );
 
 //EVENT TYPE
 define( 'FOOCONVERT_EVENT_TYPE_OPEN', 'open' );
@@ -44,6 +50,7 @@ define( 'FOOCONVERT_FRONTEND_ASSET_HANDLE', 'fc-frontend' );
 define( 'FOOCONVERT_MENU_SLUG', 'fooconvert' );
 define( 'FOOCONVERT_MENU_SLUG_DASHBOARD', 'fooconvert-dashboard' );
 define( 'FOOCONVERT_MENU_SLUG_WIDGET_STATS', 'fooconvert-widget-stats' );
+define( 'FOOCONVERT_MENU_SLUG_WIDGET_CHOOSER', 'fooconvert-widget-chooser' );
 define( 'FOOCONVERT_RETENTION_DEFAULT', 14 );
 define( 'FOOCONVERT_METRICS_DAYS_DEFAULT', 7 );
 

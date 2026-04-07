@@ -138,6 +138,201 @@ function fooconvert_is_valid_post_type( $post_type ) {
 }
 
 /**
+ * Returns the supported logical popup types.
+ *
+ * @return string[]
+ */
+function fooconvert_get_popup_types() {
+    return array(
+        FOOCONVERT_POPUP_TYPE_BAR,
+        FOOCONVERT_POPUP_TYPE_FLYOUT,
+        FOOCONVERT_POPUP_TYPE_POPUP,
+    );
+}
+
+/**
+ * Normalizes widget type inputs to the canonical popup type.
+ *
+ * @param mixed $value Raw widget type value.
+ * @return string
+ */
+function fooconvert_normalize_popup_type( $value ) {
+    if ( !is_string( $value ) ) {
+        return '';
+    }
+
+    switch ( strtolower( trim( $value ) ) ) {
+        case FOOCONVERT_POPUP_TYPE_BAR:
+        case FOOCONVERT_CPT_BAR:
+        case 'fc/bar':
+            return FOOCONVERT_POPUP_TYPE_BAR;
+        case FOOCONVERT_POPUP_TYPE_FLYOUT:
+        case FOOCONVERT_CPT_FLYOUT:
+        case 'fc/flyout':
+            return FOOCONVERT_POPUP_TYPE_FLYOUT;
+        case FOOCONVERT_POPUP_TYPE_POPUP:
+        case FOOCONVERT_CPT_POPUP:
+        case 'fc/popup':
+            return FOOCONVERT_POPUP_TYPE_POPUP;
+    }
+
+    return '';
+}
+
+/**
+ * Sanitizes a popup type for storage.
+ *
+ * @param mixed $value Raw popup type value.
+ * @return string
+ */
+function fooconvert_sanitize_popup_type( $value ) {
+    $popup_type = fooconvert_normalize_popup_type( $value );
+
+    return $popup_type !== '' ? $popup_type : FOOCONVERT_POPUP_TYPE_POPUP;
+}
+
+/**
+ * Maps a popup type to the corresponding logical widget post type.
+ *
+ * @param string $popup_type Popup type.
+ * @return string
+ */
+function fooconvert_get_popup_type_post_type( $popup_type ) {
+    switch ( fooconvert_normalize_popup_type( $popup_type ) ) {
+        case FOOCONVERT_POPUP_TYPE_BAR:
+            return FOOCONVERT_CPT_BAR;
+        case FOOCONVERT_POPUP_TYPE_FLYOUT:
+            return FOOCONVERT_CPT_FLYOUT;
+        case FOOCONVERT_POPUP_TYPE_POPUP:
+            return FOOCONVERT_CPT_POPUP;
+    }
+
+    return '';
+}
+
+/**
+ * Maps a popup type to its root widget block name.
+ *
+ * @param string $popup_type Popup type.
+ * @return string
+ */
+function fooconvert_get_popup_type_block_name( $popup_type ) {
+    switch ( fooconvert_normalize_popup_type( $popup_type ) ) {
+        case FOOCONVERT_POPUP_TYPE_BAR:
+            return 'fc/bar';
+        case FOOCONVERT_POPUP_TYPE_FLYOUT:
+            return 'fc/flyout';
+        case FOOCONVERT_POPUP_TYPE_POPUP:
+            return 'fc/popup';
+    }
+
+    return '';
+}
+
+/**
+ * Returns the singular label for a popup type.
+ *
+ * @param string $popup_type Popup type.
+ * @return string
+ */
+function fooconvert_get_popup_type_label( $popup_type ) {
+    switch ( fooconvert_normalize_popup_type( $popup_type ) ) {
+        case FOOCONVERT_POPUP_TYPE_BAR:
+            return __( 'Bar', 'fooconvert' );
+        case FOOCONVERT_POPUP_TYPE_FLYOUT:
+            return __( 'Flyout', 'fooconvert' );
+        case FOOCONVERT_POPUP_TYPE_POPUP:
+            return __( 'Popup', 'fooconvert' );
+    }
+
+    return '';
+}
+
+/**
+ * Resolves the canonical popup type for a widget.
+ *
+ * @param WP_Post|int|string $thing Widget post, ID, or logical type identifier.
+ * @return string
+ */
+function fooconvert_get_widget_popup_type( $thing ) {
+    if ( $thing instanceof WP_Post ) {
+        $post = $thing;
+    } else if ( is_numeric( $thing ) ) {
+        $post = get_post( (int) $thing );
+        if ( !$post instanceof WP_Post ) {
+            return '';
+        }
+    } else if ( is_string( $thing ) ) {
+        return fooconvert_normalize_popup_type( $thing );
+    } else {
+        return '';
+    }
+
+    $popup_type = fooconvert_normalize_popup_type( get_post_meta( $post->ID, FOOCONVERT_META_KEY_POPUP_TYPE, true ) );
+    if ( $popup_type !== '' ) {
+        return $popup_type;
+    }
+
+    $popup_type = fooconvert_normalize_popup_type( $post->post_type );
+    if ( $popup_type !== '' ) {
+        return $popup_type;
+    }
+
+    if ( function_exists( 'parse_blocks' ) && is_string( $post->post_content ) && $post->post_content !== '' ) {
+        $blocks = parse_blocks( $post->post_content );
+        foreach ( $blocks as $block ) {
+            if ( !is_array( $block ) || !isset( $block['blockName'] ) ) {
+                continue;
+            }
+
+            $popup_type = fooconvert_normalize_popup_type( $block['blockName'] );
+            if ( $popup_type !== '' ) {
+                return $popup_type;
+            }
+        }
+    }
+
+    if ( $post->post_type === FOOCONVERT_CPT_POPUP ) {
+        return FOOCONVERT_POPUP_TYPE_POPUP;
+    }
+
+    return '';
+}
+
+/**
+ * Resolves the logical widget post type for a widget.
+ *
+ * @param WP_Post|int|string $thing Widget post, ID, or logical type identifier.
+ * @return string
+ */
+function fooconvert_get_widget_logical_post_type( $thing ) {
+    $popup_type = fooconvert_get_widget_popup_type( $thing );
+    if ( $popup_type !== '' ) {
+        return fooconvert_get_popup_type_post_type( $popup_type );
+    }
+
+    if ( $thing instanceof WP_Post ) {
+        return (string) $thing->post_type;
+    }
+
+    return is_string( $thing ) ? $thing : '';
+}
+
+/**
+ * Returns the popup type requested in the current admin request.
+ *
+ * @return string
+ */
+function fooconvert_get_requested_popup_type() {
+    $popup_type = isset( $_GET['popup_type'] ) ? $_GET['popup_type'] : '';
+    if ( function_exists( 'wp_unslash' ) ) {
+        $popup_type = wp_unslash( $popup_type );
+    }
+
+    return fooconvert_normalize_popup_type( $popup_type );
+}
+
+/**
  * Checks whether WooCommerce is active.
  *
  * @return bool
@@ -217,6 +412,34 @@ function fooconvert_admin_url_widget_stats( $widget_id ) {
  */
 function fooconvert_admin_url_widget_edit( $widget_id ) {
     return admin_url( 'post.php?post=' . $widget_id . '&action=edit' );
+}
+
+/**
+ * Retrieves the URL for the FooConvert widget type chooser.
+ *
+ * @return string
+ */
+function fooconvert_admin_url_widget_type_chooser() {
+    return admin_url( 'admin.php?page=' . FOOCONVERT_MENU_SLUG_WIDGET_CHOOSER );
+}
+
+/**
+ * Retrieves the URL for creating a new FooConvert widget.
+ *
+ * @param string $popup_type Optional popup type.
+ * @return string
+ */
+function fooconvert_admin_url_widget_new( $popup_type = '' ) {
+    $args = array(
+        'post_type' => FOOCONVERT_CPT_POPUP,
+    );
+
+    $popup_type = fooconvert_normalize_popup_type( $popup_type );
+    if ( $popup_type !== '' ) {
+        $args['popup_type'] = $popup_type;
+    }
+
+    return admin_url( add_query_arg( $args, 'post-new.php' ) );
 }
 
 /**
@@ -388,19 +611,20 @@ function fooconvert_get_widget_post_type_label( $thing ) {
     if ( !$thing ) {
         return '';
     }
+
+    $popup_type = fooconvert_get_widget_popup_type( $thing );
+    if ( $popup_type !== '' ) {
+        return fooconvert_get_popup_type_label( $popup_type );
+    }
+
     if ( $thing instanceof WP_Post ) {
         $post_type = get_post_type_object( $thing->post_type );
         return $post_type ? $post_type->labels->singular_name : 'Post';
     } else if ( is_string( $thing ) ) {
-        switch ( $thing ) {
-            case 'fc-popup':
-                return __( 'Popup', 'fooconvert' );
-            case 'fc-flyout':
-                return __( 'Flyout', 'fooconvert' );
-            case 'fc-bar':
-                return __( 'Bar', 'fooconvert' );
-        }
+        $post_type = get_post_type_object( $thing );
+        return $post_type ? $post_type->labels->singular_name : '';
     }
+
     return '';
 }
 

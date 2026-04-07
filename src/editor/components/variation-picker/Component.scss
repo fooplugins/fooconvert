@@ -97,6 +97,16 @@
   }
 }
 
+.fc-variation-picker__footer {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: var(--spacing);
+
+  .components-button {
+    padding-left: 0;
+  }
+}
+
 .fc-variation-picker__variation {
   list-style: none;
   display: flex;

@@ -1,8 +1,9 @@
-import { CompatibilityPostStatusInfo, CompatibilityPrePublishPanel } from "../../components";
+import { PopupTypePostStatusInfo, CompatibilityPostStatusInfo, CompatibilityPrePublishPanel } from "../../components";
 
 const CompatibilityPlugin = () => {
     return (
         <>
+            <PopupTypePostStatusInfo/>
             <CompatibilityPostStatusInfo/>
             <CompatibilityPrePublishPanel/>
         </>

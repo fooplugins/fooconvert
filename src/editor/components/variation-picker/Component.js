@@ -19,6 +19,15 @@ const medias = [ 'icon', 'thumbnail' ];
 const DEFAULT_MEDIA = 'icon';
 
 const CLASS_NAME = 'fc--variation-picker';
+const TYPE_CHOOSER_PATH = 'admin.php?page=fooconvert-widget-chooser';
+
+const buildAdminUrl = path => {
+    if ( typeof window?.ajaxurl === "string" && window.ajaxurl.includes( "admin-ajax.php" ) ) {
+        return window.ajaxurl.replace( "admin-ajax.php", path );
+    }
+
+    return path;
+};
 
 const VariationPicker = ( {
                               clientId,
@@ -28,7 +37,8 @@ const VariationPicker = ( {
                               media = DEFAULT_MEDIA,
                               initialMode = DEFAULT_MODE,
                               showSearch,
-                              minSearchChars = 2
+                              minSearchChars = 2,
+                              showTypeChooserLink = false
                           } ) => {
 
     media = medias.includes( media ) ? media : DEFAULT_MEDIA;
@@ -126,6 +136,7 @@ const VariationPicker = ( {
         `fc-variation-picker__media-${ media }`,
         className
     );
+    const typeChooserUrl = showTypeChooserLink ? buildAdminUrl( TYPE_CHOOSER_PATH ) : '';
 
     const ModeButton = ( { value, icon, label } ) => {
         const isActive = value === mode;
@@ -164,6 +175,13 @@ const VariationPicker = ( {
             <div className="fc-variation-picker__variations">
                 { variations.map( renderVariation ) }
             </div>
+            { typeChooserUrl !== '' && (
+                <div className="fc-variation-picker__footer">
+                    <Button variant="link" href={ typeChooserUrl }>
+                        { __( "Choose a different type", "fooconvert" ) }
+                    </Button>
+                </div>
+            ) }
             { proModal.open && (
                 <Modal
                     className={ `${ CLASS_NAME }__pro-modal` }
