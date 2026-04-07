@@ -1,6 +1,8 @@
 const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 const DependencyExtractionWebpackPlugin = require( '@woocommerce/dependency-extraction-webpack-plugin' );
 const { RawSource } = require( 'webpack' ).sources;
+const fg = require( 'fast-glob' );
+const path = require( 'path' );
 
 const BUILD_SCOPE = process.env.BUILD_SCOPE === "pro" ? "pro" : "free";
 
@@ -92,8 +94,23 @@ const entry = () => {
             "dependOn": [ "frontend" ]
         };
     }
+    const proBlockEntries = BUILD_SCOPE === "pro"
+        ? fg.sync( "pro/src/blocks/*/block.json" ).reduce( ( acc, blockJsonPath ) => {
+            const blockDir = path.dirname( blockJsonPath );
+            const slug = path.basename( blockDir );
+            acc[ `blocks/${ slug }/editor/index` ] = {
+                import: `./${ blockDir }/editor/index.js`,
+                dependOn: [ "editor-pro" ]
+            };
+            acc[ `blocks/${ slug }/frontend/index` ] = {
+                import: `./${ blockDir }/frontend/index.js`,
+                dependOn: [ "frontend-pro" ]
+            };
+            return acc;
+        }, {} )
+        : {};
     // iterate the default entries and add them to our new entries object
-    return Object.entries( blockEntries ).reduce( ( acc, [ key, value ] ) => {
+    const allEntries = Object.entries( blockEntries ).reduce( ( acc, [ key, value ] ) => {
         if ( key.includes( "/frontend/" ) ) {
             acc[ key ] = {
                 import: value,
@@ -109,6 +126,10 @@ const entry = () => {
         }
         return acc;
     }, entries );
+    return {
+        ...allEntries,
+        ...proBlockEntries
+    };
 };
 
 /**

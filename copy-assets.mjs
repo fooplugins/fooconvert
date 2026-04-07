@@ -85,4 +85,10 @@ if ( BUILD_SCOPE === "pro" ) {
     await resizeTemplates("./pro/src/media/templates/fullsize", "./pro/src/media/templates");
     await performCopy( "./pro/src/media", "./pro/assets/media", [ '**/*.{png,jpg,jpeg,gif,webp,svg}', '!templates/fullsize/**' ] );
     await performMove( "./assets", "./pro/assets", [ 'editor-pro*.*', 'frontend-pro*.*' ], false );
+    const proBlockJsonFiles = await globby( [ '*/block.json' ], { cwd: "./pro/src/blocks" } );
+    await performCopy( "./pro/src/blocks", "./pro/assets/blocks", [ '**/block.json' ] );
+    for ( const blockJsonFile of proBlockJsonFiles ) {
+        const blockDir = dirname( blockJsonFile );
+        await performMove( `./assets/blocks/${ blockDir }`, `./pro/assets/blocks/${ blockDir }`, [ '**/*' ] );
+    }
 }
