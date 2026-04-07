@@ -120,7 +120,7 @@ function fooconvert_is_debug() {
  * @return string
  */
 function fooconvert_get_registered_post_type() {
-    return \FooPlugins\FooConvert\FooConvert::plugin()->widgets->get_registered_post_type();
+    return FOOCONVERT_CPT_POPUP;
 }
 
 /**

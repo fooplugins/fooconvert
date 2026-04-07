@@ -149,6 +149,10 @@ namespace {
         return abs( (int) $value );
     }
 
+    if ( !defined( 'FOOCONVERT_CPT_POPUP' ) ) {
+        define( 'FOOCONVERT_CPT_POPUP', 'fc-popup' );
+    }
+
     require_once __DIR__ . '/../support/Assertions.php';
     require_once dirname( __DIR__, 2 ) . '/pro/includes/Blocks/FreeShippingProgress.php';
     require_once dirname( __DIR__, 2 ) . '/pro/includes/Blocks/FreeShippingText.php';

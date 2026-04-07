@@ -220,7 +220,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
          * @since 1.0.0
          */
         public function register_columns() {
-            $post_type = FooConvert::plugin()->widgets->get_registered_post_type();
+            $post_type = FOOCONVERT_CPT_POPUP;
 
             add_filter( "manage_{$post_type}_posts_columns", function ( $columns ) use ( $post_type ) {
                 return $this->create_stats_column( $post_type, $columns );

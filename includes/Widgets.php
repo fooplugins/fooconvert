@@ -50,24 +50,6 @@ class Widgets extends BaseComponent {
     }
 
     /**
-     * Returns the single registered widget post type.
-     *
-     * @return string
-     */
-    function get_registered_post_type(): string {
-        return FOOCONVERT_CPT_POPUP;
-    }
-
-    /**
-     * Returns the registered widget post types.
-     *
-     * @return string[]
-     */
-    function get_post_types(): array {
-        return array( $this->get_registered_post_type() );
-    }
-
-    /**
      * Get the tag names for all widgets.
      *
      * @return string[] A string array of tag names for all widgets.
@@ -118,14 +100,14 @@ class Widgets extends BaseComponent {
     }
 
     /**
-     * Check if the current page is the editor for any of the widget custom post types.
+     * Check if the current page is the popup editor.
      *
-     * @return bool True if the current page is the editor for one of the widgets, otherwise false.
+     * @return bool True if the current page is the popup editor, otherwise false.
      *
      * @since 1.0.0
      */
     function is_editor(): bool {
-        return Utils::is_post_type_editor( $this->get_registered_post_type() );
+        return Utils::is_post_type_editor( FOOCONVERT_CPT_POPUP );
     }
 
     //endregion

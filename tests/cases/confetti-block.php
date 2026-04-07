@@ -54,6 +54,9 @@ namespace {
     if ( !defined( 'FOOCONVERT_PRO_ASSETS_PATH' ) ) {
         define( 'FOOCONVERT_PRO_ASSETS_PATH', dirname( __DIR__, 2 ) . '/pro/assets/' );
     }
+    if ( !defined( 'FOOCONVERT_CPT_POPUP' ) ) {
+        define( 'FOOCONVERT_CPT_POPUP', 'fc-popup' );
+    }
 
     require_once __DIR__ . '/../support/Assertions.php';
     require_once dirname( __DIR__, 2 ) . '/pro/includes/Blocks/Confetti.php';

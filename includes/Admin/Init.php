@@ -150,7 +150,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                 }
 
                 $current_post_Type = $current_screen->post_type;
-                if ( $current_post_Type === FooConvert::plugin()->widgets->get_registered_post_type() ) {
+                if ( $current_post_Type === FOOCONVERT_CPT_POPUP ) {
                     return $current_screen->base !== 'post';
                 }
             }
