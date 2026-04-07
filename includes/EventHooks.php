@@ -132,7 +132,7 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
          */
         public function store_post_update_event( $post_id, $post_after, $post_before ) {
             // Verify post type
-            if ( !fooconvert_is_valid_post_type( $post_after->post_type ) ) {
+            if ( $post_after->post_type !== FOOCONVERT_CPT_POPUP ) {
                 return;
             }
 

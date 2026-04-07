@@ -410,7 +410,7 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             // Only run when the post is being transitioned to 'publish'
             if ( $old_status !== 'publish' && $new_status === 'publish' ) {
                 // Check if we're dealing with our post types
-                if ( fooconvert_is_valid_post_type( $post->post_type ) ) {
+                if ( $post->post_type === FOOCONVERT_CPT_POPUP ) {
 
                     // Check if the widget is demo content.
                     $meta_value = get_post_meta( $post->ID, FOOCONVERT_META_KEY_DEMO_CONTENT, true );

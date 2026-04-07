@@ -115,28 +115,6 @@ function fooconvert_is_debug() {
 }
 
 /**
- * Returns the registered widget post types.
- *
- * Kept as a compatibility wrapper around the single registered popup post type.
- *
- * @return string[]
- */
-function fooconvert_get_post_types() {
-    return array( FOOCONVERT_CPT_POPUP );
-}
-
-/**
- * Checks if the given post type is valid for FooConvert widgets.
- *
- * @param string $post_type The post type to check.
- *
- * @return bool True if the post type is valid, false otherwise.
- */
-function fooconvert_is_valid_post_type( $post_type ) {
-    return $post_type === FOOCONVERT_CPT_POPUP;
-}
-
-/**
  * Returns the supported logical popup types.
  *
  * @return string[]
