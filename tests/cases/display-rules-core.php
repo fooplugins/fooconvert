@@ -75,6 +75,44 @@ namespace {
     function add_action( ...$args ): void {}
 
     /**
+     * Stub translation helper.
+     *
+     * @param string $text The source text.
+     * @return string
+     */
+    function __( string $text ): string {
+        return $text;
+    }
+
+    /**
+     * Minimal absolute integer helper.
+     *
+     * @param mixed $value Value to normalize.
+     * @return int
+     */
+    function absint( $value ): int {
+        return abs( (int) $value );
+    }
+
+    /**
+     * Stub capability checks used by display rules.
+     *
+     * @param string $capability Capability name.
+     * @return bool
+     */
+    function current_user_can( string $capability ): bool {
+        if ( $capability === 'edit_posts' ) {
+            return $GLOBALS['fc_test_can_edit_posts'] ?? true;
+        }
+
+        if ( $capability === 'edit_post' ) {
+            return $GLOBALS['fc_test_can_edit_post'] ?? true;
+        }
+
+        return true;
+    }
+
+    /**
      * Stub the filter API so the custom matcher path can be exercised deterministically.
      *
      * @param string $tag The filter tag.
@@ -86,6 +124,14 @@ namespace {
         if ( $tag === 'fooconvert_display_rules_match_locations' ) {
             $compiled_locations = $args[0] ?? array();
             return !empty( $GLOBALS['fc_test_custom_location_match'] ) && array_key_exists( 'woocommerce:is_product', $compiled_locations );
+        }
+
+        if ( $tag === 'fooconvert_display_rules_can_edit' && array_key_exists( 'fc_test_display_rules_can_edit', $GLOBALS ) ) {
+            return (bool) $GLOBALS['fc_test_display_rules_can_edit'];
+        }
+
+        if ( $tag === 'fooconvert_display_rules_admin_state' && isset( $GLOBALS['fc_test_display_rules_admin_state'] ) && is_array( $GLOBALS['fc_test_display_rules_admin_state'] ) ) {
+            return array_merge( $value, $GLOBALS['fc_test_display_rules_admin_state'] );
         }
 
         return $value;
@@ -158,6 +204,53 @@ namespace {
             array( 'type' => 'general:front_page', 'data' => null )
         ),
         'Custom rules should match when the extension filter returns true.'
+    );
+
+    $GLOBALS['fc_test_can_edit_posts'] = true;
+    $GLOBALS['fc_test_display_rules_can_edit'] = true;
+
+    Assertions::true(
+        $display_rules->auth_callback( null, null, 123 ),
+        'auth_callback() should allow edits when the extension filter leaves editability enabled.'
+    );
+
+    $GLOBALS['fc_test_display_rules_can_edit'] = false;
+
+    Assertions::false(
+        $display_rules->auth_callback( null, null, 123 ),
+        'auth_callback() should delegate edit locking through the display-rules can-edit filter.'
+    );
+
+    $get_admin_state = $reflection->getMethod( 'get_admin_state' );
+    $get_admin_state->setAccessible( true );
+
+    $GLOBALS['fc_test_can_edit_post'] = true;
+    unset( $GLOBALS['fc_test_display_rules_admin_state'] );
+
+    Assertions::same(
+        array(
+            'canEdit' => true,
+            'showSummary' => true,
+            'lockedMessage' => '',
+        ),
+        $get_admin_state->invoke( $display_rules, 123, array() ),
+        'get_admin_state() should default to showing the summary for editable rows.'
+    );
+
+    $GLOBALS['fc_test_display_rules_admin_state'] = array(
+        'canEdit' => false,
+        'showSummary' => false,
+        'lockedMessage' => 'Managed by experiment',
+    );
+
+    Assertions::same(
+        array(
+            'canEdit' => false,
+            'showSummary' => false,
+            'lockedMessage' => 'Managed by experiment',
+        ),
+        $get_admin_state->invoke( $display_rules, 123, array() ),
+        'get_admin_state() should expose extension-controlled lock state for admin rows.'
     );
 
     echo "display-rules-core: ok\n";

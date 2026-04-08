@@ -102,6 +102,7 @@ const summarizeUsers = ( items, options, emptyLabel ) => {
 
 const getSummary = ( rules ) => {
     const compiled = compileDisplayRules( rules );
+    const hasAllUsers = compiled.users.length === 1 && compiled.users[0] === "general:all_users";
 
     return {
         location: summarizeLocations(
@@ -119,6 +120,8 @@ const getSummary = ( rules ) => {
             editorData?.users ?? [],
             __( "Not set", "fooconvert" )
         ),
+        showExclude: compiled.exclude.length > 0,
+        showUsers: !hasAllUsers,
         reasons: compiled.reasons,
     };
 };
@@ -127,6 +130,7 @@ const DisplayRulesListApp = ( { config } ) => {
     const postId = Number.parseInt( config?.postId, 10 );
     const postTitle = typeof config?.postTitle === "string" ? config.postTitle : "";
     const canEdit = Boolean( config?.canEdit );
+    const showSummary = config?.showSummary !== false;
     const lockedMessage = typeof config?.lockedMessage === "string" ? config.lockedMessage : "";
 
     const [ rules, setRules ] = useState( () => normalizeRules( config?.rules ) );
@@ -187,28 +191,36 @@ const DisplayRulesListApp = ( { config } ) => {
         }
     };
 
+    const summaryRows = [
+        {
+            key: "location",
+            label: __( "Show on", "fooconvert" ),
+            value: summary.location,
+            isVisible: true,
+        },
+        {
+            key: "exclude",
+            label: __( "Hide from", "fooconvert" ),
+            value: summary.exclude,
+            isVisible: summary.showExclude,
+        },
+        {
+            key: "users",
+            label: __( "Users", "fooconvert" ),
+            value: summary.users,
+            isVisible: summary.showUsers,
+        },
+    ].filter( ( row ) => row.isVisible );
+
     const renderSummary = () => (
-        <>
-            <div className={ `${ rootClass }__summary` }>
-                <div className={ `${ rootClass }__summary-row` }>
-                    <span className={ `${ rootClass }__summary-label` }>{ __( "Show on", "fooconvert" ) }</span>
-                    <span className={ `${ rootClass }__summary-value` }>{ summary.location }</span>
+        <div className={ `${ rootClass }__summary` }>
+            { summaryRows.map( ( row ) => (
+                <div key={ row.key } className={ `${ rootClass }__summary-row` }>
+                    <span className={ `${ rootClass }__summary-label` }>{ row.label }</span>
+                    <span className={ `${ rootClass }__summary-value` }>{ row.value }</span>
                 </div>
-                <div className={ `${ rootClass }__summary-row` }>
-                    <span className={ `${ rootClass }__summary-label` }>{ __( "Hide from", "fooconvert" ) }</span>
-                    <span className={ `${ rootClass }__summary-value` }>{ summary.exclude }</span>
-                </div>
-                <div className={ `${ rootClass }__summary-row` }>
-                    <span className={ `${ rootClass }__summary-label` }>{ __( "Users", "fooconvert" ) }</span>
-                    <span className={ `${ rootClass }__summary-value` }>{ summary.users }</span>
-                </div>
-            </div>
-            { canEdit && (
-                <span className={ `${ rootClass }__summary-action` }>
-                    { __( "Click to edit", "fooconvert" ) }
-                </span>
-            ) }
-        </>
+            ) ) }
+        </div>
     );
 
     return (
@@ -224,14 +236,19 @@ const DisplayRulesListApp = ( { config } ) => {
                     ) }
                 >
                     { renderSummary() }
+                    <span className={ `${ rootClass }__summary-action` }>
+                        { __( "Edit display rules", "fooconvert" ) }
+                    </span>
                 </button>
-            ) : (
+            ) : showSummary ? (
                 <div className={ `${ rootClass }__summary-card` }>
                     { renderSummary() }
                 </div>
-            ) }
+            ) : lockedMessage ? (
+                <p className={ `${ rootClass }__locked-message` }>{ lockedMessage }</p>
+            ) : null }
 
-            { !canEdit && lockedMessage && (
+            { !canEdit && showSummary && lockedMessage && (
                 <p className={ `${ rootClass }__locked-message` }>{ lockedMessage }</p>
             ) }
 

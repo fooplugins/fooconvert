@@ -212,20 +212,16 @@ class DisplayRules extends BaseComponent {
     public function create_column_content( $column_name, $post_id ): void {
         if ( $column_name === $this->get_column_name() ) {
             $rules = $this->prepare_column_rules( get_post_meta( $post_id, FOOCONVERT_META_KEY_DISPLAY_RULES, true ) );
-            $is_experiment_variant = $this->is_experiment_variant( $post_id );
-            $can_edit = current_user_can( 'edit_post', $post_id ) && !$is_experiment_variant;
+            $admin_state = $this->get_admin_state( (int) $post_id, $rules );
 
             $config = array(
                 'postId'        => (int) $post_id,
                 'postTitle'     => get_the_title( $post_id ),
                 'rules'         => $rules,
                 'summary'       => $this->get_column_summary( $rules ),
-                'canEdit'       => $can_edit,
-                'lockedMessage' => $is_experiment_variant
-                    ? __( 'Display rules are managed by the parent experiment.', 'fooconvert' )
-                    : ( current_user_can( 'edit_post', $post_id )
-                        ? ''
-                        : __( 'You do not have permission to edit these display rules.', 'fooconvert' ) ),
+                'canEdit'       => $admin_state['canEdit'],
+                'showSummary'   => $admin_state['showSummary'],
+                'lockedMessage' => $admin_state['lockedMessage'],
             );
             $json = wp_json_encode( $config );
 
@@ -236,9 +232,51 @@ class DisplayRules extends BaseComponent {
 
             echo '<div class="fc-display-rules-list__app" data-config="' . esc_attr( $json ) . '">';
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-            echo $this->render_column_summary_markup( $config['summary'], $config['lockedMessage'] );
+            echo $this->render_column_summary_markup(
+                $config['summary'],
+                $config['lockedMessage'],
+                $config['showSummary']
+            );
             echo '</div>';
         }
+    }
+
+    /**
+     * Build the admin list state for a popup display-rules row.
+     *
+     * @param int   $post_id Popup post ID.
+     * @param array $rules Normalized display rules.
+     * @return array{canEdit:bool, showSummary:bool, lockedMessage:string}
+     */
+    private function get_admin_state( int $post_id, array $rules ): array {
+        $can_edit_post = current_user_can( 'edit_post', $post_id );
+        $fallback_state = array(
+            'canEdit'       => $can_edit_post,
+            'showSummary'   => true,
+            'lockedMessage' => $can_edit_post
+                ? ''
+                : __( 'You do not have permission to edit these display rules.', 'fooconvert' ),
+        );
+
+        /**
+         * Filters the display-rules admin state for a popup list-table row.
+         *
+         * @param array{canEdit:bool, showSummary:bool, lockedMessage:string} $state The current list row state.
+         * @param int                                                         $post_id Popup post ID.
+         * @param array                                                       $rules Normalized display rules.
+         * @param DisplayRules                                                $display_rules The display rules component instance.
+         */
+        $state = apply_filters( 'fooconvert_display_rules_admin_state', $fallback_state, $post_id, $rules, $this );
+
+        if ( !is_array( $state ) ) {
+            return $fallback_state;
+        }
+
+        return array(
+            'canEdit'       => !empty( $state['canEdit'] ),
+            'showSummary'   => !array_key_exists( 'showSummary', $state ) || !empty( $state['showSummary'] ),
+            'lockedMessage' => isset( $state['lockedMessage'] ) ? (string) $state['lockedMessage'] : '',
+        );
     }
 
     /**
@@ -270,53 +308,73 @@ class DisplayRules extends BaseComponent {
      * Build the fallback summary shown in the popup list table.
      *
      * @param array $rules The display rules.
-     * @return array<string, string>
+     * @return array{location:string, exclude:string, users:string, showExclude:bool, showUsers:bool}
      */
     private function get_column_summary( array $rules ): array {
+        $location = $this->get_location_summary_text(
+            Utils::get_array( $rules, 'location' ),
+            'default',
+            __( 'Not set', 'fooconvert' )
+        );
+        $exclude = $this->get_location_summary_text(
+            Utils::get_array( $rules, 'exclude' ),
+            'exclude',
+            __( 'None', 'fooconvert' )
+        );
+        $users = $this->get_user_summary_text(
+            Utils::get_array( $rules, 'users' ),
+            __( 'Not set', 'fooconvert' )
+        );
+        $compiled_users = array_values( array_filter(
+            Utils::get_array( $rules, 'users' ),
+            function ( $user ) {
+                return is_string( $user ) && $user !== '';
+            }
+        ) );
+        $has_all_users = in_array( 'general:all_users', $compiled_users, true );
+
         return array(
-            'location' => $this->get_location_summary_text(
-                Utils::get_array( $rules, 'location' ),
-                'default',
-                __( 'Not set', 'fooconvert' )
-            ),
-            'exclude'  => $this->get_location_summary_text(
-                Utils::get_array( $rules, 'exclude' ),
-                'exclude',
-                __( 'None', 'fooconvert' )
-            ),
-            'users'    => $this->get_user_summary_text(
-                Utils::get_array( $rules, 'users' ),
-                __( 'Not set', 'fooconvert' )
-            ),
+            'location'    => $location,
+            'exclude'     => $exclude,
+            'users'       => $users,
+            'showExclude' => $exclude !== __( 'None', 'fooconvert' ),
+            'showUsers'   => !$has_all_users,
         );
     }
 
     /**
      * Render the fallback column summary markup.
      *
-     * @param array<string, string> $summary The current summary strings.
-     * @param string                $locked_message Optional. A lock message to display beneath the summary.
+     * @param array{location:string, exclude:string, users:string, showExclude:bool, showUsers:bool} $summary The current summary strings.
+     * @param string                                                                    $locked_message Optional. A lock message to display beneath the summary.
+     * @param bool                                                                      $show_summary Whether the summary rows should be rendered.
      * @return string
      */
-    private function render_column_summary_markup( array $summary, string $locked_message = '' ): string {
+    private function render_column_summary_markup( array $summary, string $locked_message = '', bool $show_summary = true ): string {
         ob_start();
         ?>
-        <div class="fc-display-rules-list__summary">
-            <div class="fc-display-rules-list__summary-row">
-                <span class="fc-display-rules-list__summary-label"><?php esc_html_e( 'Show on', 'fooconvert' ); ?></span>
-                <span class="fc-display-rules-list__summary-value"><?php echo esc_html( Utils::get_string( $summary, 'location' ) ); ?></span>
+        <?php if ( $show_summary ) : ?>
+            <div class="fc-display-rules-list__summary">
+                <div class="fc-display-rules-list__summary-row">
+                    <span class="fc-display-rules-list__summary-label"><?php esc_html_e( 'Show on', 'fooconvert' ); ?></span>
+                    <span class="fc-display-rules-list__summary-value"><?php echo esc_html( Utils::get_string( $summary, 'location' ) ); ?></span>
+                </div>
+                <?php if ( Utils::get_bool( $summary, 'showExclude' ) ) : ?>
+                    <div class="fc-display-rules-list__summary-row">
+                        <span class="fc-display-rules-list__summary-label"><?php esc_html_e( 'Hide from', 'fooconvert' ); ?></span>
+                        <span class="fc-display-rules-list__summary-value"><?php echo esc_html( Utils::get_string( $summary, 'exclude' ) ); ?></span>
+                    </div>
+                <?php endif; ?>
+                <?php if ( Utils::get_bool( $summary, 'showUsers' ) ) : ?>
+                    <div class="fc-display-rules-list__summary-row">
+                        <span class="fc-display-rules-list__summary-label"><?php esc_html_e( 'Users', 'fooconvert' ); ?></span>
+                        <span class="fc-display-rules-list__summary-value"><?php echo esc_html( Utils::get_string( $summary, 'users' ) ); ?></span>
+                    </div>
+                <?php endif; ?>
             </div>
-            <div class="fc-display-rules-list__summary-row">
-                <span class="fc-display-rules-list__summary-label"><?php esc_html_e( 'Hide from', 'fooconvert' ); ?></span>
-                <span class="fc-display-rules-list__summary-value"><?php echo esc_html( Utils::get_string( $summary, 'exclude' ) ); ?></span>
-            </div>
-            <div class="fc-display-rules-list__summary-row">
-                <span class="fc-display-rules-list__summary-label"><?php esc_html_e( 'Users', 'fooconvert' ); ?></span>
-                <span class="fc-display-rules-list__summary-value"><?php echo esc_html( Utils::get_string( $summary, 'users' ) ); ?></span>
-            </div>
-        </div>
+        <?php endif; ?>
         <?php if ( $locked_message !== '' ) : ?>
-            <p class="description"><?php echo esc_html( $locked_message ); ?></p>
+            <p class="<?php echo esc_attr( $show_summary ? 'description' : 'fc-display-rules-list__locked-message' ); ?>"><?php echo esc_html( $locked_message ); ?></p>
         <?php endif; ?>
         <?php
         return trim( (string) ob_get_clean() );
@@ -464,7 +522,15 @@ class DisplayRules extends BaseComponent {
         $args = func_get_args();
         $post_id = isset( $args[2] ) ? absint( $args[2] ) : 0;
 
-        return !$this->is_experiment_variant( $post_id );
+        /**
+         * Filters whether display rules can be edited for a specific popup.
+         *
+         * @param bool         $can_edit Whether display rules are editable. Defaults to `true` once capability checks pass.
+         * @param int          $post_id Popup post ID.
+         * @param string       $context Current edit context. `meta` when validating the meta auth callback.
+         * @param DisplayRules $display_rules The display rules component instance.
+         */
+        return (bool) apply_filters( 'fooconvert_display_rules_can_edit', true, $post_id, 'meta', $this );
     }
 
     /**
@@ -1278,27 +1344,6 @@ class DisplayRules extends BaseComponent {
             return true;
         }
         return count( array_intersect( $compiled_user_roles, $current_user_roles ) ) > 0;
-    }
-
-    /**
-     * Determines whether a widget post belongs to an experiment variant.
-     *
-     * @param int $post_id Widget post ID.
-     * @return bool
-     */
-    private function is_experiment_variant( int $post_id ): bool {
-        if ( $post_id <= 0 ) {
-            return false;
-        }
-
-        if ( !defined( 'FOOCONVERT_WIDGET_META_KEY_EXPERIMENT_ID' ) || !defined( 'FOOCONVERT_WIDGET_META_KEY_EXPERIMENT_ROLE' ) ) {
-            return false;
-        }
-
-        $experiment_id = absint( get_post_meta( $post_id, FOOCONVERT_WIDGET_META_KEY_EXPERIMENT_ID, true ) );
-        $role = (string) get_post_meta( $post_id, FOOCONVERT_WIDGET_META_KEY_EXPERIMENT_ROLE, true );
-
-        return $experiment_id > 0 && $role === 'variant';
     }
 
     //endregion
