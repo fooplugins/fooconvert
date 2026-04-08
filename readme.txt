@@ -40,10 +40,23 @@ FooConvert’s mission is simple:
 
 = FooConvert Key Features =
 
+- Manage popups, bars, and flyouts from one streamlined Popup workflow.
 - Customize popup, bar & flyout design, color, spacing, and positioning.
 - Add any core or third-party WordPress blocks.
 - Add shortcodes inside popup content.
+- Use built-in Sign Up, Countdown, and Coupon blocks for lead capture, urgency, and offers.
+- Capture leads and export them from the built-in Leads screen.
+- Add custom Google Fonts to keep campaigns on-brand.
 - Build responsive widgets that look great on all devices.
+
+= Free Version Includes In 2.0 =
+
+- 5 professionally designed templates for popups, bars, and flyouts
+- Sign Up block for lead capture
+- Countdown block for urgency campaigns
+- Coupon block for promo and discount offers
+- Leads admin screen with filtering and export
+- Custom Google Fonts in the popup editor
 
 = Advanced Display Rules =
 
@@ -78,6 +91,16 @@ Free version includes:
 
 Free: 14-day analytics history
 Pro: Unlimited history
+
+= FooConvert PRO for WooCommerce & Optimization =
+
+FooConvert PRO adds advanced WooCommerce targeting, storefront-specific conversion blocks, revenue attribution, and built-in A/B testing for more serious optimization workflows.
+
+- WooCommerce display rules for shop, cart, checkout, account, and product pages
+- WooCommerce triggers for cart, coupon, checkout, and product-intent events
+- Apply Coupon, Free Shipping, Cart Threshold Progress, and Confetti blocks
+- Revenue attribution with sales metrics and dashboard reporting
+- A/B testing with automated winner selection
 
 = Benefits for Your Website =
 
@@ -142,9 +165,21 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 == Changelog ==
 
 = 2.0.0 =
-* Date Updated : 1 Apr 2026
-
-
+* Date Updated : 8 Apr 2026
+* New : Unified popups, bars, and flyouts under a single Popup post type with a popup type chooser.
+* New : Added popup type columns, filters, and inline display rule editing on the Popups list screen.
+* New : Moved 5 professionally designed templates from PRO into the free plugin.
+* New : Moved the Sign Up, Countdown, and Coupon blocks from PRO into the free plugin.
+* New : Moved the Leads admin screen with filtering and export into the free plugin.
+* New : Added Google Fonts support and font settings to the free plugin.
+* Updated : Refreshed admin terminology and workflows around the new Popup-based experience.
+[//]: # fs_premium_only_begin
+* New : Added WooCommerce display rules for shop, cart, checkout, account, and product-focused pages.
+* New : Added WooCommerce triggers for cart, coupon, checkout, and product-intent events.
+* New : Added Apply Coupon, Free Shipping Progress, Free Shipping Text, Free Shipping Bar, Cart Threshold Progress, and Confetti blocks.
+* New : Added WooCommerce revenue attribution, sales metrics, and recent sales dashboard reporting.
+* New : Added A/B testing experiments with automated winner selection.
+[//]: # fs_premium_only_end
 
 = 1.2.6 =
 * Date Updated : 15 Dec 2025
