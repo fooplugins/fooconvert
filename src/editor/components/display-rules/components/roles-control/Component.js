@@ -42,7 +42,7 @@ const DisplayRulesRolesControl = ( {
 
     const createNewItem = () => '';
 
-    const isAllUsers = item => item.type === 'general:all_users';
+    const isAllUsers = item => item === 'general:all_users';
     const hasAllUsers = items.some( isAllUsers );
 
     /**

@@ -98,18 +98,72 @@ class DisplayRules extends BaseComponent {
             $this->create_column_content( $column_name, $post_id );
         }, 10, 2 );
 
-        // phpcs:disable WordPress.Security.NonceVerification.Recommended
-        add_action( 'admin_enqueue_scripts', function ( $hook_suffix ) {
-            if ( $hook_suffix === 'edit.php' && isset( $_GET['post_type'] ) ) {
-                $current_post_type = sanitize_key( $_GET['post_type'] );
-                if ( $current_post_type === FOOCONVERT_CPT_POPUP ) {
-                    wp_add_inline_style( 'common', ".column-" . $this->get_column_name() . " { width: 10%; }" );
-                }
-            }
-        } );
-        // phpcs:enable
+        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_column_assets' ) );
 
         $this->column_registered = true;
+    }
+
+    /**
+     * Enqueue the popup list table column assets.
+     *
+     * @param string $hook_suffix The current admin hook suffix.
+     * @return void
+     */
+    public function enqueue_column_assets( string $hook_suffix ): void {
+        if ( !$this->is_popup_list_table_screen( $hook_suffix ) ) {
+            return;
+        }
+
+        $asset_path = FOOCONVERT_ASSETS_PATH . 'admin/display-rules-list/index.asset.php';
+        if ( !file_exists( $asset_path ) ) {
+            return;
+        }
+
+        $asset = include $asset_path;
+        if ( !Utils::has_keys( $asset, array( 'dependencies', 'version' ) ) ) {
+            return;
+        }
+
+        $handle = 'fc-admin-display-rules-list';
+
+        wp_enqueue_style( 'wp-components' );
+        wp_enqueue_style(
+            $handle,
+            FOOCONVERT_ASSETS_URL . 'admin/display-rules-list/index.css',
+            array( 'wp-components' ),
+            $asset['version']
+        );
+        wp_enqueue_script(
+            $handle,
+            FOOCONVERT_ASSETS_URL . 'admin/display-rules-list/index.js',
+            $asset['dependencies'],
+            $asset['version'],
+            true
+        );
+        wp_set_script_translations( $handle, 'fooconvert' );
+        $this->enqueue_component_data( $handle );
+        wp_add_inline_style(
+            $handle,
+            ".column-" . $this->get_column_name() . " { width: 24%; min-width: 280px; }"
+        );
+    }
+
+    /**
+     * Determine whether the current request is the popup list table screen.
+     *
+     * @param string $hook_suffix The current admin hook suffix.
+     * @return bool
+     */
+    private function is_popup_list_table_screen( string $hook_suffix ): bool {
+        if ( $hook_suffix !== 'edit.php' ) {
+            return false;
+        }
+
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
+        $post_type = isset( $_GET['post_type'] ) ? sanitize_key( $_GET['post_type'] ) : '';
+        // phpcs:enable
+
+        return $post_type === FOOCONVERT_CPT_POPUP;
     }
 
     /**
@@ -157,15 +211,242 @@ class DisplayRules extends BaseComponent {
      */
     public function create_column_content( $column_name, $post_id ): void {
         if ( $column_name === $this->get_column_name() ) {
-            $display_rules = get_post_meta( $post_id, FOOCONVERT_META_KEY_DISPLAY_RULES, true );
-            $is_set = !empty( $display_rules ) && !empty( $display_rules['location'] );
+            $rules = $this->prepare_column_rules( get_post_meta( $post_id, FOOCONVERT_META_KEY_DISPLAY_RULES, true ) );
+            $is_experiment_variant = $this->is_experiment_variant( $post_id );
+            $can_edit = current_user_can( 'edit_post', $post_id ) && !$is_experiment_variant;
 
-            if ( $is_set ) {
-                esc_html_e( 'Set', 'fooconvert' );
-            } else {
-                esc_html_e( 'Not set!', 'fooconvert' );
+            $config = array(
+                'postId'        => (int) $post_id,
+                'postTitle'     => get_the_title( $post_id ),
+                'rules'         => $rules,
+                'summary'       => $this->get_column_summary( $rules ),
+                'canEdit'       => $can_edit,
+                'lockedMessage' => $is_experiment_variant
+                    ? __( 'Display rules are managed by the parent experiment.', 'fooconvert' )
+                    : ( current_user_can( 'edit_post', $post_id )
+                        ? ''
+                        : __( 'You do not have permission to edit these display rules.', 'fooconvert' ) ),
+            );
+            $json = wp_json_encode( $config );
+
+            if ( !is_string( $json ) ) {
+                esc_html_e( 'Display rules unavailable.', 'fooconvert' );
+                return;
+            }
+
+            echo '<div class="fc-display-rules-list__app" data-config="' . esc_attr( $json ) . '">';
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            echo $this->render_column_summary_markup( $config['summary'], $config['lockedMessage'] );
+            echo '</div>';
+        }
+    }
+
+    /**
+     * Normalize the display rules value for list table rendering.
+     *
+     * @param mixed $display_rules The stored display rules value.
+     * @return array
+     */
+    private function prepare_column_rules( $display_rules ): array {
+        $defaults = $this->defaults();
+        $display_rules = is_array( $display_rules ) ? $display_rules : array();
+
+        return array(
+            'location' => isset( $display_rules['location'] ) && is_array( $display_rules['location'] )
+                ? array_values( $display_rules['location'] )
+                : $defaults['location'],
+            // false positive - this array is not used to query posts
+            // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams
+            'exclude'  => isset( $display_rules['exclude'] ) && is_array( $display_rules['exclude'] )
+                ? array_values( $display_rules['exclude'] )
+                : $defaults['exclude'],
+            'users'    => isset( $display_rules['users'] ) && is_array( $display_rules['users'] )
+                ? array_values( $display_rules['users'] )
+                : $defaults['users'],
+        );
+    }
+
+    /**
+     * Build the fallback summary shown in the popup list table.
+     *
+     * @param array $rules The display rules.
+     * @return array<string, string>
+     */
+    private function get_column_summary( array $rules ): array {
+        return array(
+            'location' => $this->get_location_summary_text(
+                Utils::get_array( $rules, 'location' ),
+                'default',
+                __( 'Not set', 'fooconvert' )
+            ),
+            'exclude'  => $this->get_location_summary_text(
+                Utils::get_array( $rules, 'exclude' ),
+                'exclude',
+                __( 'None', 'fooconvert' )
+            ),
+            'users'    => $this->get_user_summary_text(
+                Utils::get_array( $rules, 'users' ),
+                __( 'Not set', 'fooconvert' )
+            ),
+        );
+    }
+
+    /**
+     * Render the fallback column summary markup.
+     *
+     * @param array<string, string> $summary The current summary strings.
+     * @param string                $locked_message Optional. A lock message to display beneath the summary.
+     * @return string
+     */
+    private function render_column_summary_markup( array $summary, string $locked_message = '' ): string {
+        ob_start();
+        ?>
+        <div class="fc-display-rules-list__summary">
+            <div class="fc-display-rules-list__summary-row">
+                <span class="fc-display-rules-list__summary-label"><?php esc_html_e( 'Show on', 'fooconvert' ); ?></span>
+                <span class="fc-display-rules-list__summary-value"><?php echo esc_html( Utils::get_string( $summary, 'location' ) ); ?></span>
+            </div>
+            <div class="fc-display-rules-list__summary-row">
+                <span class="fc-display-rules-list__summary-label"><?php esc_html_e( 'Hide from', 'fooconvert' ); ?></span>
+                <span class="fc-display-rules-list__summary-value"><?php echo esc_html( Utils::get_string( $summary, 'exclude' ) ); ?></span>
+            </div>
+            <div class="fc-display-rules-list__summary-row">
+                <span class="fc-display-rules-list__summary-label"><?php esc_html_e( 'Users', 'fooconvert' ); ?></span>
+                <span class="fc-display-rules-list__summary-value"><?php echo esc_html( Utils::get_string( $summary, 'users' ) ); ?></span>
+            </div>
+        </div>
+        <?php if ( $locked_message !== '' ) : ?>
+            <p class="description"><?php echo esc_html( $locked_message ); ?></p>
+        <?php endif; ?>
+        <?php
+        return trim( (string) ob_get_clean() );
+    }
+
+    /**
+     * Create a summary string for the location-style rules.
+     *
+     * @param array  $locations The configured locations.
+     * @param string $context The location context.
+     * @param string $empty_label The fallback label.
+     * @return string
+     */
+    private function get_location_summary_text( array $locations, string $context, string $empty_label ): string {
+        $labels = array();
+        $option_map = $this->get_option_map( $this->get_component_locations( $context ) );
+
+        foreach ( $locations as $location ) {
+            if ( !is_array( $location ) ) {
+                continue;
+            }
+
+            $type = Utils::get_string( $location, 'type' );
+            if ( $type === '' ) {
+                continue;
+            }
+
+            $option = isset( $option_map[ $type ] ) && is_array( $option_map[ $type ] )
+                ? $option_map[ $type ]
+                : array();
+            $label = Utils::get_string( $option, 'label' );
+            $label = $label !== '' ? $label : $type;
+
+            if ( fooconvert_str_starts_with( $type, 'specific:' ) ) {
+                $data_labels = array();
+                foreach ( Utils::get_array( $location, 'data' ) as $data_item ) {
+                    $data_label = Utils::get_string( $data_item, 'label' );
+                    if ( $data_label !== '' ) {
+                        $data_labels[] = $data_label;
+                    }
+                }
+
+                $data_summary = $this->get_summary_text_from_labels( $data_labels, '' );
+                if ( $data_summary !== '' ) {
+                    $label .= ': ' . $data_summary;
+                }
+            }
+
+            $labels[] = $label;
+        }
+
+        return $this->get_summary_text_from_labels( $labels, $empty_label );
+    }
+
+    /**
+     * Create a summary string for the user rules.
+     *
+     * @param array  $users The configured user rules.
+     * @param string $empty_label The fallback label.
+     * @return string
+     */
+    private function get_user_summary_text( array $users, string $empty_label ): string {
+        $labels = array();
+        $option_map = $this->get_option_map( $this->get_component_users() );
+
+        foreach ( $users as $user ) {
+            $user = is_string( $user ) ? $user : '';
+            if ( $user === '' ) {
+                continue;
+            }
+
+            $option = isset( $option_map[ $user ] ) && is_array( $option_map[ $user ] )
+                ? $option_map[ $user ]
+                : array();
+            $label = Utils::get_string( $option, 'label' );
+            $labels[] = $label !== '' ? $label : $user;
+        }
+
+        return $this->get_summary_text_from_labels( $labels, $empty_label );
+    }
+
+    /**
+     * Flatten grouped select options into a lookup map.
+     *
+     * @param array $groups The grouped options.
+     * @return array<string, array>
+     */
+    private function get_option_map( array $groups ): array {
+        $option_map = array();
+
+        foreach ( $groups as $group ) {
+            foreach ( Utils::get_array( $group, 'options' ) as $option ) {
+                if ( !is_array( $option ) ) {
+                    continue;
+                }
+
+                $value = Utils::get_string( $option, 'value' );
+                if ( $value !== '' ) {
+                    $option_map[ $value ] = $option;
+                }
             }
         }
+
+        return $option_map;
+    }
+
+    /**
+     * Reduce a label list to a short summary for the list table.
+     *
+     * @param array  $labels The labels to summarize.
+     * @param string $empty_label The fallback label.
+     * @return string
+     */
+    private function get_summary_text_from_labels( array $labels, string $empty_label ): string {
+        $labels = array_values( array_filter( array_map( 'strval', $labels ), 'strlen' ) );
+        $labels = array_values( array_unique( $labels ) );
+
+        if ( empty( $labels ) ) {
+            return $empty_label;
+        }
+
+        $count = count( $labels );
+        $visible = array_slice( $labels, 0, 2 );
+        $summary = implode( ', ', $visible );
+
+        if ( $count > 2 ) {
+            $summary .= sprintf( __( ' +%d more', 'fooconvert' ), $count - 2 );
+        }
+
+        return $summary;
     }
 
     /**
@@ -285,6 +566,7 @@ class DisplayRules extends BaseComponent {
                 'key'      => FOOCONVERT_META_KEY_DISPLAY_RULES,
                 'defaults' => $this->defaults()
             ),
+            'postType' => FOOCONVERT_CPT_POPUP,
             'location' => $this->get_component_locations(),
             // false positive - this array is not used to query posts
             // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams

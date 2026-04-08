@@ -1,0 +1,108 @@
+.fc-display-rules-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.fc-display-rules-list__summary,
+.fc-display-rules-list__summary-button,
+.fc-display-rules-list__summary-card {
+    width: 100%;
+}
+
+.fc-display-rules-list__summary-button,
+.fc-display-rules-list__summary-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 12px;
+    border: 1px solid #dcdcde;
+    border-radius: 6px;
+    background: #fff;
+    text-align: left;
+}
+
+.fc-display-rules-list__summary-button {
+    appearance: none;
+    cursor: pointer;
+    font: inherit;
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.fc-display-rules-list__summary-button:hover,
+.fc-display-rules-list__summary-button:focus {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+    outline: none;
+}
+
+.fc-display-rules-list__summary {
+    display: grid;
+    gap: 6px;
+}
+
+.fc-display-rules-list__summary-row {
+    display: grid;
+    grid-template-columns: 68px minmax(0, 1fr);
+    gap: 8px;
+    align-items: start;
+}
+
+.fc-display-rules-list__summary-label {
+    color: #646970;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.fc-display-rules-list__summary-value {
+    color: #1d2327;
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.fc-display-rules-list__summary-action {
+    color: #2271b1;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.fc-display-rules-list__locked-message {
+    margin: 0;
+    color: #646970;
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.fc-display-rules-list__modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.fc-display-rules-list__modal-description {
+    margin: 0;
+    color: #50575e;
+}
+
+.fc-display-rules-list__sections {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.fc-display-rules-list__section {
+    padding-top: 18px;
+    border-top: 1px solid #f0f0f1;
+}
+
+.fc-display-rules-list__section:first-child {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.fc-display-rules-list__modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 24px;
+}

@@ -7,10 +7,9 @@ import classnames from "classnames";
 // internal
 import "./Component.scss";
 
-import {
-    GroupedSelectControl,
-    EntityRecordControl, TextContentControl, getGroupedSelectOption
-} from "../../../../../components";
+import { GroupedSelectControl } from "../../../../grouped-select-control";
+import { EntityRecordControl } from "../../../../entity-record-control";
+import { getGroupedSelectOption } from "../../../../grouped-select-control";
 import isDisplayRulesLocation from "../../../utils/isDisplayRulesLocation";
 import { hasKeys, isPlainObject, isString } from "@steveush/utils";
 

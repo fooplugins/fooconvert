@@ -3,9 +3,7 @@ import { __ } from "@wordpress/i18n";
 import { trash } from "@wordpress/icons";
 import { isString } from "@steveush/utils";
 
-import {
-    GroupedSelectControl
-} from "../../../../../components";
+import { GroupedSelectControl } from "../../../../grouped-select-control";
 
 import "./Component.scss";
 import classnames from "classnames";

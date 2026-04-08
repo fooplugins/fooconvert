@@ -139,6 +139,7 @@ const entry = () => {
     const entries = {
         "editor": "./src/editor/index.js",
         "frontend": "./src/frontend/index.js",
+        "admin/display-rules-list/index": "./src/scripts/admin/display-rules-list/index.js",
     };
     if ( BUILD_SCOPE === "pro" ) {
         entries[ "editor-pro" ] = {
