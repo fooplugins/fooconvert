@@ -54,6 +54,7 @@ namespace {
     $GLOBALS['fc_saved_post_id'] = 321;
     $GLOBALS['fc_updated_post'] = array();
     $GLOBALS['fc_saved_meta'] = array();
+    $GLOBALS['fc_registered_meta'] = array();
 
     function __( string $text, ?string $domain = null ): string {
         return $text;
@@ -62,6 +63,10 @@ namespace {
     function add_action( string $hook, $callback, int $priority = 10, int $accepted_args = 1 ): void {}
 
     function register_rest_route( string $namespace, string $route, array $args ): void {}
+
+    function register_post_meta( string $post_type, string $meta_key, array $args ): void {
+        $GLOBALS['fc_registered_meta'][ $meta_key ] = $args;
+    }
 
     function sanitize_text_field( $value ): string {
         return trim( strip_tags( (string) $value ) );
@@ -149,6 +154,10 @@ namespace {
     function wp_delete_post( int $post_id, bool $force_delete = false ): void {}
 
     function update_post_meta( int $post_id, string $meta_key, $value ): void {
+        if ( isset( $GLOBALS['fc_registered_meta'][ $meta_key ]['sanitize_callback'] ) && is_callable( $GLOBALS['fc_registered_meta'][ $meta_key ]['sanitize_callback'] ) ) {
+            $value = call_user_func( $GLOBALS['fc_registered_meta'][ $meta_key ]['sanitize_callback'], $value );
+        }
+
         $GLOBALS['fc_saved_meta'][ $meta_key ] = $value;
     }
 
@@ -162,9 +171,12 @@ namespace {
 
     require_once __DIR__ . '/../support/Assertions.php';
     require_once dirname( __DIR__, 2 ) . '/includes/constants.php';
+    require_once dirname( __DIR__, 2 ) . '/includes/AI/PopupMedia.php';
+    require_once dirname( __DIR__, 2 ) . '/includes/AI/PopupBlueprint.php';
     require_once dirname( __DIR__, 2 ) . '/includes/AI/PopupBuilder.php';
 
     $builder = new PopupBuilder();
+    $builder->register_saved_meta();
 
     $response = $builder->handle_save(
         new WP_REST_Request(
@@ -172,6 +184,36 @@ namespace {
                 'title'        => 'AI Popup Draft',
                 'popup_type'   => FOOCONVERT_POPUP_TYPE_POPUP,
                 'post_content' => '<!-- wp:fc/popup --><div>Popup</div><!-- /wp:fc/popup -->',
+                'ai_metadata'  => array(
+                    'messages' => array(
+                        array(
+                            'role'    => 'user',
+                            'content' => 'Build a popup',
+                        ),
+                        array(
+                            'role'    => 'assistant',
+                            'content' => 'Here is a popup draft.',
+                        ),
+                    ),
+                    'assistant_message' => 'Here is a popup draft.',
+                    'clarifying_question' => 'Should this be exit intent?',
+                    'suggested_prompts' => array( 'Tighten the copy' ),
+                    'popup_draft'       => array(
+                        'popup_type' => FOOCONVERT_POPUP_TYPE_POPUP,
+                    ),
+                    'validation'        => array(
+                        'score' => 88,
+                    ),
+                    'media_items'       => array(
+                        array(
+                            'id'  => 22,
+                            'url' => 'https://example.test/generated-popup-image.jpg',
+                        ),
+                    ),
+                    'options'          => array(
+                        'generate_images' => true,
+                    ),
+                ),
             )
         )
     );
@@ -201,6 +243,24 @@ namespace {
     Assertions::true(
         false !== strpos( $GLOBALS['fc_updated_post']['post_content'], '"postType":"fc-popup"' ),
         'Saving an AI popup should inject the popup post type into the root block attributes.'
+    );
+
+    Assertions::same(
+        'ai-popup-builder',
+        $GLOBALS['fc_saved_meta'][FOOCONVERT_META_KEY_AI_BUILDER_METADATA]['source'],
+        'Saving an AI popup should persist the AI builder metadata alongside the popup.'
+    );
+
+    Assertions::same(
+        'https://example.test/generated-popup-image.jpg',
+        $GLOBALS['fc_saved_meta'][FOOCONVERT_META_KEY_AI_BUILDER_METADATA]['response']['media_items'][0]['url'],
+        'Saving an AI popup should persist generated popup media metadata.'
+    );
+
+    Assertions::same(
+        'Should this be exit intent?',
+        $GLOBALS['fc_saved_meta'][FOOCONVERT_META_KEY_AI_BUILDER_METADATA]['response']['clarifying_question'],
+        'Saving an AI popup should preserve the latest clarifying question in post meta.'
     );
 
     $invalid = $builder->handle_save(

@@ -23,6 +23,7 @@ define( 'FOOCONVERT_META_KEY_METRICS', '_fooconvert_metrics' );                 
 define( 'FOOCONVERT_META_KEY_METRIC_VIEWS', '_fooconvert_metric_views' );
 define( 'FOOCONVERT_META_KEY_METRIC_ENGAGEMENTS', '_fooconvert_metric_engagements' );
 define( 'FOOCONVERT_META_KEY_POPUP_TYPE', '_fooconvert_popup_type' );
+define( 'FOOCONVERT_META_KEY_AI_BUILDER_METADATA', '_fooconvert_ai_builder_metadata' );
 
 //CPT's
 define( 'FOOCONVERT_CPT_BAR', 'fc-bar' );

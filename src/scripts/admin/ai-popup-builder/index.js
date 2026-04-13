@@ -5,6 +5,7 @@ import {
     Card,
     CardBody,
     CardHeader,
+    CheckboxControl,
     Flex,
     FlexBlock,
     Notice,
@@ -15,6 +16,7 @@ import {
 import { createRoot, Fragment, startTransition, useEffect, useMemo, useRef, useState } from "@wordpress/element";
 import { __, sprintf } from "@wordpress/i18n";
 import { Icon, copySmall, external, plusCircleFilled, tip } from "@wordpress/icons";
+import { applyMediaItemToDraft, removeMediaItemFromDraft } from "./media-support";
 import { PopupPreview } from "./preview";
 import { flattenBlocks, normalizePopupType, serializeDraftToMarkup } from "./serializer";
 
@@ -81,6 +83,16 @@ const getTriggerSummary = ( draft ) => {
         default:
             return __( "Exit intent", "fooconvert" );
     }
+};
+
+const truncateText = ( value, maxLength = 140 ) => {
+    const text = String( value || "" ).trim();
+
+    if ( text.length <= maxLength ) {
+        return text;
+    }
+
+    return `${ text.slice( 0, maxLength - 1 ).trim() }…`;
 };
 
 const PromptChip = ( { label, onClick, disabled } ) => (
@@ -165,12 +177,17 @@ const App = () => {
     const [ input, setInput ] = useState( "" );
     const [ draft, setDraft ] = useState( null );
     const [ validation, setValidation ] = useState( null );
+    const [ mediaItems, setMediaItems ] = useState( Array.isArray( config?.mediaItems ) ? config.mediaItems : [] );
+    const [ lastResponse, setLastResponse ] = useState( null );
+    const [ generateImagesOnSubmit, setGenerateImagesOnSubmit ] = useState( false );
+    const [ mediaInstructions, setMediaInstructions ] = useState( "" );
     const [ suggestedPrompts, setSuggestedPrompts ] = useState( Array.isArray( config?.starterPrompts ) ? config.starterPrompts : [] );
     const [ generatedMarkup, setGeneratedMarkup ] = useState( "" );
     const [ saveTitle, setSaveTitle ] = useState( "" );
     const [ titleTouched, setTitleTouched ] = useState( false );
     const [ isSending, setSending ] = useState( false );
     const [ isSaving, setSaving ] = useState( false );
+    const [ deletingMediaId, setDeletingMediaId ] = useState( 0 );
     const [ error, setError ] = useState( "" );
     const [ savedPopup, setSavedPopup ] = useState( null );
     const chatEndRef = useRef( null );
@@ -193,6 +210,10 @@ const App = () => {
             setSaveTitle( draft.title );
         }
     }, [ draft, titleTouched ] );
+
+    useEffect( () => {
+        setGenerateImagesOnSubmit( Boolean( config?.imageGenerationAvailable ) );
+    }, [] );
 
     useEffect( () => {
         chatEndRef.current?.scrollIntoView( {
@@ -231,9 +252,15 @@ const App = () => {
 
     const conversionRationale = Array.isArray( draft?.conversion_rationale ) ? draft.conversion_rationale.filter( Boolean ) : [];
     const implementationNotes = Array.isArray( draft?.notes ) ? draft.notes.filter( Boolean ) : [];
+    const lastAssistantMessage = useMemo( () => {
+        const lastAssistantEntry = [ ...messages ].reverse().find( message => message?.role === "assistant" );
+        return lastAssistantEntry?.content || "";
+    }, [ messages ] );
 
-    const sendPrompt = async( promptText ) => {
+    const sendPrompt = async( promptText, options = {} ) => {
         const prompt = String( promptText || "" ).trim();
+        const shouldGenerateImages = options?.generateImages ?? generateImagesOnSubmit;
+        const shouldForceImageGeneration = Boolean( options?.forceImageGeneration );
 
         if ( prompt.length === 0 || isSending || !config?.aiClientAvailable ) {
             return;
@@ -254,6 +281,8 @@ const App = () => {
                 data: {
                     messages: nextMessages,
                     popup_draft: draft || undefined,
+                    generate_images: shouldGenerateImages,
+                    force_image_generation: shouldForceImageGeneration,
                 },
             } );
 
@@ -264,6 +293,8 @@ const App = () => {
                 setSuggestedPrompts( Array.isArray( response?.suggested_prompts ) ? response.suggested_prompts : [] );
                 setDraft( isPlainObject( response?.popup_draft ) ? response.popup_draft : null );
                 setValidation( isPlainObject( response?.validation ) ? response.validation : null );
+                setMediaItems( Array.isArray( response?.media_items ) ? response.media_items : [] );
+                setLastResponse( isPlainObject( response ) ? response : null );
             } );
         } catch ( exception ) {
             setError( exception?.message || __( "The AI popup builder could not complete that request.", "fooconvert" ) );
@@ -305,6 +336,23 @@ const App = () => {
                     title: saveTitle || draft.title,
                     popup_type: draft.popup_type,
                     post_content: generatedMarkup,
+                    ai_metadata: {
+                        messages,
+                        assistant_message: lastResponse
+                            ? ( lastResponse?.assistant_message || "" )
+                            : lastAssistantMessage,
+                        clarifying_question: lastResponse
+                            ? ( lastResponse?.clarifying_question || "" )
+                            : "",
+                        suggested_prompts: suggestedPrompts,
+                        popup_draft: draft,
+                        validation,
+                        media_items: mediaItems,
+                        options: {
+                            generate_images: generateImagesOnSubmit,
+                            force_image_generation: false,
+                        },
+                    },
                 },
             } );
 
@@ -313,6 +361,69 @@ const App = () => {
             setError( exception?.message || __( "The popup could not be saved.", "fooconvert" ) );
         } finally {
             setSaving( false );
+        }
+    };
+
+    const generatePopupImage = async() => {
+        if ( !draft || isSending || !config?.imageGenerationAvailable ) {
+            return;
+        }
+
+        const prompt = mediaInstructions.trim().length > 0
+            ? mediaInstructions
+            : __( "Generate a new popup image that fits this popup and incorporate it into the draft.", "fooconvert" );
+
+        await sendPrompt( prompt, {
+            generateImages: true,
+            forceImageGeneration: true,
+        } );
+
+        setMediaInstructions( "" );
+    };
+
+    const insertMediaIntoDraft = ( mediaItem ) => {
+        if ( !draft ) {
+            return;
+        }
+
+        startTransition( () => {
+            setDraft( applyMediaItemToDraft( draft, mediaItem ) );
+            setSavedPopup( null );
+        } );
+    };
+
+    const deleteMediaItem = async( mediaItem ) => {
+        const mediaId = Number( mediaItem?.id );
+
+        if ( !Number.isFinite( mediaId ) || mediaId <= 0 || deletingMediaId > 0 ) {
+            return;
+        }
+
+        const confirmed = window.confirm( __( "Delete this generated image from the media library?", "fooconvert" ) );
+        if ( !confirmed ) {
+            return;
+        }
+
+        setDeletingMediaId( mediaId );
+        setError( "" );
+
+        try {
+            const response = await apiFetch( {
+                path: `${ config?.api?.deleteMediaPath || "/fooconvert/v1/ai-popup-builder/media" }/${ mediaId }`,
+                method: "DELETE",
+            } );
+
+            startTransition( () => {
+                setMediaItems( Array.isArray( response?.media_items ) ? response.media_items : mediaItems.filter( item => Number( item?.id ) !== mediaId ) );
+
+                if ( draft ) {
+                    setDraft( removeMediaItemFromDraft( draft, mediaItem ) );
+                }
+            } );
+        } catch ( exception ) {
+            setError( exception?.message || __( "The generated image could not be deleted.", "fooconvert" ) );
+        } finally {
+            setDeletingMediaId( 0 );
         }
     };
 
@@ -427,6 +538,20 @@ const App = () => {
                                     }
                                 } }
                             />
+                            <div className={ `${ rootClass }__composer-option` }>
+                                <CheckboxControl
+                                    label={ __( "Allow AI image generation on submit", "fooconvert" ) }
+                                    checked={ generateImagesOnSubmit }
+                                    onChange={ setGenerateImagesOnSubmit }
+                                    disabled={ isSending || !config?.imageGenerationAvailable }
+                                    help={
+                                        config?.imageGenerationAvailable
+                                            ? __( "When enabled, the AI can create and import popup images during the chat flow.", "fooconvert" )
+                                            : __( "Image generation requires media upload permission and a connected AI provider with image support.", "fooconvert" )
+                                    }
+                                    __nextHasNoMarginBottom
+                                />
+                            </div>
                             <div className={ `${ rootClass }__composer-actions` }>
                                 <div className={ `${ rootClass }__prompt-strip` }>
                                     { suggestedPrompts.map( prompt => (
@@ -504,6 +629,81 @@ const App = () => {
                                 </Fragment>
                             ) : (
                                 <p>{ __( "The AI can explain the conversion strategy and note anything worth adjusting before you save.", "fooconvert" ) }</p>
+                            ) }
+                        </CardBody>
+                    </Card>
+
+                    <Card className={ `${ rootClass }__panel` }>
+                        <CardHeader>
+                            <Flex justify="space-between" align="center">
+                                <FlexBlock>
+                                    <h2>{ __( "Media", "fooconvert" ) }</h2>
+                                </FlexBlock>
+                                <Button
+                                    variant="secondary"
+                                    onClick={ generatePopupImage }
+                                    disabled={ !draft || isSending || !config?.imageGenerationAvailable }
+                                >
+                                    { __( "Generate Image", "fooconvert" ) }
+                                </Button>
+                            </Flex>
+                        </CardHeader>
+                        <CardBody>
+                            { config?.canUploadMedia ? (
+                                <Fragment>
+                                    <TextControl
+                                        label={ __( "New image direction", "fooconvert" ) }
+                                        value={ mediaInstructions }
+                                        onChange={ setMediaInstructions }
+                                        help={ __( "Optional: describe a product shot, scene, mood, or art direction for the next generated popup image.", "fooconvert" ) }
+                                        disabled={ isSending || !draft || !config?.imageGenerationAvailable }
+                                        __nextHasNoMarginBottom
+                                        __next40pxDefaultSize
+                                    />
+                                    { mediaItems.length > 0 ? (
+                                        <div className={ `${ rootClass }__media-grid` }>
+                                            { mediaItems.map( mediaItem => (
+                                                <div key={ mediaItem.id || mediaItem.url } className={ `${ rootClass }__media-card` }>
+                                                    <div className={ `${ rootClass }__media-preview` }>
+                                                        <img src={ mediaItem.previewUrl || mediaItem.url } alt={ mediaItem.alt || mediaItem.title || "" } />
+                                                    </div>
+                                                    <div className={ `${ rootClass }__media-body` }>
+                                                        <strong>{ mediaItem.title || __( "Generated popup image", "fooconvert" ) }</strong>
+                                                        { mediaItem.prompt && (
+                                                            <p>{ truncateText( mediaItem.prompt ) }</p>
+                                                        ) }
+                                                        <div className={ `${ rootClass }__media-actions` }>
+                                                            <Button
+                                                                variant="secondary"
+                                                                onClick={ () => insertMediaIntoDraft( mediaItem ) }
+                                                                disabled={ !draft }
+                                                            >
+                                                                { __( "Use In Popup", "fooconvert" ) }
+                                                            </Button>
+                                                            { mediaItem.editUrl && (
+                                                                <Button variant="tertiary" href={ mediaItem.editUrl } icon={ external }>
+                                                                    { __( "Edit", "fooconvert" ) }
+                                                                </Button>
+                                                            ) }
+                                                            <Button
+                                                                variant="tertiary"
+                                                                isDestructive
+                                                                onClick={ () => deleteMediaItem( mediaItem ) }
+                                                                disabled={ deletingMediaId === Number( mediaItem.id ) }
+                                                            >
+                                                                { deletingMediaId === Number( mediaItem.id ) ? __( "Deleting…", "fooconvert" ) : __( "Delete", "fooconvert" ) }
+                                                            </Button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ) ) }
+                                        </div>
+                                    ) : (
+                                        <p>{ draft ? __( "Generate a popup image here, or let the AI create one during chat when image generation is enabled.", "fooconvert" ) : __( "Generate a popup draft first, then create matching images for it here.", "fooconvert" ) }</p>
+                                    ) }
+                                </Fragment>
+                            ) : (
+                                <p>{ __( "This user account cannot upload media, so popup image generation and import are unavailable.", "fooconvert" ) }</p>
                             ) }
                         </CardBody>
                     </Card>

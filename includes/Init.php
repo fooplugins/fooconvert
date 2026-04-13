@@ -39,6 +39,7 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
             new Cron();
             new Fonts();
             new AI\Abilities();
+            new AI\PopupMedia();
             new AI\PopupBuilder();
             new Admin\Templates\Init();
             new Updater();

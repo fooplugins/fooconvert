@@ -337,6 +337,7 @@ class PopupBlueprint {
             'suggested_prompts'  => self::sanitize_string_list( $payload['suggested_prompts'] ?? array(), 4 ),
             'popup_draft'        => null,
             'validation'         => null,
+            'media_items'        => PopupMedia::sanitize_media_items( $payload['media_items'] ?? array() ),
         );
 
         if ( is_array( $payload['popup_draft'] ?? null ) ) {
@@ -345,6 +346,88 @@ class PopupBlueprint {
         }
 
         return $response;
+    }
+
+    /**
+     * Sanitizes the AI builder metadata saved alongside a popup draft.
+     *
+     * @param mixed $metadata Builder metadata payload.
+     * @return array<string,mixed>
+     */
+    public static function sanitize_builder_metadata( $metadata ): array {
+        $metadata = is_array( $metadata ) ? $metadata : array();
+        $messages = array();
+        $response_payload = is_array( $metadata['response'] ?? null ) ? $metadata['response'] : $metadata;
+        $options_payload  = is_array( $metadata['options'] ?? null ) ? $metadata['options'] : array();
+        $source           = self::sanitize_plain_text( $metadata['source'] ?? '' );
+
+        if ( is_array( $metadata['messages'] ?? null ) ) {
+            foreach ( array_slice( array_values( $metadata['messages'] ), -20 ) as $message ) {
+                if ( ! is_array( $message ) ) {
+                    continue;
+                }
+
+                $content = self::sanitize_plain_text( $message['content'] ?? '' );
+                if ( '' === $content ) {
+                    continue;
+                }
+
+                $messages[] = array(
+                    'role'    => 'assistant' === ( $message['role'] ?? '' ) ? 'assistant' : 'user',
+                    'content' => $content,
+                );
+            }
+        }
+
+        $response = self::sanitize_ai_response(
+            array(
+                'assistant_message'   => $response_payload['assistant_message'] ?? '',
+                'clarifying_question' => $response_payload['clarifying_question'] ?? '',
+                'suggested_prompts'   => $response_payload['suggested_prompts'] ?? array(),
+                'popup_draft'         => $response_payload['popup_draft'] ?? null,
+                'media_items'         => $response_payload['media_items'] ?? array(),
+            )
+        );
+
+        if ( is_array( $response_payload['validation'] ?? null ) ) {
+            $response['validation'] = self::sanitize_validation( $response_payload['validation'] );
+        }
+
+        return array(
+            'source'      => '' !== $source ? $source : 'ai-popup-builder',
+            'saved_at'    => gmdate( 'c' ),
+            'messages'    => $messages,
+            'response'    => $response,
+            'options'     => array(
+                'generate_images'        => ! empty( $options_payload['generate_images'] ),
+                'force_image_generation' => ! empty( $options_payload['force_image_generation'] ),
+            ),
+        );
+    }
+
+    /**
+     * Returns the default saved AI metadata structure used by the popup editor.
+     *
+     * @return array<string,mixed>
+     */
+    public static function get_saved_ai_metadata_defaults(): array {
+        return array(
+            'source'   => '',
+            'saved_at' => '',
+            'messages' => array(),
+            'response' => array(
+                'assistant_message'   => '',
+                'clarifying_question' => '',
+                'suggested_prompts'   => array(),
+                'media_items'         => array(),
+                'popup_draft'         => null,
+                'validation'          => null,
+            ),
+            'options'  => array(
+                'generate_images'        => false,
+                'force_image_generation' => false,
+            ),
+        );
     }
 
     /**
@@ -470,7 +553,7 @@ class PopupBlueprint {
     public static function get_assistant_response_schema(): array {
         return array(
             'type'                 => 'object',
-            'required'             => array( 'assistant_message', 'suggested_prompts', 'clarifying_question', 'popup_draft' ),
+            'required'             => array( 'assistant_message', 'suggested_prompts', 'clarifying_question', 'media_items', 'popup_draft' ),
             'additionalProperties' => false,
             'properties'           => array(
                 'assistant_message'  => array(
@@ -487,6 +570,11 @@ class PopupBlueprint {
                     'items'       => array(
                         'type' => 'string',
                     ),
+                ),
+                'media_items'         => array(
+                    'type'        => 'array',
+                    'description' => __( 'Generated popup images available for the builder media panel.', 'fooconvert' ),
+                    'items'       => PopupMedia::get_attachment_schema(),
                 ),
                 'popup_draft'        => array(
                     'description' => __( 'The structured popup blueprint. Omit or use null when asking a clarifying question.', 'fooconvert' ),
@@ -517,10 +605,11 @@ class PopupBlueprint {
             "\n",
             array(
                 'Return only a single JSON object. Do not wrap it in Markdown fences.',
-                'Use exactly these top-level keys: assistant_message, clarifying_question, suggested_prompts, popup_draft.',
+                'Use exactly these top-level keys: assistant_message, clarifying_question, suggested_prompts, media_items, popup_draft.',
                 'assistant_message: string. Keep it concise and practical.',
                 'clarifying_question: string. Use an empty string when you can already produce a draft.',
                 'suggested_prompts: array of up to 4 short strings.',
+                'media_items: array. Use an empty array when no popup images are available yet.',
                 'popup_draft: either null or an object with these keys:',
                 '- title: string',
                 '- popup_type: one of ' . $popup_types,
@@ -539,7 +628,88 @@ class PopupBlueprint {
                 'For core/list, prefer attributes.items as an array of strings.',
                 'For fc/sign-up, use nested attributes like {"settings":{},"inputs":{"settings":{"emailOnly":true,"emailPlaceholder":"Enter your email"}},"button":{"settings":{"text":"Get My Offer"}}}. Do not use shorthand keys like buttonText.',
                 'If you provide a popup_draft, make it complete enough to render immediately and suitable for Fooconvert validation.',
+                'If you create or import an image, include that image in media_items and reference it from any core/image block using attributes.id, url, alt, and title when available.',
             )
+        );
+    }
+
+    /**
+     * Returns the saved AI builder metadata schema.
+     *
+     * @return array<string,mixed>
+     */
+    public static function get_saved_ai_metadata_schema(): array {
+        $response_schema = self::get_assistant_response_schema();
+        $response_schema['properties']['validation'] = array(
+            'anyOf' => array(
+                array(
+                    'type' => 'null',
+                ),
+                array(
+                    'type'       => 'object',
+                    'properties' => array(
+                        'score'       => array(
+                            'type' => 'integer',
+                        ),
+                        'strengths'   => array(
+                            'type'  => 'array',
+                            'items' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                        'warnings'    => array(
+                            'type'  => 'array',
+                            'items' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                        'suggestions' => array(
+                            'type'  => 'array',
+                            'items' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        );
+
+        return array(
+            'type'       => 'object',
+            'properties' => array(
+                'source'   => array(
+                    'type' => 'string',
+                ),
+                'saved_at' => array(
+                    'type' => 'string',
+                ),
+                'messages' => array(
+                    'type'  => 'array',
+                    'items' => array(
+                        'type'       => 'object',
+                        'properties' => array(
+                            'role'    => array(
+                                'type' => 'string',
+                            ),
+                            'content' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'response' => $response_schema,
+                'options'  => array(
+                    'type'       => 'object',
+                    'properties' => array(
+                        'generate_images'       => array(
+                            'type' => 'boolean',
+                        ),
+                        'force_image_generation' => array(
+                            'type' => 'boolean',
+                        ),
+                    ),
+                ),
+            ),
         );
     }
 
@@ -936,6 +1106,26 @@ class PopupBlueprint {
                 }
                 return $attributes;
 
+            case 'core/image':
+                if ( empty( $attributes['url'] ) && ! empty( $attributes['src'] ) && is_string( $attributes['src'] ) ) {
+                    $attributes['url'] = esc_url_raw( $attributes['src'] );
+                }
+
+                if ( empty( $attributes['id'] ) && ! empty( $attributes['mediaId'] ) ) {
+                    $attributes['id'] = absint( $attributes['mediaId'] );
+                }
+
+                if ( empty( $attributes['id'] ) && ! empty( $attributes['attachmentId'] ) ) {
+                    $attributes['id'] = absint( $attributes['attachmentId'] );
+                }
+
+                if ( empty( $attributes['alt'] ) && ! empty( $attributes['altText'] ) && is_string( $attributes['altText'] ) ) {
+                    $attributes['alt'] = self::sanitize_plain_text( $attributes['altText'] );
+                }
+
+                unset( $attributes['src'], $attributes['mediaId'], $attributes['attachmentId'], $attributes['altText'] );
+                return $attributes;
+
             case 'fc/sign-up':
                 $attributes['settings'] = is_array( $attributes['settings'] ?? null ) ? $attributes['settings'] : array();
                 $attributes['inputs']   = is_array( $attributes['inputs'] ?? null ) ? $attributes['inputs'] : array();
@@ -1130,6 +1320,23 @@ class PopupBlueprint {
         }
 
         return array_values( array_unique( $sanitized ) );
+    }
+
+    /**
+     * Sanitizes a popup validation payload.
+     *
+     * @param mixed $validation Validation payload.
+     * @return array<string,mixed>
+     */
+    private static function sanitize_validation( $validation ): array {
+        $validation = is_array( $validation ) ? $validation : array();
+
+        return array(
+            'score'       => max( 0, min( 100, absint( $validation['score'] ?? 0 ) ) ),
+            'strengths'   => self::sanitize_string_list( $validation['strengths'] ?? array(), 6 ),
+            'warnings'    => self::sanitize_string_list( $validation['warnings'] ?? array(), 6 ),
+            'suggestions' => self::sanitize_string_list( $validation['suggestions'] ?? array(), 6 ),
+        );
     }
 
     /**

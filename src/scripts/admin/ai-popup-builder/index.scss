@@ -209,6 +209,13 @@
     border-top: 1px solid #eef2f6;
 }
 
+.fc-ai-popup-builder__composer-option {
+    padding: 12px 14px;
+    border: 1px solid rgba(196, 85, 26, 0.14);
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(255, 241, 232, 0.8), rgba(255, 255, 255, 0.9));
+}
+
 .fc-ai-popup-builder__composer-actions {
     display: flex;
     gap: 14px;
@@ -449,6 +456,54 @@
     background: linear-gradient(135deg, rgba(196, 85, 26, 0.1), rgba(196, 85, 26, 0.02));
 }
 
+.fc-ai-popup-builder__media-grid {
+    display: grid;
+    gap: 14px;
+    margin-top: 16px;
+}
+
+.fc-ai-popup-builder__media-card {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    gap: 14px;
+    padding: 14px;
+    border: 1px solid #eef2f6;
+    border-radius: 18px;
+    background: #fff;
+}
+
+.fc-ai-popup-builder__media-preview {
+    overflow: hidden;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+}
+
+.fc-ai-popup-builder__media-preview img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 120px;
+    object-fit: cover;
+}
+
+.fc-ai-popup-builder__media-body {
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+}
+
+.fc-ai-popup-builder__media-body p {
+    margin: 0;
+    color: var(--fc-ai-muted);
+    line-height: 1.5;
+}
+
+.fc-ai-popup-builder__media-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
 .fc-ai-popup-builder__save-actions {
     display: flex;
     flex-wrap: wrap;
@@ -471,6 +526,10 @@
     .fc-ai-popup-builder__composer-actions {
         flex-direction: column;
         align-items: stretch;
+    }
+
+    .fc-ai-popup-builder__media-card {
+        grid-template-columns: 1fr;
     }
 
     .fc-ai-popup-builder__message {

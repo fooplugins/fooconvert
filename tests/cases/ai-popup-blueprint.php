@@ -55,6 +55,7 @@ namespace {
     require_once __DIR__ . '/../support/Assertions.php';
     require_once dirname( __DIR__, 2 ) . '/includes/constants.php';
     require_once dirname( __DIR__, 2 ) . '/includes/functions.php';
+    require_once dirname( __DIR__, 2 ) . '/includes/AI/PopupMedia.php';
     require_once dirname( __DIR__, 2 ) . '/includes/AI/PopupBlueprint.php';
 
     $assert_strict_object_schema = static function( array $schema, string $path ) use ( &$assert_strict_object_schema ): void {
@@ -188,6 +189,14 @@ namespace {
                     ),
                 ),
                 array(
+                    'name'       => 'core/image',
+                    'attributes' => array(
+                        'src'        => 'https://example.test/generated-image.jpg',
+                        'mediaId'    => 14,
+                        'altText'    => 'Generated popup image',
+                    ),
+                ),
+                array(
                     'name'       => 'fc/sign-up',
                     'attributes' => array(
                         'buttonText'       => 'Claim My Offer',
@@ -214,14 +223,70 @@ namespace {
 
     Assertions::same(
         'Claim My Offer',
-        $normalized_draft['content_blocks'][1]['attributes']['button']['settings']['text'],
+        $normalized_draft['content_blocks'][2]['attributes']['button']['settings']['text'],
         'Sign-up buttonText aliases should map to the nested button settings.'
     );
 
     Assertions::same(
         'Enter your email',
-        $normalized_draft['content_blocks'][1]['attributes']['inputs']['settings']['emailPlaceholder'],
+        $normalized_draft['content_blocks'][2]['attributes']['inputs']['settings']['emailPlaceholder'],
         'Sign-up emailPlaceholder aliases should map to the nested input settings.'
+    );
+
+    Assertions::same(
+        'https://example.test/generated-image.jpg',
+        $normalized_draft['content_blocks'][1]['attributes']['url'],
+        'Image shorthand src aliases should map to the core/image url attribute.'
+    );
+
+    Assertions::same(
+        14,
+        $normalized_draft['content_blocks'][1]['attributes']['id'],
+        'Image shorthand media IDs should map to the core/image id attribute.'
+    );
+
+    $saved_metadata = PopupBlueprint::sanitize_builder_metadata(
+        array(
+            'messages'           => array(
+                array(
+                    'role'    => 'user',
+                    'content' => 'Build a popup',
+                ),
+                array(
+                    'role'    => 'assistant',
+                    'content' => 'Here is a popup draft.',
+                ),
+            ),
+            'assistant_message'  => 'Here is a popup draft.',
+            'popup_draft'        => $normalized_draft,
+            'validation'         => array(
+                'score' => 91,
+            ),
+            'suggested_prompts'  => array( 'Make it seasonal' ),
+            'options'            => array(
+                'generate_images' => true,
+            ),
+        )
+    );
+
+    $resanitized_metadata = PopupBlueprint::sanitize_builder_metadata( $saved_metadata );
+
+    Assertions::same(
+        'Here is a popup draft.',
+        $resanitized_metadata['response']['assistant_message'],
+        'Saved AI metadata should preserve the assistant summary when sanitized again.'
+    );
+
+    Assertions::same(
+        'popup',
+        $resanitized_metadata['response']['popup_draft']['popup_type'],
+        'Saved AI metadata should preserve the popup draft when sanitized again.'
+    );
+
+    Assertions::same(
+        91,
+        $resanitized_metadata['response']['validation']['score'],
+        'Saved AI metadata should preserve validation details when sanitized again.'
     );
 
     $validation = PopupBlueprint::evaluate_popup_draft( $draft );
@@ -246,8 +311,78 @@ namespace {
     Assertions::true(
         false !== strpos( $response_contract, 'assistant_message' ) &&
         false !== strpos( $response_contract, 'popup_draft' ) &&
-        false !== strpos( $response_contract, 'content_blocks' ),
+        false !== strpos( $response_contract, 'content_blocks' ) &&
+        false !== strpos( $response_contract, 'media_items' ),
         'The assistant response contract should describe the required Fooconvert JSON payload.'
+    );
+
+    $saved_metadata = PopupBlueprint::sanitize_builder_metadata(
+        array(
+            'messages' => array(
+                array(
+                    'role'    => 'user',
+                    'content' => 'Build a popup',
+                ),
+                array(
+                    'role'    => 'assistant',
+                    'content' => 'Here is a popup draft.',
+                ),
+            ),
+            'assistant_message' => 'Here is a popup draft.',
+            'clarifying_question' => 'Should this popup show on exit intent?',
+            'suggested_prompts' => array( 'Tighten the copy' ),
+            'popup_draft'       => $normalized_draft,
+            'validation'        => array(
+                'score'       => 89,
+                'strengths'   => array( 'Focused CTA' ),
+                'warnings'    => array(),
+                'suggestions' => array( 'Add proof' ),
+            ),
+            'media_items'       => array(
+                array(
+                    'id'    => 99,
+                    'url'   => 'https://example.test/generated-popup-image.jpg',
+                    'title' => 'Generated popup image',
+                    'alt'   => 'Popup visual',
+                ),
+            ),
+            'options'          => array(
+                'generate_images'       => true,
+                'force_image_generation' => false,
+            ),
+        )
+    );
+
+    Assertions::same(
+        'ai-popup-builder',
+        $saved_metadata['source'],
+        'Saved AI metadata should record the popup builder source.'
+    );
+
+    Assertions::same(
+        'https://example.test/generated-popup-image.jpg',
+        $saved_metadata['response']['media_items'][0]['url'],
+        'Saved AI metadata should retain generated popup media items.'
+    );
+
+    Assertions::same(
+        'Should this popup show on exit intent?',
+        $saved_metadata['response']['clarifying_question'],
+        'Saved AI metadata should retain the latest clarifying question from the AI chat.'
+    );
+
+    $saved_defaults = PopupBlueprint::get_saved_ai_metadata_defaults();
+
+    Assertions::same(
+        '',
+        $saved_defaults['source'],
+        'Saved AI metadata defaults should remain empty until a popup is generated by the AI builder.'
+    );
+
+    Assertions::same(
+        null,
+        $saved_defaults['response']['popup_draft'],
+        'Saved AI metadata defaults should not invent a popup draft.'
     );
 
     echo "ai-popup-blueprint: ok\n";

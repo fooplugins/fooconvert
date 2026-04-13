@@ -329,6 +329,24 @@ export const normalizeDraftBlockAttributes = ( blockName, attributes ) => {
                 nextAttributes.text = nextAttributes.content;
             }
             return nextAttributes;
+        case "core/image":
+            if ( typeof nextAttributes?.url !== "string" && typeof nextAttributes?.src === "string" ) {
+                nextAttributes.url = nextAttributes.src;
+            }
+
+            if ( !Number.isFinite( Number( nextAttributes?.id ) ) && Number.isFinite( Number( nextAttributes?.mediaId ) ) ) {
+                nextAttributes.id = Number( nextAttributes.mediaId );
+            }
+
+            if ( !Number.isFinite( Number( nextAttributes?.id ) ) && Number.isFinite( Number( nextAttributes?.attachmentId ) ) ) {
+                nextAttributes.id = Number( nextAttributes.attachmentId );
+            }
+
+            if ( typeof nextAttributes?.alt !== "string" && typeof nextAttributes?.altText === "string" ) {
+                nextAttributes.alt = nextAttributes.altText;
+            }
+
+            return nextAttributes;
         case "fc/sign-up":
             nextAttributes.settings = isPlainObject( nextAttributes.settings ) ? nextAttributes.settings : {};
             nextAttributes.inputs = isPlainObject( nextAttributes.inputs ) ? nextAttributes.inputs : {};

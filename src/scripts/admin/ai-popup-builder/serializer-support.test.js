@@ -84,6 +84,20 @@ describe( "AI popup builder serializer support", () => {
         } );
     } );
 
+    it( "maps legacy image aliases into the core/image attribute shape", () => {
+        expect(
+            normalizeDraftBlockAttributes( "core/image", {
+                src: "https://example.test/generated.jpg",
+                mediaId: 55,
+                altText: "Generated popup image",
+            } )
+        ).toMatchObject( {
+            url: "https://example.test/generated.jpg",
+            id: 55,
+            alt: "Generated popup image",
+        } );
+    } );
+
     it( "builds conversion-ready root attributes for popup and flyout drafts", () => {
         const popupAttributes = buildRootAttributes(
             {

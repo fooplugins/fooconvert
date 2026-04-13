@@ -1,3 +1,4 @@
+export * from "./ai-builder";
 export * from "./compatibility";
 export * from "./custom-editor";
 export * from "./display-rules";

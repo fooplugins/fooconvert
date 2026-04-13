@@ -4,6 +4,7 @@ namespace FooPlugins\FooConvert\Admin;
 
 use FooPlugins\FooConvert\AI\Abilities;
 use FooPlugins\FooConvert\AI\PopupBlueprint;
+use FooPlugins\FooConvert\AI\PopupMedia;
 
 class AiPopupBuilder {
 
@@ -109,8 +110,9 @@ class AiPopupBuilder {
     private function get_editor_config(): array {
         return array(
             'api'              => array(
-                'chatPath' => '/fooconvert/v1/ai-popup-builder/chat',
-                'savePath' => '/fooconvert/v1/ai-popup-builder/save',
+                'chatPath'       => '/fooconvert/v1/ai-popup-builder/chat',
+                'savePath'       => '/fooconvert/v1/ai-popup-builder/save',
+                'deleteMediaPath' => '/fooconvert/v1/ai-popup-builder/media',
             ),
             'restRoot'         => esc_url_raw( get_rest_url() ),
             'restNonce'        => wp_create_nonce( 'wp_rest' ),
@@ -122,7 +124,10 @@ class AiPopupBuilder {
             'templates'        => PopupBlueprint::get_template_library(),
             'blockCatalog'     => PopupBlueprint::get_block_catalog(),
             'playbook'         => PopupBlueprint::get_conversion_playbook(),
+            'mediaItems'       => PopupMedia::list_generated_images( 12 ),
             'aiClientAvailable' => function_exists( 'wp_ai_client_prompt' ),
+            'imageGenerationAvailable' => function_exists( 'wp_ai_client_prompt' ) && PopupMedia::can_manage_media(),
+            'canUploadMedia'   => PopupMedia::can_manage_media(),
             'abilitiesAvailable' => Abilities::wp_api_available(),
             'starterPrompts'   => array(
                 __( 'Build a Black Friday popup that offers 15% off the first order and captures email addresses.', 'fooconvert' ),
