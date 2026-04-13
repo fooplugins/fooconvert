@@ -49,6 +49,7 @@ define( 'FOOCONVERT_EDITOR_ASSET_HANDLE', 'fc-editor' );
 define( 'FOOCONVERT_FRONTEND_ASSET_HANDLE', 'fc-frontend' );
 define( 'FOOCONVERT_MENU_SLUG', 'fooconvert' );
 define( 'FOOCONVERT_MENU_SLUG_DASHBOARD', 'fooconvert-dashboard' );
+define( 'FOOCONVERT_MENU_SLUG_AI_POPUP_BUILDER', 'fooconvert-ai-popup-builder' );
 define( 'FOOCONVERT_MENU_SLUG_WIDGET_STATS', 'fooconvert-widget-stats' );
 define( 'FOOCONVERT_MENU_SLUG_WIDGET_CHOOSER', 'fooconvert-widget-chooser' );
 define( 'FOOCONVERT_RETENTION_DEFAULT', 14 );

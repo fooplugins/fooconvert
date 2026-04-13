@@ -18,6 +18,7 @@
   ],
   "scripts": {
     "check-updates": "npx npm-check-updates",
+    "test:js": "wp-scripts test-unit-js --runInBand",
     "test:php": "php tests/run.php",
     "build:dev": "cross-env BUILD_SCOPE=free NODE_ENV=development wp-scripts build --output-path=assets && npm run copy:free",
     "build": "cross-env BUILD_SCOPE=free wp-scripts build --output-path=assets && npm run copy:free",
@@ -42,6 +43,7 @@
     "@woocommerce/dependency-extraction-webpack-plugin": "^3.1.0",
     "@wordpress/blob": "^4.40.0",
     "@wordpress/block-editor": "^15.13.1",
+    "@wordpress/block-library": "^9.13.0",
     "@wordpress/blocks": "^15.13.0",
     "@wordpress/components": "^32.2.0",
     "@wordpress/compose": "^7.40.0",

@@ -22,6 +22,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
 
             new namespace\Stats();
             new namespace\Dashboard();
+            new namespace\AiPopupBuilder();
             new namespace\ContainerManager();
             new namespace\Settings();
             new namespace\LeadsMenu();
@@ -96,6 +97,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                 FOOCONVERT_MENU_SLUG,
                 'edit.php?post_type=' . FOOCONVERT_CPT_POPUP,
                 'post-new.php?post_type=' . FOOCONVERT_CPT_POPUP,
+                FOOCONVERT_MENU_SLUG_AI_POPUP_BUILDER,
             );
 
             $ordered = array();

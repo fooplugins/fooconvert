@@ -30,12 +30,16 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
             FooConvert::plugin();
 
             if ( is_admin() ) {
-                new Admin\Init();
+                add_action( 'init', function () {
+                    new Admin\Init();
+                } );
             }
 
             new EventHooks();
             new Cron();
             new Fonts();
+            new AI\Abilities();
+            new AI\PopupBuilder();
             new Admin\Templates\Init();
             new Updater();
 
