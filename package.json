@@ -18,6 +18,8 @@
   ],
   "scripts": {
     "check-updates": "npx npm-check-updates",
+    "test:js": "vitest run",
+    "test:js:watch": "vitest",
     "test:php": "php tests/run.php",
     "build:dev": "cross-env BUILD_SCOPE=free NODE_ENV=development wp-scripts build --output-path=assets && npm run copy:free",
     "build": "cross-env BUILD_SCOPE=free wp-scripts build --output-path=assets && npm run copy:free",
@@ -73,6 +75,7 @@
     "gulp-zip": "^6.1.0",
     "raw-loader": "^4.0.2",
     "repomix": "^1.13.1",
-    "sharp": "^0.34.5"
+    "sharp": "^0.34.5",
+    "vitest": "^4.1.4"
   }
 }
