@@ -324,6 +324,7 @@
 .fc-ai-popup-builder__context-stat-pill {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     min-height: 34px;
     padding: 0 14px;
@@ -335,6 +336,22 @@
     font-size: 12px;
     font-weight: 500;
     white-space: nowrap;
+    cursor: pointer;
+    appearance: none;
+    transition: border-color 120ms ease, background-color 120ms ease, color 120ms ease, box-shadow 120ms ease;
+}
+
+.fc-ai-popup-builder__context-stat-pill:hover,
+.fc-ai-popup-builder__context-stat-pill:focus-visible {
+    border-color: var(--fc-ai-accent);
+    color: var(--fc-ai-text);
+    outline: none;
+}
+
+.fc-ai-popup-builder__context-stat-pill--active {
+    border-color: var(--fc-ai-accent);
+    background: var(--fc-ai-accent-soft);
+    color: var(--fc-ai-text);
 }
 
 .fc-ai-popup-builder__context-stat-pill strong {

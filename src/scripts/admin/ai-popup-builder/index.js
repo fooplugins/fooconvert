@@ -599,6 +599,7 @@ const App = () => {
     const [ remoteBrandUrl, setRemoteBrandUrl ] = useState( "" );
     const [ showRemoteBrandInput, setShowRemoteBrandInput ] = useState( false );
     const [ contextModal, setContextModal ] = useState( "" );
+    const [ blockFilter, setBlockFilter ] = useState( "all" );
     const chatEndRef = useRef( null );
 
     const generatedMarkup = useMemo( () => {
@@ -717,6 +718,22 @@ const App = () => {
             containers: 0,
         } )
     ), [ blockCatalog ] );
+    const filteredBlockCatalog = useMemo( () => (
+        blockCatalog.filter( block => {
+            const blockName = String( block?.name || "" );
+
+            switch ( blockFilter ) {
+                case "core":
+                    return blockName.startsWith( "core/" );
+                case "fooconvert":
+                    return blockName.startsWith( "fc/" );
+                case "woocommerce":
+                    return blockName.startsWith( "woocommerce/" );
+                default:
+                    return true;
+            }
+        } )
+    ), [ blockCatalog, blockFilter ] );
     const templateCounts = useMemo( () => (
         templateLibrary.reduce( ( counts, template ) => {
             const popupType = normalizePopupType( template?.popup_type );
@@ -1602,25 +1619,41 @@ const App = () => {
                             { __( "This list is generated from the supported core, FooConvert, and WooCommerce blocks available on the site. The AI accesses it through abilities when it needs block rules or examples.", "fooconvert" ) }
                         </p>
                         <div className={ `${ rootClass }__context-stat-row` }>
-                            <span className={ `${ rootClass }__context-stat-pill` }>
+                            <button
+                                type="button"
+                                className={ `${ rootClass }__context-stat-pill ${ "all" === blockFilter ? `${ rootClass }__context-stat-pill--active` : "" }` }
+                                onClick={ () => setBlockFilter( "all" ) }
+                            >
                                 <span>{ __( "Total", "fooconvert" ) }</span>
                                 <strong>{ blockCatalog.length }</strong>
-                            </span>
-                            <span className={ `${ rootClass }__context-stat-pill` }>
+                            </button>
+                            <button
+                                type="button"
+                                className={ `${ rootClass }__context-stat-pill ${ "core" === blockFilter ? `${ rootClass }__context-stat-pill--active` : "" }` }
+                                onClick={ () => setBlockFilter( "core" ) }
+                            >
                                 <span>{ __( "Core", "fooconvert" ) }</span>
                                 <strong>{ blockSourceCounts.core }</strong>
-                            </span>
-                            <span className={ `${ rootClass }__context-stat-pill` }>
+                            </button>
+                            <button
+                                type="button"
+                                className={ `${ rootClass }__context-stat-pill ${ "fooconvert" === blockFilter ? `${ rootClass }__context-stat-pill--active` : "" }` }
+                                onClick={ () => setBlockFilter( "fooconvert" ) }
+                            >
                                 <span>{ __( "FooConvert", "fooconvert" ) }</span>
                                 <strong>{ blockSourceCounts.fooconvert }</strong>
-                            </span>
-                            <span className={ `${ rootClass }__context-stat-pill` }>
+                            </button>
+                            <button
+                                type="button"
+                                className={ `${ rootClass }__context-stat-pill ${ "woocommerce" === blockFilter ? `${ rootClass }__context-stat-pill--active` : "" }` }
+                                onClick={ () => setBlockFilter( "woocommerce" ) }
+                            >
                                 <span>{ __( "WooCommerce", "fooconvert" ) }</span>
                                 <strong>{ blockSourceCounts.woocommerce }</strong>
-                            </span>
+                            </button>
                         </div>
                         <div className={ `${ rootClass }__context-list ${ rootClass }__context-list--compact` }>
-                            { blockCatalog.map( block => (
+                            { filteredBlockCatalog.map( block => (
                                 <Card key={ block?.name || block?.label } className={ `${ rootClass }__block-card` }>
                                     <CardBody>
                                         <div className={ `${ rootClass }__context-item ${ rootClass }__context-item--compact` }>
@@ -1639,6 +1672,12 @@ const App = () => {
                                     </CardBody>
                                 </Card>
                             ) ) }
+                            { 0 === filteredBlockCatalog.length && (
+                                <div className={ `${ rootClass }__context-inline-card` }>
+                                    <strong>{ __( "No blocks in this filter", "fooconvert" ) }</strong>
+                                    <p>{ __( "Try another source pill to inspect a different set of supported blocks.", "fooconvert" ) }</p>
+                                </div>
+                            ) }
                         </div>
                     </div>
                 </Modal>
@@ -1984,7 +2023,10 @@ const App = () => {
                                             <ContextSummaryCard
                                                 title={ __( "Blocks", "fooconvert" ) }
                                                 summary={ __( "The AI can inspect the installed content blocks and nesting rules before composing advanced layouts.", "fooconvert" ) }
-                                                onOpen={ () => setContextModal( "blocks" ) }
+                                                onOpen={ () => {
+                                                    setBlockFilter( "all" );
+                                                    setContextModal( "blocks" );
+                                                } }
                                                 preview={
                                                     <div className={ `${ rootClass }__preview-stack` }>
                                                         <BrandPreviewList
