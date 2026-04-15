@@ -1982,7 +1982,7 @@ const App = () => {
                                         <div className={ `${ rootClass }__context-grid` }>
                                             <ContextSummaryCard
                                                 title={ __( "Brand", "fooconvert" ) }
-                                                summary={ __( "Direct context. Saved brand data is attached to every builder request and should drive the popup styling first.", "fooconvert" ) }
+                                                summary={ __( "Saved brand data is attached to every builder request and should drive the popup styling first.", "fooconvert" ) }
                                                 onOpen={ () => setContextModal( "brand" ) }
                                                 preview={
                                                     <div className={ `${ rootClass }__preview-stack` }>
@@ -2021,7 +2021,7 @@ const App = () => {
 
                                             <ContextSummaryCard
                                                 title={ __( "Blocks", "fooconvert" ) }
-                                                summary={ __( "Ability-backed. The AI can inspect the installed content blocks and nesting rules before composing advanced layouts.", "fooconvert" ) }
+                                                summary={ __( "The AI can inspect the installed content blocks and nesting rules before composing advanced layouts.", "fooconvert" ) }
                                                 onOpen={ () => setContextModal( "blocks" ) }
                                                 preview={
                                                     <div className={ `${ rootClass }__preview-stack` }>
@@ -2051,7 +2051,7 @@ const App = () => {
 
                                             <ContextSummaryCard
                                                 title={ __( "Templates", "fooconvert" ) }
-                                                summary={ __( "Ability-backed. Bundled FooConvert templates provide structure only, not the primary styling direction.", "fooconvert" ) }
+                                                summary={ __( "Bundled FooConvert templates provide structure only, not the primary styling direction.", "fooconvert" ) }
                                                 onOpen={ () => setContextModal( "templates" ) }
                                                 preview={
                                                     <div className={ `${ rootClass }__preview-stack` }>
@@ -2081,7 +2081,7 @@ const App = () => {
 
                                             <ContextSummaryCard
                                                 title={ __( "Playbook", "fooconvert" ) }
-                                                summary={ __( "Ability-backed. Conversion heuristics, popup-type fit, and copy tactics the model can request while planning.", "fooconvert" ) }
+                                                summary={ __( "Conversion heuristics, popup-type fit, and copy tactics the model can request while planning.", "fooconvert" ) }
                                                 onOpen={ () => setContextModal( "playbook" ) }
                                                 preview={
                                                     <div className={ `${ rootClass }__preview-stack` }>
@@ -2106,7 +2106,7 @@ const App = () => {
 
                                             <ContextSummaryCard
                                                 title={ __( "System Prompt", "fooconvert" ) }
-                                                summary={ __( "Direct context. Builder rules that shape how the AI should think, validate, and respond.", "fooconvert" ) }
+                                                summary={ __( "Builder rules that shape how the AI should think, validate, and respond.", "fooconvert" ) }
                                                 onOpen={ () => setContextModal( "system-prompt" ) }
                                                 preview={
                                                     <ContextCodePreview
@@ -2140,7 +2140,7 @@ const App = () => {
 
                                             <ContextSummaryCard
                                                 title={ __( "Current Request", "fooconvert" ) }
-                                                summary={ __( "Direct context. Recent messages are sent each turn, and the latest user prompt is augmented with the current draft and media state.", "fooconvert" ) }
+                                                summary={ __( "Recent messages are sent each turn, and the latest user prompt is augmented with the current draft and media state.", "fooconvert" ) }
                                                 onOpen={ () => setContextModal( "request" ) }
                                                 preview={
                                                     <div className={ `${ rootClass }__preview-stack` }>
