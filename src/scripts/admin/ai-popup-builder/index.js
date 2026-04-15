@@ -1192,7 +1192,6 @@ const App = () => {
         <div className={ `${ rootClass }__stack` }>
             <div className={ `${ rootClass }__tab-intro` }>
                 <div>
-                    <h2>{ __( "Brand Context", "fooconvert" ) }</h2>
                     <p>
                         { __( "The AI uses this brand data first for colors, typography, spacing, and button styling. Templates are only structural guides.", "fooconvert" ) }
                     </p>
@@ -1226,23 +1225,27 @@ const App = () => {
                 <Card>
                     <CardBody>
                         <div className={ `${ rootClass }__remote-extract-panel` }>
-                            <TextControl
-                                label={ __( "Remote URL", "fooconvert" ) }
-                                value={ remoteBrandUrl }
-                                onChange={ setRemoteBrandUrl }
-                                help={ __( "Optional. Use this when you want to extract brand details from another live URL instead of the current site.", "fooconvert" ) }
-                                __nextHasNoMarginBottom
-                                __next40pxDefaultSize
-                            />
-                            <div className={ `${ rootClass }__inline-actions` }>
-                                <Button
-                                    variant="secondary"
-                                    onClick={ () => extractBrand( "remote" ) }
-                                    disabled={ isExtractingBrand || remoteBrandUrl.trim().length === 0 }
-                                >
-                                    { isExtractingBrand ? __( "Extracting…", "fooconvert" ) : __( "Run Remote Extract", "fooconvert" ) }
-                                </Button>
+                            <div className={ `${ rootClass }__remote-extract-row` }>
+                                <TextControl
+                                    label={ __( "Remote URL", "fooconvert" ) }
+                                    value={ remoteBrandUrl }
+                                    onChange={ setRemoteBrandUrl }
+                                    __nextHasNoMarginBottom
+                                    __next40pxDefaultSize
+                                />
+                                <div className={ `${ rootClass }__inline-actions` }>
+                                    <Button
+                                        variant="secondary"
+                                        onClick={ () => extractBrand( "remote" ) }
+                                        disabled={ isExtractingBrand || remoteBrandUrl.trim().length === 0 }
+                                    >
+                                        { isExtractingBrand ? __( "Extracting…", "fooconvert" ) : __( "Run Remote Extract", "fooconvert" ) }
+                                    </Button>
+                                </div>
                             </div>
+                            <p className={ `${ rootClass }__muted-copy` }>
+                                { __( "Optional. Use this when you want to extract brand details from another live URL instead of the current site.", "fooconvert" ) }
+                            </p>
                         </div>
                     </CardBody>
                 </Card>

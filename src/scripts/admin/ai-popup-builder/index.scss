@@ -342,12 +342,17 @@
 
 .fc-ai-popup-builder__remote-extract-panel {
     display: grid;
+    gap: 8px;
+}
+
+.fc-ai-popup-builder__remote-extract-row {
+    display: grid;
     gap: 12px;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: end;
 }
 
-.fc-ai-popup-builder__remote-extract-panel .components-base-control {
+.fc-ai-popup-builder__remote-extract-row .components-base-control {
     margin-bottom: 0;
 }
 
@@ -797,7 +802,7 @@
     }
 
     .fc-ai-popup-builder__compact-control,
-    .fc-ai-popup-builder__remote-extract-panel {
+    .fc-ai-popup-builder__remote-extract-row {
         width: 100%;
         grid-template-columns: 1fr;
     }
