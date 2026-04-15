@@ -454,17 +454,15 @@ const BrandSectionCard = ( { title, isEditing, onToggle, preview, children } ) =
 const ContextSummaryCard = ( { title, summary, preview, onOpen, actionLabel = __( "Open", "fooconvert" ) } ) => (
     <Card className={ `${ rootClass }__context-card` }>
         <CardHeader>
-            <Flex justify="space-between" align="center">
-                <FlexBlock>
-                    <div className={ `${ rootClass }__context-card-head` }>
-                        <h3>{ title }</h3>
-                        { summary && <p className={ `${ rootClass }__muted-copy` }>{ summary }</p> }
-                    </div>
-                </FlexBlock>
-                <Button variant="secondary" onClick={ onOpen }>
-                    { actionLabel }
-                </Button>
-            </Flex>
+            <div className={ `${ rootClass }__context-card-head` }>
+                <div className={ `${ rootClass }__context-item-head` }>
+                    <h3>{ title }</h3>
+                    <Button variant="secondary" onClick={ onOpen }>
+                        { actionLabel }
+                    </Button>
+                </div>
+                { summary && <p className={ `${ rootClass }__muted-copy` }>{ summary }</p> }
+            </div>
         </CardHeader>
         <CardBody>
             <div className={ `${ rootClass }__context-card-preview` }>
@@ -600,6 +598,7 @@ const App = () => {
     const [ showRemoteBrandInput, setShowRemoteBrandInput ] = useState( false );
     const [ contextModal, setContextModal ] = useState( "" );
     const [ blockFilter, setBlockFilter ] = useState( "all" );
+    const [ templateFilter, setTemplateFilter ] = useState( "all" );
     const chatEndRef = useRef( null );
 
     const generatedMarkup = useMemo( () => {
@@ -741,6 +740,20 @@ const App = () => {
             return counts;
         }, {} )
     ), [ templateLibrary ] );
+    const filteredTemplateLibrary = useMemo( () => (
+        templateLibrary.filter( template => {
+            const popupType = normalizePopupType( template?.popup_type );
+
+            switch ( templateFilter ) {
+                case "popup":
+                case "flyout":
+                case "bar":
+                    return popupType === templateFilter;
+                default:
+                    return true;
+            }
+        } )
+    ), [ templateLibrary, templateFilter ] );
     const playbookPrinciples = Array.isArray( conversionPlaybook?.principles ) ? conversionPlaybook.principles : [];
     const playbookCopyTactics = Array.isArray( conversionPlaybook?.copy_tactics ) ? conversionPlaybook.copy_tactics : [];
     const playbookPopupTypes = isPlainObject( conversionPlaybook?.popup_types ) ? conversionPlaybook.popup_types : {};
@@ -1696,60 +1709,69 @@ const App = () => {
                         <p className={ `${ rootClass }__muted-copy` }>
                             { __( "Templates stay secondary to the brand. The AI can request these bundled FooConvert patterns when it needs a structural guide for bars, flyouts, or popups.", "fooconvert" ) }
                         </p>
-                        <BrandPreviewList
-                            rows={ [
-                                {
-                                    label: __( "Total", "fooconvert" ),
-                                    value: String( templateLibrary.length ),
-                                },
-                                {
-                                    label: __( "Popups", "fooconvert" ),
-                                    value: String( templateCounts.popup || 0 ),
-                                },
-                                {
-                                    label: __( "Flyouts", "fooconvert" ),
-                                    value: String( templateCounts.flyout || 0 ),
-                                },
-                                {
-                                    label: __( "Bars", "fooconvert" ),
-                                    value: String( templateCounts.bar || 0 ),
-                                },
-                            ] }
-                        />
-                        <div className={ `${ rootClass }__context-list` }>
-                            { templateLibrary.map( template => (
-                                <Card key={ template?.slug || template?.title }>
+                        <div className={ `${ rootClass }__context-stat-row` }>
+                            <button
+                                type="button"
+                                className={ `${ rootClass }__context-stat-pill ${ "all" === templateFilter ? `${ rootClass }__context-stat-pill--active` : "" }` }
+                                onClick={ () => setTemplateFilter( "all" ) }
+                            >
+                                <span>{ __( "Total", "fooconvert" ) }</span>
+                                <strong>{ templateLibrary.length }</strong>
+                            </button>
+                            <button
+                                type="button"
+                                className={ `${ rootClass }__context-stat-pill ${ "popup" === templateFilter ? `${ rootClass }__context-stat-pill--active` : "" }` }
+                                onClick={ () => setTemplateFilter( "popup" ) }
+                            >
+                                <span>{ __( "Popups", "fooconvert" ) }</span>
+                                <strong>{ templateCounts.popup || 0 }</strong>
+                            </button>
+                            <button
+                                type="button"
+                                className={ `${ rootClass }__context-stat-pill ${ "flyout" === templateFilter ? `${ rootClass }__context-stat-pill--active` : "" }` }
+                                onClick={ () => setTemplateFilter( "flyout" ) }
+                            >
+                                <span>{ __( "Flyouts", "fooconvert" ) }</span>
+                                <strong>{ templateCounts.flyout || 0 }</strong>
+                            </button>
+                            <button
+                                type="button"
+                                className={ `${ rootClass }__context-stat-pill ${ "bar" === templateFilter ? `${ rootClass }__context-stat-pill--active` : "" }` }
+                                onClick={ () => setTemplateFilter( "bar" ) }
+                            >
+                                <span>{ __( "Bars", "fooconvert" ) }</span>
+                                <strong>{ templateCounts.bar || 0 }</strong>
+                            </button>
+                        </div>
+                        <div className={ `${ rootClass }__context-list ${ rootClass }__context-list--compact` }>
+                            { filteredTemplateLibrary.map( template => (
+                                <Card key={ template?.slug || template?.title } className={ `${ rootClass }__template-card` }>
                                     <CardBody>
-                                        <div className={ `${ rootClass }__context-item` }>
-                                            <div className={ `${ rootClass }__context-item-head` }>
+                                        <div className={ `${ rootClass }__context-item ${ rootClass }__context-item--compact` }>
+                                            <div className={ `${ rootClass }__context-item-head ${ rootClass }__context-item-head--stacked` }>
                                                 <div>
                                                     <h3>{ template?.title || template?.slug }</h3>
-                                                    <p className={ `${ rootClass }__muted-copy` }>{ template?.slug }</p>
                                                 </div>
                                                 <ContextChipRow
                                                     items={ [
                                                         config?.labels?.[ normalizePopupType( template?.popup_type ) ] || template?.popup_type,
                                                     ] }
-                                                    limit={ 2 }
+                                                    limit={ 1 }
                                                 />
                                             </div>
                                             { template?.description && (
-                                                <p className={ `${ rootClass }__muted-copy` }>{ template.description }</p>
+                                                <p className={ `${ rootClass }__muted-copy` }>{ truncateText( template.description, 90 ) }</p>
                                             ) }
-                                            <BrandPreviewList
-                                                rows={ [
-                                                    {
-                                                        label: __( "Sample blocks", "fooconvert" ),
-                                                        value: Array.isArray( template?.sample_block_names ) && template.sample_block_names.length > 0
-                                                            ? template.sample_block_names.join( ", " )
-                                                            : __( "None listed", "fooconvert" ),
-                                                    },
-                                                ] }
-                                            />
                                         </div>
                                     </CardBody>
                                 </Card>
                             ) ) }
+                            { 0 === filteredTemplateLibrary.length && (
+                                <div className={ `${ rootClass }__context-inline-card` }>
+                                    <strong>{ __( "No templates in this filter", "fooconvert" ) }</strong>
+                                    <p>{ __( "Try another template type pill to inspect a different set of structural guides.", "fooconvert" ) }</p>
+                                </div>
+                            ) }
                         </div>
                     </div>
                 </Modal>
@@ -2056,7 +2078,10 @@ const App = () => {
                                             <ContextSummaryCard
                                                 title={ __( "Templates", "fooconvert" ) }
                                                 summary={ __( "Bundled FooConvert templates provide structure only, not the primary styling direction.", "fooconvert" ) }
-                                                onOpen={ () => setContextModal( "templates" ) }
+                                                onOpen={ () => {
+                                                    setTemplateFilter( "all" );
+                                                    setContextModal( "templates" );
+                                                } }
                                                 preview={
                                                     <div className={ `${ rootClass }__preview-stack` }>
                                                         <BrandPreviewList
