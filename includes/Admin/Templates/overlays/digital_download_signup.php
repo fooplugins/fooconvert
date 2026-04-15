@@ -14,7 +14,7 @@ return array(
 				),
 				'background' => array(
 					'backgroundImage' => array(
-						'url' => FOOCONVERT_ASSETS_URL . 'media/template__overlay__digital.jpg',
+						'url' => FOOCONVERT_ASSETS_URL . 'media/template__popup__digital.jpg',
 					),
 					'backgroundSize' => 'cover'
 				),
@@ -207,7 +207,7 @@ return array(
                 ),
                 'background' => array(
                     'backgroundImage' => array(
-                        'url' => FOOCONVERT_ASSETS_URL . 'media/template__overlay__digital.jpg',
+                        'url' => FOOCONVERT_ASSETS_URL . 'media/template__popup__digital.jpg',
                     ),
                     'backgroundSize' => 'cover',
                 ),

@@ -102,6 +102,8 @@ The earlier draft backlog in this directory is no longer accurate. This document
 - `npm run build`
 - `npm run build:pro`
 
+`npm run build` now ends on the PRO-scoped editor build so the shared `fc-editor` runtime remains compatible with `fc-editor-pro` in a PRO-enabled local site. Use `npm run build:free` when you explicitly need free-only packaged assets.
+
 ## Recommended Next Step
 
 Focus next on admin preview support, sample size guidance, and auto-winner automation, then run a real end-to-end QA pass on an active WordPress site.

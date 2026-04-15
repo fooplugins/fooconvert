@@ -37,7 +37,7 @@ return array(
 			'styles' => array(
 				'background' => array(
 					'backgroundImage' => array(
-						'url' => FOOCONVERT_ASSETS_URL . 'media/template__overlay__i-cafe.jpg',
+						'url' => FOOCONVERT_ASSETS_URL . 'media/template__popup__i-cafe.jpg',
 					),
 					'backgroundSize' => 'cover',
 					'backgroundPosition' => '50% 50%',
@@ -294,7 +294,7 @@ return array(
             'styles' => array(
                 'background' => array(
                     'backgroundImage' => array(
-                        'url' => FOOCONVERT_ASSETS_URL . 'media/template__overlay__i-cafe.jpg',
+                        'url' => FOOCONVERT_ASSETS_URL . 'media/template__popup__i-cafe.jpg',
                     ),
                     'backgroundSize' => 'cover',
                 ),

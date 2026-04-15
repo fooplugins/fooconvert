@@ -68,7 +68,6 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         public function maybe_migrate_popup_content() {
             $has_media_migration = !$this->is_completed( self::MIGRATION_MOVE_PRO_MEDIA_URLS );
             $has_overlay_migration = !$this->is_completed( self::MIGRATION_RENAME_POPUP_TYPE_TO_OVERLAY );
-
             if ( !$has_media_migration && !$has_overlay_migration ) {
                 return;
             }

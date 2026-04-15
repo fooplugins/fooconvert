@@ -10,14 +10,19 @@ FooConvert is a WordPress plugin for creating conversion-focused elements like p
 
 ### Build & Development
 ```bash
-# Development build with file watcher
+# Development build with file watcher (local PRO-capable workspace default)
 npm start
 
-# Production build
+# Production build (local PRO-capable workspace default)
 npm run build
 
-# Development build without watcher (single build)
+# Development build without watcher (single build, local PRO-capable workspace default)
 npm run develop
+
+# Free-only builds for packaging or free-runtime verification
+npm run build:free
+npm run develop:free
+npm run start:free
 
 # Check for package updates
 npm run check-updates
@@ -113,6 +118,10 @@ fooconvert/
 - `frontend`: Core frontend functionality
 - `editor-pro`: Premium editor features
 - `frontend-pro`: Premium frontend features
+
+#### Build Scope Notes
+- `npm run build`, `npm start`, and `npm run develop` target `BUILD_SCOPE=pro` so the shared `fc-editor` runtime stays compatible with `fc-editor-pro` in a PRO-enabled local site.
+- Use `npm run build:free`, `npm run start:free`, and `npm run develop:free` when you explicitly need free-only assets, such as release packaging or free-runtime verification.
 
 #### Module Aliases (package.json imports)
 - `#editor` → `./src/editor/index.js`
