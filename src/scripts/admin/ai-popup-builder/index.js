@@ -1635,12 +1635,6 @@ const App = () => {
                                                     { truncateText( block.description, 82 ) }
                                                 </p>
                                             ) }
-                                            { Array.isArray( block?.allowed_children ) && block.allowed_children.length > 0 && (
-                                                <div className={ `${ rootClass }__block-children` }>
-                                                    <span>{ __( "Children", "fooconvert" ) }</span>
-                                                    <strong>{ truncateText( block.allowed_children.join( ", " ), 54 ) }</strong>
-                                                </div>
-                                            ) }
                                         </div>
                                     </CardBody>
                                 </Card>
