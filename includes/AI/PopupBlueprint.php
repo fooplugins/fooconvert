@@ -35,7 +35,9 @@ class PopupBlueprint {
      * @return array<string,array<string,mixed>>
      */
     private static function get_block_catalog_map(): array {
-        if ( is_array( self::$block_catalog ) ) {
+        $can_use_cached_catalog = ! doing_action( 'init' ) && did_action( 'init' ) > 0;
+
+        if ( $can_use_cached_catalog && is_array( self::$block_catalog ) ) {
             return self::$block_catalog;
         }
 
@@ -93,9 +95,11 @@ class PopupBlueprint {
             $catalog = array_merge( $catalog, self::get_woocommerce_metadata_catalog_map() );
         }
 
-        self::$block_catalog = $catalog;
+        if ( $can_use_cached_catalog ) {
+            self::$block_catalog = $catalog;
+        }
 
-        return self::$block_catalog;
+        return $catalog;
     }
 
     /**
