@@ -1599,69 +1599,48 @@ const App = () => {
                 >
                     <div className={ `${ rootClass }__stack` }>
                         <p className={ `${ rootClass }__muted-copy` }>
-                            { __( "This list is generated from the supported core, FooConvert, and WooCommerce blocks currently registered on the site. The AI accesses it through abilities when it needs block rules or examples.", "fooconvert" ) }
+                            { __( "This list is generated from the supported core, FooConvert, and WooCommerce blocks available on the site. The AI accesses it through abilities when it needs block rules or examples.", "fooconvert" ) }
                         </p>
-                        <BrandPreviewList
-                            rows={ [
-                                {
-                                    label: __( "Total", "fooconvert" ),
-                                    value: String( blockCatalog.length ),
-                                },
-                                {
-                                    label: __( "Core", "fooconvert" ),
-                                    value: String( blockSourceCounts.core ),
-                                },
-                                {
-                                    label: __( "FooConvert", "fooconvert" ),
-                                    value: String( blockSourceCounts.fooconvert ),
-                                },
-                                {
-                                    label: __( "WooCommerce", "fooconvert" ),
-                                    value: String( blockSourceCounts.woocommerce ),
-                                },
-                                {
-                                    label: __( "Containers", "fooconvert" ),
-                                    value: String( blockSourceCounts.containers ),
-                                },
-                            ] }
-                        />
-                        <div className={ `${ rootClass }__context-list` }>
+                        <div className={ `${ rootClass }__context-stat-row` }>
+                            <span className={ `${ rootClass }__context-stat-pill` }>
+                                <span>{ __( "Total", "fooconvert" ) }</span>
+                                <strong>{ blockCatalog.length }</strong>
+                            </span>
+                            <span className={ `${ rootClass }__context-stat-pill` }>
+                                <span>{ __( "Core", "fooconvert" ) }</span>
+                                <strong>{ blockSourceCounts.core }</strong>
+                            </span>
+                            <span className={ `${ rootClass }__context-stat-pill` }>
+                                <span>{ __( "FooConvert", "fooconvert" ) }</span>
+                                <strong>{ blockSourceCounts.fooconvert }</strong>
+                            </span>
+                            <span className={ `${ rootClass }__context-stat-pill` }>
+                                <span>{ __( "WooCommerce", "fooconvert" ) }</span>
+                                <strong>{ blockSourceCounts.woocommerce }</strong>
+                            </span>
+                        </div>
+                        <div className={ `${ rootClass }__context-list ${ rootClass }__context-list--compact` }>
                             { blockCatalog.map( block => (
-                                <Card key={ block?.name || block?.label }>
+                                <Card key={ block?.name || block?.label } className={ `${ rootClass }__block-card` }>
                                     <CardBody>
-                                        <div className={ `${ rootClass }__context-item` }>
-                                            <div className={ `${ rootClass }__context-item-head` }>
+                                        <div className={ `${ rootClass }__context-item ${ rootClass }__context-item--compact` }>
+                                            <div className={ `${ rootClass }__context-item-head ${ rootClass }__context-item-head--stacked` }>
                                                 <div>
                                                     <h3>{ block?.label || block?.name }</h3>
-                                                    <p className={ `${ rootClass }__muted-copy` }>{ block?.name }</p>
+                                                    <p className={ `${ rootClass }__context-slug` }>{ block?.name }</p>
                                                 </div>
-                                                <ContextChipRow
-                                                    items={ [
-                                                        block?.supports_children ? __( "Supports children", "fooconvert" ) : __( "Leaf block", "fooconvert" ),
-                                                        Array.isArray( block?.parent ) && block.parent.length > 0 ? __( "Has parent rules", "fooconvert" ) : "",
-                                                    ] }
-                                                    limit={ 3 }
-                                                />
                                             </div>
                                             { block?.description && (
-                                                <p className={ `${ rootClass }__muted-copy` }>{ block.description }</p>
+                                                <p className={ `${ rootClass }__muted-copy` }>
+                                                    { truncateText( block.description, 82 ) }
+                                                </p>
                                             ) }
-                                            <BrandPreviewList
-                                                rows={ [
-                                                    {
-                                                        label: __( "Allowed children", "fooconvert" ),
-                                                        value: Array.isArray( block?.allowed_children ) && block.allowed_children.length > 0
-                                                            ? block.allowed_children.join( ", " )
-                                                            : __( "None", "fooconvert" ),
-                                                    },
-                                                    {
-                                                        label: __( "Parents", "fooconvert" ),
-                                                        value: Array.isArray( block?.parent ) && block.parent.length > 0
-                                                            ? block.parent.join( ", " )
-                                                            : __( "Any", "fooconvert" ),
-                                                    },
-                                                ] }
-                                            />
+                                            { Array.isArray( block?.allowed_children ) && block.allowed_children.length > 0 && (
+                                                <div className={ `${ rootClass }__block-children` }>
+                                                    <span>{ __( "Children", "fooconvert" ) }</span>
+                                                    <strong>{ truncateText( block.allowed_children.join( ", " ), 54 ) }</strong>
+                                                </div>
+                                            ) }
                                         </div>
                                     </CardBody>
                                 </Card>
