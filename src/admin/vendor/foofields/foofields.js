@@ -53,7 +53,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
    * Iris
    */
 
-  $.popup('a8c.iris', $.a8c.iris, {
+  $.widget('a8c.iris', $.a8c.iris, {
     /**
      * Alpha options
      *
@@ -374,7 +374,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
    * wpColorPicker
    */
 
-  $.popup('wp.wpColorPicker', $.wp.wpColorPicker, {
+  $.widget('wp.wpColorPicker', $.wp.wpColorPicker, {
     /**
      * Creates the color picker.
      *
