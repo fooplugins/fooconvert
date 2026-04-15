@@ -117,7 +117,7 @@ class Manager {
         return new WP_REST_Response(
             array(
                 'brand'         => $brand,
-                'hasSavedBrand' => ! empty( $brand ),
+                'hasSavedBrand' => self::has_meaningful_brand_data( $brand ),
                 'savedAt'       => gmdate( 'c' ),
             )
         );
@@ -166,10 +166,15 @@ class Manager {
      * @return array<string,mixed>
      */
     public static function get_saved_brand(): array {
-        $brand = get_option( FOOCONVERT_OPTION_AI_BRAND, array() );
+        $brand = get_option( FOOCONVERT_OPTION_AI_BRAND, null );
+
+        if ( ! is_array( $brand ) || empty( $brand ) ) {
+            return array();
+        }
+
         $brand = self::sanitize_brand( $brand );
 
-        if ( empty( $brand ) ) {
+        if ( ! self::has_meaningful_brand_data( $brand ) ) {
             return array();
         }
 
@@ -191,7 +196,13 @@ class Manager {
      * @return bool
      */
     public static function has_saved_brand(): bool {
-        return ! empty( self::sanitize_brand( get_option( FOOCONVERT_OPTION_AI_BRAND, array() ) ) );
+        $brand = get_option( FOOCONVERT_OPTION_AI_BRAND, null );
+
+        if ( ! is_array( $brand ) || empty( $brand ) ) {
+            return false;
+        }
+
+        return self::has_meaningful_brand_data( self::sanitize_brand( $brand ) );
     }
 
     /**
@@ -201,11 +212,12 @@ class Manager {
      * @return array<string,mixed>
      */
     public static function enrich_brand( array $brand ): array {
+        $has_brand_overview = array_key_exists( 'brandOverview', $brand ) || array_key_exists( 'siteDescription', $brand );
         $brand = self::sanitize_brand( $brand );
 
-        $brand['siteName']        = sanitize_text_field( (string) ( $brand['siteName'] ?? get_bloginfo( 'name' ) ) );
-        $brand['siteDescription'] = sanitize_text_field( (string) ( $brand['siteDescription'] ?? get_bloginfo( 'description' ) ) );
-        $brand['siteUrl']         = esc_url_raw( (string) ( $brand['siteUrl'] ?? home_url( '/' ) ) );
+        if ( ! $has_brand_overview && '' === trim( (string) ( $brand['brandOverview'] ?? '' ) ) ) {
+            $brand['brandOverview'] = sanitize_textarea_field( get_bloginfo( 'description' ) );
+        }
 
         return $brand;
     }
@@ -222,35 +234,21 @@ class Manager {
         }
 
         $colors = is_array( $brand['colors'] ?? null ) ? $brand['colors'] : array();
-        $images = is_array( $brand['images'] ?? null ) ? $brand['images'] : array();
         $typography = is_array( $brand['typography'] ?? null ) ? $brand['typography'] : array();
         $spacing = is_array( $brand['spacing'] ?? null ) ? $brand['spacing'] : array();
         $components = is_array( $brand['components'] ?? null ) ? $brand['components'] : array();
 
-        $fonts = array();
-        if ( is_array( $brand['fonts'] ?? null ) ) {
-            foreach ( $brand['fonts'] as $font ) {
-                if ( is_array( $font ) && isset( $font['family'] ) ) {
-                    $family = sanitize_text_field( (string) $font['family'] );
-                    if ( '' !== $family ) {
-                        $fonts[] = array( 'family' => $family );
-                    }
-                } elseif ( is_string( $font ) ) {
-                    $family = sanitize_text_field( $font );
-                    if ( '' !== $family ) {
-                        $fonts[] = array( 'family' => $family );
-                    }
-                }
-            }
+        $brand_overview = '';
+        if ( isset( $brand['brandOverview'] ) ) {
+            $brand_overview = sanitize_textarea_field( (string) $brand['brandOverview'] );
+        } elseif ( isset( $brand['siteDescription'] ) ) {
+            $brand_overview = sanitize_textarea_field( (string) $brand['siteDescription'] );
         }
 
         return array(
-            'siteName'        => sanitize_text_field( (string) ( $brand['siteName'] ?? '' ) ),
-            'siteDescription' => sanitize_text_field( (string) ( $brand['siteDescription'] ?? '' ) ),
-            'siteUrl'         => esc_url_raw( (string) ( $brand['siteUrl'] ?? '' ) ),
-            'colorScheme'     => in_array( $brand['colorScheme'] ?? '', array( 'dark', 'light' ), true ) ? $brand['colorScheme'] : 'light',
-            'logo'            => esc_url_raw( (string) ( $brand['logo'] ?? '' ) ),
-            'colors'          => array(
+            'brandOverview' => $brand_overview,
+            'colorScheme'   => in_array( $brand['colorScheme'] ?? '', array( 'dark', 'light' ), true ) ? $brand['colorScheme'] : 'light',
+            'colors'        => array(
                 'primary'       => self::sanitize_color( $colors['primary'] ?? '' ),
                 'secondary'     => self::sanitize_color( $colors['secondary'] ?? '' ),
                 'accent'        => self::sanitize_color( $colors['accent'] ?? '' ),
@@ -258,12 +256,10 @@ class Manager {
                 'textPrimary'   => self::sanitize_color( $colors['textPrimary'] ?? '' ),
                 'textSecondary' => self::sanitize_color( $colors['textSecondary'] ?? '' ),
             ),
-            'fonts'           => array_values( $fonts ),
-            'typography'      => array(
+            'typography'    => array(
                 'fontFamilies' => array(
                     'primary' => sanitize_text_field( (string) ( $typography['fontFamilies']['primary'] ?? '' ) ),
                     'heading' => sanitize_text_field( (string) ( $typography['fontFamilies']['heading'] ?? '' ) ),
-                    'code'    => sanitize_text_field( (string) ( $typography['fontFamilies']['code'] ?? '' ) ),
                 ),
                 'fontSizes'   => array(
                     'h1'   => self::sanitize_font_size( $typography['fontSizes']['h1'] ?? array() ),
@@ -277,11 +273,11 @@ class Manager {
                     'bold'    => absint( $typography['fontWeights']['bold'] ?? 700 ),
                 ),
             ),
-            'spacing'         => array(
+            'spacing'       => array(
                 'baseUnit'     => absint( $spacing['baseUnit'] ?? 0 ),
                 'borderRadius' => sanitize_text_field( (string) ( $spacing['borderRadius'] ?? '' ) ),
             ),
-            'components'      => array(
+            'components'    => array(
                 'buttonPrimary' => array(
                     'background'   => self::sanitize_color( $components['buttonPrimary']['background'] ?? '' ),
                     'textColor'    => self::sanitize_color( $components['buttonPrimary']['textColor'] ?? '' ),
@@ -293,11 +289,6 @@ class Manager {
                     'borderColor'  => self::sanitize_color( $components['buttonSecondary']['borderColor'] ?? '' ),
                     'borderRadius' => sanitize_text_field( (string) ( $components['buttonSecondary']['borderRadius'] ?? '' ) ),
                 ),
-            ),
-            'images'          => array(
-                'logo'    => esc_url_raw( (string) ( $images['logo'] ?? '' ) ),
-                'favicon' => esc_url_raw( (string) ( $images['favicon'] ?? '' ) ),
-                'ogImage' => esc_url_raw( (string) ( $images['ogImage'] ?? '' ) ),
             ),
         );
     }
@@ -311,22 +302,58 @@ class Manager {
         return array(
             'type'       => 'object',
             'properties' => array(
-                'siteName'        => array( 'type' => 'string' ),
-                'siteDescription' => array( 'type' => 'string' ),
-                'siteUrl'         => array( 'type' => 'string' ),
-                'colorScheme'     => array( 'type' => 'string' ),
-                'logo'            => array( 'type' => 'string' ),
-                'colors'          => array( 'type' => 'object' ),
-                'fonts'           => array(
-                    'type'  => 'array',
-                    'items' => array( 'type' => 'object' ),
-                ),
-                'typography'      => array( 'type' => 'object' ),
-                'spacing'         => array( 'type' => 'object' ),
-                'components'      => array( 'type' => 'object' ),
-                'images'          => array( 'type' => 'object' ),
+                'brandOverview' => array( 'type' => 'string' ),
+                'colorScheme'   => array( 'type' => 'string' ),
+                'colors'        => array( 'type' => 'object' ),
+                'typography'    => array( 'type' => 'object' ),
+                'spacing'       => array( 'type' => 'object' ),
+                'components'    => array( 'type' => 'object' ),
             ),
         );
+    }
+
+    /**
+     * Determines whether the brand contains meaningful saved data.
+     *
+     * @param array<string,mixed> $brand Sanitized brand payload.
+     * @return bool
+     */
+    private static function has_meaningful_brand_data( array $brand ): bool {
+        if ( '' !== trim( (string) ( $brand['brandOverview'] ?? '' ) ) ) {
+            return true;
+        }
+
+        foreach ( array( 'primary', 'secondary', 'accent', 'background', 'textPrimary', 'textSecondary' ) as $color_key ) {
+            if ( '' !== trim( (string) ( $brand['colors'][ $color_key ] ?? '' ) ) ) {
+                return true;
+            }
+        }
+
+        foreach ( array( 'primary', 'heading' ) as $font_key ) {
+            if ( '' !== trim( (string) ( $brand['typography']['fontFamilies'][ $font_key ] ?? '' ) ) ) {
+                return true;
+            }
+        }
+
+        foreach ( array( 'h1', 'h2', 'h3', 'body' ) as $size_key ) {
+            if ( '' !== trim( (string) ( $brand['typography']['fontSizes'][ $size_key ]['value'] ?? '' ) ) ) {
+                return true;
+            }
+        }
+
+        if ( absint( $brand['spacing']['baseUnit'] ?? 0 ) > 0 || '' !== trim( (string) ( $brand['spacing']['borderRadius'] ?? '' ) ) ) {
+            return true;
+        }
+
+        foreach ( array( 'buttonPrimary', 'buttonSecondary' ) as $button_key ) {
+            foreach ( array( 'background', 'textColor', 'borderColor', 'borderRadius' ) as $setting_key ) {
+                if ( '' !== trim( (string) ( $brand['components'][ $button_key ][ $setting_key ] ?? '' ) ) ) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**

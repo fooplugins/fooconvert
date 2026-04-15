@@ -28,9 +28,6 @@ class LocalExtractor {
             return $remote->extract( get_site_url() );
         }
 
-        $logo     = $this->local_logo();
-        $favicon  = $this->local_favicon();
-        $og_image = $this->local_og_image();
         $colors   = $this->local_colors( $settings, $styles );
         $fonts    = $this->local_fonts( $settings );
         $typo     = $this->local_typography( $settings, $fonts );
@@ -38,23 +35,12 @@ class LocalExtractor {
         $comps    = $this->local_components( $styles, $colors, $spacing );
 
         return array(
-            'colorScheme' => $this->determine_color_scheme( $colors ),
-            'logo'        => $logo,
-            'colors'      => $colors,
-            'fonts'       => array_map(
-                function ( string $font ): array {
-                    return array( 'family' => $font );
-                },
-                array_values( array_unique( $fonts ) )
-            ),
-            'typography'  => $typo,
-            'spacing'     => $spacing,
-            'components'  => $comps,
-            'images'      => array(
-                'logo'    => $logo,
-                'favicon' => $favicon,
-                'ogImage' => $og_image,
-            ),
+            'brandOverview' => sanitize_textarea_field( get_bloginfo( 'description' ) ),
+            'colorScheme'   => $this->determine_color_scheme( $colors ),
+            'colors'        => $colors,
+            'typography'    => $typo,
+            'spacing'       => $spacing,
+            'components'    => $comps,
         );
     }
 
@@ -237,7 +223,6 @@ class LocalExtractor {
     private function local_typography( array $settings, array $fonts ): array {
         $primary = $fonts[0] ?? 'sans-serif';
         $heading = $primary;
-        $code    = 'monospace';
 
         $families_raw = $settings['typography']['fontFamilies'] ?? array();
         $theme_fonts  = isset( $families_raw['theme'] ) && is_array( $families_raw['theme'] ) ? $families_raw['theme'] : ( is_array( $families_raw ) ? $families_raw : array() );
@@ -249,11 +234,6 @@ class LocalExtractor {
                 $family = $this->first_font_name( isset( $font['fontFamily'] ) ? (string) $font['fontFamily'] : '' );
 
                 if ( '' === $family ) {
-                    continue;
-                }
-
-                if ( preg_match( '/mono|code|consol/i', $slug . $name . $family ) ) {
-                    $code = $family;
                     continue;
                 }
 
@@ -276,7 +256,6 @@ class LocalExtractor {
             'fontFamilies' => array(
                 'primary' => $primary,
                 'heading' => $heading,
-                'code'    => $code,
             ),
             'fontSizes'   => $font_sizes,
             'fontWeights' => array(

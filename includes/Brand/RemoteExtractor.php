@@ -53,11 +53,11 @@ class RemoteExtractor {
 
         $colors   = $this->extract_colors( $html, $css_text );
         $fonts    = $this->extract_fonts( $css_text, $xpath );
-        $logo     = $this->extract_logo( $xpath, $base_url );
-        $favicon  = $this->extract_favicon( $xpath, $base_url );
-        $og_image = $this->extract_og_image( $xpath, $base_url );
+        $branding = $this->assemble_branding( $colors, $fonts, $css_text );
 
-        return $this->assemble_branding( $colors, $fonts, $logo, $favicon, $og_image, $css_text );
+        $branding['brandOverview'] = $this->extract_brand_overview( $xpath );
+
+        return $branding;
     }
 
     /**
@@ -269,6 +269,32 @@ class RemoteExtractor {
         $twitter = $xpath->query( '//meta[@name="twitter:image"]' );
         if ( $twitter->length > 0 ) {
             return $this->resolve_url( $twitter->item( 0 )->getAttribute( 'content' ), $base_url );
+        }
+
+        return '';
+    }
+
+    /**
+     * Extracts a concise brand overview from common meta description tags.
+     *
+     * @param DOMXPath $xpath DOM XPath.
+     * @return string
+     */
+    private function extract_brand_overview( DOMXPath $xpath ): string {
+        foreach ( array(
+            '//meta[@name="description"]',
+            '//meta[@property="og:description"]',
+            '//meta[@name="twitter:description"]',
+        ) as $query ) {
+            $nodes = $xpath->query( $query );
+            if ( 0 === $nodes->length ) {
+                continue;
+            }
+
+            $content = trim( (string) $nodes->item( 0 )->getAttribute( 'content' ) );
+            if ( '' !== $content ) {
+                return $content;
+            }
         }
 
         return '';

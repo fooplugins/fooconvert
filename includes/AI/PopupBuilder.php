@@ -491,7 +491,7 @@ class PopupBuilder {
                 }
 
                 if ( ! empty( $brand ) ) {
-                    $content .= "\n\nBrand context JSON (this should drive styling, tone, and imagery):\n" . wp_json_encode( $brand, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
+                    $content .= "\n\nBrand context JSON (this should drive styling, tone, and component treatment):\n" . wp_json_encode( $brand, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
                 }
 
                 if ( $force_image_generation ) {

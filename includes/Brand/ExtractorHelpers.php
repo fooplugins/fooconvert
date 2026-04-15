@@ -541,14 +541,6 @@ trait ExtractorHelpers {
             }
         }
 
-        $code = '';
-        foreach ( $fonts as $font ) {
-            if ( preg_match( '/mono|code|consol/i', $font ) ) {
-                $code = $font;
-                break;
-            }
-        }
-
         $heading = $primary;
         if ( preg_match( '/\bh[12]\b[^{}]*\{[^}]*font-family\s*:\s*([^;}{]+)/i', $css_text, $matches ) ) {
             $raw      = trim( $matches[1], " \t\n\r\0\x0B\"'" );
@@ -592,7 +584,6 @@ trait ExtractorHelpers {
             'fontFamilies' => array(
                 'primary' => $primary,
                 'heading' => $heading,
-                'code'    => '' !== $code ? $code : 'monospace',
             ),
             'fontSizes' => array(
                 'h1'   => $this->extract_font_size( $css_text, 'h1', '48px' ),
@@ -707,31 +698,16 @@ trait ExtractorHelpers {
      *
      * @param array<string,string> $colors Semantic colors.
      * @param string[]             $fonts Font families.
-     * @param string               $logo Logo URL.
-     * @param string               $favicon Favicon URL.
-     * @param string               $og_image OG image URL.
      * @param string               $css_text CSS text.
      * @return array<string,mixed>
      */
-    private function assemble_branding( array $colors, array $fonts, string $logo, string $favicon, string $og_image, string $css_text ): array {
+    private function assemble_branding( array $colors, array $fonts, string $css_text ): array {
         return array(
             'colorScheme' => $this->determine_color_scheme( $colors ),
-            'logo'        => $logo,
             'colors'      => $colors,
-            'fonts'       => array_map(
-                function ( string $font ): array {
-                    return array( 'family' => $font );
-                },
-                array_values( array_unique( $fonts ) )
-            ),
             'typography'  => $this->build_typography( $fonts, $css_text ),
             'spacing'     => $this->extract_spacing( $css_text ),
             'components'  => $this->extract_button_styles( $css_text, $colors ),
-            'images'      => array(
-                'logo'    => $logo,
-                'favicon' => $favicon,
-                'ogImage' => $og_image,
-            ),
         );
     }
 }
