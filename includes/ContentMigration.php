@@ -2,10 +2,6 @@
 
 namespace FooPlugins\FooConvert;
 
-use WP_Post;
-use WP_REST_Request;
-use WP_REST_Response;
-
 if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
 
     /**
@@ -56,8 +52,6 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         public function __construct() {
             add_action( 'plugins_loaded', array( $this, 'maybe_migrate_popup_post_types' ), 20 );
             add_action( 'init', array( $this, 'maybe_migrate_popup_content' ), 20 );
-
-            add_filter( 'rest_prepare_' . $this->get_registered_popup_post_type(), array( $this, 'maybe_migrate_rest_post' ), 10, 3 );
         }
 
         /**
@@ -139,47 +133,6 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
             }
 
             return $this->maybe_migrate_post_content( $post_id, $content );
-        }
-
-        /**
-         * Updates REST responses so editors receive migrated popup content.
-         *
-         * @param mixed           $response REST response object.
-         * @param WP_Post         $post The prepared post.
-         * @param WP_REST_Request $request The current REST request.
-         * @return mixed
-         */
-        public function maybe_migrate_rest_post( $response, WP_Post $post, WP_REST_Request $request ) {
-            if ( !$response instanceof WP_REST_Response || $post->post_type !== $this->get_registered_popup_post_type() ) {
-                return $response;
-            }
-
-            $content = is_string( $post->post_content ) ? $post->post_content : '';
-            $migrated_content = $this->has_pending_content_migrations()
-                ? $this->maybe_migrate_post_content( (int) $post->ID, $content )
-                : $content;
-            $popup_type = fooconvert_get_popup_type( $post );
-            if ( $popup_type === '' ) {
-                $popup_type = FOOCONVERT_POPUP_TYPE_OVERLAY;
-            }
-
-            if ( $migrated_content === $content && $this->is_popup_overlay_migration_completed() ) {
-                return $response;
-            }
-
-            $data = $response->get_data();
-            if ( isset( $data['content'] ) && is_array( $data['content'] ) ) {
-                $data['content']['raw'] = $migrated_content;
-                if ( array_key_exists( 'rendered', $data['content'] ) ) {
-                    $data['content']['rendered'] = FooConvert::plugin()->do_content( $migrated_content );
-                }
-            }
-            if ( isset( $data['meta'] ) && is_array( $data['meta'] ) ) {
-                $data['meta'][FOOCONVERT_META_KEY_POPUP_TYPE] = $popup_type;
-            }
-            $response->set_data( $data );
-
-            return $response;
         }
 
         /**
