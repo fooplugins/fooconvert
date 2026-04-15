@@ -1,9 +1,8 @@
 import {
     useInnerBlocks,
-    VariationPicker,
+    PopupTypeTemplatePicker,
     $object
 } from "#editor";
-import { __ } from "@wordpress/i18n";
 import { useEffect } from "@wordpress/element";
 import EditBlock from "./EditBlock";
 import EditSettings from "./EditSettings";
@@ -128,12 +127,8 @@ const Edit = props => {
 
 const EditPlaceholder = props => {
     return (
-        <VariationPicker
-            label={ __( "Choose a template for your bar", "fooconvert" ) }
-            instructions={ __( "Select a template to start with.", "fooconvert" ) }
-            reset={ { template: undefined } }
-            media="thumbnail"
-            showTypeChooserLink
+        <PopupTypeTemplatePicker
+            currentPopupType="bar"
             { ...props }
         />
     );

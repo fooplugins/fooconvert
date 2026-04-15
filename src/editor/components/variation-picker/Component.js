@@ -1,5 +1,5 @@
 import { useVariations } from "./hooks";
-import { isBoolean, isPlainObject, isString, isUndefined } from "@steveush/utils";
+import { isBoolean, isPlainObject, isString } from "@steveush/utils";
 import classNames from "classnames";
 
 import "./Component.scss";
@@ -19,35 +19,17 @@ const medias = [ 'icon', 'thumbnail' ];
 const DEFAULT_MEDIA = 'icon';
 
 const CLASS_NAME = 'fc--variation-picker';
-const TYPE_CHOOSER_PATH = 'post-new.php?post_type=fc-popup';
-
-const buildAdminUrl = path => {
-    if ( typeof window?.ajaxurl === "string" && window.ajaxurl.includes( "admin-ajax.php" ) ) {
-        return window.ajaxurl.replace( "admin-ajax.php", path );
-    }
-
-    return path;
-};
-
-const navigateToTopWindow = url => {
-    if ( typeof url !== "string" || url.length === 0 ) {
-        return;
-    }
-
-    const targetWindow = window?.top ?? window;
-    targetWindow.location.assign( url );
-};
 
 const VariationPicker = ( {
                               clientId,
                               reset,
                               className,
+                              beforeToolbar = null,
                               label = '',
                               media = DEFAULT_MEDIA,
                               initialMode = DEFAULT_MODE,
                               showSearch,
-                              minSearchChars = 2,
-                              showTypeChooserLink = false
+                              minSearchChars = 2
                           } ) => {
 
     media = medias.includes( media ) ? media : DEFAULT_MEDIA;
@@ -145,15 +127,6 @@ const VariationPicker = ( {
         `fc-variation-picker__media-${ media }`,
         className
     );
-    const typeChooserUrl = showTypeChooserLink ? buildAdminUrl( TYPE_CHOOSER_PATH ) : '';
-    const handleTypeChooserClick = event => {
-        if ( typeChooserUrl === '' ) {
-            return;
-        }
-
-        event.preventDefault();
-        navigateToTopWindow( typeChooserUrl );
-    };
 
     const ModeButton = ( { value, icon, label } ) => {
         const isActive = value === mode;
@@ -183,6 +156,11 @@ const VariationPicker = ( {
 
     return (
         <div className={ classes }>
+            { beforeToolbar && (
+                <div className="fc-variation-picker__before-toolbar">
+                    { beforeToolbar }
+                </div>
+            ) }
             <div className="fc-variation-picker__toolbar">
                 { showLabel && ( <label className="fc-variation-picker__label">{ label }</label> ) }
                 { shouldShowSearch && ( <SearchInput value={ search } onChange={ debouncedSearch }/> ) }
@@ -192,13 +170,6 @@ const VariationPicker = ( {
             <div className="fc-variation-picker__variations">
                 { variations.map( renderVariation ) }
             </div>
-            { typeChooserUrl !== '' && (
-                <div className="fc-variation-picker__footer">
-                    <Button variant="link" href={ typeChooserUrl } target="_top" onClick={ handleTypeChooserClick }>
-                        { __( "Choose a different type", "fooconvert" ) }
-                    </Button>
-                </div>
-            ) }
             { proModal.open && (
                 <Modal
                     className={ `${ CLASS_NAME }__pro-modal` }

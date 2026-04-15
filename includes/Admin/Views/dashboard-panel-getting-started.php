@@ -57,7 +57,7 @@ if ( in_array( 'getting-started', $hidden_panels ) ) {
         <ol class="fooconvert-ordered-list">
             <li>
                 <?php esc_html_e( 'Create a new popup and choose whether it should be a bar, flyout, or overlay.', 'fooconvert' ); ?>
-                (<a href="<?php echo esc_url( fooconvert_admin_url_popup_type_chooser() ); ?>"
+                (<a href="<?php echo esc_url( fooconvert_admin_url_popup_new() ); ?>"
                     target="_blank"><?php esc_html_e( 'create a new popup', 'fooconvert' ); ?></a>)
             </li>
             <li>
