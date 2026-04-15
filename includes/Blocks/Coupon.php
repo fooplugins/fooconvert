@@ -20,13 +20,14 @@ class Coupon extends BaseBlock {
     public function kses_definition(): array {
         return array(
             $this->get_tag_name() => array(
-                'id'    => true,
-                'class' => true,
-                'layout' => true,
-                'code' => true,
-                'copy-close' => true,
+                'id'            => true,
+                'class'         => true,
+                'layout'        => true,
+                'button-layout' => true,
+                'code'          => true,
+                'copy-close'    => true,
                 'copy-redirect' => true,
-                'no-label' => true,
+                'no-label'      => true,
             )
         );
     }
@@ -122,6 +123,12 @@ class Coupon extends BaseBlock {
         $copied_message = Utils::get_string( $settings, 'copiedMessage', __( 'Copied!', 'fooconvert' ) );
         if ( !empty( $copied_message ) ) {
             $data['copiedMessage'] = $copied_message;
+        }
+
+        $button_settings = $this->get_settings( $attributes, 'button' );
+        $button_layout = Utils::get_string( $button_settings, 'layout' );
+        if ( !empty( $button_layout ) ) {
+            $data['buttonLayout'] = $button_layout;
         }
 
         $code_settings = $this->get_settings( $attributes, 'code' );

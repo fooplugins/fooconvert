@@ -44,7 +44,7 @@ return array(
 					'backgroundAttachment' => 'scroll'
 				),
 				'border' => array(
-					'shadow' => '6px 6px 9px rgba(0, 0, 0, 0.2)',
+					'shadow' => '6px 6px 9px #00000000',
 					'color' => '#F7941D',
 					'style' => 'solid',
 					'width' => '5px'
@@ -212,7 +212,7 @@ return array(
 													'radius' => '10px',
 													'color' => '#FFFFFF',
 													'width' => '2px',
-													'shadow' => '6px 6px 9px rgba(0, 0, 0, 0.2)'
+													'shadow' => '6px 6px 9px #00000000'
 												)
 											)
 										)
@@ -299,7 +299,7 @@ return array(
                     'backgroundSize' => 'cover',
                 ),
                 'border'     => array(
-                    'shadow' => '6px 6px 9px rgba(0, 0, 0, 0.2)',
+                    'shadow' => '6px 6px 9px #00000000',
                     'color'  => '#F7941D',
                     'style'  => 'solid',
                     'width'  => '5px'
@@ -469,3 +469,4 @@ return array(
         'block'
     )
 );
+

@@ -14,7 +14,7 @@ return array(
                     'text'       => '#ffffff'
                 ),
                 'border'     => array(
-                    'shadow' => '6px 6px 9px rgba(0, 0, 0, 0.2)',
+                    'shadow' => '6px 6px 9px #00000000',
                     'color'  => '#0F6F00',
                     'style'  => 'solid',
                     'width'  => '0px',
@@ -165,7 +165,7 @@ return array(
 											'radius' => '16px',
 											'style' => 'none',
 											'width' => '0px',
-											'shadow' => '6px 6px 9px rgba(0, 0, 0, 0.2)'
+											'shadow' => '6px 6px 9px #00000000'
 										),
 										'typography' => array(
 											'fontSize' => '1rem'
@@ -247,3 +247,4 @@ return array(
         'block'
     )
 );
+

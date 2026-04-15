@@ -17,7 +17,7 @@ return array(
 					'radius' => '0px',
 					'style' => 'none',
 					'width' => '0px',
-					'shadow' => '6px 6px 9px rgba(0, 0, 0, 0.2)',
+					'shadow' => '6px 6px 9px #00000000',
 					'radius' => '16px'
 				),
                 'dimensions' => array(
@@ -37,7 +37,7 @@ return array(
                     'color'  => '#0F6F00',
                     'style'  => 'solid',
                     'width'  => '1px',
-                    'shadow' => '6px 6px 9px rgba(0, 0, 0, 0.2)'
+                    'shadow' => '6px 6px 9px #00000000'
                 ),
                 'color'  => array(
                     'background' => '#0F6F00',
@@ -162,7 +162,7 @@ return array(
 										),
 										'border' => array(
 											'radius' => '15px',
-											'shadow' => '6px 6px 9px rgba(0, 0, 0, 0.2)'
+											'shadow' => '6px 6px 9px #00000000'
 										),
 										'dimensions' => array(
 											'margin' => '17px',
@@ -244,3 +244,4 @@ return array(
         'block'
     )
 );
+

@@ -21,7 +21,7 @@ return array(
                     'color'  => '#0F6F00', // #0F6F00
                     'style'  => 'solid',
                     'width'  => '1px',
-                    'shadow' => '6px 6px 9px rgba(0, 0, 0, 0.2)'
+                    'shadow' => '6px 6px 9px #00000000'
                 ),
                 'color'  => array(
                     'background' => '#0F6F00',  // #0F6F00
@@ -53,7 +53,7 @@ return array(
 					'radius' => '0px',
 					'style' => 'none',
 					'width' => '0px',
-					'shadow' => '6px 6px 9px rgba(0, 0, 0, 0.2)'
+					'shadow' => '6px 6px 9px #00000000'
 				)
             )
         )
@@ -240,3 +240,4 @@ return array(
         'block'
     )
 );
+

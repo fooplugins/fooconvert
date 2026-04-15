@@ -17,6 +17,7 @@ export { default as isStringNotEmpty } from "./isStringNotEmpty";
 export { default as isStringOrUndefined } from "./isStringOrUndefined";
 export { default as logEvent, LOG_EVENT_TYPES } from "./logEvent";
 export { default as resetCountdown } from "./resetCountdown";
+export { default as clearCountdown } from "./clearCountdown";
 export { default as setCookie } from "./setCookie";
 export { default as setCountdown } from "./setCountdown";
 export { default as setValidationAttributes } from "./setValidationAttributes";

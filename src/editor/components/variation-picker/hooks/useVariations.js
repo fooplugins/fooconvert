@@ -1,7 +1,8 @@
 import { useDispatch, useSelect } from "@wordpress/data";
 import { createBlocksFromInnerBlocksTemplate, store as blocksStore } from "@wordpress/blocks";
 import { store as blockEditorStore } from "@wordpress/block-editor";
-import { hasKeys } from "@steveush/utils";
+import { store as editorStore } from "@wordpress/editor";
+import { hasKeys, isPlainObject } from "@steveush/utils";
 
 /**
  * Helper hook for block variations.
@@ -14,6 +15,8 @@ const useVariations = ( clientId, resetAttributes = {} ) => {
     const block = useSelect( select => select( blockEditorStore ).getBlock( clientId ), [ clientId ] );
     const canReset = hasKeys( resetAttributes );
     const { replaceInnerBlocks, updateBlockAttributes } = useDispatch( blockEditorStore );
+    const { editPost } = useDispatch( editorStore );
+    const meta = useSelect( select => select( editorStore )?.getEditedPostAttribute( "meta" ) || {}, [ clientId ] );
     const { defaultVariation, blockVariations } = useSelect( select => {
         const { getBlockVariations, getDefaultBlockVariation } = select( blocksStore );
         return {
@@ -21,6 +24,7 @@ const useVariations = ( clientId, resetAttributes = {} ) => {
             blockVariations: getBlockVariations( block.name )
         };
     }, [ block.name ] );
+
     return {
         canReset,
         defaultVariation,
@@ -38,6 +42,16 @@ const useVariations = ( clientId, resetAttributes = {} ) => {
             await replaceInnerBlocks( clientId, innerBlocks, false );
             // noinspection JSCheckFunctionSignatures
             await updateBlockAttributes( clientId, attributes, false );
+
+            if ( isPlainObject( value?.meta ) ) {
+                // noinspection JSCheckFunctionSignatures
+                await editPost( {
+                    meta: {
+                        ...meta,
+                        ...value.meta
+                    }
+                } );
+            }
         }
     };
 };

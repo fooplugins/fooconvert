@@ -20,6 +20,7 @@ $cases = array(
     __DIR__ . '/cases/demo-content-pro-top-performers.php',
     __DIR__ . '/cases/confetti-block.php',
     __DIR__ . '/cases/free-shipping-progress-block.php',
+    __DIR__ . '/cases/pro-admin-templates.php',
     __DIR__ . '/cases/sales-attribution-woocommerce.php',
 );
 

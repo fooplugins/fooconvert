@@ -19,7 +19,7 @@ return array(
 					'backgroundSize' => 'cover'
 				),
 				'border' => array(
-					'shadow' => '6px 6px 9px rgba(0, 0, 0, 0.2)',
+					'shadow' => '6px 6px 9px #00000000',
 					'color' => '#FFFFFF',
 					'style' => 'solid',
 					'width' => '5px'
@@ -212,7 +212,7 @@ return array(
                     'backgroundSize' => 'cover',
                 ),
                 'border'     => array(
-                    'shadow' => '6px 6px 9px rgba(0, 0, 0, 0.2)',
+                    'shadow' => '6px 6px 9px #00000000',
                     'color'  => '#FFFFFF',
                     'style'  => 'solid',
                     'width'  => '5px'
@@ -226,7 +226,7 @@ return array(
         'closeButton' => array(
             'styles' => array(
                 'color' => array(
-                    'background' => 'rgba(255,255,255,0.4)',
+                    'background' => '#FFFFFF00',
                     'icon' => '#ffffff'
                 ),
                 'dimensions' => array(
@@ -384,3 +384,4 @@ return array(
         'block'
     )
 );
+

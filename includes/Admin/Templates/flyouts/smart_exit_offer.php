@@ -25,7 +25,7 @@ return array(
 		'openButton' => array(
 			'styles' => array(
 				'border' => array(
-					'shadow' => '6px 6px 9px rgba(0, 0, 0, 0.2)'
+					'shadow' => '6px 6px 9px #00000000'
 				),
 				'color' => array(
 					'background' => '#7B1FBD',
@@ -65,7 +65,7 @@ return array(
 				),
 				'border' => array(
 					'radius' => '30px',
-					'shadow' => '6px 6px 9px rgba(0, 0, 0, 0.2)',
+					'shadow' => '6px 6px 9px #00000000',
 					'color' => '#FFFFFF',
 					'style' => 'solid',
 					'width' => '5px'
@@ -275,3 +275,4 @@ return array(
 		'block'
 	)
 );
+

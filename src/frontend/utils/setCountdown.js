@@ -5,12 +5,12 @@ import setLocalData from "./setLocalData";
 import setSessionData from "./setSessionData";
 import { COUNTDOWN_STORAGE_KEY } from "./getCountdown";
 
-const setCountdown = ( countdownId, value, persist ) => {
+const setCountdown = ( countdownId, value, persist, overwrite = false ) => {
     let countdownData = persist ? getLocalData( COUNTDOWN_STORAGE_KEY ) : getSessionData( COUNTDOWN_STORAGE_KEY );
     if ( !isPlainObject( countdownData ) ) {
         countdownData = {};
     }
-    if ( !Object.hasOwn( countdownData, countdownId ) ) {
+    if ( overwrite || !Object.hasOwn( countdownData, countdownId ) ) {
         countdownData[ countdownId ] = value;
         persist ? setLocalData( COUNTDOWN_STORAGE_KEY, countdownData ) : setSessionData( COUNTDOWN_STORAGE_KEY, countdownData );
     }
