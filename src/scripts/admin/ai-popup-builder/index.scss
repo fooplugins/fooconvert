@@ -815,11 +815,29 @@
 }
 
 .fc-ai-popup-builder__preview-modal {
+    --fc-ai-border: #dcdcde;
+    --fc-ai-border-strong: #c3c4c7;
+    --fc-ai-surface: #ffffff;
+    --fc-ai-surface-subtle: #f6f7f7;
+    --fc-ai-text: #1d2327;
+    --fc-ai-muted: #50575e;
+    --fc-ai-accent: #2271b1;
+    --fc-ai-accent-soft: rgba(34, 113, 177, 0.08);
     width: min(1180px, calc(100vw - 40px));
+    color: var(--fc-ai-text);
 }
 
 .fc-ai-popup-builder__context-modal {
+    --fc-ai-border: #dcdcde;
+    --fc-ai-border-strong: #c3c4c7;
+    --fc-ai-surface: #ffffff;
+    --fc-ai-surface-subtle: #f6f7f7;
+    --fc-ai-text: #1d2327;
+    --fc-ai-muted: #50575e;
+    --fc-ai-accent: #2271b1;
+    --fc-ai-accent-soft: rgba(34, 113, 177, 0.08);
     width: min(920px, calc(100vw - 40px));
+    color: var(--fc-ai-text);
 }
 
 .fc-ai-popup-builder__context-modal--wide {
