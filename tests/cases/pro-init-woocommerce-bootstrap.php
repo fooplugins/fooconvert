@@ -210,6 +210,10 @@ namespace {
         }
     }
 
+    if ( !class_exists( 'FC_Test_WooCommerce', false ) ) {
+        class FC_Test_WooCommerce {}
+    }
+
     /**
      * @param string $hook Hook name.
      * @param mixed $callback Hook callback.
@@ -351,7 +355,7 @@ namespace {
         'Init should always bootstrap the coupon search REST service.'
     );
 
-    class_alias( \stdClass::class, 'WooCommerce' );
+    class_alias( FC_Test_WooCommerce::class, 'WooCommerce' );
 
     run_hook( 'plugins_loaded' );
 

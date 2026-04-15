@@ -5,7 +5,7 @@ namespace FooPlugins\FooConvert\Admin\Templates;
 if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
 
     /**
-     * Registers bundled widget templates and their supporting fonts.
+     * Registers bundled popup templates and their supporting fonts.
      */
     class Init {
         /**
@@ -16,7 +16,7 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
         function __construct() {
             add_filter( 'fooconvert_editor_variations-fc-bar', array( $this, 'add_editor_bar_variations' ) );
             add_filter( 'fooconvert_editor_variations-fc-flyout', array( $this, 'add_editor_flyout_variations' ) );
-            add_filter( 'fooconvert_editor_variations-fc-popup', array( $this, 'add_editor_popup_variations' ) );
+            add_filter( 'fooconvert_editor_variations-fc-popup', array( $this, 'add_editor_overlay_variations' ) );
             add_filter( 'fooconvert_get_fonts', array( $this, 'add_fonts' ) );
         }
 
@@ -67,17 +67,17 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
         }
 
         /**
-         * Appends bundled popup template variations for the editor.
+         * Appends bundled overlay template variations for the editor.
          *
          * @param array<int,array<string,mixed>> $variations Existing block variations.
          * @return array<int,array<string,mixed>>
          */
-        function add_editor_popup_variations( $variations ) {
-            $variations[] = require __DIR__ . '/popups/watch_the_video.php';
-            $variations[] = require __DIR__ . '/popups/special_offer.php';
-            $variations[] = require __DIR__ . '/popups/digital_download_signup.php';
-            $variations[] = require __DIR__ . '/popups/smart_exit_offer.php';
-            $variations[] = require __DIR__ . '/popups/newsletter_subscribe.php';
+        function add_editor_overlay_variations( $variations ) {
+            $variations[] = require __DIR__ . '/overlays/watch_the_video.php';
+            $variations[] = require __DIR__ . '/overlays/special_offer.php';
+            $variations[] = require __DIR__ . '/overlays/digital_download_signup.php';
+            $variations[] = require __DIR__ . '/overlays/smart_exit_offer.php';
+            $variations[] = require __DIR__ . '/overlays/newsletter_subscribe.php';
 
             return $variations;
         }

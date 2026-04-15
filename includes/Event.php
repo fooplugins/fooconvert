@@ -5,7 +5,7 @@ namespace FooPlugins\FooConvert;
 if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
 
     /**
-     * The event class that manages creating events for a widget.
+     * The event class that manages creating events for a popup.
      */
     class Event {
         /**
@@ -26,7 +26,7 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
 
                 if ( is_null( $user_id ) && is_user_logged_in() ) {
                     $user_id = get_current_user_id();
-                    $anonymous_user_guid = null; //TODO : check if this should be null.
+                    $anonymous_user_guid = null;
                 }
 
                 if ( $user_id > 0 ) {
@@ -35,19 +35,17 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
                 } else {
                     $data['user_id'] = 0;
 
-                    // unslash and sanitize.
                     $remote_addr = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
                     $user_agent = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) );
 
                     if ( empty( $anonymous_user_guid ) && isset( $remote_addr ) && isset( $user_agent ) ) {
-                        // We could not determine the anonymous user GUID using the localStorage or cookie.
-                        // Try and create a random GUID from the IP address and user agent.
+                        // Fall back to a stable anonymous fingerprint when the
+                        // frontend did not supply a GUID from local storage/cookies.
                         $anonymous_user_guid = hash( 'sha256', $remote_addr . $user_agent );
                     }
                     $data['anonymous_user_guid'] = $anonymous_user_guid;
                 }
 
-                // Convert empty values to null.
                 foreach ( $data as $key => $value ) {
                     if ( is_array( $value ) && empty( $value ) ) {
                         $data[$key] = null;
@@ -106,15 +104,15 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
         }
 
         /**
-         * Get a summary of the events for a given widget.
+         * Get a summary of the events for a given popup.
          *
-         * @param int $widget_id The ID of the widget to get the summary for.
+         * @param int $post_id The ID of the popup to get the summary for.
          * @param bool $force
          * @return array An associative array of event metric data.
          */
-        public function get_widget_metrics( $widget_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
+        public function get_popup_metrics( $post_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
 
-            $metric_defaults = apply_filters( 'fooconvert_widget_metrics_defaults', [
+            $metric_defaults = apply_filters( 'fooconvert_popup_metrics_defaults', [
                 'total_events'          => 0,
                 'total_views'           => 0,
                 'total_unique_visitors' => 0,
@@ -123,9 +121,9 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
                 'total_engagements'     => 0,
             ] );
 
-            return apply_filters( 'fooconvert_widget_metrics',
-                array_merge( $metric_defaults, Data\Query::get_widget_metrics( $widget_id, $days ) ),
-                $widget_id );
+            return apply_filters( 'fooconvert_popup_metrics',
+                array_merge( $metric_defaults, Data\Query::get_popup_metrics( $post_id, $days ) ),
+                $post_id );
         }
 
         /**
@@ -138,19 +136,19 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
         }
 
         /**
-         * Deletes all events for a given widget ID.
+         * Deletes all events for a given popup ID.
          *
-         * @param int $widget_id The ID of the widget to delete events for.
+         * @param int $post_id The ID of the popup to delete events for.
          *
          * @return int The number of rows deleted.
          */
-        public function delete_widget_events( $widget_id ) {
-            return Data\Query::delete_widget_events( $widget_id );
+        public function delete_popup_events( $post_id ) {
+            return Data\Query::delete_popup_events( $post_id );
         }
 
 
         /**
-         * Deletes all events that are not associated with a widget in the posts table.
+         * Deletes all events that are not associated with a popup in the posts table.
          *
          * @return int The number of events deleted.
          */
@@ -166,18 +164,18 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
          *     'Table' => string The name of the table.
          *     'Size_in_MB' => float The size of the table in megabytes.
          *     'Number_of_Rows' => int The number of rows in the table.
-         *     'Unique_Widgets' => int The number of unique widgets represented in the table.
-         *     'Orphaned_Events' => int The number of events that are not associated with a widget in the posts table.
-         *     'Unique_Orphaned_Widgets' => int The number of unique widgets that are not associated with a widget in the posts table.
+         *     'Unique_Popups' => int The number of unique popups represented in the table.
+         *     'Orphaned_Events' => int The number of events that are not associated with a popup in the posts table.
+         *     'Unique_Orphaned_Popups' => int The number of unique popups that are not associated with a popup in the posts table.
          */
         public function get_event_table_stats() {
             return Data\Query::get_events_table_stats();
         }
 
         /**
-         * Returns an array of daily activity for the given widget.
+         * Returns an array of daily activity for the given popup.
          *
-         * @param int $widget_id The ID of the widget.
+         * @param int $post_id The ID of the popup.
          * @param int $days The number of days to fetch (default is 7).
          *
          * @return array An array of daily activity, with the following structure:
@@ -186,11 +184,10 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
          *     'clicks' => int The number of clicks
          *     'unique_visitors' => int The number of unique visitors
          */
-        public function get_widget_daily_activity( $widget_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
-            // Sanitize input
-            $widget_id = intval( $widget_id );
+        public function get_popup_daily_activity( $post_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
+            $post_id = intval( $post_id );
 
-            $results = Data\Query::get_widget_daily_activity( $widget_id, $days );
+            $results = Data\Query::get_popup_daily_activity( $post_id, $days );
 
             if ( count( $results ) > 0 && $days < 0 ) {
                 // calculate how many days ago the first event was
@@ -211,7 +208,7 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
 
                 $matching_data = $this->find_row_from_results( $results, 'event_date', $date );
 
-                $default_data = apply_filters( 'fooconvert_widget_daily_activity_default', [
+                $default_data = apply_filters( 'fooconvert_popup_daily_activity_default', [
                     'event_date'      => $date,
                     'events'          => 0,
                     'views'           => 0,
@@ -222,7 +219,7 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
                 $final_data[] = $matching_data ?? $default_data;
             }
 
-            return apply_filters( 'fooconvert_widget_daily_activity', $final_data, $widget_id, $days );
+            return apply_filters( 'fooconvert_popup_daily_activity', $final_data, $post_id, $days );
         }
 
         /**
@@ -243,40 +240,40 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
         }
 
         /**
-         * Gets all widget IDs with events.
+         * Gets all popup IDs with events.
          *
-         * @return int[] The IDs of all widgets with events.
+         * @return int[] The IDs of all popups with events.
          */
-        public function get_all_widgets_with_events() {
-            $widgets = Data\Query::get_widgets_with_events();
-            if ( empty( $widgets ) ) {
+        public function get_all_popups_with_events() {
+            $popups = Data\Query::get_popups_with_events();
+            if ( empty( $popups ) ) {
                 return [];
             }
 
-            return array_column( $widgets, 'widget_id' );
+            return array_column( $popups, 'post_id' );
         }
 
         /**
-         * Gets all widget IDs with no events.
+         * Gets all popup IDs with no events.
          *
-         * @return int[] The IDs of all widgets with ZERO events.
+         * @return int[] The IDs of all popups with ZERO events.
          */
-        public function get_all_widgets_with_no_events() {
-            $widgets = Data\Query::get_widgets_with_no_events();
-            if ( empty( $widgets ) ) {
+        public function get_all_popups_with_no_events() {
+            $popups = Data\Query::get_popups_with_no_events();
+            if ( empty( $popups ) ) {
                 return [];
             }
 
-            return array_column( $widgets, 'widget_id' );
+            return array_column( $popups, 'post_id' );
         }
 
         /**
-         * Gets all widget metrics for all widgets.
+         * Gets all popup metrics for all popups.
          *
-         * @return array An associative array of widget metrics.
+         * @return array An associative array of popup metrics.
          */
-        public function get_all_widget_metrics() {
-            $metrics = Data\Query::get_all_widget_metrics();
+        public function get_all_popup_metrics() {
+            $metrics = Data\Query::get_all_popup_metrics();
 
             if ( empty( $metrics ) ) {
                 return [];
@@ -286,9 +283,9 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
 
             foreach( $metrics as $metric ) {
                 $enriched_metrics[] = apply_filters( 
-                    'fooconvert_widget_metrics',
+                    'fooconvert_popup_metrics',
                     $metric,
-                    $metric['widget_id']
+                    $metric['post_id']
                 );
             }
 
@@ -318,20 +315,19 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
         }
 
         /**
-         * Gets all events of a given type for a given widget, for the last X days.
+         * Gets all events of a given type for a given popup, for the last X days.
          *
-         * @param int $widget_id The ID of the widget.
+         * @param int $post_id The ID of the popup.
          * @param string $event_type The type of event to retrieve (e.g. 'view', 'click', 'conversion', 'dismiss').
          * @param int $days The number of days to fetch (default is 7).
          *
-         * @return array An array of events for the widget
+         * @return array An array of events for the popup
          */
-        public function get_widget_events_of_type( $widget_id, $event_type, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
-            // Sanitize input
-            $widget_id = intval( $widget_id );
-            $days = max( 1, (int)$days ); // Ensure days is at least 1
+        public function get_popup_events_of_type( $post_id, $event_type, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
+            $post_id = intval( $post_id );
+            $days = max( 1, (int) $days );
 
-            return Data\Query::get_widget_events_of_type( $widget_id, $event_type, $days );
+            return Data\Query::get_popup_events_of_type( $post_id, $event_type, $days );
         }
     }
 }

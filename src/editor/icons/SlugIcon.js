@@ -4,7 +4,7 @@ import getIconBySlug from "./getIconBySlug";
 
 /**
  *
- * @param {{ slug: string, size?: string }} props
+ * @param {{ slug: string, size?: string|number }} props
  * @returns {JSX.Element}
  */
 const SlugIcon = ( props ) => {

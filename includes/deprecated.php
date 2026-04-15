@@ -5,31 +5,27 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Returns the single registered widget post type used by FooConvert.
+ * Returns the single registered popup post type used by FooConvert.
  *
  * @deprecated 2.0.0 Use FOOCONVERT_CPT_POPUP directly.
  *
  * @return string
  */
 function fooconvert_get_registered_post_type() {
-    if ( function_exists( '_deprecated_function' ) ) {
-        _deprecated_function( __FUNCTION__, '2.0.0', 'FOOCONVERT_CPT_POPUP' );
-    }
+    _deprecated_function( __FUNCTION__, '2.0.0', 'FOOCONVERT_CPT_POPUP' );
 
     return FOOCONVERT_CPT_POPUP;
 }
 
 /**
- * Returns the registered widget post types.
+ * Returns the registered popup post types.
  *
  * @deprecated 2.0.0 Use array( FOOCONVERT_CPT_POPUP ) or FOOCONVERT_CPT_POPUP directly.
  *
  * @return string[]
  */
 function fooconvert_get_post_types() {
-    if ( function_exists( '_deprecated_function' ) ) {
-        _deprecated_function( __FUNCTION__, '2.0.0', 'array( FOOCONVERT_CPT_POPUP )' );
-    }
+    _deprecated_function( __FUNCTION__, '2.0.0', 'array( FOOCONVERT_CPT_POPUP )' );
 
     return array( FOOCONVERT_CPT_POPUP );
 }
@@ -43,9 +39,7 @@ function fooconvert_get_post_types() {
  * @return bool
  */
 function fooconvert_is_valid_post_type( $post_type ) {
-    if ( function_exists( '_deprecated_function' ) ) {
-        _deprecated_function( __FUNCTION__, '2.0.0', '$post_type === FOOCONVERT_CPT_POPUP' );
-    }
+    _deprecated_function( __FUNCTION__, '2.0.0', '$post_type === FOOCONVERT_CPT_POPUP' );
 
     return $post_type === FOOCONVERT_CPT_POPUP;
 }

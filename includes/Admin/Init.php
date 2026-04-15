@@ -18,7 +18,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             add_action( 'admin_menu', array( $this, 'reorder_menu' ), 999 );
             add_action( 'in_admin_header', array( $this, 'add_custom_header' ) );
             add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueues' ) );
-            add_action( 'load-post-new.php', array( $this, 'maybe_redirect_widget_creation' ) );
+            add_action( 'load-post-new.php', array( $this, 'maybe_redirect_popup_creation' ) );
 
             new namespace\Stats();
             new namespace\Dashboard();
@@ -74,8 +74,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                 __( 'Choose Popup Type', 'fooconvert' ),
                 __( 'Choose Popup Type', 'fooconvert' ),
                 'manage_options',
-                FOOCONVERT_MENU_SLUG_WIDGET_CHOOSER,
-                array( $this, 'render_widget_type_chooser' )
+                FOOCONVERT_MENU_SLUG_POPUP_CHOOSER,
+                array( $this, 'render_popup_type_chooser' )
             );
 
             do_action( 'fooconvert_admin_menu_after_post_types' );
@@ -128,11 +128,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
         }
 
         /**
-         * Redirects generic popup creation requests to the widget type chooser.
+         * Redirects generic popup creation requests to the popup type chooser.
          *
          * @return void
          */
-        public function maybe_redirect_widget_creation(): void {
+        public function maybe_redirect_popup_creation(): void {
             $post_type = isset( $_GET['post_type'] ) ? sanitize_key( wp_unslash( $_GET['post_type'] ) ) : 'post';
             if ( $post_type !== FOOCONVERT_CPT_POPUP ) {
                 return;
@@ -142,16 +142,16 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                 return;
             }
 
-            wp_safe_redirect( fooconvert_admin_url_widget_type_chooser() );
+            wp_safe_redirect( fooconvert_admin_url_popup_type_chooser() );
             exit;
         }
 
         /**
-         * Renders the widget type chooser used before opening the editor.
+         * Renders the popup type chooser used before opening the editor.
          *
          * @return void
          */
-        public function render_widget_type_chooser(): void {
+        public function render_popup_type_chooser(): void {
             $cards = array(
                 FOOCONVERT_POPUP_TYPE_BAR    => array(
                     'title'       => __( 'Bar', 'fooconvert' ),
@@ -161,13 +161,13 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                     'title'       => __( 'Flyout', 'fooconvert' ),
                     'description' => __( 'Create a side flyout with template variations and the usual FooConvert controls.', 'fooconvert' ),
                 ),
-                FOOCONVERT_POPUP_TYPE_POPUP  => array(
-                    'title'       => __( 'Popup', 'fooconvert' ),
-                    'description' => __( 'Create a centered popup and continue into the normal template picker flow.', 'fooconvert' ),
+                FOOCONVERT_POPUP_TYPE_OVERLAY => array(
+                    'title'       => __( 'Overlay', 'fooconvert' ),
+                    'description' => __( 'Create a centered overlay and continue into the normal template picker flow.', 'fooconvert' ),
                 ),
             );
             ?>
-            <div class="wrap fooconvert-widget-chooser">
+            <div class="wrap fooconvert-popup-chooser">
                 <h1><?php esc_html_e( 'Choose a Popup Type', 'fooconvert' ); ?></h1>
                 <p><?php esc_html_e( 'Pick the kind of popup you want to create before choosing a template.', 'fooconvert' ); ?></p>
                 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:920px;margin-top:24px;">
@@ -176,12 +176,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                             <h2 style="margin-top:0;"><?php echo esc_html( $card['title'] ); ?></h2>
                             <p><?php echo esc_html( $card['description'] ); ?></p>
                             <p style="margin-bottom:0;">
-                                <a class="button button-primary" href="<?php echo esc_url( fooconvert_admin_url_widget_new( $popup_type ) ); ?>">
+                                <a class="button button-primary" href="<?php echo esc_url( fooconvert_admin_url_popup_new( $popup_type ) ); ?>">
                                     <?php
-                                    printf(
-                                        esc_html__( 'Create %s', 'fooconvert' ),
-                                        esc_html( $card['title'] )
-                                    );
+                                    /* translators: %s is the popup type card title, for example "Bar" or "Overlay". */
+                                    $create_label = sprintf( esc_html__( 'Create %s', 'fooconvert' ), $card['title'] );
+                                    echo esc_html( $create_label );
                                     ?>
                                 </a>
                             </p>

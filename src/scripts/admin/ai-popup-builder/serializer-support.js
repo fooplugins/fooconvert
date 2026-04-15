@@ -1,18 +1,18 @@
 import signUpMetadata from "../../../blocks/sign-up/block.json";
-import barMetadata from "../../../widgets/bar/block.json";
-import barOpenButtonMetadata from "../../../widgets/bar/editor/blocks/open-button/block.json";
-import barContainerMetadata from "../../../widgets/bar/editor/blocks/container/block.json";
-import barCloseButtonMetadata from "../../../widgets/bar/editor/blocks/container/blocks/close-button/block.json";
-import barContentMetadata from "../../../widgets/bar/editor/blocks/container/blocks/content/block.json";
-import flyoutMetadata from "../../../widgets/flyout/block.json";
-import flyoutOpenButtonMetadata from "../../../widgets/flyout/editor/blocks/open-button/block.json";
-import flyoutContainerMetadata from "../../../widgets/flyout/editor/blocks/container/block.json";
-import flyoutCloseButtonMetadata from "../../../widgets/flyout/editor/blocks/container/blocks/close-button/block.json";
-import flyoutContentMetadata from "../../../widgets/flyout/editor/blocks/container/blocks/content/block.json";
-import popupMetadata from "../../../widgets/popup/block.json";
-import popupContainerMetadata from "../../../widgets/popup/editor/blocks/container/block.json";
-import popupCloseButtonMetadata from "../../../widgets/popup/editor/blocks/container/blocks/close-button/block.json";
-import popupContentMetadata from "../../../widgets/popup/editor/blocks/container/blocks/content/block.json";
+import barMetadata from "../../../popups/bar/block.json";
+import barOpenButtonMetadata from "../../../popups/bar/editor/blocks/open-button/block.json";
+import barContainerMetadata from "../../../popups/bar/editor/blocks/container/block.json";
+import barCloseButtonMetadata from "../../../popups/bar/editor/blocks/container/blocks/close-button/block.json";
+import barContentMetadata from "../../../popups/bar/editor/blocks/container/blocks/content/block.json";
+import flyoutMetadata from "../../../popups/flyout/block.json";
+import flyoutOpenButtonMetadata from "../../../popups/flyout/editor/blocks/open-button/block.json";
+import flyoutContainerMetadata from "../../../popups/flyout/editor/blocks/container/block.json";
+import flyoutCloseButtonMetadata from "../../../popups/flyout/editor/blocks/container/blocks/close-button/block.json";
+import flyoutContentMetadata from "../../../popups/flyout/editor/blocks/container/blocks/content/block.json";
+import popupMetadata from "../../../popups/overlay/block.json";
+import popupContainerMetadata from "../../../popups/overlay/editor/blocks/container/block.json";
+import popupCloseButtonMetadata from "../../../popups/overlay/editor/blocks/container/blocks/close-button/block.json";
+import popupContentMetadata from "../../../popups/overlay/editor/blocks/container/blocks/content/block.json";
 
 export const fooconvertBlockMetadata = [
     popupMetadata,

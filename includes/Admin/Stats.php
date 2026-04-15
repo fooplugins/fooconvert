@@ -22,17 +22,17 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
             add_action( 'admin_menu', array( $this, 'register_menu' ) );
             add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
             add_action( 'admin_init', array( $this, 'register_columns' ) );
-            add_action( 'wp_ajax_fooconvert_fetch_stats', array( $this, 'fetch_widget_stats' ) );
-            add_action( 'admin_init', array( $this, 'enqueue_widget' ) );
+            add_action( 'wp_ajax_fooconvert_fetch_stats', array( $this, 'fetch_popup_stats' ) );
+            add_action( 'admin_init', array( $this, 'enqueue_popup' ) );
             add_action( 'admin_footer', array( $this, 'render_enqueued' ) );
-            add_filter( 'fooconvert-widget-frontend-attributes', array( $this, 'override_widget_attributes' ), 10, 4 );
+            add_filter( 'fooconvert-popup-frontend-attributes', array( $this, 'override_popup_attributes' ), 10, 4 );
         }
 
         /**
-         * Overrides widget attributes.
+         * Overrides popup attributes.
          */
-        function override_widget_attributes( $attributes, $instance_id, $tag_name, $block ) {
-            if ( fooconvert_is_admin_stats_page() ) {
+        function override_popup_attributes( $attributes, $instance_id, $tag_name, $block ) {
+            if ( fooconvert_is_popup_stats_page() ) {
                 $attributes['settings']['trigger'] = [
                     'version'   => 2,
                     'lifetime'  => 'page',
@@ -44,7 +44,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                         [
                             'event' => 'fc.anchor.click',
                             'where' => [
-                                'ids' => [ 'fooconvert-widget-preview' ]
+                                'ids' => [ 'fooconvert-popup-preview' ]
                             ]
                         ]
                     ]
@@ -62,41 +62,41 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
         }
 
         /**
-         * Enqueues widget.
+         * Enqueues popup.
          */
-        function enqueue_widget() {
-            if ( fooconvert_is_admin_stats_page() ) {
+        function enqueue_popup() {
+            if ( fooconvert_is_popup_stats_page() ) {
                 // This is what the block editor loads behind the scenes
                 //require_once ABSPATH . 'wp-includes/block-editor.php';
                 //register_core_block_types();
 
-                $widget_id = absint( $_GET['widget_id'] );
+                $post_id = absint( $_GET['post_id'] );
 
-                // We need to make sure the widget is enqueued for the admin stats page.
-                FooConvert::plugin()->display_rules->add_to_queue( $widget_id, 'admin_stats_preview' );
+                // We need to make sure the popup is enqueued for the admin stats page.
+                FooConvert::plugin()->display_rules->add_to_queue( $post_id, 'admin_stats_preview' );
             }
         }
 
         /**
-         * AJAX callback to fetch widget stats.
+         * AJAX callback to fetch popup stats.
          *
-         * This function fetches the widget ID from the request and gets the widget
+         * This function fetches the popup ID from the request and gets the popup
          * summary data from the Event class. It then prepares the response data
          * and sends it back to the client as JSON.
          *
          * @since 1.0.0
          */
-        function fetch_widget_stats() {
+        function fetch_popup_stats() {
             if ( isset( $_POST['nonce'] ) ) {
                 // Sanitize the nonce
                 $nonce = sanitize_text_field( wp_unslash( $_POST['nonce'] ) );
 
                 // Verify the nonce
-                if ( !wp_verify_nonce( $nonce, 'fooconvert-widget-stats' ) ) {
+                if ( !wp_verify_nonce( $nonce, 'fooconvert-popup-stats' ) ) {
                     wp_die( esc_html__( 'Invalid nonce!!', 'fooconvert' ) );
                 }
 
-                $widget_id = isset( $_POST['widget_id'] ) ? intval( sanitize_text_field( wp_unslash( $_POST['widget_id'] ) ) ) : 0;
+                $post_id = isset( $_POST['post_id'] ) ? intval( sanitize_text_field( wp_unslash( $_POST['post_id'] ) ) ) : 0;
 
                 $saved_days = intval( get_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, FOOCONVERT_METRICS_DAYS_DEFAULT ) );
                 $days = isset( $_POST['days'] ) ? intval( sanitize_text_field( wp_unslash( $_POST['days'] ) ) ) : $saved_days;
@@ -111,7 +111,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                     $days = fooconvert_retention();
                 }
 
-                if ( $widget_id === 0 ) {
+                if ( $post_id === 0 ) {
                     wp_die( esc_html__( 'Invalid popup ID!!', 'fooconvert' ) );
                 }
 
@@ -119,14 +119,14 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
 
                 // Get metrics first.
                 $data = [
-                    'metrics' => $event->get_widget_metrics( $widget_id, $days )
+                    'metrics' => $event->get_popup_metrics( $post_id, $days )
                 ];
 
                 $recent_activity_chart_data = [
                     'labels' => []
                 ];
 
-                $activity_meta_data = apply_filters( 'fooconvert_widget_stats_activity_meta_data', [
+                $activity_meta_data = apply_filters( 'fooconvert_popup_stats_activity_meta_data', [
                     'events'          => [
                         'label'                  => __( 'Events', 'fooconvert' ),
                         'data'                   => [],
@@ -162,7 +162,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 ] );
 
                 // Get daily activity next.
-                $daily_activity = $event->get_widget_daily_activity( $widget_id, $days );
+                $daily_activity = $event->get_popup_daily_activity( $post_id, $days );
 
                 $min = 999;
                 $max = 0;
@@ -193,7 +193,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
 
                 $data['recent_activity'] = $recent_activity_chart_data;
 
-                $data = apply_filters( 'fooconvert_widget_stats_data', $data, $widget_id, $days );
+                $data = apply_filters( 'fooconvert_popup_stats_data', $data, $post_id, $days );
 
                 // Additional dummy data
                 //            $data['conversion_rate'] = 4.6;
@@ -215,7 +215,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
          * Register a custom column for each post type that FooConvert supports.
          *
          * The custom column is titled "Stats" and contains a link to the stats page
-         * for the widget.
+         * for the popup.
          *
          * @since 1.0.0
          */
@@ -270,7 +270,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
         public function create_stats_column_content( $post_type, $column_name, $post_id ): void {
             if ( $column_name === "{$post_type}_stats" ) {
 
-                $stats_page_url = fooconvert_admin_url_widget_stats( $post_id );
+                $stats_page_url = fooconvert_admin_url_popup_stats( $post_id );
 
                 echo '<a href="' . esc_url( $stats_page_url ) . '">' . esc_html__( 'View Stats', 'fooconvert' ) . '</a>';
             }
@@ -286,15 +286,15 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
          */
         public function register_menu() {
 
-            // Register the widget stats page
+            // Register the popup stats page
             add_submenu_page(
                 FOOCONVERT_MENU_SLUG,
                 __( 'Stats', 'fooconvert' ),
                 __( 'Stats', 'fooconvert' ),
                 'manage_options',
-                FOOCONVERT_MENU_SLUG_WIDGET_STATS,
+                FOOCONVERT_MENU_SLUG_POPUP_STATS,
                 function () {
-                    require_once FOOCONVERT_INCLUDES_PATH . 'Admin/Views/widget-stats.php';
+                    require_once FOOCONVERT_INCLUDES_PATH . 'Admin/Views/popup-stats.php';
                 }
             );
         }
@@ -304,12 +304,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
          * Enqueues the necessary assets for the FooConvert stats page.
          *
          * Only loads on the FooConvert stats page (i.e. the page with the
-         * `fooconvert_page_fooconvert-widget-stats` hook).
+         * `fooconvert_page_fooconvert-popup-stats` hook).
          *
          * Enqueues the following assets:
          * - `chartjs` (a local copy of Chart.js) with version 4.4.6
-         * - `fooconvert-widget-stats-css` (the CSS for the widget stats page)
-         * - `fooconvert-widget-stats-js` (the JS for the widget stats page)
+         * - `fooconvert-popup-stats-css` (the CSS for the popup stats page)
+         * - `fooconvert-popup-stats-js` (the JS for the popup stats page)
          *   with a dependency on `chartjs`
          *
          * Also localizes the `fooconvertData` object with the following data:
@@ -322,12 +322,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
          */
         public function enqueue_assets( $hook ) {
             // Only load on the FooConvert stats page
-            if ( $hook !== 'fooconvert_page_fooconvert-widget-stats' ) {
+            if ( $hook !== 'fooconvert_page_fooconvert-popup-stats' ) {
 
-                // Hide "Widget Stats" submenu if we are NOT on the page.
+                // Hide "Popup Stats" submenu if we are NOT on the page.
                 wp_add_inline_style( 'wp-admin', '
-                    /* Hide "Widget Stats" submenu */
-                    #toplevel_page_fooconvert .wp-submenu li a[href="' . fooconvert_admin_url_widget_stats_base() . '"] {
+                    /* Hide "Popup Stats" submenu */
+                    #toplevel_page_fooconvert .wp-submenu li a[href="' . fooconvert_admin_url_popup_stats_base() . '"] {
                         display: none !important;
                     }
                 ' );
@@ -361,23 +361,23 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
             );
 
             wp_enqueue_style(
-                'fooconvert-widget-stats-css',
-                FOOCONVERT_INCLUDES_URL . 'Admin/Views/widget-stats.css',
+                'fooconvert-popup-stats-css',
+                FOOCONVERT_INCLUDES_URL . 'Admin/Views/popup-stats.css',
                 array(),
                 FOOCONVERT_VERSION
             );
 
             wp_enqueue_script(
-                'fooconvert-widget-stats-js',
-                FOOCONVERT_INCLUDES_URL . 'Admin/Views/widget-stats.js',
+                'fooconvert-popup-stats-js',
+                FOOCONVERT_INCLUDES_URL . 'Admin/Views/popup-stats.js',
                 array( 'jquery', 'chartjs' ), // Chart.js dependency
                 FOOCONVERT_VERSION,
                 true
             );
 
-            wp_localize_script( 'fooconvert-widget-stats-js', 'fooconvertData', array(
+            wp_localize_script( 'fooconvert-popup-stats-js', 'fooconvertData', array(
                 'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-                'nonce'   => wp_create_nonce( 'fooconvert-widget-stats' )
+                'nonce'   => wp_create_nonce( 'fooconvert-popup-stats' )
             ) );
 
             FooConvert::plugin()->ensure_frontend_assets_enqueued();
@@ -389,7 +389,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
             do_action('enqueue_block_assets');          // Block frontend + editor shared assets
             do_action('enqueue_block_editor_assets');   // Editor-only assets (the big one)
 
-            do_action( 'fooconvert_widget_stats_enqueue_assets' );
+            do_action( 'fooconvert_popup_stats_enqueue_assets' );
         }
     }
 }

@@ -3,10 +3,11 @@ import { cleanObject } from "@steveush/utils";
 /**
  * Apply updates to an object where both the value or updates could be undefined.
  *
- * @param {object|undefined} value
- * @param {object|undefined} updates
+ * @template {Record<string, unknown>} T
+ * @param {T|undefined} value
+ * @param {T|undefined} updates
  *
- * @returns {object|undefined}
+ * @returns {T|undefined}
  */
 const $object = ( value, updates ) => {
     return typeof updates === 'object' ? cleanObject( {

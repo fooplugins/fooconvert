@@ -25,24 +25,28 @@ export const LOG_EVENT_TYPES = {
  */
 
 /**
- * Log an event for a given widget.
+ * @typedef {Record<string, unknown>} LogEventExtraData
+ */
+
+/**
+ * Log an event for a given popup.
  *
- * @param {number} widgetId The ID of the widget to log the event for.
- * @param {string} postType The post type of the widget.
- * @param {string} template The template used within the widget.
+ * @param {number} postId The ID of the popup to log the event for.
+ * @param {string} postType The post type of the popup.
+ * @param {string} template The template used within the popup.
  * @param {string} eventType The type of event to log.
- * @param {object} [extraData] An optional object containing any extra info for the event.
+ * @param {LogEventExtraData} [extraData] An optional object containing any extra info for the event.
  * @returns {Promise<LogEventResult>}
  */
-const logEvent = ( widgetId, postType, template, eventType, extraData ) => {
-    if ( isNumber( widgetId ) && isString( postType ) && isString( template ) && isString( eventType ) ) {
+const logEvent = ( postId, postType, template, eventType, extraData ) => {
+    if ( isNumber( postId ) && isString( postType ) && isString( template ) && isString( eventType ) ) {
         const deviceType = getDeviceType();
         const sessionID = getSessionID();
         const uniqueID = getUniqueID();
         const pageURL = globalThis?.window?.location?.href;
         if ( isString( uniqueID ) && isString( sessionID ) && isString( pageURL ) ) {
             const data = {
-                widgetId,
+                postId,
                 postType,
                 template,
                 eventType,
@@ -72,7 +76,7 @@ const logEvent = ( widgetId, postType, template, eventType, extraData ) => {
                 .then( response => response.json() )
                 .catch( err => {
                     console.error( 'FooConvertLogEventError', err );
-                    return { success: false, data: 'Unexpected Error' }
+                    return { success: false, data: 'Unexpected Error' };
                 } );
         }
     }

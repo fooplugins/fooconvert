@@ -49,7 +49,7 @@ if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
                 'id'           => __( 'ID', 'fooconvert' ),
                 'email'        => __( 'Email', 'fooconvert' ),
                 'name'         => __( 'Name', 'fooconvert' ),
-                'widget_title' => __( 'Popup', 'fooconvert' ),
+                'popup_title' => __( 'Popup', 'fooconvert' ),
                 'page_url'     => __( 'Page', 'fooconvert' ),
                 'timestamp'    => __( 'Date Added', 'fooconvert' ),
             );
@@ -73,7 +73,7 @@ if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
             return array(
                 'email'        => array( 'email', false ),
                 'name'         => array( 'name', false ),
-                'widget_title' => array( 'widget_title', false ),
+                'popup_title' => array( 'popup_title', false ),
                 'timestamp'    => array( 'timestamp', true ),
             );
         }
@@ -159,7 +159,7 @@ if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
             switch ( $column_name ) {
                 case 'email':
                 case 'name':
-                case 'widget_title':
+                case 'popup_title':
                 case 'page_url':
                     return $item[ $column_name ] ?? '';
                 case 'timestamp':
@@ -229,7 +229,7 @@ if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
                     $lead['id'],
                     $lead['email'],
                     $lead['name'] ?? '',
-                    $lead['widget_title'] ?? '',
+                    $lead['popup_title'] ?? '',
                     $lead['page_url'] ?? '',
                     date_i18n( get_option( 'date_format' ), strtotime( $lead['timestamp'] ) ),
                 ) );

@@ -1,5 +1,11 @@
 import { isNumber, isPlainObject, isString } from "@steveush/utils";
 
+/**
+ * @typedef {{id: number, label: string}} EntityRecordToken
+ * @typedef {{id: number, title?: {raw?: string}}} PostTypeEntityRecord
+ * @typedef {{id: number, name?: string}} TaxonomyEntityRecord
+ */
+
 const makeToken = ( id, label ) => {
     if ( isNumber( id ) && isString( label, true ) ) {
         return { id, label };
@@ -7,23 +13,17 @@ const makeToken = ( id, label ) => {
     return null;
 };
 
-const postTypeToken = ( record ) => {
-    const { id, title: { raw: label } } = record;
-    return makeToken( id, label );
-};
+const postTypeToken = ( record ) => makeToken( record?.id, record?.title?.raw );
 
-const taxonomyToken = ( record ) => {
-    const { id, name: label } = record;
-    return makeToken( id, label );
-};
+const taxonomyToken = ( record ) => makeToken( record?.id, record?.name );
 
 /**
  * Create a token from a record of a specific kind and name.
  *
  * @param {string} kind - The kind of entity record. See `useEntityRecords` first parameter.
  * @param {string} name - The name of entity record. See `useEntityRecords` second parameter.
- * @param {object} record - The record to create a token from. See `useEntityRecords` return value.
- * @return {?EntityRecordToken} - A token object representing the record, otherwise `null`.
+ * @param {PostTypeEntityRecord|TaxonomyEntityRecord|Record<string, unknown>} record - The record to create a token from. See `useEntityRecords` return value.
+ * @return {EntityRecordToken|null} - A token object representing the record, otherwise `null`.
  */
 const createEntityRecordToken = ( kind, name, record ) => {
     if ( isString( kind ) && isString( name ) && isPlainObject( record ) ) {

@@ -615,10 +615,10 @@ if ( !class_exists( __NAMESPACE__ . '\Utils' ) ) {
         }
 
         /**
-         * Registers a block from `block.json` for the FooConvert widget editor.
+         * Registers a block from `block.json` for the FooConvert popup editor.
          *
          * The block remains available on the frontend, but in wp-admin it is only
-         * registered on the popup editor and widget stats preview screens.
+         * registered on the popup editor and popup stats preview screens.
          *
          * @param string $file_or_folder Path to the JSON file with metadata definition for the block or path to the folder where the `block.json`
          *                               file is located. If providing the path to a JSON file, the filename must end with `block.json`.
@@ -628,8 +628,13 @@ if ( !class_exists( __NAMESPACE__ . '\Utils' ) ) {
          *
          * @return WP_Block_Type|false The registered block type on success, or false on failure.
          */
-        static function register_widget_block( string $file_or_folder, array $args = array() ) {
-            if ( is_admin() && !fooconvert_is_admin_stats_page() && !fooconvert_is_admin_ai_popup_preview_page() && !fooconvert_is_admin_ai_popup_builder_page() && !self::is_post_type_editor( FOOCONVERT_CPT_POPUP ) ) {
+        static function register_popup_block( string $file_or_folder, array $args = array() ) {
+            if ( is_admin()
+                && !fooconvert_is_popup_stats_page()
+                && !fooconvert_is_admin_ai_popup_preview_page()
+                && !fooconvert_is_admin_ai_popup_builder_page()
+                && !self::is_post_type_editor( FOOCONVERT_CPT_POPUP )
+            ) {
                 return false;
             }
 
@@ -637,17 +642,17 @@ if ( !class_exists( __NAMESPACE__ . '\Utils' ) ) {
         }
 
         /**
-         * Registers multiple blocks for the FooConvert widget editor.
+         * Registers multiple blocks for the FooConvert popup editor.
          *
          * @param array{file_or_folder:string,args:array}[] $blocks
          * @return false|WP_Block_Type[]
          */
-        static function register_widget_blocks( array $blocks ) {
+        static function register_popup_blocks( array $blocks ) {
             $block_types = [];
             foreach ( $blocks as $block ) {
                 $file_or_folder = self::get_string( $block, 'file_or_folder' );
                 if ( !empty( $file_or_folder ) ) {
-                    $result = self::register_widget_block( $file_or_folder, self::get_array( $block, 'args' ) );
+                    $result = self::register_popup_block( $file_or_folder, self::get_array( $block, 'args' ) );
                     if ( $result instanceof WP_Block_Type ) {
                         $block_types[] = $result;
                     } else {

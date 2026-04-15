@@ -1,13 +1,10 @@
 import { hasKeys, isPlainObject, isString } from "@steveush/utils";
 
-const objectName = 'FC_DISPLAY_RULES';
 /**
- * @typedef DisplayRulesEditorData
- * @property {{ key: string, defaults: DisplayRulesMeta }} meta
- * @property {GroupedSelectOptions} location
- * @property {GroupedSelectOptions} exclude
- * @property {GroupedSelectOptions} users
+ * @typedef {import("./types").DisplayRulesEditorData} DisplayRulesEditorData
  */
+
+const objectName = 'FC_DISPLAY_RULES';
 
 /**
  * @type {DisplayRulesEditorData}

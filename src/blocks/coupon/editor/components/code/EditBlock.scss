@@ -1,7 +1,7 @@
 .fc--coupon__code {
   flex: 2;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   justify-content: center;
   gap: 0;
@@ -13,10 +13,15 @@
   background-color: #fff;
   color: #000;
   width: 100%;
+  min-width: 0;
   overflow: hidden;
 
   .fc--coupon__code-text {
     flex: 1;
     padding: 0.2em 0.8em;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

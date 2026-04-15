@@ -35,7 +35,7 @@ const camelize = name => {
 /**
  *
  * @param {string} attrValue
- * @returns {{[key: string]: string;}}
+ * @returns {Record<string, string>}
  */
 const styleProps = ( attrValue ) => {
     const parts = strim( attrValue, ';' );
@@ -66,34 +66,24 @@ const renderSVGPrimitive = ( element, key ) => {
         const children = () => Array.from( element.children ).map( ( child, i ) => renderSVGPrimitive( child, i ) );
         switch ( element.tagName.toLowerCase() ) {
             case "circle":
-                // noinspection JSValidateTypes
                 return ( <Circle key={ key } { ...props }>{ children() }</Circle> );
             case "g":
-                // noinspection JSValidateTypes
                 return ( <G key={ key } { ...props }>{ children() }</G> );
             case "line":
-                // noinspection JSValidateTypes
                 return ( <Line key={ key } { ...props }>{ children() }</Line> );
             case "path":
-                // noinspection JSValidateTypes
                 return ( <Path key={ key } { ...props }>{ children() }</Path> );
             case "polygon":
-                // noinspection JSValidateTypes
                 return ( <Polygon key={ key } { ...props }>{ children() }</Polygon> );
             case "rect":
-                // noinspection JSValidateTypes
                 return ( <Rect key={ key } { ...props }>{ children() }</Rect> );
             case "defs":
-                // noinspection JSValidateTypes
                 return ( <Defs key={ key } { ...props }>{ children() }</Defs> );
             case "radialGradient":
-                // noinspection JSValidateTypes
                 return ( <RadialGradient key={ key } { ...props }>{ children() }</RadialGradient> );
             case "linearGradient":
-                // noinspection JSValidateTypes
                 return ( <LinearGradient key={ key } { ...props }>{ children() }</LinearGradient> );
             case "stop":
-                // noinspection JSValidateTypes
                 return ( <Stop key={ key } { ...props }>{ children() }</Stop> );
             case "svg":
                 return ( <SVG key={ key } { ...props }>{ children() }</SVG> );

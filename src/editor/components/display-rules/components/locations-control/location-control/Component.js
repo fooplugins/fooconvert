@@ -1,5 +1,5 @@
 // external
-import { Button, TextareaControl } from "@wordpress/components";
+import { Button } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { trash } from "@wordpress/icons";
 import classnames from "classnames";
@@ -11,7 +11,11 @@ import { GroupedSelectControl } from "../../../../grouped-select-control";
 import { EntityRecordControl } from "../../../../entity-record-control";
 import { getGroupedSelectOption } from "../../../../grouped-select-control";
 import isDisplayRulesLocation from "../../../utils/isDisplayRulesLocation";
-import { hasKeys, isPlainObject, isString } from "@steveush/utils";
+import { hasKeys, isString } from "@steveush/utils";
+/**
+ * @typedef {import("../../../types").DisplayRulesLocationControlProps} DisplayRulesLocationControlProps
+ * @typedef {import("../../../types").DisplayRulesLocation} DisplayRulesLocation
+ */
 
 /**
  * Stores the root class for the component and is used to generate the class names for its children.
@@ -19,16 +23,6 @@ import { hasKeys, isPlainObject, isString } from "@steveush/utils";
  * @const
  */
 const rootClass = 'fc--display-rules__location-control';
-
-/**
- * @typedef DisplayRulesLocationControlProps
- * @property {GroupedSelectOptions} options - The options to display within the dropdown menu.
- * @property {DisplayRulesLocation} value - The rule to display.
- * @property {( value: DisplayRulesLocation, previousValue: DisplayRulesLocation ) => void} onChange - Called whenever a change is made to the rule.
- * @property {( value: DisplayRulesLocation ) => void} onRequestRemove - Called when the rule should be removed.
- * @property {string} [className] - Optional. A space separated string of CSS classes to apply to the component.
- * @property {boolean} [disabled] - Optional. Whether the component is disabled.
- */
 
 /**
  * Display a dropdown of available locations and any additional controls to capture data for the current location.

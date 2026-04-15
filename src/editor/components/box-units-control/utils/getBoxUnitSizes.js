@@ -7,8 +7,9 @@ import makeBoxUnit from "./makeBoxUnit";
  */
 
 /**
+ * Get the resolved box-unit sizes for a value.
  *
- * @param {*} value
+ * @param {string|Partial<FCBoxUnit>|FCBoxUnitTuple|undefined} value
  * @param {string|Partial<FCBoxUnitSizes>} [defaults]
  * @returns {FCBoxUnitSizes}
  */

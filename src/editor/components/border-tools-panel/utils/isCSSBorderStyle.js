@@ -3,7 +3,7 @@ const BORDER_STYLES = [ "none", "hidden", "dotted", "dashed", "solid", "double",
 /**
  * Checks if the `value` is a valid CSS `border-style` value.
  *
- * @param {*} value - The value to check.
+ * @param {unknown} value - The value to check.
  * @return {boolean} `true` if the `value` is a CSS `border-style` value, otherwise `false`.
  */
 const isCSSBorderStyle = value => {

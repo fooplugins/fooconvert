@@ -1,5 +1,7 @@
-import { useDispatch } from "@wordpress/data";
+import { useDispatch, useSelect } from "@wordpress/data";
 import { useEffect } from "@wordpress/element";
+import { store as blockEditorStore } from "@wordpress/block-editor";
+import { store as editorStore } from "@wordpress/editor";
 
 /**
  * Overrides the computed template validity and sets it to `true`.
@@ -12,10 +14,17 @@ import { useEffect } from "@wordpress/element";
  * @see https://github.com/WordPress/gutenberg/issues/11681
  */
 const useOverrideTemplateValidity = () => {
-    const { setTemplateValidity } = useDispatch( 'core/block-editor' );
+    const { setTemplateValidity } = useDispatch( blockEditorStore );
+    const { currentPostType, isValidTemplate } = useSelect( ( select ) => ( {
+        currentPostType: select( editorStore ).getCurrentPostType(),
+        isValidTemplate: select( blockEditorStore ).isValidTemplate(),
+    } ), [] );
+
     useEffect( () => {
-        setTemplateValidity( true );
-    }, [] );
+        if ( currentPostType === "fc-popup" && isValidTemplate === false ) {
+            setTemplateValidity( true );
+        }
+    }, [ currentPostType, isValidTemplate, setTemplateValidity ] );
 };
 
 export default useOverrideTemplateValidity;

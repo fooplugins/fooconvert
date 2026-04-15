@@ -123,14 +123,14 @@ function fooconvert_get_popup_types() {
     return array(
         FOOCONVERT_POPUP_TYPE_BAR,
         FOOCONVERT_POPUP_TYPE_FLYOUT,
-        FOOCONVERT_POPUP_TYPE_POPUP,
+        FOOCONVERT_POPUP_TYPE_OVERLAY,
     );
 }
 
 /**
- * Normalizes widget type inputs to the canonical popup type.
+ * Normalizes popup type inputs to the canonical popup type.
  *
- * @param mixed $value Raw widget type value.
+ * @param mixed $value Raw popup type value.
  * @return string
  */
 function fooconvert_normalize_popup_type( $value ) {
@@ -147,10 +147,13 @@ function fooconvert_normalize_popup_type( $value ) {
         case FOOCONVERT_CPT_FLYOUT:
         case 'fc/flyout':
             return FOOCONVERT_POPUP_TYPE_FLYOUT;
+        case FOOCONVERT_POPUP_TYPE_OVERLAY:
         case FOOCONVERT_POPUP_TYPE_POPUP:
         case FOOCONVERT_CPT_POPUP:
+        case 'fc/overlay':
         case 'fc/popup':
-            return FOOCONVERT_POPUP_TYPE_POPUP;
+        case 'fc-overlay':
+            return FOOCONVERT_POPUP_TYPE_OVERLAY;
     }
 
     return '';
@@ -165,11 +168,11 @@ function fooconvert_normalize_popup_type( $value ) {
 function fooconvert_sanitize_popup_type( $value ) {
     $popup_type = fooconvert_normalize_popup_type( $value );
 
-    return $popup_type !== '' ? $popup_type : FOOCONVERT_POPUP_TYPE_POPUP;
+    return $popup_type !== '' ? $popup_type : FOOCONVERT_POPUP_TYPE_OVERLAY;
 }
 
 /**
- * Maps a popup type to the corresponding logical widget post type.
+ * Maps a popup type to the corresponding logical popup post type.
  *
  * @param string $popup_type Popup type.
  * @return string
@@ -180,7 +183,7 @@ function fooconvert_get_popup_type_post_type( $popup_type ) {
             return FOOCONVERT_CPT_BAR;
         case FOOCONVERT_POPUP_TYPE_FLYOUT:
             return FOOCONVERT_CPT_FLYOUT;
-        case FOOCONVERT_POPUP_TYPE_POPUP:
+        case FOOCONVERT_POPUP_TYPE_OVERLAY:
             return FOOCONVERT_CPT_POPUP;
     }
 
@@ -188,7 +191,7 @@ function fooconvert_get_popup_type_post_type( $popup_type ) {
 }
 
 /**
- * Maps a popup type to its root widget block name.
+ * Maps a popup type to its root popup block name.
  *
  * @param string $popup_type Popup type.
  * @return string
@@ -199,39 +202,39 @@ function fooconvert_get_popup_type_block_name( $popup_type ) {
             return 'fc/bar';
         case FOOCONVERT_POPUP_TYPE_FLYOUT:
             return 'fc/flyout';
-        case FOOCONVERT_POPUP_TYPE_POPUP:
-            return 'fc/popup';
+        case FOOCONVERT_POPUP_TYPE_OVERLAY:
+            return 'fc/overlay';
     }
 
     return '';
 }
 
 /**
- * Returns the singular label for a popup type.
+ * Returns the singular label for a popup type identifier.
  *
  * @param string $popup_type Popup type.
  * @return string
  */
-function fooconvert_get_popup_type_label( $popup_type ) {
+function fooconvert_get_popup_type_name( $popup_type ) {
     switch ( fooconvert_normalize_popup_type( $popup_type ) ) {
         case FOOCONVERT_POPUP_TYPE_BAR:
             return __( 'Bar', 'fooconvert' );
         case FOOCONVERT_POPUP_TYPE_FLYOUT:
             return __( 'Flyout', 'fooconvert' );
-        case FOOCONVERT_POPUP_TYPE_POPUP:
-            return __( 'Popup', 'fooconvert' );
+        case FOOCONVERT_POPUP_TYPE_OVERLAY:
+            return __( 'Overlay', 'fooconvert' );
     }
 
     return '';
 }
 
 /**
- * Resolves the canonical popup type for a widget.
+ * Resolves the canonical popup type for a popup.
  *
- * @param WP_Post|int|string $thing Widget post, ID, or logical type identifier.
+ * @param WP_Post|int|string $thing Popup post, ID, or logical type identifier.
  * @return string
  */
-function fooconvert_get_widget_popup_type( $thing ) {
+function fooconvert_get_popup_type( $thing ) {
     if ( $thing instanceof WP_Post ) {
         $post = $thing;
     } else if ( is_numeric( $thing ) ) {
@@ -245,17 +248,15 @@ function fooconvert_get_widget_popup_type( $thing ) {
         return '';
     }
 
-    $popup_type = fooconvert_normalize_popup_type( get_post_meta( $post->ID, FOOCONVERT_META_KEY_POPUP_TYPE, true ) );
-    if ( $popup_type !== '' ) {
+    $stored_popup_type = get_post_meta( $post->ID, FOOCONVERT_META_KEY_POPUP_TYPE, true );
+    $popup_type = fooconvert_normalize_popup_type( $stored_popup_type );
+    $has_legacy_popup_meta = is_string( $stored_popup_type ) && strtolower( trim( $stored_popup_type ) ) === FOOCONVERT_POPUP_TYPE_POPUP;
+
+    if ( $popup_type !== '' && !$has_legacy_popup_meta ) {
         return $popup_type;
     }
 
-    $popup_type = fooconvert_normalize_popup_type( $post->post_type );
-    if ( $popup_type !== '' ) {
-        return $popup_type;
-    }
-
-    if ( function_exists( 'parse_blocks' ) && is_string( $post->post_content ) && $post->post_content !== '' ) {
+    if ( is_string( $post->post_content ) && $post->post_content !== '' ) {
         $blocks = parse_blocks( $post->post_content );
         foreach ( $blocks as $block ) {
             if ( !is_array( $block ) || !isset( $block['blockName'] ) ) {
@@ -269,8 +270,17 @@ function fooconvert_get_widget_popup_type( $thing ) {
         }
     }
 
+    $popup_type = fooconvert_normalize_popup_type( $post->post_type );
+    if ( $popup_type !== '' ) {
+        return $popup_type;
+    }
+
+    if ( $has_legacy_popup_meta ) {
+        return FOOCONVERT_POPUP_TYPE_OVERLAY;
+    }
+
     if ( $post->post_type === FOOCONVERT_CPT_POPUP ) {
-        return FOOCONVERT_POPUP_TYPE_POPUP;
+        return FOOCONVERT_POPUP_TYPE_OVERLAY;
     }
 
     return '';
@@ -283,9 +293,7 @@ function fooconvert_get_widget_popup_type( $thing ) {
  */
 function fooconvert_get_requested_popup_type() {
     $popup_type = isset( $_GET['popup_type'] ) ? $_GET['popup_type'] : '';
-    if ( function_exists( 'wp_unslash' ) ) {
-        $popup_type = wp_unslash( $popup_type );
-    }
+    $popup_type = wp_unslash( $popup_type );
 
     return fooconvert_normalize_popup_type( $popup_type );
 }
@@ -339,37 +347,37 @@ function fooconvert_admin_url_trial() {
 }
 
 /**
- * Retrieves the base URL for the FooConvert Widget Stats admin page.
+ * Retrieves the base URL for the FooConvert Popup Stats admin page.
  *
  * This function constructs and returns the base URL for accessing the
- * FooConvert Widget Stats page in the WordPress admin area.
+ * FooConvert Popup Stats page in the WordPress admin area.
  *
- * @return string The base URL for the FooConvert Widget Stats admin page.
+ * @return string The base URL for the FooConvert Popup Stats admin page.
  */
-function fooconvert_admin_url_widget_stats_base() {
-    return 'admin.php?page=' . FOOCONVERT_MENU_SLUG_WIDGET_STATS;
+function fooconvert_admin_url_popup_stats_base() {
+    return 'admin.php?page=' . FOOCONVERT_MENU_SLUG_POPUP_STATS;
 }
 
 /**
- * Retrieves the URL for the FooConvert Widget Stats admin page.
+ * Retrieves the URL for the FooConvert Popup Stats admin page.
  *
- * @param int $widget_id The ID of the widget to view stats for.
+ * @param int $post_id The ID of the popup to view stats for.
  *
- * @return string The URL for the FooConvert Widget Stats admin page.
+ * @return string The URL for the FooConvert Popup Stats admin page.
  */
-function fooconvert_admin_url_widget_stats( $widget_id ) {
-    return admin_url( fooconvert_admin_url_widget_stats_base() . '&widget_id=' . $widget_id );
+function fooconvert_admin_url_popup_stats( $post_id ) {
+    return admin_url( fooconvert_admin_url_popup_stats_base() . '&post_id=' . $post_id );
 }
 
 /**
- * Retrieves the URL for the FooConvert Widget Edit admin page.
+ * Retrieves the URL for the FooConvert Popup Edit admin page.
  *
- * @param int $widget_id The ID of the widget to edit.
+ * @param int $post_id The ID of the popup to edit.
  *
- * @return string The URL for the FooConvert Widget Edit admin page.
+ * @return string The URL for the FooConvert Popup Edit admin page.
  */
-function fooconvert_admin_url_widget_edit( $widget_id ) {
-    return admin_url( 'post.php?post=' . $widget_id . '&action=edit' );
+function fooconvert_admin_url_popup_edit( $post_id ) {
+    return admin_url( 'post.php?post=' . $post_id . '&action=edit' );
 }
 
 /**
@@ -392,21 +400,21 @@ function fooconvert_admin_url_ai_popup_preview( $widget_id ) {
 }
 
 /**
- * Retrieves the URL for the FooConvert widget type chooser.
+ * Retrieves the URL for the FooConvert popup type chooser.
  *
  * @return string
  */
-function fooconvert_admin_url_widget_type_chooser() {
-    return admin_url( 'admin.php?page=' . FOOCONVERT_MENU_SLUG_WIDGET_CHOOSER );
+function fooconvert_admin_url_popup_type_chooser() {
+    return admin_url( 'admin.php?page=' . FOOCONVERT_MENU_SLUG_POPUP_CHOOSER );
 }
 
 /**
- * Retrieves the URL for creating a new FooConvert widget.
+ * Retrieves the URL for creating a new FooConvert popup.
  *
  * @param string $popup_type Optional popup type.
  * @return string
  */
-function fooconvert_admin_url_widget_new( $popup_type = '' ) {
+function fooconvert_admin_url_popup_new( $popup_type = '' ) {
     $args = array(
         'post_type' => FOOCONVERT_CPT_POPUP,
     );
@@ -463,11 +471,11 @@ function fooconvert_fix_google_font_url( $google_font_value ) {
 }
 
 /**
- * Handles widget metric options.
+ * Handles popup metric options.
  */
-function fooconvert_widget_metric_options() {
+function fooconvert_popup_metric_options() {
     // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-    return apply_filters( 'fooconvert_widget_metric_options', array(
+    return apply_filters( 'fooconvert_popup_metric_options', array(
         'engagements' => [
             'dropdown_option' => __( 'engagements', 'fooconvert' ),
             'label'           => __( 'Engagements', 'fooconvert' ),
@@ -551,15 +559,15 @@ function fooconvert_stats_last_updated_default() {
 }
 
 /**
- * Retrieves a title for a FooConvert widget from a given post object.
+ * Retrieves a title for a FooConvert popup from a given post object.
  *
  * If the post has a title, it will be returned as is. If the post has no title,
  * the function will return a string in the format "Post Type #<post ID>".
  *
  * @param WP_Post $post The post object to fetch the title from.
- * @return string The title for the FooConvert widget.
+ * @return string The title for the FooConvert popup.
  */
-function fooconvert_get_widget_title( $post ) {
+function fooconvert_get_popup_title( $post ) {
     // Return an empty string if no valid post is found
     if ( !$post ) {
         return '';
@@ -570,7 +578,7 @@ function fooconvert_get_widget_title( $post ) {
         return $post->post_title;
     }
 
-    return fooconvert_get_widget_post_type_label( $post ) . ' #' . $post->ID;
+    return fooconvert_get_popup_type_label( $post ) . ' #' . $post->ID;
 }
 
 /**
@@ -584,14 +592,14 @@ function fooconvert_get_widget_title( $post ) {
  * @param WP_Post|string $thing The post object to fetch the post type from.
  * @return string The singular label for the post type.
  */
-function fooconvert_get_widget_post_type_label( $thing ) {
+function fooconvert_get_popup_type_label( $thing ) {
     if ( !$thing ) {
         return '';
     }
 
-    $popup_type = fooconvert_get_widget_popup_type( $thing );
+    $popup_type = fooconvert_get_popup_type( $thing );
     if ( $popup_type !== '' ) {
-        return fooconvert_get_popup_type_label( $popup_type );
+        return fooconvert_get_popup_type_name( $popup_type );
     }
 
     if ( $thing instanceof WP_Post ) {
@@ -606,18 +614,18 @@ function fooconvert_get_widget_post_type_label( $thing ) {
 }
 
 /**
- * Checks if the current page is a FooConvert widget stats page.
+ * Checks if the current page is a FooConvert popup stats page.
  *
  * This function checks if the current page is an admin page and if the
- * page is a FooConvert widget stats page. The function will return true
+ * page is a FooConvert popup stats page. The function will return true
  * if the page meets both conditions.
  *
- * @return bool True if the current page is a FooConvert widget stats page, false otherwise.
+ * @return bool True if the current page is a FooConvert popup stats page, false otherwise.
  */
-function fooconvert_is_admin_stats_page() {
+function fooconvert_is_popup_stats_page() {
     return is_admin() &&
-        isset( $_GET['page'] ) && $_GET['page'] === 'fooconvert-widget-stats' &&
-        isset( $_GET['widget_id'] ) && is_numeric( $_GET['widget_id'] );
+        isset( $_GET['page'] ) && $_GET['page'] === 'fooconvert-popup-stats' &&
+        isset( $_GET['post_id'] ) && is_numeric( $_GET['post_id'] );
 }
 
 /**

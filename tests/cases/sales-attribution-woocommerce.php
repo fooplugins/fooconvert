@@ -58,14 +58,14 @@ namespace FooPlugins\FooConvert\Data {
          * Simulate sale dedupe lookup.
          *
          * @param string $dedupe_mode Dedupe mode.
-         * @param int $widget_id Widget ID.
+         * @param int $post_id Popup ID.
          * @param string|null $session_id Session ID.
          * @return bool
          */
-        public static function sale_exists_for_scope( $dedupe_mode, $widget_id, $session_id = null ) {
+        public static function sale_exists_for_scope( $dedupe_mode, $post_id, $session_id = null ) {
             self::$sale_scope_calls[] = array(
                 'dedupe_mode' => $dedupe_mode,
-                'widget_id'   => $widget_id,
+                'post_id'   => $post_id,
                 'session_id'  => $session_id,
             );
 
@@ -373,7 +373,7 @@ namespace {
      * @return string
      */
     function fooconvert_get_sale_dedupe_mode(): string {
-        return $GLOBALS['fc_sale_dedupe_mode'] ?? FOOCONVERT_SALE_DEDUPE_MODE_WIDGET_SESSION;
+        return $GLOBALS['fc_sale_dedupe_mode'] ?? FOOCONVERT_SALE_DEDUPE_MODE_POPUP_SESSION;
     }
 
     /**
@@ -386,14 +386,14 @@ namespace {
     define( 'FOOCONVERT_EVENT_TYPE_SALE', 'sale' );
     define( 'FOOCONVERT_SALE_ATTRIBUTION_TIMING_PAYMENT_MADE', 'payment_made' );
     define( 'FOOCONVERT_SALE_ATTRIBUTION_TIMING_ORDER_CREATED', 'order_created' );
-    define( 'FOOCONVERT_SALE_DEDUPE_MODE_WIDGET_SESSION', 'widget_session' );
+    define( 'FOOCONVERT_SALE_DEDUPE_MODE_POPUP_SESSION', 'popup_session' );
     define( 'FOOCONVERT_SALE_DEDUPE_MODE_SESSION_ONLY', 'session_only' );
     define( 'FOOCONVERT_SETTING_SALE_ALLOW_MULTIPLE_ORDERS_PER_SESSION', 'sale_allow_multiple_orders_per_session' );
     define( 'FOOCONVERT_WC_ORDER_META_SESSION_ID', '_fooconvert_session_id' );
     define( 'FOOCONVERT_WC_ORDER_META_ANONYMOUS_USER_GUID', '_fooconvert_anonymous_user_guid' );
     define( 'FOOCONVERT_WC_ORDER_META_ORDER_CREATED_AT_GMT', '_fooconvert_order_created_at_gmt' );
     define( 'FOOCONVERT_WC_ORDER_META_ATTRIBUTION_EVENT_ID', '_fooconvert_attribution_event_id' );
-    define( 'FOOCONVERT_WC_ORDER_META_ATTRIBUTION_WIDGET_ID', '_fooconvert_attribution_widget_id' );
+    define( 'FOOCONVERT_WC_ORDER_META_ATTRIBUTION_POST_ID', '_fooconvert_attribution_post_id' );
     define( 'FOOCONVERT_WC_ORDER_META_ATTRIBUTION_SESSION_ID', '_fooconvert_attribution_session_id' );
     define( 'FOOCONVERT_WC_ORDER_META_SALE_EVENT_ID', '_fooconvert_sale_event_id' );
 
@@ -412,7 +412,7 @@ namespace {
         $GLOBALS['fc_request_anonymous_user_guid'] = null;
         unset( $GLOBALS['fc_sale_attribution_timing'] );
         $GLOBALS['fc_sale_attribution_lookback_days'] = 7;
-        $GLOBALS['fc_sale_dedupe_mode'] = FOOCONVERT_SALE_DEDUPE_MODE_WIDGET_SESSION;
+        $GLOBALS['fc_sale_dedupe_mode'] = FOOCONVERT_SALE_DEDUPE_MODE_POPUP_SESSION;
         unset( $GLOBALS['fc_sale_allow_multiple_orders_per_session'] );
     }
 
@@ -469,7 +469,7 @@ namespace {
         ),
         array(
             'id'                  => 55,
-            'widget_id'           => 12,
+            'post_id'           => 12,
             'session_id'          => 'sess-guest',
             'anonymous_user_guid' => 'anon-guest',
             'event_type'          => 'click',
@@ -500,8 +500,8 @@ namespace {
 
     Assertions::same(
         12,
-        Event::$created[0]['widget_id'],
-        'The sale event should be attributed to the widget from the qualifying source event.'
+        Event::$created[0]['post_id'],
+        'The sale event should be attributed to the popup from the qualifying source event.'
     );
 
     Assertions::same(
@@ -536,8 +536,8 @@ namespace {
 
     Assertions::same(
         12,
-        $guest_order->get_meta( FOOCONVERT_WC_ORDER_META_ATTRIBUTION_WIDGET_ID, true ),
-        'The order should store the attributed widget ID.'
+        $guest_order->get_meta( FOOCONVERT_WC_ORDER_META_ATTRIBUTION_POST_ID, true ),
+        'The order should store the attributed popup ID.'
     );
 
     Assertions::same(
@@ -548,12 +548,12 @@ namespace {
 
     Assertions::same(
         array(
-            'dedupe_mode' => FOOCONVERT_SALE_DEDUPE_MODE_WIDGET_SESSION,
-            'widget_id'   => 12,
+            'dedupe_mode' => FOOCONVERT_SALE_DEDUPE_MODE_POPUP_SESSION,
+            'post_id'   => 12,
             'session_id'  => 'sess-guest',
         ),
         Query::$sale_scope_calls[0],
-        'Payment-made attribution should run dedupe using the default widget/session scope.'
+        'Payment-made attribution should run dedupe using the default popup/session scope.'
     );
 
     reset_sales_test_state();
@@ -579,7 +579,7 @@ namespace {
         ),
         array(
             'id'                  => 88,
-            'widget_id'           => 44,
+            'post_id'           => 44,
             'session_id'          => 'sess-created',
             'anonymous_user_guid' => 'anon-created',
             'event_type'          => 'conversion',
@@ -632,7 +632,7 @@ namespace {
         ),
         array(
             'id'                  => 140,
-            'widget_id'           => 91,
+            'post_id'           => 91,
             'session_id'          => 'sess-multi',
             'anonymous_user_guid' => 'anon-multi',
             'event_type'          => 'conversion',
@@ -661,7 +661,7 @@ namespace {
         ),
         array(
             'id'                  => 141,
-            'widget_id'           => 91,
+            'post_id'           => 91,
             'session_id'          => 'sess-multi',
             'anonymous_user_guid' => 'anon-multi',
             'event_type'          => 'conversion',
@@ -713,7 +713,7 @@ namespace {
         ),
         array(
             'id'                  => 99,
-            'widget_id'           => 51,
+            'post_id'           => 51,
             'session_id'          => 'sess-dedupe',
             'anonymous_user_guid' => 'anon-dedupe',
             'event_type'          => 'click',
@@ -733,7 +733,7 @@ namespace {
     Assertions::same(
         array(
             'dedupe_mode' => FOOCONVERT_SALE_DEDUPE_MODE_SESSION_ONLY,
-            'widget_id'   => 51,
+            'post_id'   => 51,
             'session_id'  => 'sess-dedupe',
         ),
         Query::$sale_scope_calls[0],
@@ -772,7 +772,7 @@ namespace {
         ),
         array(
             'id'                  => 120,
-            'widget_id'           => 73,
+            'post_id'           => 73,
             'session_id'          => 'sess-user',
             'anonymous_user_guid' => 'anon-user',
             'event_type'          => 'click',
@@ -808,8 +808,8 @@ namespace {
 
     Assertions::same(
         73,
-        Event::$created[0]['widget_id'],
-        'Anonymous fallback attribution should still credit the resolved widget.'
+        Event::$created[0]['post_id'],
+        'Anonymous fallback attribution should still credit the resolved popup.'
     );
 
     echo "sales-attribution-woocommerce: ok\n";

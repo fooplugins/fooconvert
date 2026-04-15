@@ -168,7 +168,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
          * this function returns the value of a number rounded
          * to the nearest integer.
          *
-         * The width to append all widgets,
+         * The width to append all popups,
          * if border is enabled, 22 is subtracted.
          * 20 for css left and right property
          * 2 for css border
@@ -509,7 +509,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
         }
       });
       /**
-       * Prevent any clicks inside this widget from leaking to the top and closing it.
+       * Prevent any clicks inside this popup from leaking to the top and closing it.
        *
        * @since 3.0.0
        *

@@ -24,7 +24,7 @@ return array(
 		'openButton' => array(
 			'styles' => array(
 				'border' => array(
-					'shadow' => '6px 6px 9px rgba(0, 0, 0, 0.2)'
+					'shadow' => '6px 6px 9px #00000000'
 				),
 				'color' => array(
 					'background' => '#F4F4F4',
@@ -65,7 +65,7 @@ return array(
 					'color' => '#F7941D',
 					'style' => 'solid',
 					'width' => '5px',
-					'shadow' => '6px 6px 9px rgba(0, 0, 0, 0.2)'
+					'shadow' => '6px 6px 9px #00000000'
 				),
 				'dimensions' => array(
 					'gap' => '32px',
@@ -226,7 +226,7 @@ return array(
 											'radius' => '10px',
 											'color' => '#f7941d',
 											'width' => '2px',
-											'shadow' => '6px 6px 9px rgba(0, 0, 0, 0.2)'
+											'shadow' => '6px 6px 9px #00000000'
 										)
 									)
 								)
@@ -242,3 +242,4 @@ return array(
 		'block'
 	)
 );
+

@@ -3,7 +3,7 @@ import { isString } from "@steveush/utils";
 /**
  * Check if a value might be an SVG string.
  *
- * @param {any} value
+ * @param {unknown} value
  * @return {value is string}
  */
 const maybeSVG = value => {

@@ -19,11 +19,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Base' ) ) {
         /**
          * Returns the table name including the prefix.
          *
+         * @param string $table_name The unprefixed table name.
          * @return string
          * @global wpdb $wpdb The WordPress database class instance.
          *
          */
-        public static function get_table_name( $table_name ) {
+        public static function get_table_name( string $table_name ): string {
             global $wpdb;
 
             return $wpdb->prefix . $table_name;
@@ -32,10 +33,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Base' ) ) {
         /**
          * Returns true if the database version is greater than or equal to the minimum version required.
          *
-         * @param $min_version
+         * @param string $min_version The minimum MySQL version to compare against.
          * @return bool
          */
-        public static function db_version_minimum( $min_version ) {
+        public static function db_version_minimum( string $min_version ): bool {
             global $wpdb;
 
             $mysql_version = $wpdb->db_version();
@@ -76,10 +77,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Base' ) ) {
         /**
          * Safely calls `dbDelta` after including the WP upgrade file.
          *
-         * @param $sql
-         * @return array
+         * @param string $sql
+         * @return array<array-key, mixed>
          */
-        public static function safe_dbDelta( $sql ) {
+        public static function safe_dbDelta( string $sql ): array {
             self::include_required_for_upgrade();
             return dbDelta( $sql );
         }
@@ -96,7 +97,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Base' ) ) {
          * @global wpdb $wpdb The WordPress database class instance.
          *
          */
-        public static function index_exists( $table_name, $index_name ) {
+        public static function index_exists( string $table_name, string $index_name ): bool {
             global $wpdb;
 
             $query = (string)$wpdb->prepare(
@@ -116,12 +117,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Base' ) ) {
         /**
          * Safely create an index in the database.
          *
-         * @param $table_name
-         * @param $index_name
-         * @param $columns
+         * @param string $table_name
+         * @param string $index_name
+         * @param string $columns
          * @return void
          */
-        public static function safe_create_index( $table_name, $index_name, $columns ) {
+        public static function safe_create_index( string $table_name, string $index_name, string $columns ): void {
             global $wpdb;
 
             if ( !self::index_exists( $table_name, $index_name ) ) {
@@ -133,13 +134,13 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Base' ) ) {
         /**
          * Safely create a partial index in the database.
          *
-         * @param $table_name
-         * @param $index_name
-         * @param $columns
-         * @param $partial_query
+         * @param string $table_name
+         * @param string $index_name
+         * @param string $columns
+         * @param string $partial_query
          * @return void
          */
-        public static function safe_create_partial_index( $table_name, $index_name, $columns, $partial_query ) {
+        public static function safe_create_partial_index( string $table_name, string $index_name, string $columns, string $partial_query ): void {
             global $wpdb;
 
             if ( self::db_version_minimum( '8.0' ) ) {

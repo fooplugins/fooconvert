@@ -10,7 +10,7 @@ import { is_$string } from "../../../utils";
 /**
  * A mapping of key to type checks that define a {@link BorderRadiusBox|`BorderRadiusBox`} object.
  *
- * @type {Record<string, ((value: any) => boolean)>}
+ * @type {Record<string, ((value: unknown) => boolean)>}
  */
 export const BORDER_RADIUS_BOX_DEFINITION = {
     topLeft: is_$string,
@@ -34,7 +34,7 @@ export const BORDER_RADIUS_BOX_DEFAULTS = {
 /**
  * Check if a value is a {@link BorderRadiusBox|`BorderRadiusBox`} object.
  *
- * @param {any} value - The value to check.
+ * @param {unknown} value - The value to check.
  * @returns {value is BorderRadiusBox} - `true` if the value is a {@link BorderRadiusBox|`BorderRadiusBox`} object, otherwise `false`.
  */
 const isBorderRadiusBox = value => hasKeys( value, BORDER_RADIUS_BOX_DEFINITION );

@@ -8,9 +8,16 @@ import editorData from "../../editorData";
 
 import "./Component.scss";
 import usePostTypeLabels from "../../../../hooks/usePostTypeLabels";
+/**
+ * @typedef {import("../../types").DisplayRulesContentControlProps} DisplayRulesContentControlProps
+ */
 
 const rootClass = 'fc--display-rules__content-control';
 
+/**
+ * @param {DisplayRulesContentControlProps} props
+ * @return {JSX.Element}
+ */
 const DisplayRulesContentControl = ( props ) => {
     const {
         rules,

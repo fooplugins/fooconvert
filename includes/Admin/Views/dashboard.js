@@ -82,10 +82,10 @@ jQuery(document).ready(function ($) {
         });
     });
 
-    // Create demo widgets
-    $('.fooconvert-create-demo-widgets').click(function (e) {
+    // Create demo popups
+    $('.fooconvert-create-demo-popups').click(function (e) {
         e.preventDefault();
-        var $spinner = $('.fooconvert-create-demo-widgets-spinner');
+        var $spinner = $('.fooconvert-create-demo-popups-spinner');
         $spinner.addClass('is-active');
         $(this).attr('disabled', 'disabled');
         $.ajax({
@@ -93,7 +93,7 @@ jQuery(document).ready(function ($) {
             method: 'POST',
             data: {
                 action: 'fooconvert_dashboard_task',
-                task: 'create_demo_widgets',
+                task: 'create_demo_popups',
                 nonce: fooconvertData.nonce
             },
             success: function (response) {
@@ -107,10 +107,10 @@ jQuery(document).ready(function ($) {
         });
     });
 
-    // Delete demo widgets
-    $('.fooconvert-delete-demo-widgets').click(function (e) {
+    // Delete demo popups
+    $('.fooconvert-delete-demo-popups').click(function (e) {
         e.preventDefault();
-        var $spinner = $('.fooconvert-delete-demo-widgets-spinner');
+        var $spinner = $('.fooconvert-delete-demo-popups-spinner');
         $spinner.addClass('is-active');
         $(this).attr('disabled', 'disabled');
         $.ajax({
@@ -118,7 +118,7 @@ jQuery(document).ready(function ($) {
             method: 'POST',
             data: {
                 action: 'fooconvert_dashboard_task',
-                task: 'delete_demo_widgets',
+                task: 'delete_demo_popups',
                 nonce: fooconvertData.nonce
             },
             success: function (response) {

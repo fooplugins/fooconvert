@@ -5,6 +5,7 @@
  * @param {string} name The name of the cookie.
  * @param {string} value The value of the cookie.
  * @param {number} [days] The number of days until the cookie expires.
+ * @returns {void}
  */
 const setCookie = ( name, value, days ) => {
     let expires = "";

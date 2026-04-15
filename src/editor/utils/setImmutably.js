@@ -3,10 +3,10 @@
  * new object. Treats nullish initial values as empty objects. Clones any
  * nested objects. Supports arrays, too.
  *
- * @param {Object}              object Object to set a value in.
- * @param {number|string|Array} path   Path in the object to modify.
- * @param {*}                   value  New value to set.
- * @return {Object} Cloned object with the new value set.
+ * @param {Record<string, unknown>|unknown[]} object - Object to set a value in.
+ * @param {number|string|Array<string|number>} path - Path in the object to modify.
+ * @param {unknown} value - New value to set.
+ * @return {Record<string, unknown>|unknown[]} Cloned object with the new value set.
  */
 const setImmutably = ( object, path, value ) => {
     // Normalize path

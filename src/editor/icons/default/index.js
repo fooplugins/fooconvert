@@ -5,6 +5,7 @@ import arrowLeft from './arrow-left.js';
 import arrowRight from './arrow-right.js';
 import arrowUp from './arrow-up.js';
 import cancelCircleFilled from './cancel-circle-filled.js';
+import cart from './cart.js';
 import chevronDown from './chevron-down.js';
 import chevronLeft from './chevron-left.js';
 import chevronRight from './chevron-right.js';
@@ -16,11 +17,14 @@ import plus from './plus.js';
 import plusCircle from './plus-circle.js';
 import plusCircleFilled from './plus-circle-filled.js';
 import plusSmall from './plus-small.js';
+import percent from './percent.js';
+import tag from './tag.js';
 import send from './send.js';
+import store from './store.js';
 
 /**
  *
- * @type {FC_ICON_SET}
+ * @type {{name: string, label: string, icons: {name: string, label: string, value: import("react").ReactNode}[]}}
  */
 export default {
     name: 'default',
@@ -31,6 +35,7 @@ export default {
         { name: 'arrow-right', label: __( 'Arrow Right', 'fooconvert' ), value: arrowRight },
         { name: 'arrow-up', label: __( 'Arrow Up', 'fooconvert' ), value: arrowUp },
         { name: 'cancel-circle-filled', label: __( 'Cancel Circle Filled', 'fooconvert' ), value: cancelCircleFilled },
+        { name: 'cart', label: __( 'Cart', 'fooconvert' ), value: cart },
         { name: 'chevron-down', label: __( 'Chevron Down', 'fooconvert' ), value: chevronDown },
         { name: 'chevron-left', label: __( 'Chevron Left', 'fooconvert' ), value: chevronLeft },
         { name: 'chevron-right', label: __( 'Chevron Right', 'fooconvert' ), value: chevronRight },
@@ -42,6 +47,9 @@ export default {
         { name: 'plus-circle', label: __( 'Plus Circle', 'fooconvert' ), value: plusCircle },
         { name: 'plus-circle-filled', label: __( 'Plus Circle Filled', 'fooconvert' ), value: plusCircleFilled },
         { name: 'plus-small', label: __( 'Plus Small', 'fooconvert' ), value: plusSmall },
+        { name: 'percent', label: __( 'Percent', 'fooconvert' ), value: percent },
+        { name: 'tag', label: __( 'Tag', 'fooconvert' ), value: tag },
         { name: 'send', label: __( 'Send', 'fooconvert' ), value: send },
+        { name: 'store', label: __( 'Store', 'fooconvert' ), value: store },
     ]
 };

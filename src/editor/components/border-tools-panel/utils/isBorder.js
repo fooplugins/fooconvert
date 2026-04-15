@@ -8,15 +8,10 @@ import isPossibleBorderBox from "./isPossibleBorderBox";
  */
 
 /**
- * Check if a value is a {@link FCBorderRadius|border radius}.
+ * Check if a value is a border value or border box.
  *
- * @param {*} value - The value to check.
- * @returns {value is BorderRadiusValue} - `true` if the value is either a string or a partial {@link FCBorderRadiusBox|border radius box} object, otherwise `false`.
- */
-/**
- *
- * @param value
- * @returns {value is Partial<FCBorderValue>|value is Partial<FCBorderBox>}
+ * @param {unknown} value - The value to check.
+ * @returns {value is FCBorder} - `true` if the value is either a border value or border box, otherwise `false`.
  */
 const isBorder = value => isPossibleBorderValue( value ) || isPossibleBorderBox( value );
 

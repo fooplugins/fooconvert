@@ -1,7 +1,9 @@
 import { isString } from "@steveush/utils";
 
 /**
- * @typedef {{[key: string]: any; variations?: WPBlockVariation[]; data?: any}} BlockSettings
+ * Block settings exposed through the global block registration namespace.
+ *
+ * @typedef {{[key: string]: unknown; variations?: WPBlockVariation[]; data?: unknown}} BlockSettings
  */
 
 /**

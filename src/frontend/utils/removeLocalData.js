@@ -1,13 +1,15 @@
 import removeCookie from "./removeCookie";
+import { removeStorageItem } from "./storage";
 
+/**
+ * Remove the stored localStorage value and its cookie fallback.
+ *
+ * @param {string} key
+ * @returns {void}
+ */
 const removeLocalData = ( key ) => {
-    try {
-        globalThis?.localStorage?.removeItem( key );
-    } catch ( e ) {
-        // eat possible security exception
-        // see: https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage#exceptions
-    }
+    removeStorageItem( "localStorage", key );
     removeCookie( key );
-}
+};
 
 export default removeLocalData;

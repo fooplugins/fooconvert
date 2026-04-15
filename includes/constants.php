@@ -9,6 +9,7 @@ define( 'FOOCONVERT_OPTION_DATA', 'fooconvert-settings' );
 define( 'FOOCONVERT_OPTION_VERSION', 'fooconvert-version' );
 define( 'FOOCONVERT_OPTION_VERSION_CREATE_TABLE', 'fooconvert-version-create-table' );
 define( 'FOOCONVERT_OPTION_CONTENT_MIGRATIONS', 'fooconvert-content-migrations' );
+define( 'FOOCONVERT_OPTION_UPGRADE_MIGRATIONS', 'fooconvert-upgrade-migrations' );
 define( 'FOOCONVERT_OPTION_DATABASEDATA', 'fooconvert-database-data' );
 define( 'FOOCONVERT_OPTION_TOP_PERFORMERS_SORT', 'fooconvert_top_performers_sort' );
 define( 'FOOCONVERT_OPTION_STATS_LAST_UPDATED', 'fooconvert_stats_last_updated' );
@@ -17,10 +18,10 @@ define( 'FOOCONVERT_OPTION_DISPLAY_RULES', 'fooconvert_display_rules' );
 define( 'FOOCONVERT_OPTION_AI_BRAND', 'fooconvert_ai_brand' );
 
 // Post meta
-define( 'FOOCONVERT_META_KEY_DISPLAY_RULES', '_fooconvert_display_rules' );     // Meta key for the widget display rules.
+define( 'FOOCONVERT_META_KEY_DISPLAY_RULES', '_fooconvert_display_rules' );     // Meta key for the popup display rules.
 define( 'FOOCONVERT_META_KEY_COMPATIBILITY', '_fooconvert_compatibility' );     // Meta key for the compatibility settings.
 define( 'FOOCONVERT_META_KEY_DEMO_CONTENT', '_fooconvert_demo_content' );       // Meta key for the demo content.
-define( 'FOOCONVERT_META_KEY_METRICS', '_fooconvert_metrics' );                 // Meta key for the widget metrics.
+define( 'FOOCONVERT_META_KEY_METRICS', '_fooconvert_metrics' );                 // Meta key for the popup metrics.
 define( 'FOOCONVERT_META_KEY_METRIC_VIEWS', '_fooconvert_metric_views' );
 define( 'FOOCONVERT_META_KEY_METRIC_ENGAGEMENTS', '_fooconvert_metric_engagements' );
 define( 'FOOCONVERT_META_KEY_POPUP_TYPE', '_fooconvert_popup_type' );
@@ -34,6 +35,7 @@ define( 'FOOCONVERT_CPT_POPUP', 'fc-popup' );
 // Popup types
 define( 'FOOCONVERT_POPUP_TYPE_BAR', 'bar' );
 define( 'FOOCONVERT_POPUP_TYPE_FLYOUT', 'flyout' );
+define( 'FOOCONVERT_POPUP_TYPE_OVERLAY', 'overlay' );
 define( 'FOOCONVERT_POPUP_TYPE_POPUP', 'popup' );
 
 //EVENT TYPE
@@ -53,13 +55,13 @@ define( 'FOOCONVERT_MENU_SLUG', 'fooconvert' );
 define( 'FOOCONVERT_MENU_SLUG_DASHBOARD', 'fooconvert-dashboard' );
 define( 'FOOCONVERT_MENU_SLUG_AI_POPUP_BUILDER', 'fooconvert-ai-popup-builder' );
 define( 'FOOCONVERT_MENU_SLUG_AI_POPUP_PREVIEW', 'fooconvert-ai-popup-preview' );
-define( 'FOOCONVERT_MENU_SLUG_WIDGET_STATS', 'fooconvert-widget-stats' );
-define( 'FOOCONVERT_MENU_SLUG_WIDGET_CHOOSER', 'fooconvert-widget-chooser' );
+define( 'FOOCONVERT_MENU_SLUG_POPUP_STATS', 'fooconvert-popup-stats' );
+define( 'FOOCONVERT_MENU_SLUG_POPUP_CHOOSER', 'fooconvert-popup-chooser' );
 define( 'FOOCONVERT_RETENTION_DEFAULT', 14 );
 define( 'FOOCONVERT_METRICS_DAYS_DEFAULT', 7 );
 
 //CRON
-define( 'FOOCONVERT_CRON_CALC_STATS', 'fooconvert_calculate_widget_stats' );
+define( 'FOOCONVERT_CRON_CALC_STATS', 'fooconvert_calculate_popup_stats' );
 define( 'FOOCONVERT_CRON_DELETE_EVENTS', 'fooconvert_delete_old_events' );
 
 //SVG KSES

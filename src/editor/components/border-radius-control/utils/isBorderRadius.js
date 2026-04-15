@@ -10,7 +10,7 @@ import isPartialBorderRadiusBox from "./isPartialBorderRadiusBox";
 /**
  * Check if a value is a {@link BorderRadiusValue|`BorderRadiusValue`}.
  *
- * @param {*} value - The value to check.
+ * @param {unknown} value - The value to check.
  * @returns {value is BorderRadiusValue} - `true` if the value is a {@link BorderRadiusValue|`BorderRadiusValue`}, otherwise `false`.
  */
 const isBorderRadius = value => isString( value, true ) || isPartialBorderRadiusBox( value );

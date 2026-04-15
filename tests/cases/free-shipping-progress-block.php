@@ -52,7 +52,7 @@ namespace FooPlugins\FooConvert {
             return is_bool( $value ) ? $value : $default;
         }
 
-        public static function register_widget_blocks( array $blocks ) {
+        public static function register_popup_blocks( array $blocks ) {
             return $blocks;
         }
     }
@@ -67,7 +67,7 @@ namespace FooPlugins\FooConvert {
         }
     }
 
-    class Widgets {
+    class Popups {
         public function get_registered_post_type(): string {
             return 'fc-popup';
         }
@@ -80,12 +80,12 @@ namespace FooPlugins\FooConvert {
         /** @var Components */
         public $components;
 
-        /** @var Widgets */
-        public $widgets;
+        /** @var Popups */
+        public $popups;
 
         public function __construct() {
             $this->components = new Components();
-            $this->widgets = new Widgets();
+            $this->popups = new Popups();
         }
 
         public static function plugin(): FooConvert {

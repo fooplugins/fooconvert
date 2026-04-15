@@ -5,21 +5,14 @@ import { isArray } from "@steveush/utils";
 
 import "./Component.scss";
 import { RepeaterControl } from "../../../repeater-control";
+/**
+ * @typedef {import("../../types").DisplayRulesLocationsControlProps} DisplayRulesLocationsControlProps
+ * @typedef {import("../../types").DisplayRulesLocation} DisplayRulesLocation
+ */
 
 const rootClass = 'fc--display-rules__locations-control';
 
 /**
- * The properties for the `DisplayRulesLocationsControl` component.
- *
- * @typedef DisplayRulesLocationsControlProps
- * @param {GroupedSelectOptions} options - The options to display in the select controls.
- * @param {DisplayRulesLocation[]} items - The current location items.
- * @param {(items:DisplayRulesLocation[]) => void} onChange - Callback to for when any items have changed.
- * @param {string} [className] - Optional. The CSS class name to append to the component.
- */
-
-/**
- *
  * @param {DisplayRulesLocationsControlProps} props - The props for the display rules locations control.
  * @return {JSX.Element}
  */
@@ -45,8 +38,7 @@ const DisplayRulesLocationsControl = ( {
     const hasEntireSite = items.some( isEntireSite );
 
     /**
-     *
-     * @param {RepeaterControlItemRendererProps<DisplayRulesLocation>} props
+     * @param {import("../../../repeater-control/Component").RepeaterControlItemRendererProps<DisplayRulesLocation>} props
      * @returns {JSX.Element}
      */
     const renderItem = ( { item, index, onChange, onRequestRemove } ) => <DisplayRulesLocationControl

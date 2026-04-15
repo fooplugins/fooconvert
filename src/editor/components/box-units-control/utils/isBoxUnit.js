@@ -9,7 +9,7 @@ import { isStringNotEmpty, isStringOrUndefined } from "../../../utils";
 /**
  * A mapping of key to type check for a box unit object.
  *
- * @type {Record<string, ( value: any ) => boolean>}
+ * @type {Record<string, ( value: unknown ) => boolean>}
  */
 const KEYS = {
     top: isStringOrUndefined,
@@ -21,7 +21,7 @@ const KEYS = {
 /**
  * A mapping of key to type check for a partial box unit object.
  *
- * @type {Record<string, ( value: any ) => boolean>}
+ * @type {Record<string, ( value: unknown ) => boolean>}
  */
 const PARTIAL_KEYS = {
     top: isStringNotEmpty,
@@ -34,7 +34,7 @@ const PARTIAL_KEYS = {
  * Check if a value is a {@link FCBoxUnit|box unit object}.
  *
  * @template {boolean} TBoolean
- * @param {any} value - The value to check.
+ * @param {unknown} value - The value to check.
  * @param {TBoolean} [partial] - Optional. If `true`, a partial match is performed. Defaults to `false`.
  * @returns {value is (TBoolean extends true ? Partial<FCBoxUnit> : FCBoxUnit)} - `true` if the value is a {@link FCBoxUnit|box unit object}, otherwise `false`.
  */

@@ -28,30 +28,23 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
         /**
          * Checks nonce and user capabilities before performing an action.
          *
-         * Verifies that the nonce is set and valid, and that the current user
-         * has the capability of 'manage_options' if check_admin is true.
-         *
-         * @param bool $check_admin Whether to check if the user is an administrator.
-         * @return bool True if the checks pass, otherwise an error message is displayed.
+         * @param bool $check_admin Whether to require the admin capability check.
+         * @return bool True if the checks pass.
          *
          * @since 1.0.0
          */
         function do_checks( $check_admin = true ) {
             if ( isset( $_POST['nonce'] ) ) {
-                // Sanitize the nonce
                 $nonce = sanitize_text_field( wp_unslash( $_POST['nonce'] ) );
 
-                // Verify the nonce
                 if ( !wp_verify_nonce( $nonce, 'fooconvert-dashboard' ) ) {
                     wp_die( esc_html__( 'Invalid nonce!!', 'fooconvert' ) );
                 }
 
-                // Check if the current user is an administrator
                 if ( $check_admin && !current_user_can( 'manage_options' ) ) {
                     wp_die( esc_html__( 'You do not have permission to access this page.', 'fooconvert' ) );
                 }
 
-                // If we get here, then all our checks have passed.
                 return true;
 
             } else {
@@ -120,11 +113,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
             $task = $this->get_dashboard_task();
 
             switch ( $task ) {
-                case 'create_demo_widgets':
-                    $this->create_demo_widgets();
+                case 'create_demo_popups':
+                    $this->create_demo_popups();
                     break;
-                case 'delete_demo_widgets':
-                    $this->delete_demo_widgets();
+                case 'delete_demo_popups':
+                    $this->delete_demo_popups();
                     break;
                 case 'update_stats':
                     $this->update_stats();
@@ -172,22 +165,19 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
         }
 
         /**
-         * Function to create demo widgets.
+         * Function to create demo popups.
          *
-         * This function creates demo widgets and sends back a JSON success
-         * response with the number of widgets created.
+         * This function creates demo popups and sends back a JSON success
+         * response with the number of popups created.
          *
          */
-        function create_demo_widgets() {
+        function create_demo_popups() {
             ob_start();
             $demo = new DemoContent();
             $created = $demo->create( true );
-            $content = ob_get_clean();
-
-            if ( !empty( $content ) ) {
-                // TODO : There were errors creating demo content. Probably DB related, which need to be logged somewhere.
-                // For now, they can be ignored.
-            }
+            // Demo creation can emit buffered output; discard it so the AJAX
+            // response body remains valid JSON.
+            ob_get_clean();
 
             fooconvert_set_setting( 'demo_content', 'on' );
 
@@ -200,14 +190,14 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
         }
 
         /**
-         * Function to delete all demo widgets.
+         * Function to delete all demo popups.
          *
-         * This function deletes all demo widgets and sends back a JSON success
+         * This function deletes all demo popups and sends back a JSON success
          * response.
          *
          * @since 1.0.0
          */
-        function delete_demo_widgets() {
+        function delete_demo_popups() {
             $demo = new DemoContent();
             $demo->delete();
 
@@ -240,7 +230,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
         /**
          * Function to update the stats.
          *
-         * This function updates all widget stats.
+         * This function updates all popup stats.
          *
          * @since 1.1.0
          */

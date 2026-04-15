@@ -1,6 +1,7 @@
 import getCookie from "./getCookie";
 import generateGUID from "./generateGUID";
 import setCookie from "./setCookie";
+import { readStorageItem, writeStorageItem } from "./storage";
 
 /**
  * The key used to store the unique ID in both localStorage and as a cookie.
@@ -20,15 +21,7 @@ const STORAGE_DURATION = 365;
  * @returns {string|undefined}
  */
 const getUniqueID = () => {
-
-    let uniqueID;
-
-    try {
-        uniqueID = globalThis?.localStorage?.getItem( UNIQUE_ID_STORAGE_KEY );
-    } catch ( e ) {
-        // eat possible security exception
-        // see: https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage#exceptions
-    }
+    let uniqueID = readStorageItem( "localStorage", UNIQUE_ID_STORAGE_KEY );
 
     if ( !uniqueID ) {
         uniqueID = getCookie( UNIQUE_ID_STORAGE_KEY );
@@ -37,14 +30,9 @@ const getUniqueID = () => {
     if ( !uniqueID ) {
         uniqueID = generateGUID();
 
-        try {
-            globalThis?.localStorage?.setItem( UNIQUE_ID_STORAGE_KEY, uniqueID );
-        } catch ( e ) {
-            // eat possible security exception
-            // see: https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage#exceptions
-        }
+        writeStorageItem( "localStorage", UNIQUE_ID_STORAGE_KEY, uniqueID );
 
-        setCookie( UNIQUE_ID_STORAGE_KEY, uniqueID, STORAGE_DURATION ); // Setting the cookie to expire in 365 days
+        setCookie( UNIQUE_ID_STORAGE_KEY, uniqueID, STORAGE_DURATION );
     }
 
     return uniqueID;

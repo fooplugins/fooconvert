@@ -3,9 +3,16 @@ import classnames from "classnames";
 
 import "./Component.scss";
 import { ToggleControl } from "@wordpress/components";
+/**
+ * @typedef {import("../../types").CompatibilityContentControlProps} CompatibilityContentControlProps
+ */
 
 const rootClass = 'fc--compatibility__content-control';
 
+/**
+ * @param {CompatibilityContentControlProps} props
+ * @return {JSX.Element}
+ */
 const CompatibilityContentControl = ( props ) => {
     const {
         compatibility,

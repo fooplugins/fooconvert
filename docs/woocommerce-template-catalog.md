@@ -1,8 +1,8 @@
-# WooCommerce Widget Template Catalog
+# WooCommerce Popup Template Catalog
 
 ## Purpose
 
-This document defines WooCommerce-oriented FooConvert widget templates.
+This document defines WooCommerce-oriented FooConvert popup templates.
 
 A template is a ready-made composition built from some mix of:
 
@@ -94,11 +94,11 @@ The full merchandising version still depends on `fc/product-recommendations` or 
 
 Current limit: on classic/non-Blocks pages the cart resolution is a one-shot REST snapshot, not a fully live cart-fragments bridge.
 
-## 2. Cart Rescue Offer Popup
+## 2. Cart Rescue Offer Overlay
 
 ### Type
 
-`fc/popup`
+`fc/overlay`
 
 ### Goal
 
@@ -233,11 +233,11 @@ Increase average order value by encouraging a one-click bundle or accessory set.
 
 This template should start with manually curated bundles instead of algorithmic bundling.
 
-## 5. Product Page Trust Popup
+## 5. Product Page Trust Overlay
 
 ### Type
 
-`fc/popup`
+`fc/overlay`
 
 ### Goal
 
@@ -281,11 +281,11 @@ Resolve product hesitation at the moment of evaluation.
 
 This template should be light on motion and heavy on clarity.
 
-## 6. Exit Intent Coupon Capture Popup
+## 6. Exit Intent Coupon Capture Overlay
 
 ### Type
 
-`fc/popup`
+`fc/overlay`
 
 ### Goal
 
@@ -330,8 +330,6 @@ This template now has two clear variants:
 
 - apply-after-signup uses `fc/apply-coupon`
 - reveal/copy-after-signup uses `fc/coupon`
-
-The direct-apply variant is now a valid first-class WooCommerce template, not a future placeholder.
 
 ## 7. Thank You Account Claim Flyout
 
@@ -510,11 +508,11 @@ Add urgency to sale or campaign landing pages.
 
 This is mostly already possible today and should be packaged as a commerce template.
 
-## 11. Welcome Discount Popup
+## 11. Welcome Discount Overlay
 
 ### Type
 
-`fc/popup`
+`fc/overlay`
 
 ### Goal
 
@@ -602,11 +600,11 @@ Show product or brand trust proof with minimal complexity.
 
 This can ship as a mostly static template before the review snapshot block is complete.
 
-## 13. Returns And Guarantee Popup
+## 13. Returns And Guarantee Overlay
 
 ### Type
 
-`fc/popup`
+`fc/overlay`
 
 ### Goal
 
@@ -740,10 +738,10 @@ This should start as a static support template and only later absorb dynamic ans
 ## Highest priority template pack
 
 - Add To Cart Unlock Flyout
-- Cart Rescue Offer Popup
-- Product Page Trust Popup
+- Cart Rescue Offer Overlay
+- Product Page Trust Overlay
 - Checkout Reassurance Bar
-- Exit Intent Coupon Capture Popup
+- Exit Intent Coupon Capture Overlay
 
 This pack covers:
 
@@ -774,18 +772,18 @@ These do not need new dynamic Woo blocks to be useful:
 
 - Shipping Reassurance Bar
 - Sale Ends Soon Bar
-- Welcome Discount Popup
-- Returns And Guarantee Popup
+- Welcome Discount Overlay
+- Returns And Guarantee Overlay
 - Gift Guide / Seasonal Offer Bar
 - Review Quote Flyout
 
 ## Templates that depend on new dynamic blocks
 
 - Add To Cart Unlock Flyout
-- Cart Rescue Offer Popup
+- Cart Rescue Offer Overlay
 - Checkout Reassurance Bar
 - Bundle Boost Flyout
-- Product Page Trust Popup
+- Product Page Trust Overlay
 - Thank You Account Claim Flyout
 - Replenishment Reminder Bar
 
@@ -800,7 +798,7 @@ These do not need new dynamic Woo blocks to be useful:
 
 - Woo product display blocks that render from explicit query or product references
 
-## Avoid in widget templates
+## Avoid in popup templates
 
 - full cart blocks
 - full checkout blocks
@@ -809,7 +807,7 @@ These do not need new dynamic Woo blocks to be useful:
 
 ## Acceptance criteria for a good template
 
-A WooCommerce widget template is worth shipping when it has:
+A WooCommerce popup template is worth shipping when it has:
 
 - a clear commerce objective
 - a narrow placement strategy

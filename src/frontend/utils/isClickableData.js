@@ -16,7 +16,7 @@ import isStringOrUndefined from "./isStringOrUndefined";
 
 /**
  *
- * @param {*} data
+ * @param {unknown} data
  * @returns {data is ClickableData}
  */
 const isClickableData = data => hasKeys( data, {

@@ -345,7 +345,7 @@ abstract class BaseBlock {
         $tag_name = $this->get_tag_name();
         $instance_id = $this->create_instance_id( $attributes );
 
-        $attributes = apply_filters( 'fooconvert-widget-frontend-attributes', $attributes, $instance_id, $tag_name, $block );
+        $attributes = apply_filters( 'fooconvert-popup-frontend-attributes', $attributes, $instance_id, $tag_name, $block );
 
         $frontend_attributes = $this->get_frontend_attributes( $instance_id, $attributes, $block );
         $frontend_styles = $this->get_frontend_styles( $instance_id, $attributes, $block );
@@ -388,9 +388,9 @@ abstract class BaseBlock {
     }
 
     /**
-     * Returns the widget post id.
+     * Returns the popup post id.
      */
-    public function get_widget_post_id( array $attributes, WP_Block $block ): int {
+    public function get_popup_post_id( array $attributes, WP_Block $block ): int {
         $post_id = Utils::get_int( $attributes, 'postId' );
         if ( !empty( $post_id ) ) {
             return $post_id;
@@ -399,9 +399,9 @@ abstract class BaseBlock {
     }
 
     /**
-     * Returns the widget post type.
+     * Returns the popup post type.
      */
-    public function get_widget_post_type( array $attributes, WP_Block $block ): string {
+    public function get_popup_post_type( array $attributes, WP_Block $block ): string {
         $post_type = Utils::get_string( $attributes, 'postType' );
         if ( !empty( $post_type ) ) {
             return $post_type;
@@ -410,9 +410,9 @@ abstract class BaseBlock {
     }
 
     /**
-     * Returns the widget template.
+     * Returns the popup template.
      */
-    public function get_widget_template( array $attributes, WP_Block $block ): string {
+    public function get_popup_template( array $attributes, WP_Block $block ): string {
         $template = Utils::get_string( $attributes, 'template' );
         if ( !empty( $template ) ) {
             return $template;
@@ -425,7 +425,7 @@ abstract class BaseBlock {
      */
     function kses( array $attributes, string $content, WP_Block $block, string $context = '' ): string {
         if ( $this->supports( 'compatibility' ) ) {
-            $post_id = $this->get_widget_post_id( $attributes, $block );
+            $post_id = $this->get_popup_post_id( $attributes, $block );
             if ( !empty( $post_id ) ) {
                 $compatibility_mode = FooConvert::plugin()->compatibility->is_enabled( $post_id );
                 if ( $context === 'check_compatibility' ) {

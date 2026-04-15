@@ -7,7 +7,6 @@ export { default as getEditorDocument } from "./getEditorDocument";
 export { default as isCSSGradient } from "./isCSSGradient";
 export { default as isStringNotEmpty } from "./isStringNotEmpty";
 export { default as isStringOrUndefined } from "./isStringOrUndefined";
-export { default as noop } from "./noop";
 export { default as strings } from "./strings";
 export { default as is_$string } from "./is_$string";
 export { default as $object } from "./$object";

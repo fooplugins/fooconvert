@@ -25,7 +25,7 @@ const ExperimentPanel = () => {
     const roleLabel = role === "control" ? __( "Control", "fooconvert" ) : __( "Variant", "fooconvert" );
     const participantLabel = label || roleLabel;
     const singularName = labels?.singular_name || __( "Popup", "fooconvert" );
-    /* translators: %s is the singular widget label, for example "Popup". */
+    /* translators: %s is the singular popup label, for example "Popup". */
     const experimentDescription = sprintf( __( "This %s is part of an A/B test experiement", "fooconvert" ), singularName );
 
     return (

@@ -3,7 +3,7 @@ import { isValidElement } from "@wordpress/element";
 
 /**
  *
- * @param {{ icon: JSX.Element, size?: number|string }} props
+ * @param {{ icon: import("react").ReactElement, size?: number|string }} props
  * @returns {JSX.Element}
  */
 const SafeIcon = ( props ) => {

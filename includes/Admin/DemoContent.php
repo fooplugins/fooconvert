@@ -6,8 +6,7 @@ use FooPlugins\FooConvert\Event;
 use FooPlugins\FooConvert\FooConvert;
 
 /**
- * FooConvert Admin DemoContent Class
- * Runs all classes that need to run in the admin
+ * FooConvert admin demo-content helper.
  */
 
 if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
@@ -29,23 +28,21 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
          * This function will delete any posts of the given post types
          * that have the meta key set to the given value.
          *
-         * @param string $widget_post_type The post type to search for.
+         * @param string $popup_post_type The post type to search for.
          * @param string $meta_key The meta key to search for.
          *
          * @return void
          */
-        function cleanup_old_demo_content( $widget_post_type, $meta_key ) {
-            // Check if old demo content already exists
+        function cleanup_old_demo_content( $popup_post_type, $meta_key ) {
             $old_demo_content = get_posts( [
                 'meta_key'    => $meta_key,
                 'meta_value'  => '1',
-                'post_type'   => $widget_post_type,
+                'post_type'   => $popup_post_type,
                 'post_status' => 'any',
                 'numberposts' => -1
             ] );
 
             if ( !empty( $old_demo_content ) ) {
-                // Old demo content exists; Delete it all!
                 foreach ( $old_demo_content as $post ) {
                     wp_delete_post( $post->ID, true );
                 }
@@ -60,7 +57,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
          * @since 1.0.0
          */
         function delete() {
-            $this->cleanup_old_demo_content( $this->ensure_registered_widget_post_type(), FOOCONVERT_META_KEY_DEMO_CONTENT );
+            $this->cleanup_old_demo_content( $this->ensure_registered_popup_post_type(), FOOCONVERT_META_KEY_DEMO_CONTENT );
         }
 
         /**
@@ -74,24 +71,21 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
          * @return int The number of demo content created.
          */
         function create( $force = false ) {
-            $widget_post_type = $this->ensure_registered_widget_post_type();
+            $popup_post_type = $this->ensure_registered_popup_post_type();
 
             if ( $force === true ) {
-                // Cleanup old demo content
-                $this->cleanup_old_demo_content( $widget_post_type, FOOCONVERT_META_KEY_DEMO_CONTENT );
+                $this->cleanup_old_demo_content( $popup_post_type, FOOCONVERT_META_KEY_DEMO_CONTENT );
             }
 
-            // Check if demo content already exists
             $existing_posts = get_posts( [
                 'meta_key'       => FOOCONVERT_META_KEY_DEMO_CONTENT,
-                'post_type'      => $widget_post_type,
+                'post_type'      => $popup_post_type,
                 'post_status'    => 'any',
                 'meta_value'     => '1',
                 'posts_per_page' => 1,
             ] );
 
             if ( !empty( $existing_posts ) ) {
-                // Demo content already exists; do nothing.
                 return 0;
             }
 
@@ -100,16 +94,13 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 $content_for_insert = $content;
                 $post_content = $content['post_content'];
 
-                // Remove the post content from the content array, as we will update it later.
                 unset( $content_for_insert['post_content'] );
 
                 if ( !array_key_exists( 'meta_input', $content_for_insert ) ) {
                     $content_for_insert['meta_input'] = [];
                 }
 
-                $content_for_insert['meta_input'][FOOCONVERT_META_KEY_DEMO_CONTENT] = '1'; // Mark as demo content
-
-                // We first need to insert the post, and get back a post ID
+                $content_for_insert['meta_input'][FOOCONVERT_META_KEY_DEMO_CONTENT] = '1';
                 $post_id = wp_insert_post( $content_for_insert );
 
                 if ( is_wp_error( $post_id ) ) {
@@ -125,13 +116,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
                 $meta = [
                     'post_type' => fooconvert_get_popup_type_post_type(
-                        $content_for_insert['meta_input'][FOOCONVERT_META_KEY_POPUP_TYPE] ?? FOOCONVERT_POPUP_TYPE_POPUP
+                        $content_for_insert['meta_input'][FOOCONVERT_META_KEY_POPUP_TYPE] ?? FOOCONVERT_POPUP_TYPE_OVERLAY
                     ),
                     'template'  => $content_for_insert['template'],
                     'demo'      => true
                 ];
 
-                // Create some events for the demo content.
                 $this->create_events( $post_id, $meta, wp_rand( 500, 1000 ) );
 
                 $count++;
@@ -142,32 +132,30 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
         // phpcs:enable
 
-
         /**
-         * Creates demo event data for the widget.
+         * Creates demo event data for the popup.
          *
-         * @param $widget_id
+         * @param $post_id
          * @return void
          */
-        function create_events( $widget_id, $meta, $num_events = 1000 ) {
+        function create_events( $post_id, $meta, $num_events = 1000 ) {
             $event = new Event();
 
-            // Define event types and probabilities (more positive events)
+            // Bias demo data toward positive engagement so the dashboard does not
+            // look empty or artificially hostile on first load.
             $event_types = [
-                FOOCONVERT_EVENT_TYPE_OPEN  => 0.7,        // 70% chance of 'view'
-                FOOCONVERT_EVENT_TYPE_CLICK => 0.2,        // 20% chance of 'click'
-                FOOCONVERT_EVENT_TYPE_CLOSE => 0.1         // 10% chance of 'dismiss'
+                FOOCONVERT_EVENT_TYPE_OPEN  => 0.7, // 70% views
+                FOOCONVERT_EVENT_TYPE_CLICK => 0.2, // 20% clicks
+                FOOCONVERT_EVENT_TYPE_CLOSE => 0.1  // 10% dismissals
             ];
 
-            // Generate event data
             for ( $i = 0; $i < $num_events; $i++ ) {
-                // Randomly pick an event type based on probabilities
                 $event_type = $this->weighted_random_event( $event_types );
 
                 $conversion = null;
 
                 if ( $event_type === FOOCONVERT_EVENT_TYPE_CLICK ) {
-                    // not every click is a conversion for demo data.
+                    // Demo clicks should not all read as successful conversions.
                     $conversion = wp_rand( 0, 1 );
                 }
 
@@ -178,23 +166,20 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                     ? 1
                     : ( FOOCONVERT_EVENT_TYPE_CLOSE === $event_type ? 0 : null );
 
-                // Random timestamp within the last 30 days
                 $timestamp = gmdate( 'Y-m-d H:i:s', strtotime( "-" . wp_rand( 0, 30 ) . " days -" . wp_rand( 0, 86400 ) . " seconds" ) );
 
-                // Randomly select either a user_id or an anonymous_user_guid
                 if ( wp_rand( 0, 1 ) === 1 ) {
-                    $user_id = wp_rand( 1, 10 );  // Random user ID for logged-in users
+                    $user_id = wp_rand( 1, 10 );
                     $anonymous_user_guid = null;
                 } else {
                     $user_id = 0;
-                    $anonymous_user_guid = bin2hex( random_bytes( 32 ) );  // Generate random GUID for anonymous users
+                    // Anonymous demo visitors still need a stable GUID shape.
+                    $anonymous_user_guid = bin2hex( random_bytes( 32 ) );
                 }
 
-                // Random device type
                 $device_types = [ 'desktop', 'mobile', 'tablet' ];
                 $device_type = $device_types[array_rand( $device_types )];
 
-                // Deal with extra data.
                 $extra_data = [];
                 if ( $conversion === 1 ) {
                     $extra_data = [
@@ -204,10 +189,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                     ];
                 }
 
-                // Insert the generated event into the database
                 $event->create(
                     [
-                        'widget_id'           => $widget_id,
+                        'post_id'           => $post_id,
                         'event_type'          => $event_type,
                         'event_subtype'       => $event_subtype,
                         'conversion'          => $conversion,
@@ -223,10 +207,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 );
             }
 
-            do_action( 'fooconvert_demo_content_after_create_events', $widget_id, $meta, $num_events );
+            do_action( 'fooconvert_demo_content_after_create_events', $post_id, $meta, $num_events );
         }
 
-        // Helper function to select an event type based on weighted probabilities
         /**
          * Handles weighted random event.
          */
@@ -240,7 +223,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                     return $event;
                 }
             }
-            return FOOCONVERT_EVENT_TYPE_OPEN;  // Fallback (shouldn’t happen if weights add up to 1)
+            // Defensive fallback if the configured weights do not total 1.
+            return FOOCONVERT_EVENT_TYPE_OPEN;
         }
 
         /**
@@ -382,14 +366,14 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 <!-- /wp:fc/flyout -->'
                 ],
 
-                // Demo Popups:
+                // Demo Overlays:
                 [
-                    'post_title'   => 'Black Friday Exit Intent Popup [Demo]',
+                    'post_title'   => 'Black Friday Exit Intent Overlay [Demo]',
                     'post_status'  => 'draft',
                     'post_type'    => FOOCONVERT_CPT_POPUP,
                     'template'     => 'black_friday_popup',
                     'meta_input'   => [
-                        FOOCONVERT_META_KEY_POPUP_TYPE => FOOCONVERT_POPUP_TYPE_POPUP,
+                        FOOCONVERT_META_KEY_POPUP_TYPE => FOOCONVERT_POPUP_TYPE_OVERLAY,
                         FOOCONVERT_META_KEY_DISPLAY_RULES => [
                             'location' => [
                                 [
@@ -402,11 +386,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                         ]
                     ],
                     'post_content' =>
-                '<!-- wp:fc/popup {"template":"black_friday_popup","postId":||POST_ID||,"settings":{"transitions":true,"hideScrollbar":true,"maxOnMobile":true,"trigger":{"version":2,"lifetime":"page","frequency":{"mode":"once","cooldownSeconds":0},"steps":[{"event":"fc.exit_intent","where":{"delaySeconds":5}}]},"backdropIgnore":false},"closeButton":{"settings":{"icon":{"slug":"default__close-small","size":"48px"}}},"content":{"styles":{"color":{"background":"linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)"},"border":{"radius":"18px","color":"#111111","style":"solid","width":"3px"},"width":"720px","dimensions":{"padding":"30px"}}}} -->
-<!-- wp:fc/popup-container -->
-<!-- wp:fc/popup-close-button /-->
+                '<!-- wp:fc/overlay {"template":"black_friday_popup","postId":||POST_ID||,"settings":{"transitions":true,"hideScrollbar":true,"maxOnMobile":true,"trigger":{"version":2,"lifetime":"page","frequency":{"mode":"once","cooldownSeconds":0},"steps":[{"event":"fc.exit_intent","where":{"delaySeconds":5}}]},"backdropIgnore":false},"closeButton":{"settings":{"icon":{"slug":"default__close-small","size":"48px"}}},"content":{"styles":{"color":{"background":"linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)"},"border":{"radius":"18px","color":"#111111","style":"solid","width":"3px"},"width":"720px","dimensions":{"padding":"30px"}}}} -->
+<!-- wp:fc/overlay-container -->
+<!-- wp:fc/overlay-close-button /-->
 
-<!-- wp:fc/popup-content -->
+<!-- wp:fc/overlay-content -->
 <!-- wp:heading {"textAlign":"center","className":"is-style-default","fontFamily":"body"} -->
 <h2 class="wp-block-heading has-text-align-center is-style-default has-body-font-family">WELCOME TO BLACK FRIDAY</h2>
 <!-- /wp:heading -->
@@ -428,9 +412,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 <div class="wp-block-button" id="cta"><a class="wp-block-button__link has-text-align-center wp-element-button" href="/shop" style="border-radius:54px">Save 70%</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons -->
-<!-- /wp:fc/popup-content -->
-<!-- /wp:fc/popup-container -->
-<!-- /wp:fc/popup -->'
+<!-- /wp:fc/overlay-content -->
+<!-- /wp:fc/overlay-container -->
+<!-- /wp:fc/overlay -->'
                 ],
             ];
             // phpcs:enable
@@ -441,15 +425,15 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
          *
          * @return string
          */
-        public function ensure_registered_widget_post_type() {
-            $widget_post_type = FOOCONVERT_CPT_POPUP;
-            if ( post_type_exists( $widget_post_type ) ) {
-                return $widget_post_type;
+        public function ensure_registered_popup_post_type() {
+            $popup_post_type = FOOCONVERT_CPT_POPUP;
+            if ( post_type_exists( $popup_post_type ) ) {
+                return $popup_post_type;
             }
 
             FooConvert::plugin()->post_type->register();
 
-            return $widget_post_type;
+            return $popup_post_type;
         }
     }
 }

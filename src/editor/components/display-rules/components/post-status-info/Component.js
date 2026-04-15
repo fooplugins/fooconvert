@@ -6,7 +6,7 @@ import { useMemo, useState } from "@wordpress/element";
 import classnames from "classnames";
 
 import "./Component.scss";
-import { DisplayRulesDropdown } from "../../components";
+import DisplayRulesDropdown from "../dropdown/Component";
 
 const rootClass = 'fc--display-rules__post-status-info';
 

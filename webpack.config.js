@@ -20,13 +20,7 @@ const getProBlockEntries = () => {
     } );
 
     return blockJsonFiles.reduce( ( entries, blockJsonFile ) => {
-        let parsed;
-
-        try {
-            parsed = JSON.parse( readFileSync( blockJsonFile, 'utf8' ) );
-        } catch ( error ) {
-            return entries;
-        }
+        const parsed = JSON.parse( readFileSync( blockJsonFile, 'utf8' ) );
 
         [ 'editorScript', 'script', 'viewScript' ].forEach( ( fieldName ) => {
             const value = parsed?.[ fieldName ];

@@ -34,7 +34,7 @@
     flex: 2;
     position: relative;
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     justify-content: center;
     gap: 0;
@@ -46,12 +46,17 @@
     background-color: #fff;
     color: #000;
     width: 100%;
+    min-width: 0;
     overflow: hidden;
   }
 
   &::part(code__text) {
     flex: 1;
     padding: 0.2em 0.8em;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &::part(copy-button) {
@@ -125,6 +130,12 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
+}
+
+:host([button-layout='text-icon']) {
+  &::part(copy-button) {
+    flex-direction: row-reverse;
+  }
 }
 
 :host([no-label]) {

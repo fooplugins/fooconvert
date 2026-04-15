@@ -19,14 +19,14 @@ if ( in_array( 'getting-started', $hidden_panels ) ) {
     <?php if ( !$demos_created ) : ?>
         <div class="fooconvert-panel-section">
             <p>
-                <?php esc_html_e( 'The easiest way to get started is by creating demo content, which will create 4 draft bars, flyouts and popups.', 'fooconvert' ); ?>
+                <?php esc_html_e( 'The easiest way to get started is by creating demo content, which will create 4 draft bars, flyouts and overlays.', 'fooconvert' ); ?>
                 <strong><?php esc_html_e( 'It\'s also the best way to see the top performers in action!', 'fooconvert' ); ?> </strong>
             </p>
             <p class="fooconvert-flex fooconvert-create-demo-container">
-                <button class="button button-primary button-large fooconvert-create-demo-widgets">
+                <button class="button button-primary button-large fooconvert-create-demo-popups">
                     <?php esc_html_e( 'Create Demo Content', 'fooconvert' ); ?>
                 </button>
-                <span class="spinner fooconvert-create-demo-widgets-spinner"></span>
+                <span class="spinner fooconvert-create-demo-popups-spinner"></span>
             </p>
             <p>
                 <strong><?php esc_html_e( 'Do not worry', 'fooconvert' ); ?></strong> -
@@ -39,10 +39,10 @@ if ( in_array( 'getting-started', $hidden_panels ) ) {
                 <?php esc_html_e( 'Awesome, you have already created the demo content!', 'fooconvert' ); ?> </strong>
             </p>
             <p class="fooconvert-flex fooconvert-delete-demo-container">
-                <button class="button button-secondary button-large fooconvert-delete-demo-widgets">
+                <button class="button button-secondary button-large fooconvert-delete-demo-popups">
                     <?php esc_html_e( 'Delete Demo Content', 'fooconvert' ); ?>
                 </button>
-                <span class="spinner fooconvert-delete-demo-widgets-spinner"></span>
+                <span class="spinner fooconvert-delete-demo-popups-spinner"></span>
             </p>
             <p>
                 <?php esc_html_e( 'Deleting the demo content will also delete all stats.', 'fooconvert' ); ?>
@@ -56,13 +56,13 @@ if ( in_array( 'getting-started', $hidden_panels ) ) {
         </p>
         <ol class="fooconvert-ordered-list">
             <li>
-                <?php esc_html_e( 'Create a new popup and choose whether it should be a bar, flyout, or popup.', 'fooconvert' ); ?>
-                (<a href="<?php echo esc_url( fooconvert_admin_url_widget_type_chooser() ); ?>"
+                <?php esc_html_e( 'Create a new popup and choose whether it should be a bar, flyout, or overlay.', 'fooconvert' ); ?>
+                (<a href="<?php echo esc_url( fooconvert_admin_url_popup_type_chooser() ); ?>"
                     target="_blank"><?php esc_html_e( 'create a new popup', 'fooconvert' ); ?></a>)
             </li>
             <li>
                 <?php esc_html_e( 'Select a pre-made template.', 'fooconvert' ); ?>
-                (<?php esc_html_e( 'e.g. Black Friday Bar, Scroll Flyout, or Exit Intent Popup', 'fooconvert' ); ?>)
+                (<?php esc_html_e( 'e.g. Black Friday Bar, Scroll Flyout, or Exit Intent Overlay', 'fooconvert' ); ?>)
             </li>
             <li>
                 <?php esc_html_e( 'Customize the look and feel &amp; change the content to your liking!', 'fooconvert' ); ?>

@@ -1,9 +1,15 @@
 export const KNOWN_VALIDATION_ATTR = [ 'required', 'minlength', 'maxlength', 'min', 'max', 'step', 'type', 'pattern' ];
 
 /**
+ * Validation attributes extracted from an input element.
+ *
+ * @typedef {{name: string, value: string}} ValidationAttribute
+ */
+
+/**
  *
  * @param {HTMLElement} element
- * @returns {Array<{name:string,value:string}>}
+ * @returns {ValidationAttribute[]}
  */
 const getValidationAttributes = element => {
     return Array.from( element.attributes ).reduce( ( acc, attr ) => {

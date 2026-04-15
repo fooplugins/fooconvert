@@ -16,7 +16,7 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
          */
         public function __construct() {
             add_filter( 'fooconvert_event_data', array( $this, 'adjust_event_data' ), 10, 2 );
-            add_action( 'before_delete_post', array( $this, 'delete_widget_events' ) );
+            add_action( 'before_delete_post', array( $this, 'delete_popup_events' ) );
             add_action( 'post_updated', array( $this, 'store_post_update_event' ), 10, 3 );
         }
 
@@ -27,7 +27,7 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
          *
          * @since 1.0.0
          */
-        public function delete_widget_events( $post_id ) {
+        public function delete_popup_events( $post_id ) {
             // Check post type if necessary
             $post_type = get_post_type( $post_id );
             if ( fooconvert_normalize_popup_type( (string) $post_type ) === '' ) {
@@ -35,7 +35,7 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
             }
 
             $event = new Event();
-            $event->delete_widget_events( $post_id );
+            $event->delete_popup_events( $post_id );
         }
 
         /**
@@ -227,7 +227,7 @@ if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
             $event = new Event();
             $event->create(
                 [
-                    'widget_id'  => $post_id,
+                    'post_id'  => $post_id,
                     'event_type' => FOOCONVERT_EVENT_TYPE_UPDATE,
                     'extra_data' => $extra_data,
                 ]

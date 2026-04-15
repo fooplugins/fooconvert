@@ -1,8 +1,9 @@
 import { isString } from "@steveush/utils";
 
 /**
+ * Check if a value is a non-empty string.
  *
- * @param {any} value
+ * @param {unknown} value - The value to check.
  * @returns {value is string}
  */
 const isStringNotEmpty = value => isString( value, true );

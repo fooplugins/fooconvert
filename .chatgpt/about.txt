@@ -1,20 +1,19 @@
 This file outlines what the FooConvert plugin does and how the free/PRO split currently works.
 
-FooConvert allows you to create 3 different types of widgets:
+FooConvert allows you to create 3 different types of popups:
 - bars
 - flyouts
-- popups
+- overlays
 
-These widgets are designed and edited with the Gutenberg block editor through custom widget post types.
+These popups are designed and edited with the Gutenberg block editor through a single popup post type.
+When you create a new popup, you can either start from scratch or choose from predefined templates.
+The free plugin now includes the migrated former PRO template pack across all popup types.
 
-When you create a new widget, you can either start from scratch or choose from predefined templates.
-The free plugin now includes the migrated former PRO template pack across all widget types.
-
-You can customize the appearance and behavior of each widget with:
-- Display Rules: controls where the widget is displayed, for example all pages, a specific page, or a specific post type.
-- Open Trigger: controls when the widget is opened, for example immediate, timer, scroll, anchor click, or exit intent.
+You can customize the appearance and behavior of each popup with:
+- Display Rules: controls where the popup is displayed, for example all pages, a specific page, or a specific post type.
+- Open Trigger: controls when the popup is opened, for example immediate, timer, scroll, anchor click, or exit intent.
 - Appearance: controls style, colors, size, layout, fonts, and media.
-- Content: allows any supported block or shortcode inside the widget content area.
+- Content: allows any supported block or shortcode inside the popup content area.
 
 The free plugin now owns these migrated content features:
 - `fc/countdown`
@@ -38,5 +37,5 @@ FooConvert has an admin dashboard with panels such as:
 - Help
 - Premium Addons / premium feature discovery
 
-There is also an admin page for widget stats, which shows metrics and recent activity for widgets.
+There is also an admin page for popup stats, which shows metrics and recent activity for popups.
 Metrics include events, views, visitors, and engagements, with PRO extending analytics beyond the basic free surface.

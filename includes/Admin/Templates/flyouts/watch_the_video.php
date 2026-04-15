@@ -14,7 +14,7 @@ return array(
                     'text'       => '#ffffff'
                 ),
                 'border'     => array(
-                    'shadow' => '6px 6px 9px rgba(0, 0, 0, 0.2)',
+                    'shadow' => '6px 6px 9px #00000000',
                     'color'  => '#981d1d',
                     'style'  => 'solid',
                     'width'  => '1px',
@@ -37,7 +37,7 @@ return array(
                     'color'  => '#A92020',
                     'style'  => 'solid',
                     'width'  => '1px',
-                    'shadow' => '6px 6px 9px rgba(0, 0, 0, 0.2)'
+                    'shadow' => '6px 6px 9px #00000000'
                 ),
                 'color'  => array(
                     'background' => '#E51919',
@@ -177,3 +177,4 @@ return array(
         'block'
     )
 );
+

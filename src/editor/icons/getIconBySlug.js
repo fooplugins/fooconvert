@@ -3,9 +3,14 @@ import { isString, isArray } from "@steveush/utils";
 import ICON_SETS from "./ICON_SETS.js";
 
 /**
+ * @typedef {{name: string, label: string, value: import("react").ReactNode}} IconEntry
+ * @typedef {{name: string, label: string, icons: IconEntry[]}} IconSet
+ */
+
+/**
  *
  * @param {string|undefined} slug - The slug for the icon. The slug is composed of the set name and icon name separated by double underscores.
- * @returns {{name: string, label: string, value: import("react").ReactNode}|undefined}
+ * @returns {IconEntry|undefined}
  */
 const getIconBySlug = slug => {
     if ( isString( slug ) ) {

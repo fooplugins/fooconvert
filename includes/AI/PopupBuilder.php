@@ -326,7 +326,7 @@ class PopupBuilder {
             array(
                 'postId'   => $post_id,
                 'title'    => get_the_title( $post_id ),
-                'editUrl'  => fooconvert_admin_url_widget_edit( $post_id ),
+                'editUrl'  => fooconvert_admin_url_popup_edit( $post_id ),
                 'previewUrl' => fooconvert_admin_url_ai_popup_preview( $post_id ),
                 'popupType' => $popup_type,
                 'updatedExisting' => $requested_post_id > 0,

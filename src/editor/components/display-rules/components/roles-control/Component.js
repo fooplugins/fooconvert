@@ -5,24 +5,15 @@ import { isArray } from "@steveush/utils";
 
 import "./Component.scss";
 import { RepeaterControl } from "../../../repeater-control";
+/**
+ * @typedef {import("../../types").DisplayRulesRolesControlProps} DisplayRulesRolesControlProps
+ */
 
 const rootClass = 'fc--display-rules__roles-control';
 
 /**
- * The properties for the `DisplayRulesRolesControl` component.
- *
- * @typedef DisplayRulesRolesControlProps
- * @param {GroupedSelectOptions} options - The options to display in the select controls.
- * @param {string[]} items - The current role items.
- * @param {( items: string[] ) => void} onChange - Callback to for when any items have changed.
- * @param {string} [className] - Optional. The CSS class name to append to the component.
- */
-
-/**
- *
  * @param {DisplayRulesRolesControlProps} props - The props for the display rules locations control.
  * @return {JSX.Element}
- * @constructor
  */
 const DisplayRulesRolesControl = ( {
                                        label,
@@ -46,8 +37,7 @@ const DisplayRulesRolesControl = ( {
     const hasAllUsers = items.some( isAllUsers );
 
     /**
-     *
-     * @param {RepeaterControlItemRendererProps<string>} props
+     * @param {import("../../../repeater-control/Component").RepeaterControlItemRendererProps<string>} props
      * @returns {JSX.Element}
      */
     const renderItem = ( { item, index, onChange, onRequestRemove } ) => <DisplayRulesRoleControl

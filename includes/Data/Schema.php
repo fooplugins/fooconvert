@@ -22,7 +22,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
          * Create or upgrade the plugin tables when the stored schema version is out of date.
          *
          * @param string|null $target_version Target plugin version to migrate to.
-         * @return array<array-key, mixed>|false Table creation results, or false.
+         * @return array{events: array<array-key, mixed>, leads: array<array-key, mixed>}|false Table creation results, or false.
          */
         public function create_event_table_if_needed( ?string $target_version = null ) {
             static $results = array();
@@ -48,11 +48,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
                 return $results[ $cache_key ];
             }
 
-            // Create the tables.
             $table_creation_results = $this->create_event_table_and_indexes();
             $leads_creation_results = $this->create_leads_table_and_indexes();
-
-            // TODO : Run any necessary migrations.
 
             // Keep this option autoloaded because it is checked on every request.
             update_option( FOOCONVERT_OPTION_VERSION_CREATE_TABLE, $current_version, true );
@@ -70,7 +67,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
          * @global wpdb $wpdb The WordPress database class instance.
          *
          */
-        public function create_event_table_and_indexes() {
+        public function create_event_table_and_indexes(): array {
             global $wpdb;
 
             $charset_collate = $wpdb->get_charset_collate();
@@ -80,7 +77,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
             /**
              * This is the Event table schema.
              *  - id is the primary key
-             *  - widget_id is the id of the widget that created the event.
+             *  - post_id is the id of the popup that created the event.
              *  - event_type is the type of event. This can be one of: 'open', 'click', 'close', 'update'.
              *  - event_subtype is the subtype of the event. This can be one of: 'engagement'.
              *  - conversion is a boolean that is true if the event is a conversion.
@@ -97,7 +94,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
 
             $sql = "CREATE TABLE $table_name (
                 id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-                widget_id bigint(20) unsigned NOT NULL,
+                post_id bigint(20) unsigned NOT NULL,
                 event_type varchar(255) NOT NULL,
                 event_subtype varchar(255) DEFAULT NULL,
                 conversion tinyint(1) DEFAULT NULL,
@@ -115,74 +112,46 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
 
             $db_delta_result = parent::safe_dbDelta( $sql );
 
-            // Log the results of the table creation.
             $this->log_table_creation_results( $db_delta_result, $sql, $table_name );
 
-            // Create all the indexes we need.
-            parent::safe_create_index( $table_name, 'idx_widget', 'widget_id' ); // We need to query all events for a widget.
+            // Query all events for a popup.
+            parent::safe_create_index( $table_name, 'idx_popup', 'post_id' );
 
-            /*
-             * Purpose : many queries use widget_id and filter by event_type (e.g., counting views, conversions, dismissals).
-             */
-            parent::safe_create_index( $table_name, 'idx_widget_event_type', 'widget_id, event_type' );
+            // Count/filter event types per popup, including time-bounded metrics.
+            parent::safe_create_index( $table_name, 'idx_popup_event_type', 'post_id, event_type' );
 
-            /*
-             * Purpose : many queries also use widget_id and filter by event_subtype (e.g., counting interactions, bounces).
-             */
-            parent::safe_create_index( $table_name, 'idx_widget_event_subtype', 'widget_id, event_subtype' );
+            // Support popup metrics that segment by event subtype.
+            parent::safe_create_index( $table_name, 'idx_popup_event_subtype', 'post_id, event_subtype' );
 
-            /*
-             * Purpose : many queries also use widget_id and filter by conversion.
-             */
-            parent::safe_create_index( $table_name, 'idx_widget_conversion', 'widget_id, conversion' );
+            // Support conversion-rate style queries per popup.
+            parent::safe_create_index( $table_name, 'idx_popup_conversion', 'post_id, conversion' );
 
-            /*
-             * Purpose : many queries also use widget_id and filter by sentiment.
-             */
-            parent::safe_create_index( $table_name, 'idx_widget_sentiment', 'widget_id, sentiment' );
+            // Support positive/negative sentiment rollups per popup.
+            parent::safe_create_index( $table_name, 'idx_popup_sentiment', 'post_id, sentiment' );
 
-            /*
-             * Purpose: This index will be particularly helpful when filtering by both widget_id and timestamp,
-             * especially for queries restricted to recent data (e.g., the last 30, 60, or 90 days).
-             * This will allow the database to quickly find the events within the specified date range for a particular widget.
-             */
-            parent::safe_create_index( $table_name, 'idx_widget_timestamp', 'widget_id, timestamp' );
+            // Filter popup events by date range.
+            parent::safe_create_index( $table_name, 'idx_popup_timestamp', 'post_id, timestamp' );
 
-            /*
-             * Purpose: This index supports queries that filter by widget_id and event_type while also filtering or ordering by timestamp.
-             * This will be useful for metrics that need to count or filter specific event types (like view, click, conversion, and dismiss) within a time range.
-             */
-            parent::safe_create_index( $table_name, 'idx_widget_event_type_timestamp', 'widget_id, event_type, timestamp' );
+            // Filter a popup's event type within a date range.
+            parent::safe_create_index( $table_name, 'idx_popup_event_type_timestamp', 'post_id, event_type, timestamp' );
 
-            /*
-             * Purpose : Session-based analytics need to efficiently group visits by widget and browser session.
-             */
-            parent::safe_create_index( $table_name, 'idx_widget_session', 'widget_id, session_id(191)' );
+            // Support session-based popup analytics.
+            parent::safe_create_index( $table_name, 'idx_popup_session', 'post_id, session_id(191)' );
 
-            /*
-             * Purpose : Attribute WooCommerce sales using the latest qualifying session event before checkout.
-             */
+            // Attribute WooCommerce sales from session history.
             parent::safe_create_index( $table_name, 'idx_session_event_lookup', 'session_id(191), event_type, sentiment, timestamp' );
 
-            /*
-             * Purpose : Attribute WooCommerce sales using logged-in customer history.
-             */
+            // Attribute WooCommerce sales from logged-in customer history.
             parent::safe_create_index( $table_name, 'idx_user_event_lookup', 'user_id, event_type, sentiment, timestamp' );
 
-            /*
-             * Purpose : Attribute WooCommerce sales using anonymous visitor history.
-             */
+            // Attribute WooCommerce sales from anonymous visitor history.
             parent::safe_create_index( $table_name, 'idx_anonymous_event_lookup', 'anonymous_user_guid(191), event_type, sentiment, timestamp' );
 
-            /*
-             * Purpose : Deduplicate sale events by session or widget/session.
-             */
+            // Deduplicate sale events by event type + session.
             parent::safe_create_index( $table_name, 'idx_event_type_session', 'event_type, session_id(191)' );
 
-            /*
-             * Purpose : Many metrics, such as unique visitors, conversion rate, and dismissal rate, rely on distinct counts of either user_id or anonymous_user_guid for each widget_id.
-             */
-            parent::safe_create_index( $table_name, 'idx_widget_user', 'widget_id, user_id, anonymous_user_guid' );
+            // Count unique users/visitors per popup.
+            parent::safe_create_index( $table_name, 'idx_popup_user', 'post_id, user_id, anonymous_user_guid' );
 
             return $db_delta_result;
         }
@@ -192,7 +161,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
          * @global wpdb $wpdb The WordPress database class instance.
          *
          */
-        public function create_leads_table_and_indexes() {
+        public function create_leads_table_and_indexes(): array {
             global $wpdb;
 
             $charset_collate = $wpdb->get_charset_collate();
@@ -201,7 +170,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
 
             $sql = "CREATE TABLE $table_name (
                 id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-                widget_id bigint(20) unsigned NOT NULL,
+                post_id bigint(20) unsigned NOT NULL,
                 email varchar(255) NOT NULL,
                 name varchar(255) DEFAULT NULL,
                 metadata longtext DEFAULT NULL,
@@ -212,13 +181,16 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
 
             $db_delta_result = parent::safe_dbDelta( $sql );
 
-            // Log the results of the table creation.
             $this->log_table_creation_results( $db_delta_result, $sql, $table_name );
 
-            // Create indexes
-            parent::safe_create_index( $table_name, 'idx_widget', 'widget_id' );
+            // Fetch leads for a popup.
+            parent::safe_create_index( $table_name, 'idx_popup', 'post_id' );
+
+            // Look up leads by email.
             parent::safe_create_index( $table_name, 'idx_email', 'email' );
-            parent::safe_create_index( $table_name, 'idx_page_url', 'page_url(191)' ); // Using prefix length for text column
+
+            // Prefix length is required for the text column.
+            parent::safe_create_index( $table_name, 'idx_page_url', 'page_url(191)' );
 
             return $db_delta_result;
         }
@@ -226,12 +198,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
         /**
          * Logs the results of the table creation process.
          *
-         * @param array $db_delta_result The results of the table creation process.
+         * @param array<array-key, mixed> $db_delta_result The results of the table creation process.
          * @param string $sql The SQL statement used to create the table.
          * @param string $table_name The name of the table that we tried to create.
          * @return void
          */
-        public function log_table_creation_results( $db_delta_result, $sql, $table_name ) {
+        public function log_table_creation_results( array $db_delta_result, string $sql, string $table_name ): void {
             global $wpdb;
 
             $table_exists = self::does_table_exist( $table_name );
@@ -256,7 +228,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
          * @param string $table_name The name of the table to check.
          * @return bool True if the table exists, false otherwise.
          */
-        static function does_table_exist( $table_name ) {
+        static function does_table_exist( string $table_name ): bool {
             global $wpdb;
 
             // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching

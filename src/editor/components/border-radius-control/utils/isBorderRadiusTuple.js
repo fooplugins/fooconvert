@@ -9,7 +9,7 @@ import { is_$string } from "../../../utils";
 
 /**
  *
- * @type {[ (( value: any ) => boolean), (( value: any ) => boolean), (( value: any ) => boolean), (( value: any ) => boolean) ]}
+ * @type {[ (( value: unknown ) => boolean), (( value: unknown ) => boolean), (( value: unknown ) => boolean), (( value: unknown ) => boolean) ]}
  */
 export const BORDER_RADIUS_TUPLE_DEFINITION = [ is_$string, is_$string, is_$string, is_$string ];
 
@@ -22,7 +22,7 @@ export const BORDER_RADIUS_TUPLE_DEFAULTS = [ undefined, undefined, undefined, u
 /**
  * Check if a value is a {@link BorderRadiusTuple|`BorderRadiusTuple`}.
  *
- * @param {any} value - The value to check.
+ * @param {unknown} value - The value to check.
  * @returns {value is BorderRadiusTuple} - `true` if the value is a {@link BorderRadiusTuple|`BorderRadiusTuple`}, otherwise `false`.
  */
 const isBorderRadiusTuple = value => isArray( value, true, ( value, i ) => {

@@ -93,6 +93,9 @@ namespace {
         if ( strpos( $content, 'wp:fc/flyout' ) !== false ) {
             return array( array( 'blockName' => 'fc/flyout' ) );
         }
+        if ( strpos( $content, 'wp:fc/overlay' ) !== false ) {
+            return array( array( 'blockName' => 'fc/overlay' ) );
+        }
         if ( strpos( $content, 'wp:fc/popup' ) !== false ) {
             return array( array( 'blockName' => 'fc/popup' ) );
         }
@@ -139,9 +142,15 @@ namespace {
     $legacy_post->post_type = FOOCONVERT_CPT_BAR;
     $legacy_post->post_content = '';
 
+    $legacy_overlay_post = new WP_Post();
+    $legacy_overlay_post->ID = 104;
+    $legacy_overlay_post->post_type = FOOCONVERT_CPT_POPUP;
+    $legacy_overlay_post->post_content = '<!-- wp:fc/popup /-->';
+
     $GLOBALS['fc_test_posts'][101] = $meta_priority_post;
     $GLOBALS['fc_test_posts'][102] = $content_fallback_post;
     $GLOBALS['fc_test_posts'][103] = $legacy_post;
+    $GLOBALS['fc_test_posts'][104] = $legacy_overlay_post;
 
     $GLOBALS['fc_test_post_meta'][101] = array(
         FOOCONVERT_META_KEY_POPUP_TYPE => FOOCONVERT_POPUP_TYPE_BAR,
@@ -151,26 +160,38 @@ namespace {
 
     Assertions::same(
         FOOCONVERT_POPUP_TYPE_BAR,
-        fooconvert_get_widget_popup_type( 101 ),
+        fooconvert_get_popup_type( 101 ),
         'Popup type resolution should prefer stored popup type meta.'
     );
 
     Assertions::same(
         FOOCONVERT_POPUP_TYPE_FLYOUT,
-        fooconvert_get_widget_popup_type( 102 ),
+        fooconvert_get_popup_type( 102 ),
         'Popup type resolution should fall back to the root block when popup type meta is missing.'
     );
 
     Assertions::same(
         FOOCONVERT_POPUP_TYPE_BAR,
-        fooconvert_get_widget_popup_type( 'fc/bar' ),
-        'Popup type normalization should accept legacy widget block names.'
+        fooconvert_get_popup_type( 'fc/bar' ),
+        'Popup type normalization should accept legacy popup block names.'
+    );
+
+    Assertions::same(
+        FOOCONVERT_POPUP_TYPE_OVERLAY,
+        fooconvert_normalize_popup_type( FOOCONVERT_POPUP_TYPE_POPUP ),
+        'Legacy popup type values should normalize to the canonical overlay type.'
+    );
+
+    Assertions::same(
+        FOOCONVERT_POPUP_TYPE_OVERLAY,
+        fooconvert_get_popup_type( 104 ),
+        'Legacy popup root blocks should resolve to the canonical overlay type.'
     );
 
     Assertions::same(
         'Bar',
-        fooconvert_get_widget_post_type_label( 101 ),
-        'Widget labels should be derived from the resolved popup type.'
+        fooconvert_get_popup_type_label( 101 ),
+        'Popup labels should be derived from the resolved popup type.'
     );
 
     $migration = new ContentMigration();
@@ -185,6 +206,16 @@ namespace {
         ),
         $method->invoke( $migration ),
         'The CPT merge migration map should convert legacy bars and flyouts into popup types.'
+    );
+
+    $migrated_content = $migration->normalize_content(
+        '<!-- wp:fc/popup --><!-- wp:fc/popup-container --><!-- wp:fc/popup-close-button /--><!-- wp:fc/popup-content --><!-- /wp:fc/popup-content --><!-- /wp:fc/popup-container --><!-- /wp:fc/popup -->'
+    );
+
+    Assertions::same(
+        '<!-- wp:fc/overlay --><!-- wp:fc/overlay-container --><!-- wp:fc/overlay-close-button /--><!-- wp:fc/overlay-content --><!-- /wp:fc/overlay-content --><!-- /wp:fc/overlay-container --><!-- /wp:fc/overlay -->',
+        $migrated_content,
+        'Content migration should rewrite legacy popup block markup to overlay block markup.'
     );
 
     echo "popup-type-core: ok\n";

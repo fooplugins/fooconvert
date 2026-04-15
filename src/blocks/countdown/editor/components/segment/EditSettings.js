@@ -16,7 +16,7 @@ const EditSettings = ( props ) => {
         segmentSettingsDefaults
     } = props;
 
-    const layout = segmentSettings?.layout ?? segmentSettings?.layout ?? 'stack';
+    const layout = segmentSettings?.layout ?? segmentSettingsDefaults?.layout ?? 'stack';
     const setLayout = value => setSegmentSettings( { layout: value !== segmentSettingsDefaults?.layout ? value : undefined } );
 
     const layoutOptions = [ {

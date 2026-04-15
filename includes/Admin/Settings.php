@@ -151,7 +151,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                     $stats_html .= '</tr>';
                     $stats_html .= '<tr>';
                     $stats_html .= '<td>' . __( 'Popup Count With Events', 'fooconvert' ) . '</td>';
-                    $stats_html .= '<td><pre>' . esc_html( $database_stats['Unique_Widgets'] ) . '</pre></td>';
+                    $stats_html .= '<td><pre>' . esc_html( $database_stats['Unique_Popups'] ) . '</pre></td>';
                     $stats_html .= '</tr>';
                     $stats_html .= '<tr>';
                     $stats_html .= '<td>' . __( 'Orphaned Event Count', 'fooconvert' ) . '</td>';
@@ -167,7 +167,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                     $stats_html .= '</tr>';
                     $stats_html .= '<tr>';
                     $stats_html .= '<td>' . __( 'Orphaned Popup Count', 'fooconvert' ) . '</td>';
-                    $stats_html .= '<td><pre>' . esc_html( $database_stats['Unique_Orphaned_Widgets'] ) . '</pre></td>';
+                    $stats_html .= '<td><pre>' . esc_html( $database_stats['Unique_Orphaned_Popups'] ) . '</pre></td>';
                     $stats_html .= '</tr>';
                     $stats_html .= '</table>';
 

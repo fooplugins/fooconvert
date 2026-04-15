@@ -10,7 +10,7 @@ import { isArray } from "@steveush/utils";
 /**
  * Check if a value is an array of grouped select options.
  *
- * @param {any} value - The value to check.
+ * @param {unknown} value - The value to check.
  * @returns {value is GroupedSelectOptions} `true` if the value is an empty array or contains only `GroupedSelectOption`
  * and `GroupedSelectOptGroup` objects, otherwise `false`.
  */

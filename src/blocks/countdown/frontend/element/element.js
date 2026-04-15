@@ -1,8 +1,8 @@
-import { ContentElement, getCountdown, getTimeDifference, setCountdown } from "#frontend";
+import { ContentElement, clearCountdown, getCountdown, getTimeDifference, setCountdown } from "#frontend";
 import cssText
     from '!!css-loader?{"sourceMap":false,"exportType":"string"}!postcss-loader!sass-loader!./element.host.scss';
 import markup from "./element.shadow-dom.html";
-import { isNumber } from "@steveush/utils";
+import { isNumber, isPlainObject } from "@steveush/utils";
 
 const styles = new CSSStyleSheet();
 styles.replaceSync( cssText );
@@ -24,7 +24,10 @@ class CountdownElement extends ContentElement {
         this.#segmentValueHours = this.shadowRoot.querySelector( "[part='segment-value hours']" );
         this.#segmentValueMinutes = this.shadowRoot.querySelector( "[part='segment-value minutes']" );
         this.#segmentValueSeconds = this.shadowRoot.querySelector( "[part='segment-value seconds']" );
-        this.onWidgetCanConnect = this.onWidgetCanConnect.bind( this );
+        this.onPopupCanConnect = this.onPopupCanConnect.bind( this );
+        this.onCountdownStart = this.onCountdownStart.bind( this );
+        this.onCountdownPause = this.onCountdownPause.bind( this );
+        this.onCountdownStop = this.onCountdownStop.bind( this );
     }
 
     /**
@@ -62,6 +65,11 @@ class CountdownElement extends ContentElement {
     #started = false;
     get started() {
         return this.#started;
+    }
+
+    #stopped = false;
+    get stopped() {
+        return this.#stopped;
     }
 
     get persist() {
@@ -122,7 +130,7 @@ class CountdownElement extends ContentElement {
         return this.toggleAttribute( 'expired', value );
     }
 
-    onWidgetCanConnect( event ) {
+    onPopupCanConnect( event ) {
         if ( this.expired ) {
             event.preventDefault();
         }
@@ -130,13 +138,30 @@ class CountdownElement extends ContentElement {
 
     connected() {
         super.connected();
-        this.parentWidgetElement?.addEventListener( 'can-connect', this.onWidgetCanConnect );
+        const parentPopup = this.parentPopupElement;
+        parentPopup?.addEventListener( 'can-connect', this.onPopupCanConnect );
+        parentPopup?.addEventListener( 'fc.countdown.start', this.onCountdownStart );
+        parentPopup?.addEventListener( 'fc.countdown.pause', this.onCountdownPause );
+        parentPopup?.addEventListener( 'fc.countdown.stop', this.onCountdownStop );
         if ( isNumber( this.fomo ) ) {
-            let timestamp = getCountdown( this.id, this.persist );
+            const stored = getCountdown( this.id, this.persist );
+            let timestamp = null;
+            if ( isPlainObject( stored ) ) {
+                if ( stored.state === 'paused' && isNumber( stored.value ) ) {
+                    timestamp = Date.now() + stored.value;
+                } else if ( stored.state === 'running' && isNumber( stored.value ) ) {
+                    timestamp = stored.value;
+                }
+            } else if ( isNumber( stored ) ) {
+                timestamp = stored;
+            }
             if ( !isNumber( timestamp ) ) {
                 timestamp = Date.now() + ( this.fomo * 60000 );
             }
-            setCountdown( this.id, timestamp, this.persist );
+            setCountdown( this.id, {
+                state: 'running',
+                value: timestamp
+            }, this.persist, true );
             this.value = timestamp;
         }
         if ( !this.expired ) {
@@ -146,6 +171,11 @@ class CountdownElement extends ContentElement {
 
     disconnected() {
         super.disconnected();
+        const parentPopup = this.parentPopupElement;
+        parentPopup?.removeEventListener( 'can-connect', this.onPopupCanConnect );
+        parentPopup?.removeEventListener( 'fc.countdown.start', this.onCountdownStart );
+        parentPopup?.removeEventListener( 'fc.countdown.pause', this.onCountdownPause );
+        parentPopup?.removeEventListener( 'fc.countdown.stop', this.onCountdownStop );
         this.stop();
     }
 
@@ -176,8 +206,15 @@ class CountdownElement extends ContentElement {
     #intervalID;
 
     start() {
-        this.stop();
-        if ( !this.started && !this.expired ) {
+        if ( this.stopped || this.expired ) {
+            return;
+        }
+        if ( this.started ) {
+            clearInterval( this.#intervalID );
+            this.#started = false;
+        }
+        this.#intervalID = undefined;
+        if ( !this.started ) {
             this.#started = true;
             this.#intervalID = setInterval( () => {
                 this.update();
@@ -185,14 +222,49 @@ class CountdownElement extends ContentElement {
         }
     }
 
+    pause() {
+        const wasStarted = this.started;
+        if ( this.started ) {
+            clearInterval( this.#intervalID );
+            this.#intervalID = undefined;
+            this.#started = false;
+        }
+        if ( wasStarted && isNumber( this.fomo ) && this.value instanceof Date ) {
+            const remaining = Math.max( 0, this.value.getTime() - Date.now() );
+            if ( remaining > 0 ) {
+                setCountdown( this.id, {
+                    state: 'paused',
+                    value: remaining
+                }, this.persist, true );
+            }
+        }
+        this.#stopped = false;
+    }
+
     stop() {
         if ( this.started ) {
             clearInterval( this.#intervalID );
+            this.#intervalID = undefined;
             this.#started = false;
         }
+        if ( isNumber( this.fomo ) ) {
+            clearCountdown( this.id, this.persist );
+        }
+        this.#stopped = true;
+    }
+
+    onCountdownStart() {
+        this.start();
+    }
+
+    onCountdownPause() {
+        this.pause();
+    }
+
+    onCountdownStop() {
+        this.stop();
     }
 }
 
 export default CountdownElement;
-
 

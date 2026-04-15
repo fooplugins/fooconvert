@@ -4,7 +4,7 @@ import { PanelRow } from "@wordpress/components";
 import classnames from "classnames";
 
 import "./Component.scss";
-import { CompatibilityContentControl } from "../../components";
+import CompatibilityContentControl from "../content-control/Component";
 import { useCompatibilityMeta } from "../../hooks";
 import { getCompatibilityStatus } from "../../utils";
 import { Icon } from "@wordpress/icons";

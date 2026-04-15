@@ -38,10 +38,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         /**
          * Inserts event data into the database.
          *
-         * @param array $data {
+         * @param array<string, mixed> $data {
          *     An array of event data.
          *
-         * @type int $widget_id The ID of the widget.
+         * @type int $post_id The ID of the popup.
          * @type string $event_type The type of event (e.g. 'view', 'click', 'conversion', 'dismiss').
          * @type string|null $event_subtype The subtype of event (if applicable).
          * @type bool|null $conversion Whether the event is a conversion (true) or not (false).
@@ -58,7 +58,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          *
          * @return int|WP_Error The ID of the inserted event, or a WP_Error object on failure.
          */
-        public static function insert_event_data( $data ) {
+        public static function insert_event_data( array $data ) {
             global $wpdb;
 
             // Validation rules and sanitization
@@ -67,9 +67,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                 return new WP_Error( 'invalid_event_data', 'The event data is not valid.' );
             }
 
-            // 1. Validate widget_id (required and should be a positive integer)
-            if ( !isset( $data['widget_id'] ) || !is_int( $data['widget_id'] ) || $data['widget_id'] <= 0 ) {
-                return new WP_Error( 'invalid_event_data_widget_id', 'The popup ID must be a positive integer.' );
+            // 1. Validate post_id (required and should be a positive integer)
+            if ( !isset( $data['post_id'] ) || !is_int( $data['post_id'] ) || $data['post_id'] <= 0 ) {
+                return new WP_Error( 'invalid_event_data_post_id', 'The popup ID must be a positive integer.' );
             }
 
             // 2. Validate event_type (required and should be a string)
@@ -137,11 +137,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         }
 
         /**
-         * Retrieves a summary of the events for the given widget.
+         * Retrieves a summary of the events for the given popup.
          *
-         * @param int $widget_id The ID of the widget.
+         * @param int $post_id The ID of the popup.
+         * @param int $days The number of days to fetch. Values less than 1 mean all time.
          *
-         * @return array {
+         * @return array<string, mixed>|null {
          *     An array of summary data.
          *
          * @type int $total_events The total number of events.
@@ -152,16 +153,16 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          * @type int $total_returning_visitors The total number of visitors with two or more sessions.
          * }
          */
-        public static function get_widget_metrics( $widget_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
+        public static function get_popup_metrics( int $post_id, int $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
-            $widget_id  = intval( $widget_id );
+            $post_id  = intval( $post_id );
             $days       = intval( $days );
             $days_clause = $days > 0 ? ' AND timestamp >= NOW() - INTERVAL %d DAY' : '';
 
             $query = apply_filters(
-                'fooconvert_get_widget_metrics_query',
+                'fooconvert_get_popup_metrics_query',
                 "SELECT 
                     metrics.total_events,
                     metrics.total_views,
@@ -177,7 +178,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                             COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as total_unique_visitors,
                             COUNT(DISTINCT CASE WHEN event_type != 'update' AND session_id IS NOT NULL THEN session_id END) as total_unique_sessions
                         FROM {$table_name}
-                        WHERE widget_id = %d{$days_clause}
+                        WHERE post_id = %d{$days_clause}
                     ) metrics
                     LEFT JOIN (
                         SELECT COUNT(*) as total_returning_visitors
@@ -189,7 +190,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                                     ELSE NULL
                                 END as visitor_key
                             FROM {$table_name}
-                            WHERE widget_id = %d
+                            WHERE post_id = %d
                                 AND event_type != 'update'
                                 AND session_id IS NOT NULL
                                 AND ( user_id IS NOT NULL OR anonymous_user_guid IS NOT NULL ){$days_clause}
@@ -201,11 +202,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                 $days_clause
             );
 
-            $query_args = [ $widget_id ];
+            $query_args = [ $post_id ];
             if ( $days > 0 ) {
                 $query_args[] = $days;
             }
-            $query_args[] = $widget_id;
+            $query_args[] = $post_id;
             if ( $days > 0 ) {
                 $query_args[] = $days;
             }
@@ -218,32 +219,32 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         }
 
         /**
-         * Returns an array of recent activity for the given widget.
+         * Returns an array of recent activity for the given popup.
          *
-         * @param int $widget_id The ID of the widget.
+         * @param int $post_id The ID of the popup.
          * @param int $days The number of days to fetch (default is 7).
          *
-         * @return array An array of recent activity, with the following structure:
+         * @return array<int, array<string, mixed>> An array of recent activity, with the following structure:
          *     'event_date' => string The date of the event (format: 'Y-m-d')
          *     'views' => int The number of views
          *     'clicks' => int The number of clicks
          *     'unique_visitors' => int The number of unique visitors
          */
-        public static function get_widget_daily_activity( $widget_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
+        public static function get_popup_daily_activity( int $post_id, int $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
-            $widget_id = intval( $widget_id ); // Ensure $widget_id is an integer
+            $post_id = intval( $post_id ); // Ensure $post_id is an integer
             $days = intval( $days );           // Ensure $days is an integer
 
-            $query = apply_filters( 'fooconvert_get_widget_daily_activity_query', "SELECT 
+            $query = apply_filters( 'fooconvert_get_popup_daily_activity_query', "SELECT 
                     DATE(timestamp) as event_date,
                     COUNT(CASE WHEN event_type != 'update' THEN 1 END) as events,
                     COUNT(CASE WHEN event_type = 'open' THEN 1 END) as views,
                     COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as unique_visitors,
                     COUNT(CASE WHEN event_subtype = 'engagement' THEN 1 END) as engagements
                     FROM {$table_name}
-                    WHERE widget_id = %d", $table_name );
+                    WHERE post_id = %d", $table_name );
 
             //Add a filter by days.
             if ( $days > 0 ) {
@@ -251,7 +252,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             }
 
             $query .= ' GROUP BY event_date ORDER BY event_date ASC';
-            $query_args = [ $widget_id ];
+            $query_args = [ $post_id ];
             if ( $days > 0 ) {
                 $query_args[] = $days;
             }
@@ -264,25 +265,25 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         }
 
         /**
-         * Deletes all events for a given widget ID.
+         * Deletes all events for a given popup ID.
          *
-         * @param int $widget_id The ID of the widget to delete events for.
+         * @param int $post_id The ID of the popup to delete events for.
          *
          * @return int The number of rows deleted.
          */
-        public static function delete_widget_events( $widget_id ) {
+        public static function delete_popup_events( int $post_id ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
-            $widget_id = intval( $widget_id ); // Ensure $widget_id is an integer
+            $post_id = intval( $post_id ); // Ensure $post_id is an integer
 
-            return $wpdb->delete( $table_name, array( 'widget_id' => $widget_id ) );
+            return $wpdb->delete( $table_name, array( 'post_id' => $post_id ) );
         }
 
         /**
          * Deletes all events from the database.
          *
-         * @return int The number of rows deleted.
+         * @return int|false The number of rows deleted, or false on error.
          */
         public static function delete_all_events() {
             global $wpdb;
@@ -297,9 +298,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          *
          * @param int $days The number of days to keep events for. Defaults to FOOCONVERT_RETENTION_DEFAULT which is 14.
          *
-         * @return int The number of rows deleted.
+         * @return int|false The number of rows deleted, or false on error.
          */
-        public static function delete_old_events( $days = FOOCONVERT_RETENTION_DEFAULT ) {
+        public static function delete_old_events( int $days = FOOCONVERT_RETENTION_DEFAULT ) {
             global $wpdb;
 
             $table_name = esc_sql( self::get_events_table_name() );
@@ -320,13 +321,13 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         /**
          * Retrieves stats we care about for the events table.
          *
-         * @return array An array of data about the events table, with the following keys:
+         * @return array<string, int|string|float|null>|null An array of data about the events table, with the following keys:
          *     'Table' => string The name of the table.
          *     'Size_in_MB' => float The size of the table in megabytes.
          *     'Number_of_Rows' => int The number of rows in the table.
-         *     'Unique_Widgets' => int The number of unique widgets represented in the table.
-         *     'Orphaned_Events' => int The number of events that are not associated with a widget in the posts table.
-         *     'Unique_Orphaned_Widgets' => int The number of unique widgets that are not associated with a widget in the posts table.
+         *     'Unique_Popups' => int The number of unique popups represented in the table.
+         *     'Orphaned_Events' => int The number of events that are not associated with a popup in the posts table.
+         *     'Unique_Orphaned_Popups' => int The number of unique popups that are not associated with a popup in the posts table.
          */
         public static function get_events_table_stats() {
             global $wpdb;
@@ -348,21 +349,21 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                         FROM {$table_name}
                     ) AS `Number_of_Rows`,                    
                     (
-                        SELECT COUNT(DISTINCT widget_id)
+                        SELECT COUNT(DISTINCT post_id)
                         FROM {$table_name}
-                    ) AS `Unique_Widgets`,
+                    ) AS `Unique_Popups`,
                     (
                         SELECT COUNT(*)
                         FROM {$table_name} e
-                        LEFT JOIN {$wpdb->prefix}posts p ON e.widget_id = p.ID
+                        LEFT JOIN {$wpdb->prefix}posts p ON e.post_id = p.ID
                         WHERE p.ID IS NULL
                     ) AS `Orphaned_Events`,
                     (
-                        SELECT COUNT(DISTINCT e.widget_id)
+                        SELECT COUNT(DISTINCT e.post_id)
                         FROM {$table_name} e
-                        LEFT JOIN {$wpdb->prefix}posts p ON e.widget_id = p.ID
+                        LEFT JOIN {$wpdb->prefix}posts p ON e.post_id = p.ID
                         WHERE p.ID IS NULL
-                    ) AS `Unique_Orphaned_Widgets`
+                    ) AS `Unique_Orphaned_Popups`
                 FROM
                     information_schema.TABLES
                 WHERE
@@ -380,9 +381,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         }
 
         /**
-         * Deletes all events that are not associated with a widget in the posts table.
+         * Deletes all events that are not associated with a popup in the posts table.
          *
-         * @return int The number of events deleted.
+         * @return int|false The number of events deleted, or false on error.
          */
         public static function delete_orphaned_events() {
             global $wpdb;
@@ -395,7 +396,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             $query = "
                 DELETE e
                 FROM {$events_table} e
-                LEFT JOIN {$posts_table} p ON e.widget_id = p.ID
+                LEFT JOIN {$posts_table} p ON e.post_id = p.ID
                 WHERE p.ID IS NULL
             ";
 
@@ -405,21 +406,21 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         }
 
         /**
-         * Retrieves a list of all widgets that have at least one event.
+         * Retrieves a list of all popups that have at least one event.
          *
-         * @return array An array of widget IDs (int) that have at least one event.
+         * @return array<int, array{post_id: string}> An array of popup IDs (int) that have at least one event.
          */
-        public static function get_widgets_with_events() {
+        public static function get_popups_with_events() {
             global $wpdb;
 
             $table_name = esc_sql( self::get_events_table_name() );
             $posts_table = esc_sql( $wpdb->prefix . 'posts' );
 
             $query = "
-                SELECT e.widget_id
+                SELECT e.post_id
                 FROM {$table_name} e
-                INNER JOIN {$posts_table} p ON e.widget_id = p.ID
-                GROUP BY e.widget_id
+                INNER JOIN {$posts_table} p ON e.post_id = p.ID
+                GROUP BY e.post_id
             ";
 
             // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -427,11 +428,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         }
 
         /**
-         * Retrieves a list of all widgets that have no events.
+         * Retrieves a list of all popups that have no events.
          *
-         * @return array An array of widget IDs (int) that have zero events.
+         * @return array<int, array{post_id: string}> An array of popup IDs (int) that have zero events.
          */
-        public static function get_widgets_with_no_events() {
+        public static function get_popups_with_no_events() {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
@@ -439,11 +440,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
 
             $post_type = FOOCONVERT_CPT_POPUP;
 
-            $query = "SELECT p.ID AS widget_id
+            $query = "SELECT p.ID AS post_id
                 FROM %i p
-                LEFT JOIN %i e ON p.ID = e.widget_id
+                LEFT JOIN %i e ON p.ID = e.post_id
                 WHERE p.post_type = %s
-                  AND e.widget_id IS NULL";
+                  AND e.post_id IS NULL";
 
             $prepared_query = $wpdb->prepare(
                 $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -457,15 +458,15 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         }
 
         /**
-         * Retrieves a list of all events of a given type for a given widget.
+         * Retrieves a list of all events of a given type for a given popup.
          *
-         * @param int $widget_id The ID of the widget to get events for.
+         * @param int $post_id The ID of the popup to get events for.
          * @param string $event_type The type of events to get.
          * @param int $days The number of days to fetch events for. Defaults to FOOCONVERT_RETENTION_DEFAULT which is 14.
          *
-         * @return array An array of events for the given widget and event type, with the following structure:
+         * @return array<int, array<string, mixed>> An array of events for the given popup and event type, with the following structure:
          *     'id' => int The ID of the event.
-         *     'widget_id' => int The ID of the widget.
+         *     'post_id' => int The ID of the popup.
          *     'event_type' => string The type of event.
          *     'event_subtype' => string The subtype of event (if applicable).
          *     'conversion' => bool Whether the event is a conversion (true) or not (false).
@@ -477,23 +478,23 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          *     'extra_data' => array An array of extra data associated with the event.
          *     'timestamp' => string The date of the event (format: 'Y-m-d')
          */
-        public static function get_widget_events_of_type( $widget_id, $event_type, $days = FOOCONVERT_RETENTION_DEFAULT ) {
+        public static function get_popup_events_of_type( int $post_id, string $event_type, int $days = FOOCONVERT_RETENTION_DEFAULT ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
-            $widget_id = intval( $widget_id ); // Ensure $widget_id is an integer
+            $post_id = intval( $post_id ); // Ensure $post_id is an integer
             $days = intval( $days );           // Ensure $days is an integer
 
             $query = "SELECT *, DATE(timestamp) as event_date
                     FROM {$table_name}
-                    WHERE widget_id = %d AND event_type = %s AND timestamp >= DATE_SUB(NOW(), INTERVAL %d DAY)
+                    WHERE post_id = %d AND event_type = %s AND timestamp >= DATE_SUB(NOW(), INTERVAL %d DAY)
                     ORDER BY timestamp ASC";
 
             // Prepare event data for the last X days
             return $wpdb->get_results(
                 $wpdb->prepare(
                     $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-                    $widget_id,
+                    $post_id,
                     $event_type,
                     $days
                 ),
@@ -502,11 +503,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         }
 
         /**
-         * Retrieves a summary of all events for all widgets.
+         * Retrieves a summary of all events for all popups.
          *
          * This function returns an array of arrays, where each sub-array contains the
-         * following metrics for a single widget:
-         *     'widget_id' => int The ID of the widget.
+         * following metrics for a single popup:
+         *     'post_id' => int The ID of the popup.
          *     'total_events' => int The total number of events.
          *     'total_views' => int The total number of views.
          *     'total_engagements' => int The total number of engagements.
@@ -514,39 +515,39 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          *     'total_unique_sessions' => int The total number of unique sessions.
          *     'total_returning_visitors' => int The total number of visitors with two or more sessions.
          *
-         * @return array[] An array of arrays, each containing the metrics for a single widget.
+         * @return array<int, array<string, mixed>> An array of arrays, each containing the metrics for a single popup.
          */
-        public static function get_all_widget_metrics() {
+        public static function get_all_popup_metrics() {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
 
-            $query = apply_filters( 'fooconvert_get_all_widget_metrics_query', "SELECT
-                    widget_totals.widget_id,
-                    widget_totals.total_events,
-                    widget_totals.total_views,
-                    widget_totals.total_engagements,
-                    widget_totals.total_unique_visitors,
-                    widget_totals.total_unique_sessions,
+            $query = apply_filters( 'fooconvert_get_all_popup_metrics_query', "SELECT
+                    popup_totals.post_id,
+                    popup_totals.total_events,
+                    popup_totals.total_views,
+                    popup_totals.total_engagements,
+                    popup_totals.total_unique_visitors,
+                    popup_totals.total_unique_sessions,
                     IFNULL(returning_visitors.total_returning_visitors, 0) as total_returning_visitors
                     FROM (
                         SELECT
-                            widget_id,
+                            post_id,
                             COUNT(CASE WHEN event_type != 'update' THEN 1 END) as total_events,
                             COUNT(CASE WHEN event_type = 'open' THEN 1 END) as total_views,
                             COUNT(CASE WHEN event_subtype = 'engagement' THEN 1 END) as total_engagements,
                             COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as total_unique_visitors,
                             COUNT(DISTINCT CASE WHEN event_type != 'update' AND session_id IS NOT NULL THEN session_id END) as total_unique_sessions
                         FROM {$table_name}
-                        GROUP BY widget_id
-                    ) widget_totals
+                        GROUP BY post_id
+                    ) popup_totals
                     LEFT JOIN (
                         SELECT
-                            widget_id,
+                            post_id,
                             COUNT(*) as total_returning_visitors
                         FROM (
                             SELECT
-                                widget_id,
+                                post_id,
                                 CASE
                                     WHEN user_id IS NOT NULL THEN CONCAT('u:', user_id)
                                     WHEN anonymous_user_guid IS NOT NULL THEN CONCAT('a:', anonymous_user_guid)
@@ -556,12 +557,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                             WHERE event_type != 'update'
                                 AND session_id IS NOT NULL
                                 AND ( user_id IS NOT NULL OR anonymous_user_guid IS NOT NULL )
-                            GROUP BY widget_id, visitor_key
+                            GROUP BY post_id, visitor_key
                             HAVING COUNT(DISTINCT session_id) >= 2
                         ) returning_visitor_groups
-                        GROUP BY widget_id
+                        GROUP BY post_id
                     ) returning_visitors
-                    ON widget_totals.widget_id = returning_visitors.widget_id", $table_name );
+                    ON popup_totals.post_id = returning_visitors.post_id", $table_name );
 
             // Prepare SQL query to return high-level statistics
             return $wpdb->get_results(
@@ -573,7 +574,13 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         /**
          * Returns the latest qualifying attribution event before the supplied cutoff.
          *
-         * @param array $criteria {
+         * @param array{
+         *     user_id?: int,
+         *     anonymous_user_guid?: string,
+         *     session_id?: string,
+         *     cutoff_gmt?: string,
+         *     lookback_days?: int
+         * } $criteria {
          *     Optional query criteria.
          *
          * @type int|null $user_id Logged-in user ID to match.
@@ -583,9 +590,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          * @type int|null $lookback_days Lookback window in days.
          * }
          *
-         * @return array|null
+         * @return array<string, mixed>|null
          */
-        public static function get_latest_qualifying_event( $criteria = array() ) {
+        public static function get_latest_qualifying_event( array $criteria = array() ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
@@ -634,15 +641,15 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          * Checks if a sale event already exists for the supplied dedupe scope.
          *
          * @param string $dedupe_mode Dedupe mode.
-         * @param int $widget_id Widget ID.
+         * @param int $post_id Popup ID.
          * @param string|null $session_id Session ID.
          * @return bool
          */
-        public static function sale_exists_for_scope( $dedupe_mode, $widget_id, $session_id = null ) {
+        public static function sale_exists_for_scope( string $dedupe_mode, int $post_id, ?string $session_id = null ): bool {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
-            $widget_id = intval( $widget_id );
+            $post_id = intval( $post_id );
             $session_id = is_string( $session_id ) ? sanitize_text_field( $session_id ) : '';
 
             if ( $session_id === '' ) {
@@ -655,9 +662,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                       AND session_id = %s";
             $args = array( FOOCONVERT_EVENT_TYPE_SALE, $session_id );
 
-            if ( $dedupe_mode === FOOCONVERT_SALE_DEDUPE_MODE_WIDGET_SESSION ) {
-                $query .= ' AND widget_id = %d';
-                $args[] = $widget_id;
+            if ( $dedupe_mode === FOOCONVERT_SALE_DEDUPE_MODE_POPUP_SESSION ) {
+                $query .= ' AND post_id = %d';
+                $args[] = $post_id;
             }
 
             $query .= ' LIMIT 1';
@@ -670,24 +677,24 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         }
 
         /**
-         * Retrieves sale events for a widget.
+         * Retrieves sale events for a popup.
          *
-         * @param int $widget_id Widget ID.
+         * @param int $post_id Popup ID.
          * @param int $days Lookback in days. Values less than 1 mean all time.
          * @return array<int,array<string,mixed>>
          */
-        public static function get_widget_sales( $widget_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
+        public static function get_popup_sales( int $post_id, int $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
-            $widget_id = intval( $widget_id );
+            $post_id = intval( $post_id );
             $days = intval( $days );
 
             $query = "SELECT *
                     FROM {$table_name}
-                    WHERE widget_id = %d
+                    WHERE post_id = %d
                       AND event_type = %s";
-            $args = array( $widget_id, FOOCONVERT_EVENT_TYPE_SALE );
+            $args = array( $post_id, FOOCONVERT_EVENT_TYPE_SALE );
 
             if ( $days > 0 ) {
                 $query .= ' AND timestamp >= DATE_SUB(NOW(), INTERVAL %d DAY)';
@@ -708,7 +715,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          * @param int $limit Max number of sale events to return.
          * @return array<int,array<string,mixed>>
          */
-        public static function get_recent_sales( $limit = 10 ) {
+        public static function get_recent_sales( int $limit = 10 ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
@@ -728,22 +735,22 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         }
 
         /**
-         * Retrieves revenue totals grouped by widget.
+         * Retrieves revenue totals grouped by popup.
          *
-         * @param int $limit Max number of widgets to return.
+         * @param int $limit Max number of popups to return.
          * @return array<int,array<string,mixed>>
          */
-        public static function get_sales_totals_by_widget( $limit = 10 ) {
+        public static function get_sales_totals_by_popup( int $limit = 10 ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
             $limit = max( 1, intval( $limit ) );
 
             $query = $wpdb->prepare(
-                "SELECT widget_id, COUNT(*) as sale_count, COALESCE(SUM(event_value), 0) as total_sales
+                "SELECT post_id, COUNT(*) as sale_count, COALESCE(SUM(event_value), 0) as total_sales
                 FROM {$table_name}
                 WHERE event_type = %s
-                GROUP BY widget_id
+                GROUP BY post_id
                 ORDER BY total_sales DESC, sale_count DESC
                 LIMIT %d",
                 FOOCONVERT_EVENT_TYPE_SALE,

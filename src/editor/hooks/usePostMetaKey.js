@@ -7,7 +7,7 @@ import { clone, hasKeys, isUndefined } from "@steveush/utils";
  * @template T
  * @param {string} key
  * @param {T} [initial]
- * @return {[ T, ( value: T, save?: boolean ) => void ]}
+ * @return {import("../types/postMeta").PostMetaState<T>}
  */
 const usePostMetaKey = ( key, initial ) => {
     const { editPost, savePost } = useDispatch( editorStore );

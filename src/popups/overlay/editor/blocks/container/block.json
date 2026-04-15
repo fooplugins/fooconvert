@@ -1,0 +1,19 @@
+{
+  "apiVersion": 3,
+  "name": "fc/overlay-container",
+  "title": "Container",
+  "description": "Wraps the overlay content and close button and positions it within the viewport.",
+  "category": "fooconvert",
+  "parent": [ "fc/overlay" ],
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "supports": {
+    "lock": false,
+    "multiple": false,
+    "reusable": false,
+    "className": false,
+    "html": false,
+    "inserter": false
+  },
+  "usesContext": [ "fc/postId" ]
+}

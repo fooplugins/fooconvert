@@ -1,4 +1,5 @@
 # FooConvert
-Turning clicks into conversions, visitors into customers – the ultimate catalyst for online success!
 
-FooConvert is a WordPress plugin for increasing website conversions via popups, flyouts, and top/bottom bars. Key features include a library of professionally-designed templates (≈15) to speed setup, fully customizable design (colors, animations, fonts incl. Google Fonts), and multiple popup types (popups for exit-intent or lead magnets; flyouts for CTAs or social proof; bars for less intrusive calls-to-action). You can control when (triggers like page load, scroll, exit intent, anchor click) and where (sitewide, specific pages/posts, logged in/out users) popups display. Advanced analytics give real-time stats per popup — click-throughs, conversions, engagement, top performers — so you can monitor and optimize.
+FooConvert is a WordPress plugin for building popups, flyouts, and bars with configurable triggers, display rules, and analytics.
+
+It includes template-driven popup types, shared editor controls, and frontend tracking for views, clicks, conversions, and lead capture.

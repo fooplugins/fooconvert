@@ -214,7 +214,7 @@ class AiPopupBuilder {
                         <?php esc_html_e( 'Replay Preview', 'fooconvert' ); ?>
                     </a>
                     <?php if ( $widget instanceof \WP_Post ) : ?>
-                        <a class="button" href="<?php echo esc_url( fooconvert_admin_url_widget_edit( $widget_id ) ); ?>" target="_blank" rel="noreferrer">
+                        <a class="button" href="<?php echo esc_url( fooconvert_admin_url_popup_edit( $widget_id ) ); ?>" target="_blank" rel="noreferrer">
                             <?php esc_html_e( 'Edit In New Tab', 'fooconvert' ); ?>
                         </a>
                     <?php endif; ?>

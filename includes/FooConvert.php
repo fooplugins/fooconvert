@@ -56,7 +56,7 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             $this->display_rules = new DisplayRules();
             $this->blocks = new Blocks();
             $this->post_type = new PostType();
-            $this->widgets = new Widgets();
+            $this->popups = new Popups();
             $this->shortcodes = new Shortcodes();
             $this->ajax = new Ajax();
         }
@@ -81,7 +81,7 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             if ( $is_frontend_js_enqueued ) {
                 $data = array(
                     'endpoint' => $this->ajax->get_endpoint(),
-                    'widgets' => $this->widgets->get_tag_names()
+                    'popups' => $this->popups->get_tag_names()
                 );
                 $data = apply_filters( 'fooconvert_frontend_config', $data );
                 wp_add_inline_script( FOOCONVERT_FRONTEND_ASSET_HANDLE, Utils::to_js_script( 'FOOCONVERT_CONFIG', $data ), 'before' );
@@ -102,7 +102,7 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         public Components $components;
 
         /**
-         * Compatibility helpers for rendering widgets in legacy themes and builders.
+         * Compatibility helpers for rendering popups in legacy themes and builders.
          *
          * @var Compatibility
          * @access public
@@ -112,7 +112,7 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         public Compatibility $compatibility;
 
         /**
-         * Content migration helpers used when widget content is loaded.
+         * Content migration helpers used when popup content is loaded.
          *
          * @var ContentMigration
          * @access public
@@ -122,7 +122,7 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         public ContentMigration $content_migration;
 
         /**
-         * Contains the logic for the widget display rules.
+         * Contains the logic for the popup display rules.
          *
          * @var DisplayRules
          * @access public
@@ -135,8 +135,8 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * Contains utility methods as well as all block instances for the plugin.
          *
          * @remarks
-         * Blocks are different to widgets within the context of the plugin. A widget has its own custom post type
-         * and cannot be used outside of it. A block can be used by all widgets, but will only be visible to widgets.
+         * Blocks are different to popups within the context of the plugin. A popup has its own custom post type
+         * and cannot be used outside of it. A block can be used by all popups, but will only be visible to popups.
          *
          * @var Blocks
          * @access public
@@ -156,18 +156,18 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         public PostType $post_type;
 
         /**
-         * Contains utility methods as well as all widget instances for the plugin.
+         * Contains utility methods as well as all popup instances for the plugin.
          *
          * @remarks
-         * Widgets are different to blocks within the context of the plugin. A widget has its own custom post type
-         * and cannot be used outside of it. A block can be used by all widgets, but will only be visible to widgets.
+         * Popups are different to blocks within the context of the plugin. A popup has its own custom post type
+         * and cannot be used outside of it. A block can be used by all popups, but will only be visible to popups.
          *
-         * @var Widgets
+         * @var Popups
          * @access public
          *
          * @since 1.0.0
          */
-        public Widgets $widgets;
+        public Popups $popups;
 
         /**
          * Handles FooConvert shortcode registration and rendering.
@@ -184,7 +184,7 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         //endregion
 
         /**
-         * Used to transform raw widget content to output HTML.
+         * Used to transform raw popup content to output HTML.
          * @param string $content Raw content string to process.
          * @return string Processed content
          */
@@ -196,9 +196,6 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             $content = $wp_embed->autoembed( $content );    // convert any embeds to HTML
 
             return $content;
-            // pass the content through a filter to allow further processing by other plugins
-//            $result = apply_filters( 'the_content', $content );
-//            return is_string( $result ) ? $result : '';
         }
 
         //region KSES
@@ -218,10 +215,12 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             $allowed_html = array_merge(
                 $allowed_html,
                 $this->blocks->get_kses_definitions(),
-                $this->widgets->get_kses_definitions()
+                $this->popups->get_kses_definitions()
             );
 
-            return $this->kses_with_svg( $content, $allowed_html );
+            $result = $this->kses_with_svg( $content, $allowed_html );
+
+            return $result;
         }
 
         /**
@@ -266,6 +265,10 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             $allowed_html = $this->add_custom_element_attributes( $allowed_html );
             // hook into the safe_style_css filter, so we can include the SVG presentation attributes for only this call to wp_kses
             add_filter( 'safe_style_css', array( $this, 'safe_style_css_svg_presentation_attributes' ) );
+
+//            global $wp_filter;
+//            $hook =$wp_filter['safecss_filter_attr_allow_css'] ->callbacks ?? null;
+
             $result = wp_kses( $content, $allowed_html );
             remove_filter( 'safe_style_css', array( $this, 'safe_style_css_svg_presentation_attributes' ) );
             return $result;
@@ -374,7 +377,7 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @since 1.0.0
          */
         public function enqueue_editor_assets() {
-            if ( $this->post_type->is_editor() || fooconvert_is_admin_stats_page() || fooconvert_is_admin_ai_popup_preview_page() ) {
+            if ( $this->post_type->is_editor() || fooconvert_is_popup_stats_page() || fooconvert_is_admin_ai_popup_preview_page() ) {
                 $editor = include FOOCONVERT_ASSETS_PATH . 'editor.asset.php';
                 if ( Utils::has_keys( $editor, array( 'dependencies', 'version' ) ) ) {
                     wp_enqueue_style( FOOCONVERT_EDITOR_ASSET_HANDLE, FOOCONVERT_ASSETS_URL . 'editor.css', array(), $editor['version'] );
@@ -417,9 +420,9 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
         //endregion
 
         /**
-         * Removes the demo content meta value when a widget is published.
+         * Removes the demo content meta value when a popup is published.
          *
-         * We assume that any widget that is published is no longer demo content.
+         * We assume that any popup that is published is no longer demo content.
          * We want to remove the demo content "marker" so that we do not delete it when we delete demo content from the dashboard.
          *
          * @param string $new_status The new post status.
@@ -434,11 +437,11 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
                 // Check if we're dealing with our post types
                 if ( $post->post_type === FOOCONVERT_CPT_POPUP ) {
 
-                    // Check if the widget is demo content.
+                    // Check if the popup is demo content.
                     $meta_value = get_post_meta( $post->ID, FOOCONVERT_META_KEY_DEMO_CONTENT, true );
 
                     if ( !empty( $meta_value ) ) {
-                        // Delete the demo content marker because we assume the user has adapted the widget because they have published.
+                        // Delete the demo content marker because we assume the user has adapted the popup because they have published.
                         delete_post_meta( $post->ID, FOOCONVERT_META_KEY_DEMO_CONTENT );
                     }
                 }

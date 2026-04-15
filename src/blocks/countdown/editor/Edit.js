@@ -80,7 +80,7 @@ const Edit = ( props ) => {
         styles: digitsStyles,
         setStyles: setDigitsStyles,
         stylesDefaults: digitsStylesDefaults
-    } = makePropsFromObjectAttribute( 'text', props.attributes, setAttributes, attributesDefaults );
+    } = makePropsFromObjectAttribute( 'digits', props.attributes, setAttributes, attributesDefaults );
 
     const customProps = {
         ...props,

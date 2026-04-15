@@ -1,13 +1,15 @@
 import removeCookie from "./removeCookie";
+import { removeStorageItem } from "./storage";
 
+/**
+ * Remove the stored sessionStorage value and its cookie fallback.
+ *
+ * @param {string} key
+ * @returns {void}
+ */
 const removeSessionData = ( key ) => {
-    try {
-        globalThis?.sessionStorage?.removeItem( key );
-    } catch ( e ) {
-        // eat possible security exception
-        // see: https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage#exceptions
-    }
+    removeStorageItem( "sessionStorage", key );
     removeCookie( key );
-}
+};
 
 export default removeSessionData;

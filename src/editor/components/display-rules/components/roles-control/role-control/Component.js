@@ -7,14 +7,8 @@ import { GroupedSelectControl } from "../../../../grouped-select-control";
 
 import "./Component.scss";
 import classnames from "classnames";
-
 /**
- * @typedef DisplayRulesRoleControlProps
- * @param {GroupedSelectOptions} options - The options to display in the select control.
- * @param {string} value - The current role.
- * @param {( value: string, previousValue: string ) => void} onChange - Callback for when an item has changed.
- * @param {( value: string ) => void} onRequestRemove - Callback for when an item should be removed.
- * @param {string} [className] - Optional. The CSS class name to append to the component.
+ * @typedef {import("../../../types").DisplayRulesRoleControlProps} DisplayRulesRoleControlProps
  */
 
 /**
@@ -24,6 +18,10 @@ import classnames from "classnames";
  */
 const rootClass = 'fc--display-rules__role-control';
 
+/**
+ * @param {DisplayRulesRoleControlProps} props
+ * @return {JSX.Element}
+ */
 const DisplayRulesRoleControl = ( {
                                       options,
                                       value,

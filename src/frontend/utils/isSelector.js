@@ -1,12 +1,18 @@
 import { isString } from "@steveush/utils";
 
+/**
+ * Check whether a string is a valid CSS selector.
+ *
+ * @param {unknown} value
+ * @returns {boolean}
+ */
 const isSelector = value => {
     if ( isString( value, true ) ) {
         try {
             globalThis.document.querySelector( value );
             return true;
-        } catch ( err ) {
-            /* Nom nom nom */
+        } catch {
+            return false;
         }
     }
     return false;

@@ -1,11 +1,11 @@
 import { default as DEFAULT_ICON_SET } from "./default";
 
 /**
- * @typedef {{name:string,label:string,icons:({name:string,label:string,value:import("react").ReactNode})[]}} FC_ICON_SET
+ * @typedef {{name: string, label: string, icons: {name: string, label: string, value: import("react").ReactNode}[]}} IconSet
  */
 
 /**
- * @type {FC_ICON_SET[]}
+ * @type {IconSet[]}
  */
 const ICON_SETS = [ DEFAULT_ICON_SET ];
 
