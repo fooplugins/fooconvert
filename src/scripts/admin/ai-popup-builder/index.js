@@ -642,7 +642,6 @@ const App = () => {
         ];
     }, [ draft ] );
 
-    const lastAssistantMessage = useMemo( () => buildLastAssistantMessage( messages ), [ messages ] );
     const brandIsDirty = useMemo(
         () => serializeComparable( brand ) !== serializeComparable( savedBrandSnapshot ),
         [ brand, savedBrandSnapshot ]
@@ -1989,26 +1988,16 @@ const App = () => {
                                                         <BrandPreviewList
                                                             rows={ [
                                                                 {
-                                                                    label: __( "Status", "fooconvert" ),
-                                                                    value: brandIsDirty
-                                                                        ? __( "Unsaved changes", "fooconvert" )
-                                                                        : ( hasSavedBrandProfile ? __( "Saved", "fooconvert" ) : __( "Draft only", "fooconvert" ) ),
-                                                                },
-                                                                {
                                                                     label: __( "Overview", "fooconvert" ),
                                                                     value: truncateText(
                                                                         brand?.brandOverview,
-                                                                        90
+                                                                        72
                                                                     ) || __( "Not set", "fooconvert" ),
-                                                                },
-                                                                {
-                                                                    label: __( "Primary font", "fooconvert" ),
-                                                                    value: getPreviewValue( brand?.typography?.fontFamilies?.primary ),
                                                                 },
                                                             ] }
                                                         />
                                                         <div className={ `${ rootClass }__swatch-row` }>
-                                                            { brandPalette.slice( 0, 4 ).map( color => (
+                                                            { brandPalette.slice( 0, 3 ).map( color => (
                                                                 <div key={ color.label } className={ `${ rootClass }__swatch-chip` }>
                                                                     <span aria-hidden="true" style={ { background: color.value } } />
                                                                     <strong>{ color.label }</strong>
@@ -2032,18 +2021,18 @@ const App = () => {
                                                                     value: String( blockCatalog.length ),
                                                                 },
                                                                 {
-                                                                    label: __( "FooConvert", "fooconvert" ),
-                                                                    value: String( blockSourceCounts.fooconvert ),
-                                                                },
-                                                                {
-                                                                    label: __( "WooCommerce", "fooconvert" ),
-                                                                    value: String( blockSourceCounts.woocommerce ),
+                                                                    label: __( "Sources", "fooconvert" ),
+                                                                    value: sprintf(
+                                                                        __( "%1$d FooConvert / %2$d WooCommerce", "fooconvert" ),
+                                                                        blockSourceCounts.fooconvert,
+                                                                        blockSourceCounts.woocommerce
+                                                                    ),
                                                                 },
                                                             ] }
                                                         />
                                                         <ContextChipRow
                                                             items={ blockCatalog.map( block => block?.label || block?.name ) }
-                                                            limit={ 5 }
+                                                            limit={ 4 }
                                                         />
                                                     </div>
                                                 }
@@ -2066,14 +2055,18 @@ const App = () => {
                                                                     value: String( templateCounts.popup || 0 ),
                                                                 },
                                                                 {
-                                                                    label: __( "Flyouts", "fooconvert" ),
-                                                                    value: String( templateCounts.flyout || 0 ),
+                                                                    label: __( "Mix", "fooconvert" ),
+                                                                    value: sprintf(
+                                                                        __( "%1$d popups / %2$d flyouts", "fooconvert" ),
+                                                                        templateCounts.popup || 0,
+                                                                        templateCounts.flyout || 0
+                                                                    ),
                                                                 },
                                                             ] }
                                                         />
                                                         <ContextChipRow
                                                             items={ templateLibrary.map( template => template?.title ) }
-                                                            limit={ 4 }
+                                                            limit={ 3 }
                                                         />
                                                     </div>
                                                 }
@@ -2097,9 +2090,6 @@ const App = () => {
                                                                 },
                                                             ] }
                                                         />
-                                                        <ul className={ `${ rootClass }__plain-list ${ rootClass }__context-list-preview` }>
-                                                            { playbookPrinciples.slice( 0, 2 ).map( principle => <li key={ principle }>{ principle }</li> ) }
-                                                        </ul>
                                                     </div>
                                                 }
                                             />
@@ -2110,7 +2100,7 @@ const App = () => {
                                                 onOpen={ () => setContextModal( "system-prompt" ) }
                                                 preview={
                                                     <ContextCodePreview
-                                                        content={ truncateText( String( config?.systemPrompt || "" ), 220 ) }
+                                                        content={ truncateText( String( config?.systemPrompt || "" ), 140 ) }
                                                     />
                                                 }
                                             />
@@ -2124,16 +2114,14 @@ const App = () => {
                                                         <BrandPreviewList
                                                             rows={ [
                                                                 {
-                                                                    label: __( "API", "fooconvert" ),
-                                                                    value: config?.abilitiesAvailable ? __( "Enabled", "fooconvert" ) : __( "Unavailable", "fooconvert" ),
-                                                                },
-                                                                {
                                                                     label: __( "Tools", "fooconvert" ),
-                                                                    value: String( abilityNames.length ),
+                                                                    value: config?.abilitiesAvailable
+                                                                        ? String( abilityNames.length )
+                                                                        : __( "Unavailable", "fooconvert" ),
                                                                 },
                                                             ] }
                                                         />
-                                                        <ContextChipRow items={ abilityPreviewLabels } limit={ 5 } />
+                                                        <ContextChipRow items={ abilityPreviewLabels } limit={ 4 } />
                                                     </div>
                                                 }
                                             />
@@ -2144,13 +2132,7 @@ const App = () => {
                                                 onOpen={ () => setContextModal( "request" ) }
                                                 preview={
                                                     <div className={ `${ rootClass }__preview-stack` }>
-                                                        <BrandPreviewList rows={ liveRequestSummaryRows } />
-                                                        <p className={ `${ rootClass }__muted-copy` }>
-                                                            { truncateText(
-                                                                lastAssistantMessage || __( "No assistant response yet.", "fooconvert" ),
-                                                                110
-                                                            ) }
-                                                        </p>
+                                                        <BrandPreviewList rows={ liveRequestSummaryRows.slice( 0, 3 ) } />
                                                     </div>
                                                 }
                                             />

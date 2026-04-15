@@ -143,7 +143,7 @@
 }
 
 .fc-ai-popup-builder__context-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     align-items: start;
 }
 
@@ -198,7 +198,7 @@
 
 .fc-ai-popup-builder__context-card-preview {
     display: grid;
-    gap: 12px;
+    gap: 10px;
 }
 
 .fc-ai-popup-builder__context-chip-row {
@@ -237,10 +237,6 @@
 .fc-ai-popup-builder__context-list {
     display: grid;
     gap: 12px;
-}
-
-.fc-ai-popup-builder__context-list-preview {
-    margin-left: 18px;
 }
 
 .fc-ai-popup-builder__context-item {
@@ -396,6 +392,10 @@
     flex-wrap: wrap;
     gap: 10px;
     margin-top: 16px;
+}
+
+.fc-ai-popup-builder__context-card-preview .fc-ai-popup-builder__swatch-row {
+    margin-top: 0;
 }
 
 .fc-ai-popup-builder__swatch-chip {
