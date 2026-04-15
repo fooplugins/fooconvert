@@ -632,6 +632,16 @@ function fooconvert_is_admin_ai_popup_preview_page() {
 }
 
 /**
+ * Checks if the current page is the AI popup builder admin page.
+ *
+ * @return bool
+ */
+function fooconvert_is_admin_ai_popup_builder_page() {
+    return is_admin() &&
+        isset( $_GET['page'] ) && $_GET['page'] === FOOCONVERT_MENU_SLUG_AI_POPUP_BUILDER;
+}
+
+/**
  * Returns an array of PRO features for FooConvert.
  * Each feature has a 'title', 'feature', and optional 'link'.
  *

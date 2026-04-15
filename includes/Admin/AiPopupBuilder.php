@@ -68,6 +68,8 @@ class AiPopupBuilder {
             return;
         }
 
+        $this->prime_runtime_block_registries();
+
         $asset_path = FOOCONVERT_ASSETS_PATH . 'admin/ai-popup-builder/index.asset.php';
         $asset      = file_exists( $asset_path )
             ? require $asset_path
@@ -107,6 +109,41 @@ class AiPopupBuilder {
             'window.FC_AI_POPUP_BUILDER = ' . wp_json_encode( $this->get_editor_config() ) . ';',
             'before'
         );
+    }
+
+    /**
+     * Primes runtime block registries used by the AI builder catalog.
+     *
+     * @return void
+     */
+    private function prime_runtime_block_registries(): void {
+        // Prime block assets so runtime block registries from FooConvert and other plugins are available to the builder.
+        do_action( 'enqueue_block_assets' );
+
+        if ( ! class_exists( '\WP_Block_Type_Registry' ) || ! fooconvert_is_woocommerce_active() ) {
+            return;
+        }
+
+        $registered = \WP_Block_Type_Registry::get_instance()->get_all_registered();
+        foreach ( array_keys( $registered ) as $block_name ) {
+            if ( 0 === strpos( $block_name, 'woocommerce/' ) ) {
+                return;
+            }
+        }
+
+        if ( ! class_exists( '\Automattic\WooCommerce\Blocks\Package' ) || ! class_exists( '\Automattic\WooCommerce\Blocks\BlockTypesController' ) ) {
+            return;
+        }
+
+        \Automattic\WooCommerce\Blocks\Package::init();
+
+        $container = \Automattic\WooCommerce\Blocks\Package::container();
+        if ( is_object( $container ) && method_exists( $container, 'get' ) ) {
+            $controller = $container->get( \Automattic\WooCommerce\Blocks\BlockTypesController::class );
+            if ( $controller instanceof \Automattic\WooCommerce\Blocks\BlockTypesController ) {
+                $controller->register_blocks();
+            }
+        }
     }
 
     /**

@@ -39,8 +39,9 @@ class PopupBlueprint {
             return self::$block_catalog;
         }
 
-        $catalog   = self::get_core_block_catalog_map();
-        $overrides = self::get_block_catalog_overrides();
+        $catalog          = self::get_core_block_catalog_map();
+        $overrides        = self::get_block_catalog_overrides();
+        $has_woo_runtime  = false;
 
         if ( class_exists( '\WP_Block_Type_Registry' ) ) {
             $registered = \WP_Block_Type_Registry::get_instance()->get_all_registered();
@@ -49,6 +50,10 @@ class PopupBlueprint {
             foreach ( $registered as $block_name => $block_type ) {
                 if ( ! self::is_ai_supported_runtime_block( $block_name ) ) {
                     continue;
+                }
+
+                if ( fooconvert_str_starts_with( $block_name, 'woocommerce/' ) ) {
+                    $has_woo_runtime = true;
                 }
 
                 $override         = $overrides[ $block_name ] ?? array();
@@ -82,6 +87,10 @@ class PopupBlueprint {
                     $override
                 );
             }
+        }
+
+        if ( ! $has_woo_runtime ) {
+            $catalog = array_merge( $catalog, self::get_woocommerce_metadata_catalog_map() );
         }
 
         self::$block_catalog = $catalog;
@@ -379,6 +388,130 @@ class PopupBlueprint {
     }
 
     /**
+     * Builds a child map from block metadata keyed by parent block name.
+     *
+     * @param array<string,array<string,mixed>> $metadata_map Block metadata keyed by block name.
+     * @return array<string,array<int,string>>
+     */
+    private static function get_metadata_block_child_map( array $metadata_map ): array {
+        $child_map = array();
+
+        foreach ( $metadata_map as $block_name => $metadata ) {
+            $parents = array();
+            if ( isset( $metadata['parent'] ) && is_array( $metadata['parent'] ) ) {
+                $parents = array_values( $metadata['parent'] );
+            } elseif ( isset( $metadata['parent'] ) && is_string( $metadata['parent'] ) && '' !== $metadata['parent'] ) {
+                $parents = array( $metadata['parent'] );
+            }
+
+            foreach ( $parents as $parent ) {
+                if ( ! is_string( $parent ) || '' === $parent ) {
+                    continue;
+                }
+
+                $child_map[ $parent ]   = $child_map[ $parent ] ?? array();
+                $child_map[ $parent ][] = $block_name;
+            }
+        }
+
+        foreach ( $child_map as $parent => $children ) {
+            $child_map[ $parent ] = array_values( array_unique( $children ) );
+        }
+
+        return $child_map;
+    }
+
+    /**
+     * Returns WooCommerce block metadata when runtime registration is unavailable on the current screen.
+     *
+     * @return array<string,array<string,mixed>>
+     */
+    private static function get_woocommerce_metadata_catalog_map(): array {
+        if ( ! fooconvert_is_woocommerce_active() || ! defined( 'WC_ABSPATH' ) ) {
+            return array();
+        }
+
+        $base_dir = trailingslashit( WC_ABSPATH ) . 'assets/client/blocks';
+        if ( ! is_dir( $base_dir ) ) {
+            return array();
+        }
+
+        $metadata_map = array();
+        $iterator     = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator( $base_dir, \FilesystemIterator::SKIP_DOTS )
+        );
+
+        foreach ( $iterator as $file ) {
+            if ( ! $file instanceof \SplFileInfo || 'block.json' !== $file->getFilename() ) {
+                continue;
+            }
+
+            $json = file_get_contents( $file->getPathname() );
+            if ( false === $json ) {
+                continue;
+            }
+
+            $metadata = json_decode( $json, true );
+            if ( ! is_array( $metadata ) ) {
+                continue;
+            }
+
+            $block_name = isset( $metadata['name'] ) && is_string( $metadata['name'] ) ? $metadata['name'] : '';
+            if ( '' === $block_name || ! fooconvert_str_starts_with( $block_name, 'woocommerce/' ) ) {
+                continue;
+            }
+
+            $metadata_map[ $block_name ] = $metadata;
+        }
+
+        if ( empty( $metadata_map ) ) {
+            return array();
+        }
+
+        $overrides = self::get_block_catalog_overrides();
+        $child_map = self::get_metadata_block_child_map( $metadata_map );
+        $catalog   = array();
+
+        foreach ( $metadata_map as $block_name => $metadata ) {
+            $override         = $overrides[ $block_name ] ?? array();
+            $allowed_children = isset( $override['allowed_children'] ) && is_array( $override['allowed_children'] )
+                ? array_values( array_unique( $override['allowed_children'] ) )
+                : array_values( array_unique( $child_map[ $block_name ] ?? array() ) );
+            $supports_children = array_key_exists( 'supports_children', $override )
+                ? ! empty( $override['supports_children'] )
+                : ! empty( $allowed_children );
+            $attributes = isset( $metadata['attributes'] ) && is_array( $metadata['attributes'] )
+                ? $metadata['attributes']
+                : array();
+
+            $catalog[ $block_name ] = array_merge(
+                array(
+                    'name'               => $block_name,
+                    'label'              => isset( $metadata['title'] ) && is_string( $metadata['title'] ) && '' !== $metadata['title']
+                        ? $metadata['title']
+                        : $block_name,
+                    'description'        => isset( $metadata['description'] ) && is_string( $metadata['description'] )
+                        ? $metadata['description']
+                        : '',
+                    'supports_children'  => $supports_children,
+                    'allowed_children'   => $allowed_children,
+                    'attribute_examples' => self::build_attribute_examples_from_attributes( $block_name, $attributes ),
+                    'attribute_schema'   => self::get_attribute_schema_from_attributes( $attributes ),
+                    'parent'             => isset( $metadata['parent'] ) && is_array( $metadata['parent'] )
+                        ? array_values( $metadata['parent'] )
+                        : array(),
+                    'ancestor'           => isset( $metadata['ancestor'] ) && is_array( $metadata['ancestor'] )
+                        ? array_values( $metadata['ancestor'] )
+                        : array(),
+                ),
+                $override
+            );
+        }
+
+        return $catalog;
+    }
+
+    /**
      * Builds lightweight attribute examples from a registered block type.
      *
      * @param string         $block_name Block name.
@@ -386,13 +519,23 @@ class PopupBlueprint {
      * @return array<string,mixed>
      */
     private static function build_attribute_examples_from_block_type( string $block_name, \WP_Block_Type $block_type ): array {
+        return self::build_attribute_examples_from_attributes(
+            $block_name,
+            isset( $block_type->attributes ) && is_array( $block_type->attributes ) ? $block_type->attributes : array()
+        );
+    }
+
+    /**
+     * Builds lightweight attribute examples from a block attribute schema array.
+     *
+     * @param string              $block_name Block name.
+     * @param array<string,mixed> $attributes Attribute schema.
+     * @return array<string,mixed>
+     */
+    private static function build_attribute_examples_from_attributes( string $block_name, array $attributes ): array {
         $examples = array();
 
-        if ( ! isset( $block_type->attributes ) || ! is_array( $block_type->attributes ) ) {
-            return $examples;
-        }
-
-        foreach ( $block_type->attributes as $attribute_name => $schema ) {
+        foreach ( $attributes as $attribute_name => $schema ) {
             if ( ! is_array( $schema ) ) {
                 continue;
             }
@@ -446,8 +589,20 @@ class PopupBlueprint {
      * @return array<string,mixed>
      */
     private static function get_block_attribute_schema( \WP_Block_Type $block_type ): array {
-        return isset( $block_type->attributes ) && is_array( $block_type->attributes )
-            ? self::sanitize_recursive( $block_type->attributes, 'attribute_schema' )
+        return self::get_attribute_schema_from_attributes(
+            isset( $block_type->attributes ) && is_array( $block_type->attributes ) ? $block_type->attributes : array()
+        );
+    }
+
+    /**
+     * Returns a JSON-safe attribute schema from a raw block attribute schema array.
+     *
+     * @param array<string,mixed> $attributes Attribute schema.
+     * @return array<string,mixed>
+     */
+    private static function get_attribute_schema_from_attributes( array $attributes ): array {
+        return ! empty( $attributes )
+            ? self::sanitize_recursive( $attributes, 'attribute_schema' )
             : array();
     }
 
