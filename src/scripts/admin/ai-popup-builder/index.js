@@ -453,16 +453,20 @@ const BrandSectionCard = ( { title, isEditing, onToggle, preview, children } ) =
 
 const ContextSummaryCard = ( { title, summary, preview, onOpen, actionLabel = __( "Open", "fooconvert" ) } ) => (
     <Card className={ `${ rootClass }__context-card` }>
-        <CardBody>
-            <div className={ `${ rootClass }__context-card-head` }>
-                <div>
-                    <h3>{ title }</h3>
-                    { summary && <p className={ `${ rootClass }__muted-copy` }>{ summary }</p> }
-                </div>
+        <CardHeader>
+            <Flex justify="space-between" align="center">
+                <FlexBlock>
+                    <div className={ `${ rootClass }__context-card-head` }>
+                        <h3>{ title }</h3>
+                        { summary && <p className={ `${ rootClass }__muted-copy` }>{ summary }</p> }
+                    </div>
+                </FlexBlock>
                 <Button variant="secondary" onClick={ onOpen }>
                     { actionLabel }
                 </Button>
-            </div>
+            </Flex>
+        </CardHeader>
+        <CardBody>
             <div className={ `${ rootClass }__context-card-preview` }>
                 { preview }
             </div>

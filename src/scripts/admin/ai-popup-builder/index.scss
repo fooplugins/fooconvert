@@ -167,16 +167,18 @@
 }
 
 .fc-ai-popup-builder__context-card .components-card__body {
-    display: grid;
-    gap: 14px;
-    padding: 16px;
+    padding-top: 14px;
 }
 
 .fc-ai-popup-builder__brand-card--editing {
     border-color: rgba(34, 113, 177, 0.18);
 }
 
-.fc-ai-popup-builder__context-card-head,
+.fc-ai-popup-builder__context-card-head {
+    display: grid;
+    gap: 4px;
+}
+
 .fc-ai-popup-builder__context-item-head {
     display: flex;
     flex-wrap: wrap;
