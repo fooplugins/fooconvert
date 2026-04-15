@@ -523,12 +523,8 @@ const App = () => {
     const [ editingBrandSections, setEditingBrandSections ] = useState( createBrandSectionState() );
     const [ isExtractingBrand, setExtractingBrand ] = useState( false );
     const [ isSavingBrand, setSavingBrand ] = useState( false );
-    const [ brandStatus, setBrandStatus ] = useState(
-        config?.brand?.hasSavedBrand
-            ? __( "Saved brand loaded. The builder will use this as the primary styling context.", "fooconvert" )
-            : __( "No saved brand was found. Extracting a starting point from the current site.", "fooconvert" )
-    );
     const [ remoteBrandUrl, setRemoteBrandUrl ] = useState( "" );
+    const [ showRemoteBrandInput, setShowRemoteBrandInput ] = useState( false );
     const chatEndRef = useRef( null );
 
     const generatedMarkup = useMemo( () => {
@@ -600,8 +596,12 @@ const App = () => {
             value: brand?.colors?.background,
         },
         {
-            label: __( "Text", "fooconvert" ),
+            label: __( "Primary text", "fooconvert" ),
             value: brand?.colors?.textPrimary,
+        },
+        {
+            label: __( "Secondary text", "fooconvert" ),
+            value: brand?.colors?.textSecondary,
         },
     ].filter( color => typeof color.value === "string" && color.value.length > 0 );
     const primaryButtonPreviewStyle = useMemo(
@@ -662,7 +662,6 @@ const App = () => {
                 startTransition( () => {
                     setBrand( nextBrand );
                     setEditingBrandSections( createBrandSectionState() );
-                    setBrandStatus( __( "Brand extracted from the current site. Review it, override anything you want, then save it for reuse.", "fooconvert" ) );
                     setStatusNotice( {
                         status: "info",
                         message: __( "A starter brand profile was extracted from the current site so the builder can style popups from the site itself.", "fooconvert" ),
@@ -670,7 +669,6 @@ const App = () => {
                 } );
             } catch ( exception ) {
                 setError( exception?.message || __( "Brand extraction failed. You can fill in the brand details manually and save them.", "fooconvert" ) );
-                setBrandStatus( __( "Automatic brand extraction failed. You can still edit the brand fields manually and save them.", "fooconvert" ) );
             } finally {
                 setExtractingBrand( false );
             }
@@ -891,11 +889,10 @@ const App = () => {
             startTransition( () => {
                 setBrand( nextBrand );
                 setEditingBrandSections( createBrandSectionState() );
-                setBrandStatus(
-                    mode === "remote"
-                        ? __( "Brand extracted from the remote URL. Review the values, then save them if you want to reuse them later.", "fooconvert" )
-                        : __( "Brand extracted from the current site. Review the values, then save them if you want to reuse them later.", "fooconvert" )
-                );
+                if ( mode === "remote" ) {
+                    setRemoteBrandUrl( "" );
+                    setShowRemoteBrandInput( false );
+                }
                 setStatusNotice( {
                     status: "info",
                     message: mode === "remote"
@@ -929,7 +926,6 @@ const App = () => {
                 setBrand( nextBrand );
                 setSavedBrandSnapshot( nextBrand );
                 setEditingBrandSections( createBrandSectionState() );
-                setBrandStatus( __( "Brand saved. Future popup sessions will reuse this brand profile.", "fooconvert" ) );
                 setStatusNotice( {
                     status: "success",
                     message: __( "Brand saved for reuse. The AI builder will now use it as the main styling source.", "fooconvert" ),
@@ -1170,6 +1166,13 @@ const App = () => {
                                                     { isExtractingBrand ? __( "Extracting…", "fooconvert" ) : __( "Extract Current Site", "fooconvert" ) }
                                                 </Button>
                                                 <Button
+                                                    variant="secondary"
+                                                    onClick={ () => setShowRemoteBrandInput( current => !current ) }
+                                                    disabled={ isExtractingBrand }
+                                                >
+                                                    { showRemoteBrandInput ? __( "Hide Remote URL", "fooconvert" ) : __( "Extract Remote URL", "fooconvert" ) }
+                                                </Button>
+                                                <Button
                                                     variant="primary"
                                                     onClick={ saveBrandProfile }
                                                     disabled={ isSavingBrand || !brandIsDirty }
@@ -1179,9 +1182,31 @@ const App = () => {
                                             </div>
                                         </div>
 
-                                        <Notice status="info" isDismissible={ false }>
-                                            { brandStatus }
-                                        </Notice>
+                                        { showRemoteBrandInput && (
+                                            <Card>
+                                                <CardBody>
+                                                    <div className={ `${ rootClass }__remote-extract-panel` }>
+                                                        <TextControl
+                                                            label={ __( "Remote URL", "fooconvert" ) }
+                                                            value={ remoteBrandUrl }
+                                                            onChange={ setRemoteBrandUrl }
+                                                            help={ __( "Optional. Use this when you want to extract brand details from another live URL instead of the current site.", "fooconvert" ) }
+                                                            __nextHasNoMarginBottom
+                                                            __next40pxDefaultSize
+                                                        />
+                                                        <div className={ `${ rootClass }__inline-actions` }>
+                                                            <Button
+                                                                variant="secondary"
+                                                                onClick={ () => extractBrand( "remote" ) }
+                                                                disabled={ isExtractingBrand || remoteBrandUrl.trim().length === 0 }
+                                                            >
+                                                                { isExtractingBrand ? __( "Extracting…", "fooconvert" ) : __( "Run Remote Extract", "fooconvert" ) }
+                                                            </Button>
+                                                        </div>
+                                                    </div>
+                                                </CardBody>
+                                            </Card>
+                                        ) }
 
                                         <div className={ `${ rootClass }__brand-grid` }>
                                             <BrandSectionCard
@@ -1191,12 +1216,6 @@ const App = () => {
                                                 preview={
                                                     <div className={ `${ rootClass }__preview-stack` }>
                                                         <div className={ `${ rootClass }__overview-preview` }>
-                                                            <span className={ `${ rootClass }__meta-pill` }>
-                                                                { sprintf(
-                                                                    __( "%s scheme", "fooconvert" ),
-                                                                    getColorSchemeLabel( brand?.colorScheme )
-                                                                ) }
-                                                            </span>
                                                             <p>
                                                                 { truncateText( brand?.brandOverview, 220 ) || __( "Add a short brand overview so the AI has tone and positioning context.", "fooconvert" ) }
                                                             </p>
@@ -1214,23 +1233,6 @@ const App = () => {
                                                         __nextHasNoMarginBottom
                                                         __next40pxDefaultSize
                                                     />
-                                                    <SelectControl
-                                                        label={ __( "Color scheme", "fooconvert" ) }
-                                                        value={ brand?.colorScheme || "light" }
-                                                        onChange={ value => updateBrandField( "colorScheme", value ) }
-                                                        options={ [
-                                                            {
-                                                                label: __( "Light", "fooconvert" ),
-                                                                value: "light",
-                                                            },
-                                                            {
-                                                                label: __( "Dark", "fooconvert" ),
-                                                                value: "dark",
-                                                            },
-                                                        ] }
-                                                        __nextHasNoMarginBottom
-                                                        __next40pxDefaultSize
-                                                    />
                                                 </div>
                                             </BrandSectionCard>
 
@@ -1241,6 +1243,14 @@ const App = () => {
                                                 preview={
                                                     brandPalette.length > 0 ? (
                                                         <div className={ `${ rootClass }__preview-stack` }>
+                                                            <div className={ `${ rootClass }__brand-meta-row` }>
+                                                                <span className={ `${ rootClass }__meta-pill` }>
+                                                                    { sprintf(
+                                                                        __( "%s scheme", "fooconvert" ),
+                                                                        getColorSchemeLabel( brand?.colorScheme )
+                                                                    ) }
+                                                                </span>
+                                                            </div>
                                                             <div className={ `${ rootClass }__swatch-row` }>
                                                                 { brandPalette.map( color => (
                                                                     <div key={ color.label } className={ `${ rootClass }__swatch-chip` }>
@@ -1293,6 +1303,25 @@ const App = () => {
                                                         label={ __( "Secondary text", "fooconvert" ) }
                                                         value={ brand?.colors?.textSecondary || "" }
                                                         onChange={ value => updateBrandField( "colors.textSecondary", value ) }
+                                                    />
+                                                </div>
+                                                <div className={ `${ rootClass }__compact-control` }>
+                                                    <SelectControl
+                                                        label={ __( "Color scheme", "fooconvert" ) }
+                                                        value={ brand?.colorScheme || "light" }
+                                                        onChange={ value => updateBrandField( "colorScheme", value ) }
+                                                        options={ [
+                                                            {
+                                                                label: __( "Light", "fooconvert" ),
+                                                                value: "light",
+                                                            },
+                                                            {
+                                                                label: __( "Dark", "fooconvert" ),
+                                                                value: "dark",
+                                                            },
+                                                        ] }
+                                                        __nextHasNoMarginBottom
+                                                        __next40pxDefaultSize
                                                     />
                                                 </div>
                                             </BrandSectionCard>
@@ -1497,30 +1526,6 @@ const App = () => {
                                                 </div>
                                             </BrandSectionCard>
 
-                                            <Card>
-                                                <CardHeader>
-                                                    <h3>{ __( "Remote Extraction", "fooconvert" ) }</h3>
-                                                </CardHeader>
-                                                <CardBody>
-                                                    <TextControl
-                                                        label={ __( "Remote URL", "fooconvert" ) }
-                                                        value={ remoteBrandUrl }
-                                                        onChange={ setRemoteBrandUrl }
-                                                        help={ __( "Optional. Use this when you want to extract brand details from another live URL instead of the current site.", "fooconvert" ) }
-                                                        __nextHasNoMarginBottom
-                                                        __next40pxDefaultSize
-                                                    />
-                                                    <div className={ `${ rootClass }__inline-actions` }>
-                                                        <Button
-                                                            variant="secondary"
-                                                            onClick={ () => extractBrand( "remote" ) }
-                                                            disabled={ isExtractingBrand || remoteBrandUrl.trim().length === 0 }
-                                                        >
-                                                            { __( "Extract Remote URL", "fooconvert" ) }
-                                                        </Button>
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
                                         </div>
                                     </div>
                                 ) }

@@ -175,6 +175,12 @@
     gap: 14px;
 }
 
+.fc-ai-popup-builder__brand-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
 .fc-ai-popup-builder__overview-preview {
     display: grid;
     gap: 10px;
@@ -236,6 +242,25 @@
     padding: 0 16px;
     font-weight: 600;
     cursor: default;
+}
+
+.fc-ai-popup-builder__compact-control {
+    width: min(180px, 100%);
+}
+
+.fc-ai-popup-builder__compact-control .components-base-control {
+    margin-bottom: 0;
+}
+
+.fc-ai-popup-builder__remote-extract-panel {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+}
+
+.fc-ai-popup-builder__remote-extract-panel .components-base-control {
+    margin-bottom: 0;
 }
 
 .fc-ai-popup-builder__color-control {
@@ -665,6 +690,12 @@
 
     .fc-ai-popup-builder__field-grid,
     .fc-ai-popup-builder__preview-row {
+        grid-template-columns: 1fr;
+    }
+
+    .fc-ai-popup-builder__compact-control,
+    .fc-ai-popup-builder__remote-extract-panel {
+        width: 100%;
         grid-template-columns: 1fr;
     }
 }
