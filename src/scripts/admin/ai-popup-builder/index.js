@@ -725,6 +725,7 @@ const App = () => {
     const playbookCopyTactics = Array.isArray( conversionPlaybook?.copy_tactics ) ? conversionPlaybook.copy_tactics : [];
     const playbookPopupTypes = isPlainObject( conversionPlaybook?.popup_types ) ? conversionPlaybook.popup_types : {};
     const abilityPreviewLabels = abilityNames.map( ability => String( ability ).replace( "fooconvert/", "" ) );
+    const initialBuilderTab = hasSavedBrandProfile && !brandIsDirty ? "chat" : "context";
     const liveRequestSummaryRows = [
         {
             label: __( "Messages", "fooconvert" ),
@@ -1956,7 +1957,7 @@ const App = () => {
                     <TabPanel
                         className={ `${ rootClass }__tabs` }
                         activeClass="is-active"
-                        initialTabName="context"
+                        initialTabName={ initialBuilderTab }
                         tabs={ tabDefinitions }
                     >
                         { ( tab ) => (
