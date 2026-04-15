@@ -272,6 +272,7 @@
 .fc-ai-popup-builder__brand-meta-row .fc-ai-popup-builder__meta-pill {
     border-color: var(--fc-ai-border-strong);
     background: var(--fc-ai-surface);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.72);
 }
 
 .fc-ai-popup-builder__overview-preview {
@@ -403,9 +404,10 @@
     gap: 4px;
     min-width: 108px;
     padding: 10px 12px;
-    border: 1px solid var(--fc-ai-border);
+    border: 1px solid var(--fc-ai-border-strong);
     border-radius: 6px;
-    background: var(--fc-ai-surface-subtle);
+    background: var(--fc-ai-surface);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.72);
 }
 
 .fc-ai-popup-builder__swatch-chip span {
@@ -413,6 +415,7 @@
     height: 24px;
     border: 1px solid var(--fc-ai-border-strong);
     border-radius: 4px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
 .fc-ai-popup-builder__swatch-chip strong {
