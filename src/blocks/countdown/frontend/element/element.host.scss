@@ -45,6 +45,11 @@
     color: var(--digits-color, currentColor);
   }
 
+  &::part(segment-text) {
+    text-align: center;
+    line-height: 1.1;
+  }
+
   & ::slotted(span[slot^='segment-text__']) {
     box-sizing: border-box;
     display: inline-block;
@@ -60,5 +65,14 @@
     flex-direction: row;
     align-items: baseline;
     min-width: fit-content;
+  }
+}
+
+:host([layout="stack"]) {
+  &::part(segment-value),
+  &::part(segment-text) {
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
   }
 }

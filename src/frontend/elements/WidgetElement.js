@@ -1,6 +1,5 @@
 import CustomElement from "./CustomElement";
 import { logEvent } from "../utils";
-import getParentWidgetElement from "../utils/getParentWidgetElement";
 
 class WidgetElement extends CustomElement {
 

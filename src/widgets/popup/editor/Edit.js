@@ -72,6 +72,7 @@ const Edit = props => {
         attributes: {
             postId: storedPostId,
             postType: storedPostType,
+            template: storedTemplate,
             settings,
             styles
         }

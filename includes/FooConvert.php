@@ -221,7 +221,9 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
                 $this->widgets->get_kses_definitions()
             );
 
-            return $this->kses_with_svg( $content, $allowed_html );
+            $result = $this->kses_with_svg( $content, $allowed_html );
+
+            return $result;
         }
 
         /**
@@ -266,6 +268,10 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             $allowed_html = $this->add_custom_element_attributes( $allowed_html );
             // hook into the safe_style_css filter, so we can include the SVG presentation attributes for only this call to wp_kses
             add_filter( 'safe_style_css', array( $this, 'safe_style_css_svg_presentation_attributes' ) );
+
+//            global $wp_filter;
+//            $hook =$wp_filter['safecss_filter_attr_allow_css'] ->callbacks ?? null;
+
             $result = wp_kses( $content, $allowed_html );
             remove_filter( 'safe_style_css', array( $this, 'safe_style_css_svg_presentation_attributes' ) );
             return $result;

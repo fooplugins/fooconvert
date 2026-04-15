@@ -1,9 +1,9 @@
 .fc--countdown__segment {
   display: flex;
   flex-direction: column;
-  min-width: 5rem;
+  min-width: 0;
   width: fit-content;
-  font-size: inherit;
+  font-size: 1rem;
   line-height: 1;
   list-style-type: none;
   justify-content: center;
@@ -11,7 +11,7 @@
   padding: 0.5em;
   color: inherit;
   gap: 0;
-  flex: 1;
+  flex: 1 1 0;
 
   .fc--countdown__segment-value {
     display: block;
@@ -20,7 +20,17 @@
   }
 
   .fc--countdown__segment-text {
+    text-align: center;
+    line-height: 1.1;
+  }
 
+  &.fc--countdown__segment__layout-stack {
+    .fc--countdown__segment-value,
+    .fc--countdown__segment-text {
+      white-space: nowrap;
+      overflow-wrap: normal;
+      word-break: normal;
+    }
   }
 
   &.fc--countdown__segment__layout-row {

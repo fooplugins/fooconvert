@@ -10,6 +10,12 @@ const DISPLAY_RULES_META_DEFINITION = {
     users: isStringArray
 };
 
-const isDisplayRulesMeta = obj => hasKeys( obj, DISPLAY_RULES_META_DEFINITION );
+const isDisplayRulesMeta = obj => {
+    const valid = hasKeys( obj, DISPLAY_RULES_META_DEFINITION );
+    if ( !valid ) {
+        console.debug( "FooConvert: Invalid display rules meta", obj );
+    }
+    return valid;
+};
 
 export default isDisplayRulesMeta;

@@ -12,6 +12,12 @@ const DISPLAY_RULES_LOCATION_DEFINITION = {
     data: value => isUndefined( value ) || isArray( value, false, isDisplayRulesLocationData )
 };
 
-const isDisplayRulesLocation = value => hasKeys( value, DISPLAY_RULES_LOCATION_DEFINITION );
+const isDisplayRulesLocation = value => {
+    const valid = hasKeys( value, DISPLAY_RULES_LOCATION_DEFINITION );
+    if ( !valid ) {
+        console.debug( "FooConvert: Invalid display rules location", value );
+    }
+    return valid;
+};
 
 export default isDisplayRulesLocation;
