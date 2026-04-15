@@ -39,7 +39,7 @@ The SQL shape is:
 
 CREATE TABLE fooconvert_events (
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    widget_id bigint(20) unsigned NOT NULL,
+    post_id bigint(20) unsigned NOT NULL,
     event_type varchar(255) NOT NULL,
     event_subtype varchar(255) DEFAULT NULL,
     conversion tinyint(1) DEFAULT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE fooconvert_events (
 
 Field summary:
 - `id`: primary key
-- `widget_id`: popup post ID associated with the event
+- `post_id`: popup post ID associated with the event
 - `event_type`: core event type such as `open`, `click`, `close`, or `update`
 - `event_subtype`: subtype such as `engagement`, or `NULL`
 - `conversion`: whether the event counts as a conversion
