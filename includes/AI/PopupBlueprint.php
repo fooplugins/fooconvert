@@ -48,7 +48,7 @@ class PopupBlueprint {
             $child_map  = self::get_registered_block_child_map( $registered );
 
             foreach ( $registered as $block_name => $block_type ) {
-                if ( ! self::is_ai_supported_runtime_block( $block_name ) ) {
+                if ( ! self::is_ai_supported_runtime_block( $block_name, $block_type ) ) {
                     continue;
                 }
 
@@ -330,9 +330,27 @@ class PopupBlueprint {
      * @param string $block_name Block name.
      * @return bool
      */
-    private static function is_ai_supported_runtime_block( string $block_name ): bool {
+    private static function is_ai_supported_runtime_block( string $block_name, ?\WP_Block_Type $block_type = null ): bool {
         if ( fooconvert_str_starts_with( $block_name, 'woocommerce/' ) ) {
-            return true;
+            $parent = $block_type instanceof \WP_Block_Type && isset( $block_type->parent ) && is_array( $block_type->parent )
+                ? array_values( $block_type->parent )
+                : array();
+            $ancestor = $block_type instanceof \WP_Block_Type && isset( $block_type->ancestor ) && is_array( $block_type->ancestor )
+                ? array_values( $block_type->ancestor )
+                : array();
+            $supports = $block_type instanceof \WP_Block_Type && isset( $block_type->supports ) && is_array( $block_type->supports )
+                ? $block_type->supports
+                : array();
+            $inserter = $block_type instanceof \WP_Block_Type && isset( $block_type->inserter )
+                ? $block_type->inserter
+                : null;
+
+            return self::is_ai_supported_woocommerce_block(
+                $block_name,
+                $parent,
+                $ancestor,
+                self::is_block_inserter_disabled( $supports, $inserter )
+            );
         }
 
         if ( ! fooconvert_str_starts_with( $block_name, 'fc/' ) ) {
@@ -360,6 +378,42 @@ class PopupBlueprint {
             ),
             true
         );
+    }
+
+    /**
+     * Determines whether a WooCommerce block is directly usable in the builder.
+     *
+     * @param string            $block_name Block name.
+     * @param array<int,string> $parent Parent block rules.
+     * @param array<int,string> $ancestor Ancestor block rules.
+     * @param bool              $inserter_disabled Whether the block is hidden from the inserter.
+     * @return bool
+     */
+    private static function is_ai_supported_woocommerce_block(
+        string $block_name,
+        array $parent = array(),
+        array $ancestor = array(),
+        bool $inserter_disabled = false
+    ): bool {
+        return fooconvert_str_starts_with( $block_name, 'woocommerce/' )
+            && empty( $parent )
+            && empty( $ancestor )
+            && ! $inserter_disabled;
+    }
+
+    /**
+     * Determines whether a block explicitly disables the inserter.
+     *
+     * @param array<string,mixed> $supports Block supports configuration.
+     * @param mixed               $inserter Optional top-level inserter flag.
+     * @return bool
+     */
+    private static function is_block_inserter_disabled( array $supports = array(), $inserter = null ): bool {
+        if ( array_key_exists( 'inserter', $supports ) ) {
+            return false === $supports['inserter'];
+        }
+
+        return false === $inserter;
     }
 
     /**
@@ -473,6 +527,26 @@ class PopupBlueprint {
         $catalog   = array();
 
         foreach ( $metadata_map as $block_name => $metadata ) {
+            $parent = isset( $metadata['parent'] ) && is_array( $metadata['parent'] )
+                ? array_values( $metadata['parent'] )
+                : array();
+            $ancestor = isset( $metadata['ancestor'] ) && is_array( $metadata['ancestor'] )
+                ? array_values( $metadata['ancestor'] )
+                : array();
+            $supports = isset( $metadata['supports'] ) && is_array( $metadata['supports'] )
+                ? $metadata['supports']
+                : array();
+            $inserter = $metadata['inserter'] ?? null;
+
+            if ( ! self::is_ai_supported_woocommerce_block(
+                $block_name,
+                $parent,
+                $ancestor,
+                self::is_block_inserter_disabled( $supports, $inserter )
+            ) ) {
+                continue;
+            }
+
             $override         = $overrides[ $block_name ] ?? array();
             $allowed_children = isset( $override['allowed_children'] ) && is_array( $override['allowed_children'] )
                 ? array_values( array_unique( $override['allowed_children'] ) )
@@ -497,12 +571,8 @@ class PopupBlueprint {
                     'allowed_children'   => $allowed_children,
                     'attribute_examples' => self::build_attribute_examples_from_attributes( $block_name, $attributes ),
                     'attribute_schema'   => self::get_attribute_schema_from_attributes( $attributes ),
-                    'parent'             => isset( $metadata['parent'] ) && is_array( $metadata['parent'] )
-                        ? array_values( $metadata['parent'] )
-                        : array(),
-                    'ancestor'           => isset( $metadata['ancestor'] ) && is_array( $metadata['ancestor'] )
-                        ? array_values( $metadata['ancestor'] )
-                        : array(),
+                    'parent'             => $parent,
+                    'ancestor'           => $ancestor,
                 ),
                 $override
             );
