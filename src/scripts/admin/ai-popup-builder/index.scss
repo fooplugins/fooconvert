@@ -273,6 +273,11 @@
     gap: 8px;
 }
 
+.fc-ai-popup-builder__brand-meta-row .fc-ai-popup-builder__meta-pill {
+    border-color: var(--fc-ai-border-strong);
+    background: var(--fc-ai-surface);
+}
+
 .fc-ai-popup-builder__overview-preview {
     display: grid;
     gap: 10px;
@@ -406,7 +411,7 @@
 .fc-ai-popup-builder__swatch-chip span {
     width: 100%;
     height: 24px;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--fc-ai-border-strong);
     border-radius: 4px;
 }
 
