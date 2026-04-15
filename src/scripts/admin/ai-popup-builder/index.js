@@ -88,11 +88,8 @@ const tabDefinitions = [
 ];
 
 const createEmptyBrand = () => ( {
-    siteName: "",
-    siteDescription: "",
-    siteUrl: "",
+    brandOverview: "",
     colorScheme: "light",
-    logo: "",
     colors: {
         primary: "",
         secondary: "",
@@ -101,12 +98,10 @@ const createEmptyBrand = () => ( {
         textPrimary: "",
         textSecondary: "",
     },
-    fonts: [],
     typography: {
         fontFamilies: {
             primary: "",
             heading: "",
-            code: "",
         },
         fontSizes: {
             h1: {
@@ -152,11 +147,6 @@ const createEmptyBrand = () => ( {
             borderColor: "",
             borderRadius: "",
         },
-    },
-    images: {
-        logo: "",
-        favicon: "",
-        ogImage: "",
     },
 } );
 
@@ -275,6 +265,35 @@ const truncateText = ( value, maxLength = 160 ) => {
     return `${ text.slice( 0, maxLength - 1 ).trim() }…`;
 };
 
+const getPreviewValue = ( value, fallback = __( "Not set", "fooconvert" ) ) => {
+    const text = String( value || "" ).trim();
+    return text.length > 0 ? text : fallback;
+};
+
+const getColorSchemeLabel = ( value ) => (
+    value === "dark"
+        ? __( "Dark", "fooconvert" )
+        : __( "Light", "fooconvert" )
+);
+
+const getButtonPreviewStyle = ( button, fallbackBorderColor ) => {
+    const borderColor = button?.borderColor || button?.background || fallbackBorderColor || "#1d2327";
+
+    return {
+        background: button?.background || "transparent",
+        color: button?.textColor || "#1d2327",
+        borderRadius: button?.borderRadius || "999px",
+        border: `1px solid ${ borderColor }`,
+    };
+};
+
+const createBrandSectionState = () => ( {
+    overview: false,
+    palette: false,
+    typography: false,
+    controls: false,
+} );
+
 const buildLastAssistantMessage = ( messages ) => {
     const lastAssistantEntry = [ ...( Array.isArray( messages ) ? messages : [] ) ]
         .reverse()
@@ -295,31 +314,6 @@ const buildPreviewUrl = ( previewUrl ) => {
     } catch ( exception ) {
         return previewUrl;
     }
-};
-
-const getBrandFontsText = ( brand ) => {
-    if ( !Array.isArray( brand?.fonts ) ) {
-        return "";
-    }
-
-    return brand.fonts
-        .map( font => {
-            if ( isPlainObject( font ) ) {
-                return String( font?.family || "" ).trim();
-            }
-
-            return String( font || "" ).trim();
-        } )
-        .filter( Boolean )
-        .join( ", " );
-};
-
-const parseBrandFonts = ( value ) => {
-    return String( value || "" )
-        .split( /[\n,]/ )
-        .map( family => family.trim() )
-        .filter( Boolean )
-        .map( family => ( { family } ) );
 };
 
 const PromptChip = ( { label, onClick, disabled } ) => (
@@ -420,6 +414,43 @@ const BrandColorControl = ( { label, value, onChange, help } ) => (
     </div>
 );
 
+const BrandPreviewList = ( { rows } ) => {
+    const items = Array.isArray( rows ) ? rows.filter( row => row?.label ) : [];
+
+    if ( items.length === 0 ) {
+        return null;
+    }
+
+    return (
+        <div className={ `${ rootClass }__preview-list` }>
+            { items.map( row => (
+                <div key={ row.label } className={ `${ rootClass }__preview-row` }>
+                    <span>{ row.label }</span>
+                    <strong>{ row.value }</strong>
+                </div>
+            ) ) }
+        </div>
+    );
+};
+
+const BrandSectionCard = ( { title, isEditing, onToggle, preview, children } ) => (
+    <Card className={ `${ rootClass }__brand-card ${ isEditing ? `${ rootClass }__brand-card--editing` : "" }` }>
+        <CardHeader>
+            <Flex justify="space-between" align="center">
+                <FlexBlock>
+                    <h3>{ title }</h3>
+                </FlexBlock>
+                <Button variant={ isEditing ? "primary" : "secondary" } onClick={ onToggle }>
+                    { isEditing ? __( "Save", "fooconvert" ) : __( "Edit", "fooconvert" ) }
+                </Button>
+            </Flex>
+        </CardHeader>
+        <CardBody>
+            { isEditing ? children : preview }
+        </CardBody>
+    </Card>
+);
+
 const ActivityTimeline = ( { items, isSending, activeIndex } ) => {
     const rows = Array.isArray( items ) ? items.filter( Boolean ) : [];
 
@@ -489,6 +520,7 @@ const App = () => {
     const [ pendingActivityIndex, setPendingActivityIndex ] = useState( 0 );
     const [ brand, setBrand ] = useState( initialBrand );
     const [ savedBrandSnapshot, setSavedBrandSnapshot ] = useState( initialSavedBrand );
+    const [ editingBrandSections, setEditingBrandSections ] = useState( createBrandSectionState() );
     const [ isExtractingBrand, setExtractingBrand ] = useState( false );
     const [ isSavingBrand, setSavingBrand ] = useState( false );
     const [ brandStatus, setBrandStatus ] = useState(
@@ -572,6 +604,14 @@ const App = () => {
             value: brand?.colors?.textPrimary,
         },
     ].filter( color => typeof color.value === "string" && color.value.length > 0 );
+    const primaryButtonPreviewStyle = useMemo(
+        () => getButtonPreviewStyle( brand?.components?.buttonPrimary, brand?.colors?.primary ),
+        [ brand ]
+    );
+    const secondaryButtonPreviewStyle = useMemo(
+        () => getButtonPreviewStyle( brand?.components?.buttonSecondary, brand?.colors?.primary ),
+        [ brand ]
+    );
 
     useEffect( () => {
         if ( draft?.title && !titleTouched ) {
@@ -621,6 +661,7 @@ const App = () => {
 
                 startTransition( () => {
                     setBrand( nextBrand );
+                    setEditingBrandSections( createBrandSectionState() );
                     setBrandStatus( __( "Brand extracted from the current site. Review it, override anything you want, then save it for reuse.", "fooconvert" ) );
                     setStatusNotice( {
                         status: "info",
@@ -849,6 +890,7 @@ const App = () => {
 
             startTransition( () => {
                 setBrand( nextBrand );
+                setEditingBrandSections( createBrandSectionState() );
                 setBrandStatus(
                     mode === "remote"
                         ? __( "Brand extracted from the remote URL. Review the values, then save them if you want to reuse them later.", "fooconvert" )
@@ -886,6 +928,7 @@ const App = () => {
             startTransition( () => {
                 setBrand( nextBrand );
                 setSavedBrandSnapshot( nextBrand );
+                setEditingBrandSections( createBrandSectionState() );
                 setBrandStatus( __( "Brand saved. Future popup sessions will reuse this brand profile.", "fooconvert" ) );
                 setStatusNotice( {
                     status: "success",
@@ -901,6 +944,13 @@ const App = () => {
 
     const updateBrandField = ( path, value ) => {
         setBrand( currentBrand => setNestedValue( currentBrand, path, value ) );
+    };
+
+    const toggleBrandSection = ( section ) => {
+        setEditingBrandSections( currentSections => ( {
+            ...currentSections,
+            [ section ]: !currentSections?.[ section ],
+        } ) );
     };
 
     const generatePopupImage = async() => {
@@ -1108,7 +1158,7 @@ const App = () => {
                                             <div>
                                                 <h2>{ __( "Brand Context", "fooconvert" ) }</h2>
                                                 <p>
-                                                    { __( "The AI uses this brand data first for colors, typography, spacing, imagery, and button styling. Templates are only structural guides.", "fooconvert" ) }
+                                                    { __( "The AI uses this brand data first for colors, typography, spacing, and button styling. Templates are only structural guides.", "fooconvert" ) }
                                                 </p>
                                             </div>
                                             <div className={ `${ rootClass }__tab-actions` }>
@@ -1134,272 +1184,318 @@ const App = () => {
                                         </Notice>
 
                                         <div className={ `${ rootClass }__brand-grid` }>
-                                            <Card>
-                                                <CardHeader>
-                                                    <h3>{ __( "Site Identity", "fooconvert" ) }</h3>
-                                                </CardHeader>
-                                                <CardBody>
-                                                    <div className={ `${ rootClass }__field-grid` }>
-                                                        <TextControl
-                                                            label={ __( "Site name", "fooconvert" ) }
-                                                            value={ brand?.siteName || "" }
-                                                            onChange={ value => updateBrandField( "siteName", value ) }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
-                                                        />
-                                                        <TextControl
-                                                            label={ __( "Site URL", "fooconvert" ) }
-                                                            value={ brand?.siteUrl || "" }
-                                                            onChange={ value => updateBrandField( "siteUrl", value ) }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
-                                                        />
-                                                        <TextareaControl
-                                                            label={ __( "Site description", "fooconvert" ) }
-                                                            value={ brand?.siteDescription || "" }
-                                                            onChange={ value => updateBrandField( "siteDescription", value ) }
-                                                            rows={ 4 }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
-                                                        />
-                                                        <TextControl
-                                                            label={ __( "Primary logo URL", "fooconvert" ) }
-                                                            value={ brand?.logo || "" }
-                                                            onChange={ value => updateBrandField( "logo", value ) }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
-                                                        />
-                                                        <SelectControl
-                                                            label={ __( "Color scheme", "fooconvert" ) }
-                                                            value={ brand?.colorScheme || "light" }
-                                                            onChange={ value => updateBrandField( "colorScheme", value ) }
-                                                            options={ [
+                                            <BrandSectionCard
+                                                title={ __( "Brand Overview", "fooconvert" ) }
+                                                isEditing={ !!editingBrandSections?.overview }
+                                                onToggle={ () => toggleBrandSection( "overview" ) }
+                                                preview={
+                                                    <div className={ `${ rootClass }__preview-stack` }>
+                                                        <div className={ `${ rootClass }__overview-preview` }>
+                                                            <span className={ `${ rootClass }__meta-pill` }>
+                                                                { sprintf(
+                                                                    __( "%s scheme", "fooconvert" ),
+                                                                    getColorSchemeLabel( brand?.colorScheme )
+                                                                ) }
+                                                            </span>
+                                                            <p>
+                                                                { truncateText( brand?.brandOverview, 220 ) || __( "Add a short brand overview so the AI has tone and positioning context.", "fooconvert" ) }
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            >
+                                                <div className={ `${ rootClass }__field-grid` }>
+                                                    <TextareaControl
+                                                        label={ __( "Brand Overview", "fooconvert" ) }
+                                                        value={ brand?.brandOverview || "" }
+                                                        onChange={ value => updateBrandField( "brandOverview", value ) }
+                                                        help={ __( "This starts from the site tagline on first run and gives the AI tone and positioning context.", "fooconvert" ) }
+                                                        rows={ 5 }
+                                                        __nextHasNoMarginBottom
+                                                        __next40pxDefaultSize
+                                                    />
+                                                    <SelectControl
+                                                        label={ __( "Color scheme", "fooconvert" ) }
+                                                        value={ brand?.colorScheme || "light" }
+                                                        onChange={ value => updateBrandField( "colorScheme", value ) }
+                                                        options={ [
+                                                            {
+                                                                label: __( "Light", "fooconvert" ),
+                                                                value: "light",
+                                                            },
+                                                            {
+                                                                label: __( "Dark", "fooconvert" ),
+                                                                value: "dark",
+                                                            },
+                                                        ] }
+                                                        __nextHasNoMarginBottom
+                                                        __next40pxDefaultSize
+                                                    />
+                                                </div>
+                                            </BrandSectionCard>
+
+                                            <BrandSectionCard
+                                                title={ __( "Palette", "fooconvert" ) }
+                                                isEditing={ !!editingBrandSections?.palette }
+                                                onToggle={ () => toggleBrandSection( "palette" ) }
+                                                preview={
+                                                    brandPalette.length > 0 ? (
+                                                        <div className={ `${ rootClass }__preview-stack` }>
+                                                            <div className={ `${ rootClass }__swatch-row` }>
+                                                                { brandPalette.map( color => (
+                                                                    <div key={ color.label } className={ `${ rootClass }__swatch-chip` }>
+                                                                        <span
+                                                                            aria-hidden="true"
+                                                                            style={ {
+                                                                                background: color.value,
+                                                                            } }
+                                                                        />
+                                                                        <strong>{ color.label }</strong>
+                                                                        <small>{ color.value }</small>
+                                                                    </div>
+                                                                ) ) }
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        <p className={ `${ rootClass }__muted-copy` }>
+                                                            { __( "Extract or set the core brand colors to guide the popup styling.", "fooconvert" ) }
+                                                        </p>
+                                                    )
+                                                }
+                                            >
+                                                <div className={ `${ rootClass }__field-grid` }>
+                                                    <BrandColorControl
+                                                        label={ __( "Primary", "fooconvert" ) }
+                                                        value={ brand?.colors?.primary || "" }
+                                                        onChange={ value => updateBrandField( "colors.primary", value ) }
+                                                    />
+                                                    <BrandColorControl
+                                                        label={ __( "Secondary", "fooconvert" ) }
+                                                        value={ brand?.colors?.secondary || "" }
+                                                        onChange={ value => updateBrandField( "colors.secondary", value ) }
+                                                    />
+                                                    <BrandColorControl
+                                                        label={ __( "Accent", "fooconvert" ) }
+                                                        value={ brand?.colors?.accent || "" }
+                                                        onChange={ value => updateBrandField( "colors.accent", value ) }
+                                                    />
+                                                    <BrandColorControl
+                                                        label={ __( "Background", "fooconvert" ) }
+                                                        value={ brand?.colors?.background || "" }
+                                                        onChange={ value => updateBrandField( "colors.background", value ) }
+                                                    />
+                                                    <BrandColorControl
+                                                        label={ __( "Primary text", "fooconvert" ) }
+                                                        value={ brand?.colors?.textPrimary || "" }
+                                                        onChange={ value => updateBrandField( "colors.textPrimary", value ) }
+                                                    />
+                                                    <BrandColorControl
+                                                        label={ __( "Secondary text", "fooconvert" ) }
+                                                        value={ brand?.colors?.textSecondary || "" }
+                                                        onChange={ value => updateBrandField( "colors.textSecondary", value ) }
+                                                    />
+                                                </div>
+                                            </BrandSectionCard>
+
+                                            <BrandSectionCard
+                                                title={ __( "Typography", "fooconvert" ) }
+                                                isEditing={ !!editingBrandSections?.typography }
+                                                onToggle={ () => toggleBrandSection( "typography" ) }
+                                                preview={
+                                                    <div className={ `${ rootClass }__preview-stack` }>
+                                                        <div className={ `${ rootClass }__type-specimen` }>
+                                                            <div
+                                                                className={ `${ rootClass }__type-specimen-heading` }
+                                                                style={ {
+                                                                    fontFamily: brand?.typography?.fontFamilies?.heading || brand?.typography?.fontFamilies?.primary || undefined,
+                                                                    fontSize: brand?.typography?.fontSizes?.h1?.value || undefined,
+                                                                    fontWeight: brand?.typography?.fontWeights?.bold || undefined,
+                                                                } }
+                                                            >
+                                                                { __( "Headline Sample", "fooconvert" ) }
+                                                            </div>
+                                                            <div
+                                                                className={ `${ rootClass }__type-specimen-body` }
+                                                                style={ {
+                                                                    fontFamily: brand?.typography?.fontFamilies?.primary || undefined,
+                                                                    fontSize: brand?.typography?.fontSizes?.body?.value || undefined,
+                                                                    fontWeight: brand?.typography?.fontWeights?.regular || undefined,
+                                                                } }
+                                                            >
+                                                                { __( "Body copy sample for popup descriptions, proof points, and CTA support text.", "fooconvert" ) }
+                                                            </div>
+                                                        </div>
+                                                        <BrandPreviewList
+                                                            rows={ [
                                                                 {
-                                                                    label: __( "Light", "fooconvert" ),
-                                                                    value: "light",
+                                                                    label: __( "Primary", "fooconvert" ),
+                                                                    value: getPreviewValue( brand?.typography?.fontFamilies?.primary ),
                                                                 },
                                                                 {
-                                                                    label: __( "Dark", "fooconvert" ),
-                                                                    value: "dark",
+                                                                    label: __( "Heading", "fooconvert" ),
+                                                                    value: getPreviewValue( brand?.typography?.fontFamilies?.heading ),
+                                                                },
+                                                                {
+                                                                    label: __( "H1 size", "fooconvert" ),
+                                                                    value: getPreviewValue( brand?.typography?.fontSizes?.h1?.value ),
+                                                                },
+                                                                {
+                                                                    label: __( "Body size", "fooconvert" ),
+                                                                    value: getPreviewValue( brand?.typography?.fontSizes?.body?.value ),
+                                                                },
+                                                                {
+                                                                    label: __( "Weights", "fooconvert" ),
+                                                                    value: `${ brand?.typography?.fontWeights?.regular || 400 } / ${ brand?.typography?.fontWeights?.bold || 700 }`,
                                                                 },
                                                             ] }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
                                                         />
                                                     </div>
-                                                </CardBody>
-                                            </Card>
+                                                }
+                                            >
+                                                <div className={ `${ rootClass }__field-grid` }>
+                                                    <TextControl
+                                                        label={ __( "Primary font family", "fooconvert" ) }
+                                                        value={ brand?.typography?.fontFamilies?.primary || "" }
+                                                        onChange={ value => updateBrandField( "typography.fontFamilies.primary", value ) }
+                                                        __nextHasNoMarginBottom
+                                                        __next40pxDefaultSize
+                                                    />
+                                                    <TextControl
+                                                        label={ __( "Heading font family", "fooconvert" ) }
+                                                        value={ brand?.typography?.fontFamilies?.heading || "" }
+                                                        onChange={ value => updateBrandField( "typography.fontFamilies.heading", value ) }
+                                                        __nextHasNoMarginBottom
+                                                        __next40pxDefaultSize
+                                                    />
+                                                    <TextControl
+                                                        label={ __( "H1 size", "fooconvert" ) }
+                                                        value={ brand?.typography?.fontSizes?.h1?.value || "" }
+                                                        onChange={ value => updateBrandField( "typography.fontSizes.h1.value", value ) }
+                                                        __nextHasNoMarginBottom
+                                                        __next40pxDefaultSize
+                                                    />
+                                                    <TextControl
+                                                        label={ __( "Body size", "fooconvert" ) }
+                                                        value={ brand?.typography?.fontSizes?.body?.value || "" }
+                                                        onChange={ value => updateBrandField( "typography.fontSizes.body.value", value ) }
+                                                        __nextHasNoMarginBottom
+                                                        __next40pxDefaultSize
+                                                    />
+                                                    <TextControl
+                                                        label={ __( "Regular weight", "fooconvert" ) }
+                                                        type="number"
+                                                        value={ String( brand?.typography?.fontWeights?.regular || "" ) }
+                                                        onChange={ value => updateBrandField( "typography.fontWeights.regular", value ) }
+                                                        __nextHasNoMarginBottom
+                                                        __next40pxDefaultSize
+                                                    />
+                                                    <TextControl
+                                                        label={ __( "Bold weight", "fooconvert" ) }
+                                                        type="number"
+                                                        value={ String( brand?.typography?.fontWeights?.bold || "" ) }
+                                                        onChange={ value => updateBrandField( "typography.fontWeights.bold", value ) }
+                                                        __nextHasNoMarginBottom
+                                                        __next40pxDefaultSize
+                                                    />
+                                                </div>
+                                            </BrandSectionCard>
 
-                                            <Card>
-                                                <CardHeader>
-                                                    <h3>{ __( "Palette", "fooconvert" ) }</h3>
-                                                </CardHeader>
-                                                <CardBody>
-                                                    <div className={ `${ rootClass }__field-grid` }>
-                                                        <BrandColorControl
-                                                            label={ __( "Primary", "fooconvert" ) }
-                                                            value={ brand?.colors?.primary || "" }
-                                                            onChange={ value => updateBrandField( "colors.primary", value ) }
-                                                        />
-                                                        <BrandColorControl
-                                                            label={ __( "Secondary", "fooconvert" ) }
-                                                            value={ brand?.colors?.secondary || "" }
-                                                            onChange={ value => updateBrandField( "colors.secondary", value ) }
-                                                        />
-                                                        <BrandColorControl
-                                                            label={ __( "Accent", "fooconvert" ) }
-                                                            value={ brand?.colors?.accent || "" }
-                                                            onChange={ value => updateBrandField( "colors.accent", value ) }
-                                                        />
-                                                        <BrandColorControl
-                                                            label={ __( "Background", "fooconvert" ) }
-                                                            value={ brand?.colors?.background || "" }
-                                                            onChange={ value => updateBrandField( "colors.background", value ) }
-                                                        />
-                                                        <BrandColorControl
-                                                            label={ __( "Primary text", "fooconvert" ) }
-                                                            value={ brand?.colors?.textPrimary || "" }
-                                                            onChange={ value => updateBrandField( "colors.textPrimary", value ) }
-                                                        />
-                                                        <BrandColorControl
-                                                            label={ __( "Secondary text", "fooconvert" ) }
-                                                            value={ brand?.colors?.textSecondary || "" }
-                                                            onChange={ value => updateBrandField( "colors.textSecondary", value ) }
-                                                        />
-                                                    </div>
-
-                                                    { brandPalette.length > 0 && (
-                                                        <div className={ `${ rootClass }__swatch-row` }>
-                                                            { brandPalette.map( color => (
-                                                                <div key={ color.label } className={ `${ rootClass }__swatch-chip` }>
-                                                                    <span
-                                                                        aria-hidden="true"
-                                                                        style={ {
-                                                                            background: color.value,
-                                                                        } }
-                                                                    />
-                                                                    <strong>{ color.label }</strong>
-                                                                    <small>{ color.value }</small>
-                                                                </div>
-                                                            ) ) }
+                                            <BrandSectionCard
+                                                title={ __( "Buttons & Spacing", "fooconvert" ) }
+                                                isEditing={ !!editingBrandSections?.controls }
+                                                onToggle={ () => toggleBrandSection( "controls" ) }
+                                                preview={
+                                                    <div className={ `${ rootClass }__preview-stack` }>
+                                                        <div className={ `${ rootClass }__button-preview-row` }>
+                                                            <button type="button" className={ `${ rootClass }__button-preview` } style={ primaryButtonPreviewStyle }>
+                                                                { __( "Primary CTA", "fooconvert" ) }
+                                                            </button>
+                                                            <button type="button" className={ `${ rootClass }__button-preview` } style={ secondaryButtonPreviewStyle }>
+                                                                { __( "Secondary CTA", "fooconvert" ) }
+                                                            </button>
                                                         </div>
-                                                    ) }
-                                                </CardBody>
-                                            </Card>
-
-                                            <Card>
-                                                <CardHeader>
-                                                    <h3>{ __( "Typography", "fooconvert" ) }</h3>
-                                                </CardHeader>
-                                                <CardBody>
-                                                    <div className={ `${ rootClass }__field-grid` }>
-                                                        <TextControl
-                                                            label={ __( "Primary font family", "fooconvert" ) }
-                                                            value={ brand?.typography?.fontFamilies?.primary || "" }
-                                                            onChange={ value => updateBrandField( "typography.fontFamilies.primary", value ) }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
-                                                        />
-                                                        <TextControl
-                                                            label={ __( "Heading font family", "fooconvert" ) }
-                                                            value={ brand?.typography?.fontFamilies?.heading || "" }
-                                                            onChange={ value => updateBrandField( "typography.fontFamilies.heading", value ) }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
-                                                        />
-                                                        <TextControl
-                                                            label={ __( "Code font family", "fooconvert" ) }
-                                                            value={ brand?.typography?.fontFamilies?.code || "" }
-                                                            onChange={ value => updateBrandField( "typography.fontFamilies.code", value ) }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
-                                                        />
-                                                        <TextareaControl
-                                                            label={ __( "Additional font families", "fooconvert" ) }
-                                                            value={ getBrandFontsText( brand ) }
-                                                            onChange={ value => updateBrandField( "fonts", parseBrandFonts( value ) ) }
-                                                            help={ __( "Comma-separated or one per line.", "fooconvert" ) }
-                                                            rows={ 3 }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
-                                                        />
-                                                        <TextControl
-                                                            label={ __( "H1 size", "fooconvert" ) }
-                                                            value={ brand?.typography?.fontSizes?.h1?.value || "" }
-                                                            onChange={ value => updateBrandField( "typography.fontSizes.h1.value", value ) }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
-                                                        />
-                                                        <TextControl
-                                                            label={ __( "Body size", "fooconvert" ) }
-                                                            value={ brand?.typography?.fontSizes?.body?.value || "" }
-                                                            onChange={ value => updateBrandField( "typography.fontSizes.body.value", value ) }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
-                                                        />
-                                                        <TextControl
-                                                            label={ __( "Regular weight", "fooconvert" ) }
-                                                            type="number"
-                                                            value={ String( brand?.typography?.fontWeights?.regular || "" ) }
-                                                            onChange={ value => updateBrandField( "typography.fontWeights.regular", value ) }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
-                                                        />
-                                                        <TextControl
-                                                            label={ __( "Bold weight", "fooconvert" ) }
-                                                            type="number"
-                                                            value={ String( brand?.typography?.fontWeights?.bold || "" ) }
-                                                            onChange={ value => updateBrandField( "typography.fontWeights.bold", value ) }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
+                                                        <BrandPreviewList
+                                                            rows={ [
+                                                                {
+                                                                    label: __( "Base unit", "fooconvert" ),
+                                                                    value: getPreviewValue(
+                                                                        brand?.spacing?.baseUnit ? `${ brand.spacing.baseUnit }px` : "",
+                                                                        __( "Not set", "fooconvert" )
+                                                                    ),
+                                                                },
+                                                                {
+                                                                    label: __( "Radius", "fooconvert" ),
+                                                                    value: getPreviewValue( brand?.spacing?.borderRadius ),
+                                                                },
+                                                                {
+                                                                    label: __( "Primary fill", "fooconvert" ),
+                                                                    value: getPreviewValue( brand?.components?.buttonPrimary?.background ),
+                                                                },
+                                                                {
+                                                                    label: __( "Secondary border", "fooconvert" ),
+                                                                    value: getPreviewValue( brand?.components?.buttonSecondary?.borderColor ),
+                                                                },
+                                                            ] }
                                                         />
                                                     </div>
-                                                </CardBody>
-                                            </Card>
-
-                                            <Card>
-                                                <CardHeader>
-                                                    <h3>{ __( "Buttons, Spacing, and Images", "fooconvert" ) }</h3>
-                                                </CardHeader>
-                                                <CardBody>
-                                                    <div className={ `${ rootClass }__field-grid` }>
-                                                        <TextControl
-                                                            label={ __( "Base spacing unit", "fooconvert" ) }
-                                                            value={ String( brand?.spacing?.baseUnit || "" ) }
-                                                            onChange={ value => updateBrandField( "spacing.baseUnit", value ) }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
-                                                        />
-                                                        <TextControl
-                                                            label={ __( "Global border radius", "fooconvert" ) }
-                                                            value={ brand?.spacing?.borderRadius || "" }
-                                                            onChange={ value => updateBrandField( "spacing.borderRadius", value ) }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
-                                                        />
-                                                        <BrandColorControl
-                                                            label={ __( "Primary button background", "fooconvert" ) }
-                                                            value={ brand?.components?.buttonPrimary?.background || "" }
-                                                            onChange={ value => updateBrandField( "components.buttonPrimary.background", value ) }
-                                                        />
-                                                        <BrandColorControl
-                                                            label={ __( "Primary button text", "fooconvert" ) }
-                                                            value={ brand?.components?.buttonPrimary?.textColor || "" }
-                                                            onChange={ value => updateBrandField( "components.buttonPrimary.textColor", value ) }
-                                                        />
-                                                        <TextControl
-                                                            label={ __( "Primary button radius", "fooconvert" ) }
-                                                            value={ brand?.components?.buttonPrimary?.borderRadius || "" }
-                                                            onChange={ value => updateBrandField( "components.buttonPrimary.borderRadius", value ) }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
-                                                        />
-                                                        <BrandColorControl
-                                                            label={ __( "Secondary button background", "fooconvert" ) }
-                                                            value={ brand?.components?.buttonSecondary?.background || "" }
-                                                            onChange={ value => updateBrandField( "components.buttonSecondary.background", value ) }
-                                                        />
-                                                        <BrandColorControl
-                                                            label={ __( "Secondary button text", "fooconvert" ) }
-                                                            value={ brand?.components?.buttonSecondary?.textColor || "" }
-                                                            onChange={ value => updateBrandField( "components.buttonSecondary.textColor", value ) }
-                                                        />
-                                                        <BrandColorControl
-                                                            label={ __( "Secondary button border", "fooconvert" ) }
-                                                            value={ brand?.components?.buttonSecondary?.borderColor || "" }
-                                                            onChange={ value => updateBrandField( "components.buttonSecondary.borderColor", value ) }
-                                                        />
-                                                        <TextControl
-                                                            label={ __( "Secondary button radius", "fooconvert" ) }
-                                                            value={ brand?.components?.buttonSecondary?.borderRadius || "" }
-                                                            onChange={ value => updateBrandField( "components.buttonSecondary.borderRadius", value ) }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
-                                                        />
-                                                        <TextControl
-                                                            label={ __( "Logo image URL", "fooconvert" ) }
-                                                            value={ brand?.images?.logo || "" }
-                                                            onChange={ value => updateBrandField( "images.logo", value ) }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
-                                                        />
-                                                        <TextControl
-                                                            label={ __( "Favicon URL", "fooconvert" ) }
-                                                            value={ brand?.images?.favicon || "" }
-                                                            onChange={ value => updateBrandField( "images.favicon", value ) }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
-                                                        />
-                                                        <TextControl
-                                                            label={ __( "Open Graph image URL", "fooconvert" ) }
-                                                            value={ brand?.images?.ogImage || "" }
-                                                            onChange={ value => updateBrandField( "images.ogImage", value ) }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
-                                                        />
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
+                                                }
+                                            >
+                                                <div className={ `${ rootClass }__field-grid` }>
+                                                    <TextControl
+                                                        label={ __( "Base spacing unit", "fooconvert" ) }
+                                                        value={ String( brand?.spacing?.baseUnit || "" ) }
+                                                        onChange={ value => updateBrandField( "spacing.baseUnit", value ) }
+                                                        __nextHasNoMarginBottom
+                                                        __next40pxDefaultSize
+                                                    />
+                                                    <TextControl
+                                                        label={ __( "Global border radius", "fooconvert" ) }
+                                                        value={ brand?.spacing?.borderRadius || "" }
+                                                        onChange={ value => updateBrandField( "spacing.borderRadius", value ) }
+                                                        __nextHasNoMarginBottom
+                                                        __next40pxDefaultSize
+                                                    />
+                                                    <BrandColorControl
+                                                        label={ __( "Primary button background", "fooconvert" ) }
+                                                        value={ brand?.components?.buttonPrimary?.background || "" }
+                                                        onChange={ value => updateBrandField( "components.buttonPrimary.background", value ) }
+                                                    />
+                                                    <BrandColorControl
+                                                        label={ __( "Primary button text", "fooconvert" ) }
+                                                        value={ brand?.components?.buttonPrimary?.textColor || "" }
+                                                        onChange={ value => updateBrandField( "components.buttonPrimary.textColor", value ) }
+                                                    />
+                                                    <TextControl
+                                                        label={ __( "Primary button radius", "fooconvert" ) }
+                                                        value={ brand?.components?.buttonPrimary?.borderRadius || "" }
+                                                        onChange={ value => updateBrandField( "components.buttonPrimary.borderRadius", value ) }
+                                                        __nextHasNoMarginBottom
+                                                        __next40pxDefaultSize
+                                                    />
+                                                    <BrandColorControl
+                                                        label={ __( "Secondary button background", "fooconvert" ) }
+                                                        value={ brand?.components?.buttonSecondary?.background || "" }
+                                                        onChange={ value => updateBrandField( "components.buttonSecondary.background", value ) }
+                                                    />
+                                                    <BrandColorControl
+                                                        label={ __( "Secondary button text", "fooconvert" ) }
+                                                        value={ brand?.components?.buttonSecondary?.textColor || "" }
+                                                        onChange={ value => updateBrandField( "components.buttonSecondary.textColor", value ) }
+                                                    />
+                                                    <BrandColorControl
+                                                        label={ __( "Secondary button border", "fooconvert" ) }
+                                                        value={ brand?.components?.buttonSecondary?.borderColor || "" }
+                                                        onChange={ value => updateBrandField( "components.buttonSecondary.borderColor", value ) }
+                                                    />
+                                                    <TextControl
+                                                        label={ __( "Secondary button radius", "fooconvert" ) }
+                                                        value={ brand?.components?.buttonSecondary?.borderRadius || "" }
+                                                        onChange={ value => updateBrandField( "components.buttonSecondary.borderRadius", value ) }
+                                                        __nextHasNoMarginBottom
+                                                        __next40pxDefaultSize
+                                                    />
+                                                </div>
+                                            </BrandSectionCard>
 
                                             <Card>
                                                 <CardHeader>
