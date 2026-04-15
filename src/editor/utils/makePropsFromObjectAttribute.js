@@ -2,10 +2,10 @@ import $object from "./$object";
 /**
  *
  * @param {string} name
- * @param {object} attributes
- * @param {(value:?object)=>void} setAttributes
- * @param {object} [attributesDefaults]
- * @returns {[object,((next:?object)=>void),object]}
+ * @param {Record<string, Record<string, unknown>|undefined>} attributes
+ * @param {(value: Record<string, Record<string, unknown>|undefined>) => void} setAttributes
+ * @param {Record<string, Record<string, unknown>|undefined>} [attributesDefaults]
+ * @returns {[Record<string, unknown>,((next: Record<string, unknown>|undefined)=>void),Record<string, unknown>]}
  */
 const useObject = ( name, attributes, setAttributes, attributesDefaults = {} ) => {
     const _attributes = attributes[ name ] ?? {};
@@ -17,10 +17,10 @@ const useObject = ( name, attributes, setAttributes, attributesDefaults = {} ) =
 /**
  *
  * @param {string} name
- * @param {object} attributes
- * @param {(value:?object)=>void} setAttributes
- * @param {object} [attributesDefaults]
- * @returns {{attributes: Object, setAttributes: (function(?Object): void), attributesDefaults: Object, settings: Object, setSettings: (function(?Object): void), settingsDefaults: Object, styles: Object, setStyles: (function(?Object): void), stylesDefaults: Object}}
+ * @param {Record<string, Record<string, unknown>|undefined>} attributes
+ * @param {(value: Record<string, Record<string, unknown>|undefined>) => void} setAttributes
+ * @param {Record<string, Record<string, unknown>|undefined>} [attributesDefaults]
+ * @returns {{attributes: Record<string, unknown>, setAttributes: (value: Record<string, unknown>|undefined) => void, attributesDefaults: Record<string, unknown>, settings: Record<string, unknown>, setSettings: (value: Record<string, unknown>|undefined) => void, settingsDefaults: Record<string, unknown>, styles: Record<string, unknown>, setStyles: (value: Record<string, unknown>|undefined) => void, stylesDefaults: Record<string, unknown>}}
  */
 const makePropsFromObjectAttribute = ( name, attributes, setAttributes, attributesDefaults = {} ) => {
     const [ _attributes, _setAttributes, _attributesDefaults ] = useObject( name, attributes, setAttributes, attributesDefaults );

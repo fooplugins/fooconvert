@@ -4,7 +4,7 @@ import { isString } from "@steveush/utils";
  * Get the element configuration data for the given id.
  *
  * @param {string} id - The id of the element to retrieve the data for.
- * @returns {undefined|*} The element configuration data, otherwise `undefined`.
+ * @returns {unknown} The element configuration data, otherwise `undefined`.
  */
 const getElementConfiguration = id => {
     if ( isString( id ) ) {

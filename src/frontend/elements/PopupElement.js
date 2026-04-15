@@ -11,7 +11,7 @@ class PopupElement extends CustomElement {
     /**
      *
      * @param {string} type
-     * @param {object} [data]
+     * @param {Record<string, unknown>} [data]
      * @returns {Promise<LogEventResult>}
      */
     log( type, data ) {

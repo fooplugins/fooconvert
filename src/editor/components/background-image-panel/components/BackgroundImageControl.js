@@ -4,7 +4,9 @@ import { useMemo, useState } from "@wordpress/element";
 import clsx from "clsx";
 import { setImmutably } from "../../../utils";
 import { hasBackgroundImageValue } from "../utils";
-import { BackgroundControlsPanel, BackgroundImageControls, BackgroundSizeControls } from "../components";
+import BackgroundControlsPanel from "./BackgroundControlsPanel";
+import BackgroundImageControls from "./BackgroundImageControls";
+import BackgroundSizeControls from "./BackgroundSizeControls";
 
 import { VStack } from "../../experimental";
 

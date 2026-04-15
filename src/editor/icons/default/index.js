@@ -24,7 +24,7 @@ import store from './store.js';
 
 /**
  *
- * @type {FC_ICON_SET}
+ * @type {{name: string, label: string, icons: {name: string, label: string, value: import("react").ReactNode}[]}}
  */
 export default {
     name: 'default',

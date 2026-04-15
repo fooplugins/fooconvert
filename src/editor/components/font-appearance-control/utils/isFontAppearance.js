@@ -7,7 +7,7 @@ import { hasKeys, isNumber } from "@steveush/utils";
 
 /**
  *
- * @type {Record<string, ((value: any) => boolean)>}
+ * @type {Record<string, ((value: unknown) => boolean)>}
  */
 const KEYS = {
     fontStyle: isStringNotEmpty,
@@ -16,7 +16,7 @@ const KEYS = {
 
 /**
  *
- * @param value
+ * @param {unknown} value
  * @returns {value is FontAppearance}
  */
 const isFontAppearance = value => hasKeys( value, KEYS );

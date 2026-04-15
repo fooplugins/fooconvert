@@ -331,8 +331,6 @@ This template now has two clear variants:
 - apply-after-signup uses `fc/apply-coupon`
 - reveal/copy-after-signup uses `fc/coupon`
 
-The direct-apply variant is now a valid first-class WooCommerce template, not a future placeholder.
-
 ## 7. Thank You Account Claim Flyout
 
 ### Type

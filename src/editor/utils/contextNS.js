@@ -4,9 +4,9 @@ const MATCH_STRING = search => value => value.startsWith( search );
 
 /**
  * Gets all context values that exist within the specified namespace.
- * @param {object} context
+ * @param {Record<string, unknown>} context
  * @param {string|RegExp} namespace
- * @return {object}
+ * @return {Record<string, unknown>}
  */
 const contextNS = ( context, namespace ) => {
     let matches = RETURN_FALSE;

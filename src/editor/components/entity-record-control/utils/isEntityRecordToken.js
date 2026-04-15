@@ -10,7 +10,7 @@ import isStringNotEmpty from "../../../utils/isStringNotEmpty";
 /**
  * Check if a value is a valid entity record token.
  *
- * @param {any} value - The value to check.
+ * @param {unknown} value - The value to check.
  * @returns {value is EntityRecordToken} - `true` if the value is an entity record token, otherwise `false`.
  */
 const isEntityRecordToken = value => hasKeys( value, {

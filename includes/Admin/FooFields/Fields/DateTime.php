@@ -135,9 +135,6 @@ if ( !class_exists( __NAMESPACE__ . '\DateTime' ) ) {
          */
         function validate( $posted_value ) {
             $timestamp = intval( $posted_value );
-//			if ( $this->adjust_timezone ) {
-//				$timestamp = $timestamp + (int) ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
-//			}
             // phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain
             if ( isset( $this->config['minimum'] ) && is_numeric( $this->config['minimum'] ) && $timestamp < $this->config['minimum'] ) {
                 $minimum = gmdate( 'r', $this->config['minimum'] );

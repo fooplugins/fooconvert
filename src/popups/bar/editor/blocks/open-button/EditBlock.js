@@ -1,43 +1,13 @@
-import { useBlockProps } from "@wordpress/block-editor";
-import { getCSSBackgroundProperty, SlugIcon, useStyles } from "#editor";
-import classnames from "classnames";
+import PopupButtonEditBlock from "../../../../shared/editor/blocks/button/EditBlock";
 
-export const OPEN_BUTTON_CLASS_NAME = 'fc--bar-open-button';
+export const OPEN_BUTTON_CLASS_NAME = "fc--bar-open-button";
 
-const EditBlock = props => {
-
-    const {
-        settings: {
-            position,
-            icon
-        },
-        settingsDefaults: {
-            position: positionDefault,
-            icon: iconDefault
-        },
-        styles
-    } = props;
-
-    const buttonStyles = useStyles( styles, {
-        background: getCSSBackgroundProperty,
-        icon: 'color'
-    } );
-
-    const buttonProps = useBlockProps( {
-        className: classnames( OPEN_BUTTON_CLASS_NAME, {
-            [`open-button-position-${ position ?? positionDefault }`]: position !== positionDefault
-        } ),
-        style: {
-            ...buttonStyles,
-            fontSize: icon?.size ?? iconDefault?.size
-        }
-    } );
-
-    return (
-        <button { ...buttonProps }>
-            <SlugIcon slug={ icon?.slug ?? iconDefault?.slug }/>
-        </button>
-    );
-};
+const EditBlock = props => (
+    <PopupButtonEditBlock
+        { ...props }
+        className={ OPEN_BUTTON_CLASS_NAME }
+        positionClassName="open-button-position"
+    />
+);
 
 export default EditBlock;

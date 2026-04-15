@@ -19,7 +19,7 @@ const getCSSProperty = ( side, propertyName ) => {
  * @param {string|FCBoxUnit} value - The value to express as a CSS value.
  * @param {(string|((side: "all"|"top"|"right"|"bottom"|"left") => string))} propertyName - The CSS property name the box unit represents.
  * @param {boolean} [shorthand=false] - Whether to use the shorthand syntax for the output. i.e. a single property containing the `top right bottom left` values.
- * @returns {object} - An object containing the CSS style for the value.
+ * @returns {Record<string, string>} - An object containing the CSS style for the value.
  */
 const getBoxUnitStyle = ( value, propertyName, shorthand = false ) => {
     const css = {};

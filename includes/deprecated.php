@@ -12,9 +12,7 @@ if ( !defined( 'ABSPATH' ) ) {
  * @return string
  */
 function fooconvert_get_registered_post_type() {
-    if ( function_exists( '_deprecated_function' ) ) {
-        _deprecated_function( __FUNCTION__, '2.0.0', 'FOOCONVERT_CPT_POPUP' );
-    }
+    _deprecated_function( __FUNCTION__, '2.0.0', 'FOOCONVERT_CPT_POPUP' );
 
     return FOOCONVERT_CPT_POPUP;
 }
@@ -27,9 +25,7 @@ function fooconvert_get_registered_post_type() {
  * @return string[]
  */
 function fooconvert_get_post_types() {
-    if ( function_exists( '_deprecated_function' ) ) {
-        _deprecated_function( __FUNCTION__, '2.0.0', 'array( FOOCONVERT_CPT_POPUP )' );
-    }
+    _deprecated_function( __FUNCTION__, '2.0.0', 'array( FOOCONVERT_CPT_POPUP )' );
 
     return array( FOOCONVERT_CPT_POPUP );
 }
@@ -43,9 +39,7 @@ function fooconvert_get_post_types() {
  * @return bool
  */
 function fooconvert_is_valid_post_type( $post_type ) {
-    if ( function_exists( '_deprecated_function' ) ) {
-        _deprecated_function( __FUNCTION__, '2.0.0', '$post_type === FOOCONVERT_CPT_POPUP' );
-    }
+    _deprecated_function( __FUNCTION__, '2.0.0', '$post_type === FOOCONVERT_CPT_POPUP' );
 
     return $post_type === FOOCONVERT_CPT_POPUP;
 }

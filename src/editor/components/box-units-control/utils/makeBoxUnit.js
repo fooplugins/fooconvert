@@ -4,7 +4,8 @@ import isBoxUnit from "./isBoxUnit";
 
 /**
  * Given a box unit value create an object containing the `top`, `right`, `bottom` and `left` values.
- * @param {string|Partial<FCBoxUnit>|FCBoxUnitTuple} value - The value to turn into an object. Can be a `string` or a {@link FCBoxUnitTuple|box unit tuple}.
+ *
+ * @param {string|Partial<FCBoxUnit>|FCBoxUnitTuple|undefined} value - The value to turn into an object. Can be a `string` or a {@link FCBoxUnitTuple|box unit tuple}.
  * If passed a {@link FCBoxUnit|box unit object}, it is simply returned. Any other value results in `undefined` being returned.
  * @returns {FCBoxUnit|undefined} A {@link FCBoxUnit|box unit object}, otherwise `undefined`.
  */

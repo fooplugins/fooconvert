@@ -1,1 +1,0 @@
-export { default as DisplayRulesRoleControl } from "./Component";

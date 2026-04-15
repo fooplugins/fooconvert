@@ -1,7 +1,7 @@
 /**
  * Determine the device type (desktop, tablet, mobile) of the current client.
  *
- * @returns {string} The device type.
+ * @returns {"desktop"|"tablet"|"mobile"} The device type.
  */
 const getDeviceType = () => {
     const userAgent = globalThis?.navigator?.userAgent?.toLowerCase();

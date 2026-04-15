@@ -16,39 +16,31 @@ const toShortTime = timespan => {
 
 const performCopy = async(source, target, patterns) => {
     const started = Date.now();
-    try {
-        console.log( `copying "${ source }" to "${ target }"...` );
-        const found = await globby( patterns, { cwd: source } );
-        await Promise.all( found.map( file => {
-            const output = join( target, file );
-            return mkdir( dirname( output ), { recursive: true } )
-                .then( () => copyFile( join( source, file ), output ) );
-        } ) );
-        console.log( `copied "${ source }" in ${ toShortTime( Date.now() - started ) }` );
-    } catch ( err ) {
-        console.error( `copy error: ${ err.message }` );
-    }
+    console.log( `copying "${ source }" to "${ target }"...` );
+    const found = await globby( patterns, { cwd: source } );
+    await Promise.all( found.map( file => {
+        const output = join( target, file );
+        return mkdir( dirname( output ), { recursive: true } )
+            .then( () => copyFile( join( source, file ), output ) );
+    } ) );
+    console.log( `copied "${ source }" in ${ toShortTime( Date.now() - started ) }` );
 };
 
 const performMove = async(source, target, patterns, clean = true) => {
     const started = Date.now();
-    try {
-        console.log( `moving "${ source }" to "${ target }"...` );
-        const found = await globby( patterns, { cwd: source } );
-        await Promise.all( found.map( file => {
-            const input = join( source, file );
-            const output = join( target, file );
-            return mkdir( dirname( output ), { recursive: true } )
-                .then( () => copyFile( input, output ) )
-                .then( () => rm( input, { force: true, recursive: true } ) );
-        } ) );
-        if ( clean ) {
-            await rm( source, { force: true, recursive: true } );
-        }
-        console.log( `moved "${ source }" in ${ toShortTime( Date.now() - started ) }` );
-    } catch ( err ) {
-        console.error( `move error: ${ err.message }` );
+    console.log( `moving "${ source }" to "${ target }"...` );
+    const found = await globby( patterns, { cwd: source } );
+    await Promise.all( found.map( file => {
+        const input = join( source, file );
+        const output = join( target, file );
+        return mkdir( dirname( output ), { recursive: true } )
+            .then( () => copyFile( input, output ) )
+            .then( () => rm( input, { force: true, recursive: true } ) );
+    } ) );
+    if ( clean ) {
+        await rm( source, { force: true, recursive: true } );
     }
+    console.log( `moved "${ source }" in ${ toShortTime( Date.now() - started ) }` );
 };
 
 const resizeTemplates = async (sourceDir, destDir, width = 150, height = 150) => {
@@ -70,7 +62,7 @@ const resizeTemplates = async (sourceDir, destDir, width = 150, height = 150) =>
         if ( err?.code === "ENOENT" ) {
             return;
         }
-        console.error(`Image resize error for "${sourceDir}": ${err.message}`);
+        throw err;
     }
 };
 

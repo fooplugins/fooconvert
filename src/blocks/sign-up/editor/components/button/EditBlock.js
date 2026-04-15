@@ -3,6 +3,8 @@ import { RichText } from "@wordpress/block-editor";
 import { __ } from "@wordpress/i18n";
 import classnames from "classnames";
 
+import { BUTTON_TEXT_FORMATS, BUTTON_TEXT_LAYOUTS, isButtonIconLayout } from "../../../../shared/editor/button";
+
 const EditBlock = ( props ) => {
     const {
         buttonStyles,
@@ -18,8 +20,8 @@ const EditBlock = ( props ) => {
     const width = buttonSettings?.width ?? buttonSettingsDefaults?.width;
 
     const layout = buttonSettings?.layout ?? buttonSettingsDefaults?.layout ?? 'text-only';
-    const showIcon = [ 'icon-only', 'icon-text', 'text-icon' ].includes( layout );
-    const showText = [ 'text-only', 'icon-text', 'text-icon' ].includes( layout );
+    const showIcon = isButtonIconLayout( layout );
+    const showText = BUTTON_TEXT_LAYOUTS.includes( layout );
 
     const iconSlug = buttonSettings?.icon?.slug ?? buttonSettingsDefaults?.icon?.slug;
     const iconSize = buttonSettings?.icon?.size ?? buttonSettingsDefaults?.icon?.size;
@@ -51,7 +53,7 @@ const EditBlock = ( props ) => {
     const textProps = {
         className: "fc--sign-up__submit-text",
         format: 'string',
-        allowedFormats: [ 'core/bold', 'core/italic' ],
+        allowedFormats: BUTTON_TEXT_FORMATS,
         tagName: 'span',
         withoutInteractiveFormatting: true
     };

@@ -10,7 +10,7 @@ import isStringNotEmpty from "../../../utils/isStringNotEmpty";
 /**
  * Check if a value is a `GroupedSelectOption` object.
  *
- * @param {any} value - The value to check.
+ * @param {unknown} value - The value to check.
  * @return {value is GroupedSelectOption} `true` if the value is a `GroupedSelectOption` object, otherwise `false`.
  */
 const isGroupedSelectOption = value => hasKeys( value, { value: isStringNotEmpty, label: isStringNotEmpty } );

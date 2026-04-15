@@ -5,7 +5,7 @@ import { PanelRow } from "@wordpress/components";
 import classnames from "classnames";
 
 import "./Component.scss";
-import { DisplayRulesContentControl } from "../../components";
+import DisplayRulesContentControl from "../content-control/Component";
 import { useDisplayRulesMeta } from "../../hooks";
 import compileDisplayRules from "../../utils/compileDisplayRules";
 

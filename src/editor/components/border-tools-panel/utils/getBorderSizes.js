@@ -4,7 +4,7 @@ import isPossibleBorderBox from "./isPossibleBorderBox";
 /**
  * Get an object containing the sizes for the top, right, bottom and left borders.
  *
- * @param {*} value - The value to parse.
+ * @param {unknown} value - The value to parse.
  * @param {Partial<FCBoxUnitSizes>} [defaults] - Optional. An object containing the default values for each side. Defaults to `0px` for all values.
  * @return {FCBoxUnitSizes} An object containing the sizes for the top, right, bottom and left borders.
  */

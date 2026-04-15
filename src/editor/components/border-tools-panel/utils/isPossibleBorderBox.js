@@ -9,7 +9,7 @@ import isPossibleBorderValue from "./isPossibleBorderValue";
 /**
  * A mapping of key to type check for a partial box unit object.
  *
- * @type {Record<string, ( value: any ) => boolean>}
+ * @type {Record<string, ( value: unknown ) => boolean>}
  */
 const KEYS = {
     top: isPossibleBorderValue,
@@ -21,7 +21,7 @@ const KEYS = {
 /**
  * Check if a value contains any {@link FCBorderBox|border box} object keys with a `string` value.
  *
- * @param {any} value - The value to check.
+ * @param {unknown} value - The value to check.
  * @returns {value is Partial<FCBorderBox>} - `true` if the value contains any {@link FCBorderBox|border box} object keys with a `string` value, otherwise `false`.
  */
 const isPossibleBorderBox = value => someKeys( value, KEYS );

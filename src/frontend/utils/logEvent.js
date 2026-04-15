@@ -25,13 +25,17 @@ export const LOG_EVENT_TYPES = {
  */
 
 /**
+ * @typedef {Record<string, unknown>} LogEventExtraData
+ */
+
+/**
  * Log an event for a given popup.
  *
  * @param {number} postId The ID of the popup to log the event for.
  * @param {string} postType The post type of the popup.
  * @param {string} template The template used within the popup.
  * @param {string} eventType The type of event to log.
- * @param {object} [extraData] An optional object containing any extra info for the event.
+ * @param {LogEventExtraData} [extraData] An optional object containing any extra info for the event.
  * @returns {Promise<LogEventResult>}
  */
 const logEvent = ( postId, postType, template, eventType, extraData ) => {
@@ -72,7 +76,7 @@ const logEvent = ( postId, postType, template, eventType, extraData ) => {
                 .then( response => response.json() )
                 .catch( err => {
                     console.error( 'FooConvertLogEventError', err );
-                    return { success: false, data: 'Unexpected Error' }
+                    return { success: false, data: 'Unexpected Error' };
                 } );
         }
     }

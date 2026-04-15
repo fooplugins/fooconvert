@@ -1,4 +1,5 @@
-import { getBackgroundImageStyle, getColorStyle } from "../components";
+import getBackgroundImageStyle from "../components/background-image-panel/utils/getBackgroundImageStyle";
+import getColorStyle from "../components/color-tools-panel/utils/getColorStyle";
 
 const getBackgroundAndColorStyles = ( value, colorMap ) => {
     const colorStyles = getColorStyle( value?.color, colorMap );

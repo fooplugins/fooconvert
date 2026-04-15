@@ -1,46 +1,25 @@
-import { useBlockProps, useInnerBlocksProps } from "@wordpress/block-editor";
-import classnames from "classnames";
-import {
-    useInnerBlocks, useStyles
-} from "#editor";
-import ContentAppender from "./ContentAppender";
-
+import PopupContentEditBlock from "../../../../../../shared/editor/blocks/content/EditBlock";
 import { CONTENT_CLASS_NAME } from "./Edit";
 
 const EditBlock = props => {
-
     const {
-        clientId,
         styles,
-        stylesDefaults
+        stylesDefaults,
     } = props;
 
-    const { hasInnerBlocks } = useInnerBlocks( clientId );
-
-    const inlineStyles = useStyles( styles );
     const width = styles?.width ?? stylesDefaults?.width;
-    const widthStyle = {};
-    if ( width !== stylesDefaults?.width ) {
-        widthStyle['width'] = width;
-    }
-    const blockProps = useBlockProps( {
-        className: classnames( CONTENT_CLASS_NAME, { 'show-inserter': !hasInnerBlocks } ),
-        style: {
-            ...inlineStyles,
-            ...widthStyle
-        }
-    } );
+    const extraStyle = {};
 
-    const { children, ...contentProps } = useInnerBlocksProps( blockProps, {
-        templateLock: false,
-        orientation: 'vertical',
-        renderAppender: () => <ContentAppender rootClientId={ clientId }/>
-    } );
+    if ( width !== stylesDefaults?.width ) {
+        extraStyle.width = width;
+    }
 
     return (
-        <div { ...contentProps }>
-            { children }
-        </div>
+        <PopupContentEditBlock
+            { ...props }
+            className={ CONTENT_CLASS_NAME }
+            extraStyle={ extraStyle }
+        />
     );
 };
 

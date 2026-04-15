@@ -38,7 +38,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         /**
          * Inserts event data into the database.
          *
-         * @param array $data {
+         * @param array<string, mixed> $data {
          *     An array of event data.
          *
          * @type int $post_id The ID of the popup.
@@ -58,7 +58,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          *
          * @return int|WP_Error The ID of the inserted event, or a WP_Error object on failure.
          */
-        public static function insert_event_data( $data ) {
+        public static function insert_event_data( array $data ) {
             global $wpdb;
 
             // Validation rules and sanitization
@@ -140,8 +140,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          * Retrieves a summary of the events for the given popup.
          *
          * @param int $post_id The ID of the popup.
+         * @param int $days The number of days to fetch. Values less than 1 mean all time.
          *
-         * @return array {
+         * @return array<string, mixed>|null {
          *     An array of summary data.
          *
          * @type int $total_events The total number of events.
@@ -152,7 +153,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          * @type int $total_returning_visitors The total number of visitors with two or more sessions.
          * }
          */
-        public static function get_popup_metrics( $post_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
+        public static function get_popup_metrics( int $post_id, int $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
@@ -223,13 +224,13 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          * @param int $post_id The ID of the popup.
          * @param int $days The number of days to fetch (default is 7).
          *
-         * @return array An array of recent activity, with the following structure:
+         * @return array<int, array<string, mixed>> An array of recent activity, with the following structure:
          *     'event_date' => string The date of the event (format: 'Y-m-d')
          *     'views' => int The number of views
          *     'clicks' => int The number of clicks
          *     'unique_visitors' => int The number of unique visitors
          */
-        public static function get_popup_daily_activity( $post_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
+        public static function get_popup_daily_activity( int $post_id, int $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
@@ -270,7 +271,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          *
          * @return int The number of rows deleted.
          */
-        public static function delete_popup_events( $post_id ) {
+        public static function delete_popup_events( int $post_id ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
@@ -282,7 +283,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         /**
          * Deletes all events from the database.
          *
-         * @return int The number of rows deleted.
+         * @return int|false The number of rows deleted, or false on error.
          */
         public static function delete_all_events() {
             global $wpdb;
@@ -297,9 +298,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          *
          * @param int $days The number of days to keep events for. Defaults to FOOCONVERT_RETENTION_DEFAULT which is 14.
          *
-         * @return int The number of rows deleted.
+         * @return int|false The number of rows deleted, or false on error.
          */
-        public static function delete_old_events( $days = FOOCONVERT_RETENTION_DEFAULT ) {
+        public static function delete_old_events( int $days = FOOCONVERT_RETENTION_DEFAULT ) {
             global $wpdb;
 
             $table_name = esc_sql( self::get_events_table_name() );
@@ -320,7 +321,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         /**
          * Retrieves stats we care about for the events table.
          *
-         * @return array An array of data about the events table, with the following keys:
+         * @return array<string, int|string|float|null>|null An array of data about the events table, with the following keys:
          *     'Table' => string The name of the table.
          *     'Size_in_MB' => float The size of the table in megabytes.
          *     'Number_of_Rows' => int The number of rows in the table.
@@ -382,7 +383,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         /**
          * Deletes all events that are not associated with a popup in the posts table.
          *
-         * @return int The number of events deleted.
+         * @return int|false The number of events deleted, or false on error.
          */
         public static function delete_orphaned_events() {
             global $wpdb;
@@ -407,7 +408,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         /**
          * Retrieves a list of all popups that have at least one event.
          *
-         * @return array An array of popup IDs (int) that have at least one event.
+         * @return array<int, array{post_id: string}> An array of popup IDs (int) that have at least one event.
          */
         public static function get_popups_with_events() {
             global $wpdb;
@@ -429,7 +430,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         /**
          * Retrieves a list of all popups that have no events.
          *
-         * @return array An array of popup IDs (int) that have zero events.
+         * @return array<int, array{post_id: string}> An array of popup IDs (int) that have zero events.
          */
         public static function get_popups_with_no_events() {
             global $wpdb;
@@ -463,7 +464,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          * @param string $event_type The type of events to get.
          * @param int $days The number of days to fetch events for. Defaults to FOOCONVERT_RETENTION_DEFAULT which is 14.
          *
-         * @return array An array of events for the given popup and event type, with the following structure:
+         * @return array<int, array<string, mixed>> An array of events for the given popup and event type, with the following structure:
          *     'id' => int The ID of the event.
          *     'post_id' => int The ID of the popup.
          *     'event_type' => string The type of event.
@@ -477,7 +478,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          *     'extra_data' => array An array of extra data associated with the event.
          *     'timestamp' => string The date of the event (format: 'Y-m-d')
          */
-        public static function get_popup_events_of_type( $post_id, $event_type, $days = FOOCONVERT_RETENTION_DEFAULT ) {
+        public static function get_popup_events_of_type( int $post_id, string $event_type, int $days = FOOCONVERT_RETENTION_DEFAULT ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
@@ -514,7 +515,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          *     'total_unique_sessions' => int The total number of unique sessions.
          *     'total_returning_visitors' => int The total number of visitors with two or more sessions.
          *
-         * @return array[] An array of arrays, each containing the metrics for a single popup.
+         * @return array<int, array<string, mixed>> An array of arrays, each containing the metrics for a single popup.
          */
         public static function get_all_popup_metrics() {
             global $wpdb;
@@ -573,7 +574,13 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         /**
          * Returns the latest qualifying attribution event before the supplied cutoff.
          *
-         * @param array $criteria {
+         * @param array{
+         *     user_id?: int,
+         *     anonymous_user_guid?: string,
+         *     session_id?: string,
+         *     cutoff_gmt?: string,
+         *     lookback_days?: int
+         * } $criteria {
          *     Optional query criteria.
          *
          * @type int|null $user_id Logged-in user ID to match.
@@ -583,9 +590,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          * @type int|null $lookback_days Lookback window in days.
          * }
          *
-         * @return array|null
+         * @return array<string, mixed>|null
          */
-        public static function get_latest_qualifying_event( $criteria = array() ) {
+        public static function get_latest_qualifying_event( array $criteria = array() ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
@@ -638,7 +645,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          * @param string|null $session_id Session ID.
          * @return bool
          */
-        public static function sale_exists_for_scope( $dedupe_mode, $post_id, $session_id = null ) {
+        public static function sale_exists_for_scope( string $dedupe_mode, int $post_id, ?string $session_id = null ): bool {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
@@ -676,7 +683,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          * @param int $days Lookback in days. Values less than 1 mean all time.
          * @return array<int,array<string,mixed>>
          */
-        public static function get_popup_sales( $post_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
+        public static function get_popup_sales( int $post_id, int $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
@@ -708,7 +715,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          * @param int $limit Max number of sale events to return.
          * @return array<int,array<string,mixed>>
          */
-        public static function get_recent_sales( $limit = 10 ) {
+        public static function get_recent_sales( int $limit = 10 ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();
@@ -733,7 +740,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
          * @param int $limit Max number of popups to return.
          * @return array<int,array<string,mixed>>
          */
-        public static function get_sales_totals_by_popup( $limit = 10 ) {
+        public static function get_sales_totals_by_popup( int $limit = 10 ) {
             global $wpdb;
 
             $table_name = self::get_events_table_name();

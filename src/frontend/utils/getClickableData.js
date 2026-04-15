@@ -1,6 +1,18 @@
 import stringOrUndefined from "./stringOrUndefined";
-import isClickableData from "./isClickableData";
 import { cleanObject } from "@steveush/utils";
+
+/**
+ * The data sent to the server for logged click events.
+ *
+ * @typedef ClickableData
+ * @property {string} tagName - The lowercase tagName for the element.
+ * @property {string[]} classList - A string array of CSS classes for the element.
+ * @property {string} [id] - The id for the element, if one exists.
+ * @property {string} [name] - The name for the element, if one exists.
+ * @property {string} [href] - The href for the element, if one exists.
+ * @property {string} [target] - The target for the element, if one exists.
+ * @property {string} [rel] - The rel for the element, if one exists.
+ */
 
 /**
  *
@@ -25,9 +37,8 @@ const getClickableData = element => {
             composed: true
         } );
         element.dispatchEvent( event );
-        data = cleanObject( event.detail.data )
+        data = cleanObject( event.detail.data );
         if ( data ) {
-            // noinspection JSValidateTypes
             return data;
         }
     }

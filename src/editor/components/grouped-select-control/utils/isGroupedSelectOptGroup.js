@@ -15,7 +15,7 @@ import isGroupedSelectOption from "./isGroupedSelectOption";
 /**
  * Check if a value is `GroupedSelectOptGroup` object.
  *
- * @param {any} value - The value to check.
+ * @param {unknown} value - The value to check.
  * @return {value is GroupedSelectOptGroup} `true` if the value is a `GroupedSelectOptGroup` object, otherwise `false`.
  */
 const isGroupedSelectOptGroup = value => hasKeys( value, {

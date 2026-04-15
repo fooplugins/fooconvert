@@ -1,5 +1,5 @@
 import { isFunction, isPlainObject, isString } from "@steveush/utils";
-import { getCSSBackgroundProperty } from "../../../utils";
+import getCSSBackgroundProperty from "../../../utils/getCSSBackgroundProperty";
 
 const KNOWN = {
     text: 'color',

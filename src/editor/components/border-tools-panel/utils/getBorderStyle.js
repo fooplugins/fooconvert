@@ -11,7 +11,7 @@ import isPossibleBorderBox from "./isPossibleBorderBox";
 /**
  * Get the CSS style for the border.
  *
- * @param {any} value
+ * @param {unknown} value
  * @param {boolean} [styleRequired=false]
  * @returns {FCBorderStyle}
  */

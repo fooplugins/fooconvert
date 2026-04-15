@@ -352,6 +352,7 @@ const parseConfig = ( node ) => {
         const config = JSON.parse( node.dataset.config ?? "{}" );
         return isPlainObject( config ) ? config : null;
     } catch ( exception ) {
+        console.error( "Invalid display rules config.", exception );
         return null;
     }
 };

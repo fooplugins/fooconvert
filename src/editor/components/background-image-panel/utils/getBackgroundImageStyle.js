@@ -1,5 +1,5 @@
 import hasBackgroundImageValue from "./hasBackgroundImageValue";
-import { isStringNotEmpty } from "../../../utils";
+import isStringNotEmpty from "../../../utils/isStringNotEmpty";
 
 const getBackgroundImageStyle = style => {
     const css = {};

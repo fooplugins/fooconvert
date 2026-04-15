@@ -1,10 +1,10 @@
 import { hasKeys, isPlainObject, isString } from "@steveush/utils";
 
-const objectName = 'FC_COMPATIBILITY';
 /**
- * @typedef CompatibilityEditorData
- * @property {{ key: string, defaults: DisplayRulesMeta }} meta
+ * @typedef {import("./types").CompatibilityEditorData} CompatibilityEditorData
  */
+
+const objectName = 'FC_COMPATIBILITY';
 
 /**
  * @type {CompatibilityEditorData}

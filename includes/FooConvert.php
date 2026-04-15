@@ -196,9 +196,6 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             $content = $wp_embed->autoembed( $content );    // convert any embeds to HTML
 
             return $content;
-            // pass the content through a filter to allow further processing by other plugins
-//            $result = apply_filters( 'the_content', $content );
-//            return is_string( $result ) ? $result : '';
         }
 
         //region KSES

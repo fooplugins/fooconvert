@@ -8,7 +8,7 @@ import { ToolsPanel, ToolsPanelItem } from '../experimental';
 /**
  * Internal dependencies
  */
-import { BackgroundImageControl } from './components';
+import BackgroundImageControl from "./components/BackgroundImageControl";
 import { setImmutably } from '../../utils';
 
 const DEFAULT_CONTROLS = {

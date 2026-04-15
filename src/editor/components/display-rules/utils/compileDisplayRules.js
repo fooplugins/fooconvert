@@ -4,11 +4,14 @@ import isDisplayRulesMeta from "./isDisplayRulesMeta";
 import isStringNotEmpty from "../../../utils/isStringNotEmpty";
 
 /**
+ * @typedef {import("../types").DisplayRulesMeta} DisplayRulesMeta
+ * @typedef {import("../types").DisplayRulesCompiledRules} DisplayRulesCompiledRules
  *
  * @param {DisplayRulesMeta} rules
- * @returns {{reasons: *[], success: boolean, location: *[], exclude: *[], users: *[]}}
+ * @returns {DisplayRulesCompiledRules}
  */
 const compileDisplayRules = ( rules ) => {
+    /** @type {DisplayRulesCompiledRules} */
     const result = {
         success: false,
         reasons: [],

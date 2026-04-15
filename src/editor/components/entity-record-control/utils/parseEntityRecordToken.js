@@ -5,7 +5,7 @@ import isEntityRecordToken from "./isEntityRecordToken";
  * Parse a JSON string representing a token into a valid object.
  *
  * @param {string} json - The JSON string to parse.
- * @return {?EntityRecordToken} - The token object, otherwise `null`.
+ * @return {EntityRecordToken|null} - The token object, otherwise `null`.
  */
 const parseEntityRecordToken = json => {
     if ( isString( json, true ) && /^\{[^}]*?}$/.test( json ) ) {

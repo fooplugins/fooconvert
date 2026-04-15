@@ -1,27 +1,5 @@
-import { useRootAttributes } from "#editor";
-import { BlockControls } from "@wordpress/block-editor";
-import { ToolbarButton, ToolbarGroup } from "@wordpress/components";
-import { __, sprintf } from "@wordpress/i18n";
+import ViewStateControls from "../../../../shared/editor/components/view-state-controls";
 
-const ViewStateControls = () => {
-    const [ attributes, setAttributes ] = useRootAttributes( 'fc/flyout' );
-    const { viewState = 'open' } = attributes ?? {};
-    const toggleViewState = () => setAttributes( { viewState: viewState === 'open' ? 'closed' : 'open' } );
-    const viewStateLabel = viewState === 'open' ? __( 'Closed', 'fooconvert' ) : __( 'Open', 'fooconvert' );
-    const label = sprintf(
-        // translators: %s: Open/Closed State
-        __( '%s View', 'fooconvert' ),
-        viewStateLabel
-    );
-    return (
-        <BlockControls group="other">
-            <ToolbarGroup>
-                <ToolbarButton label={ __( 'Toggle View', 'fooconvert' ) } onClick={ toggleViewState }>
-                    { label }
-                </ToolbarButton>
-            </ToolbarGroup>
-        </BlockControls>
-    );
-};
-
-export default ViewStateControls;
+export default () => (
+    <ViewStateControls rootAttributeName="fc/flyout" />
+);

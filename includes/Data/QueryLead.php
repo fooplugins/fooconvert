@@ -24,8 +24,12 @@ class QueryLead extends Base {
     /**
      * Builds the SQL WHERE fragments used by lead queries.
      *
-     * @param array $args Lead query arguments.
-     * @return array{0:array<int,string>,1:array<int,mixed>}
+     * @param array{
+     *     email?: string,
+     *     page_url?: string,
+     *     date_range?: '24hours'|'7days'|'30days'|'forever'
+     * } $args Lead query arguments.
+     * @return array{0:array<int,string>,1:array<int,string>}
      */
     private static function get_where_parts( array $args ): array {
         $where_clauses = array();
@@ -63,8 +67,11 @@ class QueryLead extends Base {
 
     /**
      * Handles insert lead data.
+     *
+     * @param array<string, mixed> $data Lead data to insert.
+     * @return int|WP_Error
      */
-    public static function insert_lead_data( $data ) {
+    public static function insert_lead_data( array $data ) {
         global $wpdb;
 
         if ( !is_array( $data ) || empty( $data ) ) {
@@ -101,8 +108,11 @@ class QueryLead extends Base {
 
     /**
      * Returns the leads by ids.
+     *
+     * @param array<int, int|string> $ids Lead IDs to fetch.
+     * @return array<int, array<string, mixed>>
      */
-    public static function get_leads_by_ids( $ids ) {
+    public static function get_leads_by_ids( array $ids ) {
         global $wpdb;
 
         $table_name = self::get_leads_table_name();
@@ -128,10 +138,18 @@ class QueryLead extends Base {
     /**
      * Returns leads that match the supplied filters and pagination arguments.
      *
-     * @param array $args Lead query arguments.
+     * @param array{
+     *     limit?: int,
+     *     offset?: int,
+     *     orderby?: string,
+     *     order?: 'ASC'|'DESC',
+     *     email?: string,
+     *     date_range?: '24hours'|'7days'|'30days'|'forever',
+     *     page_url?: string
+     * } $args Lead query arguments.
      * @return array<int,array<string,mixed>>
      */
-    public static function get_leads( $args = array() ) {
+    public static function get_leads( array $args = array() ) {
         global $wpdb;
 
         $table_name = self::get_leads_table_name();
@@ -174,10 +192,14 @@ class QueryLead extends Base {
     /**
      * Counts leads that match the supplied filters.
      *
-     * @param array $args Lead query arguments.
+     * @param array{
+     *     email?: string,
+     *     date_range?: '24hours'|'7days'|'30days'|'forever',
+     *     page_url?: string
+     * } $args Lead query arguments.
      * @return int
      */
-    public static function count_leads( $args = array() ): int {
+    public static function count_leads( array $args = array() ): int {
         global $wpdb;
 
         $table_name = self::get_leads_table_name();
@@ -204,8 +226,13 @@ class QueryLead extends Base {
 
     /**
      * Returns the leads metrics.
+     *
+     * @param array{
+     *     date_range?: '24hours'|'7days'|'30days'|'forever'
+     * } $args Metric filters.
+     * @return array<string, mixed>|null
      */
-    public static function get_leads_metrics( $args = array() ) {
+    public static function get_leads_metrics( array $args = array() ) {
         global $wpdb;
 
         $table_name = self::get_leads_table_name();
@@ -233,6 +260,8 @@ class QueryLead extends Base {
 
     /**
      * Deletes all leads.
+     *
+     * @return int|false
      */
     public static function delete_all_leads() {
         global $wpdb;
@@ -247,7 +276,7 @@ class QueryLead extends Base {
      * @param int $post_id Popup post ID.
      * @return int|false
      */
-    public static function delete_popup_leads( $post_id ) {
+    public static function delete_popup_leads( int $post_id ) {
         global $wpdb;
 
         $table_name = self::get_leads_table_name();
@@ -260,7 +289,7 @@ class QueryLead extends Base {
      * @param int $id Lead ID.
      * @return int|false
      */
-    public static function delete_lead( $id ) {
+    public static function delete_lead( int $id ) {
         global $wpdb;
 
         $table_name = self::get_leads_table_name();

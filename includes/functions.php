@@ -256,7 +256,7 @@ function fooconvert_get_popup_type( $thing ) {
         return $popup_type;
     }
 
-    if ( function_exists( 'parse_blocks' ) && is_string( $post->post_content ) && $post->post_content !== '' ) {
+    if ( is_string( $post->post_content ) && $post->post_content !== '' ) {
         $blocks = parse_blocks( $post->post_content );
         foreach ( $blocks as $block ) {
             if ( !is_array( $block ) || !isset( $block['blockName'] ) ) {
@@ -293,9 +293,7 @@ function fooconvert_get_popup_type( $thing ) {
  */
 function fooconvert_get_requested_popup_type() {
     $popup_type = isset( $_GET['popup_type'] ) ? $_GET['popup_type'] : '';
-    if ( function_exists( 'wp_unslash' ) ) {
-        $popup_type = wp_unslash( $popup_type );
-    }
+    $popup_type = wp_unslash( $popup_type );
 
     return fooconvert_normalize_popup_type( $popup_type );
 }

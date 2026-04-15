@@ -8,8 +8,8 @@ import { isString, isUndefined } from "@steveush/utils";
  * - has zero length
  * - contains only whitespace
  *
- * @param {any} value - The value to check.
- * @returns {value is undefined|value is string} - `true` if the value is `undefined` or a non-empty `string`, otherwise `false`.
+ * @param {unknown} value - The value to check.
+ * @returns {value is undefined|string} - `true` if the value is `undefined` or a non-empty `string`, otherwise `false`.
  * @see $string
  */
 const is_$string = value => isUndefined( value ) || isString( value, true );

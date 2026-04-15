@@ -8,7 +8,7 @@ import { isString } from "@steveush/utils";
  * - has zero length
  * - contains only whitespace
  *
- * @param {string|any} value - The value to check.
+ * @param {unknown} value - The value to check.
  * @returns {string|undefined} A non-empty `string`, otherwise `undefined`.
  * @see is_$string
  * @example
