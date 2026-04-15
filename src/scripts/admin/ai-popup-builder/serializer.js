@@ -53,7 +53,34 @@ const registerFooconvertBlock = ( metadata, save ) => {
     registerBlockType( metadata, { save } );
 };
 
-export const ensurePopupBuilderBlocksRegistered = () => {
+const registerRuntimeContentBlock = ( block ) => {
+    if ( !isPlainObject( block ) || typeof block?.name !== "string" || block.name.length === 0 ) {
+        return;
+    }
+
+    if ( block.name.startsWith( "core/" ) || getBlockType( block.name ) ) {
+        return;
+    }
+
+    registerFooconvertBlock(
+        {
+            name: block.name,
+            title: block?.label || block.name,
+            category: block.name.startsWith( "woocommerce/" ) ? "widgets" : "fooconvert",
+            attributes: isPlainObject( block?.attribute_schema ) ? block.attribute_schema : {},
+            parent: Array.isArray( block?.parent ) && block.parent.length > 0 ? block.parent : undefined,
+            ancestor: Array.isArray( block?.ancestor ) && block.ancestor.length > 0 ? block.ancestor : undefined,
+            supports: {
+                html: false,
+                className: false,
+                customClassName: false,
+            },
+        },
+        block?.supports_children ? saveInnerBlocks : saveEmpty
+    );
+};
+
+export const ensurePopupBuilderBlocksRegistered = ( blockCatalog = [] ) => {
     if ( hasRegisteredBlocks ) {
         return;
     }
@@ -75,6 +102,10 @@ export const ensurePopupBuilderBlocksRegistered = () => {
 
         registerFooconvertBlock( metadata, save );
     } );
+
+    if ( Array.isArray( blockCatalog ) ) {
+        blockCatalog.forEach( registerRuntimeContentBlock );
+    }
 
     hasRegisteredBlocks = true;
 };
@@ -171,8 +202,8 @@ const buildPopupRootBlock = ( draft, templatesBySlug ) => {
     );
 };
 
-export const serializeDraftToMarkup = ( draft, templatesBySlug = {} ) => {
-    ensurePopupBuilderBlocksRegistered();
+export const serializeDraftToMarkup = ( draft, templatesBySlug = {}, blockCatalog = [] ) => {
+    ensurePopupBuilderBlocksRegistered( blockCatalog );
 
     if ( !isPlainObject( draft ) ) {
         return "";
