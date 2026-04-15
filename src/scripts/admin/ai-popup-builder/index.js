@@ -70,8 +70,8 @@ const pendingActivitySteps = [
 
 const tabDefinitions = [
     {
-        name: "brand",
-        title: __( "Brand", "fooconvert" ),
+        name: "context",
+        title: __( "Context", "fooconvert" ),
     },
     {
         name: "chat",
@@ -451,6 +451,75 @@ const BrandSectionCard = ( { title, isEditing, onToggle, preview, children } ) =
     </Card>
 );
 
+const ContextSummaryCard = ( { title, summary, preview, onOpen, actionLabel = __( "Open", "fooconvert" ) } ) => (
+    <Card className={ `${ rootClass }__context-card` }>
+        <CardBody>
+            <div className={ `${ rootClass }__context-card-head` }>
+                <div>
+                    <h3>{ title }</h3>
+                    { summary && <p className={ `${ rootClass }__muted-copy` }>{ summary }</p> }
+                </div>
+                <Button variant="secondary" onClick={ onOpen }>
+                    { actionLabel }
+                </Button>
+            </div>
+            <div className={ `${ rootClass }__context-card-preview` }>
+                { preview }
+            </div>
+        </CardBody>
+    </Card>
+);
+
+const ReadOnlyTextField = ( { label, value, rows = 12 } ) => (
+    <TextareaControl
+        label={ label }
+        value={ value }
+        onChange={ () => {} }
+        readOnly
+        rows={ rows }
+        __nextHasNoMarginBottom
+        __next40pxDefaultSize
+    />
+);
+
+const ContextChipRow = ( { items, limit = 6 } ) => {
+    const rows = Array.isArray( items ) ? items.filter( Boolean ).slice( 0, limit ) : [];
+
+    if ( rows.length === 0 ) {
+        return null;
+    }
+
+    return (
+        <div className={ `${ rootClass }__context-chip-row` }>
+            { rows.map( ( item, index ) => (
+                <span key={ `${ item }-${ index }` } className={ `${ rootClass }__context-chip` }>
+                    { item }
+                </span>
+            ) ) }
+        </div>
+    );
+};
+
+const ContextCodePreview = ( { content } ) => {
+    const text = String( content || "" ).trim();
+
+    if ( text.length === 0 ) {
+        return (
+            <p className={ `${ rootClass }__muted-copy` }>
+                { __( "No context available yet.", "fooconvert" ) }
+            </p>
+        );
+    }
+
+    return (
+        <pre className={ `${ rootClass }__context-code` }>
+            { text }
+        </pre>
+    );
+};
+
+const formatJsonValue = ( value ) => JSON.stringify( value ?? null, null, 2 ) || "";
+
 const ActivityTimeline = ( { items, isSending, activeIndex } ) => {
     const rows = Array.isArray( items ) ? items.filter( Boolean ) : [];
 
@@ -525,6 +594,7 @@ const App = () => {
     const [ isSavingBrand, setSavingBrand ] = useState( false );
     const [ remoteBrandUrl, setRemoteBrandUrl ] = useState( "" );
     const [ showRemoteBrandInput, setShowRemoteBrandInput ] = useState( false );
+    const [ contextModal, setContextModal ] = useState( "" );
     const chatEndRef = useRef( null );
 
     const generatedMarkup = useMemo( () => {
@@ -612,6 +682,67 @@ const App = () => {
         () => getButtonPreviewStyle( brand?.components?.buttonSecondary, brand?.colors?.primary ),
         [ brand ]
     );
+    const blockCatalog = Array.isArray( config?.blockCatalog ) ? config.blockCatalog : [];
+    const templateLibrary = Array.isArray( config?.templates ) ? config.templates : [];
+    const conversionPlaybook = isPlainObject( config?.playbook ) ? config.playbook : {};
+    const abilityNames = Array.isArray( config?.abilities ) ? config.abilities : [];
+    const hasSavedBrandProfile = config?.brand?.hasSavedBrand || serializeComparable( savedBrandSnapshot ) !== serializeComparable( createEmptyBrand() );
+    const blockSourceCounts = useMemo( () => (
+        blockCatalog.reduce( ( counts, block ) => {
+            const blockName = String( block?.name || "" );
+
+            if ( blockName.startsWith( "fc/" ) ) {
+                counts.fooconvert += 1;
+            } else if ( blockName.startsWith( "woocommerce/" ) ) {
+                counts.woocommerce += 1;
+            } else if ( blockName.startsWith( "core/" ) ) {
+                counts.core += 1;
+            } else {
+                counts.other += 1;
+            }
+
+            if ( block?.supports_children ) {
+                counts.containers += 1;
+            }
+
+            return counts;
+        }, {
+            core: 0,
+            fooconvert: 0,
+            woocommerce: 0,
+            other: 0,
+            containers: 0,
+        } )
+    ), [ blockCatalog ] );
+    const templateCounts = useMemo( () => (
+        templateLibrary.reduce( ( counts, template ) => {
+            const popupType = normalizePopupType( template?.popup_type );
+            counts[ popupType || "other" ] = ( counts[ popupType || "other" ] || 0 ) + 1;
+            return counts;
+        }, {} )
+    ), [ templateLibrary ] );
+    const playbookPrinciples = Array.isArray( conversionPlaybook?.principles ) ? conversionPlaybook.principles : [];
+    const playbookCopyTactics = Array.isArray( conversionPlaybook?.copy_tactics ) ? conversionPlaybook.copy_tactics : [];
+    const playbookPopupTypes = isPlainObject( conversionPlaybook?.popup_types ) ? conversionPlaybook.popup_types : {};
+    const abilityPreviewLabels = abilityNames.map( ability => String( ability ).replace( "fooconvert/", "" ) );
+    const liveRequestSummaryRows = [
+        {
+            label: __( "Messages", "fooconvert" ),
+            value: sprintf( __( "%d turns", "fooconvert" ), messages.length ),
+        },
+        {
+            label: __( "Draft", "fooconvert" ),
+            value: draft ? __( "Included", "fooconvert" ) : __( "None yet", "fooconvert" ),
+        },
+        {
+            label: __( "Media", "fooconvert" ),
+            value: sprintf( __( "%d items", "fooconvert" ), mediaItems.length ),
+        },
+        {
+            label: __( "Brand", "fooconvert" ),
+            value: __( "Always attached separately", "fooconvert" ),
+        },
+    ];
 
     useEffect( () => {
         if ( draft?.title && !titleTouched ) {
@@ -1052,6 +1183,709 @@ const App = () => {
         } );
     };
 
+    const brandEditorContent = (
+        <div className={ `${ rootClass }__stack` }>
+            <div className={ `${ rootClass }__tab-intro` }>
+                <div>
+                    <h2>{ __( "Brand Context", "fooconvert" ) }</h2>
+                    <p>
+                        { __( "The AI uses this brand data first for colors, typography, spacing, and button styling. Templates are only structural guides.", "fooconvert" ) }
+                    </p>
+                </div>
+                <div className={ `${ rootClass }__tab-actions` }>
+                    <Button
+                        variant="secondary"
+                        onClick={ () => extractBrand( "local" ) }
+                        disabled={ isExtractingBrand }
+                    >
+                        { isExtractingBrand ? __( "Extracting…", "fooconvert" ) : __( "Extract Current Site", "fooconvert" ) }
+                    </Button>
+                    <Button
+                        variant="secondary"
+                        onClick={ () => setShowRemoteBrandInput( current => !current ) }
+                        disabled={ isExtractingBrand }
+                    >
+                        { showRemoteBrandInput ? __( "Hide Remote URL", "fooconvert" ) : __( "Extract Remote URL", "fooconvert" ) }
+                    </Button>
+                    <Button
+                        variant="primary"
+                        onClick={ saveBrandProfile }
+                        disabled={ isSavingBrand || !brandIsDirty }
+                    >
+                        { isSavingBrand ? __( "Saving…", "fooconvert" ) : __( "Save Brand", "fooconvert" ) }
+                    </Button>
+                </div>
+            </div>
+
+            { showRemoteBrandInput && (
+                <Card>
+                    <CardBody>
+                        <div className={ `${ rootClass }__remote-extract-panel` }>
+                            <TextControl
+                                label={ __( "Remote URL", "fooconvert" ) }
+                                value={ remoteBrandUrl }
+                                onChange={ setRemoteBrandUrl }
+                                help={ __( "Optional. Use this when you want to extract brand details from another live URL instead of the current site.", "fooconvert" ) }
+                                __nextHasNoMarginBottom
+                                __next40pxDefaultSize
+                            />
+                            <div className={ `${ rootClass }__inline-actions` }>
+                                <Button
+                                    variant="secondary"
+                                    onClick={ () => extractBrand( "remote" ) }
+                                    disabled={ isExtractingBrand || remoteBrandUrl.trim().length === 0 }
+                                >
+                                    { isExtractingBrand ? __( "Extracting…", "fooconvert" ) : __( "Run Remote Extract", "fooconvert" ) }
+                                </Button>
+                            </div>
+                        </div>
+                    </CardBody>
+                </Card>
+            ) }
+
+            <div className={ `${ rootClass }__brand-grid` }>
+                <BrandSectionCard
+                    title={ __( "Brand Overview", "fooconvert" ) }
+                    isEditing={ !!editingBrandSections?.overview }
+                    onToggle={ () => toggleBrandSection( "overview" ) }
+                    preview={
+                        <div className={ `${ rootClass }__preview-stack` }>
+                            <div className={ `${ rootClass }__overview-preview` }>
+                                <p>
+                                    { truncateText( brand?.brandOverview, 220 ) || __( "Add a short brand overview so the AI has tone and positioning context.", "fooconvert" ) }
+                                </p>
+                            </div>
+                        </div>
+                    }
+                >
+                    <div className={ `${ rootClass }__field-grid` }>
+                        <TextareaControl
+                            label={ __( "Brand Overview", "fooconvert" ) }
+                            value={ brand?.brandOverview || "" }
+                            onChange={ value => updateBrandField( "brandOverview", value ) }
+                            help={ __( "This starts from the site tagline on first run and gives the AI tone and positioning context.", "fooconvert" ) }
+                            rows={ 5 }
+                            __nextHasNoMarginBottom
+                            __next40pxDefaultSize
+                        />
+                    </div>
+                </BrandSectionCard>
+
+                <BrandSectionCard
+                    title={ __( "Palette", "fooconvert" ) }
+                    isEditing={ !!editingBrandSections?.palette }
+                    onToggle={ () => toggleBrandSection( "palette" ) }
+                    preview={
+                        brandPalette.length > 0 ? (
+                            <div className={ `${ rootClass }__preview-stack` }>
+                                <div className={ `${ rootClass }__brand-meta-row` }>
+                                    <span className={ `${ rootClass }__meta-pill` }>
+                                        { sprintf(
+                                            __( "%s scheme", "fooconvert" ),
+                                            getColorSchemeLabel( brand?.colorScheme )
+                                        ) }
+                                    </span>
+                                </div>
+                                <div className={ `${ rootClass }__swatch-row` }>
+                                    { brandPalette.map( color => (
+                                        <div key={ color.label } className={ `${ rootClass }__swatch-chip` }>
+                                            <span
+                                                aria-hidden="true"
+                                                style={ {
+                                                    background: color.value,
+                                                } }
+                                            />
+                                            <strong>{ color.label }</strong>
+                                            <small>{ color.value }</small>
+                                        </div>
+                                    ) ) }
+                                </div>
+                            </div>
+                        ) : (
+                            <p className={ `${ rootClass }__muted-copy` }>
+                                { __( "Extract or set the core brand colors to guide the popup styling.", "fooconvert" ) }
+                            </p>
+                        )
+                    }
+                >
+                    <div className={ `${ rootClass }__field-grid` }>
+                        <BrandColorControl
+                            label={ __( "Primary", "fooconvert" ) }
+                            value={ brand?.colors?.primary || "" }
+                            onChange={ value => updateBrandField( "colors.primary", value ) }
+                        />
+                        <BrandColorControl
+                            label={ __( "Secondary", "fooconvert" ) }
+                            value={ brand?.colors?.secondary || "" }
+                            onChange={ value => updateBrandField( "colors.secondary", value ) }
+                        />
+                        <BrandColorControl
+                            label={ __( "Accent", "fooconvert" ) }
+                            value={ brand?.colors?.accent || "" }
+                            onChange={ value => updateBrandField( "colors.accent", value ) }
+                        />
+                        <BrandColorControl
+                            label={ __( "Background", "fooconvert" ) }
+                            value={ brand?.colors?.background || "" }
+                            onChange={ value => updateBrandField( "colors.background", value ) }
+                        />
+                        <BrandColorControl
+                            label={ __( "Primary text", "fooconvert" ) }
+                            value={ brand?.colors?.textPrimary || "" }
+                            onChange={ value => updateBrandField( "colors.textPrimary", value ) }
+                        />
+                        <BrandColorControl
+                            label={ __( "Secondary text", "fooconvert" ) }
+                            value={ brand?.colors?.textSecondary || "" }
+                            onChange={ value => updateBrandField( "colors.textSecondary", value ) }
+                        />
+                    </div>
+                    <div className={ `${ rootClass }__compact-control` }>
+                        <SelectControl
+                            label={ __( "Color scheme", "fooconvert" ) }
+                            value={ brand?.colorScheme || "light" }
+                            onChange={ value => updateBrandField( "colorScheme", value ) }
+                            options={ [
+                                {
+                                    label: __( "Light", "fooconvert" ),
+                                    value: "light",
+                                },
+                                {
+                                    label: __( "Dark", "fooconvert" ),
+                                    value: "dark",
+                                },
+                            ] }
+                            __nextHasNoMarginBottom
+                            __next40pxDefaultSize
+                        />
+                    </div>
+                </BrandSectionCard>
+
+                <BrandSectionCard
+                    title={ __( "Typography", "fooconvert" ) }
+                    isEditing={ !!editingBrandSections?.typography }
+                    onToggle={ () => toggleBrandSection( "typography" ) }
+                    preview={
+                        <div className={ `${ rootClass }__preview-stack` }>
+                            <div className={ `${ rootClass }__type-specimen` }>
+                                <div
+                                    className={ `${ rootClass }__type-specimen-heading` }
+                                    style={ {
+                                        fontFamily: brand?.typography?.fontFamilies?.heading || brand?.typography?.fontFamilies?.primary || undefined,
+                                        fontSize: brand?.typography?.fontSizes?.h1?.value || undefined,
+                                        fontWeight: brand?.typography?.fontWeights?.bold || undefined,
+                                    } }
+                                >
+                                    { __( "Headline Sample", "fooconvert" ) }
+                                </div>
+                                <div
+                                    className={ `${ rootClass }__type-specimen-body` }
+                                    style={ {
+                                        fontFamily: brand?.typography?.fontFamilies?.primary || undefined,
+                                        fontSize: brand?.typography?.fontSizes?.body?.value || undefined,
+                                        fontWeight: brand?.typography?.fontWeights?.regular || undefined,
+                                    } }
+                                >
+                                    { __( "Body copy sample for popup descriptions, proof points, and CTA support text.", "fooconvert" ) }
+                                </div>
+                            </div>
+                            <BrandPreviewList
+                                rows={ [
+                                    {
+                                        label: __( "Primary", "fooconvert" ),
+                                        value: getPreviewValue( brand?.typography?.fontFamilies?.primary ),
+                                    },
+                                    {
+                                        label: __( "Heading", "fooconvert" ),
+                                        value: getPreviewValue( brand?.typography?.fontFamilies?.heading ),
+                                    },
+                                    {
+                                        label: __( "H1 size", "fooconvert" ),
+                                        value: getPreviewValue( brand?.typography?.fontSizes?.h1?.value ),
+                                    },
+                                    {
+                                        label: __( "Body size", "fooconvert" ),
+                                        value: getPreviewValue( brand?.typography?.fontSizes?.body?.value ),
+                                    },
+                                    {
+                                        label: __( "Weights", "fooconvert" ),
+                                        value: `${ brand?.typography?.fontWeights?.regular || 400 } / ${ brand?.typography?.fontWeights?.bold || 700 }`,
+                                    },
+                                ] }
+                            />
+                        </div>
+                    }
+                >
+                    <div className={ `${ rootClass }__field-grid` }>
+                        <TextControl
+                            label={ __( "Primary font family", "fooconvert" ) }
+                            value={ brand?.typography?.fontFamilies?.primary || "" }
+                            onChange={ value => updateBrandField( "typography.fontFamilies.primary", value ) }
+                            __nextHasNoMarginBottom
+                            __next40pxDefaultSize
+                        />
+                        <TextControl
+                            label={ __( "Heading font family", "fooconvert" ) }
+                            value={ brand?.typography?.fontFamilies?.heading || "" }
+                            onChange={ value => updateBrandField( "typography.fontFamilies.heading", value ) }
+                            __nextHasNoMarginBottom
+                            __next40pxDefaultSize
+                        />
+                        <TextControl
+                            label={ __( "H1 size", "fooconvert" ) }
+                            value={ brand?.typography?.fontSizes?.h1?.value || "" }
+                            onChange={ value => updateBrandField( "typography.fontSizes.h1.value", value ) }
+                            __nextHasNoMarginBottom
+                            __next40pxDefaultSize
+                        />
+                        <TextControl
+                            label={ __( "Body size", "fooconvert" ) }
+                            value={ brand?.typography?.fontSizes?.body?.value || "" }
+                            onChange={ value => updateBrandField( "typography.fontSizes.body.value", value ) }
+                            __nextHasNoMarginBottom
+                            __next40pxDefaultSize
+                        />
+                        <TextControl
+                            label={ __( "Regular weight", "fooconvert" ) }
+                            type="number"
+                            value={ String( brand?.typography?.fontWeights?.regular || "" ) }
+                            onChange={ value => updateBrandField( "typography.fontWeights.regular", value ) }
+                            __nextHasNoMarginBottom
+                            __next40pxDefaultSize
+                        />
+                        <TextControl
+                            label={ __( "Bold weight", "fooconvert" ) }
+                            type="number"
+                            value={ String( brand?.typography?.fontWeights?.bold || "" ) }
+                            onChange={ value => updateBrandField( "typography.fontWeights.bold", value ) }
+                            __nextHasNoMarginBottom
+                            __next40pxDefaultSize
+                        />
+                    </div>
+                </BrandSectionCard>
+
+                <BrandSectionCard
+                    title={ __( "Buttons & Spacing", "fooconvert" ) }
+                    isEditing={ !!editingBrandSections?.controls }
+                    onToggle={ () => toggleBrandSection( "controls" ) }
+                    preview={
+                        <div className={ `${ rootClass }__preview-stack` }>
+                            <div className={ `${ rootClass }__button-preview-row` }>
+                                <button type="button" className={ `${ rootClass }__button-preview` } style={ primaryButtonPreviewStyle }>
+                                    { __( "Primary CTA", "fooconvert" ) }
+                                </button>
+                                <button type="button" className={ `${ rootClass }__button-preview` } style={ secondaryButtonPreviewStyle }>
+                                    { __( "Secondary CTA", "fooconvert" ) }
+                                </button>
+                            </div>
+                            <BrandPreviewList
+                                rows={ [
+                                    {
+                                        label: __( "Base unit", "fooconvert" ),
+                                        value: getPreviewValue(
+                                            brand?.spacing?.baseUnit ? `${ brand.spacing.baseUnit }px` : "",
+                                            __( "Not set", "fooconvert" )
+                                        ),
+                                    },
+                                    {
+                                        label: __( "Radius", "fooconvert" ),
+                                        value: getPreviewValue( brand?.spacing?.borderRadius ),
+                                    },
+                                    {
+                                        label: __( "Primary fill", "fooconvert" ),
+                                        value: getPreviewValue( brand?.components?.buttonPrimary?.background ),
+                                    },
+                                    {
+                                        label: __( "Secondary border", "fooconvert" ),
+                                        value: getPreviewValue( brand?.components?.buttonSecondary?.borderColor ),
+                                    },
+                                ] }
+                            />
+                        </div>
+                    }
+                >
+                    <div className={ `${ rootClass }__field-grid` }>
+                        <TextControl
+                            label={ __( "Base spacing unit", "fooconvert" ) }
+                            value={ String( brand?.spacing?.baseUnit || "" ) }
+                            onChange={ value => updateBrandField( "spacing.baseUnit", value ) }
+                            __nextHasNoMarginBottom
+                            __next40pxDefaultSize
+                        />
+                        <TextControl
+                            label={ __( "Global border radius", "fooconvert" ) }
+                            value={ brand?.spacing?.borderRadius || "" }
+                            onChange={ value => updateBrandField( "spacing.borderRadius", value ) }
+                            __nextHasNoMarginBottom
+                            __next40pxDefaultSize
+                        />
+                        <BrandColorControl
+                            label={ __( "Primary button background", "fooconvert" ) }
+                            value={ brand?.components?.buttonPrimary?.background || "" }
+                            onChange={ value => updateBrandField( "components.buttonPrimary.background", value ) }
+                        />
+                        <BrandColorControl
+                            label={ __( "Primary button text", "fooconvert" ) }
+                            value={ brand?.components?.buttonPrimary?.textColor || "" }
+                            onChange={ value => updateBrandField( "components.buttonPrimary.textColor", value ) }
+                        />
+                        <TextControl
+                            label={ __( "Primary button radius", "fooconvert" ) }
+                            value={ brand?.components?.buttonPrimary?.borderRadius || "" }
+                            onChange={ value => updateBrandField( "components.buttonPrimary.borderRadius", value ) }
+                            __nextHasNoMarginBottom
+                            __next40pxDefaultSize
+                        />
+                        <BrandColorControl
+                            label={ __( "Secondary button background", "fooconvert" ) }
+                            value={ brand?.components?.buttonSecondary?.background || "" }
+                            onChange={ value => updateBrandField( "components.buttonSecondary.background", value ) }
+                        />
+                        <BrandColorControl
+                            label={ __( "Secondary button text", "fooconvert" ) }
+                            value={ brand?.components?.buttonSecondary?.textColor || "" }
+                            onChange={ value => updateBrandField( "components.buttonSecondary.textColor", value ) }
+                        />
+                        <BrandColorControl
+                            label={ __( "Secondary button border", "fooconvert" ) }
+                            value={ brand?.components?.buttonSecondary?.borderColor || "" }
+                            onChange={ value => updateBrandField( "components.buttonSecondary.borderColor", value ) }
+                        />
+                        <TextControl
+                            label={ __( "Secondary button radius", "fooconvert" ) }
+                            value={ brand?.components?.buttonSecondary?.borderRadius || "" }
+                            onChange={ value => updateBrandField( "components.buttonSecondary.borderRadius", value ) }
+                            __nextHasNoMarginBottom
+                            __next40pxDefaultSize
+                        />
+                    </div>
+                </BrandSectionCard>
+            </div>
+        </div>
+    );
+
+    const renderContextModal = () => {
+        if ( !contextModal ) {
+            return null;
+        }
+
+        if ( "brand" === contextModal ) {
+            return (
+                <Modal
+                    title={ __( "Brand Context", "fooconvert" ) }
+                    onRequestClose={ () => setContextModal( "" ) }
+                    className={ `${ rootClass }__context-modal ${ rootClass }__context-modal--wide` }
+                    shouldCloseOnClickOutside={ true }
+                >
+                    { brandEditorContent }
+                </Modal>
+            );
+        }
+
+        if ( "blocks" === contextModal ) {
+            return (
+                <Modal
+                    title={ __( "Supported Blocks", "fooconvert" ) }
+                    onRequestClose={ () => setContextModal( "" ) }
+                    className={ `${ rootClass }__context-modal ${ rootClass }__context-modal--wide` }
+                    shouldCloseOnClickOutside={ true }
+                >
+                    <div className={ `${ rootClass }__stack` }>
+                        <p className={ `${ rootClass }__muted-copy` }>
+                            { __( "This list is generated from the supported core, FooConvert, and WooCommerce blocks currently registered on the site. The AI accesses it through abilities when it needs block rules or examples.", "fooconvert" ) }
+                        </p>
+                        <BrandPreviewList
+                            rows={ [
+                                {
+                                    label: __( "Total", "fooconvert" ),
+                                    value: String( blockCatalog.length ),
+                                },
+                                {
+                                    label: __( "Core", "fooconvert" ),
+                                    value: String( blockSourceCounts.core ),
+                                },
+                                {
+                                    label: __( "FooConvert", "fooconvert" ),
+                                    value: String( blockSourceCounts.fooconvert ),
+                                },
+                                {
+                                    label: __( "WooCommerce", "fooconvert" ),
+                                    value: String( blockSourceCounts.woocommerce ),
+                                },
+                                {
+                                    label: __( "Containers", "fooconvert" ),
+                                    value: String( blockSourceCounts.containers ),
+                                },
+                            ] }
+                        />
+                        <div className={ `${ rootClass }__context-list` }>
+                            { blockCatalog.map( block => (
+                                <Card key={ block?.name || block?.label }>
+                                    <CardBody>
+                                        <div className={ `${ rootClass }__context-item` }>
+                                            <div className={ `${ rootClass }__context-item-head` }>
+                                                <div>
+                                                    <h3>{ block?.label || block?.name }</h3>
+                                                    <p className={ `${ rootClass }__muted-copy` }>{ block?.name }</p>
+                                                </div>
+                                                <ContextChipRow
+                                                    items={ [
+                                                        block?.supports_children ? __( "Supports children", "fooconvert" ) : __( "Leaf block", "fooconvert" ),
+                                                        Array.isArray( block?.parent ) && block.parent.length > 0 ? __( "Has parent rules", "fooconvert" ) : "",
+                                                    ] }
+                                                    limit={ 3 }
+                                                />
+                                            </div>
+                                            { block?.description && (
+                                                <p className={ `${ rootClass }__muted-copy` }>{ block.description }</p>
+                                            ) }
+                                            <BrandPreviewList
+                                                rows={ [
+                                                    {
+                                                        label: __( "Allowed children", "fooconvert" ),
+                                                        value: Array.isArray( block?.allowed_children ) && block.allowed_children.length > 0
+                                                            ? block.allowed_children.join( ", " )
+                                                            : __( "None", "fooconvert" ),
+                                                    },
+                                                    {
+                                                        label: __( "Parents", "fooconvert" ),
+                                                        value: Array.isArray( block?.parent ) && block.parent.length > 0
+                                                            ? block.parent.join( ", " )
+                                                            : __( "Any", "fooconvert" ),
+                                                    },
+                                                ] }
+                                            />
+                                        </div>
+                                    </CardBody>
+                                </Card>
+                            ) ) }
+                        </div>
+                    </div>
+                </Modal>
+            );
+        }
+
+        if ( "templates" === contextModal ) {
+            return (
+                <Modal
+                    title={ __( "Structural Templates", "fooconvert" ) }
+                    onRequestClose={ () => setContextModal( "" ) }
+                    className={ `${ rootClass }__context-modal ${ rootClass }__context-modal--wide` }
+                    shouldCloseOnClickOutside={ true }
+                >
+                    <div className={ `${ rootClass }__stack` }>
+                        <p className={ `${ rootClass }__muted-copy` }>
+                            { __( "Templates stay secondary to the brand. The AI can request these bundled FooConvert patterns when it needs a structural guide for bars, flyouts, or popups.", "fooconvert" ) }
+                        </p>
+                        <BrandPreviewList
+                            rows={ [
+                                {
+                                    label: __( "Total", "fooconvert" ),
+                                    value: String( templateLibrary.length ),
+                                },
+                                {
+                                    label: __( "Popups", "fooconvert" ),
+                                    value: String( templateCounts.popup || 0 ),
+                                },
+                                {
+                                    label: __( "Flyouts", "fooconvert" ),
+                                    value: String( templateCounts.flyout || 0 ),
+                                },
+                                {
+                                    label: __( "Bars", "fooconvert" ),
+                                    value: String( templateCounts.bar || 0 ),
+                                },
+                            ] }
+                        />
+                        <div className={ `${ rootClass }__context-list` }>
+                            { templateLibrary.map( template => (
+                                <Card key={ template?.slug || template?.title }>
+                                    <CardBody>
+                                        <div className={ `${ rootClass }__context-item` }>
+                                            <div className={ `${ rootClass }__context-item-head` }>
+                                                <div>
+                                                    <h3>{ template?.title || template?.slug }</h3>
+                                                    <p className={ `${ rootClass }__muted-copy` }>{ template?.slug }</p>
+                                                </div>
+                                                <ContextChipRow
+                                                    items={ [
+                                                        config?.labels?.[ normalizePopupType( template?.popup_type ) ] || template?.popup_type,
+                                                    ] }
+                                                    limit={ 2 }
+                                                />
+                                            </div>
+                                            { template?.description && (
+                                                <p className={ `${ rootClass }__muted-copy` }>{ template.description }</p>
+                                            ) }
+                                            <BrandPreviewList
+                                                rows={ [
+                                                    {
+                                                        label: __( "Sample blocks", "fooconvert" ),
+                                                        value: Array.isArray( template?.sample_block_names ) && template.sample_block_names.length > 0
+                                                            ? template.sample_block_names.join( ", " )
+                                                            : __( "None listed", "fooconvert" ),
+                                                    },
+                                                ] }
+                                            />
+                                        </div>
+                                    </CardBody>
+                                </Card>
+                            ) ) }
+                        </div>
+                    </div>
+                </Modal>
+            );
+        }
+
+        if ( "playbook" === contextModal ) {
+            return (
+                <Modal
+                    title={ __( "Conversion Playbook", "fooconvert" ) }
+                    onRequestClose={ () => setContextModal( "" ) }
+                    className={ `${ rootClass }__context-modal` }
+                    shouldCloseOnClickOutside={ true }
+                >
+                    <div className={ `${ rootClass }__stack` }>
+                        <p className={ `${ rootClass }__muted-copy` }>
+                            { __( "This playbook is available to the AI through abilities when it needs conversion heuristics, popup-type fit, or copy tactics.", "fooconvert" ) }
+                        </p>
+                        <Card>
+                            <CardHeader>
+                                <h3>{ __( "Principles", "fooconvert" ) }</h3>
+                            </CardHeader>
+                            <CardBody>
+                                <ul className={ `${ rootClass }__plain-list` }>
+                                    { playbookPrinciples.map( principle => <li key={ principle }>{ principle }</li> ) }
+                                </ul>
+                            </CardBody>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <h3>{ __( "Popup Type Guidance", "fooconvert" ) }</h3>
+                            </CardHeader>
+                            <CardBody>
+                                <div className={ `${ rootClass }__context-list` }>
+                                    { Object.entries( playbookPopupTypes ).map( ( [ popupType, details ] ) => (
+                                        <div key={ popupType } className={ `${ rootClass }__context-inline-card` }>
+                                            <strong>{ config?.labels?.[ normalizePopupType( popupType ) ] || popupType }</strong>
+                                            <p><strong>{ __( "Best for:", "fooconvert" ) }</strong> { details?.best_for || __( "Not set", "fooconvert" ) }</p>
+                                            <p><strong>{ __( "Watchouts:", "fooconvert" ) }</strong> { details?.watchouts || __( "Not set", "fooconvert" ) }</p>
+                                        </div>
+                                    ) ) }
+                                </div>
+                            </CardBody>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <h3>{ __( "Copy Tactics", "fooconvert" ) }</h3>
+                            </CardHeader>
+                            <CardBody>
+                                <ul className={ `${ rootClass }__plain-list` }>
+                                    { playbookCopyTactics.map( tactic => <li key={ tactic }>{ tactic }</li> ) }
+                                </ul>
+                            </CardBody>
+                        </Card>
+                    </div>
+                </Modal>
+            );
+        }
+
+        if ( "system-prompt" === contextModal ) {
+            return (
+                <Modal
+                    title={ __( "System Prompt", "fooconvert" ) }
+                    onRequestClose={ () => setContextModal( "" ) }
+                    className={ `${ rootClass }__context-modal` }
+                    shouldCloseOnClickOutside={ true }
+                >
+                    <div className={ `${ rootClass }__stack` }>
+                        <p className={ `${ rootClass }__muted-copy` }>
+                            { __( "This is the default builder instruction. Per-turn image rules are appended automatically depending on whether AI image generation is enabled for that request.", "fooconvert" ) }
+                        </p>
+                        <ReadOnlyTextField
+                            label={ __( "Builder system instruction", "fooconvert" ) }
+                            value={ String( config?.systemPrompt || "" ) }
+                            rows={ 20 }
+                        />
+                    </div>
+                </Modal>
+            );
+        }
+
+        if ( "abilities" === contextModal ) {
+            return (
+                <Modal
+                    title={ __( "Abilities", "fooconvert" ) }
+                    onRequestClose={ () => setContextModal( "" ) }
+                    className={ `${ rootClass }__context-modal` }
+                    shouldCloseOnClickOutside={ true }
+                >
+                    <div className={ `${ rootClass }__stack` }>
+                        <p className={ `${ rootClass }__muted-copy` }>
+                            { __( "These are the tool calls the AI can use while building or validating a popup. The builder can request them on demand during a chat turn.", "fooconvert" ) }
+                        </p>
+                        <BrandPreviewList
+                            rows={ [
+                                {
+                                    label: __( "Abilities API", "fooconvert" ),
+                                    value: config?.abilitiesAvailable ? __( "Available", "fooconvert" ) : __( "Unavailable", "fooconvert" ),
+                                },
+                                {
+                                    label: __( "Allowed tools", "fooconvert" ),
+                                    value: String( abilityNames.length ),
+                                },
+                            ] }
+                        />
+                        <div className={ `${ rootClass }__context-list` }>
+                            { abilityNames.map( ability => (
+                                <div key={ ability } className={ `${ rootClass }__context-inline-card` }>
+                                    <strong>{ ability }</strong>
+                                </div>
+                            ) ) }
+                        </div>
+                    </div>
+                </Modal>
+            );
+        }
+
+        if ( "request" === contextModal ) {
+            return (
+                <Modal
+                    title={ __( "Current Request Context", "fooconvert" ) }
+                    onRequestClose={ () => setContextModal( "" ) }
+                    className={ `${ rootClass }__context-modal ${ rootClass }__context-modal--wide` }
+                    shouldCloseOnClickOutside={ true }
+                >
+                    <div className={ `${ rootClass }__stack` }>
+                        <p className={ `${ rootClass }__muted-copy` }>
+                            { __( "On each turn the latest user message is augmented with the current popup draft, generated media, and brand JSON. The recent message history is also sent directly.", "fooconvert" ) }
+                        </p>
+                        <BrandPreviewList rows={ liveRequestSummaryRows } />
+                        <ReadOnlyTextField
+                            label={ __( "Conversation", "fooconvert" ) }
+                            value={ messages.length > 0
+                                ? messages.map( message => `[${ message.role }] ${ message.content }` ).join( "\n\n" )
+                                : __( "No messages yet.", "fooconvert" ) }
+                            rows={ 14 }
+                        />
+                        <ReadOnlyTextField
+                            label={ __( "Current popup draft JSON", "fooconvert" ) }
+                            value={ draft ? formatJsonValue( draft ) : __( "No popup draft yet.", "fooconvert" ) }
+                            rows={ 16 }
+                        />
+                        <ReadOnlyTextField
+                            label={ __( "Current media JSON", "fooconvert" ) }
+                            value={ mediaItems.length > 0 ? formatJsonValue( mediaItems ) : __( "No generated media yet.", "fooconvert" ) }
+                            rows={ 12 }
+                        />
+                    </div>
+                </Modal>
+            );
+        }
+
+        return null;
+    };
+
     return (
         <div className={ rootClass }>
             <Card className={ `${ rootClass }__header-card` }>
@@ -1066,20 +1900,20 @@ const App = () => {
                                 <span className={ `${ rootClass }__meta-pill` }>
                                     { brandIsDirty
                                         ? __( "Brand has unsaved changes", "fooconvert" )
-                                        : ( config?.brand?.hasSavedBrand || serializeComparable( savedBrandSnapshot ) !== serializeComparable( createEmptyBrand() )
+                                        : ( hasSavedBrandProfile
                                             ? __( "Brand saved", "fooconvert" )
                                             : __( "Brand ready to save", "fooconvert" ) ) }
                                 </span>
                                 <span className={ `${ rootClass }__meta-pill` }>
                                     { sprintf(
                                         __( "%d supported blocks", "fooconvert" ),
-                                        Array.isArray( config?.blockCatalog ) ? config.blockCatalog.length : 0
+                                        blockCatalog.length
                                     ) }
                                 </span>
                                 <span className={ `${ rootClass }__meta-pill` }>
                                     { sprintf(
                                         __( "%d structural templates", "fooconvert" ),
-                                        Array.isArray( config?.templates ) ? config.templates.length : 0
+                                        templateLibrary.length
                                     ) }
                                 </span>
                             </div>
@@ -1143,389 +1977,196 @@ const App = () => {
                     <TabPanel
                         className={ `${ rootClass }__tabs` }
                         activeClass="is-active"
-                        initialTabName={ config?.brand?.hasSavedBrand ? "chat" : "brand" }
+                        initialTabName="context"
                         tabs={ tabDefinitions }
                     >
                         { ( tab ) => (
                             <div className={ `${ rootClass }__tab-panel` }>
-                                { tab.name === "brand" && (
+                                { tab.name === "context" && (
                                     <div className={ `${ rootClass }__stack` }>
                                         <div className={ `${ rootClass }__tab-intro` }>
                                             <div>
-                                                <h2>{ __( "Brand Context", "fooconvert" ) }</h2>
+                                                <h2>{ __( "AI Context", "fooconvert" ) }</h2>
                                                 <p>
-                                                    { __( "The AI uses this brand data first for colors, typography, spacing, and button styling. Templates are only structural guides.", "fooconvert" ) }
+                                                    { __( "This is the context available to the builder. Brand and live request data are passed directly, while blocks, templates, the playbook, and media tooling are available through abilities when the model needs them.", "fooconvert" ) }
                                                 </p>
                                             </div>
-                                            <div className={ `${ rootClass }__tab-actions` }>
-                                                <Button
-                                                    variant="secondary"
-                                                    onClick={ () => extractBrand( "local" ) }
-                                                    disabled={ isExtractingBrand }
-                                                >
-                                                    { isExtractingBrand ? __( "Extracting…", "fooconvert" ) : __( "Extract Current Site", "fooconvert" ) }
-                                                </Button>
-                                                <Button
-                                                    variant="secondary"
-                                                    onClick={ () => setShowRemoteBrandInput( current => !current ) }
-                                                    disabled={ isExtractingBrand }
-                                                >
-                                                    { showRemoteBrandInput ? __( "Hide Remote URL", "fooconvert" ) : __( "Extract Remote URL", "fooconvert" ) }
-                                                </Button>
-                                                <Button
-                                                    variant="primary"
-                                                    onClick={ saveBrandProfile }
-                                                    disabled={ isSavingBrand || !brandIsDirty }
-                                                >
-                                                    { isSavingBrand ? __( "Saving…", "fooconvert" ) : __( "Save Brand", "fooconvert" ) }
-                                                </Button>
-                                            </div>
                                         </div>
-
-                                        { showRemoteBrandInput && (
-                                            <Card>
-                                                <CardBody>
-                                                    <div className={ `${ rootClass }__remote-extract-panel` }>
-                                                        <TextControl
-                                                            label={ __( "Remote URL", "fooconvert" ) }
-                                                            value={ remoteBrandUrl }
-                                                            onChange={ setRemoteBrandUrl }
-                                                            help={ __( "Optional. Use this when you want to extract brand details from another live URL instead of the current site.", "fooconvert" ) }
-                                                            __nextHasNoMarginBottom
-                                                            __next40pxDefaultSize
-                                                        />
-                                                        <div className={ `${ rootClass }__inline-actions` }>
-                                                            <Button
-                                                                variant="secondary"
-                                                                onClick={ () => extractBrand( "remote" ) }
-                                                                disabled={ isExtractingBrand || remoteBrandUrl.trim().length === 0 }
-                                                            >
-                                                                { isExtractingBrand ? __( "Extracting…", "fooconvert" ) : __( "Run Remote Extract", "fooconvert" ) }
-                                                            </Button>
-                                                        </div>
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
-                                        ) }
-
-                                        <div className={ `${ rootClass }__brand-grid` }>
-                                            <BrandSectionCard
-                                                title={ __( "Brand Overview", "fooconvert" ) }
-                                                isEditing={ !!editingBrandSections?.overview }
-                                                onToggle={ () => toggleBrandSection( "overview" ) }
+                                        <div className={ `${ rootClass }__context-grid` }>
+                                            <ContextSummaryCard
+                                                title={ __( "Brand", "fooconvert" ) }
+                                                summary={ __( "Direct context. Saved brand data is attached to every builder request and should drive the popup styling first.", "fooconvert" ) }
+                                                onOpen={ () => setContextModal( "brand" ) }
                                                 preview={
                                                     <div className={ `${ rootClass }__preview-stack` }>
-                                                        <div className={ `${ rootClass }__overview-preview` }>
-                                                            <p>
-                                                                { truncateText( brand?.brandOverview, 220 ) || __( "Add a short brand overview so the AI has tone and positioning context.", "fooconvert" ) }
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                }
-                                            >
-                                                <div className={ `${ rootClass }__field-grid` }>
-                                                    <TextareaControl
-                                                        label={ __( "Brand Overview", "fooconvert" ) }
-                                                        value={ brand?.brandOverview || "" }
-                                                        onChange={ value => updateBrandField( "brandOverview", value ) }
-                                                        help={ __( "This starts from the site tagline on first run and gives the AI tone and positioning context.", "fooconvert" ) }
-                                                        rows={ 5 }
-                                                        __nextHasNoMarginBottom
-                                                        __next40pxDefaultSize
-                                                    />
-                                                </div>
-                                            </BrandSectionCard>
-
-                                            <BrandSectionCard
-                                                title={ __( "Palette", "fooconvert" ) }
-                                                isEditing={ !!editingBrandSections?.palette }
-                                                onToggle={ () => toggleBrandSection( "palette" ) }
-                                                preview={
-                                                    brandPalette.length > 0 ? (
-                                                        <div className={ `${ rootClass }__preview-stack` }>
-                                                            <div className={ `${ rootClass }__brand-meta-row` }>
-                                                                <span className={ `${ rootClass }__meta-pill` }>
-                                                                    { sprintf(
-                                                                        __( "%s scheme", "fooconvert" ),
-                                                                        getColorSchemeLabel( brand?.colorScheme )
-                                                                    ) }
-                                                                </span>
-                                                            </div>
-                                                            <div className={ `${ rootClass }__swatch-row` }>
-                                                                { brandPalette.map( color => (
-                                                                    <div key={ color.label } className={ `${ rootClass }__swatch-chip` }>
-                                                                        <span
-                                                                            aria-hidden="true"
-                                                                            style={ {
-                                                                                background: color.value,
-                                                                            } }
-                                                                        />
-                                                                        <strong>{ color.label }</strong>
-                                                                        <small>{ color.value }</small>
-                                                                    </div>
-                                                                ) ) }
-                                                            </div>
-                                                        </div>
-                                                    ) : (
-                                                        <p className={ `${ rootClass }__muted-copy` }>
-                                                            { __( "Extract or set the core brand colors to guide the popup styling.", "fooconvert" ) }
-                                                        </p>
-                                                    )
-                                                }
-                                            >
-                                                <div className={ `${ rootClass }__field-grid` }>
-                                                    <BrandColorControl
-                                                        label={ __( "Primary", "fooconvert" ) }
-                                                        value={ brand?.colors?.primary || "" }
-                                                        onChange={ value => updateBrandField( "colors.primary", value ) }
-                                                    />
-                                                    <BrandColorControl
-                                                        label={ __( "Secondary", "fooconvert" ) }
-                                                        value={ brand?.colors?.secondary || "" }
-                                                        onChange={ value => updateBrandField( "colors.secondary", value ) }
-                                                    />
-                                                    <BrandColorControl
-                                                        label={ __( "Accent", "fooconvert" ) }
-                                                        value={ brand?.colors?.accent || "" }
-                                                        onChange={ value => updateBrandField( "colors.accent", value ) }
-                                                    />
-                                                    <BrandColorControl
-                                                        label={ __( "Background", "fooconvert" ) }
-                                                        value={ brand?.colors?.background || "" }
-                                                        onChange={ value => updateBrandField( "colors.background", value ) }
-                                                    />
-                                                    <BrandColorControl
-                                                        label={ __( "Primary text", "fooconvert" ) }
-                                                        value={ brand?.colors?.textPrimary || "" }
-                                                        onChange={ value => updateBrandField( "colors.textPrimary", value ) }
-                                                    />
-                                                    <BrandColorControl
-                                                        label={ __( "Secondary text", "fooconvert" ) }
-                                                        value={ brand?.colors?.textSecondary || "" }
-                                                        onChange={ value => updateBrandField( "colors.textSecondary", value ) }
-                                                    />
-                                                </div>
-                                                <div className={ `${ rootClass }__compact-control` }>
-                                                    <SelectControl
-                                                        label={ __( "Color scheme", "fooconvert" ) }
-                                                        value={ brand?.colorScheme || "light" }
-                                                        onChange={ value => updateBrandField( "colorScheme", value ) }
-                                                        options={ [
-                                                            {
-                                                                label: __( "Light", "fooconvert" ),
-                                                                value: "light",
-                                                            },
-                                                            {
-                                                                label: __( "Dark", "fooconvert" ),
-                                                                value: "dark",
-                                                            },
-                                                        ] }
-                                                        __nextHasNoMarginBottom
-                                                        __next40pxDefaultSize
-                                                    />
-                                                </div>
-                                            </BrandSectionCard>
-
-                                            <BrandSectionCard
-                                                title={ __( "Typography", "fooconvert" ) }
-                                                isEditing={ !!editingBrandSections?.typography }
-                                                onToggle={ () => toggleBrandSection( "typography" ) }
-                                                preview={
-                                                    <div className={ `${ rootClass }__preview-stack` }>
-                                                        <div className={ `${ rootClass }__type-specimen` }>
-                                                            <div
-                                                                className={ `${ rootClass }__type-specimen-heading` }
-                                                                style={ {
-                                                                    fontFamily: brand?.typography?.fontFamilies?.heading || brand?.typography?.fontFamilies?.primary || undefined,
-                                                                    fontSize: brand?.typography?.fontSizes?.h1?.value || undefined,
-                                                                    fontWeight: brand?.typography?.fontWeights?.bold || undefined,
-                                                                } }
-                                                            >
-                                                                { __( "Headline Sample", "fooconvert" ) }
-                                                            </div>
-                                                            <div
-                                                                className={ `${ rootClass }__type-specimen-body` }
-                                                                style={ {
-                                                                    fontFamily: brand?.typography?.fontFamilies?.primary || undefined,
-                                                                    fontSize: brand?.typography?.fontSizes?.body?.value || undefined,
-                                                                    fontWeight: brand?.typography?.fontWeights?.regular || undefined,
-                                                                } }
-                                                            >
-                                                                { __( "Body copy sample for popup descriptions, proof points, and CTA support text.", "fooconvert" ) }
-                                                            </div>
-                                                        </div>
                                                         <BrandPreviewList
                                                             rows={ [
                                                                 {
-                                                                    label: __( "Primary", "fooconvert" ),
+                                                                    label: __( "Status", "fooconvert" ),
+                                                                    value: brandIsDirty
+                                                                        ? __( "Unsaved changes", "fooconvert" )
+                                                                        : ( hasSavedBrandProfile ? __( "Saved", "fooconvert" ) : __( "Draft only", "fooconvert" ) ),
+                                                                },
+                                                                {
+                                                                    label: __( "Overview", "fooconvert" ),
+                                                                    value: truncateText(
+                                                                        brand?.brandOverview,
+                                                                        90
+                                                                    ) || __( "Not set", "fooconvert" ),
+                                                                },
+                                                                {
+                                                                    label: __( "Primary font", "fooconvert" ),
                                                                     value: getPreviewValue( brand?.typography?.fontFamilies?.primary ),
                                                                 },
-                                                                {
-                                                                    label: __( "Heading", "fooconvert" ),
-                                                                    value: getPreviewValue( brand?.typography?.fontFamilies?.heading ),
-                                                                },
-                                                                {
-                                                                    label: __( "H1 size", "fooconvert" ),
-                                                                    value: getPreviewValue( brand?.typography?.fontSizes?.h1?.value ),
-                                                                },
-                                                                {
-                                                                    label: __( "Body size", "fooconvert" ),
-                                                                    value: getPreviewValue( brand?.typography?.fontSizes?.body?.value ),
-                                                                },
-                                                                {
-                                                                    label: __( "Weights", "fooconvert" ),
-                                                                    value: `${ brand?.typography?.fontWeights?.regular || 400 } / ${ brand?.typography?.fontWeights?.bold || 700 }`,
-                                                                },
                                                             ] }
                                                         />
+                                                        <div className={ `${ rootClass }__swatch-row` }>
+                                                            { brandPalette.slice( 0, 4 ).map( color => (
+                                                                <div key={ color.label } className={ `${ rootClass }__swatch-chip` }>
+                                                                    <span aria-hidden="true" style={ { background: color.value } } />
+                                                                    <strong>{ color.label }</strong>
+                                                                </div>
+                                                            ) ) }
+                                                        </div>
                                                     </div>
                                                 }
-                                            >
-                                                <div className={ `${ rootClass }__field-grid` }>
-                                                    <TextControl
-                                                        label={ __( "Primary font family", "fooconvert" ) }
-                                                        value={ brand?.typography?.fontFamilies?.primary || "" }
-                                                        onChange={ value => updateBrandField( "typography.fontFamilies.primary", value ) }
-                                                        __nextHasNoMarginBottom
-                                                        __next40pxDefaultSize
-                                                    />
-                                                    <TextControl
-                                                        label={ __( "Heading font family", "fooconvert" ) }
-                                                        value={ brand?.typography?.fontFamilies?.heading || "" }
-                                                        onChange={ value => updateBrandField( "typography.fontFamilies.heading", value ) }
-                                                        __nextHasNoMarginBottom
-                                                        __next40pxDefaultSize
-                                                    />
-                                                    <TextControl
-                                                        label={ __( "H1 size", "fooconvert" ) }
-                                                        value={ brand?.typography?.fontSizes?.h1?.value || "" }
-                                                        onChange={ value => updateBrandField( "typography.fontSizes.h1.value", value ) }
-                                                        __nextHasNoMarginBottom
-                                                        __next40pxDefaultSize
-                                                    />
-                                                    <TextControl
-                                                        label={ __( "Body size", "fooconvert" ) }
-                                                        value={ brand?.typography?.fontSizes?.body?.value || "" }
-                                                        onChange={ value => updateBrandField( "typography.fontSizes.body.value", value ) }
-                                                        __nextHasNoMarginBottom
-                                                        __next40pxDefaultSize
-                                                    />
-                                                    <TextControl
-                                                        label={ __( "Regular weight", "fooconvert" ) }
-                                                        type="number"
-                                                        value={ String( brand?.typography?.fontWeights?.regular || "" ) }
-                                                        onChange={ value => updateBrandField( "typography.fontWeights.regular", value ) }
-                                                        __nextHasNoMarginBottom
-                                                        __next40pxDefaultSize
-                                                    />
-                                                    <TextControl
-                                                        label={ __( "Bold weight", "fooconvert" ) }
-                                                        type="number"
-                                                        value={ String( brand?.typography?.fontWeights?.bold || "" ) }
-                                                        onChange={ value => updateBrandField( "typography.fontWeights.bold", value ) }
-                                                        __nextHasNoMarginBottom
-                                                        __next40pxDefaultSize
-                                                    />
-                                                </div>
-                                            </BrandSectionCard>
+                                            />
 
-                                            <BrandSectionCard
-                                                title={ __( "Buttons & Spacing", "fooconvert" ) }
-                                                isEditing={ !!editingBrandSections?.controls }
-                                                onToggle={ () => toggleBrandSection( "controls" ) }
+                                            <ContextSummaryCard
+                                                title={ __( "Blocks", "fooconvert" ) }
+                                                summary={ __( "Ability-backed. The AI can inspect the installed content blocks and nesting rules before composing advanced layouts.", "fooconvert" ) }
+                                                onOpen={ () => setContextModal( "blocks" ) }
                                                 preview={
                                                     <div className={ `${ rootClass }__preview-stack` }>
-                                                        <div className={ `${ rootClass }__button-preview-row` }>
-                                                            <button type="button" className={ `${ rootClass }__button-preview` } style={ primaryButtonPreviewStyle }>
-                                                                { __( "Primary CTA", "fooconvert" ) }
-                                                            </button>
-                                                            <button type="button" className={ `${ rootClass }__button-preview` } style={ secondaryButtonPreviewStyle }>
-                                                                { __( "Secondary CTA", "fooconvert" ) }
-                                                            </button>
-                                                        </div>
                                                         <BrandPreviewList
                                                             rows={ [
                                                                 {
-                                                                    label: __( "Base unit", "fooconvert" ),
-                                                                    value: getPreviewValue(
-                                                                        brand?.spacing?.baseUnit ? `${ brand.spacing.baseUnit }px` : "",
-                                                                        __( "Not set", "fooconvert" )
-                                                                    ),
+                                                                    label: __( "Total", "fooconvert" ),
+                                                                    value: String( blockCatalog.length ),
                                                                 },
                                                                 {
-                                                                    label: __( "Radius", "fooconvert" ),
-                                                                    value: getPreviewValue( brand?.spacing?.borderRadius ),
+                                                                    label: __( "FooConvert", "fooconvert" ),
+                                                                    value: String( blockSourceCounts.fooconvert ),
                                                                 },
                                                                 {
-                                                                    label: __( "Primary fill", "fooconvert" ),
-                                                                    value: getPreviewValue( brand?.components?.buttonPrimary?.background ),
-                                                                },
-                                                                {
-                                                                    label: __( "Secondary border", "fooconvert" ),
-                                                                    value: getPreviewValue( brand?.components?.buttonSecondary?.borderColor ),
+                                                                    label: __( "WooCommerce", "fooconvert" ),
+                                                                    value: String( blockSourceCounts.woocommerce ),
                                                                 },
                                                             ] }
                                                         />
+                                                        <ContextChipRow
+                                                            items={ blockCatalog.map( block => block?.label || block?.name ) }
+                                                            limit={ 5 }
+                                                        />
                                                     </div>
                                                 }
-                                            >
-                                                <div className={ `${ rootClass }__field-grid` }>
-                                                    <TextControl
-                                                        label={ __( "Base spacing unit", "fooconvert" ) }
-                                                        value={ String( brand?.spacing?.baseUnit || "" ) }
-                                                        onChange={ value => updateBrandField( "spacing.baseUnit", value ) }
-                                                        __nextHasNoMarginBottom
-                                                        __next40pxDefaultSize
-                                                    />
-                                                    <TextControl
-                                                        label={ __( "Global border radius", "fooconvert" ) }
-                                                        value={ brand?.spacing?.borderRadius || "" }
-                                                        onChange={ value => updateBrandField( "spacing.borderRadius", value ) }
-                                                        __nextHasNoMarginBottom
-                                                        __next40pxDefaultSize
-                                                    />
-                                                    <BrandColorControl
-                                                        label={ __( "Primary button background", "fooconvert" ) }
-                                                        value={ brand?.components?.buttonPrimary?.background || "" }
-                                                        onChange={ value => updateBrandField( "components.buttonPrimary.background", value ) }
-                                                    />
-                                                    <BrandColorControl
-                                                        label={ __( "Primary button text", "fooconvert" ) }
-                                                        value={ brand?.components?.buttonPrimary?.textColor || "" }
-                                                        onChange={ value => updateBrandField( "components.buttonPrimary.textColor", value ) }
-                                                    />
-                                                    <TextControl
-                                                        label={ __( "Primary button radius", "fooconvert" ) }
-                                                        value={ brand?.components?.buttonPrimary?.borderRadius || "" }
-                                                        onChange={ value => updateBrandField( "components.buttonPrimary.borderRadius", value ) }
-                                                        __nextHasNoMarginBottom
-                                                        __next40pxDefaultSize
-                                                    />
-                                                    <BrandColorControl
-                                                        label={ __( "Secondary button background", "fooconvert" ) }
-                                                        value={ brand?.components?.buttonSecondary?.background || "" }
-                                                        onChange={ value => updateBrandField( "components.buttonSecondary.background", value ) }
-                                                    />
-                                                    <BrandColorControl
-                                                        label={ __( "Secondary button text", "fooconvert" ) }
-                                                        value={ brand?.components?.buttonSecondary?.textColor || "" }
-                                                        onChange={ value => updateBrandField( "components.buttonSecondary.textColor", value ) }
-                                                    />
-                                                    <BrandColorControl
-                                                        label={ __( "Secondary button border", "fooconvert" ) }
-                                                        value={ brand?.components?.buttonSecondary?.borderColor || "" }
-                                                        onChange={ value => updateBrandField( "components.buttonSecondary.borderColor", value ) }
-                                                    />
-                                                    <TextControl
-                                                        label={ __( "Secondary button radius", "fooconvert" ) }
-                                                        value={ brand?.components?.buttonSecondary?.borderRadius || "" }
-                                                        onChange={ value => updateBrandField( "components.buttonSecondary.borderRadius", value ) }
-                                                        __nextHasNoMarginBottom
-                                                        __next40pxDefaultSize
-                                                    />
-                                                </div>
-                                            </BrandSectionCard>
+                                            />
 
+                                            <ContextSummaryCard
+                                                title={ __( "Templates", "fooconvert" ) }
+                                                summary={ __( "Ability-backed. Bundled FooConvert templates provide structure only, not the primary styling direction.", "fooconvert" ) }
+                                                onOpen={ () => setContextModal( "templates" ) }
+                                                preview={
+                                                    <div className={ `${ rootClass }__preview-stack` }>
+                                                        <BrandPreviewList
+                                                            rows={ [
+                                                                {
+                                                                    label: __( "Total", "fooconvert" ),
+                                                                    value: String( templateLibrary.length ),
+                                                                },
+                                                                {
+                                                                    label: __( "Popups", "fooconvert" ),
+                                                                    value: String( templateCounts.popup || 0 ),
+                                                                },
+                                                                {
+                                                                    label: __( "Flyouts", "fooconvert" ),
+                                                                    value: String( templateCounts.flyout || 0 ),
+                                                                },
+                                                            ] }
+                                                        />
+                                                        <ContextChipRow
+                                                            items={ templateLibrary.map( template => template?.title ) }
+                                                            limit={ 4 }
+                                                        />
+                                                    </div>
+                                                }
+                                            />
+
+                                            <ContextSummaryCard
+                                                title={ __( "Playbook", "fooconvert" ) }
+                                                summary={ __( "Ability-backed. Conversion heuristics, popup-type fit, and copy tactics the model can request while planning.", "fooconvert" ) }
+                                                onOpen={ () => setContextModal( "playbook" ) }
+                                                preview={
+                                                    <div className={ `${ rootClass }__preview-stack` }>
+                                                        <BrandPreviewList
+                                                            rows={ [
+                                                                {
+                                                                    label: __( "Principles", "fooconvert" ),
+                                                                    value: String( playbookPrinciples.length ),
+                                                                },
+                                                                {
+                                                                    label: __( "Copy tactics", "fooconvert" ),
+                                                                    value: String( playbookCopyTactics.length ),
+                                                                },
+                                                            ] }
+                                                        />
+                                                        <ul className={ `${ rootClass }__plain-list ${ rootClass }__context-list-preview` }>
+                                                            { playbookPrinciples.slice( 0, 2 ).map( principle => <li key={ principle }>{ principle }</li> ) }
+                                                        </ul>
+                                                    </div>
+                                                }
+                                            />
+
+                                            <ContextSummaryCard
+                                                title={ __( "System Prompt", "fooconvert" ) }
+                                                summary={ __( "Direct context. Builder rules that shape how the AI should think, validate, and respond.", "fooconvert" ) }
+                                                onOpen={ () => setContextModal( "system-prompt" ) }
+                                                preview={
+                                                    <ContextCodePreview
+                                                        content={ truncateText( String( config?.systemPrompt || "" ), 220 ) }
+                                                    />
+                                                }
+                                            />
+
+                                            <ContextSummaryCard
+                                                title={ __( "Abilities", "fooconvert" ) }
+                                                summary={ __( "Available tool calls the model can use for templates, blocks, validation, media, and image generation.", "fooconvert" ) }
+                                                onOpen={ () => setContextModal( "abilities" ) }
+                                                preview={
+                                                    <div className={ `${ rootClass }__preview-stack` }>
+                                                        <BrandPreviewList
+                                                            rows={ [
+                                                                {
+                                                                    label: __( "API", "fooconvert" ),
+                                                                    value: config?.abilitiesAvailable ? __( "Enabled", "fooconvert" ) : __( "Unavailable", "fooconvert" ),
+                                                                },
+                                                                {
+                                                                    label: __( "Tools", "fooconvert" ),
+                                                                    value: String( abilityNames.length ),
+                                                                },
+                                                            ] }
+                                                        />
+                                                        <ContextChipRow items={ abilityPreviewLabels } limit={ 5 } />
+                                                    </div>
+                                                }
+                                            />
+
+                                            <ContextSummaryCard
+                                                title={ __( "Current Request", "fooconvert" ) }
+                                                summary={ __( "Direct context. Recent messages are sent each turn, and the latest user prompt is augmented with the current draft and media state.", "fooconvert" ) }
+                                                onOpen={ () => setContextModal( "request" ) }
+                                                preview={
+                                                    <div className={ `${ rootClass }__preview-stack` }>
+                                                        <BrandPreviewList rows={ liveRequestSummaryRows } />
+                                                        <p className={ `${ rootClass }__muted-copy` }>
+                                                            { truncateText(
+                                                                lastAssistantMessage || __( "No assistant response yet.", "fooconvert" ),
+                                                                110
+                                                            ) }
+                                                        </p>
+                                                    </div>
+                                                }
+                                            />
                                         </div>
                                     </div>
                                 ) }
@@ -1865,6 +2506,8 @@ const App = () => {
                     </TabPanel>
                 </CardBody>
             </Card>
+
+            { renderContextModal() }
 
             { previewOpen && (
                 <Modal

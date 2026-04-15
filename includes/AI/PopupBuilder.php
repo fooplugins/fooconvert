@@ -589,6 +589,26 @@ class PopupBuilder {
      * @return string
      */
     private function build_system_instruction( bool $generate_images, bool $force_image_generation ): string {
+        return self::compose_system_instruction( $generate_images, $force_image_generation );
+    }
+
+    /**
+     * Returns the default system instruction preview shown in the builder UI.
+     *
+     * @return string
+     */
+    public static function get_default_system_instruction_preview(): string {
+        return self::compose_system_instruction( false, false );
+    }
+
+    /**
+     * Composes the popup builder system instruction.
+     *
+     * @param bool $generate_images Whether image generation is available for this turn.
+     * @param bool $force_image_generation Whether this turn should explicitly generate a new image.
+     * @return string
+     */
+    private static function compose_system_instruction( bool $generate_images, bool $force_image_generation ): string {
         $instructions = array(
             'You are an experimental FooConvert popup strategist and builder.',
             'Your job is to turn natural-language requests into high-converting Fooconvert popup drafts.',

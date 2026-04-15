@@ -4,6 +4,7 @@ namespace FooPlugins\FooConvert\Admin;
 
 use FooPlugins\FooConvert\AI\Abilities;
 use FooPlugins\FooConvert\AI\PopupBlueprint;
+use FooPlugins\FooConvert\AI\PopupBuilder as PopupBuilderAI;
 use FooPlugins\FooConvert\AI\PopupMedia;
 use FooPlugins\FooConvert\Brand\Manager as BrandManager;
 use FooPlugins\FooConvert\FooConvert;
@@ -224,11 +225,13 @@ class AiPopupBuilder {
             'templates'        => PopupBlueprint::get_template_library(),
             'blockCatalog'     => PopupBlueprint::get_block_catalog(),
             'playbook'         => PopupBlueprint::get_conversion_playbook(),
+            'systemPrompt'     => PopupBuilderAI::get_default_system_instruction_preview(),
             'mediaItems'       => PopupMedia::list_generated_images( 12 ),
             'aiClientAvailable' => function_exists( 'wp_ai_client_prompt' ),
             'imageGenerationAvailable' => function_exists( 'wp_ai_client_prompt' ) && PopupMedia::can_manage_media(),
             'canUploadMedia'   => PopupMedia::can_manage_media(),
             'abilitiesAvailable' => Abilities::wp_api_available(),
+            'abilities'        => Abilities::get_allowed_abilities(),
             'brand'            => array(
                 'savedBrand'    => BrandManager::get_saved_brand(),
                 'hasSavedBrand' => BrandManager::has_saved_brand(),
