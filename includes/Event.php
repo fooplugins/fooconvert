@@ -26,7 +26,7 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
 
                 if ( is_null( $user_id ) && is_user_logged_in() ) {
                     $user_id = get_current_user_id();
-                    $anonymous_user_guid = null; //TODO : check if this should be null.
+                    $anonymous_user_guid = null;
                 }
 
                 if ( $user_id > 0 ) {
@@ -35,19 +35,17 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
                 } else {
                     $data['user_id'] = 0;
 
-                    // unslash and sanitize.
                     $remote_addr = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
                     $user_agent = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) );
 
                     if ( empty( $anonymous_user_guid ) && isset( $remote_addr ) && isset( $user_agent ) ) {
-                        // We could not determine the anonymous user GUID using the localStorage or cookie.
-                        // Try and create a random GUID from the IP address and user agent.
+                        // Fall back to a stable anonymous fingerprint when the
+                        // frontend did not supply a GUID from local storage/cookies.
                         $anonymous_user_guid = hash( 'sha256', $remote_addr . $user_agent );
                     }
                     $data['anonymous_user_guid'] = $anonymous_user_guid;
                 }
 
-                // Convert empty values to null.
                 foreach ( $data as $key => $value ) {
                     if ( is_array( $value ) && empty( $value ) ) {
                         $data[$key] = null;
@@ -187,7 +185,6 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
          *     'unique_visitors' => int The number of unique visitors
          */
         public function get_popup_daily_activity( $post_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
-            // Sanitize input
             $post_id = intval( $post_id );
 
             $results = Data\Query::get_popup_daily_activity( $post_id, $days );
@@ -327,9 +324,8 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
          * @return array An array of events for the popup
          */
         public function get_popup_events_of_type( $post_id, $event_type, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
-            // Sanitize input
             $post_id = intval( $post_id );
-            $days = max( 1, (int)$days ); // Ensure days is at least 1
+            $days = max( 1, (int) $days );
 
             return Data\Query::get_popup_events_of_type( $post_id, $event_type, $days );
         }

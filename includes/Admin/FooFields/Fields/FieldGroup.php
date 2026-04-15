@@ -96,13 +96,14 @@ if ( !class_exists( __NAMESPACE__ . '\FieldGroup' ) ) {
         function render_input( $override_attributes = false ) {
             if ( is_array( $this->fields ) ) {
                 foreach ( $this->fields as $field ) {
-                    // child fields inherit this fields layout value unless they explicitly define there own
+                    // Child fields inherit the group layout unless they override it.
                     if ( !isset( $field->config['layout'] ) ) {
                         $field->layout = $this->layout;
                     }
                     $field->pre_render();
 
-                    // only add the indent class if the option is enabled, the field is not a field group and the field doesn't already have the class set
+                    // Only indent non-group child fields when the group explicitly
+                    // enables indentation and the class is not already present.
                     if ( $this->indent === true && $field->type !== 'field-group' && !in_array( 'foofields-indent', $field->classes ) ) {
                         $field->classes[] = 'foofields-indent';
                     }
@@ -110,46 +111,5 @@ if ( !class_exists( __NAMESPACE__ . '\FieldGroup' ) ) {
                 }
             }
         }
-
-//		/**
-//		 * Gets a field value from the saved state.
-//		 *
-//		 * @param $field_config
-//		 *
-//		 * @return mixed|null
-//		 */
-//		function get_field_value( $field_config ) {
-//			if ( array_key_exists( 'id', $field_config ) ) {
-//				$state = $this->value();
-//				if ( is_array( $state ) && array_key_exists( $field_config['id'], $state ) ) {
-//					return $state[ $field_config['id'] ];
-//				}
-//				if ( isset( $field_config['default'] ) ) {
-//					return $field_config['default'];
-//				}
-//			}
-//
-//			return null;
-//		}
-
-//		/**
-//		 * Overrides the base method so we can fetch each of the child field values from the posted data.
-//		 *
-//		 * @param $sanitized_form_data
-//		 *
-//		 * @return array|mixed|string|null
-//		 */
-//		public function get_posted_value( $sanitized_form_data ) {
-//			$return_value = null;
-//			if ( is_array( $this->fields ) ) {
-//				$return_value = array();
-//				foreach ( $this->fields as $field_config ) {
-//					$field_object                      = $this->container->create_field_instance( $field_config['type'], $field_config );
-//					$return_value[ $field_object->id ] = $field_object->get_posted_value( $sanitized_form_data );
-//				}
-//			}
-//
-//			return $return_value;
-//		}
     }
 }

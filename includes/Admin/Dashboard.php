@@ -28,30 +28,23 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
         /**
          * Checks nonce and user capabilities before performing an action.
          *
-         * Verifies that the nonce is set and valid, and that the current user
-         * has the capability of 'manage_options' if check_admin is true.
-         *
-         * @param bool $check_admin Whether to check if the user is an administrator.
-         * @return bool True if the checks pass, otherwise an error message is displayed.
+         * @param bool $check_admin Whether to require the admin capability check.
+         * @return bool True if the checks pass.
          *
          * @since 1.0.0
          */
         function do_checks( $check_admin = true ) {
             if ( isset( $_POST['nonce'] ) ) {
-                // Sanitize the nonce
                 $nonce = sanitize_text_field( wp_unslash( $_POST['nonce'] ) );
 
-                // Verify the nonce
                 if ( !wp_verify_nonce( $nonce, 'fooconvert-dashboard' ) ) {
                     wp_die( esc_html__( 'Invalid nonce!!', 'fooconvert' ) );
                 }
 
-                // Check if the current user is an administrator
                 if ( $check_admin && !current_user_can( 'manage_options' ) ) {
                     wp_die( esc_html__( 'You do not have permission to access this page.', 'fooconvert' ) );
                 }
 
-                // If we get here, then all our checks have passed.
                 return true;
 
             } else {
@@ -182,12 +175,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
             ob_start();
             $demo = new DemoContent();
             $created = $demo->create( true );
-            $content = ob_get_clean();
-
-            if ( !empty( $content ) ) {
-                // TODO : There were errors creating demo content. Probably DB related, which need to be logged somewhere.
-                // For now, they can be ignored.
-            }
+            // Demo creation can emit buffered output; discard it so the AJAX
+            // response body remains valid JSON.
+            ob_get_clean();
 
             fooconvert_set_setting( 'demo_content', 'on' );
 
