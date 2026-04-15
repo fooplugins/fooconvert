@@ -6,7 +6,7 @@ Core implementation shipped. Follow-up work remains.
 
 ## Summary
 
-FooConvert now has a working PRO A/B testing foundation built around a native WordPress experiment CPT, widget duplication, server-side sticky assignment, and results reporting on top of the existing analytics tables.
+FooConvert now has a working PRO A/B testing foundation built around a native WordPress experiment CPT, popup duplication, server-side sticky assignment, and results reporting on top of the existing analytics tables.
 
 The earlier draft backlog in this directory is no longer accurate. This document summarizes what is actually implemented today and what still needs follow-up work.
 
@@ -14,10 +14,10 @@ The earlier draft backlog in this directory is no longer accurate. This document
 
 ### Runtime
 
-- PRO-only feature for `fc-popup`, `fc-bar`, and `fc-flyout`
+- PRO-only feature for `fc-overlay`, `fc-bar`, and `fc-flyout`
 - Same-type experiments only
 - Server-side participant assignment with sticky cookies
-- Assignment cookie stores widget IDs, not indexes
+- Assignment cookie stores popup IDs, not indexes
 - Display rules and shortcode rendering both resolve through the experiment runtime
 - Active experiments disable page caching for matched requests
 
@@ -30,14 +30,14 @@ The earlier draft backlog in this directory is no longer accurate. This document
 - Start, pause, complete, complete-with-winner, and apply-winner flows
 - Applied state after winner application
 - Cleanup flow for permanently deleting variants after apply
-- Widget membership metadata with role, label, current experiment, and history
+- Popup membership metadata with role, label, current experiment, and history
 - Run-window tracking so paused time is excluded from results
 
 ### Editor integration
 
-- Experiment status panel in widget editors
+- Experiment status panel in popup editors
 - Direct links back to the owning experiment
-- Variant widgets cannot edit experiment-owned targeting:
+- Variant popups cannot edit experiment-owned targeting:
   - display rules
   - trigger/open behavior
   - experiment-controlled close/open button settings
@@ -61,10 +61,10 @@ The earlier draft backlog in this directory is no longer accurate. This document
 ### Shipped
 
 - [x] Register experiment CPT
-- [x] Register experiment/widget meta
+- [x] Register experiment/popup meta
 - [x] Create experiment lifecycle service
 - [x] Build experiment admin UI on native CPT screens
-- [x] Duplicate widgets into variants
+- [x] Duplicate popups into variants
 - [x] Resolve assigned participants during frontend rendering
 - [x] Add sticky assignment cookies
 - [x] Add results aggregation from existing analytics tables
@@ -72,7 +72,7 @@ The earlier draft backlog in this directory is no longer accurate. This document
 - [x] Add inline results and CSV export
 - [x] Add manual winner selection and apply-winner flow
 - [x] Add applied state and post-apply cleanup flow
-- [x] Add widget editor membership/status UI
+- [x] Add popup editor membership/status UI
 - [x] Lock variant targeting config in the editor
 
 ### Still Open
@@ -90,7 +90,7 @@ The earlier draft backlog in this directory is no longer accurate. This document
 
 ## Notes
 
-- The feature is PRO-only, but one small free-core runtime hook exists so PRO can resolve the correct widget at render time.
+- The feature is PRO-only, but one small free-core runtime hook exists so PRO can resolve the correct popup at render time.
 - Earlier docs referred to `fooconvert_experiment`; the implemented CPT is `fc-experiment`.
 - Earlier docs assumed popup-only support and a custom admin architecture; the shipped implementation supports popups, bars, and flyouts on native CPT screens.
 - `Apply Winner` copies the winner back to the control and moves the experiment to `Applied`.

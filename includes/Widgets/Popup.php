@@ -34,21 +34,21 @@ class Popup extends BaseWidget {
      * @inheritDoc
      */
     function get_post_type(): string {
-        return 'fc-popup';
+        return FOOCONVERT_CPT_POPUP;
     }
 
     /**
      * Returns the block name.
      */
     function get_block_name(): string {
-        return 'fc/popup';
+        return 'fc/overlay';
     }
 
     /**
      * Returns the tag name.
      */
     function get_tag_name(): string {
-        return 'fc-popup';
+        return 'fc-overlay';
     }
 
     /**
@@ -83,7 +83,7 @@ class Popup extends BaseWidget {
             array(
                 'name'        => 'empty_popup',
                 'title'       => __( 'Empty', 'fooconvert' ),
-                'description' => __( 'A blank slate that you can use to build your own popup from scratch.', 'fooconvert' ),
+                'description' => __( 'A blank slate that you can use to build your own overlay from scratch.', 'fooconvert' ),
                 'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__blank.png',
                 'attributes'  => array(
                     'content'     => array(
@@ -100,11 +100,11 @@ class Popup extends BaseWidget {
                 ),
                 'innerBlocks' => array(
                     array(
-                        'fc/popup-container',
+                        'fc/overlay-container',
                         array(),
                         array(
-                            array( 'fc/popup-close-button' ),
-                            array( 'fc/popup-content' )
+                            array( 'fc/overlay-close-button' ),
+                            array( 'fc/overlay-content' )
                         )
                     )
                 ),
@@ -112,8 +112,8 @@ class Popup extends BaseWidget {
             ),
             array(
                 'name'        => 'black_friday_popup',
-                'title'       => __( 'Black Friday Popup', 'fooconvert' ),
-                'description' => __( 'A typical Black Friday popup to help drive sales.', 'fooconvert' ),
+                'title'       => __( 'Black Friday Overlay', 'fooconvert' ),
+                'description' => __( 'A typical Black Friday overlay to help drive sales.', 'fooconvert' ),
                 'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__black_friday.png',
                 'attributes'  => array(
                     'settings'    => array(
@@ -166,16 +166,16 @@ class Popup extends BaseWidget {
                 ),
                 'innerBlocks' => array(
                     array(
-                        'fc/popup-container',
+                        'fc/overlay-container',
                         array(),
                         array(
                             array(
-                                'fc/popup-close-button',
+                                'fc/overlay-close-button',
                                 array(),
                                 array(),
                             ),
                             array(
-                                'fc/popup-content',
+                                'fc/overlay-content',
                                 array(),
                                 array(
                                     array(

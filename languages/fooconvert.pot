@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-04-06T12:23:14+00:00\n"
+"POT-Creation-Date: 2026-04-15T16:10:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: fooconvert\n"
@@ -70,17 +70,17 @@ msgid "Panel hidden."
 msgstr ""
 
 #: includes/Admin/Dashboard.php:195
-msgid "No widgets created!"
+msgid "No popups created!"
 msgstr ""
 
-#. Translators: %d refers to the number of demo widgets created.
+#. Translators: %d refers to the number of demo popups created.
 #: includes/Admin/Dashboard.php:198
 #, php-format
-msgid "%d demo widgets created successfully!"
+msgid "%d demo popups created successfully!"
 msgstr ""
 
 #: includes/Admin/Dashboard.php:216
-msgid "All demo widgets deleted!"
+msgid "All demo popups deleted!"
 msgstr ""
 
 #: includes/Admin/Dashboard.php:267
@@ -105,15 +105,68 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: includes/Admin/Init.php:45
-#: includes/Admin/Init.php:46
+#: includes/Admin/Init.php:47
+#: includes/Admin/Init.php:48
 msgid "FooConvert"
+msgstr ""
+
+#: includes/Admin/Init.php:73
+#: includes/Admin/Init.php:74
+msgid "Choose Popup Type"
+msgstr ""
+
+#: includes/Admin/Init.php:155
+#: includes/functions.php:221
+#: src/editor/hooks/usePostTypeLabels.js:12
+msgid "Bar"
+msgstr ""
+
+#: includes/Admin/Init.php:156
+msgid "Create a top or bottom bar with triggers, display rules, and templates."
+msgstr ""
+
+#: includes/Admin/Init.php:159
+#: includes/functions.php:223
+#: src/editor/hooks/usePostTypeLabels.js:16
+msgid "Flyout"
+msgstr ""
+
+#: includes/Admin/Init.php:160
+msgid "Create a side flyout with template variations and the usual FooConvert controls."
+msgstr ""
+
+#: includes/Admin/Init.php:163
+#: includes/functions.php:225
+#: src/editor/hooks/usePostTypeLabels.js:20
+msgid "Overlay"
+msgstr ""
+
+#: includes/Admin/Init.php:164
+msgid "Create a centered overlay and continue into the normal template picker flow."
+msgstr ""
+
+#: includes/Admin/Init.php:169
+msgid "Choose a Popup Type"
+msgstr ""
+
+#: includes/Admin/Init.php:170
+msgid "Pick the kind of popup you want to create before choosing a template."
+msgstr ""
+
+#. translators: %s is the popup type card title, for example "Bar" or "Overlay".
+#: includes/Admin/Init.php:180
+#, php-format
+msgid "Create %s"
+msgstr ""
+
+#: includes/Admin/Init.php:190
+msgid "Back to popups"
 msgstr ""
 
 #: includes/Admin/LeadsMenu.php:29
 #: includes/Admin/LeadsMenu.php:30
-#: pro/includes/Experiments/Admin/Init.php:867
-#: pro/includes/Experiments/Experiment.php:250
+#: pro/includes/Experiments/Admin/Init.php:866
+#: pro/includes/Experiments/Experiment.php:289
 #: pro/includes/Leads/Init.php:70
 msgid "Leads"
 msgstr ""
@@ -123,24 +176,26 @@ msgid "ID"
 msgstr ""
 
 #: includes/Admin/LeadsTable.php:50
-#: includes/Blocks/SignUp.php:88
+#: includes/Blocks/SignUp.php:87
 #: src/blocks/sign-up/editor/components/inputs/EditBlock.js:21
 #: src/blocks/sign-up/editor/Edit.js:22
 msgid "Email"
 msgstr ""
 
 #: includes/Admin/LeadsTable.php:51
-#: includes/Blocks/SignUp.php:84
+#: includes/Blocks/SignUp.php:83
 #: src/blocks/sign-up/editor/components/inputs/EditBlock.js:15
 #: src/blocks/sign-up/editor/Edit.js:21
 msgid "Name"
 msgstr ""
 
 #: includes/Admin/LeadsTable.php:52
+#: includes/PostType.php:51
 #: pro/includes/Analytics/Sales.php:256
 #: src/editor/components/experiment-panel/Component.js:19
 #: src/editor/components/experiment-panel/Component.js:27
-msgid "Widget"
+#: src/scripts/admin/display-rules-list/index.js:145
+msgid "Popup"
 msgstr ""
 
 #: includes/Admin/LeadsTable.php:53
@@ -193,6 +248,7 @@ msgid "Click Through Rate"
 msgstr ""
 
 #: includes/Admin/Promotions.php:226
+#: pro/includes/Analytics/Metrics.php:54
 msgid "Click Through Rate for the popup."
 msgstr ""
 
@@ -328,8 +384,8 @@ msgstr ""
 
 #: includes/Admin/Settings.php:57
 #: includes/Components/OpenTriggerPanel.php:397
-#: includes/DisplayRules.php:265
-#: includes/DisplayRules.php:388
+#: includes/DisplayRules.php:652
+#: includes/DisplayRules.php:775
 msgid "General"
 msgstr ""
 
@@ -414,7 +470,7 @@ msgid "Event Row Count"
 msgstr ""
 
 #: includes/Admin/Settings.php:153
-msgid "Widget Count With Events"
+msgid "Popup Count With Events"
 msgstr ""
 
 #: includes/Admin/Settings.php:157
@@ -422,7 +478,7 @@ msgid "Orphaned Event Count"
 msgstr ""
 
 #: includes/Admin/Settings.php:169
-msgid "Orphaned Widget Count"
+msgid "Orphaned Popup Count"
 msgstr ""
 
 #: includes/Admin/Settings.php:177
@@ -521,7 +577,6 @@ msgstr ""
 #: includes/Admin/Settings.php:325
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:84
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:234
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:410
 #: src/blocks/countdown/editor/components/container/EditSettings.js:76
 #: src/blocks/countdown/editor/EditSettings.js:26
 #: src/blocks/coupon/editor/components/container/EditSettings.js:66
@@ -531,7 +586,7 @@ msgid "Settings"
 msgstr ""
 
 #: includes/Admin/Stats.php:115
-msgid "Invalid widget ID!!"
+msgid "Invalid popup ID!!"
 msgstr ""
 
 #: includes/Admin/Stats.php:131
@@ -539,13 +594,13 @@ msgid "Events"
 msgstr ""
 
 #: includes/Admin/Stats.php:139
-#: includes/functions.php:281
-#: pro/includes/Experiments/Admin/Init.php:864
+#: includes/functions.php:472
+#: pro/includes/Experiments/Admin/Init.php:863
 msgid "Views"
 msgstr ""
 
 #: includes/Admin/Stats.php:147
-#: includes/functions.php:273
+#: includes/functions.php:464
 msgid "Engagements"
 msgstr ""
 
@@ -704,7 +759,7 @@ msgid "A smart exit offer flyout lead magnet to help prevent visitors from leavi
 msgstr ""
 
 #: includes/Admin/Templates/popups/digital_download_signup.php:6
-msgid "Digital download signup themed popup."
+msgid "Digital download signup themed overlay."
 msgstr ""
 
 #: includes/Admin/Templates/popups/digital_download_signup.php:197
@@ -712,11 +767,11 @@ msgid "Digital Marketing"
 msgstr ""
 
 #: includes/Admin/Templates/popups/digital_download_signup.php:198
-msgid "Digital marketing themed popup."
+msgid "Digital marketing themed overlay."
 msgstr ""
 
 #: includes/Admin/Templates/popups/newsletter_subscribe.php:6
-msgid "Newsletter Subscribe marketing themed popup."
+msgid "Newsletter Subscribe marketing themed overlay."
 msgstr ""
 
 #: includes/Admin/Templates/popups/newsletter_subscribe.php:264
@@ -724,11 +779,11 @@ msgid "i-Cafe"
 msgstr ""
 
 #: includes/Admin/Templates/popups/newsletter_subscribe.php:265
-msgid "i-Cafe marketing themed popup."
+msgid "i-Cafe marketing themed overlay."
 msgstr ""
 
 #: includes/Admin/Templates/popups/smart_exit_offer.php:6
-msgid "Smart exit offer themed popup."
+msgid "Smart exit offer themed overlay."
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:11
@@ -736,7 +791,7 @@ msgid "Getting Started with FooConvert!"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:22
-msgid "The easiest way to get started is by creating demo content, which will create 4 draft bars, flyouts and popups."
+msgid "The easiest way to get started is by creating demo content, which will create 4 draft bars, flyouts and overlays."
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:23
@@ -773,15 +828,15 @@ msgid "OR"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:55
-msgid "Create your own unique bar by following these simple steps:"
+msgid "Create your own unique popup by following these simple steps:"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:59
-msgid "Create a new bar."
+msgid "Create a new popup and choose whether it should be a bar, flyout, or overlay."
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:61
-msgid "create a new bar"
+msgid "create a new popup"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:64
@@ -789,7 +844,7 @@ msgid "Select a pre-made template."
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:65
-msgid "e.g. Black Friday Bar"
+msgid "e.g. Black Friday Bar, Scroll Flyout, or Exit Intent Overlay"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:68
@@ -854,12 +909,13 @@ msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-recent.php:48
 #: includes/Admin/Views/dashboard-top-performers.php:39
-msgid "Edit Widget"
+#: includes/PostType.php:54
+msgid "Edit Popup"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-recent.php:50
 #: includes/Admin/Views/dashboard-top-performers.php:41
-msgid "View Widget Stats"
+msgid "View Popup Stats"
 msgstr ""
 
 #. translators: %s: refers to the time last modified.
@@ -869,18 +925,15 @@ msgid "modified %s ago"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-recent.php:75
-#: includes/Widgets/Bar.php:92
 msgid "Add New Bar"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-recent.php:78
-#: includes/Widgets/Flyout.php:92
 msgid "Add New Flyout"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-recent.php:81
-#: includes/Widgets/Popup.php:88
-msgid "Add New Popup"
+msgid "Add New Overlay"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-top-performers.php:8
@@ -1002,7 +1055,7 @@ msgid "Total Events"
 msgstr ""
 
 #: includes/Admin/Views/widget-stats.php:65
-msgid "Total events logged for the widget over the time period."
+msgid "Total events logged for the popup over the time period."
 msgstr ""
 
 #: includes/Admin/Views/widget-stats.php:71
@@ -1010,7 +1063,7 @@ msgid "Total Views"
 msgstr ""
 
 #: includes/Admin/Views/widget-stats.php:73
-msgid "Total number of times the widget has been viewed by a visitor."
+msgid "Total number of times the popup has been viewed by a visitor."
 msgstr ""
 
 #: includes/Admin/Views/widget-stats.php:79
@@ -1018,7 +1071,7 @@ msgid "Total Visitors"
 msgstr ""
 
 #: includes/Admin/Views/widget-stats.php:81
-msgid "Total number of unique visitors that have viewed the widget."
+msgid "Total number of unique visitors that have viewed the popup."
 msgstr ""
 
 #: includes/Admin/Views/widget-stats.php:87
@@ -1026,7 +1079,7 @@ msgid "Total Engagements"
 msgstr ""
 
 #: includes/Admin/Views/widget-stats.php:89
-msgid "Total number of engagements that have been made with the widget (clicks, opens, etc)."
+msgid "Total number of engagements that have been made with the popup (clicks, opens, etc)."
 msgstr ""
 
 #. Translators: %s refers to the widget type.
@@ -1035,44 +1088,44 @@ msgstr ""
 msgid "%s Activity"
 msgstr ""
 
-#: includes/Blocks/Countdown.php:82
+#: includes/Blocks/Countdown.php:81
 #: src/blocks/countdown/editor/Edit.js:19
 msgid "Days"
 msgstr ""
 
-#: includes/Blocks/Countdown.php:86
+#: includes/Blocks/Countdown.php:85
 #: src/blocks/countdown/editor/Edit.js:20
 msgid "Hours"
 msgstr ""
 
-#: includes/Blocks/Countdown.php:90
+#: includes/Blocks/Countdown.php:89
 #: src/blocks/countdown/editor/components/container/EditSettings.js:95
 #: src/blocks/countdown/editor/Edit.js:21
 msgid "Minutes"
 msgstr ""
 
-#: includes/Blocks/Countdown.php:94
+#: includes/Blocks/Countdown.php:93
 #: src/blocks/countdown/editor/Edit.js:22
 msgid "Seconds"
 msgstr ""
 
-#: includes/Blocks/Coupon.php:89
+#: includes/Blocks/Coupon.php:88
 #: src/blocks/coupon/editor/Edit.js:23
 #: src/editor/icons/default/index.js:40
 msgid "Copy"
 msgstr ""
 
-#: includes/Blocks/Coupon.php:123
+#: includes/Blocks/Coupon.php:122
 #: src/blocks/coupon/editor/Edit.js:13
 msgid "Copied!"
 msgstr ""
 
-#: includes/Blocks/SignUp.php:97
+#: includes/Blocks/SignUp.php:96
 #: src/blocks/sign-up/editor/Edit.js:43
 msgid "Submit"
 msgstr ""
 
-#: includes/Blocks/SignUp.php:122
+#: includes/Blocks/SignUp.php:121
 #: src/blocks/sign-up/editor/Edit.js:12
 msgid "Thanks!"
 msgstr ""
@@ -1195,111 +1248,156 @@ msgstr ""
 msgid "The amount of time to wait before opening."
 msgstr ""
 
-#: includes/DisplayRules.php:44
+#: includes/DisplayRules.php:61
 msgid "Display rules for FooConvert."
 msgstr ""
 
-#: includes/DisplayRules.php:89
-#: includes/DisplayRules.php:96
-#: includes/DisplayRules.php:108
+#: includes/DisplayRules.php:181
+#: includes/DisplayRules.php:188
+#: includes/DisplayRules.php:201
 #: src/editor/components/display-rules-button/Component.js:178
 msgid "Display Rules"
 msgstr ""
 
-#: includes/DisplayRules.php:109
+#: includes/DisplayRules.php:202
 msgid "Table ordered by display rules."
 msgstr ""
 
-#: includes/DisplayRules.php:126
+#: includes/DisplayRules.php:229
+msgid "Display rules unavailable."
+msgstr ""
+
+#: includes/DisplayRules.php:258
+msgid "You do not have permission to edit these display rules."
+msgstr ""
+
+#: includes/DisplayRules.php:317
+#: includes/DisplayRules.php:326
+#: src/editor/components/date-time-control/Component.js:17
 #: src/editor/components/display-rules/components/post-status-info/Component.js:45
 #: src/editor/components/display-rules/components/pre-publish-panel/Component.js:20
-msgid "Set"
+#: src/scripts/admin/display-rules-list/index.js:111
+#: src/scripts/admin/display-rules-list/index.js:121
+msgid "Not set"
 msgstr ""
 
-#: includes/DisplayRules.php:128
-msgid "Not set!"
+#: includes/DisplayRules.php:322
+#: includes/DisplayRules.php:340
+#: src/editor/components/display-rules/components/content-control/Component.js:75
+#: src/editor/components/display-rules/components/content-control/Component.js:84
+#: src/editor/components/display-rules/components/content-control/Component.js:93
+#: src/editor/components/open-trigger-component/Component.js:269
+#: src/editor/components/typography-tools-panel/Component.js:219
+#: src/editor/components/typography-tools-panel/Component.js:253
+#: src/scripts/admin/display-rules-list/index.js:116
+msgid "None"
 msgstr ""
 
-#: includes/DisplayRules.php:269
+#: includes/DisplayRules.php:359
+#: src/scripts/admin/display-rules-list/index.js:209
+msgid "Show on"
+msgstr ""
+
+#: includes/DisplayRules.php:364
+#: src/scripts/admin/display-rules-list/index.js:215
+msgid "Hide from"
+msgstr ""
+
+#: includes/DisplayRules.php:370
+#: src/editor/components/display-rules-button/Component.js:105
+#: src/editor/components/display-rules/components/content-control/Component.js:53
+#: src/scripts/admin/display-rules-list/index.js:221
+#: src/scripts/admin/display-rules-list/index.js:318
+msgid "Users"
+msgstr ""
+
+#. translators: %d is the number of remaining labels hidden from the summary.
+#: includes/DisplayRules.php:505
+#: src/scripts/admin/display-rules-list/index.js:53
+#, php-format,js-format
+msgid " +%d more"
+msgstr ""
+
+#: includes/DisplayRules.php:656
 msgid "Entire Site"
 msgstr ""
 
-#: includes/DisplayRules.php:273
+#: includes/DisplayRules.php:660
 msgid "Front Page"
 msgstr ""
 
-#: includes/DisplayRules.php:277
+#: includes/DisplayRules.php:664
 msgid "Blog"
 msgstr ""
 
-#: includes/DisplayRules.php:281
+#: includes/DisplayRules.php:668
 msgid "Search Results"
 msgstr ""
 
-#: includes/DisplayRules.php:285
+#: includes/DisplayRules.php:672
 msgid "No Search Results"
 msgstr ""
 
-#: includes/DisplayRules.php:289
+#: includes/DisplayRules.php:676
 msgid "404 Template"
 msgstr ""
 
 #. Translators: %s refers to the taxonomy that is being searched for. e.g. "Category".
-#: includes/DisplayRules.php:307
-#: includes/DisplayRules.php:333
+#: includes/DisplayRules.php:694
+#: includes/DisplayRules.php:720
 #, php-format
 msgid "Type to choose %s..."
 msgstr ""
 
-#: includes/DisplayRules.php:316
+#: includes/DisplayRules.php:703
 msgid "Specific Posts"
 msgstr ""
 
-#: includes/DisplayRules.php:342
+#: includes/DisplayRules.php:729
 msgid "Specific Taxonomies"
 msgstr ""
 
-#: includes/DisplayRules.php:361
+#: includes/DisplayRules.php:748
 msgid "Post Archives"
 msgstr ""
 
-#: includes/DisplayRules.php:392
+#: includes/DisplayRules.php:779
 msgid "All Users"
 msgstr ""
 
-#: includes/DisplayRules.php:396
+#: includes/DisplayRules.php:783
 msgid "Logged In"
 msgstr ""
 
-#: includes/DisplayRules.php:400
+#: includes/DisplayRules.php:787
 msgid "Logged Out"
 msgstr ""
 
-#: includes/DisplayRules.php:406
+#: includes/DisplayRules.php:793
 msgid "Roles"
 msgstr ""
 
-#: includes/EventHooks.php:158
+#: includes/EventHooks.php:152
 msgid "Published"
 msgstr ""
 
-#: includes/EventHooks.php:161
+#: includes/EventHooks.php:155
 msgid "Un-published"
 msgstr ""
 
-#: includes/EventHooks.php:164
+#: includes/EventHooks.php:158
 msgid "Status Updated"
 msgstr ""
 
-#: includes/EventHooks.php:183
+#: includes/EventHooks.php:177
 msgid "Content Updated"
 msgstr ""
 
-#: includes/EventHooks.php:209
+#: includes/EventHooks.php:203
 msgid "Open Trigger Changed"
 msgstr ""
 
-#: includes/EventHooks.php:224
+#: includes/EventHooks.php:218
 msgid "Styling Updated"
 msgstr ""
 
@@ -1312,7 +1410,7 @@ msgid "Font Help"
 msgstr ""
 
 #: includes/Fonts.php:46
-msgid "Add Google Fonts here to make them available while editing your widgets."
+msgid "Add Google Fonts here to make them available while editing your popups."
 msgstr ""
 
 #: includes/Fonts.php:52
@@ -1339,84 +1437,110 @@ msgstr ""
 msgid "The Google Font family code, for example \"Handlee\" or \"Montserrat:ital,wght@0,100..900;1,100..900\"."
 msgstr ""
 
-#: includes/functions.php:272
+#: includes/functions.php:463
 msgid "engagements"
 msgstr ""
 
-#: includes/functions.php:274
+#: includes/functions.php:465
 msgid "Total number of engagements"
 msgstr ""
 
-#: includes/functions.php:280
+#: includes/functions.php:471
 #: pro/includes/WooCommerce/Triggers.php:283
 msgid "views"
 msgstr ""
 
-#: includes/functions.php:282
+#: includes/functions.php:473
 msgid "Total number of views"
 msgstr ""
 
-#: includes/functions.php:322
+#: includes/functions.php:513
 msgid "ago"
 msgstr ""
 
-#: includes/functions.php:350
+#: includes/functions.php:541
 msgid "Never"
 msgstr ""
 
-#: includes/functions.php:397
-#: includes/Widgets/Popup.php:86
-msgid "Popup"
-msgstr ""
-
-#: includes/functions.php:399
-#: includes/Widgets/Flyout.php:90
-msgid "Flyout"
-msgstr ""
-
-#: includes/functions.php:401
-#: includes/Widgets/Bar.php:90
-msgid "Bar"
-msgstr ""
-
-#: includes/functions.php:431
+#: includes/functions.php:623
 msgid "Lead Integrations"
 msgstr ""
 
-#: includes/functions.php:432
+#: includes/functions.php:624
 msgid "Send captured leads to Mailchimp, MailPoet, or custom webhook integrations."
 msgstr ""
 
-#: includes/functions.php:436
+#: includes/functions.php:628
 msgid "Longer Retention"
 msgstr ""
 
-#: includes/functions.php:437
-msgid "Longer retention period for widget analytics. Track widget performance as long as you like!"
+#: includes/functions.php:629
+msgid "Longer retention period for popup analytics. Track popup performance as long as you like!"
 msgstr ""
 
-#: includes/functions.php:441
+#: includes/functions.php:633
 msgid "Advanced Analytics"
 msgstr ""
 
-#: includes/functions.php:442
-msgid "Advanced widget analytics: Clicks, click-through-rates, conversions, conversion rates, engagement sentiment, engagement ratios, daily activity charts."
+#: includes/functions.php:634
+msgid "Advanced popup analytics: Clicks, click-through-rates, conversions, conversion rates, engagement sentiment, engagement ratios, daily activity charts."
 msgstr ""
 
-#: includes/functions.php:446
+#: includes/functions.php:638
 msgid "More Dashboard Metrics"
 msgstr ""
 
-#: includes/functions.php:447
+#: includes/functions.php:639
 msgid "Top Performers by Engagement Rate, Clicks, Click Rate, Conversions, Conversion Rate."
 msgstr ""
 
-#: includes/functions.php:451
+#: includes/functions.php:643
 msgid "Role Exclusion"
 msgstr ""
 
-#: includes/functions.php:452
-msgid "Exclude roles from logging widget events for analytics (e.g., exclude admin tests)."
+#: includes/functions.php:644
+msgid "Exclude roles from logging popup events for analytics (e.g., exclude admin tests)."
+msgstr ""
+
+#: includes/PostType.php:50
+#: includes/PostType.php:60
+msgid "Popups"
+msgstr ""
+
+#: includes/PostType.php:52
+msgid "Add Popup"
+msgstr ""
+
+#: includes/PostType.php:53
+msgid "Add New Popup"
+msgstr ""
+
+#: includes/PostType.php:55
+msgid "New Popup"
+msgstr ""
+
+#: includes/PostType.php:56
+msgid "View Popups"
+msgstr ""
+
+#: includes/PostType.php:57
+msgid "Search Popups"
+msgstr ""
+
+#: includes/PostType.php:58
+msgid "No Popups found"
+msgstr ""
+
+#: includes/PostType.php:59
+msgid "No Popups found in Trash"
+msgstr ""
+
+#: includes/PostType.php:147
+msgid "Type"
+msgstr ""
+
+#: includes/PostType.php:198
+msgid "All Types"
 msgstr ""
 
 #. translators: %1$s = Plugin name; %2$s = Minimum PHP version; %3$s = Current PHP version
@@ -1436,152 +1560,53 @@ msgid "Update WordPress now."
 msgstr ""
 
 #: includes/Widgets/Bar.php:89
-#: includes/Widgets/Bar.php:99
-msgid "Bars"
-msgstr ""
-
-#: includes/Widgets/Bar.php:91
-msgid "Add Bar"
-msgstr ""
-
-#: includes/Widgets/Bar.php:93
-msgid "Edit Bar"
-msgstr ""
-
-#: includes/Widgets/Bar.php:94
-msgid "New Bar"
-msgstr ""
-
-#: includes/Widgets/Bar.php:95
-msgid "View Bars"
-msgstr ""
-
-#: includes/Widgets/Bar.php:96
-msgid "Search Bars"
-msgstr ""
-
-#: includes/Widgets/Bar.php:97
-msgid "No Bars found"
-msgstr ""
-
-#: includes/Widgets/Bar.php:98
-msgid "No Bars found in Trash"
-msgstr ""
-
-#: includes/Widgets/Bar.php:121
-#: includes/Widgets/Flyout.php:121
-#: includes/Widgets/Popup.php:117
+#: includes/Widgets/Flyout.php:89
+#: includes/Widgets/Popup.php:85
 msgid "Empty"
 msgstr ""
 
-#: includes/Widgets/Bar.php:122
+#: includes/Widgets/Bar.php:90
 msgid "A blank slate that you can use to build your own bar from scratch."
 msgstr ""
 
-#: includes/Widgets/Bar.php:162
+#: includes/Widgets/Bar.php:130
 msgid "Black Friday Bar"
 msgstr ""
 
-#: includes/Widgets/Bar.php:163
+#: includes/Widgets/Bar.php:131
 msgid "A typical Black Friday bar to help drive sales."
 msgstr ""
 
-#: includes/Widgets/Bar.php:279
+#: includes/Widgets/Bar.php:247
 msgid "Cookie Consent Bar"
 msgstr ""
 
-#: includes/Widgets/Bar.php:280
+#: includes/Widgets/Bar.php:248
 msgid "A simple bottom bar that is dismissed when the button is clicked."
 msgstr ""
 
-#: includes/Widgets/Flyout.php:89
-#: includes/Widgets/Flyout.php:99
-msgid "Flyouts"
-msgstr ""
-
-#: includes/Widgets/Flyout.php:91
-msgid "Add Flyout"
-msgstr ""
-
-#: includes/Widgets/Flyout.php:93
-msgid "Edit Flyout"
-msgstr ""
-
-#: includes/Widgets/Flyout.php:94
-msgid "New Flyout"
-msgstr ""
-
-#: includes/Widgets/Flyout.php:95
-msgid "View Flyouts"
-msgstr ""
-
-#: includes/Widgets/Flyout.php:96
-msgid "Search Flyouts"
-msgstr ""
-
-#: includes/Widgets/Flyout.php:97
-msgid "No Flyouts found"
-msgstr ""
-
-#: includes/Widgets/Flyout.php:98
-msgid "No Flyouts found in Trash"
-msgstr ""
-
-#: includes/Widgets/Flyout.php:122
+#: includes/Widgets/Flyout.php:90
 msgid "A blank slate that you can use to build your own flyout from scratch."
 msgstr ""
 
-#: includes/Widgets/Flyout.php:162
+#: includes/Widgets/Flyout.php:130
 msgid "Black Friday Flyout"
 msgstr ""
 
-#: includes/Widgets/Flyout.php:163
+#: includes/Widgets/Flyout.php:131
 msgid "A typical Black Friday flyout to help drive sales."
 msgstr ""
 
-#: includes/Widgets/Popup.php:85
-#: includes/Widgets/Popup.php:95
-msgid "Popups"
+#: includes/Widgets/Popup.php:86
+msgid "A blank slate that you can use to build your own overlay from scratch."
 msgstr ""
 
-#: includes/Widgets/Popup.php:87
-msgid "Add Popup"
+#: includes/Widgets/Popup.php:115
+msgid "Black Friday Overlay"
 msgstr ""
 
-#: includes/Widgets/Popup.php:89
-msgid "Edit Popup"
-msgstr ""
-
-#: includes/Widgets/Popup.php:90
-msgid "New Popup"
-msgstr ""
-
-#: includes/Widgets/Popup.php:91
-msgid "View Popups"
-msgstr ""
-
-#: includes/Widgets/Popup.php:92
-msgid "Search Popups"
-msgstr ""
-
-#: includes/Widgets/Popup.php:93
-msgid "No Popups found"
-msgstr ""
-
-#: includes/Widgets/Popup.php:94
-msgid "No Popups found in Trash"
-msgstr ""
-
-#: includes/Widgets/Popup.php:118
-msgid "A blank slate that you can use to build your own popup from scratch."
-msgstr ""
-
-#: includes/Widgets/Popup.php:147
-msgid "Black Friday Popup"
-msgstr ""
-
-#: includes/Widgets/Popup.php:148
-msgid "A typical Black Friday popup to help drive sales."
+#: includes/Widgets/Popup.php:116
+msgid "A typical Black Friday overlay to help drive sales."
 msgstr ""
 
 #: pro/includes/Admin/Views/dashboard-panel-sales.php:10
@@ -1594,11 +1619,11 @@ msgid "No attributed sales yet."
 msgstr ""
 
 #: pro/includes/Admin/Views/dashboard-panel-sales.php:45
-msgid "Totals By Widget"
+msgid "Totals By Popup"
 msgstr ""
 
 #: pro/includes/Admin/Views/dashboard-panel-sales.php:47
-msgid "No widget sales totals available yet."
+msgid "No popup sales totals available yet."
 msgstr ""
 
 #. translators: %d is the number of attributed sales for the widget.
@@ -1610,35 +1635,31 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: pro/includes/Analytics/Metrics.php:46
-msgid "Total number of clicks made within the widget."
-msgstr ""
-
-#: pro/includes/Analytics/Metrics.php:54
-msgid "Click Through Rate for the widget."
+msgid "Total number of clicks made within the popup."
 msgstr ""
 
 #: pro/includes/Analytics/Metrics.php:62
-msgid "Total number of conversions for the widget."
+msgid "Total number of conversions for the popup."
 msgstr ""
 
 #: pro/includes/Analytics/Metrics.php:70
-msgid "Conversion Rate for the widget."
+msgid "Conversion Rate for the popup."
 msgstr ""
 
 #: pro/includes/Analytics/Metrics.php:78
-msgid "Engagement Rate for the widget."
+msgid "Engagement Rate for the popup."
 msgstr ""
 
 #: pro/includes/Analytics/Metrics.php:86
-msgid "Total number of positive engagements for the widget (like clicks)."
+msgid "Total number of positive engagements for the popup (like clicks)."
 msgstr ""
 
 #: pro/includes/Analytics/Metrics.php:94
-msgid "Total number of negative engagements for the widget (like dismissals)."
+msgid "Total number of negative engagements for the popup (like dismissals)."
 msgstr ""
 
 #: pro/includes/Analytics/Metrics.php:102
-msgid "Overall sentiment for the widget which ranges from very negative to very positive. It can also be unknown if there are no engagements, or neutral."
+msgid "Overall sentiment for the popup which ranges from very negative to very positive. It can also be unknown if there are no engagements, or neutral."
 msgstr ""
 
 #: pro/includes/Analytics/Metrics.php:408
@@ -1684,8 +1705,8 @@ msgstr ""
 #: pro/includes/Analytics/Metrics.php:445
 #: pro/includes/Analytics/RecentActivity.php:149
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:191
-#: pro/includes/Experiments/Admin/Init.php:865
-#: pro/includes/Experiments/Experiment.php:248
+#: pro/includes/Experiments/Admin/Init.php:864
+#: pro/includes/Experiments/Experiment.php:287
 msgid "Clicks"
 msgstr ""
 
@@ -1711,8 +1732,8 @@ msgstr ""
 
 #: pro/includes/Analytics/Metrics.php:463
 #: pro/includes/Analytics/RecentActivity.php:172
-#: pro/includes/Experiments/Admin/Init.php:866
-#: pro/includes/Experiments/Experiment.php:249
+#: pro/includes/Experiments/Admin/Init.php:865
+#: pro/includes/Experiments/Experiment.php:288
 msgid "Conversions"
 msgstr ""
 
@@ -1776,7 +1797,7 @@ msgid "Change in Engagements"
 msgstr ""
 
 #: pro/includes/Analytics/Metrics.php:508
-msgid "Change in Engagements (This Week vs Last) as a percentage"
+msgid "Change in Engagements (This Week vs Last)"
 msgstr ""
 
 #: pro/includes/Analytics/Metrics.php:514
@@ -1788,7 +1809,7 @@ msgid "Change in Clicks"
 msgstr ""
 
 #: pro/includes/Analytics/Metrics.php:516
-msgid "Change in Clicks (This Week vs Last) as a percentage"
+msgid "Change in Clicks (This Week vs Last)"
 msgstr ""
 
 #: pro/includes/Analytics/Metrics.php:522
@@ -1800,7 +1821,7 @@ msgid "Change in Conversions"
 msgstr ""
 
 #: pro/includes/Analytics/Metrics.php:524
-msgid "Change in Conversions (This Week vs Last) as a percentage"
+msgid "Change in Conversions (This Week vs Last)"
 msgstr ""
 
 #: pro/includes/Analytics/RecentActivity.php:79
@@ -1818,7 +1839,7 @@ msgid "Closes"
 msgstr ""
 
 #: pro/includes/Analytics/Sales.php:41
-msgid "Attributed revenue and order activity for this widget."
+msgid "Attributed revenue and order activity for this popup."
 msgstr ""
 
 #: pro/includes/Analytics/Sales.php:47
@@ -1850,8 +1871,8 @@ msgid "Customer"
 msgstr ""
 
 #: pro/includes/Analytics/Sales.php:192
-#: pro/includes/Experiments/Admin/Init.php:169
-#: pro/includes/Experiments/Admin/Init.php:599
+#: pro/includes/Experiments/Admin/Init.php:168
+#: pro/includes/Experiments/Admin/Init.php:598
 msgid "Status"
 msgstr ""
 
@@ -1870,7 +1891,7 @@ msgstr ""
 #. translators: %d is the widget post ID.
 #: pro/includes/Analytics/Sales.php:251
 #, php-format
-msgid "Widget #%d"
+msgid "Popup #%d"
 msgstr ""
 
 #: pro/includes/Analytics/Sales.php:291
@@ -1878,50 +1899,53 @@ msgstr ""
 msgid "Guest"
 msgstr ""
 
-#: pro/includes/Blocks/ApplyCoupon.php:95
+#: pro/includes/Blocks/ApplyCoupon.php:92
 #: pro/src/blocks/apply-coupon/editor/Edit.js:23
 msgid "Apply"
 msgstr ""
 
-#: pro/includes/Blocks/ApplyCoupon.php:143
-#: pro/includes/Blocks/ApplyCoupon.php:147
+#: pro/includes/Blocks/ApplyCoupon.php:140
+#: pro/includes/Blocks/ApplyCoupon.php:144
 msgid "Coupon apply is unavailable on this page."
 msgstr ""
 
-#: pro/includes/Blocks/ApplyCoupon.php:145
+#: pro/includes/Blocks/ApplyCoupon.php:142
 msgid "Select a WooCommerce coupon before applying it."
 msgstr ""
 
-#: pro/includes/Blocks/ApplyCoupon.php:146
+#: pro/includes/Blocks/ApplyCoupon.php:143
 msgid "Coupon saved. It will be applied when the cart or checkout is available."
 msgstr ""
 
-#: pro/includes/Blocks/FreeShippingProgress.php:204
-msgid "Free shipping at {threshold}"
+#: pro/includes/Blocks/CartThresholdProgress.php:89
+#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:10
+msgid "free shipping"
 msgstr ""
 
-#: pro/includes/Blocks/FreeShippingProgress.php:213
-msgid "Proceed to checkout"
+#: pro/includes/Blocks/CartThresholdProgress.php:90
+#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:11
+msgid "You are {remaining} away from {goal}."
 msgstr ""
 
-#: pro/includes/Blocks/FreeShippingProgress.php:224
-#: pro/src/blocks/free-shipping-progress/editor/Edit.js:20
-msgid "You're {remaining} away from free shipping"
+#: pro/includes/Blocks/CartThresholdProgress.php:91
+#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:12
+msgid "You have unlocked {goal}."
 msgstr ""
 
-#: pro/includes/Blocks/FreeShippingProgress.php:225
-#: pro/src/blocks/free-shipping-progress/editor/Edit.js:21
-msgid "Almost there. Add {remaining} more to unlock free shipping."
+#: pro/includes/Blocks/CartThresholdProgress.php:93
+msgid "{subtotal} of {threshold}"
 msgstr ""
 
-#: pro/includes/Blocks/FreeShippingProgress.php:226
-#: pro/src/blocks/free-shipping-progress/editor/Edit.js:22
-msgid "Free shipping unlocked"
+#: pro/includes/Blocks/CartThresholdProgress.php:94
+msgid "{subtotal} in cart"
 msgstr ""
 
-#: pro/includes/Blocks/FreeShippingProgress.php:227
-#: pro/src/blocks/free-shipping-progress/editor/Edit.js:23
-msgid "Free shipping details are currently unavailable."
+#: pro/includes/Blocks/CartThresholdProgress.php:96
+msgid "Waiting for WooCommerce cart data."
+msgstr ""
+
+#: pro/includes/Blocks/CartThresholdProgress.php:97
+msgid "Add a valid threshold amount in the block settings."
 msgstr ""
 
 #: pro/includes/DisplayRules/WooCommerce.php:31
@@ -1977,8 +2001,8 @@ msgid "Experiment Configuration"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:56
-#: pro/includes/Experiments/Admin/Init.php:170
-#: pro/includes/Experiments/Experiment.php:1379
+#: pro/includes/Experiments/Admin/Init.php:169
+#: pro/includes/Experiments/Experiment.php:1421
 #: src/editor/components/experiment-panel/Component.js:25
 msgid "Control"
 msgstr ""
@@ -1992,7 +2016,7 @@ msgid "Choose the live control that should own the display rules and shortcode e
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:64
-#: pro/includes/Experiments/Admin/Init.php:172
+#: pro/includes/Experiments/Admin/Init.php:171
 msgid "Goal"
 msgstr ""
 
@@ -2049,32 +2073,32 @@ msgid "Default is 250. Automation must satisfy this minimum-traffic gate before 
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:137
-#: pro/includes/Experiments/Admin/Init.php:1233
+#: pro/includes/Experiments/Admin/Init.php:1232
 msgid "New"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:139
-#: pro/includes/Experiments/Admin/Init.php:1241
+#: pro/includes/Experiments/Admin/Init.php:1240
 msgid "Running"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:141
-#: pro/includes/Experiments/Admin/Init.php:1245
+#: pro/includes/Experiments/Admin/Init.php:1244
 msgid "Paused"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:143
-#: pro/includes/Experiments/Admin/Init.php:1249
+#: pro/includes/Experiments/Admin/Init.php:1248
 msgid "Completed"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:145
-#: pro/includes/Experiments/Admin/Init.php:1253
+#: pro/includes/Experiments/Admin/Init.php:1252
 msgid "Draft"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:147
-#: pro/includes/Experiments/Admin/Init.php:1254
+#: pro/includes/Experiments/Admin/Init.php:1253
 msgid "Not started"
 msgstr ""
 
@@ -2092,432 +2116,432 @@ msgid "Enabled"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:201
-#: pro/includes/Experiments/Admin/Init.php:1271
+#: pro/includes/Experiments/Admin/Init.php:1270
 #: src/editor/components/compatibility/utils/getCompatibilityStatus.js:12
 msgid "Disabled"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:224
-#: pro/includes/Experiments/Admin/Init.php:1280
-#: pro/includes/Experiments/Experiment.php:259
+#: pro/includes/Experiments/Admin/Init.php:1279
+#: pro/includes/Experiments/Experiment.php:298
 msgid "Complete experiment"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:237
-#: pro/includes/Experiments/Admin/Init.php:1282
-#: pro/includes/Experiments/Experiment.php:269
+#: pro/includes/Experiments/Admin/Init.php:1281
+#: pro/includes/Experiments/Experiment.php:308
 msgid "Minimum views per participant"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:79
+#: pro/includes/Experiments/Admin/Init.php:78
 msgid "Experiment Participants"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:87
+#: pro/includes/Experiments/Admin/Init.php:86
 msgid "Experiment Actions"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:95
+#: pro/includes/Experiments/Admin/Init.php:94
 msgid "Results Summary"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:103
+#: pro/includes/Experiments/Admin/Init.php:102
 msgid "Experiment Results"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:111
+#: pro/includes/Experiments/Admin/Init.php:110
 msgid "Automation History"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:171
+#: pro/includes/Experiments/Admin/Init.php:170
 msgid "Participants"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:263
+#: pro/includes/Experiments/Admin/Init.php:262
 msgid "Resume"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:265
-#: pro/includes/Experiments/Admin/Init.php:278
+#: pro/includes/Experiments/Admin/Init.php:264
+#: pro/includes/Experiments/Admin/Init.php:277
 msgid "Start"
+msgstr ""
+
+#: pro/includes/Experiments/Admin/Init.php:266
+#: pro/includes/Experiments/Admin/Init.php:278
+msgid "Pause"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/Init.php:267
 #: pro/includes/Experiments/Admin/Init.php:279
-msgid "Pause"
-msgstr ""
-
-#: pro/includes/Experiments/Admin/Init.php:268
-#: pro/includes/Experiments/Admin/Init.php:280
 msgid "Complete"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:332
+#: pro/includes/Experiments/Admin/Init.php:331
 #: pro/includes/Experiments/Admin/Views/dashboard-panel-experiments.php:25
-#: pro/includes/Experiments/Experiment.php:105
+#: pro/includes/Experiments/Experiment.php:107
 #: pro/src/editor/plugins/experiments/Plugin.js:44
 #: src/editor/components/experiment-panel/Component.js:32
 msgid "Experiment"
 msgstr ""
 
+#: pro/includes/Experiments/Admin/Init.php:383
 #: pro/includes/Experiments/Admin/Init.php:384
-#: pro/includes/Experiments/Admin/Init.php:385
 msgid "A/B Testing"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:417
-#: pro/includes/Experiments/Admin/Init.php:463
-#: pro/includes/Experiments/Admin/Init.php:501
+#: pro/includes/Experiments/Admin/Init.php:416
+#: pro/includes/Experiments/Admin/Init.php:462
+#: pro/includes/Experiments/Admin/Init.php:500
 msgid "You are not allowed to edit this experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:442
+#: pro/includes/Experiments/Admin/Init.php:441
 msgid "You are not allowed to remove this variant."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:466
-#: pro/includes/Experiments/Admin/Init.php:504
+#: pro/includes/Experiments/Admin/Init.php:465
+#: pro/includes/Experiments/Admin/Init.php:503
 msgid "This experiment is currently being processed by automation. Please try again in a moment."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:523
+#: pro/includes/Experiments/Admin/Init.php:522
 msgid "You are not allowed to clean up this experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:529
+#: pro/includes/Experiments/Admin/Init.php:528
 msgid "You are not allowed to delete one or more variants in this experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:549
+#: pro/includes/Experiments/Admin/Init.php:548
 msgid "You are not allowed to export this experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:588
+#: pro/includes/Experiments/Admin/Init.php:587
 msgid "Choose and save a control before creating variants."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:593
+#: pro/includes/Experiments/Admin/Init.php:592
 msgid "Use this list to edit the experiment participants. Before the experiment starts, you can create a new variant from the control or from any existing variant."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:594
+#: pro/includes/Experiments/Admin/Init.php:593
 msgid "Weight controls the relative share of traffic each participant receives. For example, weights of 1 and 1 split traffic evenly, while weights of 2 and 1 send roughly twice as much traffic to the first participant."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:597
+#: pro/includes/Experiments/Admin/Init.php:596
 msgid "Label"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:598
-#: pro/includes/Experiments/Admin/Init.php:863
+#: pro/includes/Experiments/Admin/Init.php:597
+#: pro/includes/Experiments/Admin/Init.php:862
 #: src/editor/components/experiment-panel/Component.js:40
 msgid "Participant"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:600
+#: pro/includes/Experiments/Admin/Init.php:599
 msgid "Weight"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:601
+#: pro/includes/Experiments/Admin/Init.php:600
 msgid "Actions"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:613
+#: pro/includes/Experiments/Admin/Init.php:612
 msgid "Edit Control"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:614
+#: pro/includes/Experiments/Admin/Init.php:613
 msgid "Edit Variant"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:623
+#: pro/includes/Experiments/Admin/Init.php:622
 msgid "Trashed participant"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:624
+#: pro/includes/Experiments/Admin/Init.php:623
 msgid "Deleted participant"
 msgstr ""
 
 #. Translators: %s is the experiment participant label.
-#: pro/includes/Experiments/Admin/Init.php:628
+#: pro/includes/Experiments/Admin/Init.php:627
 #, php-format
 msgid "Create Variant from %s"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:634
+#: pro/includes/Experiments/Admin/Init.php:633
 msgid "Remove this variant from the experiment and move it to trash?"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:640
+#: pro/includes/Experiments/Admin/Init.php:639
 msgid "Winner"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:655
+#: pro/includes/Experiments/Admin/Init.php:654
 msgid "This participant is in the trash."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:657
+#: pro/includes/Experiments/Admin/Init.php:656
 msgid "This participant has been permanently deleted."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:659
+#: pro/includes/Experiments/Admin/Init.php:658
 msgid "Warning: publish this participant before starting the experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:670
+#: pro/includes/Experiments/Admin/Init.php:669
 msgid "Remove"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:674
+#: pro/includes/Experiments/Admin/Init.php:673
 msgid "Complete With Winner"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:683
+#: pro/includes/Experiments/Admin/Init.php:682
 msgid "Save the experiment after adjusting weights to update the traffic split."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:685
+#: pro/includes/Experiments/Admin/Init.php:684
 msgid "Variant structure and weights are locked after the experiment starts."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:697
+#: pro/includes/Experiments/Admin/Init.php:696
 msgid "Current Status:"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:700
+#: pro/includes/Experiments/Admin/Init.php:699
 msgid "Automation:"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:702
+#: pro/includes/Experiments/Admin/Init.php:701
 msgid "Last Automated Action:"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:710
+#: pro/includes/Experiments/Admin/Init.php:709
 msgid "The winner has been applied. This experiment is now read-only."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:742
+#: pro/includes/Experiments/Admin/Init.php:741
 msgid "Resume Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:745
+#: pro/includes/Experiments/Admin/Init.php:744
 msgid "Start Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:751
+#: pro/includes/Experiments/Admin/Init.php:750
 msgid "Pause Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:752
+#: pro/includes/Experiments/Admin/Init.php:751
 msgid "Complete Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:755
+#: pro/includes/Experiments/Admin/Init.php:754
 msgid "Apply Winner"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:760
+#: pro/includes/Experiments/Admin/Init.php:759
 msgid "This will permanently delete all variants for this experiment. This cannot be undone. Continue?"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:762
+#: pro/includes/Experiments/Admin/Init.php:761
 msgid "Clean Up"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:768
+#: pro/includes/Experiments/Admin/Init.php:767
 msgid "Move to Trash"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:780
-#: pro/includes/Experiments/Admin/Init.php:856
+#: pro/includes/Experiments/Admin/Init.php:779
+#: pro/includes/Experiments/Admin/Init.php:855
 msgid "Add a variant to start collecting comparison data."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:788
-#: pro/includes/Experiments/Admin/Init.php:834
+#: pro/includes/Experiments/Admin/Init.php:787
+#: pro/includes/Experiments/Admin/Init.php:833
 msgid "Winner:"
+msgstr ""
+
+#: pro/includes/Experiments/Admin/Init.php:788
+#: pro/includes/Experiments/Admin/Init.php:803
+msgid "Goal Rate:"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/Init.php:789
 #: pro/includes/Experiments/Admin/Init.php:804
-msgid "Goal Rate:"
-msgstr ""
-
-#: pro/includes/Experiments/Admin/Init.php:790
-#: pro/includes/Experiments/Admin/Init.php:805
-#: pro/includes/Experiments/Admin/Init.php:836
+#: pro/includes/Experiments/Admin/Init.php:835
 msgid "Confidence:"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:798
+#: pro/includes/Experiments/Admin/Init.php:797
 msgid "No leader yet."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:803
+#: pro/includes/Experiments/Admin/Init.php:802
 msgid "Current Leader:"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:807
+#: pro/includes/Experiments/Admin/Init.php:806
 msgid "Automation Status:"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:811
+#: pro/includes/Experiments/Admin/Init.php:810
 msgid "Health warning: no experiment traffic has been recorded yet."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:813
+#: pro/includes/Experiments/Admin/Init.php:812
 msgid "Health warning: the current leader is not statistically significant yet."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:823
+#: pro/includes/Experiments/Admin/Init.php:822
 msgid "No automated actions have been recorded for this experiment yet."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:832
+#: pro/includes/Experiments/Admin/Init.php:831
 msgid "Reason:"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:837
+#: pro/includes/Experiments/Admin/Init.php:836
 msgid "Views:"
 msgstr ""
 
 #. translators: 1: control views, 2: winner or leader views, 3: total views.
-#: pro/includes/Experiments/Admin/Init.php:840
+#: pro/includes/Experiments/Admin/Init.php:839
 #, php-format
 msgid "control %1$d, decision row %2$d, total %3$d"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:861
+#: pro/includes/Experiments/Admin/Init.php:860
 msgid "Export CSV"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:868
+#: pro/includes/Experiments/Admin/Init.php:867
 #: pro/includes/Experiments/Admin/Views/dashboard-panel-experiments.php:27
 msgid "Goal Rate"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:869
+#: pro/includes/Experiments/Admin/Init.php:868
 msgid "Uplift"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:870
+#: pro/includes/Experiments/Admin/Init.php:869
 #: pro/includes/Experiments/Admin/Views/dashboard-panel-experiments.php:28
 msgid "Confidence"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:877
+#: pro/includes/Experiments/Admin/Init.php:876
 msgid "Current leader"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:918
+#: pro/includes/Experiments/Admin/Init.php:917
 msgid "This participant belongs to an active experiment. Complete or delete the experiment first."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:919
+#: pro/includes/Experiments/Admin/Init.php:918
 msgid "Participant Locked"
 msgstr ""
 
 #. Translators: %s is the experiment participant label.
-#: pro/includes/Experiments/Admin/Init.php:955
+#: pro/includes/Experiments/Admin/Init.php:954
 #, php-format
 msgid "This participant is %s and belongs to experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:985
-#: pro/includes/Experiments/Admin/Init.php:1470
+#: pro/includes/Experiments/Admin/Init.php:984
+#: pro/includes/Experiments/Admin/Init.php:1469
 msgid "Choose a control before creating the experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:995
+#: pro/includes/Experiments/Admin/Init.php:994
 #: pro/includes/Experiments/Admin/Views/dashboard-panel-experiments.php:10
 msgid "A/B Testing Experiments"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1237
+#: pro/includes/Experiments/Admin/Init.php:1236
 msgid "Applied"
 msgstr ""
 
 #. translators: 1: action label, 2: threshold percentage, 3: view mode label, 4: minimum views.
-#: pro/includes/Experiments/Admin/Init.php:1279
+#: pro/includes/Experiments/Admin/Init.php:1278
 #, php-format
 msgid "Enabled. %1$s at %2$d%% confidence with %3$s (%4$d)."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1292
+#: pro/includes/Experiments/Admin/Init.php:1291
 msgid "Choose a control and save the experiment before creating variants."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1296
-#: pro/includes/Experiments/Admin/Init.php:1303
+#: pro/includes/Experiments/Admin/Init.php:1295
+#: pro/includes/Experiments/Admin/Init.php:1302
 msgid "Create at least one variant before starting the experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1300
-#: pro/includes/Experiments/Experiment.php:582
+#: pro/includes/Experiments/Admin/Init.php:1299
+#: pro/includes/Experiments/Experiment.php:624
 msgid "Publish every participant before starting the experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1311
+#: pro/includes/Experiments/Admin/Init.php:1310
 msgid "Trashed"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1315
-#: pro/includes/Experiments/Admin/Init.php:1320
+#: pro/includes/Experiments/Admin/Init.php:1314
+#: pro/includes/Experiments/Admin/Init.php:1319
 msgid "Deleted"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1351
+#: pro/includes/Experiments/Admin/Init.php:1350
 #: pro/includes/Experiments/Automation.php:535
 msgid "Automatically applied winner"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1353
+#: pro/includes/Experiments/Admin/Init.php:1352
 #: pro/includes/Experiments/Automation.php:537
 msgid "Automatically completed with winner"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1355
+#: pro/includes/Experiments/Admin/Init.php:1354
 #: pro/includes/Experiments/Automation.php:539
 msgid "Automatically completed without winner"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1357
+#: pro/includes/Experiments/Admin/Init.php:1356
 #: pro/includes/Experiments/Automation.php:541
 msgid "Automated action"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1367
+#: pro/includes/Experiments/Admin/Init.php:1366
 #: pro/includes/Experiments/Automation.php:554
 msgid "Winner threshold met"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1369
+#: pro/includes/Experiments/Admin/Init.php:1368
 #: pro/includes/Experiments/Automation.php:556
 msgid "End date reached"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1371
+#: pro/includes/Experiments/Admin/Init.php:1370
 #: pro/includes/Experiments/Automation.php:558
 msgid "Automated rule matched"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1381
+#: pro/includes/Experiments/Admin/Init.php:1380
 msgid "Unknown time"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1416
+#: pro/includes/Experiments/Admin/Init.php:1415
 msgid "Save Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1417
+#: pro/includes/Experiments/Admin/Init.php:1416
 msgid "Update Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1457
+#: pro/includes/Experiments/Admin/Init.php:1456
 msgid "Create Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1458
+#: pro/includes/Experiments/Admin/Init.php:1457
 msgid "Choose a control, then create the experiment so you can add variants."
 msgstr ""
 
@@ -2595,150 +2619,154 @@ msgstr ""
 msgid "Review experiment: %s"
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:104
-#: pro/includes/Experiments/Experiment.php:114
+#: pro/includes/Experiments/Experiment.php:106
+#: pro/includes/Experiments/Experiment.php:116
 msgid "Experiments"
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:106
+#: pro/includes/Experiments/Experiment.php:108
 msgid "Add Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:107
+#: pro/includes/Experiments/Experiment.php:109
 msgid "Add New Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:108
+#: pro/includes/Experiments/Experiment.php:110
 msgid "Edit Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:109
+#: pro/includes/Experiments/Experiment.php:111
 msgid "New Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:110
+#: pro/includes/Experiments/Experiment.php:112
 msgid "View Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:111
+#: pro/includes/Experiments/Experiment.php:113
 msgid "Search Experiments"
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:112
+#: pro/includes/Experiments/Experiment.php:114
 msgid "No experiments found"
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:113
+#: pro/includes/Experiments/Experiment.php:115
 msgid "No experiments found in Trash"
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:260
+#: pro/includes/Experiments/Experiment.php:277
+msgid "Managed by experiment"
+msgstr ""
+
+#: pro/includes/Experiments/Experiment.php:299
 msgid "Complete and apply winner"
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:270
+#: pro/includes/Experiments/Experiment.php:309
 msgid "Minimum total views across all participants"
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:429
-#: pro/includes/Experiments/Experiment.php:489
-#: pro/includes/Experiments/Experiment.php:534
+#: pro/includes/Experiments/Experiment.php:468
+#: pro/includes/Experiments/Experiment.php:531
+#: pro/includes/Experiments/Experiment.php:576
 msgid "Invalid experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:432
+#: pro/includes/Experiments/Experiment.php:471
 msgid "Invalid participant."
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:437
-#: pro/includes/Experiments/Experiment.php:497
+#: pro/includes/Experiments/Experiment.php:476
+#: pro/includes/Experiments/Experiment.php:539
 msgid "Experiment structure is locked after it has started."
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:440
+#: pro/includes/Experiments/Experiment.php:479
 msgid "Choose a control first."
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:444
+#: pro/includes/Experiments/Experiment.php:483
 msgid "Variants can only be duplicated from the control or an existing variant."
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:449
+#: pro/includes/Experiments/Experiment.php:491
 msgid "Variants must use the same type as the control."
 msgstr ""
 
 #. Translators: %s is the variant label.
-#: pro/includes/Experiments/Experiment.php:459
+#: pro/includes/Experiments/Experiment.php:501
 #, php-format
 msgid "%1$s (%2$s)"
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:492
+#: pro/includes/Experiments/Experiment.php:534
 msgid "Invalid variant."
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:500
+#: pro/includes/Experiments/Experiment.php:542
 msgid "Only variants can be removed from an experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:521
+#: pro/includes/Experiments/Experiment.php:563
 msgid "The variant was removed from the experiment, but it could not be moved to trash."
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:538
+#: pro/includes/Experiments/Experiment.php:580
 msgid "Variants can only be cleaned up after the winner has been applied."
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:568
+#: pro/includes/Experiments/Experiment.php:610
 msgid "Completed experiments cannot be restarted."
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:571
+#: pro/includes/Experiments/Experiment.php:613
 msgid "Experiments need a control and at least one variant."
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:577
+#: pro/includes/Experiments/Experiment.php:619
 msgid "One or more selected items are already attached to another experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:618
+#: pro/includes/Experiments/Experiment.php:660
 msgid "Experiment is not running."
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:636
+#: pro/includes/Experiments/Experiment.php:678
 msgid "Experiment has no participants."
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:639
+#: pro/includes/Experiments/Experiment.php:681
 msgid "Start the experiment before completing it."
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:644
-#: pro/includes/Experiments/Experiment.php:671
+#: pro/includes/Experiments/Experiment.php:686
+#: pro/includes/Experiments/Experiment.php:713
 msgid "Winner must belong to the experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:668
+#: pro/includes/Experiments/Experiment.php:710
 msgid "Choose a winner before applying it."
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:677
+#: pro/includes/Experiments/Experiment.php:719
 msgid "Winner could not be loaded."
 msgstr ""
 
 #. Translators: %s is the source participant label.
-#: pro/includes/Experiments/Experiment.php:860
+#: pro/includes/Experiments/Experiment.php:902
 #, php-format
 msgid "Created from %s"
 msgstr ""
 
 #. Translators: %s is the variant letter label.
-#: pro/includes/Experiments/Experiment.php:1388
+#: pro/includes/Experiments/Experiment.php:1430
 #, php-format
 msgid "Variant %s"
 msgstr ""
 
-#: pro/includes/Experiments/Experiment.php:1441
+#: pro/includes/Experiments/Experiment.php:1483
 msgid "control"
 msgstr ""
 
@@ -2961,7 +2989,7 @@ msgid "Sale Dedupe Mode"
 msgstr ""
 
 #: pro/includes/WooCommerce/Sales.php:70
-msgid "Per widget + session"
+msgid "Per popup + session"
 msgstr ""
 
 #: pro/includes/WooCommerce/Sales.php:71
@@ -2969,7 +2997,7 @@ msgid "Per session only"
 msgstr ""
 
 #: pro/includes/WooCommerce/Sales.php:73
-msgid "Prevent duplicate credited sales either per widget/session pair or across the entire session."
+msgid "Prevent duplicate credited sales either per popup/session pair or across the entire session."
 msgstr ""
 
 #: pro/includes/WooCommerce/Sales.php:79
@@ -2994,7 +3022,7 @@ msgid "On product added to cart"
 msgstr ""
 
 #: pro/includes/WooCommerce/Triggers.php:27
-msgid "Open when a product is added to the cart. Optionally limit to specific product IDs."
+msgid "Open when a product is newly added to the cart as a line item. Quantity-only changes use the cart updated trigger. Optionally limit to specific product IDs."
 msgstr ""
 
 #: pro/includes/WooCommerce/Triggers.php:34
@@ -3020,7 +3048,7 @@ msgid "On cart updated"
 msgstr ""
 
 #: pro/includes/WooCommerce/Triggers.php:48
-msgid "Open when the cart updates. Optionally limit by subtotal threshold."
+msgid "Open when the cart updates, including quantity changes, subtotal changes, and coupon changes. Optionally limit by subtotal threshold."
 msgstr ""
 
 #: pro/includes/WooCommerce/Triggers.php:55
@@ -3064,7 +3092,7 @@ msgid "On product removed from cart"
 msgstr ""
 
 #: pro/includes/WooCommerce/Triggers.php:95
-msgid "Open when a product is removed from the cart. Optionally limit to specific product IDs."
+msgid "Open when a product line item is removed from the cart completely. Quantity-only changes use the cart updated trigger. Optionally limit to specific product IDs."
 msgstr ""
 
 #: pro/includes/WooCommerce/Triggers.php:103
@@ -3297,7 +3325,7 @@ msgid "Close on apply"
 msgstr ""
 
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:103
-msgid "Close the parent widget after the coupon is applied or queued for handoff."
+msgid "Close the parent popup after the coupon is applied or queued for handoff."
 msgstr ""
 
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:109
@@ -3385,7 +3413,7 @@ msgid "Button"
 msgstr ""
 
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:238
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:414
+#: pro/src/blocks/free-shipping-text/editor/Edit.js:50
 #: src/blocks/countdown/editor/EditSettings.js:30
 #: src/blocks/coupon/editor/EditSettings.js:36
 #: src/blocks/sign-up/editor/EditSettings.js:33
@@ -3404,242 +3432,239 @@ msgstr ""
 msgid "Search coupons..."
 msgstr ""
 
+#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:83
+msgid "Add a valid threshold amount to preview the block."
+msgstr ""
+
+#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:92
+msgid "Cart Goal"
+msgstr ""
+
+#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:94
+msgid "Threshold amount"
+msgstr ""
+
+#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:99
+msgid "Goal amount in store currency, for example 75 or 75.00."
+msgstr ""
+
+#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:104
+msgid "Goal label"
+msgstr ""
+
+#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:109
+msgid "Used in the locked and unlocked state messages."
+msgstr ""
+
+#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:114
+msgid "Locked message"
+msgstr ""
+
+#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:119
+msgid "Tokens: {remaining}, {goal}, {threshold}, {subtotal}"
+msgstr ""
+
+#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:124
+msgid "Unlocked message"
+msgstr ""
+
+#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:129
+msgid "Tokens: {goal}, {threshold}, {subtotal}"
+msgstr ""
+
+#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:134
+msgid "Show progress bar"
+msgstr ""
+
+#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:139
+msgid "Hide this to show only the message and summary line."
+msgstr ""
+
+#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:146
+msgid "WooCommerce Cart Goal"
+msgstr ""
+
+#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:154
+msgid "Waiting for a valid threshold amount."
+msgstr ""
+
+#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:165
+msgid "Uses the live WooCommerce cart subtotal on the frontend."
+msgstr ""
+
 #: pro/src/blocks/confetti/editor/Edit.js:11
 msgid "Confetti"
 msgstr ""
 
 #: pro/src/blocks/confetti/editor/Edit.js:13
-msgid "No frontend UI. Plays a confetti effect when the parent widget opens."
+msgid "No frontend UI. Plays a confetti effect when the parent popup opens."
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:20
-msgid "Available tokens: {remaining}, {threshold}, {subtotal}."
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:22
-msgid "Use default"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:23
-msgid "Show"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:24
-msgid "Hide"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:27
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:130
-msgid "Locked"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:28
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:131
-msgid "Almost"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:29
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:132
-msgid "Unlocked"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:30
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:133
-msgid "Unavailable"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:122
-msgid "Preview"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:124
-msgid "Preview state"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:128
-msgid "Preview styles without saving a runtime state."
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:138
-msgid "Frontend renders the unavailable message until a valid threshold amount is configured."
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:142
+#: pro/src/blocks/free-shipping-bar/editor/Edit.js:135
 msgid "Display"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:144
-msgid "Free shipping threshold"
+#: pro/src/blocks/free-shipping-bar/editor/Edit.js:137
+msgid "Show percent"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:147
-msgid "Merchant-entered decimal amount, for example 50 or 50.00."
+#: pro/src/blocks/free-shipping-bar/editor/Edit.js:142
+msgid "Show the rounded progress percentage inside the fill when progress is known."
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:152
-msgid "Almost there percentage"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:159
-msgid "Switch to the almost-there state when progress reaches this percentage."
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:163
-msgid "Round totals"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:164
-msgid "Round displayed amounts to whole currency values, for example 39.80 to 40."
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:170
-msgid "Show progress bar"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:171
-msgid "Display the progress track by default when cart data is available."
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:177
-msgid "Show % in bar"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:178
-msgid "Display the rounded progress percentage inside the progress fill."
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:184
-msgid "Show threshold label"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:185
-msgid "Display the threshold label by default when a valid threshold is configured."
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:191
-msgid "Show proceed to checkout button"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:192
-msgid "Display a proceed to checkout button by default when free shipping is unlocked."
-msgstr ""
-
-#. translators: %s: selected free shipping preview state label.
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:201
-#, js-format
-msgid "%s State Display"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:202
-msgid "Current"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:207
-msgid "Progress bar"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:211
-msgid "Override whether the progress bar is shown for the selected preview state."
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:215
-msgid "Threshold label"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:219
-msgid "Override whether the threshold label is shown for the selected preview state."
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:223
-msgid "Proceed button"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:227
-msgid "Override whether the proceed to checkout button is shown for the selected preview state."
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:231
-msgid "Messages"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:233
-msgid "Locked message"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:241
-msgid "Almost-there message"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:249
-msgid "Unlocked message"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:257
-msgid "Unavailable message"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:287
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:351
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:388
-#: src/blocks/countdown/editor/components/container/EditStyles.js:19
-#: src/blocks/countdown/editor/components/segment/EditStyles.js:26
-#: src/blocks/coupon/editor/components/button/EditStyles.js:30
-#: src/blocks/coupon/editor/components/code/EditStyles.js:29
-#: src/blocks/coupon/editor/components/container/EditStyles.js:26
-#: src/blocks/example-block/editor/Settings.js:43
-#: src/blocks/sign-up/editor/components/button/EditStyles.js:30
-#: src/blocks/sign-up/editor/components/form/EditStyles.js:26
-#: src/blocks/sign-up/editor/components/inputs/EditStyles.js:20
-#: src/widgets/bar/editor/blocks/container/blocks/close-button/EditStyles.js:26
-#: src/widgets/bar/editor/blocks/container/blocks/content/EditStyles.js:24
-#: src/widgets/bar/editor/blocks/open-button/EditStyles.js:26
-#: src/widgets/flyout/editor/blocks/container/blocks/close-button/EditStyles.js:26
-#: src/widgets/flyout/editor/blocks/container/blocks/content/EditStyles.js:28
-#: src/widgets/flyout/editor/blocks/open-button/EditStyles.js:26
-#: src/widgets/popup/editor/blocks/container/blocks/close-button/EditStyles.js:26
-#: src/widgets/popup/editor/blocks/container/blocks/content/EditStyles.js:28
-msgid "Background"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:293
-#: src/blocks/countdown/editor/components/segment/EditStyles.js:31
-#: src/blocks/coupon/editor/components/button/EditStyles.js:35
-#: src/blocks/coupon/editor/components/code/EditStyles.js:34
-#: src/blocks/coupon/editor/components/container/EditStyles.js:31
-#: src/blocks/example-block/editor/Settings.js:49
-#: src/blocks/sign-up/editor/components/button/EditStyles.js:35
-#: src/blocks/sign-up/editor/components/form/EditStyles.js:31
-#: src/blocks/sign-up/editor/components/inputs/EditStyles.js:25
-#: src/widgets/bar/editor/blocks/container/blocks/content/EditStyles.js:29
-#: src/widgets/flyout/editor/blocks/container/blocks/content/EditStyles.js:33
-#: src/widgets/popup/editor/blocks/container/blocks/content/EditStyles.js:33
-msgid "Text"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:322
-#: src/blocks/countdown/editor/components/container/EditStyles.js:44
-#: src/blocks/countdown/editor/components/segment/EditStyles.js:71
-#: src/blocks/coupon/editor/components/button/EditStyles.js:71
-#: src/blocks/coupon/editor/components/code/EditStyles.js:68
-#: src/blocks/coupon/editor/components/container/EditStyles.js:68
-#: src/blocks/sign-up/editor/components/button/EditStyles.js:71
-#: src/blocks/sign-up/editor/components/form/EditStyles.js:67
-#: src/blocks/sign-up/editor/components/inputs/EditStyles.js:57
-#: src/editor/components/dimension-tools-panel/Component.js:47
-msgid "Dimensions"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:420
+#: pro/src/blocks/free-shipping-bar/editor/Edit.js:149
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:107
 #: src/blocks/countdown/editor/EditSettings.js:18
 msgid "Container"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:423
-msgid "Progress"
+#: pro/src/blocks/free-shipping-bar/editor/Edit.js:156
+msgid "Track"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:426
+#: pro/src/blocks/free-shipping-bar/editor/Edit.js:163
 msgid "Fill"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:46
+msgid "Preview"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:48
+msgid "Preview state"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:52
+msgid "Preview state templates without saving a runtime state."
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:54
+msgid "Locked"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:55
+msgid "Almost"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:56
+msgid "Unlocked"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:57
+msgid "Unavailable"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:62
+msgid "Frontend remains in the unavailable state until a valid threshold amount is configured."
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:66
+msgid "Rules"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:68
+msgid "Free shipping threshold"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:71
+msgid "Merchant-entered decimal amount, for example 50 or 50.00."
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:76
+msgid "Almost there percentage"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:83
+msgid "Switch to the almost-there state when progress reaches this percentage."
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:87
+msgid "Round totals"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:88
+msgid "Round displayed amounts to whole currency values, for example 39.80 to 40."
+msgstr ""
+
+#: pro/src/blocks/free-shipping-state/editor/Edit.js:9
+msgid "Locked State"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-state/editor/Edit.js:10
+msgid "Almost State"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-state/editor/Edit.js:11
+msgid "Unlocked State"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-state/editor/Edit.js:12
+msgid "Unavailable State"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-state/editor/Edit.js:15
+msgid "Free Shipping State"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-text/editor/Edit.js:22
+msgid "Paragraph"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-text/editor/Edit.js:23
+msgid "Heading 1"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-text/editor/Edit.js:24
+msgid "Heading 2"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-text/editor/Edit.js:25
+msgid "Heading 3"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-text/editor/Edit.js:26
+msgid "Heading 4"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-text/editor/Edit.js:27
+msgid "Heading 5"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-text/editor/Edit.js:28
+msgid "Heading 6"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-text/editor/Edit.js:29
+msgid "Division"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-text/editor/Edit.js:30
+msgid "Span"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-text/editor/Edit.js:131
+msgid "Markup"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-text/editor/Edit.js:133
+msgid "HTML tag"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-text/editor/Edit.js:139
+msgid "Wrap the resolved text in a semantic HTML tag."
+msgstr ""
+
+#: pro/src/blocks/free-shipping-text/editor/Edit.js:143
+msgid "Tokens"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-text/editor/Edit.js:144
+msgid "Supported tokens: {remaining}, {threshold}, {subtotal}, {progress_percent}."
+msgstr ""
+
+#: pro/src/blocks/free-shipping-text/editor/Edit.js:157
+#: pro/src/blocks/free-shipping-text/editor/Edit.js:164
+msgid "Add free shipping text with tokens…"
 msgstr ""
 
 #: src/blocks/countdown/editor/components/container/EditSettings.js:27
@@ -3701,7 +3726,7 @@ msgid "Close on expire"
 msgstr ""
 
 #: src/blocks/countdown/editor/components/container/EditSettings.js:115
-msgid "Close the parent widget after the countdown expires."
+msgid "Close the parent popup after the countdown expires."
 msgstr ""
 
 #: src/blocks/countdown/editor/components/container/EditSettings.js:121
@@ -3722,9 +3747,55 @@ msgstr ""
 msgid "Add a zero before single digits."
 msgstr ""
 
+#: src/blocks/countdown/editor/components/container/EditStyles.js:19
+#: src/blocks/countdown/editor/components/segment/EditStyles.js:26
+#: src/blocks/coupon/editor/components/button/EditStyles.js:30
+#: src/blocks/coupon/editor/components/code/EditStyles.js:29
+#: src/blocks/coupon/editor/components/container/EditStyles.js:26
+#: src/blocks/example-block/editor/Settings.js:43
+#: src/blocks/sign-up/editor/components/button/EditStyles.js:30
+#: src/blocks/sign-up/editor/components/form/EditStyles.js:26
+#: src/blocks/sign-up/editor/components/inputs/EditStyles.js:20
+#: src/widgets/bar/editor/blocks/container/blocks/close-button/EditStyles.js:26
+#: src/widgets/bar/editor/blocks/container/blocks/content/EditStyles.js:24
+#: src/widgets/bar/editor/blocks/open-button/EditStyles.js:26
+#: src/widgets/flyout/editor/blocks/container/blocks/close-button/EditStyles.js:26
+#: src/widgets/flyout/editor/blocks/container/blocks/content/EditStyles.js:28
+#: src/widgets/flyout/editor/blocks/open-button/EditStyles.js:26
+#: src/widgets/popup/editor/blocks/container/blocks/close-button/EditStyles.js:26
+#: src/widgets/popup/editor/blocks/container/blocks/content/EditStyles.js:28
+msgid "Background"
+msgstr ""
+
+#: src/blocks/countdown/editor/components/container/EditStyles.js:44
+#: src/blocks/countdown/editor/components/segment/EditStyles.js:71
+#: src/blocks/coupon/editor/components/button/EditStyles.js:71
+#: src/blocks/coupon/editor/components/code/EditStyles.js:68
+#: src/blocks/coupon/editor/components/container/EditStyles.js:68
+#: src/blocks/sign-up/editor/components/button/EditStyles.js:71
+#: src/blocks/sign-up/editor/components/form/EditStyles.js:67
+#: src/blocks/sign-up/editor/components/inputs/EditStyles.js:57
+#: src/editor/components/dimension-tools-panel/Component.js:47
+msgid "Dimensions"
+msgstr ""
+
 #: src/blocks/countdown/editor/components/segment/EditSettings.js:32
 #: src/blocks/countdown/editor/EditSettings.js:21
 msgid "Segment"
+msgstr ""
+
+#: src/blocks/countdown/editor/components/segment/EditStyles.js:31
+#: src/blocks/coupon/editor/components/button/EditStyles.js:35
+#: src/blocks/coupon/editor/components/code/EditStyles.js:34
+#: src/blocks/coupon/editor/components/container/EditStyles.js:31
+#: src/blocks/example-block/editor/Settings.js:49
+#: src/blocks/sign-up/editor/components/button/EditStyles.js:35
+#: src/blocks/sign-up/editor/components/form/EditStyles.js:31
+#: src/blocks/sign-up/editor/components/inputs/EditStyles.js:25
+#: src/widgets/bar/editor/blocks/container/blocks/content/EditStyles.js:29
+#: src/widgets/flyout/editor/blocks/container/blocks/content/EditStyles.js:33
+#: src/widgets/popup/editor/blocks/container/blocks/content/EditStyles.js:33
+msgid "Text"
 msgstr ""
 
 #: src/blocks/countdown/editor/components/segment/EditStyles.js:34
@@ -3896,7 +3967,7 @@ msgid "Close on copy"
 msgstr ""
 
 #: src/blocks/coupon/editor/components/container/EditSettings.js:94
-msgid "Close the parent widget after the coupon is copied."
+msgid "Close the parent popup after the coupon is copied."
 msgstr ""
 
 #: src/blocks/coupon/editor/components/container/EditSettings.js:102
@@ -3998,7 +4069,7 @@ msgid "Close on success"
 msgstr ""
 
 #: src/blocks/sign-up/editor/components/form/EditSettings.js:56
-msgid "Close the parent widget after a successful sign-up."
+msgid "Close the parent popup after a successful sign-up."
 msgstr ""
 
 #: src/blocks/sign-up/editor/components/inputs/EditBlock.js:40
@@ -4195,12 +4266,6 @@ msgstr ""
 msgid "Warning"
 msgstr ""
 
-#: src/editor/components/date-time-control/Component.js:17
-#: src/editor/components/display-rules/components/post-status-info/Component.js:45
-#: src/editor/components/display-rules/components/pre-publish-panel/Component.js:20
-msgid "Not set"
-msgstr ""
-
 #: src/editor/components/dimension-tools-panel/Component.js:56
 #: src/editor/components/dimension-tools-panel/Component.js:60
 msgid "Padding"
@@ -4224,11 +4289,6 @@ msgstr ""
 msgid "Exclude"
 msgstr ""
 
-#: src/editor/components/display-rules-button/Component.js:105
-#: src/editor/components/display-rules/components/content-control/Component.js:53
-msgid "Users"
-msgstr ""
-
 #: src/editor/components/display-rules-button/Component.js:115
 msgid "Choose where you want to display the modal."
 msgstr ""
@@ -4246,10 +4306,12 @@ msgid "Configured"
 msgstr ""
 
 #: src/editor/components/display-rules-button/Component.js:189
+#: src/scripts/admin/display-rules-list/index.js:333
 msgid "Cancel"
 msgstr ""
 
 #: src/editor/components/display-rules-button/Component.js:192
+#: src/scripts/admin/display-rules-list/index.js:341
 msgid "Save"
 msgstr ""
 
@@ -4280,7 +4342,7 @@ msgstr ""
 
 #: src/editor/components/display-rules-button/components/locations-control/location-control/Component.js:108
 #: src/editor/components/display-rules-button/components/roles-control/role-control/Component.js:46
-#: src/editor/components/display-rules/components/locations-control/location-control/Component.js:98
+#: src/editor/components/display-rules/components/locations-control/location-control/Component.js:97
 msgid "Select type"
 msgstr ""
 
@@ -4321,15 +4383,6 @@ msgstr ""
 msgid "Set where and to whom this %s will be visible."
 msgstr ""
 
-#: src/editor/components/display-rules/components/content-control/Component.js:75
-#: src/editor/components/display-rules/components/content-control/Component.js:84
-#: src/editor/components/display-rules/components/content-control/Component.js:93
-#: src/editor/components/open-trigger-component/Component.js:269
-#: src/editor/components/typography-tools-panel/Component.js:219
-#: src/editor/components/typography-tools-panel/Component.js:253
-msgid "None"
-msgstr ""
-
 #: src/editor/components/display-rules/components/content-control/Component.js:76
 msgid "Add location"
 msgstr ""
@@ -4343,10 +4396,12 @@ msgid "Exclusions"
 msgstr ""
 
 #: src/editor/components/display-rules/components/content-control/Component.js:85
+#: src/scripts/admin/display-rules-list/index.js:311
 msgid "Add exclusion"
 msgstr ""
 
 #: src/editor/components/display-rules/components/content-control/Component.js:86
+#: src/scripts/admin/display-rules-list/index.js:312
 msgid "Remove exclusion"
 msgstr ""
 
@@ -4367,11 +4422,16 @@ msgstr ""
 msgid "Display rules"
 msgstr ""
 
-#: src/editor/components/display-rules/components/locations-control/location-control/Component.js:71
+#: src/editor/components/display-rules/components/locations-control/location-control/Component.js:70
 msgid "Type to choose..."
 msgstr ""
 
-#: src/editor/components/display-rules/components/roles-control/role-control/Component.js:48
+#: src/editor/components/display-rules/components/post-status-info/Component.js:45
+#: src/editor/components/display-rules/components/pre-publish-panel/Component.js:20
+msgid "Set"
+msgstr ""
+
+#: src/editor/components/display-rules/components/roles-control/role-control/Component.js:46
 msgid "Select role"
 msgstr ""
 
@@ -4504,7 +4564,7 @@ msgid "Inner Blocks"
 msgstr ""
 
 #: src/editor/components/inner-blocks-button/Component.js:130
-#: src/editor/components/variation-picker/Component.js:182
+#: src/editor/components/variation-picker/Component.js:217
 #: src/editor/icons/default/index.js:38
 msgid "Close"
 msgstr ""
@@ -4534,7 +4594,11 @@ msgid "Open Trigger"
 msgstr ""
 
 #: src/editor/components/open-trigger-component/Component.js:695
-msgid "Select how this widget is opened."
+msgid "Select how this popup is opened."
+msgstr ""
+
+#: src/editor/components/popup-type/components/post-status-info/Component.js:23
+msgid "Popup Type"
 msgstr ""
 
 #: src/editor/components/repeater-control/Component.js:53
@@ -4601,12 +4665,16 @@ msgstr ""
 msgid "Capitalize"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:161
+#: src/editor/components/variation-picker/Component.js:189
 msgid "List View"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:162
+#: src/editor/components/variation-picker/Component.js:190
 msgid "Grid View"
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:198
+msgid "Choose a different type"
 msgstr ""
 
 #: src/editor/components/variation-picker/components/search/Component.js:17
@@ -4615,6 +4683,18 @@ msgstr ""
 
 #: src/editor/hooks/use-icon-sets/hook.js:21
 msgid "WordPress"
+msgstr ""
+
+#: src/editor/hooks/usePostTypeLabels.js:11
+msgid "Bars"
+msgstr ""
+
+#: src/editor/hooks/usePostTypeLabels.js:15
+msgid "Flyouts"
+msgstr ""
+
+#: src/editor/hooks/usePostTypeLabels.js:19
+msgid "Overlays"
 msgstr ""
 
 #: src/editor/icons/default/index.js:29
@@ -4685,6 +4765,82 @@ msgstr ""
 
 #: src/editor/plugins/display-rules/Plugin.js:14
 msgid "Inherited"
+msgstr ""
+
+#. translators: %s is the popup title shown in the list table.
+#: src/scripts/admin/display-rules-list/index.js:136
+#, js-format
+msgid "Edit display rules for %s"
+msgstr ""
+
+#: src/scripts/admin/display-rules-list/index.js:139
+msgid "this popup"
+msgstr ""
+
+#. translators: %s is the popup title shown in the modal header.
+#: src/scripts/admin/display-rules-list/index.js:142
+#, js-format
+msgid "Display Rules: %s"
+msgstr ""
+
+#: src/scripts/admin/display-rules-list/index.js:199
+msgid "Could not save display rules."
+msgstr ""
+
+#: src/scripts/admin/display-rules-list/index.js:249
+msgid "Edit display rules"
+msgstr ""
+
+#: src/scripts/admin/display-rules-list/index.js:272
+msgid "Update where this popup appears and who can see it without leaving the listing."
+msgstr ""
+
+#: src/scripts/admin/display-rules-list/index.js:292
+msgid "Display on"
+msgstr ""
+
+#: src/scripts/admin/display-rules-list/index.js:293
+msgid "Choose where this popup should appear."
+msgstr ""
+
+#: src/scripts/admin/display-rules-list/index.js:297
+msgid "No display locations added."
+msgstr ""
+
+#: src/scripts/admin/display-rules-list/index.js:298
+msgid "Add display location"
+msgstr ""
+
+#: src/scripts/admin/display-rules-list/index.js:299
+msgid "Remove display location"
+msgstr ""
+
+#: src/scripts/admin/display-rules-list/index.js:305
+msgid "Exclude from"
+msgstr ""
+
+#: src/scripts/admin/display-rules-list/index.js:306
+msgid "Choose where this popup should stay hidden."
+msgstr ""
+
+#: src/scripts/admin/display-rules-list/index.js:310
+msgid "No exclusions added."
+msgstr ""
+
+#: src/scripts/admin/display-rules-list/index.js:319
+msgid "Choose which visitors can see this popup."
+msgstr ""
+
+#: src/scripts/admin/display-rules-list/index.js:323
+msgid "No audience rules added."
+msgstr ""
+
+#: src/scripts/admin/display-rules-list/index.js:324
+msgid "Add audience rule"
+msgstr ""
+
+#: src/scripts/admin/display-rules-list/index.js:325
+msgid "Remove audience rule"
 msgstr ""
 
 #: src/widgets/bar/editor/blocks/container/blocks/close-button/EditSettings.js:37
@@ -4800,9 +4956,7 @@ msgid "Toggle View"
 msgstr ""
 
 #: src/widgets/bar/editor/Edit.js:132
-#: src/widgets/flyout/editor/Edit.js:128
-#: src/widgets/popup/editor/Edit.js:124
-msgid "Choose a template"
+msgid "Choose a template for your bar"
 msgstr ""
 
 #: src/widgets/bar/editor/Edit.js:133
@@ -4855,8 +5009,11 @@ msgid "Clicking specific anchors closes the flyout."
 msgstr ""
 
 #: src/widgets/flyout/editor/components/trigger-controls/Component.js:125
-#: src/widgets/popup/editor/components/trigger-controls/Component.js:125
 msgid "Add an anchor to a button block and then insert the same value here to close the flyout on click."
+msgstr ""
+
+#: src/widgets/flyout/editor/Edit.js:128
+msgid "Choose a template for your flyout"
 msgstr ""
 
 #: src/widgets/flyout/editor/EditSettings.js:39
@@ -4869,7 +5026,7 @@ msgid "Expand the flyout on mobile to use as much screen space as possible."
 msgstr ""
 
 #: src/widgets/popup/editor/components/trigger-controls/Component.js:70
-msgid "Select how the popup is opened."
+msgid "Select how the overlay is opened."
 msgstr ""
 
 #: src/widgets/popup/editor/components/trigger-controls/Component.js:95
@@ -4877,11 +5034,19 @@ msgid "Close on backdrop click"
 msgstr ""
 
 #: src/widgets/popup/editor/components/trigger-controls/Component.js:96
-msgid "Close the popup when the backdrop is clicked."
+msgid "Close the overlay when the backdrop is clicked."
 msgstr ""
 
 #: src/widgets/popup/editor/components/trigger-controls/Component.js:114
-msgid "Clicking specific anchors closes the popup."
+msgid "Clicking specific anchors closes the overlay."
+msgstr ""
+
+#: src/widgets/popup/editor/components/trigger-controls/Component.js:125
+msgid "Add an anchor to a button block and then insert the same value here to close the overlay on click."
+msgstr ""
+
+#: src/widgets/popup/editor/Edit.js:124
+msgid "Choose a template for your overlay"
 msgstr ""
 
 #: src/widgets/popup/editor/EditSettings.js:33
@@ -4889,11 +5054,11 @@ msgid "Backdrop"
 msgstr ""
 
 #: src/widgets/popup/editor/EditSettings.js:45
-msgid "Expand the popup on mobile to use all available screen space."
+msgid "Expand the overlay on mobile to use all available screen space."
 msgstr ""
 
 #: src/widgets/popup/editor/EditSettings.js:54
-msgid "Choose if transitions are used when toggling the popup."
+msgid "Choose if transitions are used when toggling the overlay."
 msgstr ""
 
 #: src/widgets/popup/editor/EditSettings.js:62
@@ -4914,6 +5079,16 @@ msgctxt "block description"
 msgid "A WooCommerce coupon apply block."
 msgstr ""
 
+#: pro/src/blocks/cart-threshold-progress/block.json
+msgctxt "block title"
+msgid "Cart Threshold Progress"
+msgstr ""
+
+#: pro/src/blocks/cart-threshold-progress/block.json
+msgctxt "block description"
+msgid "Shows progress toward a WooCommerce cart goal such as free shipping."
+msgstr ""
+
 #: pro/src/blocks/confetti/block.json
 msgctxt "block title"
 msgid "Confetti"
@@ -4921,7 +5096,17 @@ msgstr ""
 
 #: pro/src/blocks/confetti/block.json
 msgctxt "block description"
-msgid "Plays a confetti effect when the parent widget opens."
+msgid "Plays a confetti effect when the parent popup opens."
+msgstr ""
+
+#: pro/src/blocks/free-shipping-bar/block.json
+msgctxt "block title"
+msgid "Free Shipping Bar"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-bar/block.json
+msgctxt "block description"
+msgid "Dynamic free shipping progress bar."
 msgstr ""
 
 #: pro/src/blocks/free-shipping-progress/block.json
@@ -4932,6 +5117,26 @@ msgstr ""
 #: pro/src/blocks/free-shipping-progress/block.json
 msgctxt "block description"
 msgid "A WooCommerce free shipping progress block."
+msgstr ""
+
+#: pro/src/blocks/free-shipping-state/block.json
+msgctxt "block title"
+msgid "Free Shipping State"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-state/block.json
+msgctxt "block description"
+msgid "A free shipping state template container."
+msgstr ""
+
+#: pro/src/blocks/free-shipping-text/block.json
+msgctxt "block title"
+msgid "Free Shipping Text"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-text/block.json
+msgctxt "block description"
+msgid "Token-aware free shipping text."
 msgstr ""
 
 #: src/blocks/countdown/block.json
@@ -5059,25 +5264,25 @@ msgstr ""
 
 #: src/widgets/popup/block.json
 msgctxt "block title"
-msgid "Popup"
+msgid "Overlay"
 msgstr ""
 
 #: src/widgets/popup/block.json
 msgctxt "block description"
-msgid "A popup element to display content to visitors."
+msgid "An overlay element to display content to visitors."
 msgstr ""
 
 #: src/widgets/popup/editor/blocks/container/block.json
 msgctxt "block description"
-msgid "Wraps the popup content and close button and positions it within the viewport."
+msgid "Wraps the overlay content and close button and positions it within the viewport."
 msgstr ""
 
 #: src/widgets/popup/editor/blocks/container/blocks/close-button/block.json
 msgctxt "block description"
-msgid "The button used to close the popup."
+msgid "The button used to close the overlay."
 msgstr ""
 
 #: src/widgets/popup/editor/blocks/container/blocks/content/block.json
 msgctxt "block description"
-msgid "The primary content container of the popup."
+msgid "The primary content container of the overlay."
 msgstr ""

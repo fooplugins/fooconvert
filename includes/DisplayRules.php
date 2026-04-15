@@ -501,6 +501,7 @@ class DisplayRules extends BaseComponent {
         $summary = implode( ', ', $visible );
 
         if ( $count > 2 ) {
+            // translators: %d is the number of remaining labels hidden from the summary.
             $summary .= sprintf( __( ' +%d more', 'fooconvert' ), $count - 2 );
         }
 

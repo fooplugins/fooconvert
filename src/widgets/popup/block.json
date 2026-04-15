@@ -1,8 +1,8 @@
 {
   "apiVersion": 3,
-  "name": "fc/popup",
-  "title": "Popup",
-  "description": "A popup element to display content to visitors.",
+  "name": "fc/overlay",
+  "title": "Overlay",
+  "description": "An overlay element to display content to visitors.",
   "category": "fooconvert",
   "editorScript": "file:./editor/index.js",
   "editorStyle": "file:./editor/index.css",
@@ -44,9 +44,9 @@
     "fc/postId": "postId",
     "fc/postType": "postType",
     "fc/template": "template",
-    "fc-popup/settings": "settings",
-    "fc-popup/styles": "styles",
-    "fc-popup/closeButton": "closeButton",
-    "fc-popup/content": "content"
+    "fc-overlay/settings": "settings",
+    "fc-overlay/styles": "styles",
+    "fc-overlay/closeButton": "closeButton",
+    "fc-overlay/content": "content"
   }
 }

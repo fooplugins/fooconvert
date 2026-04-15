@@ -123,7 +123,7 @@ function fooconvert_get_popup_types() {
     return array(
         FOOCONVERT_POPUP_TYPE_BAR,
         FOOCONVERT_POPUP_TYPE_FLYOUT,
-        FOOCONVERT_POPUP_TYPE_POPUP,
+        FOOCONVERT_POPUP_TYPE_OVERLAY,
     );
 }
 
@@ -147,10 +147,13 @@ function fooconvert_normalize_popup_type( $value ) {
         case FOOCONVERT_CPT_FLYOUT:
         case 'fc/flyout':
             return FOOCONVERT_POPUP_TYPE_FLYOUT;
+        case FOOCONVERT_POPUP_TYPE_OVERLAY:
         case FOOCONVERT_POPUP_TYPE_POPUP:
         case FOOCONVERT_CPT_POPUP:
+        case 'fc/overlay':
         case 'fc/popup':
-            return FOOCONVERT_POPUP_TYPE_POPUP;
+        case 'fc-overlay':
+            return FOOCONVERT_POPUP_TYPE_OVERLAY;
     }
 
     return '';
@@ -165,7 +168,7 @@ function fooconvert_normalize_popup_type( $value ) {
 function fooconvert_sanitize_popup_type( $value ) {
     $popup_type = fooconvert_normalize_popup_type( $value );
 
-    return $popup_type !== '' ? $popup_type : FOOCONVERT_POPUP_TYPE_POPUP;
+    return $popup_type !== '' ? $popup_type : FOOCONVERT_POPUP_TYPE_OVERLAY;
 }
 
 /**
@@ -180,7 +183,7 @@ function fooconvert_get_popup_type_post_type( $popup_type ) {
             return FOOCONVERT_CPT_BAR;
         case FOOCONVERT_POPUP_TYPE_FLYOUT:
             return FOOCONVERT_CPT_FLYOUT;
-        case FOOCONVERT_POPUP_TYPE_POPUP:
+        case FOOCONVERT_POPUP_TYPE_OVERLAY:
             return FOOCONVERT_CPT_POPUP;
     }
 
@@ -199,8 +202,8 @@ function fooconvert_get_popup_type_block_name( $popup_type ) {
             return 'fc/bar';
         case FOOCONVERT_POPUP_TYPE_FLYOUT:
             return 'fc/flyout';
-        case FOOCONVERT_POPUP_TYPE_POPUP:
-            return 'fc/popup';
+        case FOOCONVERT_POPUP_TYPE_OVERLAY:
+            return 'fc/overlay';
     }
 
     return '';
@@ -218,8 +221,8 @@ function fooconvert_get_popup_type_label( $popup_type ) {
             return __( 'Bar', 'fooconvert' );
         case FOOCONVERT_POPUP_TYPE_FLYOUT:
             return __( 'Flyout', 'fooconvert' );
-        case FOOCONVERT_POPUP_TYPE_POPUP:
-            return __( 'Popup', 'fooconvert' );
+        case FOOCONVERT_POPUP_TYPE_OVERLAY:
+            return __( 'Overlay', 'fooconvert' );
     }
 
     return '';
@@ -245,13 +248,11 @@ function fooconvert_get_widget_popup_type( $thing ) {
         return '';
     }
 
-    $popup_type = fooconvert_normalize_popup_type( get_post_meta( $post->ID, FOOCONVERT_META_KEY_POPUP_TYPE, true ) );
-    if ( $popup_type !== '' ) {
-        return $popup_type;
-    }
+    $stored_popup_type = get_post_meta( $post->ID, FOOCONVERT_META_KEY_POPUP_TYPE, true );
+    $popup_type = fooconvert_normalize_popup_type( $stored_popup_type );
+    $has_legacy_popup_meta = is_string( $stored_popup_type ) && strtolower( trim( $stored_popup_type ) ) === FOOCONVERT_POPUP_TYPE_POPUP;
 
-    $popup_type = fooconvert_normalize_popup_type( $post->post_type );
-    if ( $popup_type !== '' ) {
+    if ( $popup_type !== '' && !$has_legacy_popup_meta ) {
         return $popup_type;
     }
 
@@ -269,8 +270,17 @@ function fooconvert_get_widget_popup_type( $thing ) {
         }
     }
 
+    $popup_type = fooconvert_normalize_popup_type( $post->post_type );
+    if ( $popup_type !== '' ) {
+        return $popup_type;
+    }
+
+    if ( $has_legacy_popup_meta ) {
+        return FOOCONVERT_POPUP_TYPE_OVERLAY;
+    }
+
     if ( $post->post_type === FOOCONVERT_CPT_POPUP ) {
-        return FOOCONVERT_POPUP_TYPE_POPUP;
+        return FOOCONVERT_POPUP_TYPE_OVERLAY;
     }
 
     return '';

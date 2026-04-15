@@ -14,7 +14,7 @@ const ContentAppender = ( { rootClientId, disable } ) => {
             renderToggle={ ( { onToggle, ...props } ) => {
                 return (
                     <Button
-                        className="fc--popup-content--button-block-appender"
+                        className="fc--overlay-content--button-block-appender"
                         onClick={ onToggle }
                         label={ __( 'Add block', 'fooconvert' ) }
                         icon={ plus }

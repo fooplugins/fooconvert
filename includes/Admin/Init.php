@@ -159,9 +159,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                     'title'       => __( 'Flyout', 'fooconvert' ),
                     'description' => __( 'Create a side flyout with template variations and the usual FooConvert controls.', 'fooconvert' ),
                 ),
-                FOOCONVERT_POPUP_TYPE_POPUP  => array(
-                    'title'       => __( 'Popup', 'fooconvert' ),
-                    'description' => __( 'Create a centered popup and continue into the normal template picker flow.', 'fooconvert' ),
+                FOOCONVERT_POPUP_TYPE_OVERLAY => array(
+                    'title'       => __( 'Overlay', 'fooconvert' ),
+                    'description' => __( 'Create a centered overlay and continue into the normal template picker flow.', 'fooconvert' ),
                 ),
             );
             ?>
@@ -176,10 +176,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                             <p style="margin-bottom:0;">
                                 <a class="button button-primary" href="<?php echo esc_url( fooconvert_admin_url_widget_new( $popup_type ) ); ?>">
                                     <?php
-                                    printf(
-                                        esc_html__( 'Create %s', 'fooconvert' ),
-                                        esc_html( $card['title'] )
-                                    );
+                                    /* translators: %s is the popup type card title, for example "Bar" or "Overlay". */
+                                    $create_label = sprintf( esc_html__( 'Create %s', 'fooconvert' ), $card['title'] );
+                                    echo esc_html( $create_label );
                                     ?>
                                 </a>
                             </p>

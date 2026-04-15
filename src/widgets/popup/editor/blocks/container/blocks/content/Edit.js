@@ -3,7 +3,7 @@ import { $object, useRootAttributes } from "#editor";
 import EditStyles from "./EditStyles";
 import { POPUP_DEFAULTS } from "../../../../Edit";
 
-export const CONTENT_CLASS_NAME = 'fc--popup-content';
+export const CONTENT_CLASS_NAME = 'fc--overlay-content';
 
 const Edit = props => {
 
@@ -14,7 +14,7 @@ const Edit = props => {
         ...restProps
     } = props;
 
-    const [ parentAttributes, setParentAttributes ] = useRootAttributes( 'fc/popup' );
+    const [ parentAttributes, setParentAttributes ] = useRootAttributes( 'fc/overlay' );
 
     const attributes = parentAttributes?.content ?? {};
     const setAttributes = value => setParentAttributes( { content: $object( attributes, value ) } );

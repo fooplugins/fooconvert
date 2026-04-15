@@ -125,7 +125,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
                 $meta = [
                     'post_type' => fooconvert_get_popup_type_post_type(
-                        $content_for_insert['meta_input'][FOOCONVERT_META_KEY_POPUP_TYPE] ?? FOOCONVERT_POPUP_TYPE_POPUP
+                        $content_for_insert['meta_input'][FOOCONVERT_META_KEY_POPUP_TYPE] ?? FOOCONVERT_POPUP_TYPE_OVERLAY
                     ),
                     'template'  => $content_for_insert['template'],
                     'demo'      => true
@@ -382,14 +382,14 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 <!-- /wp:fc/flyout -->'
                 ],
 
-                // Demo Popups:
+                // Demo Overlays:
                 [
-                    'post_title'   => 'Black Friday Exit Intent Popup [Demo]',
+                    'post_title'   => 'Black Friday Exit Intent Overlay [Demo]',
                     'post_status'  => 'draft',
                     'post_type'    => FOOCONVERT_CPT_POPUP,
                     'template'     => 'black_friday_popup',
                     'meta_input'   => [
-                        FOOCONVERT_META_KEY_POPUP_TYPE => FOOCONVERT_POPUP_TYPE_POPUP,
+                        FOOCONVERT_META_KEY_POPUP_TYPE => FOOCONVERT_POPUP_TYPE_OVERLAY,
                         FOOCONVERT_META_KEY_DISPLAY_RULES => [
                             'location' => [
                                 [
@@ -402,11 +402,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                         ]
                     ],
                     'post_content' =>
-                '<!-- wp:fc/popup {"template":"black_friday_popup","postId":||POST_ID||,"settings":{"transitions":true,"hideScrollbar":true,"maxOnMobile":true,"trigger":{"version":2,"lifetime":"page","frequency":{"mode":"once","cooldownSeconds":0},"steps":[{"event":"fc.exit_intent","where":{"delaySeconds":5}}]},"backdropIgnore":false},"closeButton":{"settings":{"icon":{"slug":"default__close-small","size":"48px"}}},"content":{"styles":{"color":{"background":"linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)"},"border":{"radius":"18px","color":"#111111","style":"solid","width":"3px"},"width":"720px","dimensions":{"padding":"30px"}}}} -->
-<!-- wp:fc/popup-container -->
-<!-- wp:fc/popup-close-button /-->
+                '<!-- wp:fc/overlay {"template":"black_friday_popup","postId":||POST_ID||,"settings":{"transitions":true,"hideScrollbar":true,"maxOnMobile":true,"trigger":{"version":2,"lifetime":"page","frequency":{"mode":"once","cooldownSeconds":0},"steps":[{"event":"fc.exit_intent","where":{"delaySeconds":5}}]},"backdropIgnore":false},"closeButton":{"settings":{"icon":{"slug":"default__close-small","size":"48px"}}},"content":{"styles":{"color":{"background":"linear-gradient(135deg,rgb(6,147,227) 0%,rgb(157,85,225) 100%)"},"border":{"radius":"18px","color":"#111111","style":"solid","width":"3px"},"width":"720px","dimensions":{"padding":"30px"}}}} -->
+<!-- wp:fc/overlay-container -->
+<!-- wp:fc/overlay-close-button /-->
 
-<!-- wp:fc/popup-content -->
+<!-- wp:fc/overlay-content -->
 <!-- wp:heading {"textAlign":"center","className":"is-style-default","fontFamily":"body"} -->
 <h2 class="wp-block-heading has-text-align-center is-style-default has-body-font-family">WELCOME TO BLACK FRIDAY</h2>
 <!-- /wp:heading -->
@@ -428,9 +428,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 <div class="wp-block-button" id="cta"><a class="wp-block-button__link has-text-align-center wp-element-button" href="/shop" style="border-radius:54px">Save 70%</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons -->
-<!-- /wp:fc/popup-content -->
-<!-- /wp:fc/popup-container -->
-<!-- /wp:fc/popup -->'
+<!-- /wp:fc/overlay-content -->
+<!-- /wp:fc/overlay-container -->
+<!-- /wp:fc/overlay -->'
                 ],
             ];
             // phpcs:enable

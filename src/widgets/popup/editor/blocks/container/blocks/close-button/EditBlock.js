@@ -2,7 +2,7 @@ import { useBlockProps } from "@wordpress/block-editor";
 import classnames from "classnames";
 import { getCSSBackgroundProperty, SlugIcon, useStyles } from "#editor";
 
-export const BUTTON_CLASS_NAME = 'fc--popup-close-button';
+export const BUTTON_CLASS_NAME = 'fc--overlay-close-button';
 
 const EditBlock = props => {
 

@@ -1,10 +1,10 @@
 {
   "apiVersion": 3,
-  "name": "fc/popup-close-button",
+  "name": "fc/overlay-close-button",
   "title": "Close Button",
-  "description": "The button used to close the popup.",
+  "description": "The button used to close the overlay.",
   "category": "fooconvert",
-  "parent": [ "fc/popup-container" ],
+  "parent": [ "fc/overlay-container" ],
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "supports": {

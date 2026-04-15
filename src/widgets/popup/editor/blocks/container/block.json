@@ -1,10 +1,10 @@
 {
   "apiVersion": 3,
-  "name": "fc/popup-container",
+  "name": "fc/overlay-container",
   "title": "Container",
-  "description": "Wraps the popup content and close button and positions it within the viewport.",
+  "description": "Wraps the overlay content and close button and positions it within the viewport.",
   "category": "fooconvert",
-  "parent": [ "fc/popup" ],
+  "parent": [ "fc/overlay" ],
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "supports": {

@@ -9,7 +9,7 @@ import EditBlock from "./EditBlock";
 import EditSettings from "./EditSettings";
 import { TriggerControls } from "./components/trigger-controls";
 
-export const POPUP_CLASS_NAME = 'fc--popup';
+export const POPUP_CLASS_NAME = 'fc--overlay';
 const POPUP_POST_TYPE = 'fc-popup';
 
 export const POPUP_DEFAULTS = {
@@ -121,7 +121,7 @@ const Edit = props => {
 const EditPlaceholder = props => {
     return (
         <VariationPicker
-            label={ __( "Choose a template for your popup", "fooconvert" ) }
+            label={ __( "Choose a template for your overlay", "fooconvert" ) }
             instructions={ __( "Select a template to start with.", "fooconvert" ) }
             reset={ { template: undefined } }
             media="thumbnail"

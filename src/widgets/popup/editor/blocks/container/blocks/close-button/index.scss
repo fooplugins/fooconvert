@@ -1,4 +1,4 @@
-.fc--popup-close-button {
+.fc--overlay-close-button {
   position: absolute!important;
   display: flex;
   align-items: center;
@@ -30,7 +30,7 @@
   }
 }
 
-.fc--popup-close-button.position-left {
+.fc--overlay-close-button.position-left {
   right: unset;
   left: 0;
 }

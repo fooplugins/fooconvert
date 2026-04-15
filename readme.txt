@@ -8,7 +8,7 @@ Stable tag: 2.0.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-FooConvert is a powerful Popup, Bar, and Flyout Builder for WordPress that helps you turn more visitors into leads, subscribers, and customers.
+FooConvert is a powerful popup builder for WordPress that helps you create bars, flyouts, and overlays that turn more visitors into leads, subscribers, and customers.
 
 == Description ==
 
@@ -19,10 +19,10 @@ Whether you want to grow your email list, promote a sale, increase conversions, 
 
 [Visit the FooConvert Homepage](https://fooplugins.com/fooconvert/)
 
-= Build High-Converting Popup, Bar, and Flyout  (Free Version Includes): =
+= Build High-Converting Bars, Flyouts, and Overlays  (Free Version Includes): =
 
-- Lightbox Popups
-- Exit-intent Popups
+- Lightbox Overlays
+- Exit-intent Overlays
 - Floating Bars
 - Sticky Bars
 - Slide-in Flyouts
@@ -40,18 +40,18 @@ FooConvert’s mission is simple:
 
 = FooConvert Key Features =
 
-- Manage popups, bars, and flyouts from one streamlined Popup workflow.
-- Customize popup, bar & flyout design, color, spacing, and positioning.
+- Manage bars, flyouts, and overlays from one streamlined popup workflow.
+- Customize bar, flyout, and overlay design, color, spacing, and positioning.
 - Add any core or third-party WordPress blocks.
 - Add shortcodes inside popup content.
 - Use built-in Sign Up, Countdown, and Coupon blocks for lead capture, urgency, and offers.
 - Capture leads and export them from the built-in Leads screen.
 - Add custom Google Fonts to keep campaigns on-brand.
-- Build responsive widgets that look great on all devices.
+- Build responsive popups that look great on all devices.
 
 = Free Version Includes In 2.0 =
 
-- 5 professionally designed templates for popups, bars, and flyouts
+- 5 professionally designed templates for bars, flyouts, and overlays
 - Sign Up block for lead capture
 - Countdown block for urgency campaigns
 - Coupon block for promo and discount offers
@@ -60,7 +60,7 @@ FooConvert’s mission is simple:
 
 = Advanced Display Rules =
 
-Show Popups, Bars, and Flyouts based on:
+Show Bars, Flyouts, and Overlays based on:
 
 - Page location (entire site, homepage, specific URLs, posts, taxonomies, WooCommerce pages, etc.)
 - Exclusions (skip pages or user flows you don’t want to interrupt)
@@ -68,7 +68,7 @@ Show Popups, Bars, and Flyouts based on:
 
 = Smart Trigger Options =
 
-Open Popups, Bars, and Flyouts based on:
+Open Bars, Flyouts, and Overlays based on:
 
 - Page load
 - Exit intent
@@ -108,7 +108,7 @@ FooConvert PRO adds advanced WooCommerce targeting, storefront-specific conversi
 - *Boost Lead Generation* – Grow your list with targeted offers
 - *Sell More Products* – Promote discounts, sales, & cross-sell offers
 - *Optimize Your Funnel* – Personalize messages based on user behavior
-- *Make Data-Driven Decisions* – See exactly which widgets perform best
+- *Make Data-Driven Decisions* – See exactly which popups perform best
 
 [Launch Your Own FooConvert Demo](https://app.instawp.io/launch?t=fooconvert-free-demo&d=v2)
 
@@ -166,7 +166,7 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 
 = 2.0.0 =
 * Date Updated : 8 Apr 2026
-* New : Unified popups, bars, and flyouts under a single Popup post type with a popup type chooser.
+* New : Unified bars, flyouts, and overlays under a single Popup post type with a popup type chooser.
 * New : Added popup type columns, filters, and inline display rule editing on the Popups list screen.
 * New : Moved 5 professionally designed templates from PRO into the free plugin.
 * New : Moved the Sign Up, Countdown, and Coupon blocks from PRO into the free plugin.
@@ -186,7 +186,7 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 * Fixed : Fixed error when creating bars and flyouts in block editor.
 * Fixed : In block editor, disabled autosave for our custom post types.
 * Fixed : Updated Freemius SDK to 2.12.3
-* Fixed : Updated dashboard & reworded all admin screens to make more sense (removed wording for 'widget')
+* Fixed : Updated dashboard copy and reworded admin screens for clearer popup terminology.
 
 = 1.2.5 =
 * Date Updated : 28 Sep 2025

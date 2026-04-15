@@ -1,6 +1,6 @@
 @use "../../../mixins";
 
-.fc--popup__editor {
+.fc--overlay__editor {
   box-sizing: border-box;
   position: relative;
   display: flex;
@@ -15,7 +15,7 @@
 
   @include mixins.background-transparency-grid();
 
-  .fc--popup__backdrop {
+  .fc--overlay__backdrop {
     box-sizing: border-box;
     display: block;
     position: absolute;
@@ -29,7 +29,7 @@
   }
 }
 
-.fc--popup {
+.fc--overlay {
   box-sizing: border-box;
   position: relative;
   display: flex;
@@ -44,7 +44,7 @@
 }
 
 @media (max-width: 600px) {
-  .fc--popup {
+  .fc--overlay {
     width: 100%;
     height: 100%;
   }

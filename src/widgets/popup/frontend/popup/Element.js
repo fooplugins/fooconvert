@@ -111,7 +111,7 @@ class PopupElement extends TriggeredElement {
 
     onOpenChanged( state ) {
         if ( this.hideScrollbar ) {
-            this.ownerDocument.documentElement.classList.toggle( 'fc-popup__hide-scroll', state );
+            this.ownerDocument.documentElement.classList.toggle( 'fc-overlay__hide-scroll', state );
         }
         super.onOpenChanged( state );
     }

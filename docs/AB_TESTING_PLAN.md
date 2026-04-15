@@ -8,12 +8,12 @@ This document is the current-state plan, not the original draft. It reflects wha
 
 ## Product Scope
 
-- PRO-only feature for `fc-popup`, `fc-bar`, and `fc-flyout`
+- PRO-only feature for `fc-overlay`, `fc-bar`, and `fc-flyout`
 - Same-type experiments only
 - Existing analytics tables are reused: `fooconvert_events` and `fooconvert_leads`
 - No new database tables
 - Native WordPress CPT screens and metaboxes, not a separate custom CRUD UI
-- One small free-core runtime hook is required so PRO can resolve control widgets to assigned variants at render time
+- One small free-core runtime hook is required so PRO can resolve control popups to assigned variants at render time
 
 ## Implemented Architecture
 
@@ -37,7 +37,7 @@ Experiment posts store:
 - auto-winner settings, stored for future automation
 - `started_at`, `ended_at`, and active `run_windows`
 
-Widget posts store canonical membership:
+Popup posts store canonical membership:
 
 - current experiment ID
 - experiment role: `control` or `variant`
@@ -53,14 +53,14 @@ This replaces the earlier draft idea of reverse lookups based on serialized expe
 - Variants remain same-type as the control
 - Only one non-completed experiment can reserve a participant at a time
 - Controls keep the public display rules and shortcode entrypoint
-- Variant widgets are internal draft copies and do not own targeting
+- Variant popups are internal draft copies and do not own targeting
 - Variants keep track of which participant they were created from
 
 ### Runtime and assignment
 
 - Free-core exposes `fooconvert_resolve_widget_post_id`
 - Display-rule queueing and shortcode rendering both pass through that resolver
-- PRO resolves control widgets to an assigned participant for `display_rules` and `shortcode` contexts
+- PRO resolves control popups to an assigned participant for `display_rules` and `shortcode` contexts
 - Assignment is server-side and sticky via `fooconvert_exp_{experiment_id}`
 - The cookie stores the assigned participant ID, not an array index
 - If an experiment is active on the request, page caching is disabled via `DONOTCACHEPAGE` and `nocache_headers()`
@@ -76,8 +76,8 @@ This replaces the earlier draft idea of reverse lookups based on serialized expe
   - create a new variant from any existing participant
 - Applied winners can be followed by a `Clean Up` action that permanently deletes all variants
 - Control, variants, weights, and goal are locked after the experiment has started
-- Widget editors show experiment membership through a PRO `PluginPostStatusInfo` panel
-- Variant widgets lock experiment-owned targeting:
+- Popup editors show experiment membership through a PRO `PluginPostStatusInfo` panel
+- Variant popups lock experiment-owned targeting:
   - display rules
   - trigger/open behavior
   - close/open button visibility tied to experiment-controlled behavior

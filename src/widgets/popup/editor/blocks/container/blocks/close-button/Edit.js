@@ -6,7 +6,7 @@ import EditStyles from "./EditStyles";
 import { POPUP_DEFAULTS } from "../../../../Edit";
 
 const Edit = props => {
-    const [ parentAttributes, setParentAttributes ] = useRootAttributes( 'fc/popup' );
+    const [ parentAttributes, setParentAttributes ] = useRootAttributes( 'fc/overlay' );
 
     const attributes = parentAttributes?.closeButton ?? {};
     const setAttributes = value => setParentAttributes( { closeButton: $object( attributes, value ) } );

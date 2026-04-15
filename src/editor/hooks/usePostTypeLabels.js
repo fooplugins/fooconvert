@@ -15,9 +15,9 @@ const POPUP_TYPE_LABELS = {
         name: __( "Flyouts", "fooconvert" ),
         singular_name: __( "Flyout", "fooconvert" ),
     },
-    popup: {
-        name: __( "Popups", "fooconvert" ),
-        singular_name: __( "Popup", "fooconvert" ),
+    overlay: {
+        name: __( "Overlays", "fooconvert" ),
+        singular_name: __( "Overlay", "fooconvert" ),
     },
 };
 
@@ -31,10 +31,13 @@ const normalizePopupType = value => {
         case "fc-flyout":
         case "fc/flyout":
             return "flyout";
+        case "overlay":
         case "popup":
         case "fc-popup":
+        case "fc-overlay":
+        case "fc/overlay":
         case "fc/popup":
-            return "popup";
+            return "overlay";
         default:
             return "";
     }

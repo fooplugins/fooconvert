@@ -8,13 +8,13 @@ The goal is to separate:
 
 - reusable dynamic blocks that should become first-class FooConvert blocks
 - upgrades to existing FooConvert blocks
-- support blocks that make widget templates easier to compose
+- support blocks that make popup templates easier to compose
 
-These blocks are intended to run inside existing FooConvert widget types:
+These blocks are intended to run inside existing FooConvert popup types:
 
 - `fc-bar`
 - `fc-flyout`
-- `fc-popup`
+- `fc-overlay`
 
 They should work alongside existing content blocks, core Gutenberg blocks, and selective WooCommerce content embeds.
 
@@ -22,7 +22,7 @@ They should work alongside existing content blocks, core Gutenberg blocks, and s
 
 ### Content model
 
-FooConvert widget content areas already support flexible `InnerBlocks` composition. That means the new blocks can be mixed with:
+FooConvert popup content areas already support flexible `InnerBlocks` composition. That means the new blocks can be mixed with:
 
 - core blocks such as Heading, Paragraph, List, Buttons, Image, Group, Columns, and Shortcode
 - existing FooConvert blocks such as `fc/countdown`, `fc/coupon`, and `fc/sign-up`
@@ -55,7 +55,7 @@ Use three categories:
 
 ## Existing blocks to evolve
 
-These blocks already exist and are still part of the WooCommerce widget toolkit.
+These blocks already exist and are still part of the WooCommerce popup toolkit.
 
 ### `fc/coupon`
 
@@ -63,7 +63,7 @@ Current role:
 
 - copy code
 - log conversion
-- optionally close widget
+- optionally close popup
 - optionally redirect
 
 Current scope:
@@ -109,7 +109,7 @@ Upgrade path:
 Current role:
 
 - PRO-only WooCommerce action block
-- applies a selected WooCommerce coupon directly from a FooConvert widget
+- applies a selected WooCommerce coupon directly from a FooConvert popup
 - supports close-on-apply and redirect-on-apply flows
 - shares the visual language of `fc/coupon` but is apply-only
 
@@ -117,7 +117,7 @@ Current implementation:
 
 - registered as `fc/apply-coupon`
 - rendered as the custom element `fc-apply-coupon`
-- registered from PRO so saved widget content does not depend on `fc/coupon` apply mode
+- registered from PRO so saved popup content does not depend on `fc/coupon` apply mode
 - uses a WooCommerce coupon selector in the editor rather than manual freeform coupon entry
 
 Current editor behavior:
@@ -247,18 +247,18 @@ Support behavior block
 
 ### Purpose
 
-Add a lightweight celebration effect to a widget without rendering any visible frontend UI.
+Add a lightweight celebration effect to a popup without rendering any visible frontend UI.
 
 ### Why it should be a block
 
-This is reusable behavior, not content. Merchants should be able to drop it into a widget composition the same way they add any other FooConvert block.
+This is reusable behavior, not content. Merchants should be able to drop it into a popup composition the same way they add any other FooConvert block.
 
 ### Primary placements
 
 - signup success popups
 - coupon reveal bars
 - flash-sale flyouts
-- post-action celebration widgets
+- post-action celebration popups
 
 ### Current implementation
 
@@ -266,26 +266,26 @@ This is reusable behavior, not content. Merchants should be able to drop it into
 - registered as `fc/confetti`
 - rendered as the custom element `fc-confetti`
 - has no visible frontend output
-- listens for the parent widget `open` event and triggers `canvas-confetti`
-- anchors the confetti origin to the current widget position in the viewport
+- listens for the parent popup `open` event and triggers `canvas-confetti`
+- anchors the confetti origin to the current popup position in the viewport
 
 ### Useful triggers and rules
 
-- pair with `fc.immediate` for launch-style announcement widgets
+- pair with `fc.immediate` for launch-style announcement popups
 - pair with `cart.add` for celebration flyouts
 - pair with signup or coupon templates that open after a conversion step
 
 ### MVP
 
 - invisible support block
-- trigger confetti each time the parent widget opens
+- trigger confetti each time the parent popup opens
 - ship the confetti runtime with the plugin bundle
 
 ### Known limits of the current implementation
 
 - PRO-only
 - no merchant-facing controls in v1
-- tied to widget open events, not downstream submit/apply success events
+- tied to popup open events, not downstream submit/apply success events
 
 ## 3. `fc/cart-offer-unlock`
 
@@ -360,7 +360,7 @@ Commerce action block
 
 ### Purpose
 
-Apply a WooCommerce coupon directly from a FooConvert widget.
+Apply a WooCommerce coupon directly from a FooConvert popup.
 
 ### Why it should be a block
 
@@ -414,7 +414,7 @@ This is now a standalone PRO sibling to `fc/coupon`.
 ### V2
 
 - remove coupon
-- auto-apply on widget open
+- auto-apply on popup open
 - show already-applied state
 - show compatibility or stacking guidance
 - multi-coupon support where store rules allow it
@@ -480,7 +480,7 @@ Commerce reassurance block
 
 ### Purpose
 
-Summarize product trust signals in a compact format suitable for widgets.
+Summarize product trust signals in a compact format suitable for popups.
 
 ### Primary placements
 
@@ -524,7 +524,7 @@ Commerce state block
 
 ### Purpose
 
-Show contextual product cards inside FooConvert widgets.
+Show contextual product cards inside FooConvert popups.
 
 ### Primary placements
 
@@ -767,7 +767,7 @@ These may not need to be v1 dynamic blocks if core blocks and theme styles can c
 - Woo product grid / product collection style blocks when they can render from explicit query context
 - Woo shortcodes in the Shortcode block for product lists or add-to-cart links
 
-## Avoid inside widgets
+## Avoid inside popups
 
 - full cart block
 - full checkout block
@@ -786,7 +786,7 @@ These may not need to be v1 dynamic blocks if core blocks and theme styles can c
 - `fc/review-snapshot`
 - `fc/product-recommendations`
 
-These complete the next most useful widget templates on top of the blocks already shipped.
+These complete the next most useful popup templates on top of the blocks already shipped.
 
 ## Phase 2
 
@@ -811,10 +811,10 @@ Promote a concept into a true FooConvert dynamic block when it needs at least tw
 - live Woo data
 - distinct commerce states
 - merchant configuration beyond plain copy/styling
-- reuse across multiple widget templates
+- reuse across multiple popup templates
 - action handling beyond ordinary links/buttons
 
-If it does not meet that threshold, ship it as a widget template built from:
+If it does not meet that threshold, ship it as a popup template built from:
 
 - static content
 - core blocks

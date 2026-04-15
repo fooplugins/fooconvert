@@ -44,16 +44,16 @@ return array(
     ),
 	'innerBlocks' => array(
 		array(
-			'fc/popup-container',
+			'fc/overlay-container',
 			array(),
 			array(
 				array(
-					'fc/popup-close-button',
+					'fc/overlay-close-button',
 					array(),
 					array()
 				),
 				array(
-					'fc/popup-content',
+					'fc/overlay-content',
 					array(),
 					array(
 						array(

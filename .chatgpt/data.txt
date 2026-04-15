@@ -1,12 +1,19 @@
 This file outlines how data is stored within FooConvert.
 
-FooConvert creates 3 widget custom post types in WordPress:
-- Bar widgets use `fc-bar`
-- Flyout widgets use `fc-flyout`
-- Popup widgets use `fc-popup`
+FooConvert stores all popup types in a single WordPress custom post type:
+- `fc-popup`
 
-Each widget stores its editor content in the standard WordPress `post_content` field for its custom post type entry.
-That content contains the widget root block plus any nested blocks used inside the widget.
+The logical popup type is stored in post meta:
+- `_fooconvert_popup_type`
+- canonical values: `bar`, `flyout`, `overlay`
+- legacy `popup` is accepted only during normalization and migration
+
+Each popup stores its editor content in the standard WordPress `post_content` field for its post entry.
+That content contains the popup root block plus any nested blocks used inside the popup.
+The root block is one of:
+- `fc/bar`
+- `fc/flyout`
+- `fc/overlay`
 
 The free plugin now owns these content blocks:
 - `fc/countdown`
@@ -15,19 +22,18 @@ The free plugin now owns these content blocks:
 
 The free plugin also owns the migrated former PRO templates, template media, template fonts, and basic lead-management UI.
 
-Saved widget content may contain baked-in asset URLs.
-On this branch, FooConvert includes a one-time content migration that rewrites stale saved media URLs from:
-- `plugins/fooconvert/pro/assets/media/`
-to:
-- `plugins/fooconvert/assets/media/`
+Saved popup content may contain baked-in asset URLs or legacy overlay block names.
+FooConvert includes one-time content migrations that rewrite:
+- stale media URLs from `plugins/fooconvert/pro/assets/media/` to `plugins/fooconvert/assets/media/`
+- legacy overlay content from `popup` / `fc/popup*` to `overlay` / `fc/overlay*`
 
-The migration records completion in the WordPress option:
+Migration completion is recorded in the WordPress option:
 - `fooconvert-content-migrations`
 
 FooConvert creates a custom database table for analytics events:
 - `fooconvert_events`
 
-Its purpose is to store widget analytics and engagement/conversion event data.
+Its purpose is to store popup analytics and engagement/conversion event data.
 
 The SQL shape is:
 
@@ -49,7 +55,7 @@ CREATE TABLE fooconvert_events (
 
 Field summary:
 - `id`: primary key
-- `widget_id`: widget post ID associated with the event
+- `widget_id`: popup post ID associated with the event
 - `event_type`: core event type such as `open`, `click`, `close`, or `update`
 - `event_subtype`: subtype such as `engagement`, or `NULL`
 - `conversion`: whether the event counts as a conversion

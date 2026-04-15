@@ -32,6 +32,7 @@ define( 'FOOCONVERT_CPT_POPUP', 'fc-popup' );
 // Popup types
 define( 'FOOCONVERT_POPUP_TYPE_BAR', 'bar' );
 define( 'FOOCONVERT_POPUP_TYPE_FLYOUT', 'flyout' );
+define( 'FOOCONVERT_POPUP_TYPE_OVERLAY', 'overlay' );
 define( 'FOOCONVERT_POPUP_TYPE_POPUP', 'popup' );
 
 //EVENT TYPE

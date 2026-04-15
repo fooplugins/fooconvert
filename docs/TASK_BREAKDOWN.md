@@ -7,15 +7,15 @@ This checklist reflects the current implementation status of FooConvert PRO A/B 
 ## Phase 1: Core Infrastructure
 
 - [x] Register experiment CPT as `fc-experiment`
-- [x] Register experiment meta and widget membership meta
-- [x] Support `fc-popup`, `fc-bar`, and `fc-flyout`
+- [x] Register experiment meta and popup membership meta
+- [x] Support `fc-overlay`, `fc-bar`, and `fc-flyout`
 - [x] Implement the core `Experiment` service
 - [x] Implement variant duplication from the control
 - [x] Implement variant duplication from an existing variant
 - [x] Enforce same-type participants
-- [x] Enforce one non-completed experiment per widget
+- [x] Enforce one non-completed experiment per popup
 - [x] Track `started_at`, `ended_at`, and `run_windows`
-- [x] Block deletion of widgets that belong to a non-completed experiment
+- [x] Block deletion of popups that belong to a non-completed experiment
 
 ## Phase 2: Display And Assignment
 
@@ -23,7 +23,7 @@ This checklist reflects the current implementation status of FooConvert PRO A/B 
 - [x] Resolve assigned participants during display-rule queueing
 - [x] Resolve assigned participants during shortcode rendering
 - [x] Store sticky assignment in `fooconvert_exp_{experiment_id}`
-- [x] Store assigned widget IDs in cookies instead of array indexes
+- [x] Store assigned popup IDs in cookies instead of array indexes
 - [x] Reassign visitors when a stale cookie points at an invalid participant
 - [x] Disable page caching when an active experiment matches the request
 - [ ] Add admin preview mode / participant switcher for logged-in users
@@ -41,7 +41,7 @@ This checklist reflects the current implementation status of FooConvert PRO A/B 
 - [x] Allow creating new variants from the control on the experiment screen
 - [x] Allow creating new variants from an existing variant on the experiment screen
 - [x] Add direct edit links for the control and variants from the experiment screen
-- [x] Add widget editor experiment membership/status panel
+- [x] Add popup editor experiment membership/status panel
 - [x] Lock experiment structure after first start
 - [x] Lock variant display rules in the editor
 - [x] Lock variant trigger/open-close configuration in the editor

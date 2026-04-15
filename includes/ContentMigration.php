@@ -28,6 +28,13 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         private const MIGRATION_MERGE_WIDGET_CPTS = 'merge_widget_cpts_into_popup';
 
         /**
+         * Migration key used to mark the popup-to-overlay rename as completed.
+         *
+         * @var string
+         */
+        private const MIGRATION_RENAME_POPUP_TYPE_TO_OVERLAY = 'rename_popup_type_to_overlay';
+
+        /**
          * Legacy media path stored in migrated widget content.
          *
          * @var string
@@ -59,15 +66,27 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
          * @return void
          */
         public function maybe_migrate_widget_content() {
-            if ( $this->is_completed( self::MIGRATION_MOVE_PRO_MEDIA_URLS ) ) {
+            $has_media_migration = !$this->is_completed( self::MIGRATION_MOVE_PRO_MEDIA_URLS );
+            $has_overlay_migration = !$this->is_completed( self::MIGRATION_RENAME_POPUP_TYPE_TO_OVERLAY );
+
+            if ( !$has_media_migration && !$has_overlay_migration ) {
                 return;
             }
 
             foreach ( $this->get_widget_ids() as $post_id ) {
+                if ( $has_overlay_migration ) {
+                    $this->maybe_migrate_widget_popup_type( $post_id );
+                }
                 $this->get_post_content( $post_id );
             }
 
-            $this->mark_completed( self::MIGRATION_MOVE_PRO_MEDIA_URLS );
+            if ( $has_media_migration ) {
+                $this->mark_completed( self::MIGRATION_MOVE_PRO_MEDIA_URLS );
+            }
+
+            if ( $has_overlay_migration ) {
+                $this->mark_completed( self::MIGRATION_RENAME_POPUP_TYPE_TO_OVERLAY );
+            }
         }
 
         /**
@@ -93,7 +112,7 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
             foreach ( $this->get_widget_ids_for_post_type( FOOCONVERT_CPT_POPUP ) as $post_id ) {
                 $popup_type = fooconvert_normalize_popup_type( get_post_meta( $post_id, FOOCONVERT_META_KEY_POPUP_TYPE, true ) );
                 if ( $popup_type === '' ) {
-                    update_post_meta( $post_id, FOOCONVERT_META_KEY_POPUP_TYPE, FOOCONVERT_POPUP_TYPE_POPUP );
+                    update_post_meta( $post_id, FOOCONVERT_META_KEY_POPUP_TYPE, FOOCONVERT_POPUP_TYPE_OVERLAY );
                 }
             }
 
@@ -116,7 +135,7 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
                 return '';
             }
 
-            if ( $this->is_media_url_migration_completed() ) {
+            if ( !$this->has_pending_content_migrations() ) {
                 return $content;
             }
 
@@ -136,13 +155,16 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
                 return $response;
             }
 
-            if ( $this->is_media_url_migration_completed() ) {
-                return $response;
+            $content = is_string( $post->post_content ) ? $post->post_content : '';
+            $migrated_content = $this->has_pending_content_migrations()
+                ? $this->maybe_migrate_post_content( (int) $post->ID, $content )
+                : $content;
+            $popup_type = fooconvert_get_widget_popup_type( $post );
+            if ( $popup_type === '' ) {
+                $popup_type = FOOCONVERT_POPUP_TYPE_OVERLAY;
             }
 
-            $content = is_string( $post->post_content ) ? $post->post_content : '';
-            $migrated_content = $this->maybe_migrate_post_content( (int)$post->ID, $content );
-            if ( $migrated_content === $content ) {
+            if ( $migrated_content === $content && $this->is_popup_overlay_migration_completed() ) {
                 return $response;
             }
 
@@ -152,6 +174,9 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
                 if ( array_key_exists( 'rendered', $data['content'] ) ) {
                     $data['content']['rendered'] = FooConvert::plugin()->do_content( $migrated_content );
                 }
+            }
+            if ( isset( $data['meta'] ) && is_array( $data['meta'] ) ) {
+                $data['meta'][FOOCONVERT_META_KEY_POPUP_TYPE] = $popup_type;
             }
             $response->set_data( $data );
 
@@ -165,17 +190,45 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
          * @return string
          */
         public function normalize_content( string $content ): string {
-            return str_replace(
-                array(
-                    self::OLD_MEDIA_PATH,
-                    str_replace( '/', '\/', self::OLD_MEDIA_PATH )
-                ),
-                array(
-                    self::NEW_MEDIA_PATH,
-                    str_replace( '/', '\/', self::NEW_MEDIA_PATH )
-                ),
-                $content
-            );
+            if ( !$this->is_media_url_migration_completed() ) {
+                $content = str_replace(
+                    array(
+                        self::OLD_MEDIA_PATH,
+                        str_replace( '/', '\/', self::OLD_MEDIA_PATH )
+                    ),
+                    array(
+                        self::NEW_MEDIA_PATH,
+                        str_replace( '/', '\/', self::NEW_MEDIA_PATH )
+                    ),
+                    $content
+                );
+            }
+
+            if ( !$this->is_popup_overlay_migration_completed() ) {
+                $content = str_replace(
+                    array(
+                        'wp:fc/popup-container',
+                        'wp:fc/popup-close-button',
+                        'wp:fc/popup-content',
+                        'wp:fc/popup',
+                        '<fc-popup',
+                        '</fc-popup',
+                        '<\\/fc-popup',
+                    ),
+                    array(
+                        'wp:fc/overlay-container',
+                        'wp:fc/overlay-close-button',
+                        'wp:fc/overlay-content',
+                        'wp:fc/overlay',
+                        '<fc-overlay',
+                        '</fc-overlay',
+                        '<\\/fc-overlay',
+                    ),
+                    $content
+                );
+            }
+
+            return $content;
         }
 
         /**
@@ -328,6 +381,42 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
          */
         private function is_media_url_migration_completed(): bool {
             return $this->is_completed( self::MIGRATION_MOVE_PRO_MEDIA_URLS );
+        }
+
+        /**
+         * Checks whether the popup-to-overlay migration has already run.
+         *
+         * @return bool
+         */
+        private function is_popup_overlay_migration_completed(): bool {
+            return $this->is_completed( self::MIGRATION_RENAME_POPUP_TYPE_TO_OVERLAY );
+        }
+
+        /**
+         * Checks whether any content migrations remain pending.
+         *
+         * @return bool
+         */
+        private function has_pending_content_migrations(): bool {
+            return !$this->is_media_url_migration_completed() || !$this->is_popup_overlay_migration_completed();
+        }
+
+        /**
+         * Normalizes the logical popup type stored for a widget post.
+         *
+         * @param int $post_id Widget post ID.
+         * @return void
+         */
+        private function maybe_migrate_widget_popup_type( int $post_id ): void {
+            $stored_popup_type = get_post_meta( $post_id, FOOCONVERT_META_KEY_POPUP_TYPE, true );
+            $canonical_popup_type = fooconvert_get_widget_popup_type( $post_id );
+            if ( $canonical_popup_type === '' ) {
+                $canonical_popup_type = FOOCONVERT_POPUP_TYPE_OVERLAY;
+            }
+
+            if ( $stored_popup_type !== $canonical_popup_type ) {
+                update_post_meta( $post_id, FOOCONVERT_META_KEY_POPUP_TYPE, $canonical_popup_type );
+            }
         }
 
         /**

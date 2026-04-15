@@ -9,7 +9,7 @@ import { dispatch } from "@wordpress/data";
 
 const TriggerControls = () => {
 
-    const [ attributes, setAttributes ] = useRootAttributes( 'fc/popup' );
+    const [ attributes, setAttributes ] = useRootAttributes( 'fc/overlay' );
 
     const {
         settings,
@@ -67,7 +67,7 @@ const TriggerControls = () => {
                         onChange={ setTrigger }
                         locked={ isLocked }
                         allowEmpty={ true }
-                        help={ __( 'Select how the popup is opened.', 'fooconvert' ) }
+                        help={ __( 'Select how the overlay is opened.', 'fooconvert' ) }
                         hideLabelFromVision
                     />
                 </PanelRow>
@@ -93,7 +93,7 @@ const TriggerControls = () => {
                 <PanelRow>
                     <ToggleControl
                         label={ __( 'Close on backdrop click', 'fooconvert' ) }
-                        help={ __( 'Close the popup when the backdrop is clicked.', 'fooconvert' ) }
+                        help={ __( 'Close the overlay when the backdrop is clicked.', 'fooconvert' ) }
                         checked={ !( settings?.backdropIgnore ?? settingsDefaults?.backdropIgnore ?? false ) }
                         onChange={ value => setBackdropIgnore( !value ) }
                         disabled={ isLocked }
@@ -103,7 +103,7 @@ const TriggerControls = () => {
                 {/*<PanelRow>*/}
                 {/*    <ToggleControl*/}
                 {/*        label={ __( 'Close on form submit', 'fooconvert' ) }*/}
-                {/*        help={ __( 'Close the popup when a child form is submitted.', 'fooconvert' ) }*/}
+                {/*        help={ __( 'Close the overlay when a child form is submitted.', 'fooconvert' ) }*/}
                 {/*        checked={ settings?.closeOnSubmit ?? settingsDefaults?.closeOnSubmit ?? false }*/}
                 {/*        onChange={ setCloseOnSubmit }*/}
                 {/*    />*/}
@@ -111,7 +111,7 @@ const TriggerControls = () => {
                 <PanelRow>
                     <ToggleControl
                         label={ __( 'Close on anchor click', 'fooconvert' ) }
-                        help={ __( 'Clicking specific anchors closes the popup.', 'fooconvert' ) }
+                        help={ __( 'Clicking specific anchors closes the overlay.', 'fooconvert' ) }
                         checked={ closeAnchorChecked }
                         onChange={ value => setCloseAnchorChecked( value ) }
                         disabled={ isLocked }
@@ -122,7 +122,7 @@ const TriggerControls = () => {
                     <PanelRow>
                         <TextControl
                             label={ __( 'Anchor', 'fooconvert' ) }
-                            help={ __( 'Add an anchor to a button block and then insert the same value here to close the flyout on click.', 'fooconvert' ) }
+                            help={ __( 'Add an anchor to a button block and then insert the same value here to close the overlay on click.', 'fooconvert' ) }
                             value={ settings?.closeAnchor ?? settingsDefaults?.closeAnchor ?? "" }
                             onChange={ setCloseAnchor }
                             disabled={ isLocked }

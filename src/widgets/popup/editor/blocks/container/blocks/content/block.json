@@ -1,10 +1,10 @@
 {
   "apiVersion": 3,
-  "name": "fc/popup-content",
+  "name": "fc/overlay-content",
   "title": "Content",
-  "description": "The primary content container of the popup.",
+  "description": "The primary content container of the overlay.",
   "category": "fooconvert",
-  "parent": [ "fc/popup-container" ],
+  "parent": [ "fc/overlay-container" ],
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "supports": {

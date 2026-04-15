@@ -3,7 +3,7 @@
 return array(
 	'name' => 'popup__digital_download_signup',
 	'title' => __( 'Digital Download Signup', 'fooconvert' ),
-	'description' => __( 'Digital download signup themed popup.', 'fooconvert' ),
+	'description' => __( 'Digital download signup themed overlay.', 'fooconvert' ),
 	'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/template__digital_download_signup.png',
 	'attributes' => array(
 		'template' => 'popup__digital_download_signup',
@@ -52,16 +52,16 @@ return array(
 	),
 	'innerBlocks' => array(
 		array(
-			'fc/popup-container',
+			'fc/overlay-container',
 			array(),
 			array(
 				array(
-					'fc/popup-close-button',
+					'fc/overlay-close-button',
 					array(),
 					array()
 				),
 				array(
-					'fc/popup-content',
+					'fc/overlay-content',
 					array(),
 					array(
 						array(
@@ -195,7 +195,7 @@ return array(
 return array(
     'name'        => 'popup__digital',
     'title'       => __( 'Digital Marketing', 'fooconvert' ),
-    'description' => __( 'Digital marketing themed popup.', 'fooconvert' ),
+    'description' => __( 'Digital marketing themed overlay.', 'fooconvert' ),
     'icon'        => '',
     'thumbnail'   => '',
     'attributes'  => array(
@@ -244,16 +244,16 @@ return array(
     ),
     'innerBlocks' => array(
         array(
-            'fc/popup-container',
+            'fc/overlay-container',
             array(),
             array(
                 array(
-                    'fc/popup-close-button',
+                    'fc/overlay-close-button',
                     array(),
                     array()
                 ),
                 array(
-                    'fc/popup-content',
+                    'fc/overlay-content',
                     array(),
                     array(
                         array(

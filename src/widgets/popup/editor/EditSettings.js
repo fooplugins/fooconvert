@@ -42,7 +42,7 @@ const EditSettings = props => {
                     <PanelRow>
                         <ToggleControl
                             label={ __( 'Maximize on mobile', 'fooconvert' ) }
-                            help={ __( 'Expand the popup on mobile to use all available screen space.', 'fooconvert' ) }
+                            help={ __( 'Expand the overlay on mobile to use all available screen space.', 'fooconvert' ) }
                             checked={ settings?.maxOnMobile ?? settingsDefaults?.maxOnMobile ?? false }
                             onChange={ setMaxOnMobile }
                             __nextHasNoMarginBottom
@@ -51,7 +51,7 @@ const EditSettings = props => {
                     <PanelRow>
                         <ToggleControl
                             label={ __( 'Enable transitions', 'fooconvert' ) }
-                            help={ __( 'Choose if transitions are used when toggling the popup.', 'fooconvert' ) }
+                            help={ __( 'Choose if transitions are used when toggling the overlay.', 'fooconvert' ) }
                             checked={ settings?.transitions ?? settingsDefaults?.transitions ?? false }
                             onChange={ setTransitions }
                             __nextHasNoMarginBottom

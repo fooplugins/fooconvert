@@ -77,8 +77,8 @@ if ( empty( $widgets ) || count( $widgets ) === 0 ) {
             <a href="<?php echo esc_url( fooconvert_admin_url_widget_new( FOOCONVERT_POPUP_TYPE_FLYOUT ) ); ?>" class="button button-secondary">
                 <?php esc_html_e( 'Add New Flyout', 'fooconvert' ); ?>
             </a>
-            <a href="<?php echo esc_url( fooconvert_admin_url_widget_new( FOOCONVERT_POPUP_TYPE_POPUP ) ); ?>" class="button button-secondary">
-                <?php esc_html_e( 'Add New Popup', 'fooconvert' ); ?>
+            <a href="<?php echo esc_url( fooconvert_admin_url_widget_new( FOOCONVERT_POPUP_TYPE_OVERLAY ) ); ?>" class="button button-secondary">
+                <?php esc_html_e( 'Add New Overlay', 'fooconvert' ); ?>
             </a>
         </p>
     </div>

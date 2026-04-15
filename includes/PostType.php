@@ -74,7 +74,7 @@ class PostType {
         register_post_meta( FOOCONVERT_CPT_POPUP, FOOCONVERT_META_KEY_POPUP_TYPE, array(
             'single'            => true,
             'type'              => 'string',
-            'default'           => FOOCONVERT_POPUP_TYPE_POPUP,
+            'default'           => FOOCONVERT_POPUP_TYPE_OVERLAY,
             'sanitize_callback' => 'fooconvert_sanitize_popup_type',
             'auth_callback'     => static function () {
                 return current_user_can( 'edit_posts' );
@@ -82,7 +82,7 @@ class PostType {
             'show_in_rest'      => array(
                 'schema' => array(
                     'type'    => 'string',
-                    'default' => FOOCONVERT_POPUP_TYPE_POPUP,
+                    'default' => FOOCONVERT_POPUP_TYPE_OVERLAY,
                     'enum'    => fooconvert_get_popup_types(),
                 ),
             ),
@@ -110,12 +110,12 @@ class PostType {
     private function get_template_block_name(): string {
         $popup_type = fooconvert_get_requested_popup_type();
         if ( $popup_type === '' ) {
-            $popup_type = FOOCONVERT_POPUP_TYPE_POPUP;
+            $popup_type = FOOCONVERT_POPUP_TYPE_OVERLAY;
         }
 
         $block_name = fooconvert_get_popup_type_block_name( $popup_type );
 
-        return $block_name !== '' ? $block_name : 'fc/popup';
+        return $block_name !== '' ? $block_name : 'fc/overlay';
     }
 
     /**

@@ -26,7 +26,7 @@ class ContentElement extends CustomElement {
         if ( this.parentWidgetElement ) {
             return this.parentWidgetElement?.log( type, data );
         }
-        return Promise.resolve( { success: false, data: 'No parent widget' } );
+        return Promise.resolve( { success: false, data: 'No parent popup' } );
     }
 }
 

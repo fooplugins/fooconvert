@@ -132,6 +132,18 @@ const DisplayRulesListApp = ( { config } ) => {
     const canEdit = Boolean( config?.canEdit );
     const showSummary = config?.showSummary !== false;
     const lockedMessage = typeof config?.lockedMessage === "string" ? config.lockedMessage : "";
+    /* translators: %s is the popup title shown in the list table. */
+    const editDisplayRulesLabelText = __( "Edit display rules for %s", "fooconvert" );
+    const editDisplayRulesLabel = sprintf(
+        editDisplayRulesLabelText,
+        postTitle || __( "this popup", "fooconvert" )
+    );
+    /* translators: %s is the popup title shown in the modal header. */
+    const modalTitleText = __( "Display Rules: %s", "fooconvert" );
+    const modalTitle = sprintf(
+        modalTitleText,
+        postTitle || __( "Popup", "fooconvert" )
+    );
 
     const [ rules, setRules ] = useState( () => normalizeRules( config?.rules ) );
     const [ draftRules, setDraftRules ] = useState( () => normalizeRules( config?.rules ) );
@@ -230,10 +242,7 @@ const DisplayRulesListApp = ( { config } ) => {
                     type="button"
                     className={ `${ rootClass }__summary-button` }
                     onClick={ openModal }
-                    aria-label={ sprintf(
-                        __( "Edit display rules for %s", "fooconvert" ),
-                        postTitle || __( "this popup", "fooconvert" )
-                    ) }
+                    aria-label={ editDisplayRulesLabel }
                 >
                     { renderSummary() }
                     <span className={ `${ rootClass }__summary-action` }>
@@ -255,10 +264,7 @@ const DisplayRulesListApp = ( { config } ) => {
             { isOpen && canEdit && (
                 <Modal
                     className={ `${ rootClass }__modal` }
-                    title={ sprintf(
-                        __( "Display Rules: %s", "fooconvert" ),
-                        postTitle || __( "Popup", "fooconvert" )
-                    ) }
+                    title={ modalTitle }
                     onRequestClose={ closeModal }
                 >
                     <div className={ `${ rootClass }__modal-body` }>

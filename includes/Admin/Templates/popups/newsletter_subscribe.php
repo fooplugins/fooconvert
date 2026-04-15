@@ -3,7 +3,7 @@
 return array(
 	'name' => 'popup__newsletter_subscribe',
 	'title' => __( 'Newsletter Subscribe', 'fooconvert' ),
-	'description' => __( 'Newsletter Subscribe marketing themed popup.', 'fooconvert' ),
+	'description' => __( 'Newsletter Subscribe marketing themed overlay.', 'fooconvert' ),
 	'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/template__newsletter_subscribe.png',
 	'attributes' => array(
 		'template' => 'popup__newsletter_subscribe',
@@ -60,16 +60,16 @@ return array(
 	),
 	'innerBlocks' => array(
 		array(
-			'fc/popup-container',
+			'fc/overlay-container',
 			array(),
 			array(
 				array(
-					'fc/popup-close-button',
+					'fc/overlay-close-button',
 					array(),
 					array()
 				),
 				array(
-					'fc/popup-content',
+					'fc/overlay-content',
 					array(),
 					array(
 						array(
@@ -262,7 +262,7 @@ return array(
 return array(
     'name'        => 'popup__i-cafe',
     'title'       => __( 'i-Cafe', 'fooconvert' ),
-    'description' => __( 'i-Cafe marketing themed popup.', 'fooconvert' ),
+    'description' => __( 'i-Cafe marketing themed overlay.', 'fooconvert' ),
     'icon'        => '',
     'thumbnail'   => '',
     'attributes'  => array(
@@ -319,16 +319,16 @@ return array(
     ),
     'innerBlocks' => array(
         array(
-            'fc/popup-container',
+            'fc/overlay-container',
             array(),
             array(
                 array(
-                    'fc/popup-close-button',
+                    'fc/overlay-close-button',
                     array(),
                     array()
                 ),
                 array(
-                    'fc/popup-content',
+                    'fc/overlay-content',
                     array(),
                     array(
                         array(

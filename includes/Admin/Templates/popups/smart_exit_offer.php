@@ -3,7 +3,7 @@
 return array(
 	'name' => 'popup__smart_exit_offer',
 	'title' => __( 'Smart Exit Offer', 'fooconvert' ),
-	'description' => __( 'Smart exit offer themed popup.', 'fooconvert' ),
+	'description' => __( 'Smart exit offer themed overlay.', 'fooconvert' ),
 	'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/template__smart_exit_offer.png',
 	'attributes' => array(
 		'template' => 'popup__smart_exit_offer',
@@ -71,16 +71,16 @@ return array(
 	),
 	'innerBlocks' => array(
 		array(
-			'fc/popup-container',
+			'fc/overlay-container',
 			array(),
 			array(
 				array(
-					'fc/popup-close-button',
+					'fc/overlay-close-button',
 					array(),
 					array()
 				),
 				array(
-					'fc/popup-content',
+					'fc/overlay-content',
 					array(),
 					array(
 						array(

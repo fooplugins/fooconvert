@@ -1,7 +1,7 @@
 import { useBlockProps, useInnerBlocksProps } from "@wordpress/block-editor";
 import classnames from "classnames";
 
-export const CONTAINER_CLASS_NAME = 'fc--popup-container';
+export const CONTAINER_CLASS_NAME = 'fc--overlay-container';
 
 const Edit = props => {
 
