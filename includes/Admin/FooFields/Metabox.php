@@ -19,6 +19,10 @@ if ( !class_exists( __NAMESPACE__ . '\Metabox' ) ) {
         function __construct( $config ) {
             parent::__construct( $config );
 
+            if ( !$this->has_manager() ) {
+                return;
+            }
+
             //add the metaboxes for a person
             add_action( 'add_meta_boxes_' . $this->config['post_type'], array( $this, 'add_meta_boxes' ) );
 

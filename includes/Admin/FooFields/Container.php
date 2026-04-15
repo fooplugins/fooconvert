@@ -22,7 +22,7 @@ if ( !class_exists( __NAMESPACE__ . '\Container' ) ) {
         /**
          * @var Manager
          */
-        public $manager;
+        public $manager = null;
 
         /**
          * @var Field[]
@@ -70,7 +70,36 @@ if ( !class_exists( __NAMESPACE__ . '\Container' ) ) {
 
             if ( isset( $this->config['manager'] ) ) {
                 $this->manager = namespace\Manager::get_manager( $this->config['manager'] );
-                $this->manager->register_container( $this );
+                if ( $this->has_manager() ) {
+                    $this->manager->register_container( $this );
+                } else {
+                    $this->warn_missing_manager( $this->config['manager'] );
+                }
+            }
+        }
+
+        /**
+         * Determines whether the container resolved a valid manager instance.
+         *
+         * @return bool
+         */
+        protected function has_manager() {
+            return $this->manager instanceof Manager;
+        }
+
+        /**
+         * Emits a developer warning when the configured manager has not been registered yet.
+         *
+         * @param string $manager_id Manager identifier from the container config.
+         * @return void
+         */
+        protected function warn_missing_manager( $manager_id ) {
+            if ( function_exists( '_doing_it_wrong' ) ) {
+                _doing_it_wrong(
+                    __METHOD__,
+                    sprintf( 'Container manager "%s" has not been registered yet.', (string) $manager_id ),
+                    '2.0.0'
+                );
             }
         }
 
