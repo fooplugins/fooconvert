@@ -1896,27 +1896,6 @@ const App = () => {
                             <p>
                                 { __( "Use the site brand as the primary styling source, then let the builder assemble a popup with FooConvert, WooCommerce, and supported core blocks.", "fooconvert" ) }
                             </p>
-                            <div className={ `${ rootClass }__meta-row` }>
-                                <span className={ `${ rootClass }__meta-pill` }>
-                                    { brandIsDirty
-                                        ? __( "Brand has unsaved changes", "fooconvert" )
-                                        : ( hasSavedBrandProfile
-                                            ? __( "Brand saved", "fooconvert" )
-                                            : __( "Brand ready to save", "fooconvert" ) ) }
-                                </span>
-                                <span className={ `${ rootClass }__meta-pill` }>
-                                    { sprintf(
-                                        __( "%d supported blocks", "fooconvert" ),
-                                        blockCatalog.length
-                                    ) }
-                                </span>
-                                <span className={ `${ rootClass }__meta-pill` }>
-                                    { sprintf(
-                                        __( "%d structural templates", "fooconvert" ),
-                                        templateLibrary.length
-                                    ) }
-                                </span>
-                            </div>
                         </div>
 
                         <div className={ `${ rootClass }__header-actions` }>
