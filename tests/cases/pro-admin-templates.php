@@ -23,6 +23,7 @@ namespace {
     }
 
     require_once __DIR__ . '/../support/Assertions.php';
+    require_once dirname( __DIR__, 2 ) . '/includes/constants.php';
     require_once dirname( __DIR__, 2 ) . '/pro/includes/Admin/Templates/Init.php';
     require_once dirname( __DIR__, 2 ) . '/pro/includes/Admin/Init.php';
 
@@ -63,9 +64,9 @@ namespace {
 
     $bar_template = require dirname( __DIR__, 2 ) . '/pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php';
     $flyout_template = require dirname( __DIR__, 2 ) . '/pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php';
-    $cart_idle_template = require dirname( __DIR__, 2 ) . '/pro/includes/Admin/Templates/popups/cart_idle_rescue.php';
-    $checkout_exit_template = require dirname( __DIR__, 2 ) . '/pro/includes/Admin/Templates/popups/checkout_exit_save.php';
-    $high_intent_template = require dirname( __DIR__, 2 ) . '/pro/includes/Admin/Templates/popups/high_intent_offer.php';
+    $cart_idle_template = require dirname( __DIR__, 2 ) . '/pro/includes/Admin/Templates/overlays/cart_idle_rescue.php';
+    $checkout_exit_template = require dirname( __DIR__, 2 ) . '/pro/includes/Admin/Templates/overlays/checkout_exit_save.php';
+    $high_intent_template = require dirname( __DIR__, 2 ) . '/pro/includes/Admin/Templates/overlays/high_intent_offer.php';
 
     foreach ( array(
         $bar_template,

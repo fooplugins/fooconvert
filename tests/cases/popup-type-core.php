@@ -160,20 +160,20 @@ namespace {
 
     Assertions::same(
         FOOCONVERT_POPUP_TYPE_BAR,
-        fooconvert_get_widget_popup_type( 101 ),
+        fooconvert_get_popup_type( 101 ),
         'Popup type resolution should prefer stored popup type meta.'
     );
 
     Assertions::same(
         FOOCONVERT_POPUP_TYPE_FLYOUT,
-        fooconvert_get_widget_popup_type( 102 ),
+        fooconvert_get_popup_type( 102 ),
         'Popup type resolution should fall back to the root block when popup type meta is missing.'
     );
 
     Assertions::same(
         FOOCONVERT_POPUP_TYPE_BAR,
-        fooconvert_get_widget_popup_type( 'fc/bar' ),
-        'Popup type normalization should accept legacy widget block names.'
+        fooconvert_get_popup_type( 'fc/bar' ),
+        'Popup type normalization should accept legacy popup block names.'
     );
 
     Assertions::same(
@@ -184,14 +184,14 @@ namespace {
 
     Assertions::same(
         FOOCONVERT_POPUP_TYPE_OVERLAY,
-        fooconvert_get_widget_popup_type( 104 ),
+        fooconvert_get_popup_type( 104 ),
         'Legacy popup root blocks should resolve to the canonical overlay type.'
     );
 
     Assertions::same(
         'Bar',
-        fooconvert_get_widget_post_type_label( 101 ),
-        'Widget labels should be derived from the resolved popup type.'
+        fooconvert_get_popup_type_label( 101 ),
+        'Popup labels should be derived from the resolved popup type.'
     );
 
     $migration = new ContentMigration();

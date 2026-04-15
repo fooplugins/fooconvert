@@ -137,7 +137,7 @@ class PostType {
     }
 
     /**
-     * Adds the logical widget type column to the popup list table.
+     * Adds the logical popup type column to the popup list table.
      *
      * @param array $columns Existing columns.
      * @return array
@@ -167,7 +167,7 @@ class PostType {
     }
 
     /**
-     * Renders the logical widget type column content.
+     * Renders the logical popup type column content.
      *
      * @param string $column_name Column name.
      * @param int    $post_id Post ID.
@@ -178,7 +178,7 @@ class PostType {
             return;
         }
 
-        echo esc_html( fooconvert_get_widget_post_type_label( $post_id ) );
+        echo esc_html( fooconvert_get_popup_type_label( $post_id ) );
     }
 
     /**

@@ -6,8 +6,8 @@ namespace FooPlugins\FooConvert {
         /**
          * @return array<int,array<string,mixed>>
          */
-        public function get_all_widget_metrics(): array {
-            return $GLOBALS['fc_test_all_widget_metrics'] ?? array();
+        public function get_all_popup_metrics(): array {
+            return $GLOBALS['fc_test_all_popup_metrics'] ?? array();
         }
     }
 }
@@ -18,7 +18,7 @@ namespace FooPlugins\FooConvert\Data {
          * @param int $limit
          * @return array<int,array<string,mixed>>
          */
-        public static function get_sales_totals_by_widget( int $limit = 10 ): array {
+        public static function get_sales_totals_by_popup( int $limit = 10 ): array {
             return $GLOBALS['fc_test_sales_rows'] ?? array();
         }
     }
@@ -82,7 +82,7 @@ namespace {
     $GLOBALS['fc_test_post_meta'] = array();
 
     /** @var array<int,array<string,mixed>> */
-    $GLOBALS['fc_test_all_widget_metrics'] = array();
+    $GLOBALS['fc_test_all_popup_metrics'] = array();
 
     /** @var array<int,array<string,mixed>> */
     $GLOBALS['fc_test_sales_rows'] = array();
@@ -221,7 +221,7 @@ namespace {
     require_once dirname( __DIR__, 2 ) . '/includes/functions.php';
     require_once dirname( __DIR__, 2 ) . '/includes/Stats.php';
 
-    add_filter( 'fooconvert_widget_metric_options', static function( array $options ): array {
+    add_filter( 'fooconvert_popup_metric_options', static function( array $options ): array {
         $options['sales'] = array(
             'dropdown_option' => 'sales',
             'label'           => 'Sales',
@@ -241,16 +241,16 @@ namespace {
     $GLOBALS['fc_test_posts'][2313] = $post;
     $GLOBALS['fc_test_post_meta'][2313] = array();
 
-    $GLOBALS['fc_test_all_widget_metrics'] = array(
+    $GLOBALS['fc_test_all_popup_metrics'] = array(
         array(
-            'widget_id'    => 2313,
+            'post_id'    => 2313,
             'total_views'  => 92,
             'total_clicks' => 5,
         ),
     );
     $GLOBALS['fc_test_sales_rows'] = array(
         array(
-            'widget_id'   => 2313,
+            'post_id'   => 2313,
             'sale_count'  => 2,
             'total_sales' => '30.6000',
         ),
@@ -268,7 +268,7 @@ namespace {
     Assertions::same(
         2313,
         $top_performers[1]['id'],
-        'The fallback sales ranking should include the widget with attributed sales.'
+        'The fallback sales ranking should include the popup with attributed sales.'
     );
 
     Assertions::same(

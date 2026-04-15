@@ -29,17 +29,17 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
          * This function will delete any posts of the given post types
          * that have the meta key set to the given value.
          *
-         * @param string $widget_post_type The post type to search for.
+         * @param string $popup_post_type The post type to search for.
          * @param string $meta_key The meta key to search for.
          *
          * @return void
          */
-        function cleanup_old_demo_content( $widget_post_type, $meta_key ) {
+        function cleanup_old_demo_content( $popup_post_type, $meta_key ) {
             // Check if old demo content already exists
             $old_demo_content = get_posts( [
                 'meta_key'    => $meta_key,
                 'meta_value'  => '1',
-                'post_type'   => $widget_post_type,
+                'post_type'   => $popup_post_type,
                 'post_status' => 'any',
                 'numberposts' => -1
             ] );
@@ -60,7 +60,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
          * @since 1.0.0
          */
         function delete() {
-            $this->cleanup_old_demo_content( $this->ensure_registered_widget_post_type(), FOOCONVERT_META_KEY_DEMO_CONTENT );
+            $this->cleanup_old_demo_content( $this->ensure_registered_popup_post_type(), FOOCONVERT_META_KEY_DEMO_CONTENT );
         }
 
         /**
@@ -74,17 +74,17 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
          * @return int The number of demo content created.
          */
         function create( $force = false ) {
-            $widget_post_type = $this->ensure_registered_widget_post_type();
+            $popup_post_type = $this->ensure_registered_popup_post_type();
 
             if ( $force === true ) {
                 // Cleanup old demo content
-                $this->cleanup_old_demo_content( $widget_post_type, FOOCONVERT_META_KEY_DEMO_CONTENT );
+                $this->cleanup_old_demo_content( $popup_post_type, FOOCONVERT_META_KEY_DEMO_CONTENT );
             }
 
             // Check if demo content already exists
             $existing_posts = get_posts( [
                 'meta_key'       => FOOCONVERT_META_KEY_DEMO_CONTENT,
-                'post_type'      => $widget_post_type,
+                'post_type'      => $popup_post_type,
                 'post_status'    => 'any',
                 'meta_value'     => '1',
                 'posts_per_page' => 1,
@@ -144,12 +144,12 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 
 
         /**
-         * Creates demo event data for the widget.
+         * Creates demo event data for the popup.
          *
-         * @param $widget_id
+         * @param $post_id
          * @return void
          */
-        function create_events( $widget_id, $meta, $num_events = 1000 ) {
+        function create_events( $post_id, $meta, $num_events = 1000 ) {
             $event = new Event();
 
             // Define event types and probabilities (more positive events)
@@ -207,7 +207,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 // Insert the generated event into the database
                 $event->create(
                     [
-                        'widget_id'           => $widget_id,
+                        'post_id'           => $post_id,
                         'event_type'          => $event_type,
                         'event_subtype'       => $event_subtype,
                         'conversion'          => $conversion,
@@ -223,7 +223,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
                 );
             }
 
-            do_action( 'fooconvert_demo_content_after_create_events', $widget_id, $meta, $num_events );
+            do_action( 'fooconvert_demo_content_after_create_events', $post_id, $meta, $num_events );
         }
 
         // Helper function to select an event type based on weighted probabilities
@@ -441,15 +441,15 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
          *
          * @return string
          */
-        public function ensure_registered_widget_post_type() {
-            $widget_post_type = FOOCONVERT_CPT_POPUP;
-            if ( post_type_exists( $widget_post_type ) ) {
-                return $widget_post_type;
+        public function ensure_registered_popup_post_type() {
+            $popup_post_type = FOOCONVERT_CPT_POPUP;
+            if ( post_type_exists( $popup_post_type ) ) {
+                return $popup_post_type;
             }
 
             FooConvert::plugin()->post_type->register();
 
-            return $widget_post_type;
+            return $popup_post_type;
         }
     }
 }

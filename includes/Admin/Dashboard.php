@@ -120,11 +120,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
             $task = $this->get_dashboard_task();
 
             switch ( $task ) {
-                case 'create_demo_widgets':
-                    $this->create_demo_widgets();
+                case 'create_demo_popups':
+                    $this->create_demo_popups();
                     break;
-                case 'delete_demo_widgets':
-                    $this->delete_demo_widgets();
+                case 'delete_demo_popups':
+                    $this->delete_demo_popups();
                     break;
                 case 'update_stats':
                     $this->update_stats();
@@ -172,13 +172,13 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
         }
 
         /**
-         * Function to create demo widgets.
+         * Function to create demo popups.
          *
-         * This function creates demo widgets and sends back a JSON success
-         * response with the number of widgets created.
+         * This function creates demo popups and sends back a JSON success
+         * response with the number of popups created.
          *
          */
-        function create_demo_widgets() {
+        function create_demo_popups() {
             ob_start();
             $demo = new DemoContent();
             $created = $demo->create( true );
@@ -200,14 +200,14 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
         }
 
         /**
-         * Function to delete all demo widgets.
+         * Function to delete all demo popups.
          *
-         * This function deletes all demo widgets and sends back a JSON success
+         * This function deletes all demo popups and sends back a JSON success
          * response.
          *
          * @since 1.0.0
          */
-        function delete_demo_widgets() {
+        function delete_demo_popups() {
             $demo = new DemoContent();
             $demo->delete();
 
@@ -240,7 +240,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
         /**
          * Function to update the stats.
          *
-         * This function updates all widget stats.
+         * This function updates all popup stats.
          *
          * @since 1.1.0
          */

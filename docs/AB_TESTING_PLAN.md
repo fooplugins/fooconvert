@@ -58,7 +58,7 @@ This replaces the earlier draft idea of reverse lookups based on serialized expe
 
 ### Runtime and assignment
 
-- Free-core exposes `fooconvert_resolve_widget_post_id`
+- Free-core exposes `fooconvert_resolve_popup_post_id`
 - Display-rule queueing and shortcode rendering both pass through that resolver
 - PRO resolves control popups to an assigned participant for `display_rules` and `shortcode` contexts
 - Assignment is server-side and sticky via `fooconvert_exp_{experiment_id}`

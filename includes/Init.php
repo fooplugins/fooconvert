@@ -2,6 +2,10 @@
 
 namespace FooPlugins\FooConvert;
 
+if ( !class_exists( __NAMESPACE__ . '\UpgradeMigration' ) ) {
+    require_once __DIR__ . '/UpgradeMigration.php';
+}
+
 /**
  * FooConvert Init Class
  * Runs all classes that need to run at startup
@@ -25,6 +29,8 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
                 $plugin_rel_path = dirname( plugin_basename( FOOCONVERT_FILE ) ) . '/languages/';
                 load_plugin_textdomain( FOOCONVERT_SLUG, false, $plugin_rel_path );
             } );
+
+            new UpgradeMigration();
 
             // Initialize the main plugin.
             FooConvert::plugin();

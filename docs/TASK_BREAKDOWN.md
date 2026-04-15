@@ -19,7 +19,7 @@ This checklist reflects the current implementation status of FooConvert PRO A/B 
 
 ## Phase 2: Display And Assignment
 
-- [x] Add the free-core `fooconvert_resolve_widget_post_id` hook
+- [x] Add the free-core `fooconvert_resolve_popup_post_id` hook
 - [x] Resolve assigned participants during display-rule queueing
 - [x] Resolve assigned participants during shortcode rendering
 - [x] Store sticky assignment in `fooconvert_exp_{experiment_id}`

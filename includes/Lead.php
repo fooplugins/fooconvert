@@ -12,11 +12,11 @@ if ( !class_exists( __NAMESPACE__ . '\Lead' ) ) {
          * Handles create.
          */
         public function create( $data ) {
-            if ( empty( $data['widget_id'] ) || empty( $data['email'] ) ) {
+            if ( empty( $data['post_id'] ) || empty( $data['email'] ) ) {
                 return new \WP_Error( 'missing_required_fields', 'Popup ID and email are required fields' );
             }
 
-            $data['widget_id'] = intval( $data['widget_id'] );
+            $data['post_id'] = intval( $data['post_id'] );
             $data['email'] = sanitize_email( $data['email'] );
             $data['name'] = !empty( $data['name'] ) ? sanitize_text_field( $data['name'] ) : null;
             $data['page_url'] = !empty( $data['page_url'] ) ? $this->clean_page_url( $data['page_url'] ) : null;
@@ -91,14 +91,14 @@ if ( !class_exists( __NAMESPACE__ . '\Lead' ) ) {
         }
 
         /**
-         * Returns lead metrics for a single widget over the requested time window.
+         * Returns lead metrics for a single popup over the requested time window.
          *
-         * @param int $widget_id Widget post ID.
+         * @param int $post_id Popup post ID.
          * @param int $days Number of days to include in the metrics window.
          * @return array<string,mixed>
          */
-        public function get_widget_lead_metrics( $widget_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
-            $metric_defaults = apply_filters( 'fooconvert_widget_lead_metrics_defaults', [
+        public function get_popup_lead_metrics( $post_id, $days = FOOCONVERT_METRICS_DAYS_DEFAULT ) {
+            $metric_defaults = apply_filters( 'fooconvert_popup_lead_metrics_defaults', [
                 'total_leads' => 0,
                 'unique_leads' => 0,
                 'unique_emails' => 0,
@@ -106,9 +106,9 @@ if ( !class_exists( __NAMESPACE__ . '\Lead' ) ) {
             ] );
 
             return apply_filters(
-                'fooconvert_widget_lead_metrics',
-                array_merge( $metric_defaults, Data\QueryLead::get_leads_metrics( $widget_id, $days ) ),
-                $widget_id
+                'fooconvert_popup_lead_metrics',
+                array_merge( $metric_defaults, Data\QueryLead::get_leads_metrics( $post_id, $days ) ),
+                $post_id
             );
         }
 
@@ -127,10 +127,10 @@ if ( !class_exists( __NAMESPACE__ . '\Lead' ) ) {
         }
 
         /**
-         * Deletes widget leads.
+         * Deletes popup leads.
          */
-        public function delete_widget_leads( $widget_id ) {
-            return Data\QueryLead::delete_widget_leads( $widget_id );
+        public function delete_popup_leads( $post_id ) {
+            return Data\QueryLead::delete_popup_leads( $post_id );
         }
 
         /**

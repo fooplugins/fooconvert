@@ -56,7 +56,7 @@ class Coupon extends BaseBlock {
      * @return false|array
      */
     function register_blocks() {
-        return Utils::register_widget_blocks( array(
+        return Utils::register_popup_blocks( array(
             array(
                 'file_or_folder' => FOOCONVERT_ASSETS_PATH . 'blocks/coupon/block.json',
                 'args'           => array(

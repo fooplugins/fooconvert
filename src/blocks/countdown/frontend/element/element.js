@@ -24,7 +24,7 @@ class CountdownElement extends ContentElement {
         this.#segmentValueHours = this.shadowRoot.querySelector( "[part='segment-value hours']" );
         this.#segmentValueMinutes = this.shadowRoot.querySelector( "[part='segment-value minutes']" );
         this.#segmentValueSeconds = this.shadowRoot.querySelector( "[part='segment-value seconds']" );
-        this.onWidgetCanConnect = this.onWidgetCanConnect.bind( this );
+        this.onPopupCanConnect = this.onPopupCanConnect.bind( this );
         this.onCountdownStart = this.onCountdownStart.bind( this );
         this.onCountdownPause = this.onCountdownPause.bind( this );
         this.onCountdownStop = this.onCountdownStop.bind( this );
@@ -130,7 +130,7 @@ class CountdownElement extends ContentElement {
         return this.toggleAttribute( 'expired', value );
     }
 
-    onWidgetCanConnect( event ) {
+    onPopupCanConnect( event ) {
         if ( this.expired ) {
             event.preventDefault();
         }
@@ -138,11 +138,11 @@ class CountdownElement extends ContentElement {
 
     connected() {
         super.connected();
-        const parentWidget = this.parentWidgetElement;
-        parentWidget?.addEventListener( 'can-connect', this.onWidgetCanConnect );
-        parentWidget?.addEventListener( 'fc.countdown.start', this.onCountdownStart );
-        parentWidget?.addEventListener( 'fc.countdown.pause', this.onCountdownPause );
-        parentWidget?.addEventListener( 'fc.countdown.stop', this.onCountdownStop );
+        const parentPopup = this.parentPopupElement;
+        parentPopup?.addEventListener( 'can-connect', this.onPopupCanConnect );
+        parentPopup?.addEventListener( 'fc.countdown.start', this.onCountdownStart );
+        parentPopup?.addEventListener( 'fc.countdown.pause', this.onCountdownPause );
+        parentPopup?.addEventListener( 'fc.countdown.stop', this.onCountdownStop );
         if ( isNumber( this.fomo ) ) {
             const stored = getCountdown( this.id, this.persist );
             let timestamp = null;
@@ -171,11 +171,11 @@ class CountdownElement extends ContentElement {
 
     disconnected() {
         super.disconnected();
-        const parentWidget = this.parentWidgetElement;
-        parentWidget?.removeEventListener( 'can-connect', this.onWidgetCanConnect );
-        parentWidget?.removeEventListener( 'fc.countdown.start', this.onCountdownStart );
-        parentWidget?.removeEventListener( 'fc.countdown.pause', this.onCountdownPause );
-        parentWidget?.removeEventListener( 'fc.countdown.stop', this.onCountdownStop );
+        const parentPopup = this.parentPopupElement;
+        parentPopup?.removeEventListener( 'can-connect', this.onPopupCanConnect );
+        parentPopup?.removeEventListener( 'fc.countdown.start', this.onCountdownStart );
+        parentPopup?.removeEventListener( 'fc.countdown.pause', this.onCountdownPause );
+        parentPopup?.removeEventListener( 'fc.countdown.stop', this.onCountdownStop );
         this.stop();
     }
 
@@ -267,5 +267,4 @@ class CountdownElement extends ContentElement {
 }
 
 export default CountdownElement;
-
 

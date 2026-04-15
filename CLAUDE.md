@@ -68,14 +68,14 @@ fooconvert/
 │   ├── Admin/                 # Admin interface classes
 │   ├── Components/            # Reusable Gutenberg components
 │   ├── Data/                  # Database models & queries
-│   ├── Widgets/               # Core widget classes
+│   ├── Popups/               # Core popup classes
 ├── pro/                       # Premium features (paid only)
 ├── src/                       # Source JavaScript & SCSS
 │   ├── admin/                 # Admin-specific resources
 │   ├── blocks/                # Custom Gutenberg blocks
 │   ├── editor/                # Gutenberg editor integrations
 │   ├── frontend/              # Frontend JavaScript
-│   └── widgets/               # Widget-specific assets
+│   └── popups/               # Popup-specific assets
 ├── vendor/                    # Composer dependencies
 └── languages/                 # Translation files
 ```
@@ -91,9 +91,9 @@ fooconvert/
 
 #### Gutenberg Blocks
 - **ExampleBlock**: Sample custom block
-- **BarWidget**: Top/bottom bar widgets
-- **FlyoutWidget**: Side panel widgets
-- **PopupWidget**: Modal popup widgets
+- **BarPopup**: Top/bottom bar popups
+- **FlyoutPopup**: Side panel popups
+- **OverlayPopup**: Modal popup popups
 
 #### Pro Blocks (Premium)
 - **Countdown**: Countdown timer block
@@ -102,9 +102,9 @@ fooconvert/
 - Premium editor plugins live in `pro/src/editor/plugins/`
 
 #### Custom Post Types
-- `fc-bar`: Bar widgets
-- `fc-flyout`: Flyout widgets  
-- `fc-popup`: Popup widgets
+- `fc-bar`: Bar popups
+- `fc-flyout`: Flyout popups  
+- `fc-popup`: Popup popups
 
 ### Build System
 
@@ -128,7 +128,7 @@ fooconvert/
 
 ### Database Structure
 - **Custom Tables**: `fooconvert_events` for tracking conversion events
-- **Post Meta**: Widget-specific settings stored as post meta
+- **Post Meta**: Popup-specific settings stored as post meta
 - **Options**: Plugin-wide settings stored in wp_options
 
 ### Asset Handles
@@ -158,7 +158,7 @@ fooconvert/
 #### JavaScript
 - Uses WordPress data modules (@wordpress/* packages)
 - React hooks for state management
-- Custom element system for frontend widgets
+- Custom element system for frontend popups
 
 #### Hooks & Filters
 - **JavaScript**: WordPress hooks system via @wordpress/hooks

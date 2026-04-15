@@ -4,7 +4,7 @@ if ( empty( $sort ) ) {
     $sort = 'engagement';
 }
 
-$sort_object = fooconvert_widget_metric_options()[$sort];
+$sort_object = fooconvert_popup_metric_options()[$sort];
 
 $stats = new FooPlugins\FooConvert\Stats();
 
@@ -35,15 +35,15 @@ if ( empty( $top_performers ) ) {
 
     foreach ( $top_performers as $index => $top_performer ) {
         $id = intval( $top_performer['id'] );
-        $edit_url = fooconvert_admin_url_widget_edit( $id );
+        $edit_url = fooconvert_admin_url_popup_edit( $id );
         $edit_link = '<a href="' . esc_url( $edit_url ) . '"><i class="dashicons dashicons-edit" title="' . esc_attr__( 'Edit Popup', 'fooconvert' ) . '"></i></a>';
-        $stats_url = fooconvert_admin_url_widget_stats( $id );
+        $stats_url = fooconvert_admin_url_popup_stats( $id );
         $stats_link = '<a href="' . esc_url( $stats_url ) . '"><i class="dashicons dashicons-chart-bar" title="' . esc_attr__( 'View Popup Stats', 'fooconvert' ) . '"></i></a>';
         $score = $top_performer['score'];
         if ( isset( $sort_object['format'] ) && $sort_object['format'] === 'currency' ) {
             $score = fooconvert_format_revenue( $score );
         }
-        $post_type = fooconvert_get_widget_post_type_label( $top_performer['post_type'] );
+        $post_type = fooconvert_get_popup_type_label( $top_performer['post_type'] );
         echo '<tr>';
         echo '<td>#' . esc_attr( $index ) . '</td>';
         echo '<td><span>' . esc_html( $top_performer['title'] ) . '</span>';

@@ -23,7 +23,7 @@ export { default as setCountdown } from "./setCountdown";
 export { default as setValidationAttributes } from "./setValidationAttributes";
 export { default as removeCookie } from "./removeCookie";
 export { default as stringOrUndefined } from "./stringOrUndefined";
-export { default as getParentWidgetElement } from "./getParentWidgetElement";
+export { default as getParentPopupElement } from "./getParentPopupElement";
 export { default as getSeen } from "./getSeen";
 export { default as setSeen } from "./setSeen";
 export { default as resetSeen } from "./resetSeen";

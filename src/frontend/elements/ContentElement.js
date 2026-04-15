@@ -1,5 +1,5 @@
 import CustomElement from "./CustomElement";
-import { getParentWidgetElement } from "../utils";
+import { getParentPopupElement } from "../utils";
 
 class ContentElement extends CustomElement {
 
@@ -8,12 +8,12 @@ class ContentElement extends CustomElement {
         this.log = this.log.bind( this );
     }
 
-    #parentWidgetElement = null;
-    get parentWidgetElement() {
-        if ( !this.#parentWidgetElement ) {
-            this.#parentWidgetElement = getParentWidgetElement( this );
+    #parentPopupElement = null;
+    get parentPopupElement() {
+        if ( !this.#parentPopupElement ) {
+            this.#parentPopupElement = getParentPopupElement( this );
         }
-        return this.#parentWidgetElement;
+        return this.#parentPopupElement;
     }
 
     /**
@@ -23,8 +23,8 @@ class ContentElement extends CustomElement {
      * @returns {Promise<LogEventResult>}
      */
     log( type, data ) {
-        if ( this.parentWidgetElement ) {
-            return this.parentWidgetElement?.log( type, data );
+        if ( this.parentPopupElement ) {
+            return this.parentPopupElement?.log( type, data );
         }
         return Promise.resolve( { success: false, data: 'No parent popup' } );
     }

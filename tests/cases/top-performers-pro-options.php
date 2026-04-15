@@ -10,7 +10,7 @@ namespace FooPlugins\FooConvert\Data {
          * @param int $limit
          * @return array<int,array<string,mixed>>
          */
-        public static function get_sales_totals_by_widget( int $limit = 10 ): array {
+        public static function get_sales_totals_by_popup( int $limit = 10 ): array {
             $rows = self::$sales_rows;
 
             usort(
@@ -40,8 +40,8 @@ namespace FooPlugins\FooConvert {
         /**
          * @return array<int,array<string,mixed>>
          */
-        public function get_all_widget_metrics(): array {
-            $metrics = $GLOBALS['fc_test_all_widget_metrics'] ?? array();
+        public function get_all_popup_metrics(): array {
+            $metrics = $GLOBALS['fc_test_all_popup_metrics'] ?? array();
 
             if ( empty( $metrics ) ) {
                 return array();
@@ -51,9 +51,9 @@ namespace FooPlugins\FooConvert {
 
             foreach ( $metrics as $metric ) {
                 $enriched[] = apply_filters(
-                    'fooconvert_widget_metrics',
+                    'fooconvert_popup_metrics',
                     $metric,
-                    $metric['widget_id']
+                    $metric['post_id']
                 );
             }
 
@@ -122,7 +122,7 @@ namespace {
     $GLOBALS['fc_test_post_meta'] = array();
 
     /** @var array<int,array<string,mixed>> */
-    $GLOBALS['fc_test_all_widget_metrics'] = array();
+    $GLOBALS['fc_test_all_popup_metrics'] = array();
 
     /**
      * @param string $text
@@ -247,7 +247,7 @@ namespace {
     require_once dirname( __DIR__, 2 ) . '/pro/includes/Analytics/Metrics.php';
 
     $metrics = new Metrics();
-    $options = fooconvert_widget_metric_options();
+    $options = fooconvert_popup_metric_options();
 
     $expected_options = array(
         'engagement-rate'  => 'fooconvert_percentage_to_float',
@@ -281,7 +281,7 @@ namespace {
         );
     }
 
-    $query = $metrics->adjust_get_all_widget_metrics_query( '', 'wp_fooconvert_events' );
+    $query = $metrics->adjust_get_all_popup_metrics_query( '', 'wp_fooconvert_events' );
     foreach (
         array(
             'total_clicks',
@@ -299,7 +299,7 @@ namespace {
     ) {
         Assertions::true(
             false !== strpos( $query, $required_fragment ),
-            'Expected the all-widget metrics query to expose "' . $required_fragment . '".'
+            'Expected the all-popup metrics query to expose "' . $required_fragment . '".'
         );
     }
 
@@ -307,14 +307,14 @@ namespace {
         $post = new WP_Post();
         $post->ID = $post_id;
         $post->post_type = FOOCONVERT_CPT_POPUP;
-        $post->post_title = 'Demo widget ' . $post_id;
+        $post->post_title = 'Demo popup ' . $post_id;
         $GLOBALS['fc_test_posts'][ $post_id ] = $post;
         $GLOBALS['fc_test_post_meta'][ $post_id ] = array();
     }
 
-    $GLOBALS['fc_test_all_widget_metrics'] = array(
+    $GLOBALS['fc_test_all_popup_metrics'] = array(
         array(
-            'widget_id'                  => 101,
+            'post_id'                  => 101,
             'total_views'                => 100,
             'total_dismiss'              => 10,
             'total_engagements'          => 40,
@@ -332,7 +332,7 @@ namespace {
             'previous_7_days_conversions'=> 2,
         ),
         array(
-            'widget_id'                  => 102,
+            'post_id'                  => 102,
             'total_views'                => 80,
             'total_dismiss'              => 12,
             'total_engagements'          => 50,
@@ -350,7 +350,7 @@ namespace {
             'previous_7_days_conversions'=> 6,
         ),
         array(
-            'widget_id'                  => 103,
+            'post_id'                  => 103,
             'total_views'                => 50,
             'total_dismiss'              => 8,
             'total_engagements'          => 15,
@@ -371,17 +371,17 @@ namespace {
 
     Query::$sales_rows = array(
         array(
-            'widget_id'   => 101,
+            'post_id'   => 101,
             'sale_count'  => 2,
             'total_sales' => '75.25',
         ),
         array(
-            'widget_id'   => 102,
+            'post_id'   => 102,
             'sale_count'  => 3,
             'total_sales' => '125.00',
         ),
         array(
-            'widget_id'   => 103,
+            'post_id'   => 103,
             'sale_count'  => 1,
             'total_sales' => '95.00',
         ),
@@ -402,13 +402,13 @@ namespace {
         'change-conversions'=> 103,
     );
 
-    foreach ( $expected_winners as $sort => $expected_widget_id ) {
+    foreach ( $expected_winners as $sort => $expected_post_id ) {
         $top_performers = $stats->get_top_performers( $sort );
 
         Assertions::same(
-            $expected_widget_id,
+            $expected_post_id,
             $top_performers[1]['id'] ?? 0,
-            'Expected "' . $sort . '" to rank the correct widget first.'
+            'Expected "' . $sort . '" to rank the correct popup first.'
         );
     }
 

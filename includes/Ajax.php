@@ -73,9 +73,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
                 exit;
             }
 
-            // check the widget ID
-            $widget_id = isset( $data['widgetId'] ) ? intval( $data['widgetId'] ) : 0;
-            if ( $widget_id === 0 ) {
+            // check the popup ID
+            $post_id = isset( $data['postId'] ) ? intval( $data['postId'] ) : 0;
+            if ( $post_id === 0 ) {
                 wp_send_json_error( 'Missing ID!' );
                 exit;
             }
@@ -102,7 +102,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
                 $lead = new Lead();
 
                 $lead_data = [
-                    'widget_id' => $widget_id,
+                    'post_id' => $post_id,
                     'email' => $extra_data['email'],
                     'name' => $extra_data['name'],
                     'metadata' => $extra_data,
@@ -120,7 +120,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
             }
 
             $data = [
-                'widget_id'           => $widget_id,
+                'post_id'           => $post_id,
                 'event_type'          => $event_type,
                 'page_url'            => $page_url,
                 'device_type'         => $device_type,

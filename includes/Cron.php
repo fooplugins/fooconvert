@@ -20,10 +20,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Cron' ) ) {
         }
 
         /**
-         * Initiate the cron job to update widget stats hourly.
+         * Initiate the cron job to update popup stats hourly.
          *
-         * Schedule the 'calculate_widget_stats' event to run hourly if it hasn't already been scheduled.
-         * Hook into the scheduled event to call the 'update_widget_stats' method.
+         * Schedule the 'calculate_popup_stats' event to run hourly if it hasn't already been scheduled.
+         * Hook into the scheduled event to call the 'update_popup_stats' method.
          */
         public function init() {
             // Schedule cron jobs if not already scheduled
@@ -36,16 +36,16 @@ if ( !class_exists( 'FooPlugins\FooConvert\Cron' ) ) {
             }
 
             // Hook into the scheduled events
-            add_action( FOOCONVERT_CRON_CALC_STATS, [ $this, 'update_widget_stats' ] );
+            add_action( FOOCONVERT_CRON_CALC_STATS, [ $this, 'update_popup_stats' ] );
             add_action( FOOCONVERT_CRON_DELETE_EVENTS, [ $this, 'delete_old_events' ] );
         }
 
         /**
-         * Updates the widget stats for all widgets with events.
+         * Updates the popup stats for all popups with events.
          *
-         * Calls the `get_widget_metrics` method of the to retrieve and store the metrics in the post meta.
+         * Calls the `get_popup_metrics` method of the to retrieve and store the metrics in the post meta.
          */
-        public function update_widget_stats() {
+        public function update_popup_stats() {
             $stats = new Stats();
             $stats->update();
         }

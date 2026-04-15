@@ -80,7 +80,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
             /**
              * This is the Event table schema.
              *  - id is the primary key
-             *  - widget_id is the id of the widget that created the event.
+             *  - post_id is the id of the popup that created the event.
              *  - event_type is the type of event. This can be one of: 'open', 'click', 'close', 'update'.
              *  - event_subtype is the subtype of the event. This can be one of: 'engagement'.
              *  - conversion is a boolean that is true if the event is a conversion.
@@ -97,7 +97,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
 
             $sql = "CREATE TABLE $table_name (
                 id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-                widget_id bigint(20) unsigned NOT NULL,
+                post_id bigint(20) unsigned NOT NULL,
                 event_type varchar(255) NOT NULL,
                 event_subtype varchar(255) DEFAULT NULL,
                 conversion tinyint(1) DEFAULT NULL,
@@ -119,45 +119,45 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
             $this->log_table_creation_results( $db_delta_result, $sql, $table_name );
 
             // Create all the indexes we need.
-            parent::safe_create_index( $table_name, 'idx_widget', 'widget_id' ); // We need to query all events for a widget.
+            parent::safe_create_index( $table_name, 'idx_popup', 'post_id' ); // We need to query all events for a popup.
 
             /*
-             * Purpose : many queries use widget_id and filter by event_type (e.g., counting views, conversions, dismissals).
+             * Purpose : many queries use post_id and filter by event_type (e.g., counting views, conversions, dismissals).
              */
-            parent::safe_create_index( $table_name, 'idx_widget_event_type', 'widget_id, event_type' );
+            parent::safe_create_index( $table_name, 'idx_popup_event_type', 'post_id, event_type' );
 
             /*
-             * Purpose : many queries also use widget_id and filter by event_subtype (e.g., counting interactions, bounces).
+             * Purpose : many queries also use post_id and filter by event_subtype (e.g., counting interactions, bounces).
              */
-            parent::safe_create_index( $table_name, 'idx_widget_event_subtype', 'widget_id, event_subtype' );
+            parent::safe_create_index( $table_name, 'idx_popup_event_subtype', 'post_id, event_subtype' );
 
             /*
-             * Purpose : many queries also use widget_id and filter by conversion.
+             * Purpose : many queries also use post_id and filter by conversion.
              */
-            parent::safe_create_index( $table_name, 'idx_widget_conversion', 'widget_id, conversion' );
+            parent::safe_create_index( $table_name, 'idx_popup_conversion', 'post_id, conversion' );
 
             /*
-             * Purpose : many queries also use widget_id and filter by sentiment.
+             * Purpose : many queries also use post_id and filter by sentiment.
              */
-            parent::safe_create_index( $table_name, 'idx_widget_sentiment', 'widget_id, sentiment' );
+            parent::safe_create_index( $table_name, 'idx_popup_sentiment', 'post_id, sentiment' );
 
             /*
-             * Purpose: This index will be particularly helpful when filtering by both widget_id and timestamp,
+             * Purpose: This index will be particularly helpful when filtering by both post_id and timestamp,
              * especially for queries restricted to recent data (e.g., the last 30, 60, or 90 days).
-             * This will allow the database to quickly find the events within the specified date range for a particular widget.
+             * This will allow the database to quickly find the events within the specified date range for a particular popup.
              */
-            parent::safe_create_index( $table_name, 'idx_widget_timestamp', 'widget_id, timestamp' );
+            parent::safe_create_index( $table_name, 'idx_popup_timestamp', 'post_id, timestamp' );
 
             /*
-             * Purpose: This index supports queries that filter by widget_id and event_type while also filtering or ordering by timestamp.
+             * Purpose: This index supports queries that filter by post_id and event_type while also filtering or ordering by timestamp.
              * This will be useful for metrics that need to count or filter specific event types (like view, click, conversion, and dismiss) within a time range.
              */
-            parent::safe_create_index( $table_name, 'idx_widget_event_type_timestamp', 'widget_id, event_type, timestamp' );
+            parent::safe_create_index( $table_name, 'idx_popup_event_type_timestamp', 'post_id, event_type, timestamp' );
 
             /*
-             * Purpose : Session-based analytics need to efficiently group visits by widget and browser session.
+             * Purpose : Session-based analytics need to efficiently group visits by popup and browser session.
              */
-            parent::safe_create_index( $table_name, 'idx_widget_session', 'widget_id, session_id(191)' );
+            parent::safe_create_index( $table_name, 'idx_popup_session', 'post_id, session_id(191)' );
 
             /*
              * Purpose : Attribute WooCommerce sales using the latest qualifying session event before checkout.
@@ -175,14 +175,14 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
             parent::safe_create_index( $table_name, 'idx_anonymous_event_lookup', 'anonymous_user_guid(191), event_type, sentiment, timestamp' );
 
             /*
-             * Purpose : Deduplicate sale events by session or widget/session.
+             * Purpose : Deduplicate sale events by session or popup/session.
              */
             parent::safe_create_index( $table_name, 'idx_event_type_session', 'event_type, session_id(191)' );
 
             /*
-             * Purpose : Many metrics, such as unique visitors, conversion rate, and dismissal rate, rely on distinct counts of either user_id or anonymous_user_guid for each widget_id.
+             * Purpose : Many metrics, such as unique visitors, conversion rate, and dismissal rate, rely on distinct counts of either user_id or anonymous_user_guid for each post_id.
              */
-            parent::safe_create_index( $table_name, 'idx_widget_user', 'widget_id, user_id, anonymous_user_guid' );
+            parent::safe_create_index( $table_name, 'idx_popup_user', 'post_id, user_id, anonymous_user_guid' );
 
             return $db_delta_result;
         }
@@ -201,7 +201,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
 
             $sql = "CREATE TABLE $table_name (
                 id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-                widget_id bigint(20) unsigned NOT NULL,
+                post_id bigint(20) unsigned NOT NULL,
                 email varchar(255) NOT NULL,
                 name varchar(255) DEFAULT NULL,
                 metadata longtext DEFAULT NULL,
@@ -216,7 +216,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
             $this->log_table_creation_results( $db_delta_result, $sql, $table_name );
 
             // Create indexes
-            parent::safe_create_index( $table_name, 'idx_widget', 'widget_id' );
+            parent::safe_create_index( $table_name, 'idx_popup', 'post_id' );
             parent::safe_create_index( $table_name, 'idx_email', 'email' );
             parent::safe_create_index( $table_name, 'idx_page_url', 'page_url(191)' ); // Using prefix length for text column
 

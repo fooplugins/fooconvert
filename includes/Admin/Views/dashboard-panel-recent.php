@@ -5,7 +5,7 @@ if ( in_array( 'recent', $hidden_panels ) ) {
     return;
 }
 
-$recent_widget_args = array(
+$recent_popup_args = array(
     'post_type'      => FOOCONVERT_CPT_POPUP,
     'posts_per_page' => 5,
     'post_status'    => 'any',
@@ -13,9 +13,9 @@ $recent_widget_args = array(
     'order'          => 'DESC',     // Newest first
 );
 
-$widgets = get_posts( $recent_widget_args );
+$popups = get_posts( $recent_popup_args );
 
-if ( empty( $widgets ) || count( $widgets ) === 0 ) {
+if ( empty( $popups ) || count( $popups ) === 0 ) {
     return;
 }
 
@@ -41,21 +41,21 @@ if ( empty( $widgets ) || count( $widgets ) === 0 ) {
             <table class="fooconvert-dashboard-table fooconvert-recent-updated-table">
                 <tbody>
                 <?php
-                foreach ( $widgets as $widget ) {
-                    $id = intval( $widget->ID );
-                    $widget_title = fooconvert_get_widget_title( $widget );
-                    $edit_url = fooconvert_admin_url_widget_edit( $id );
+                foreach ( $popups as $popup ) {
+                    $id = intval( $popup->ID );
+                    $popup_title = fooconvert_get_popup_title( $popup );
+                    $edit_url = fooconvert_admin_url_popup_edit( $id );
                     $edit_link = '<a href="' . esc_url( $edit_url ) . '"><i class="dashicons dashicons-edit" title="' . esc_attr__( 'Edit Popup', 'fooconvert' ) . '"></i></a>';
-                    $stats_url = fooconvert_admin_url_widget_stats( $id );
+                    $stats_url = fooconvert_admin_url_popup_stats( $id );
                     $stats_link = '<a href="' . esc_url( $stats_url ) . '"><i class="dashicons dashicons-chart-bar" title="' . esc_attr__( 'View Popup Stats', 'fooconvert' ) . '"></i></a>';
-                    $post_type = fooconvert_get_widget_post_type_label( $widget );
-                    $modified_time = get_post_modified_time( 'U', false, $widget );               // Get the Unix timestamp of the modified date
+                    $post_type = fooconvert_get_popup_type_label( $popup );
+                    $modified_time = get_post_modified_time( 'U', false, $popup );               // Get the Unix timestamp of the modified date
                     $modified_diff = human_time_diff( $modified_time, current_time( 'timestamp' ) );
                     // translators: %s: refers to the time last modified.
                     $modified = sprintf( __( 'modified %s ago', 'fooconvert' ), $modified_diff ); // Friendly time difference
 
                     echo '<tr><td>';
-                    echo '<span>' . esc_html( $widget_title ) . '</span>';
+                    echo '<span>' . esc_html( $popup_title ) . '</span>';
                     echo '<span class="fooconvert-dashboard-pill">' . esc_html( $post_type ) . '</span>';
                     echo '<div class="fooconvert-dashboard-table-actions">';
                     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -71,13 +71,13 @@ if ( empty( $widgets ) || count( $widgets ) === 0 ) {
     </div>
     <div class="fooconvert-panel-section fooconvert-panel-section-flex">
         <p class="fooconvert-flex">
-            <a href="<?php echo esc_url( fooconvert_admin_url_widget_new( FOOCONVERT_POPUP_TYPE_BAR ) ); ?>" class="button button-secondary">
+            <a href="<?php echo esc_url( fooconvert_admin_url_popup_new( FOOCONVERT_POPUP_TYPE_BAR ) ); ?>" class="button button-secondary">
                 <?php esc_html_e( 'Add New Bar', 'fooconvert' ); ?>
             </a>
-            <a href="<?php echo esc_url( fooconvert_admin_url_widget_new( FOOCONVERT_POPUP_TYPE_FLYOUT ) ); ?>" class="button button-secondary">
+            <a href="<?php echo esc_url( fooconvert_admin_url_popup_new( FOOCONVERT_POPUP_TYPE_FLYOUT ) ); ?>" class="button button-secondary">
                 <?php esc_html_e( 'Add New Flyout', 'fooconvert' ); ?>
             </a>
-            <a href="<?php echo esc_url( fooconvert_admin_url_widget_new( FOOCONVERT_POPUP_TYPE_OVERLAY ) ); ?>" class="button button-secondary">
+            <a href="<?php echo esc_url( fooconvert_admin_url_popup_new( FOOCONVERT_POPUP_TYPE_OVERLAY ) ); ?>" class="button button-secondary">
                 <?php esc_html_e( 'Add New Overlay', 'fooconvert' ); ?>
             </a>
         </p>

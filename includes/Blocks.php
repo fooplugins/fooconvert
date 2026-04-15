@@ -28,7 +28,7 @@ class Blocks {
     private array $instances;
 
     /**
-     * Get all widget instances.
+     * Get all popup instances.
      *
      * @return BaseBlock[]
      *

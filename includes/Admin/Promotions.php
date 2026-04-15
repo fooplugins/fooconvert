@@ -64,8 +64,8 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
             });
 
             add_action( 'fooconvert_admin_dashboard_right', array( $this, 'render_addons_panel' ) );
-            add_action( 'fooconvert_widget_stats_html-metrics', array( $this, 'render_metrics' ), 10, 2 );
-            add_filter( 'fooconvert_widget_metric_options', array( $this, 'adjust_widget_metric_options' ) );
+            add_action( 'fooconvert_popup_stats_html-metrics', array( $this, 'render_metrics' ), 10, 2 );
+            add_filter( 'fooconvert_popup_metric_options', array( $this, 'adjust_popup_metric_options' ) );
         }
 
 
@@ -204,12 +204,12 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
         }
 
         /**
-         * Renders advanced PRO metrics for a widget.
+         * Renders advanced PRO metrics for a popup.
          *
-         * @param int $widget_id The ID of the widget.
-         * @param array $widget The widget data.
+         * @param int $post_id The ID of the popup.
+         * @param array $popup The popup data.
          */
-        public function render_metrics( $widget_id, $widget ) {
+        public function render_metrics( $post_id, $popup ) {
             ?>
             <div class="metric pro-feature">
                 <p><?php echo esc_html( wp_rand( 0, 100 ) ); ?></p>
@@ -287,12 +287,12 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
         }
 
         /**
-         * Adjusts the widget metric options to include PRO features.
+         * Adjusts the popup metric options to include PRO features.
          *
-         * @param array $options The current widget metric options.
-         * @return array The updated widget metric options.
+         * @param array $options The current popup metric options.
+         * @return array The updated popup metric options.
          */
-        function adjust_widget_metric_options( $options ) {
+        function adjust_popup_metric_options( $options ) {
             $options['engagement-rate'] = [
                 'dropdown_option' => __( 'engagement rate (PRO)', 'fooconvert' ),
                 'pro_feature'     => true,

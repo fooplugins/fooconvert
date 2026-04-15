@@ -3,7 +3,7 @@ import getLocalData from "./getLocalData";
 import getSessionData from "./getSessionData";
 
 /**
- * The key used to store the countdown widget data in both localStorage and as a cookie.
+ * The key used to store the countdown popup data in both localStorage and as a cookie.
  * @type {string}
  */
 export const COUNTDOWN_STORAGE_KEY = 'FOOCONVERT_COUNTDOWN';

@@ -71,15 +71,15 @@ class QueryLead extends Base {
             return new WP_Error( 'invalid_lead_data', 'The lead data is not valid.' );
         }
 
-        if ( !isset( $data['widget_id'] ) || !is_int( $data['widget_id'] ) || $data['widget_id'] <= 0 ) {
-            return new WP_Error( 'invalid_lead_data_widget_id', 'The popup ID must be a positive integer.' );
+        if ( !isset( $data['post_id'] ) || !is_int( $data['post_id'] ) || $data['post_id'] <= 0 ) {
+            return new WP_Error( 'invalid_lead_data_post_id', 'The popup ID must be a positive integer.' );
         }
 
         if ( !isset( $data['email'] ) || !is_string( $data['email'] ) || !is_email( $data['email'] ) ) {
             return new WP_Error( 'invalid_lead_data_email', 'The email address is not valid.' );
         }
 
-        $data['widget_id'] = intval( $data['widget_id'] );
+        $data['post_id'] = intval( $data['post_id'] );
         $data['email'] = sanitize_email( $data['email'] );
         $data['name'] = !empty( $data['name'] ) ? sanitize_text_field( $data['name'] ) : null;
         $data['page_url'] = !empty( $data['page_url'] ) ? $data['page_url'] : null;
@@ -116,9 +116,9 @@ class QueryLead extends Base {
         $query = "
             SELECT
                 {$table_name}.*,
-                {$wpdb->posts}.post_title AS widget_title
+                {$wpdb->posts}.post_title AS popup_title
             FROM {$table_name}
-            LEFT JOIN {$wpdb->posts} ON {$table_name}.widget_id = {$wpdb->posts}.ID
+            LEFT JOIN {$wpdb->posts} ON {$table_name}.post_id = {$wpdb->posts}.ID
             WHERE {$table_name}.id IN ({$placeholders})
         ";
 
@@ -146,15 +146,15 @@ class QueryLead extends Base {
         );
         $args = wp_parse_args( $args, $defaults );
 
-        $allowed_orderby = array( 'id', 'email', 'name', 'timestamp', 'widget_title', 'page_url' );
+        $allowed_orderby = array( 'id', 'email', 'name', 'timestamp', 'popup_title', 'page_url' );
         $orderby = in_array( $args['orderby'], $allowed_orderby, true ) ? $args['orderby'] : 'timestamp';
         $order = in_array( strtoupper( $args['order'] ), array( 'ASC', 'DESC' ), true ) ? strtoupper( $args['order'] ) : 'DESC';
 
         $query = "SELECT
                 {$table_name}.*,
-                {$wpdb->posts}.post_title as widget_title
+                {$wpdb->posts}.post_title as popup_title
             FROM {$table_name}
-            LEFT JOIN {$wpdb->posts} ON {$table_name}.widget_id = {$wpdb->posts}.ID
+            LEFT JOIN {$wpdb->posts} ON {$table_name}.post_id = {$wpdb->posts}.ID
             WHERE (1=1)";
 
         list( $where_clauses, $where_params ) = self::get_where_parts( $args );
@@ -215,7 +215,7 @@ class QueryLead extends Base {
                     COUNT(*) as total_leads,
                     COUNT(DISTINCT email) as unique_emails
                     FROM {$table_name}
-                    LEFT JOIN {$wpdb->posts} ON {$table_name}.widget_id = {$wpdb->posts}.ID
+                    LEFT JOIN {$wpdb->posts} ON {$table_name}.post_id = {$wpdb->posts}.ID
                     WHERE (1=1)";
 
         list( $where_clauses, $where_params ) = self::get_where_parts( $args );
@@ -242,16 +242,16 @@ class QueryLead extends Base {
     }
 
     /**
-     * Deletes all leads associated with a single widget.
+     * Deletes all leads associated with a single popup.
      *
-     * @param int $widget_id Widget post ID.
+     * @param int $post_id Popup post ID.
      * @return int|false
      */
-    public static function delete_widget_leads( $widget_id ) {
+    public static function delete_popup_leads( $post_id ) {
         global $wpdb;
 
         $table_name = self::get_leads_table_name();
-        return $wpdb->delete( $table_name, array( 'widget_id' => $widget_id ) );
+        return $wpdb->delete( $table_name, array( 'post_id' => $post_id ) );
     }
 
     /**
@@ -268,7 +268,7 @@ class QueryLead extends Base {
     }
 
     /**
-     * Returns aggregate row, widget, email, and table size statistics.
+     * Returns aggregate row, popup, email, and table size statistics.
      *
      * @return array<string,mixed>
      */
@@ -278,7 +278,7 @@ class QueryLead extends Base {
         $table_name = self::get_leads_table_name();
         $query = "SELECT
                     COUNT(*) as Number_of_Rows,
-                    COUNT(DISTINCT widget_id) as Unique_Widgets,
+                    COUNT(DISTINCT post_id) as Unique_Popups,
                     COUNT(DISTINCT email) as Unique_Emails
                     FROM {$table_name}";
 

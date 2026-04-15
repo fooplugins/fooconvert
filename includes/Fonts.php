@@ -155,13 +155,13 @@ if ( !class_exists( __NAMESPACE__ . '\Fonts' ) ) {
         }
 
         /**
-         * Enqueues the subset of configured fonts used by the queued widgets.
+         * Enqueues the subset of configured fonts used by the queued popups.
          *
-         * @param array $widgets Widgets being rendered on the current request.
+         * @param array $popups Popups being rendered on the current request.
          * @return void
          */
-        function enqueue_assets( $widgets ) {
-            if ( empty( $widgets ) ) {
+        function enqueue_assets( $popups ) {
+            if ( empty( $popups ) ) {
                 return;
             }
 
@@ -173,12 +173,12 @@ if ( !class_exists( __NAMESPACE__ . '\Fonts' ) ) {
 
             $used_fonts = [];
 
-            foreach ( $widgets as $widget ) {
+            foreach ( $popups as $popup ) {
                 if ( count( $fonts ) === count( $used_fonts ) ) {
                     break;
                 }
 
-                $content = $widget['content'];
+                $content = $popup['content'];
 
                 if ( empty( $content ) ) {
                     continue;

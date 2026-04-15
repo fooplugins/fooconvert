@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-04-15T16:10:21+00:00\n"
+"POT-Creation-Date: 2026-04-15T17:37:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: fooconvert\n"
@@ -101,7 +101,7 @@ msgstr ""
 
 #: includes/Admin/FooFields/Fields/IconPicker.php:23
 #: src/editor/components/font-appearance-control/Component.js:9
-#: src/editor/icons/default/index.js:27
+#: src/editor/icons/default/index.js:31
 msgid "Default"
 msgstr ""
 
@@ -576,7 +576,7 @@ msgstr ""
 
 #: includes/Admin/Settings.php:325
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:84
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:234
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:254
 #: src/blocks/countdown/editor/components/container/EditSettings.js:76
 #: src/blocks/countdown/editor/EditSettings.js:26
 #: src/blocks/coupon/editor/components/container/EditSettings.js:66
@@ -622,7 +622,7 @@ msgstr ""
 
 #: includes/Admin/Templates/bars/digital_download_signup.php:5
 #: includes/Admin/Templates/flyouts/digital_download_signup.php:5
-#: includes/Admin/Templates/popups/digital_download_signup.php:5
+#: includes/Admin/Templates/overlays/digital_download_signup.php:5
 msgid "Digital Download Signup"
 msgstr ""
 
@@ -652,7 +652,7 @@ msgstr ""
 
 #: includes/Admin/Templates/bars/newsletter_subscribe.php:5
 #: includes/Admin/Templates/flyouts/newsletter_subscribe.php:5
-#: includes/Admin/Templates/popups/newsletter_subscribe.php:5
+#: includes/Admin/Templates/overlays/newsletter_subscribe.php:5
 msgid "Newsletter Subscribe"
 msgstr ""
 
@@ -687,7 +687,7 @@ msgstr ""
 
 #: includes/Admin/Templates/bars/smart_exit_offer.php:5
 #: includes/Admin/Templates/flyouts/smart_exit_offer.php:5
-#: includes/Admin/Templates/popups/smart_exit_offer.php:5
+#: includes/Admin/Templates/overlays/smart_exit_offer.php:5
 msgid "Smart Exit Offer"
 msgstr ""
 
@@ -696,53 +696,53 @@ msgid "A smart exit offer bar lead magnet to help prevent visitors from leaving 
 msgstr ""
 
 #: includes/Admin/Templates/bars/smart_exit_offer.php:124
-#: includes/Admin/Templates/popups/smart_exit_offer.php:111
+#: includes/Admin/Templates/overlays/smart_exit_offer.php:111
 msgid "HEY... Don’t Go Yet!"
 msgstr ""
 
 #: includes/Admin/Templates/bars/smart_exit_offer.php:153
-#: includes/Admin/Templates/popups/smart_exit_offer.php:145
+#: includes/Admin/Templates/overlays/smart_exit_offer.php:145
 msgid "Take 10% Off Your First Order – Our Treat!"
 msgstr ""
 
 #: includes/Admin/Templates/bars/smart_exit_offer.php:252
-#: includes/Admin/Templates/popups/smart_exit_offer.php:245
+#: includes/Admin/Templates/overlays/smart_exit_offer.php:245
 msgid "Only available while you’re still here..."
 msgstr ""
 
 #: includes/Admin/Templates/bars/special_offer.php:5
 #: includes/Admin/Templates/flyouts/special_offer.php:5
-#: includes/Admin/Templates/popups/special_offer.php:5
+#: includes/Admin/Templates/overlays/special_offer.php:5
 msgid "Special Offer Countdown"
 msgstr ""
 
 #: includes/Admin/Templates/bars/special_offer.php:6
 #: includes/Admin/Templates/flyouts/special_offer.php:6
-#: includes/Admin/Templates/popups/special_offer.php:6
+#: includes/Admin/Templates/overlays/special_offer.php:6
 msgid "Guide visitors to specific offer with a countdown timer."
 msgstr ""
 
 #: includes/Admin/Templates/bars/watch_the_video.php:5
 #: includes/Admin/Templates/flyouts/watch_the_video.php:5
-#: includes/Admin/Templates/popups/watch_the_video.php:5
+#: includes/Admin/Templates/overlays/watch_the_video.php:5
 msgid "Watch the Video"
 msgstr ""
 
 #: includes/Admin/Templates/bars/watch_the_video.php:6
 #: includes/Admin/Templates/flyouts/watch_the_video.php:6
-#: includes/Admin/Templates/popups/watch_the_video.php:6
+#: includes/Admin/Templates/overlays/watch_the_video.php:6
 msgid "Guide visitors to a watch a specific video."
 msgstr ""
 
 #: includes/Admin/Templates/bars/watch_the_video.php:95
 #: includes/Admin/Templates/flyouts/watch_the_video.php:85
-#: includes/Admin/Templates/popups/watch_the_video.php:58
+#: includes/Admin/Templates/overlays/watch_the_video.php:58
 msgid "Add video description..."
 msgstr ""
 
 #: includes/Admin/Templates/bars/watch_the_video.php:131
 #: includes/Admin/Templates/flyouts/watch_the_video.php:133
-#: includes/Admin/Templates/popups/watch_the_video.php:108
+#: includes/Admin/Templates/overlays/watch_the_video.php:108
 msgid "Watch the video"
 msgstr ""
 
@@ -758,31 +758,31 @@ msgstr ""
 msgid "A smart exit offer flyout lead magnet to help prevent visitors from leaving your site."
 msgstr ""
 
-#: includes/Admin/Templates/popups/digital_download_signup.php:6
+#: includes/Admin/Templates/overlays/digital_download_signup.php:6
 msgid "Digital download signup themed overlay."
 msgstr ""
 
-#: includes/Admin/Templates/popups/digital_download_signup.php:197
+#: includes/Admin/Templates/overlays/digital_download_signup.php:197
 msgid "Digital Marketing"
 msgstr ""
 
-#: includes/Admin/Templates/popups/digital_download_signup.php:198
+#: includes/Admin/Templates/overlays/digital_download_signup.php:198
 msgid "Digital marketing themed overlay."
 msgstr ""
 
-#: includes/Admin/Templates/popups/newsletter_subscribe.php:6
+#: includes/Admin/Templates/overlays/newsletter_subscribe.php:6
 msgid "Newsletter Subscribe marketing themed overlay."
 msgstr ""
 
-#: includes/Admin/Templates/popups/newsletter_subscribe.php:264
+#: includes/Admin/Templates/overlays/newsletter_subscribe.php:264
 msgid "i-Cafe"
 msgstr ""
 
-#: includes/Admin/Templates/popups/newsletter_subscribe.php:265
+#: includes/Admin/Templates/overlays/newsletter_subscribe.php:265
 msgid "i-Cafe marketing themed overlay."
 msgstr ""
 
-#: includes/Admin/Templates/popups/smart_exit_offer.php:6
+#: includes/Admin/Templates/overlays/smart_exit_offer.php:6
 msgid "Smart exit offer themed overlay."
 msgstr ""
 
@@ -1014,108 +1014,116 @@ msgstr ""
 msgid "No leads found for the current filter. Try changing the filter above to see more leads."
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:5
+#: includes/Admin/Views/popup-stats.php:5
 #: pro/includes/Analytics/Sales.php:307
 #: pro/includes/Analytics/Sales.php:330
 msgid "Unknown"
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:9
+#: includes/Admin/Views/popup-stats.php:9
 msgid "Last day"
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:10
+#: includes/Admin/Views/popup-stats.php:10
 msgid "Last 2 days"
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:11
+#: includes/Admin/Views/popup-stats.php:11
 msgid "Last 7 days"
 msgstr ""
 
-#. Translators: %s refers to the link to edit the widget.
-#: includes/Admin/Views/widget-stats.php:24
+#. Translators: %s refers to the link to edit the popup.
+#: includes/Admin/Views/popup-stats.php:24
 #, php-format
 msgid "Edit %s"
 msgstr ""
 
-#. Translators: %s refers to the link to preview the widget.
-#: includes/Admin/Views/widget-stats.php:26
+#. Translators: %s refers to the link to preview the popup.
+#: includes/Admin/Views/popup-stats.php:26
 #, php-format
 msgid "Preview %s"
 msgstr ""
 
-#. Translators: %s refers to the title of the widget.
-#: includes/Admin/Views/widget-stats.php:41
+#. Translators: %s refers to the title of the popup.
+#: includes/Admin/Views/popup-stats.php:41
 #, php-format
 msgid "Stats for %s"
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:63
+#: includes/Admin/Views/popup-stats.php:63
 msgid "Total Events"
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:65
+#: includes/Admin/Views/popup-stats.php:65
 msgid "Total events logged for the popup over the time period."
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:71
+#: includes/Admin/Views/popup-stats.php:71
 msgid "Total Views"
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:73
+#: includes/Admin/Views/popup-stats.php:73
 msgid "Total number of times the popup has been viewed by a visitor."
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:79
+#: includes/Admin/Views/popup-stats.php:79
 msgid "Total Visitors"
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:81
+#: includes/Admin/Views/popup-stats.php:81
 msgid "Total number of unique visitors that have viewed the popup."
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:87
+#: includes/Admin/Views/popup-stats.php:87
 msgid "Total Engagements"
 msgstr ""
 
-#: includes/Admin/Views/widget-stats.php:89
+#: includes/Admin/Views/popup-stats.php:89
 msgid "Total number of engagements that have been made with the popup (clicks, opens, etc)."
 msgstr ""
 
-#. Translators: %s refers to the widget type.
-#: includes/Admin/Views/widget-stats.php:101
+#. Translators: %s refers to the popup type.
+#: includes/Admin/Views/popup-stats.php:101
 #, php-format
 msgid "%s Activity"
 msgstr ""
 
 #: includes/Blocks/Countdown.php:81
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:189
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:254
 #: src/blocks/countdown/editor/Edit.js:19
 msgid "Days"
 msgstr ""
 
 #: includes/Blocks/Countdown.php:85
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:190
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:255
 #: src/blocks/countdown/editor/Edit.js:20
 msgid "Hours"
 msgstr ""
 
 #: includes/Blocks/Countdown.php:89
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:191
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:256
 #: src/blocks/countdown/editor/components/container/EditSettings.js:95
 #: src/blocks/countdown/editor/Edit.js:21
 msgid "Minutes"
 msgstr ""
 
 #: includes/Blocks/Countdown.php:93
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:192
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:257
 #: src/blocks/countdown/editor/Edit.js:22
 msgid "Seconds"
 msgstr ""
 
-#: includes/Blocks/Coupon.php:88
+#: includes/Blocks/Coupon.php:89
 #: src/blocks/coupon/editor/Edit.js:23
-#: src/editor/icons/default/index.js:40
+#: src/editor/icons/default/index.js:45
 msgid "Copy"
 msgstr ""
 
-#: includes/Blocks/Coupon.php:122
+#: includes/Blocks/Coupon.php:123
 #: src/blocks/coupon/editor/Edit.js:13
 msgid "Copied!"
 msgstr ""
@@ -1158,9 +1166,9 @@ msgstr ""
 
 #: includes/Components/OpenTriggerPanel.php:418
 #: includes/Components/OpenTriggerPanel.php:436
-#: src/widgets/bar/editor/components/trigger-controls/Component.js:124
-#: src/widgets/flyout/editor/components/trigger-controls/Component.js:124
-#: src/widgets/popup/editor/components/trigger-controls/Component.js:124
+#: src/popups/bar/editor/components/trigger-controls/Component.js:124
+#: src/popups/flyout/editor/components/trigger-controls/Component.js:124
+#: src/popups/overlay/editor/components/trigger-controls/Component.js:124
 msgid "Anchor"
 msgstr ""
 
@@ -1196,9 +1204,9 @@ msgstr ""
 #: includes/Components/OpenTriggerPanel.php:461
 #: includes/Components/OpenTriggerPanel.php:481
 #: includes/Components/OpenTriggerPanel.php:501
-#: src/widgets/bar/editor/EditSettings.js:37
-#: src/widgets/flyout/editor/EditSettings.js:47
-#: src/widgets/popup/editor/EditSettings.js:41
+#: src/popups/bar/editor/EditSettings.js:37
+#: src/popups/flyout/editor/EditSettings.js:47
+#: src/popups/overlay/editor/EditSettings.js:41
 msgid "Behavior"
 msgstr ""
 
@@ -1502,6 +1510,56 @@ msgstr ""
 msgid "Exclude roles from logging popup events for analytics (e.g., exclude admin tests)."
 msgstr ""
 
+#: includes/Popups/Bar.php:89
+#: includes/Popups/Flyout.php:89
+#: includes/Popups/Overlay.php:85
+msgid "Empty"
+msgstr ""
+
+#: includes/Popups/Bar.php:90
+msgid "A blank slate that you can use to build your own bar from scratch."
+msgstr ""
+
+#: includes/Popups/Bar.php:130
+msgid "Black Friday Bar"
+msgstr ""
+
+#: includes/Popups/Bar.php:131
+msgid "A typical Black Friday bar to help drive sales."
+msgstr ""
+
+#: includes/Popups/Bar.php:247
+msgid "Cookie Consent Bar"
+msgstr ""
+
+#: includes/Popups/Bar.php:248
+msgid "A simple bottom bar that is dismissed when the button is clicked."
+msgstr ""
+
+#: includes/Popups/Flyout.php:90
+msgid "A blank slate that you can use to build your own flyout from scratch."
+msgstr ""
+
+#: includes/Popups/Flyout.php:130
+msgid "Black Friday Flyout"
+msgstr ""
+
+#: includes/Popups/Flyout.php:131
+msgid "A typical Black Friday flyout to help drive sales."
+msgstr ""
+
+#: includes/Popups/Overlay.php:86
+msgid "A blank slate that you can use to build your own overlay from scratch."
+msgstr ""
+
+#: includes/Popups/Overlay.php:115
+msgid "Black Friday Overlay"
+msgstr ""
+
+#: includes/Popups/Overlay.php:116
+msgid "A typical Black Friday overlay to help drive sales."
+msgstr ""
+
 #: includes/PostType.php:50
 #: includes/PostType.php:60
 msgid "Popups"
@@ -1559,54 +1617,160 @@ msgstr ""
 msgid "Update WordPress now."
 msgstr ""
 
-#: includes/Widgets/Bar.php:89
-#: includes/Widgets/Flyout.php:89
-#: includes/Widgets/Popup.php:85
-msgid "Empty"
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:5
+msgid "Almost Free Shipping Bar"
 msgstr ""
 
-#: includes/Widgets/Bar.php:90
-msgid "A blank slate that you can use to build your own bar from scratch."
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:6
+msgid "A low-friction shipping progress bar with a compact coupon action."
 msgstr ""
 
-#: includes/Widgets/Bar.php:130
-msgid "Black Friday Bar"
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:143
+msgid "Free shipping is close."
 msgstr ""
 
-#: includes/Widgets/Bar.php:131
-msgid "A typical Black Friday bar to help drive sales."
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:163
+msgid "You are almost there."
 msgstr ""
 
-#: includes/Widgets/Bar.php:247
-msgid "Cookie Consent Bar"
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:240
+msgid "Apply the coupon, then keep moving."
 msgstr ""
 
-#: includes/Widgets/Bar.php:248
-msgid "A simple bottom bar that is dismissed when the button is clicked."
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:291
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:354
+msgid "Apply code"
 msgstr ""
 
-#: includes/Widgets/Flyout.php:90
-msgid "A blank slate that you can use to build your own flyout from scratch."
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:5
+msgid "Add To Cart Unlock Flyout"
 msgstr ""
 
-#: includes/Widgets/Flyout.php:130
-msgid "Black Friday Flyout"
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:6
+msgid "An airy post-add-to-cart flyout that keeps the basket building momentum going."
 msgstr ""
 
-#: includes/Widgets/Flyout.php:131
-msgid "A typical Black Friday flyout to help drive sales."
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:121
+msgid "Added to cart"
 msgstr ""
 
-#: includes/Widgets/Popup.php:86
-msgid "A blank slate that you can use to build your own overlay from scratch."
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:141
+msgid "Build the basket while the moment is warm."
 msgstr ""
 
-#: includes/Widgets/Popup.php:115
-msgid "Black Friday Overlay"
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:160
+msgid "Use the offer now, then keep browsing for the pieces that make sense together."
 msgstr ""
 
-#: includes/Widgets/Popup.php:116
-msgid "A typical Black Friday overlay to help drive sales."
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:254
+msgid "Round out the order with one more item."
+msgstr ""
+
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:261
+msgid "Keep the cart closer to free shipping."
+msgstr ""
+
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:268
+msgid "Use the offer before you move on."
+msgstr ""
+
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:396
+msgid "Continue shopping"
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:5
+msgid "Cart Idle Rescue Popup"
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:6
+msgid "A dense cart recovery popup with a strong FOMO countdown."
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:124
+msgid "Cart paused"
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:144
+msgid "Your cart is waiting."
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:163
+msgid "Apply the code now before this session closes."
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:299
+msgid "Apply now"
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:338
+#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:332
+msgid "One tap applies the offer."
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:358
+msgid "One quick step and your cart is saved."
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:5
+msgid "Checkout Exit Save Popup"
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:6
+msgid "A compact checkout recovery popup with a concise rescue offer."
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:138
+msgid "Checkout rescue"
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:158
+msgid "Finish your order."
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:177
+msgid "Apply the code and keep checkout moving."
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:192
+msgid "This helps keep your order on track."
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:331
+#: pro/includes/Blocks/ApplyCoupon.php:93
+#: pro/src/blocks/apply-coupon/editor/Edit.js:23
+msgid "Apply"
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:370
+msgid "Click the button to apply the coupon."
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:5
+msgid "High Intent Product Offer Popup"
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:6
+msgid "An airy product offer popup with a promotional split layout."
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:147
+msgid "Product offer"
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:167
+msgid "A better way to buy this item."
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:186
+msgid "Apply the code below to unlock the offer on this order."
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:201
+msgid "A simple offer for the right moment."
+msgstr ""
+
+#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:293
+msgid "Use offer"
 msgstr ""
 
 #: pro/includes/Admin/Views/dashboard-panel-sales.php:10
@@ -1626,7 +1790,7 @@ msgstr ""
 msgid "No popup sales totals available yet."
 msgstr ""
 
-#. translators: %d is the number of attributed sales for the widget.
+#. translators: %d is the number of attributed sales for the popup.
 #: pro/includes/Admin/Views/dashboard-panel-sales.php:58
 #, php-format
 msgid "%d sale"
@@ -1888,7 +2052,7 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#. translators: %d is the widget post ID.
+#. translators: %d is the popup post ID.
 #: pro/includes/Analytics/Sales.php:251
 #, php-format
 msgid "Popup #%d"
@@ -1899,53 +2063,17 @@ msgstr ""
 msgid "Guest"
 msgstr ""
 
-#: pro/includes/Blocks/ApplyCoupon.php:92
-#: pro/src/blocks/apply-coupon/editor/Edit.js:23
-msgid "Apply"
-msgstr ""
-
-#: pro/includes/Blocks/ApplyCoupon.php:140
-#: pro/includes/Blocks/ApplyCoupon.php:144
+#: pro/includes/Blocks/ApplyCoupon.php:142
+#: pro/includes/Blocks/ApplyCoupon.php:147
 msgid "Coupon apply is unavailable on this page."
 msgstr ""
 
-#: pro/includes/Blocks/ApplyCoupon.php:142
+#: pro/includes/Blocks/ApplyCoupon.php:145
 msgid "Select a WooCommerce coupon before applying it."
 msgstr ""
 
-#: pro/includes/Blocks/ApplyCoupon.php:143
+#: pro/includes/Blocks/ApplyCoupon.php:146
 msgid "Coupon saved. It will be applied when the cart or checkout is available."
-msgstr ""
-
-#: pro/includes/Blocks/CartThresholdProgress.php:89
-#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:10
-msgid "free shipping"
-msgstr ""
-
-#: pro/includes/Blocks/CartThresholdProgress.php:90
-#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:11
-msgid "You are {remaining} away from {goal}."
-msgstr ""
-
-#: pro/includes/Blocks/CartThresholdProgress.php:91
-#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:12
-msgid "You have unlocked {goal}."
-msgstr ""
-
-#: pro/includes/Blocks/CartThresholdProgress.php:93
-msgid "{subtotal} of {threshold}"
-msgstr ""
-
-#: pro/includes/Blocks/CartThresholdProgress.php:94
-msgid "{subtotal} in cart"
-msgstr ""
-
-#: pro/includes/Blocks/CartThresholdProgress.php:96
-msgid "Waiting for WooCommerce cart data."
-msgstr ""
-
-#: pro/includes/Blocks/CartThresholdProgress.php:97
-msgid "Add a valid threshold amount in the block settings."
 msgstr ""
 
 #: pro/includes/DisplayRules/WooCommerce.php:31
@@ -3259,39 +3387,39 @@ msgid "Stack"
 msgstr ""
 
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:71
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:175
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:179
 #: src/blocks/coupon/editor/components/code/EditSettings.js:21
 #: src/blocks/coupon/editor/components/container/EditSettings.js:31
 #: src/blocks/sign-up/editor/components/button/EditSettings.js:29
 #: src/editor/components/box-units-control/Component.js:30
-#: src/widgets/bar/editor/blocks/container/blocks/close-button/EditSettings.js:24
-#: src/widgets/bar/editor/blocks/open-button/EditSettings.js:21
-#: src/widgets/flyout/editor/blocks/container/blocks/close-button/EditSettings.js:24
-#: src/widgets/flyout/editor/components/position-control/Component.js:45
-#: src/widgets/popup/editor/blocks/container/blocks/close-button/EditSettings.js:24
+#: src/popups/bar/editor/blocks/container/blocks/close-button/EditSettings.js:24
+#: src/popups/bar/editor/blocks/open-button/EditSettings.js:21
+#: src/popups/flyout/editor/blocks/container/blocks/close-button/EditSettings.js:24
+#: src/popups/flyout/editor/components/position-control/Component.js:45
+#: src/popups/overlay/editor/blocks/container/blocks/close-button/EditSettings.js:24
 msgid "Left"
 msgstr ""
 
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:75
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:179
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:183
 #: src/blocks/coupon/editor/components/code/EditSettings.js:25
 #: src/blocks/coupon/editor/components/container/EditSettings.js:35
 #: src/blocks/sign-up/editor/components/button/EditSettings.js:33
-#: src/widgets/flyout/editor/components/position-control/Component.js:59
+#: src/popups/flyout/editor/components/position-control/Component.js:59
 msgid "Center"
 msgstr ""
 
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:79
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:183
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:187
 #: src/blocks/coupon/editor/components/code/EditSettings.js:29
 #: src/blocks/coupon/editor/components/container/EditSettings.js:39
 #: src/blocks/sign-up/editor/components/button/EditSettings.js:37
 #: src/editor/components/box-units-control/Component.js:28
-#: src/widgets/bar/editor/blocks/container/blocks/close-button/EditSettings.js:28
-#: src/widgets/bar/editor/blocks/open-button/EditSettings.js:25
-#: src/widgets/flyout/editor/blocks/container/blocks/close-button/EditSettings.js:27
-#: src/widgets/flyout/editor/components/position-control/Component.js:49
-#: src/widgets/popup/editor/blocks/container/blocks/close-button/EditSettings.js:27
+#: src/popups/bar/editor/blocks/container/blocks/close-button/EditSettings.js:28
+#: src/popups/bar/editor/blocks/open-button/EditSettings.js:25
+#: src/popups/flyout/editor/blocks/container/blocks/close-button/EditSettings.js:27
+#: src/popups/flyout/editor/components/position-control/Component.js:49
+#: src/popups/overlay/editor/blocks/container/blocks/close-button/EditSettings.js:27
 msgid "Right"
 msgstr ""
 
@@ -3309,7 +3437,7 @@ msgid "The overall layout of elements in the coupon."
 msgstr ""
 
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:94
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:190
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:194
 #: src/blocks/coupon/editor/components/code/EditSettings.js:37
 #: src/blocks/coupon/editor/components/container/EditSettings.js:76
 msgid "Text Align"
@@ -3341,6 +3469,7 @@ msgid "Redirect destination"
 msgstr ""
 
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:120
+#: src/editor/icons/default/index.js:38
 msgid "Cart"
 msgstr ""
 
@@ -3371,40 +3500,57 @@ msgstr ""
 msgid "Hide the label for the coupon."
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:188
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:226
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:192
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:246
 #: src/blocks/coupon/editor/components/code/EditSettings.js:35
 #: src/blocks/coupon/editor/EditSettings.js:24
 msgid "Coupon"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:195
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:199
 #: src/blocks/coupon/editor/components/code/EditSettings.js:42
 msgid "The text alignment for the coupon code."
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:204
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:208
 msgid "Search published WooCommerce coupons by code."
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:205
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:209
 msgid "WooCommerce must be active to search for coupons."
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:209
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:213
 msgid "Override Applied Text"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:212
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:216
 msgid "If supplied, this text will be applied instead of the visible coupon code."
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:223
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:221
+#: src/blocks/sign-up/editor/components/form/EditSettings.js:47
+msgid "Success Message"
+msgstr ""
+
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:224
+msgid "If supplied, this message is shown briefly after the coupon is applied successfully."
+msgstr ""
+
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:229
+msgid "Friendly Error Message"
+msgstr ""
+
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:232
+msgid "If supplied, this message replaces the WooCommerce error shown when the coupon apply fails."
+msgstr ""
+
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:243
 #: src/blocks/coupon/editor/EditSettings.js:21
 msgid "Block"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:229
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:249
 #: src/blocks/coupon/editor/components/button/EditSettings.js:79
 #: src/blocks/coupon/editor/EditSettings.js:27
 #: src/blocks/sign-up/editor/components/button/EditSettings.js:120
@@ -3412,7 +3558,7 @@ msgstr ""
 msgid "Button"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:238
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:258
 #: pro/src/blocks/free-shipping-text/editor/Edit.js:50
 #: src/blocks/countdown/editor/EditSettings.js:30
 #: src/blocks/coupon/editor/EditSettings.js:36
@@ -3430,66 +3576,6 @@ msgstr ""
 
 #: pro/src/blocks/apply-coupon/editor/WooCouponSelector.js:131
 msgid "Search coupons..."
-msgstr ""
-
-#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:83
-msgid "Add a valid threshold amount to preview the block."
-msgstr ""
-
-#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:92
-msgid "Cart Goal"
-msgstr ""
-
-#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:94
-msgid "Threshold amount"
-msgstr ""
-
-#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:99
-msgid "Goal amount in store currency, for example 75 or 75.00."
-msgstr ""
-
-#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:104
-msgid "Goal label"
-msgstr ""
-
-#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:109
-msgid "Used in the locked and unlocked state messages."
-msgstr ""
-
-#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:114
-msgid "Locked message"
-msgstr ""
-
-#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:119
-msgid "Tokens: {remaining}, {goal}, {threshold}, {subtotal}"
-msgstr ""
-
-#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:124
-msgid "Unlocked message"
-msgstr ""
-
-#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:129
-msgid "Tokens: {goal}, {threshold}, {subtotal}"
-msgstr ""
-
-#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:134
-msgid "Show progress bar"
-msgstr ""
-
-#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:139
-msgid "Hide this to show only the message and summary line."
-msgstr ""
-
-#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:146
-msgid "WooCommerce Cart Goal"
-msgstr ""
-
-#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:154
-msgid "Waiting for a valid threshold amount."
-msgstr ""
-
-#: pro/src/blocks/cart-threshold-progress/editor/Edit.js:165
-msgid "Uses the live WooCommerce cart subtotal on the frontend."
 msgstr ""
 
 #: pro/src/blocks/confetti/editor/Edit.js:11
@@ -3756,14 +3842,14 @@ msgstr ""
 #: src/blocks/sign-up/editor/components/button/EditStyles.js:30
 #: src/blocks/sign-up/editor/components/form/EditStyles.js:26
 #: src/blocks/sign-up/editor/components/inputs/EditStyles.js:20
-#: src/widgets/bar/editor/blocks/container/blocks/close-button/EditStyles.js:26
-#: src/widgets/bar/editor/blocks/container/blocks/content/EditStyles.js:24
-#: src/widgets/bar/editor/blocks/open-button/EditStyles.js:26
-#: src/widgets/flyout/editor/blocks/container/blocks/close-button/EditStyles.js:26
-#: src/widgets/flyout/editor/blocks/container/blocks/content/EditStyles.js:28
-#: src/widgets/flyout/editor/blocks/open-button/EditStyles.js:26
-#: src/widgets/popup/editor/blocks/container/blocks/close-button/EditStyles.js:26
-#: src/widgets/popup/editor/blocks/container/blocks/content/EditStyles.js:28
+#: src/popups/bar/editor/blocks/container/blocks/close-button/EditStyles.js:26
+#: src/popups/bar/editor/blocks/container/blocks/content/EditStyles.js:24
+#: src/popups/bar/editor/blocks/open-button/EditStyles.js:26
+#: src/popups/flyout/editor/blocks/container/blocks/close-button/EditStyles.js:26
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:28
+#: src/popups/flyout/editor/blocks/open-button/EditStyles.js:26
+#: src/popups/overlay/editor/blocks/container/blocks/close-button/EditStyles.js:26
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:28
 msgid "Background"
 msgstr ""
 
@@ -3792,9 +3878,9 @@ msgstr ""
 #: src/blocks/sign-up/editor/components/button/EditStyles.js:35
 #: src/blocks/sign-up/editor/components/form/EditStyles.js:31
 #: src/blocks/sign-up/editor/components/inputs/EditStyles.js:25
-#: src/widgets/bar/editor/blocks/container/blocks/content/EditStyles.js:29
-#: src/widgets/flyout/editor/blocks/container/blocks/content/EditStyles.js:33
-#: src/widgets/popup/editor/blocks/container/blocks/content/EditStyles.js:33
+#: src/popups/bar/editor/blocks/container/blocks/content/EditStyles.js:29
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:33
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:33
 msgid "Text"
 msgstr ""
 
@@ -3811,8 +3897,8 @@ msgstr ""
 #: src/editor/components/dimension-tools-panel/Component.js:94
 #: src/editor/components/icon-tools-panel/Component.js:74
 #: src/editor/components/typography-tools-panel/Component.js:33
-#: src/widgets/flyout/editor/blocks/container/blocks/content/EditStyles.js:81
-#: src/widgets/popup/editor/blocks/container/blocks/content/EditStyles.js:81
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:81
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:81
 msgid "S"
 msgstr ""
 
@@ -3821,8 +3907,8 @@ msgstr ""
 #: src/editor/components/dimension-tools-panel/Component.js:95
 #: src/editor/components/icon-tools-panel/Component.js:75
 #: src/editor/components/typography-tools-panel/Component.js:34
-#: src/widgets/flyout/editor/blocks/container/blocks/content/EditStyles.js:82
-#: src/widgets/popup/editor/blocks/container/blocks/content/EditStyles.js:82
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:82
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:82
 msgid "Small"
 msgstr ""
 
@@ -3831,8 +3917,8 @@ msgstr ""
 #: src/editor/components/dimension-tools-panel/Component.js:100
 #: src/editor/components/icon-tools-panel/Component.js:78
 #: src/editor/components/typography-tools-panel/Component.js:39
-#: src/widgets/flyout/editor/blocks/container/blocks/content/EditStyles.js:85
-#: src/widgets/popup/editor/blocks/container/blocks/content/EditStyles.js:85
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:85
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:85
 msgid "M"
 msgstr ""
 
@@ -3842,8 +3928,8 @@ msgstr ""
 #: src/editor/components/font-appearance-control/Component.js:28
 #: src/editor/components/icon-tools-panel/Component.js:79
 #: src/editor/components/typography-tools-panel/Component.js:40
-#: src/widgets/flyout/editor/blocks/container/blocks/content/EditStyles.js:86
-#: src/widgets/popup/editor/blocks/container/blocks/content/EditStyles.js:86
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:86
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:86
 msgid "Medium"
 msgstr ""
 
@@ -3852,8 +3938,8 @@ msgstr ""
 #: src/editor/components/dimension-tools-panel/Component.js:106
 #: src/editor/components/icon-tools-panel/Component.js:82
 #: src/editor/components/typography-tools-panel/Component.js:45
-#: src/widgets/flyout/editor/blocks/container/blocks/content/EditStyles.js:89
-#: src/widgets/popup/editor/blocks/container/blocks/content/EditStyles.js:89
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:89
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:89
 msgid "L"
 msgstr ""
 
@@ -3862,8 +3948,8 @@ msgstr ""
 #: src/editor/components/dimension-tools-panel/Component.js:107
 #: src/editor/components/icon-tools-panel/Component.js:83
 #: src/editor/components/typography-tools-panel/Component.js:46
-#: src/widgets/flyout/editor/blocks/container/blocks/content/EditStyles.js:90
-#: src/widgets/popup/editor/blocks/container/blocks/content/EditStyles.js:90
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:90
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:90
 msgid "Large"
 msgstr ""
 
@@ -3872,8 +3958,8 @@ msgstr ""
 #: src/editor/components/dimension-tools-panel/Component.js:112
 #: src/editor/components/icon-tools-panel/Component.js:86
 #: src/editor/components/typography-tools-panel/Component.js:51
-#: src/widgets/flyout/editor/blocks/container/blocks/content/EditStyles.js:93
-#: src/widgets/popup/editor/blocks/container/blocks/content/EditStyles.js:93
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:93
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:93
 msgid "XL"
 msgstr ""
 
@@ -3882,8 +3968,8 @@ msgstr ""
 #: src/editor/components/dimension-tools-panel/Component.js:113
 #: src/editor/components/icon-tools-panel/Component.js:87
 #: src/editor/components/typography-tools-panel/Component.js:52
-#: src/widgets/flyout/editor/blocks/container/blocks/content/EditStyles.js:94
-#: src/widgets/popup/editor/blocks/container/blocks/content/EditStyles.js:94
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:94
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:94
 msgid "Extra Large"
 msgstr ""
 
@@ -3918,11 +4004,11 @@ msgstr ""
 #: src/blocks/sign-up/editor/components/button/EditStyles.js:41
 #: src/editor/components/icon-tools-panel/Component.js:16
 #: src/editor/components/icon-tools-panel/Component.js:17
-#: src/widgets/bar/editor/blocks/container/blocks/close-button/EditStyles.js:32
-#: src/widgets/bar/editor/blocks/open-button/EditStyles.js:32
-#: src/widgets/flyout/editor/blocks/container/blocks/close-button/EditStyles.js:32
-#: src/widgets/flyout/editor/blocks/open-button/EditStyles.js:32
-#: src/widgets/popup/editor/blocks/container/blocks/close-button/EditStyles.js:32
+#: src/popups/bar/editor/blocks/container/blocks/close-button/EditStyles.js:32
+#: src/popups/bar/editor/blocks/open-button/EditStyles.js:32
+#: src/popups/flyout/editor/blocks/container/blocks/close-button/EditStyles.js:32
+#: src/popups/flyout/editor/blocks/open-button/EditStyles.js:32
+#: src/popups/overlay/editor/blocks/container/blocks/close-button/EditStyles.js:32
 msgid "Icon"
 msgstr ""
 
@@ -3987,8 +4073,8 @@ msgid "The URL to redirect to after the coupon is copied."
 msgstr ""
 
 #: src/blocks/sign-up/editor/components/button/EditSettings.js:46
-#: src/widgets/flyout/editor/blocks/container/blocks/content/EditStyles.js:77
-#: src/widgets/popup/editor/blocks/container/blocks/content/EditStyles.js:77
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:77
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:77
 msgid "Fit"
 msgstr ""
 
@@ -4009,17 +4095,17 @@ msgid "100%"
 msgstr ""
 
 #: src/blocks/sign-up/editor/components/button/EditSettings.js:132
-#: src/widgets/bar/editor/blocks/container/blocks/close-button/EditSettings.js:34
-#: src/widgets/bar/editor/blocks/container/EditSettings.js:26
-#: src/widgets/bar/editor/blocks/container/EditSettings.js:29
-#: src/widgets/bar/editor/blocks/open-button/EditSettings.js:31
-#: src/widgets/bar/editor/EditSettings.js:29
-#: src/widgets/flyout/editor/blocks/container/blocks/close-button/EditSettings.js:32
-#: src/widgets/flyout/editor/blocks/container/blocks/close-button/EditSettings.js:35
-#: src/widgets/flyout/editor/blocks/container/EditSettings.js:23
-#: src/widgets/flyout/editor/EditSettings.js:30
-#: src/widgets/popup/editor/blocks/container/blocks/close-button/EditSettings.js:32
-#: src/widgets/popup/editor/blocks/container/blocks/close-button/EditSettings.js:35
+#: src/popups/bar/editor/blocks/container/blocks/close-button/EditSettings.js:34
+#: src/popups/bar/editor/blocks/container/EditSettings.js:26
+#: src/popups/bar/editor/blocks/container/EditSettings.js:29
+#: src/popups/bar/editor/blocks/open-button/EditSettings.js:31
+#: src/popups/bar/editor/EditSettings.js:29
+#: src/popups/flyout/editor/blocks/container/blocks/close-button/EditSettings.js:32
+#: src/popups/flyout/editor/blocks/container/blocks/close-button/EditSettings.js:35
+#: src/popups/flyout/editor/blocks/container/EditSettings.js:23
+#: src/popups/flyout/editor/EditSettings.js:30
+#: src/popups/overlay/editor/blocks/container/blocks/close-button/EditSettings.js:32
+#: src/popups/overlay/editor/blocks/container/blocks/close-button/EditSettings.js:35
 msgid "Position"
 msgstr ""
 
@@ -4028,10 +4114,10 @@ msgid "Horizontal position of the button in the form."
 msgstr ""
 
 #: src/blocks/sign-up/editor/components/button/EditSettings.js:140
-#: src/widgets/flyout/editor/blocks/container/blocks/content/EditStyles.js:67
-#: src/widgets/flyout/editor/blocks/container/blocks/content/EditStyles.js:72
-#: src/widgets/popup/editor/blocks/container/blocks/content/EditStyles.js:67
-#: src/widgets/popup/editor/blocks/container/blocks/content/EditStyles.js:72
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:67
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:72
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:67
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:72
 msgid "Width"
 msgstr ""
 
@@ -4054,10 +4140,6 @@ msgstr ""
 
 #: src/blocks/sign-up/editor/components/form/EditSettings.js:44
 msgid "The overall layout of elements in the form."
-msgstr ""
-
-#: src/blocks/sign-up/editor/components/form/EditSettings.js:47
-msgid "Success Message"
 msgstr ""
 
 #: src/blocks/sign-up/editor/components/form/EditSettings.js:50
@@ -4219,14 +4301,14 @@ msgid "Reset"
 msgstr ""
 
 #: src/editor/components/box-units-control/Component.js:27
-#: src/widgets/bar/editor/components/position-control/Component.js:20
-#: src/widgets/flyout/editor/components/position-control/Component.js:55
+#: src/popups/bar/editor/components/position-control/Component.js:20
+#: src/popups/flyout/editor/components/position-control/Component.js:55
 msgid "Top"
 msgstr ""
 
 #: src/editor/components/box-units-control/Component.js:29
-#: src/widgets/bar/editor/components/position-control/Component.js:24
-#: src/widgets/flyout/editor/components/position-control/Component.js:63
+#: src/popups/bar/editor/components/position-control/Component.js:24
+#: src/popups/flyout/editor/components/position-control/Component.js:63
 msgid "Bottom"
 msgstr ""
 
@@ -4443,7 +4525,7 @@ msgstr ""
 msgid "Variant"
 msgstr ""
 
-#. translators: %s is the singular widget label, for example "Popup".
+#. translators: %s is the singular popup label, for example "Popup".
 #: src/editor/components/experiment-panel/Component.js:29
 #, js-format
 msgid "This %s is part of an A/B test experiement"
@@ -4565,7 +4647,7 @@ msgstr ""
 
 #: src/editor/components/inner-blocks-button/Component.js:130
 #: src/editor/components/variation-picker/Component.js:217
-#: src/editor/icons/default/index.js:38
+#: src/editor/icons/default/index.js:43
 msgid "Close"
 msgstr ""
 
@@ -4587,9 +4669,9 @@ msgstr ""
 
 #: src/editor/components/open-trigger-component/Component.js:694
 #: src/editor/components/open-trigger-component/Component.js:768
-#: src/widgets/bar/editor/components/trigger-controls/Component.js:63
-#: src/widgets/flyout/editor/components/trigger-controls/Component.js:63
-#: src/widgets/popup/editor/components/trigger-controls/Component.js:56
+#: src/popups/bar/editor/components/trigger-controls/Component.js:63
+#: src/popups/flyout/editor/components/trigger-controls/Component.js:63
+#: src/popups/overlay/editor/components/trigger-controls/Component.js:56
 msgid "Open Trigger"
 msgstr ""
 
@@ -4697,64 +4779,76 @@ msgstr ""
 msgid "Overlays"
 msgstr ""
 
-#: src/editor/icons/default/index.js:29
+#: src/editor/icons/default/index.js:33
 msgid "Arrow Down"
 msgstr ""
 
-#: src/editor/icons/default/index.js:30
+#: src/editor/icons/default/index.js:34
 msgid "Arrow Left"
 msgstr ""
 
-#: src/editor/icons/default/index.js:31
+#: src/editor/icons/default/index.js:35
 msgid "Arrow Right"
 msgstr ""
 
-#: src/editor/icons/default/index.js:32
+#: src/editor/icons/default/index.js:36
 msgid "Arrow Up"
 msgstr ""
 
-#: src/editor/icons/default/index.js:33
+#: src/editor/icons/default/index.js:37
 msgid "Cancel Circle Filled"
 msgstr ""
 
-#: src/editor/icons/default/index.js:34
+#: src/editor/icons/default/index.js:39
 msgid "Chevron Down"
 msgstr ""
 
-#: src/editor/icons/default/index.js:35
+#: src/editor/icons/default/index.js:40
 msgid "Chevron Left"
 msgstr ""
 
-#: src/editor/icons/default/index.js:36
+#: src/editor/icons/default/index.js:41
 msgid "Chevron Right"
 msgstr ""
 
-#: src/editor/icons/default/index.js:37
+#: src/editor/icons/default/index.js:42
 msgid "Chevron Up"
 msgstr ""
 
-#: src/editor/icons/default/index.js:39
+#: src/editor/icons/default/index.js:44
 msgid "Close Small"
 msgstr ""
 
-#: src/editor/icons/default/index.js:41
+#: src/editor/icons/default/index.js:46
 msgid "Plus"
 msgstr ""
 
-#: src/editor/icons/default/index.js:42
+#: src/editor/icons/default/index.js:47
 msgid "Plus Circle"
 msgstr ""
 
-#: src/editor/icons/default/index.js:43
+#: src/editor/icons/default/index.js:48
 msgid "Plus Circle Filled"
 msgstr ""
 
-#: src/editor/icons/default/index.js:44
+#: src/editor/icons/default/index.js:49
 msgid "Plus Small"
 msgstr ""
 
-#: src/editor/icons/default/index.js:45
+#: src/editor/icons/default/index.js:50
+msgid "Percent"
+msgstr ""
+
+#: src/editor/icons/default/index.js:51
+msgid "Tag"
+msgstr ""
+
+#: src/editor/icons/default/index.js:52
 msgid "Send"
+msgstr ""
+
+#: src/editor/icons/default/index.js:53
+msgid "Store"
 msgstr ""
 
 #. translators: %s: post singular_label
@@ -4765,6 +4859,232 @@ msgstr ""
 
 #: src/editor/plugins/display-rules/Plugin.js:14
 msgid "Inherited"
+msgstr ""
+
+#: src/popups/bar/editor/blocks/container/blocks/close-button/EditSettings.js:37
+#: src/popups/bar/editor/blocks/open-button/EditSettings.js:34
+#: src/popups/flyout/editor/components/position-control/Component.js:71
+msgid "Horizontal"
+msgstr ""
+
+#: src/popups/bar/editor/blocks/container/blocks/close-button/EditSettings.js:38
+msgid "Choose which side of the bar to display the button."
+msgstr ""
+
+#: src/popups/bar/editor/blocks/container/blocks/content/ContentAppender.js:19
+#: src/popups/flyout/editor/blocks/container/blocks/content/ContentAppender.js:19
+#: src/popups/overlay/editor/blocks/container/blocks/content/ContentAppender.js:19
+msgid "Add block"
+msgstr ""
+
+#: src/popups/bar/editor/blocks/container/EditSettings.js:36
+msgid "Max Width"
+msgstr ""
+
+#: src/popups/bar/editor/blocks/container/EditSettings.js:37
+msgid "Set the maximum width of the bar."
+msgstr ""
+
+#: src/popups/bar/editor/blocks/open-button/EditSettings.js:35
+msgid "Choose which side of the viewport to display the button."
+msgstr ""
+
+#: src/popups/bar/editor/components/position-control/Component.js:13
+msgid "Choose where to display the bar within the page."
+msgstr ""
+
+#: src/popups/bar/editor/components/trigger-controls/Component.js:67
+#: src/popups/flyout/editor/components/trigger-controls/Component.js:67
+#: src/popups/overlay/editor/components/trigger-controls/Component.js:60
+msgid "Inherits open trigger from control."
+msgstr ""
+
+#: src/popups/bar/editor/components/trigger-controls/Component.js:77
+msgid "Select how the bar is opened."
+msgstr ""
+
+#: src/popups/bar/editor/components/trigger-controls/Component.js:84
+#: src/popups/flyout/editor/components/trigger-controls/Component.js:84
+msgid "Hide open button"
+msgstr ""
+
+#: src/popups/bar/editor/components/trigger-controls/Component.js:85
+#: src/popups/flyout/editor/components/trigger-controls/Component.js:85
+msgid "Hide the default open button."
+msgstr ""
+
+#: src/popups/bar/editor/components/trigger-controls/Component.js:93
+#: src/popups/flyout/editor/components/trigger-controls/Component.js:93
+#: src/popups/overlay/editor/components/trigger-controls/Component.js:75
+msgid "Close Trigger"
+msgstr ""
+
+#: src/popups/bar/editor/components/trigger-controls/Component.js:97
+#: src/popups/flyout/editor/components/trigger-controls/Component.js:97
+#: src/popups/overlay/editor/components/trigger-controls/Component.js:79
+msgid "Inherits close trigger from control."
+msgstr ""
+
+#: src/popups/bar/editor/components/trigger-controls/Component.js:103
+#: src/popups/flyout/editor/components/trigger-controls/Component.js:103
+#: src/popups/overlay/editor/components/trigger-controls/Component.js:85
+msgid "Hide close button"
+msgstr ""
+
+#: src/popups/bar/editor/components/trigger-controls/Component.js:104
+#: src/popups/flyout/editor/components/trigger-controls/Component.js:104
+#: src/popups/overlay/editor/components/trigger-controls/Component.js:86
+msgid "Hide the default close button."
+msgstr ""
+
+#: src/popups/bar/editor/components/trigger-controls/Component.js:113
+#: src/popups/flyout/editor/components/trigger-controls/Component.js:113
+#: src/popups/overlay/editor/components/trigger-controls/Component.js:113
+msgid "Close on anchor click"
+msgstr ""
+
+#: src/popups/bar/editor/components/trigger-controls/Component.js:114
+msgid "Clicking specific anchors closes the bar."
+msgstr ""
+
+#: src/popups/bar/editor/components/trigger-controls/Component.js:125
+msgid "Add an anchor to a button block and then insert the same value here to close the bar on click."
+msgstr ""
+
+#: src/popups/bar/editor/components/view-state-controls/index.js:10
+#: src/popups/flyout/editor/components/view-state-controls/index.js:10
+msgid "Closed"
+msgstr ""
+
+#: src/popups/bar/editor/components/view-state-controls/index.js:10
+#: src/popups/flyout/editor/components/view-state-controls/index.js:10
+msgid "Open"
+msgstr ""
+
+#. translators: %s: Open/Closed State
+#: src/popups/bar/editor/components/view-state-controls/index.js:13
+#: src/popups/flyout/editor/components/view-state-controls/index.js:13
+#, js-format
+msgid "%s View"
+msgstr ""
+
+#: src/popups/bar/editor/components/view-state-controls/index.js:19
+#: src/popups/flyout/editor/components/view-state-controls/index.js:19
+msgid "Toggle View"
+msgstr ""
+
+#: src/popups/bar/editor/Edit.js:132
+msgid "Choose a template for your bar"
+msgstr ""
+
+#: src/popups/bar/editor/Edit.js:133
+#: src/popups/flyout/editor/Edit.js:129
+#: src/popups/overlay/editor/Edit.js:126
+msgid "Select a template to start with."
+msgstr ""
+
+#: src/popups/bar/editor/EditSettings.js:40
+#: src/popups/flyout/editor/EditSettings.js:50
+#: src/popups/overlay/editor/EditSettings.js:53
+msgid "Enable transitions"
+msgstr ""
+
+#: src/popups/bar/editor/EditSettings.js:41
+#: src/popups/flyout/editor/EditSettings.js:51
+msgid "Choose if transitions are used when toggling the bar."
+msgstr ""
+
+#: src/popups/bar/editor/EditSettings.js:67
+#: src/popups/flyout/editor/EditSettings.js:77
+#: src/popups/overlay/editor/EditSettings.js:96
+msgid "Make Variation"
+msgstr ""
+
+#: src/popups/flyout/editor/blocks/container/blocks/close-button/EditSettings.js:40
+#: src/popups/overlay/editor/blocks/container/blocks/close-button/EditSettings.js:40
+msgid "Choose which side the button is displayed."
+msgstr ""
+
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:78
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:78
+msgid "Fit Content"
+msgstr ""
+
+#: src/popups/flyout/editor/components/position-control/Component.js:30
+msgid "Choose where to display the flyout within the page."
+msgstr ""
+
+#: src/popups/flyout/editor/components/position-control/Component.js:78
+msgid "Vertical"
+msgstr ""
+
+#: src/popups/flyout/editor/components/trigger-controls/Component.js:77
+msgid "Select how the flyout is opened."
+msgstr ""
+
+#: src/popups/flyout/editor/components/trigger-controls/Component.js:114
+msgid "Clicking specific anchors closes the flyout."
+msgstr ""
+
+#: src/popups/flyout/editor/components/trigger-controls/Component.js:125
+msgid "Add an anchor to a button block and then insert the same value here to close the flyout on click."
+msgstr ""
+
+#: src/popups/flyout/editor/Edit.js:128
+msgid "Choose a template for your flyout"
+msgstr ""
+
+#: src/popups/flyout/editor/EditSettings.js:39
+#: src/popups/overlay/editor/EditSettings.js:44
+msgid "Maximize on mobile"
+msgstr ""
+
+#: src/popups/flyout/editor/EditSettings.js:40
+msgid "Expand the flyout on mobile to use as much screen space as possible."
+msgstr ""
+
+#: src/popups/overlay/editor/components/trigger-controls/Component.js:70
+msgid "Select how the overlay is opened."
+msgstr ""
+
+#: src/popups/overlay/editor/components/trigger-controls/Component.js:95
+msgid "Close on backdrop click"
+msgstr ""
+
+#: src/popups/overlay/editor/components/trigger-controls/Component.js:96
+msgid "Close the overlay when the backdrop is clicked."
+msgstr ""
+
+#: src/popups/overlay/editor/components/trigger-controls/Component.js:114
+msgid "Clicking specific anchors closes the overlay."
+msgstr ""
+
+#: src/popups/overlay/editor/components/trigger-controls/Component.js:125
+msgid "Add an anchor to a button block and then insert the same value here to close the overlay on click."
+msgstr ""
+
+#: src/popups/overlay/editor/Edit.js:125
+msgid "Choose a template for your overlay"
+msgstr ""
+
+#: src/popups/overlay/editor/EditSettings.js:33
+msgid "Backdrop"
+msgstr ""
+
+#: src/popups/overlay/editor/EditSettings.js:45
+msgid "Expand the overlay on mobile to use all available screen space."
+msgstr ""
+
+#: src/popups/overlay/editor/EditSettings.js:54
+msgid "Choose if transitions are used when toggling the overlay."
+msgstr ""
+
+#: src/popups/overlay/editor/EditSettings.js:62
+msgid "Hide scrollbar"
+msgstr ""
+
+#: src/popups/overlay/editor/EditSettings.js:63
+msgid "Hide the page scrollbar when open."
 msgstr ""
 
 #. translators: %s is the popup title shown in the list table.
@@ -4843,232 +5163,6 @@ msgstr ""
 msgid "Remove audience rule"
 msgstr ""
 
-#: src/widgets/bar/editor/blocks/container/blocks/close-button/EditSettings.js:37
-#: src/widgets/bar/editor/blocks/open-button/EditSettings.js:34
-#: src/widgets/flyout/editor/components/position-control/Component.js:71
-msgid "Horizontal"
-msgstr ""
-
-#: src/widgets/bar/editor/blocks/container/blocks/close-button/EditSettings.js:38
-msgid "Choose which side of the bar to display the button."
-msgstr ""
-
-#: src/widgets/bar/editor/blocks/container/blocks/content/ContentAppender.js:19
-#: src/widgets/flyout/editor/blocks/container/blocks/content/ContentAppender.js:19
-#: src/widgets/popup/editor/blocks/container/blocks/content/ContentAppender.js:19
-msgid "Add block"
-msgstr ""
-
-#: src/widgets/bar/editor/blocks/container/EditSettings.js:36
-msgid "Max Width"
-msgstr ""
-
-#: src/widgets/bar/editor/blocks/container/EditSettings.js:37
-msgid "Set the maximum width of the bar."
-msgstr ""
-
-#: src/widgets/bar/editor/blocks/open-button/EditSettings.js:35
-msgid "Choose which side of the viewport to display the button."
-msgstr ""
-
-#: src/widgets/bar/editor/components/position-control/Component.js:13
-msgid "Choose where to display the bar within the page."
-msgstr ""
-
-#: src/widgets/bar/editor/components/trigger-controls/Component.js:67
-#: src/widgets/flyout/editor/components/trigger-controls/Component.js:67
-#: src/widgets/popup/editor/components/trigger-controls/Component.js:60
-msgid "Inherits open trigger from control."
-msgstr ""
-
-#: src/widgets/bar/editor/components/trigger-controls/Component.js:77
-msgid "Select how the bar is opened."
-msgstr ""
-
-#: src/widgets/bar/editor/components/trigger-controls/Component.js:84
-#: src/widgets/flyout/editor/components/trigger-controls/Component.js:84
-msgid "Hide open button"
-msgstr ""
-
-#: src/widgets/bar/editor/components/trigger-controls/Component.js:85
-#: src/widgets/flyout/editor/components/trigger-controls/Component.js:85
-msgid "Hide the default open button."
-msgstr ""
-
-#: src/widgets/bar/editor/components/trigger-controls/Component.js:93
-#: src/widgets/flyout/editor/components/trigger-controls/Component.js:93
-#: src/widgets/popup/editor/components/trigger-controls/Component.js:75
-msgid "Close Trigger"
-msgstr ""
-
-#: src/widgets/bar/editor/components/trigger-controls/Component.js:97
-#: src/widgets/flyout/editor/components/trigger-controls/Component.js:97
-#: src/widgets/popup/editor/components/trigger-controls/Component.js:79
-msgid "Inherits close trigger from control."
-msgstr ""
-
-#: src/widgets/bar/editor/components/trigger-controls/Component.js:103
-#: src/widgets/flyout/editor/components/trigger-controls/Component.js:103
-#: src/widgets/popup/editor/components/trigger-controls/Component.js:85
-msgid "Hide close button"
-msgstr ""
-
-#: src/widgets/bar/editor/components/trigger-controls/Component.js:104
-#: src/widgets/flyout/editor/components/trigger-controls/Component.js:104
-#: src/widgets/popup/editor/components/trigger-controls/Component.js:86
-msgid "Hide the default close button."
-msgstr ""
-
-#: src/widgets/bar/editor/components/trigger-controls/Component.js:113
-#: src/widgets/flyout/editor/components/trigger-controls/Component.js:113
-#: src/widgets/popup/editor/components/trigger-controls/Component.js:113
-msgid "Close on anchor click"
-msgstr ""
-
-#: src/widgets/bar/editor/components/trigger-controls/Component.js:114
-msgid "Clicking specific anchors closes the bar."
-msgstr ""
-
-#: src/widgets/bar/editor/components/trigger-controls/Component.js:125
-msgid "Add an anchor to a button block and then insert the same value here to close the bar on click."
-msgstr ""
-
-#: src/widgets/bar/editor/components/view-state-controls/index.js:10
-#: src/widgets/flyout/editor/components/view-state-controls/index.js:10
-msgid "Closed"
-msgstr ""
-
-#: src/widgets/bar/editor/components/view-state-controls/index.js:10
-#: src/widgets/flyout/editor/components/view-state-controls/index.js:10
-msgid "Open"
-msgstr ""
-
-#. translators: %s: Open/Closed State
-#: src/widgets/bar/editor/components/view-state-controls/index.js:13
-#: src/widgets/flyout/editor/components/view-state-controls/index.js:13
-#, js-format
-msgid "%s View"
-msgstr ""
-
-#: src/widgets/bar/editor/components/view-state-controls/index.js:19
-#: src/widgets/flyout/editor/components/view-state-controls/index.js:19
-msgid "Toggle View"
-msgstr ""
-
-#: src/widgets/bar/editor/Edit.js:132
-msgid "Choose a template for your bar"
-msgstr ""
-
-#: src/widgets/bar/editor/Edit.js:133
-#: src/widgets/flyout/editor/Edit.js:129
-#: src/widgets/popup/editor/Edit.js:125
-msgid "Select a template to start with."
-msgstr ""
-
-#: src/widgets/bar/editor/EditSettings.js:40
-#: src/widgets/flyout/editor/EditSettings.js:50
-#: src/widgets/popup/editor/EditSettings.js:53
-msgid "Enable transitions"
-msgstr ""
-
-#: src/widgets/bar/editor/EditSettings.js:41
-#: src/widgets/flyout/editor/EditSettings.js:51
-msgid "Choose if transitions are used when toggling the bar."
-msgstr ""
-
-#: src/widgets/bar/editor/EditSettings.js:67
-#: src/widgets/flyout/editor/EditSettings.js:77
-#: src/widgets/popup/editor/EditSettings.js:96
-msgid "Make Variation"
-msgstr ""
-
-#: src/widgets/flyout/editor/blocks/container/blocks/close-button/EditSettings.js:40
-#: src/widgets/popup/editor/blocks/container/blocks/close-button/EditSettings.js:40
-msgid "Choose which side the button is displayed."
-msgstr ""
-
-#: src/widgets/flyout/editor/blocks/container/blocks/content/EditStyles.js:78
-#: src/widgets/popup/editor/blocks/container/blocks/content/EditStyles.js:78
-msgid "Fit Content"
-msgstr ""
-
-#: src/widgets/flyout/editor/components/position-control/Component.js:30
-msgid "Choose where to display the flyout within the page."
-msgstr ""
-
-#: src/widgets/flyout/editor/components/position-control/Component.js:78
-msgid "Vertical"
-msgstr ""
-
-#: src/widgets/flyout/editor/components/trigger-controls/Component.js:77
-msgid "Select how the flyout is opened."
-msgstr ""
-
-#: src/widgets/flyout/editor/components/trigger-controls/Component.js:114
-msgid "Clicking specific anchors closes the flyout."
-msgstr ""
-
-#: src/widgets/flyout/editor/components/trigger-controls/Component.js:125
-msgid "Add an anchor to a button block and then insert the same value here to close the flyout on click."
-msgstr ""
-
-#: src/widgets/flyout/editor/Edit.js:128
-msgid "Choose a template for your flyout"
-msgstr ""
-
-#: src/widgets/flyout/editor/EditSettings.js:39
-#: src/widgets/popup/editor/EditSettings.js:44
-msgid "Maximize on mobile"
-msgstr ""
-
-#: src/widgets/flyout/editor/EditSettings.js:40
-msgid "Expand the flyout on mobile to use as much screen space as possible."
-msgstr ""
-
-#: src/widgets/popup/editor/components/trigger-controls/Component.js:70
-msgid "Select how the overlay is opened."
-msgstr ""
-
-#: src/widgets/popup/editor/components/trigger-controls/Component.js:95
-msgid "Close on backdrop click"
-msgstr ""
-
-#: src/widgets/popup/editor/components/trigger-controls/Component.js:96
-msgid "Close the overlay when the backdrop is clicked."
-msgstr ""
-
-#: src/widgets/popup/editor/components/trigger-controls/Component.js:114
-msgid "Clicking specific anchors closes the overlay."
-msgstr ""
-
-#: src/widgets/popup/editor/components/trigger-controls/Component.js:125
-msgid "Add an anchor to a button block and then insert the same value here to close the overlay on click."
-msgstr ""
-
-#: src/widgets/popup/editor/Edit.js:124
-msgid "Choose a template for your overlay"
-msgstr ""
-
-#: src/widgets/popup/editor/EditSettings.js:33
-msgid "Backdrop"
-msgstr ""
-
-#: src/widgets/popup/editor/EditSettings.js:45
-msgid "Expand the overlay on mobile to use all available screen space."
-msgstr ""
-
-#: src/widgets/popup/editor/EditSettings.js:54
-msgid "Choose if transitions are used when toggling the overlay."
-msgstr ""
-
-#: src/widgets/popup/editor/EditSettings.js:62
-msgid "Hide scrollbar"
-msgstr ""
-
-#: src/widgets/popup/editor/EditSettings.js:63
-msgid "Hide the page scrollbar when open."
-msgstr ""
-
 #: pro/src/blocks/apply-coupon/block.json
 msgctxt "block title"
 msgid "Apply Coupon"
@@ -5077,16 +5171,6 @@ msgstr ""
 #: pro/src/blocks/apply-coupon/block.json
 msgctxt "block description"
 msgid "A WooCommerce coupon apply block."
-msgstr ""
-
-#: pro/src/blocks/cart-threshold-progress/block.json
-msgctxt "block title"
-msgid "Cart Threshold Progress"
-msgstr ""
-
-#: pro/src/blocks/cart-threshold-progress/block.json
-msgctxt "block description"
-msgid "Shows progress toward a WooCommerce cart goal such as free shipping."
 msgstr ""
 
 #: pro/src/blocks/confetti/block.json
@@ -5179,110 +5263,110 @@ msgctxt "block description"
 msgid "A simple email sign up form."
 msgstr ""
 
-#: src/widgets/bar/block.json
+#: src/popups/bar/block.json
 msgctxt "block title"
 msgid "Bar"
 msgstr ""
 
-#: src/widgets/bar/block.json
-#: src/widgets/flyout/block.json
+#: src/popups/bar/block.json
+#: src/popups/flyout/block.json
 msgctxt "block description"
 msgid "A flyout element to display content to visitors."
 msgstr ""
 
-#: src/widgets/bar/editor/blocks/container/block.json
-#: src/widgets/flyout/editor/blocks/container/block.json
-#: src/widgets/popup/editor/blocks/container/block.json
+#: src/popups/bar/editor/blocks/container/block.json
+#: src/popups/flyout/editor/blocks/container/block.json
+#: src/popups/overlay/editor/blocks/container/block.json
 msgctxt "block title"
 msgid "Container"
 msgstr ""
 
-#: src/widgets/bar/editor/blocks/container/block.json
+#: src/popups/bar/editor/blocks/container/block.json
 msgctxt "block description"
 msgid "Wraps the bar content and close button and positions it within the viewport."
 msgstr ""
 
-#: src/widgets/bar/editor/blocks/container/blocks/close-button/block.json
-#: src/widgets/flyout/editor/blocks/container/blocks/close-button/block.json
-#: src/widgets/popup/editor/blocks/container/blocks/close-button/block.json
+#: src/popups/bar/editor/blocks/container/blocks/close-button/block.json
+#: src/popups/flyout/editor/blocks/container/blocks/close-button/block.json
+#: src/popups/overlay/editor/blocks/container/blocks/close-button/block.json
 msgctxt "block title"
 msgid "Close Button"
 msgstr ""
 
-#: src/widgets/bar/editor/blocks/container/blocks/close-button/block.json
+#: src/popups/bar/editor/blocks/container/blocks/close-button/block.json
 msgctxt "block description"
 msgid "The button used to close the bar."
 msgstr ""
 
-#: src/widgets/bar/editor/blocks/container/blocks/content/block.json
-#: src/widgets/flyout/editor/blocks/container/blocks/content/block.json
-#: src/widgets/popup/editor/blocks/container/blocks/content/block.json
+#: src/popups/bar/editor/blocks/container/blocks/content/block.json
+#: src/popups/flyout/editor/blocks/container/blocks/content/block.json
+#: src/popups/overlay/editor/blocks/container/blocks/content/block.json
 msgctxt "block title"
 msgid "Content"
 msgstr ""
 
-#: src/widgets/bar/editor/blocks/container/blocks/content/block.json
+#: src/popups/bar/editor/blocks/container/blocks/content/block.json
 msgctxt "block description"
 msgid "The primary content container of the bar."
 msgstr ""
 
-#: src/widgets/bar/editor/blocks/open-button/block.json
-#: src/widgets/flyout/editor/blocks/open-button/block.json
+#: src/popups/bar/editor/blocks/open-button/block.json
+#: src/popups/flyout/editor/blocks/open-button/block.json
 msgctxt "block title"
 msgid "Open Button"
 msgstr ""
 
-#: src/widgets/bar/editor/blocks/open-button/block.json
+#: src/popups/bar/editor/blocks/open-button/block.json
 msgctxt "block description"
 msgid "The button displayed when the bar is closed."
 msgstr ""
 
-#: src/widgets/flyout/block.json
+#: src/popups/flyout/block.json
 msgctxt "block title"
 msgid "Flyout"
 msgstr ""
 
-#: src/widgets/flyout/editor/blocks/container/block.json
+#: src/popups/flyout/editor/blocks/container/block.json
 msgctxt "block description"
 msgid "Wraps the flyout content and close button and positions it within the viewport."
 msgstr ""
 
-#: src/widgets/flyout/editor/blocks/container/blocks/close-button/block.json
+#: src/popups/flyout/editor/blocks/container/blocks/close-button/block.json
 msgctxt "block description"
 msgid "The button used to close the flyout."
 msgstr ""
 
-#: src/widgets/flyout/editor/blocks/container/blocks/content/block.json
+#: src/popups/flyout/editor/blocks/container/blocks/content/block.json
 msgctxt "block description"
 msgid "The primary content container of the flyout."
 msgstr ""
 
-#: src/widgets/flyout/editor/blocks/open-button/block.json
+#: src/popups/flyout/editor/blocks/open-button/block.json
 msgctxt "block description"
 msgid "The button displayed when the flyout is closed."
 msgstr ""
 
-#: src/widgets/popup/block.json
+#: src/popups/overlay/block.json
 msgctxt "block title"
 msgid "Overlay"
 msgstr ""
 
-#: src/widgets/popup/block.json
+#: src/popups/overlay/block.json
 msgctxt "block description"
 msgid "An overlay element to display content to visitors."
 msgstr ""
 
-#: src/widgets/popup/editor/blocks/container/block.json
+#: src/popups/overlay/editor/blocks/container/block.json
 msgctxt "block description"
 msgid "Wraps the overlay content and close button and positions it within the viewport."
 msgstr ""
 
-#: src/widgets/popup/editor/blocks/container/blocks/close-button/block.json
+#: src/popups/overlay/editor/blocks/container/blocks/close-button/block.json
 msgctxt "block description"
 msgid "The button used to close the overlay."
 msgstr ""
 
-#: src/widgets/popup/editor/blocks/container/blocks/content/block.json
+#: src/popups/overlay/editor/blocks/container/blocks/content/block.json
 msgctxt "block description"
 msgid "The primary content container of the overlay."
 msgstr ""

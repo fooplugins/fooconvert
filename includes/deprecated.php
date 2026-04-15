@@ -5,7 +5,7 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Returns the single registered widget post type used by FooConvert.
+ * Returns the single registered popup post type used by FooConvert.
  *
  * @deprecated 2.0.0 Use FOOCONVERT_CPT_POPUP directly.
  *
@@ -20,7 +20,7 @@ function fooconvert_get_registered_post_type() {
 }
 
 /**
- * Returns the registered widget post types.
+ * Returns the registered popup post types.
  *
  * @deprecated 2.0.0 Use array( FOOCONVERT_CPT_POPUP ) or FOOCONVERT_CPT_POPUP directly.
  *

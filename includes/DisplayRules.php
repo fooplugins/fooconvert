@@ -803,7 +803,7 @@ class DisplayRules extends BaseComponent {
     /**
      * Callback for the `wp_after_insert_post` action.
      *
-     * This callback performs some checks on the incoming post and if it is a widget post that supports display
+     * This callback performs some checks on the incoming post and if it is a popup post that supports display
      * rules triggers a recompile of the `fooconvert_display_rules` option.
      *
      * @remarks
@@ -827,7 +827,7 @@ class DisplayRules extends BaseComponent {
             return;
         }
 
-        // otherwise if this is OR was a published widget post
+        // otherwise if this is OR was a published popup post
         $was_published = $post_before instanceof WP_Post && $post_before->post_status === 'publish';
         $is_published = $post->post_status === 'publish';
         if ( $was_published || $is_published ) {
@@ -844,13 +844,13 @@ class DisplayRules extends BaseComponent {
      * @since 1.0.0
      */
     public function compile( int $post_id, bool $is_published ) {
-        $widgets = [];
+        $popups = [];
 
         $cached = get_option( FOOCONVERT_OPTION_DISPLAY_RULES, [] );
 
-        // First, make sure all the widgets exist and are published.
-        foreach ( $cached as $widget ) {
-            $id = Utils::get_int( $widget, 'post_id' );
+        // First, make sure all the popups exist and are published.
+        foreach ( $cached as $popup ) {
+            $id = Utils::get_int( $popup, 'post_id' );
 
             // Do not add the current post to the list, so that it is compiled later.
             if ( $id === $post_id ) {
@@ -860,8 +860,8 @@ class DisplayRules extends BaseComponent {
             $post = get_post( $id );
 
             if ( $post && $post->post_status === 'publish' ) {
-                // The widget exists and is published.
-                $widgets[] = $widget;
+                // The popup exists and is published.
+                $popups[] = $popup;
             }
         }
 
@@ -869,13 +869,13 @@ class DisplayRules extends BaseComponent {
         if ( $is_published ) {
             $compiled = $this->get_compiled( $post_id );
             if ( !empty( $compiled ) ) {
-                $widgets[] = $compiled;
+                $popups[] = $compiled;
             }
         }
 
-        do_action( 'fooconvert_display_rules_compiled', $widgets );
+        do_action( 'fooconvert_display_rules_compiled', $popups );
 
-        update_option( FOOCONVERT_OPTION_DISPLAY_RULES, $widgets, true );
+        update_option( FOOCONVERT_OPTION_DISPLAY_RULES, $popups, true );
     }
 
     /**
@@ -1088,7 +1088,7 @@ class DisplayRules extends BaseComponent {
     }
 
     /**
-     * Stores any enqueued widgets whose display rules matched the current request.
+     * Stores any enqueued popups whose display rules matched the current request.
      *
      * @access private
      * @var array
@@ -1107,14 +1107,14 @@ class DisplayRules extends BaseComponent {
      * @since 1.0.0
      */
     public function is_enqueued( int $post_id ): bool {
-        foreach ( $this->enqueued as $widget ) {
-            if ( is_array( $widget ) ) {
-                $source_post_id = isset( $widget['source_post_id'] ) ? absint( $widget['source_post_id'] ) : 0;
-                $resolved_post_id = isset( $widget['post_id'] ) ? absint( $widget['post_id'] ) : 0;
+        foreach ( $this->enqueued as $popup ) {
+            if ( is_array( $popup ) ) {
+                $source_post_id = isset( $popup['source_post_id'] ) ? absint( $popup['source_post_id'] ) : 0;
+                $resolved_post_id = isset( $popup['post_id'] ) ? absint( $popup['post_id'] ) : 0;
                 if ( $source_post_id === $post_id || $resolved_post_id === $post_id ) {
                     return true;
                 }
-            } elseif ( absint( $widget ) === $post_id ) {
+            } elseif ( absint( $popup ) === $post_id ) {
                 return true;
             }
         }
@@ -1125,7 +1125,7 @@ class DisplayRules extends BaseComponent {
     /**
      * Callback for the `wp_footer` action.
      *
-     * This callback outputs any enqueued widget posts into the footer of the page.
+     * This callback outputs any enqueued popup posts into the footer of the page.
      *
      * @remarks
      * The `do_blocks` call is executed within the `template_redirect` callback as some core blocks will not
@@ -1138,33 +1138,33 @@ class DisplayRules extends BaseComponent {
      * @since 1.0.0
      */
     public function render_enqueued() {
-        foreach ( $this->enqueued as $widget ) {
+        foreach ( $this->enqueued as $popup ) {
             // phpcs:ignore WordPress.Security.EscapeOutput
-            echo $this->render_queueable( $widget );
+            echo $this->render_queueable( $popup );
         }
     }
 
     /**
-     * Sanitizes queued widget content before it is printed in the footer.
+     * Sanitizes queued popup content before it is printed in the footer.
      *
-     * @param array $widget Queueable widget payload.
+     * @param array $popup Queueable popup payload.
      * @return string
      */
-    public function render_queueable( array $widget ): string {
-        if ( empty( $widget['content'] ) ) {
+    public function render_queueable( array $popup ): string {
+        if ( empty( $popup['content'] ) ) {
             return '';
         }
 
-        $compatibility_mode = Utils::get_bool( $widget, 'compatibility_mode' );
+        $compatibility_mode = Utils::get_bool( $popup, 'compatibility_mode' );
 
-        return FooConvert::plugin()->kses_post( $widget['content'], $compatibility_mode );
+        return FooConvert::plugin()->kses_post( $popup['content'], $compatibility_mode );
     }
 
     /**
      * Triggers the `fooconvert_enqueue_assets` action.
      *
      * This function allows other developers to enqueue additional assets
-     * for the enqueued widgets by hooking into the `fooconvert_enqueue_assets`
+     * for the enqueued popups by hooking into the `fooconvert_enqueue_assets`
      * action.
      */
     public function enqueue_assets() {
@@ -1174,7 +1174,7 @@ class DisplayRules extends BaseComponent {
     /**
      * Callback for the `template_redirect` action.
      *
-     * This callback checks if any widgets with display rules match the current request and if any do, enqueues there
+     * This callback checks if any popups with display rules match the current request and if any do, enqueues there
      * content for rendering into the page footer.
      *
      * @remarks
@@ -1216,12 +1216,12 @@ class DisplayRules extends BaseComponent {
     }
 
     /**
-     * Adds a widget to the queue for processing.
+     * Adds a popup to the queue for processing.
      *
      * This function retrieves the queueable data for the given post ID
-     * and appends it to the list of enqueued widgets for further processing.
+     * and appends it to the list of enqueued popups for further processing.
      *
-     * @param int $post_id The post ID of the widget to enqueue.
+     * @param int $post_id The post ID of the popup to enqueue.
      *
      * @since 1.0.0
      */
@@ -1233,15 +1233,15 @@ class DisplayRules extends BaseComponent {
     }
 
     /**
-     * Builds a queueable widget payload for rendering and asset enqueueing.
+     * Builds a queueable popup payload for rendering and asset enqueueing.
      *
-     * @param int    $post_id Widget post ID.
-     * @param string $context Context describing why the widget is being queued.
+     * @param int    $post_id Popup post ID.
+     * @param string $context Context describing why the popup is being queued.
      * @return array<string,mixed>
      */
     public function get_queueable( int $post_id, string $context = 'display_rules' ): array {
         $source_post_id = $post_id;
-        $resolved_post_id = apply_filters( 'fooconvert_resolve_widget_post_id', $post_id, array(
+        $resolved_post_id = apply_filters( 'fooconvert_resolve_popup_post_id', $post_id, array(
             'context'        => $context,
             'source_post_id' => $source_post_id
         ) );
@@ -1260,13 +1260,13 @@ class DisplayRules extends BaseComponent {
                 'compatibility_mode' => $compatibility_mode,
             );
             /**
-             * Allows extensions to attach additional request-time data to queueable widgets.
+             * Allows extensions to attach additional request-time data to queueable popups.
              *
-             * @param array<string,mixed> $queueable Queueable widget payload.
-             * @param int $resolved_post_id Widget post ID after any resolver filters are applied.
-             * @param array<string,mixed> $context_data Context describing why the widget was queued.
+             * @param array<string,mixed> $queueable Queueable popup payload.
+             * @param int $resolved_post_id Popup post ID after any resolver filters are applied.
+             * @param array<string,mixed> $context_data Context describing why the popup was queued.
              */
-            return apply_filters( 'fooconvert_queueable_widget', $queueable, $resolved_post_id, array(
+            return apply_filters( 'fooconvert_queueable_popup', $queueable, $resolved_post_id, array(
                 'context'        => $context,
                 'source_post_id' => $source_post_id,
                 'resolved_post_id' => $resolved_post_id,

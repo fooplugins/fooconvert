@@ -1,9 +1,9 @@
 import { useSelect } from "@wordpress/data";
 import { store as editorStore } from "@wordpress/editor";
 
-const EXPERIMENT_META_KEY = "_fooconvert_widget_experiment_id";
-const EXPERIMENT_ROLE_META_KEY = "_fooconvert_widget_experiment_role";
-const EXPERIMENT_LABEL_META_KEY = "_fooconvert_widget_experiment_label";
+const EXPERIMENT_META_KEY = "_fooconvert_popup_experiment_id";
+const EXPERIMENT_ROLE_META_KEY = "_fooconvert_popup_experiment_role";
+const EXPERIMENT_LABEL_META_KEY = "_fooconvert_popup_experiment_label";
 
 const useExperimentVariantLock = () => {
     return useSelect( select => {

@@ -279,8 +279,8 @@ namespace {
     foreach ( $sale_events as $entry ) {
         Assertions::same(
             2313,
-            $entry['data']['widget_id'],
-            'Expected PRO demo sale events to target the same widget.'
+            $entry['data']['post_id'],
+            'Expected PRO demo sale events to target the same popup.'
         );
         Assertions::same(
             true,

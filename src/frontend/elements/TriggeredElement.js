@@ -1,4 +1,4 @@
-import WidgetElement from "./WidgetElement";
+import PopupElement from "./PopupElement";
 import { isFunction, isNumber, isPlainObject, isString, strim } from "@steveush/utils";
 import { getClickableData, LOG_EVENT_TYPES, isSelector, getSeen, setSeen } from "../utils";
 import { getEventBus, subscribeTrigger } from "../triggers";
@@ -6,7 +6,7 @@ import { getEventBus, subscribeTrigger } from "../triggers";
 /**
  *
  */
-class TriggeredElement extends WidgetElement {
+class TriggeredElement extends PopupElement {
 
     // noinspection JSUnusedGlobalSymbols
 

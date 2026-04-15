@@ -9,7 +9,7 @@ use WP_REST_Response;
 if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
 
     /**
-     * Migrates stored widget content to updated asset paths on read.
+     * Migrates stored popup content to updated asset paths on read.
      */
     class ContentMigration {
 
@@ -25,7 +25,7 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
          *
          * @var string
          */
-        private const MIGRATION_MERGE_WIDGET_CPTS = 'merge_widget_cpts_into_popup';
+        private const MIGRATION_MERGE_POPUP_CPTS = 'merge_popup_cpts_into_popup';
 
         /**
          * Migration key used to mark the popup-to-overlay rename as completed.
@@ -35,7 +35,7 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         private const MIGRATION_RENAME_POPUP_TYPE_TO_OVERLAY = 'rename_popup_type_to_overlay';
 
         /**
-         * Legacy media path stored in migrated widget content.
+         * Legacy media path stored in migrated popup content.
          *
          * @var string
          */
@@ -49,23 +49,23 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         private const NEW_MEDIA_PATH = 'plugins/fooconvert/assets/media/';
 
         /**
-         * Hooks the content migration into widget reads and REST responses.
+         * Hooks the content migration into popup reads and REST responses.
          *
          * @return void
          */
         public function __construct() {
-            add_action( 'plugins_loaded', array( $this, 'maybe_migrate_widget_post_types' ), 20 );
-            add_action( 'init', array( $this, 'maybe_migrate_widget_content' ), 20 );
+            add_action( 'plugins_loaded', array( $this, 'maybe_migrate_popup_post_types' ), 20 );
+            add_action( 'init', array( $this, 'maybe_migrate_popup_content' ), 20 );
 
-            add_filter( 'rest_prepare_' . $this->get_registered_widget_post_type(), array( $this, 'maybe_migrate_rest_post' ), 10, 3 );
+            add_filter( 'rest_prepare_' . $this->get_registered_popup_post_type(), array( $this, 'maybe_migrate_rest_post' ), 10, 3 );
         }
 
         /**
-         * Migrates stored widget content once for all widget post types.
+         * Migrates stored popup content once for all popup post types.
          *
          * @return void
          */
-        public function maybe_migrate_widget_content() {
+        public function maybe_migrate_popup_content() {
             $has_media_migration = !$this->is_completed( self::MIGRATION_MOVE_PRO_MEDIA_URLS );
             $has_overlay_migration = !$this->is_completed( self::MIGRATION_RENAME_POPUP_TYPE_TO_OVERLAY );
 
@@ -73,9 +73,9 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
                 return;
             }
 
-            foreach ( $this->get_widget_ids() as $post_id ) {
+            foreach ( $this->get_post_ids() as $post_id ) {
                 if ( $has_overlay_migration ) {
-                    $this->maybe_migrate_widget_popup_type( $post_id );
+                    $this->maybe_migrate_popup_popup_type( $post_id );
                 }
                 $this->get_post_content( $post_id );
             }
@@ -90,26 +90,26 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         }
 
         /**
-         * Migrates legacy widget CPTs into the popup CPT and stores the logical popup type in post meta.
+         * Migrates legacy popup CPTs into the popup CPT and stores the logical popup type in post meta.
          *
          * @return void
          */
-        public function maybe_migrate_widget_post_types(): void {
-            if ( $this->is_completed( self::MIGRATION_MERGE_WIDGET_CPTS ) ) {
+        public function maybe_migrate_popup_post_types(): void {
+            if ( $this->is_completed( self::MIGRATION_MERGE_POPUP_CPTS ) ) {
                 return;
             }
 
             $updated_ids = array();
             foreach ( $this->get_legacy_post_type_migration_map() as $legacy_post_type => $popup_type ) {
-                foreach ( $this->get_widget_ids_for_post_type( $legacy_post_type ) as $post_id ) {
-                    if ( $this->update_widget_post_type( $post_id, FOOCONVERT_CPT_POPUP ) ) {
+                foreach ( $this->get_post_ids_for_post_type( $legacy_post_type ) as $post_id ) {
+                    if ( $this->update_popup_post_type( $post_id, FOOCONVERT_CPT_POPUP ) ) {
                         $updated_ids[] = $post_id;
                     }
                     update_post_meta( $post_id, FOOCONVERT_META_KEY_POPUP_TYPE, $popup_type );
                 }
             }
 
-            foreach ( $this->get_widget_ids_for_post_type( FOOCONVERT_CPT_POPUP ) as $post_id ) {
+            foreach ( $this->get_post_ids_for_post_type( FOOCONVERT_CPT_POPUP ) as $post_id ) {
                 $popup_type = fooconvert_normalize_popup_type( get_post_meta( $post_id, FOOCONVERT_META_KEY_POPUP_TYPE, true ) );
                 if ( $popup_type === '' ) {
                     update_post_meta( $post_id, FOOCONVERT_META_KEY_POPUP_TYPE, FOOCONVERT_POPUP_TYPE_OVERLAY );
@@ -120,13 +120,13 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
                 clean_post_cache( $post_id );
             }
 
-            $this->mark_completed( self::MIGRATION_MERGE_WIDGET_CPTS );
+            $this->mark_completed( self::MIGRATION_MERGE_POPUP_CPTS );
         }
 
         /**
-         * Returns widget content after applying any pending path migrations.
+         * Returns popup content after applying any pending path migrations.
          *
-         * @param int $post_id Widget post ID.
+         * @param int $post_id Popup post ID.
          * @return string
          */
         public function get_post_content( int $post_id ): string {
@@ -143,7 +143,7 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         }
 
         /**
-         * Updates REST responses so editors receive migrated widget content.
+         * Updates REST responses so editors receive migrated popup content.
          *
          * @param mixed           $response REST response object.
          * @param WP_Post         $post The prepared post.
@@ -151,7 +151,7 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
          * @return mixed
          */
         public function maybe_migrate_rest_post( $response, WP_Post $post, WP_REST_Request $request ) {
-            if ( !$response instanceof WP_REST_Response || $post->post_type !== $this->get_registered_widget_post_type() ) {
+            if ( !$response instanceof WP_REST_Response || $post->post_type !== $this->get_registered_popup_post_type() ) {
                 return $response;
             }
 
@@ -159,7 +159,7 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
             $migrated_content = $this->has_pending_content_migrations()
                 ? $this->maybe_migrate_post_content( (int) $post->ID, $content )
                 : $content;
-            $popup_type = fooconvert_get_widget_popup_type( $post );
+            $popup_type = fooconvert_get_popup_type( $post );
             if ( $popup_type === '' ) {
                 $popup_type = FOOCONVERT_POPUP_TYPE_OVERLAY;
             }
@@ -184,9 +184,9 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         }
 
         /**
-         * Rewrites legacy media paths in widget content.
+         * Rewrites legacy media paths in popup content.
          *
-         * @param string $content Raw widget content.
+         * @param string $content Raw popup content.
          * @return string
          */
         public function normalize_content( string $content ): string {
@@ -232,10 +232,10 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         }
 
         /**
-         * Migrates content for a single widget post when changes are required.
+         * Migrates content for a single popup post when changes are required.
          *
-         * @param int    $post_id Widget post ID.
-         * @param string $content Raw widget content.
+         * @param int    $post_id Popup post ID.
+         * @param string $content Raw popup content.
          * @return string
          */
         private function maybe_migrate_post_content( int $post_id, string $content ): string {
@@ -248,9 +248,9 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         }
 
         /**
-         * Persists migrated widget content back to the posts table.
+         * Persists migrated popup content back to the posts table.
          *
-         * @param int    $post_id Widget post ID.
+         * @param int    $post_id Popup post ID.
          * @param string $content Migrated content.
          * @return void
          */
@@ -269,11 +269,11 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         }
 
         /**
-         * Returns the IDs of widget posts eligible for migration.
+         * Returns the IDs of popup posts eligible for migration.
          *
          * @return int[]
          */
-        private function get_widget_ids(): array {
+        private function get_post_ids(): array {
             global $wpdb;
 
             $query = $wpdb->prepare(
@@ -281,7 +281,7 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
                  FROM {$wpdb->posts}
                  WHERE post_type = %s
                  AND post_status NOT IN ('auto-draft', 'trash')",
-                $this->get_registered_widget_post_type()
+                $this->get_registered_popup_post_type()
             );
 
             $results = $wpdb->get_col( $query );
@@ -290,12 +290,12 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         }
 
         /**
-         * Returns widget IDs for a specific post type that are eligible for migration.
+         * Returns popup IDs for a specific post type that are eligible for migration.
          *
-         * @param string $post_type Widget post type.
+         * @param string $post_type Popup post type.
          * @return int[]
          */
-        private function get_widget_ids_for_post_type( string $post_type ): array {
+        private function get_post_ids_for_post_type( string $post_type ): array {
             global $wpdb;
 
             $query = $wpdb->prepare(
@@ -312,13 +312,13 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         }
 
         /**
-         * Updates the database post type for a widget.
+         * Updates the database post type for a popup.
          *
-         * @param int    $post_id Widget post ID.
+         * @param int    $post_id Popup post ID.
          * @param string $post_type New post type.
          * @return bool
          */
-        private function update_widget_post_type( int $post_id, string $post_type ): bool {
+        private function update_popup_post_type( int $post_id, string $post_type ): bool {
             global $wpdb;
 
             $result = $wpdb->update(
@@ -333,7 +333,7 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         }
 
         /**
-         * Returns the legacy widget post types that should be migrated to popups.
+         * Returns the legacy popup post types that should be migrated to popups.
          *
          * @return array<string,string>
          */
@@ -345,11 +345,11 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         }
 
         /**
-         * Returns the single registered widget post type tracked by content migrations.
+         * Returns the single registered popup post type tracked by content migrations.
          *
          * @return string
          */
-        private function get_registered_widget_post_type(): string {
+        private function get_registered_popup_post_type(): string {
             return FOOCONVERT_CPT_POPUP;
         }
 
@@ -402,14 +402,14 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         }
 
         /**
-         * Normalizes the logical popup type stored for a widget post.
+         * Normalizes the logical popup type stored for a popup post.
          *
-         * @param int $post_id Widget post ID.
+         * @param int $post_id Popup post ID.
          * @return void
          */
-        private function maybe_migrate_widget_popup_type( int $post_id ): void {
+        private function maybe_migrate_popup_popup_type( int $post_id ): void {
             $stored_popup_type = get_post_meta( $post_id, FOOCONVERT_META_KEY_POPUP_TYPE, true );
-            $canonical_popup_type = fooconvert_get_widget_popup_type( $post_id );
+            $canonical_popup_type = fooconvert_get_popup_type( $post_id );
             if ( $canonical_popup_type === '' ) {
                 $canonical_popup_type = FOOCONVERT_POPUP_TYPE_OVERLAY;
             }

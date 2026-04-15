@@ -13,12 +13,12 @@ namespace FooPlugins\FooConvert\Blocks\Base {
 
 namespace FooPlugins\FooConvert {
     class Utils {
-        public static function register_widget_blocks( array $blocks ) {
+        public static function register_popup_blocks( array $blocks ) {
             return $blocks;
         }
     }
 
-    class Widgets {
+    class Popups {
         public function get_registered_post_type(): string {
             return 'fc-popup';
         }
@@ -28,11 +28,11 @@ namespace FooPlugins\FooConvert {
         /** @var ?FooConvert */
         private static $instance = null;
 
-        /** @var Widgets */
-        public $widgets;
+        /** @var Popups */
+        public $popups;
 
         public function __construct() {
-            $this->widgets = new Widgets();
+            $this->popups = new Popups();
         }
 
         public static function plugin(): FooConvert {

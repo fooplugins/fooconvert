@@ -6,7 +6,7 @@ use FooPlugins\FooConvert\Components\Base\BaseComponent;
 use FooPlugins\FooConvert\Utils;
 
 /**
- * Normalizes widget open-trigger settings for editor and frontend consumers.
+ * Normalizes popup open-trigger settings for editor and frontend consumers.
  */
 class OpenTriggerPanel extends BaseComponent {
     /**
