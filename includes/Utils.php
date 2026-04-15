@@ -629,7 +629,7 @@ if ( !class_exists( __NAMESPACE__ . '\Utils' ) ) {
          * @return WP_Block_Type|false The registered block type on success, or false on failure.
          */
         static function register_widget_block( string $file_or_folder, array $args = array() ) {
-            if ( is_admin() && !fooconvert_is_admin_stats_page() && !self::is_post_type_editor( FOOCONVERT_CPT_POPUP ) ) {
+            if ( is_admin() && !fooconvert_is_admin_stats_page() && !fooconvert_is_admin_ai_popup_preview_page() && !self::is_post_type_editor( FOOCONVERT_CPT_POPUP ) ) {
                 return false;
             }
 

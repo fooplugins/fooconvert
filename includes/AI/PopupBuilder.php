@@ -2,6 +2,7 @@
 
 namespace FooPlugins\FooConvert\AI;
 
+use FooPlugins\FooConvert\Brand\Manager as BrandManager;
 use FooPlugins\FooConvert\Utils;
 use WP_AI_Client_Ability_Function_Resolver;
 use WP_Error;
@@ -96,6 +97,9 @@ class PopupBuilder {
                     'force_image_generation' => array(
                         'type' => 'boolean',
                     ),
+                    'brand' => array(
+                        'type' => 'object',
+                    ),
                 ),
             )
         );
@@ -120,6 +124,10 @@ class PopupBuilder {
                 'args'                => array(
                     'title'       => array(
                         'type'     => 'string',
+                        'required' => false,
+                    ),
+                    'post_id'     => array(
+                        'type'     => 'integer',
                         'required' => false,
                     ),
                     'popup_type'  => array(
@@ -158,7 +166,9 @@ class PopupBuilder {
         $popup_draft = is_array( $request->get_param( 'popup_draft' ) ) ? PopupBlueprint::sanitize_popup_draft( $request->get_param( 'popup_draft' ) ) : array();
         $generate_images = ! empty( $request->get_param( 'generate_images' ) );
         $force_image_generation = ! empty( $request->get_param( 'force_image_generation' ) );
+        $brand       = BrandManager::sanitize_brand( $request->get_param( 'brand' ) );
         $existing_media = PopupMedia::list_generated_images( self::MEDIA_ITEMS_LIMIT );
+        $activity_log = array();
 
         if ( empty( $messages ) ) {
             return new WP_Error(
@@ -172,8 +182,10 @@ class PopupBuilder {
             $messages,
             $popup_draft,
             $existing_media,
+            $brand,
             $generate_images,
-            $force_image_generation
+            $force_image_generation,
+            $activity_log
         );
 
         if ( is_wp_error( $response ) ) {
@@ -188,6 +200,7 @@ class PopupBuilder {
         );
 
         $response['media_items'] = PopupMedia::list_generated_images( self::MEDIA_ITEMS_LIMIT );
+        $response['activity_log'] = $activity_log;
 
         return $response;
     }
@@ -202,6 +215,7 @@ class PopupBuilder {
         $popup_type   = fooconvert_normalize_popup_type( $request->get_param( 'popup_type' ) );
         $post_content = (string) $request->get_param( 'post_content' );
         $title        = sanitize_text_field( (string) $request->get_param( 'title' ) );
+        $requested_post_id = absint( $request->get_param( 'post_id' ) );
         $ai_metadata  = PopupBlueprint::sanitize_builder_metadata( $request->get_param( 'ai_metadata' ) );
 
         if ( '' === $popup_type ) {
@@ -231,6 +245,31 @@ class PopupBuilder {
             );
         }
 
+        $existing_post = null;
+        if ( $requested_post_id > 0 ) {
+            $existing_post = get_post( $requested_post_id );
+
+            if ( ! $existing_post || FOOCONVERT_CPT_POPUP !== $existing_post->post_type ) {
+                return new WP_Error(
+                    'fooconvert_ai_popup_builder_invalid_post',
+                    __( 'The popup draft could not be found.', 'fooconvert' ),
+                    array( 'status' => 404 )
+                );
+            }
+
+            if ( ! current_user_can( 'edit_post', $requested_post_id ) ) {
+                return new WP_Error(
+                    'fooconvert_ai_popup_builder_cannot_edit',
+                    __( 'You do not have permission to update this popup draft.', 'fooconvert' ),
+                    array( 'status' => 403 )
+                );
+            }
+        }
+
+        if ( '' === $title && $existing_post instanceof \WP_Post ) {
+            $title = $existing_post->post_title;
+        }
+
         if ( '' === $title ) {
             $title = sprintf(
                 /* translators: %s: popup type label */
@@ -239,17 +278,21 @@ class PopupBuilder {
             );
         }
 
-        $post_id = wp_insert_post(
-            array(
-                'post_type'   => FOOCONVERT_CPT_POPUP,
-                'post_status' => 'draft',
-                'post_title'  => $title,
-            ),
-            true
-        );
+        $post_id = $requested_post_id;
 
-        if ( is_wp_error( $post_id ) ) {
-            return $post_id;
+        if ( $post_id <= 0 ) {
+            $post_id = wp_insert_post(
+                array(
+                    'post_type'   => FOOCONVERT_CPT_POPUP,
+                    'post_status' => 'draft',
+                    'post_title'  => $title,
+                ),
+                true
+            );
+
+            if ( is_wp_error( $post_id ) ) {
+                return $post_id;
+            }
         }
 
         if ( ! isset( $blocks[0]['attrs'] ) || ! is_array( $blocks[0]['attrs'] ) ) {
@@ -262,13 +305,17 @@ class PopupBuilder {
         $updated = wp_update_post(
             array(
                 'ID'           => $post_id,
+                'post_title'   => $title,
+                'post_status'  => 'draft',
                 'post_content' => serialize_blocks( $blocks ),
             ),
             true
         );
 
         if ( is_wp_error( $updated ) ) {
-            wp_delete_post( $post_id, true );
+            if ( $requested_post_id <= 0 ) {
+                wp_delete_post( $post_id, true );
+            }
             return $updated;
         }
 
@@ -280,7 +327,9 @@ class PopupBuilder {
                 'postId'   => $post_id,
                 'title'    => get_the_title( $post_id ),
                 'editUrl'  => fooconvert_admin_url_widget_edit( $post_id ),
+                'previewUrl' => fooconvert_admin_url_ai_popup_preview( $post_id ),
                 'popupType' => $popup_type,
+                'updatedExisting' => $requested_post_id > 0,
             )
         );
     }
@@ -351,10 +400,15 @@ class PopupBuilder {
      * @param bool                            $force_image_generation Whether this turn should explicitly generate a new image.
      * @return array<string,mixed>|WP_Error
      */
-    private function generate_ai_response( array $messages, array $popup_draft, array $media_items, bool $generate_images, bool $force_image_generation ) {
-        $history   = $this->build_history( $messages, $popup_draft, $media_items, $generate_images, $force_image_generation );
+    private function generate_ai_response( array $messages, array $popup_draft, array $media_items, array $brand, bool $generate_images, bool $force_image_generation, array &$activity_log ) {
+        $history   = $this->build_history( $messages, $popup_draft, $media_items, $brand, $generate_images, $force_image_generation );
         $abilities = Abilities::get_allowed_abilities();
         $resolver  = new WP_AI_Client_Ability_Function_Resolver( ...$abilities );
+
+        $activity_log[] = array(
+            'type'  => 'status',
+            'label' => __( 'Calling AI model', 'fooconvert' ),
+        );
 
         for ( $iteration = 0; $iteration < self::MAX_ITERATIONS; $iteration++ ) {
             $prompt = wp_ai_client_prompt();
@@ -383,7 +437,10 @@ class PopupBuilder {
             $history[] = $message;
 
             if ( $resolver->has_ability_calls( $message ) ) {
-                $history[] = $resolver->execute_abilities( $message );
+                $activity_log = array_merge( $activity_log, $this->get_message_ability_calls( $message ) );
+                $ability_response = $resolver->execute_abilities( $message );
+                $activity_log = array_merge( $activity_log, $this->get_message_ability_results( $ability_response ) );
+                $history[] = $ability_response;
                 continue;
             }
 
@@ -416,7 +473,7 @@ class PopupBuilder {
      * @param bool                            $force_image_generation Whether this turn should explicitly generate a new image.
      * @return array<int,Message>
      */
-    private function build_history( array $messages, array $popup_draft, array $media_items, bool $generate_images, bool $force_image_generation ): array {
+    private function build_history( array $messages, array $popup_draft, array $media_items, array $brand, bool $generate_images, bool $force_image_generation ): array {
         $history        = array();
         $message_count  = count( $messages );
 
@@ -431,6 +488,10 @@ class PopupBuilder {
 
                 if ( ! empty( $media_items ) ) {
                     $content .= "\n\nCurrent generated popup media JSON:\n" . wp_json_encode( $media_items, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
+                }
+
+                if ( ! empty( $brand ) ) {
+                    $content .= "\n\nBrand context JSON (this should drive styling, tone, and imagery):\n" . wp_json_encode( $brand, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
                 }
 
                 if ( $force_image_generation ) {
@@ -532,15 +593,17 @@ class PopupBuilder {
             'You are an experimental FooConvert popup strategist and builder.',
             'Your job is to turn natural-language requests into high-converting Fooconvert popup drafts.',
             'Always reason in terms of one clear conversion goal, one dominant CTA, and a popup type that fits the user intent.',
-            'Use the available abilities when you need template references, supported block rules, best practices, media context, or blueprint validation.',
+            'Use the available abilities when you need structural template references, supported block rules, best practices, media context, or blueprint validation.',
             'If you need popup imagery, prefer the create popup image ability because it returns an imported media item ready for core/image blocks.',
             'If you return a popup_draft, run the popup blueprint validator ability before the final response.',
             'Keep the assistant_message concise and practical.',
-            'Use supported Fooconvert content blocks only. Do not invent unsupported block names.',
+            'Use the extracted brand context as the main source of truth for colors, typography, spacing, and visual tone.',
+            'Templates are optional structural references only. Do not let a template override the brand styling direction.',
+            'Use supported core, FooConvert, and WooCommerce content blocks only. Do not invent unsupported block names.',
             'Favor scannable popup structures: headline, support copy, proof or benefit stack, and CTA.',
             'Bars should stay compact. Flyouts should stay narrow. Popups can carry more detail, but still keep them focused.',
             'Only ask a clarifying question when absolutely necessary. Otherwise make a reasonable conversion-focused assumption and produce a complete draft.',
-            'When a template_slug is helpful, pick one of the bundled Fooconvert templates instead of inventing a fake template.',
+            'When a template_slug is helpful, pick one of the bundled Fooconvert templates as a structural guide instead of inventing a fake template.',
         );
 
         if ( $force_image_generation ) {
@@ -605,5 +668,139 @@ class PopupBuilder {
         );
 
         return $response;
+    }
+
+    /**
+     * Collects ability call log entries from a model message.
+     *
+     * @param Message $message Model message.
+     * @return array<int,array<string,string>>
+     */
+    private function get_message_ability_calls( Message $message ): array {
+        $entries = array();
+
+        foreach ( $message->getParts() as $part ) {
+            if ( ! $part->getType()->isFunctionCall() ) {
+                continue;
+            }
+
+            $function_call = $part->getFunctionCall();
+            if ( ! $function_call ) {
+                continue;
+            }
+
+            $function_name = (string) $function_call->getName();
+            $ability_name  = '' !== $function_name
+                ? WP_AI_Client_Ability_Function_Resolver::function_name_to_ability_name( $function_name )
+                : __( 'unknown ability', 'fooconvert' );
+
+            $entries[] = array(
+                'type'    => 'tool_call',
+                'label'   => $ability_name,
+                'summary' => $this->summarize_activity_payload( $function_call->getArgs() ),
+            );
+        }
+
+        return $entries;
+    }
+
+    /**
+     * Collects ability result log entries from a tool response message.
+     *
+     * @param Message $message Tool response message.
+     * @return array<int,array<string,string>>
+     */
+    private function get_message_ability_results( Message $message ): array {
+        $entries = array();
+
+        foreach ( $message->getParts() as $part ) {
+            if ( ! $part->getType()->isFunctionResponse() ) {
+                continue;
+            }
+
+            $function_response = $part->getFunctionResponse();
+            if ( ! $function_response ) {
+                continue;
+            }
+
+            $function_name = (string) $function_response->getName();
+            $ability_name  = '' !== $function_name
+                ? WP_AI_Client_Ability_Function_Resolver::function_name_to_ability_name( $function_name )
+                : __( 'unknown ability', 'fooconvert' );
+
+            $entries[] = array(
+                'type'    => 'tool_result',
+                'label'   => $ability_name,
+                'summary' => $this->summarize_activity_payload( $function_response->getResponse() ),
+            );
+        }
+
+        return $entries;
+    }
+
+    /**
+     * Produces a short human-readable summary for tool call/result payloads.
+     *
+     * @param mixed $payload Tool payload.
+     * @return string
+     */
+    private function summarize_activity_payload( $payload ): string {
+        if ( is_array( $payload ) ) {
+            if ( isset( $payload['error'] ) && is_string( $payload['error'] ) ) {
+                return $payload['error'];
+            }
+
+            if ( isset( $payload['templates'] ) && is_array( $payload['templates'] ) ) {
+                return sprintf( __( 'Returned %d templates', 'fooconvert' ), count( $payload['templates'] ) );
+            }
+
+            if ( isset( $payload['blocks'] ) && is_array( $payload['blocks'] ) ) {
+                return sprintf( __( 'Returned %d blocks', 'fooconvert' ), count( $payload['blocks'] ) );
+            }
+
+            if ( isset( $payload['media_items'] ) && is_array( $payload['media_items'] ) ) {
+                return sprintf( __( 'Returned %d media items', 'fooconvert' ), count( $payload['media_items'] ) );
+            }
+
+            if ( isset( $payload['validation']['score'] ) ) {
+                return sprintf( __( 'Validation score %d/100', 'fooconvert' ), absint( $payload['validation']['score'] ) );
+            }
+
+            if ( isset( $payload['prompt'] ) && is_string( $payload['prompt'] ) ) {
+                return __( 'Generated an image prompt', 'fooconvert' );
+            }
+
+            if ( isset( $payload['image'] ) && is_array( $payload['image'] ) ) {
+                return __( 'Prepared a popup image', 'fooconvert' );
+            }
+
+            if ( isset( $payload['playbook'] ) && is_array( $payload['playbook'] ) ) {
+                return __( 'Loaded the conversion playbook', 'fooconvert' );
+            }
+
+            $keys = array_slice( array_keys( $payload ), 0, 4 );
+            if ( ! empty( $keys ) ) {
+                return sprintf(
+                    /* translators: %s: comma-separated payload keys */
+                    __( 'Payload keys: %s', 'fooconvert' ),
+                    implode( ', ', array_map( 'strval', $keys ) )
+                );
+            }
+        }
+
+        if ( is_string( $payload ) ) {
+            $text = trim( wp_strip_all_tags( $payload ) );
+            return mb_substr( $text, 0, 140 );
+        }
+
+        if ( is_bool( $payload ) ) {
+            return $payload ? __( 'Completed successfully', 'fooconvert' ) : __( 'Returned false', 'fooconvert' );
+        }
+
+        if ( is_numeric( $payload ) ) {
+            return (string) $payload;
+        }
+
+        return __( 'Completed', 'fooconvert' );
     }
 }

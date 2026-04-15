@@ -14,6 +14,13 @@ class PopupBlueprint {
     private static ?array $template_library = null;
 
     /**
+     * Cached runtime block catalog.
+     *
+     * @var array<string,array<string,mixed>>|null
+     */
+    private static ?array $block_catalog = null;
+
+    /**
      * Returns the supported content block catalog for the AI popup builder.
      *
      * @return array<int,array<string,mixed>>
@@ -28,6 +35,66 @@ class PopupBlueprint {
      * @return array<string,array<string,mixed>>
      */
     private static function get_block_catalog_map(): array {
+        if ( is_array( self::$block_catalog ) ) {
+            return self::$block_catalog;
+        }
+
+        $catalog   = self::get_core_block_catalog_map();
+        $overrides = self::get_block_catalog_overrides();
+
+        if ( class_exists( '\WP_Block_Type_Registry' ) ) {
+            $registered = \WP_Block_Type_Registry::get_instance()->get_all_registered();
+            $child_map  = self::get_registered_block_child_map( $registered );
+
+            foreach ( $registered as $block_name => $block_type ) {
+                if ( ! self::is_ai_supported_runtime_block( $block_name ) ) {
+                    continue;
+                }
+
+                $override         = $overrides[ $block_name ] ?? array();
+                $allowed_children = isset( $override['allowed_children'] ) && is_array( $override['allowed_children'] )
+                    ? array_values( array_unique( $override['allowed_children'] ) )
+                    : array_values( array_unique( $child_map[ $block_name ] ?? array() ) );
+                $supports_children = array_key_exists( 'supports_children', $override )
+                    ? ! empty( $override['supports_children'] )
+                    : ! empty( $allowed_children );
+
+                $catalog[ $block_name ] = array_merge(
+                    array(
+                        'name'               => $block_name,
+                        'label'              => isset( $block_type->title ) && is_string( $block_type->title ) && '' !== $block_type->title
+                            ? $block_type->title
+                            : $block_name,
+                        'description'        => isset( $block_type->description ) && is_string( $block_type->description )
+                            ? $block_type->description
+                            : '',
+                        'supports_children'  => $supports_children,
+                        'allowed_children'   => $allowed_children,
+                        'attribute_examples' => self::build_attribute_examples_from_block_type( $block_name, $block_type ),
+                        'attribute_schema'   => self::get_block_attribute_schema( $block_type ),
+                        'parent'             => isset( $block_type->parent ) && is_array( $block_type->parent )
+                            ? array_values( $block_type->parent )
+                            : array(),
+                        'ancestor'           => isset( $block_type->ancestor ) && is_array( $block_type->ancestor )
+                            ? array_values( $block_type->ancestor )
+                            : array(),
+                    ),
+                    $override
+                );
+            }
+        }
+
+        self::$block_catalog = $catalog;
+
+        return self::$block_catalog;
+    }
+
+    /**
+     * Returns the core content blocks always supported by the builder.
+     *
+     * @return array<string,array<string,mixed>>
+     */
+    private static function get_core_block_catalog_map(): array {
         return array(
             'core/heading'   => array(
                 'name'             => 'core/heading',
@@ -152,12 +219,19 @@ class PopupBlueprint {
                     'height' => '24px',
                 ),
             ),
-            'fc/sign-up'     => array(
-                'name'             => 'fc/sign-up',
-                'label'            => __( 'FooConvert Sign Up', 'fooconvert' ),
-                'description'      => __( 'Lead capture form block with configurable placeholders and button copy.', 'fooconvert' ),
-                'supports_children' => false,
-                'allowed_children' => array(),
+        );
+    }
+
+    /**
+     * Returns manual catalog overrides and examples for custom blocks.
+     *
+     * @return array<string,array<string,mixed>>
+     */
+    private static function get_block_catalog_overrides(): array {
+        return array(
+            'fc/sign-up' => array(
+                'label'       => __( 'FooConvert Sign Up', 'fooconvert' ),
+                'description' => __( 'Lead capture form block with configurable placeholders and button copy.', 'fooconvert' ),
                 'attribute_examples' => array(
                     'settings' => array(
                         'layout'         => 'stack',
@@ -180,7 +254,201 @@ class PopupBlueprint {
                     ),
                 ),
             ),
+            'fc/countdown' => array(
+                'attribute_examples' => array(
+                    'settings' => array(
+                        'endDate' => gmdate( 'c', time() + DAY_IN_SECONDS * 7 ),
+                    ),
+                ),
+            ),
+            'fc/coupon' => array(
+                'attribute_examples' => array(
+                    'code' => array(
+                        'settings' => array(
+                            'content' => 'SAVE15',
+                        ),
+                    ),
+                    'button' => array(
+                        'settings' => array(
+                            'text' => __( 'Copy Code', 'fooconvert' ),
+                        ),
+                    ),
+                ),
+            ),
+            'fc/apply-coupon' => array(
+                'attribute_examples' => array(
+                    'code' => array(
+                        'settings' => array(
+                            'content' => 'SAVE15',
+                        ),
+                    ),
+                    'button' => array(
+                        'settings' => array(
+                            'text' => __( 'Apply Coupon', 'fooconvert' ),
+                        ),
+                    ),
+                ),
+            ),
+            'fc/free-shipping-progress' => array(
+                'supports_children' => true,
+                'allowed_children'  => array( 'fc/free-shipping-state' ),
+            ),
+            'fc/free-shipping-state' => array(
+                'supports_children' => true,
+                'allowed_children'  => array( 'fc/free-shipping-bar', 'fc/free-shipping-text' ),
+                'attribute_examples' => array(
+                    'state' => 'locked',
+                ),
+            ),
+            'fc/free-shipping-text' => array(
+                'attribute_examples' => array(
+                    'content' => __( 'Spend {remaining} more to unlock free shipping.', 'fooconvert' ),
+                ),
+            ),
+            'fc/cart-threshold-progress' => array(
+                'attribute_examples' => array(
+                    'settings' => array(
+                        'thresholdAmount' => 75,
+                    ),
+                ),
+            ),
         );
+    }
+
+    /**
+     * Determines whether a registered runtime block should be exposed to the builder.
+     *
+     * @param string $block_name Block name.
+     * @return bool
+     */
+    private static function is_ai_supported_runtime_block( string $block_name ): bool {
+        if ( fooconvert_str_starts_with( $block_name, 'woocommerce/' ) ) {
+            return true;
+        }
+
+        if ( ! fooconvert_str_starts_with( $block_name, 'fc/' ) ) {
+            return false;
+        }
+
+        return ! in_array(
+            $block_name,
+            array(
+                'fc/popup',
+                'fc/popup-container',
+                'fc/popup-close-button',
+                'fc/popup-content',
+                'fc/flyout',
+                'fc/flyout-open-button',
+                'fc/flyout-container',
+                'fc/flyout-close-button',
+                'fc/flyout-content',
+                'fc/bar',
+                'fc/bar-open-button',
+                'fc/bar-container',
+                'fc/bar-close-button',
+                'fc/bar-content',
+                'fc/example-block',
+            ),
+            true
+        );
+    }
+
+    /**
+     * Builds a map of parent block names to their registered child blocks.
+     *
+     * @param array<string,\WP_Block_Type> $registered Registered block types.
+     * @return array<string,array<int,string>>
+     */
+    private static function get_registered_block_child_map( array $registered ): array {
+        $child_map = array();
+
+        foreach ( $registered as $block_name => $block_type ) {
+            if ( isset( $block_type->parent ) && is_array( $block_type->parent ) ) {
+                foreach ( $block_type->parent as $parent ) {
+                    $child_map[ $parent ]   = $child_map[ $parent ] ?? array();
+                    $child_map[ $parent ][] = $block_name;
+                }
+            }
+        }
+
+        foreach ( $child_map as $parent => $children ) {
+            $child_map[ $parent ] = array_values( array_unique( $children ) );
+        }
+
+        return $child_map;
+    }
+
+    /**
+     * Builds lightweight attribute examples from a registered block type.
+     *
+     * @param string         $block_name Block name.
+     * @param \WP_Block_Type $block_type Block type object.
+     * @return array<string,mixed>
+     */
+    private static function build_attribute_examples_from_block_type( string $block_name, \WP_Block_Type $block_type ): array {
+        $examples = array();
+
+        if ( ! isset( $block_type->attributes ) || ! is_array( $block_type->attributes ) ) {
+            return $examples;
+        }
+
+        foreach ( $block_type->attributes as $attribute_name => $schema ) {
+            if ( ! is_array( $schema ) ) {
+                continue;
+            }
+
+            if ( array_key_exists( 'default', $schema ) ) {
+                $examples[ $attribute_name ] = $schema['default'];
+                continue;
+            }
+
+            $type = isset( $schema['type'] ) ? $schema['type'] : null;
+
+            switch ( $type ) {
+                case 'string':
+                    if ( in_array( $attribute_name, array( 'content', 'text', 'title', 'heading' ), true ) ) {
+                        $examples[ $attribute_name ] = __( 'Sample text', 'fooconvert' );
+                    } elseif ( in_array( $attribute_name, array( 'url', 'href', 'src' ), true ) ) {
+                        $examples[ $attribute_name ] = 'https://example.com';
+                    } elseif ( 'alt' === $attribute_name ) {
+                        $examples[ $attribute_name ] = __( 'Image alt text', 'fooconvert' );
+                    } else {
+                        $examples[ $attribute_name ] = '';
+                    }
+                    break;
+                case 'boolean':
+                    $examples[ $attribute_name ] = false;
+                    break;
+                case 'number':
+                case 'integer':
+                    $examples[ $attribute_name ] = 0;
+                    break;
+                case 'array':
+                    $examples[ $attribute_name ] = array();
+                    break;
+                case 'object':
+                    $examples[ $attribute_name ] = array();
+                    break;
+            }
+        }
+
+        if ( 'woocommerce/mini-cart' === $block_name && empty( $examples ) ) {
+            $examples['miniCartIcon'] = 'cart';
+        }
+
+        return $examples;
+    }
+
+    /**
+     * Returns a JSON-safe attribute schema for a block type.
+     *
+     * @param \WP_Block_Type $block_type Block type.
+     * @return array<string,mixed>
+     */
+    private static function get_block_attribute_schema( \WP_Block_Type $block_type ): array {
+        return isset( $block_type->attributes ) && is_array( $block_type->attributes )
+            ? self::sanitize_recursive( $block_type->attributes, 'attribute_schema' )
+            : array();
     }
 
     /**
@@ -520,10 +788,10 @@ class PopupBlueprint {
         }
 
         if ( '' === $draft['template_slug'] ) {
-            $suggestions[] = __( 'Selecting a bundled template can give the popup a stronger visual starting point.', 'fooconvert' );
+            $suggestions[] = __( 'Make sure the root attributes and supporting blocks reflect the extracted brand palette, typography, and spacing.', 'fooconvert' );
         } else {
-            $strengths[] = __( 'A bundled Fooconvert template is being used as the visual base.', 'fooconvert' );
-            $score += 4;
+            $strengths[] = __( 'A bundled Fooconvert template is being used as a structural reference.', 'fooconvert' );
+            $score += 2;
         }
 
         if ( empty( $draft['trigger']['type'] ) ) {
@@ -599,7 +867,8 @@ class PopupBlueprint {
      */
     public static function get_assistant_response_contract(): string {
         $popup_types = implode( ', ', fooconvert_get_popup_types() );
-        $block_names = implode( ', ', array_keys( self::get_block_catalog_map() ) );
+        $block_names = array_keys( self::get_block_catalog_map() );
+        $example_names = implode( ', ', array_slice( $block_names, 0, 24 ) );
 
         return implode(
             "\n",
@@ -622,11 +891,13 @@ class PopupBlueprint {
                 '- content_blocks: array of supported blocks',
                 '- conversion_rationale: array of short strings',
                 '- notes: array of short strings',
-                'Supported content block names: ' . $block_names,
+                'Use the block catalog ability to inspect the currently supported core, FooConvert, and WooCommerce blocks before choosing advanced blocks.',
+                'Example supported content block names: ' . $example_names,
                 'Each content block should use this shape: {"name":"core/heading","attributes":{},"inner_blocks":[]}.',
                 'Only blocks that support children may include non-empty inner_blocks.',
                 'For core/list, prefer attributes.items as an array of strings.',
                 'For fc/sign-up, use nested attributes like {"settings":{},"inputs":{"settings":{"emailOnly":true,"emailPlaceholder":"Enter your email"}},"button":{"settings":{"text":"Get My Offer"}}}. Do not use shorthand keys like buttonText.',
+                'Use template_slug only when you want a structural reference. Brand context should drive styling choices.',
                 'If you provide a popup_draft, make it complete enough to render immediately and suitable for Fooconvert validation.',
                 'If you create or import an image, include that image in media_items and reference it from any core/image block using attributes.id, url, alt, and title when available.',
             )
