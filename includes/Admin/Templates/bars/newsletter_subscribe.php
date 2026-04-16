@@ -5,6 +5,12 @@ return array(
 	'title' => __( 'Newsletter Subscribe', 'fooconvert' ),
 	'description' => __( 'Newsletter Subscribe marketing themed bar.', 'fooconvert' ),
 	'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/template__newsletter_subscribe.png',
+	'picker' => array(
+		'category' => 'lead-capture',
+		'tags' => array( 'newsletter', 'email' ),
+		'availability' => 'included',
+		'preview' => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__newsletter_subscribe.png',
+	),
 	'attributes' => array(
 		'viewState' => 'open',
 		'template' => 'bar__newsletter_subscribe',
@@ -285,4 +291,3 @@ return array(
 		'block'
 	)
 );
-

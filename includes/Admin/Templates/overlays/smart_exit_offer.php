@@ -5,6 +5,12 @@ return array(
 	'title' => __( 'Smart Exit Offer', 'fooconvert' ),
 	'description' => __( 'Smart exit offer themed overlay.', 'fooconvert' ),
 	'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/template__smart_exit_offer.png',
+	'picker' => array(
+		'category' => 'lead-capture',
+		'tags' => array( 'offer', 'exit-intent' ),
+		'availability' => 'included',
+		'preview' => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__smart_exit_offer.png',
+	),
 	'attributes' => array(
 		'template' => 'popup__smart_exit_offer',
 		'settings' => array(
@@ -259,4 +265,3 @@ return array(
 		'block'
 	)
 );
-

@@ -5,6 +5,12 @@ return array(
     'title'       => __( 'Watch the Video', 'fooconvert' ),
     'description' => __( 'Guide visitors to a watch a specific video.', 'fooconvert' ),
     'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__video.png',
+    'picker'      => array(
+        'category'     => 'video',
+        'tags'         => array( 'video' ),
+        'availability' => 'included',
+        'preview'      => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__video.png',
+    ),
     'attributes'  => array(
         'template'    => 'flyout__watch_the_video',
         'content'     => array(
@@ -177,4 +183,3 @@ return array(
         'block'
     )
 );
-

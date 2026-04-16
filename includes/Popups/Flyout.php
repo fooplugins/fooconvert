@@ -83,12 +83,18 @@ class Flyout extends BasePopup {
      * @inheritDoc
      */
     function get_editor_variations(): array {
-        return apply_filters( 'fooconvert_editor_variations-' . $this->get_post_type(), array(
+        $variations = apply_filters( 'fooconvert_editor_variations-' . $this->get_post_type(), array(
             array(
                 'name'        => 'empty_flyout',
                 'title'       => __( 'Empty', 'fooconvert' ),
                 'description' => __( 'A blank slate that you can use to build your own flyout from scratch.', 'fooconvert' ),
                 'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__blank.png',
+                'picker'      => array(
+                    'category'     => 'blank',
+                    'tags'         => array( 'blank' ),
+                    'availability' => 'included',
+                    'preview'      => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__blank.png',
+                ),
                 'attributes'  => array(
                     'openButton'  => array(
                         'styles' => array(
@@ -130,6 +136,12 @@ class Flyout extends BasePopup {
                 'title'       => __( 'Black Friday Flyout', 'fooconvert' ),
                 'description' => __( 'A typical Black Friday flyout to help drive sales.', 'fooconvert' ),
                 'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__black_friday.png',
+                'picker'      => array(
+                    'category'     => 'promotion',
+                    'tags'         => array( 'seasonal', 'offer' ),
+                    'availability' => 'included',
+                    'preview'      => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__black_friday.png',
+                ),
                 'attributes'  => array(
                     'viewState'   => 'open',
                     'settings'    => array(
@@ -280,6 +292,8 @@ class Flyout extends BasePopup {
                 )
             )
         ) );
+
+        return FooConvert::plugin()->components->variation_picker->prepare_variations( $variations );
     }
 
     /**

@@ -5,6 +5,12 @@ return array(
 	'title' => __( 'Digital Download Signup', 'fooconvert' ),
 	'description' => __( 'Digital download signup themed overlay.', 'fooconvert' ),
 	'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/template__digital_download_signup.png',
+	'picker' => array(
+		'category' => 'lead-capture',
+		'tags' => array( 'email', 'download' ),
+		'availability' => 'included',
+		'preview' => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__digital_download_signup.png',
+	),
 	'attributes' => array(
 		'template' => 'popup__digital_download_signup',
 		'content' => array(

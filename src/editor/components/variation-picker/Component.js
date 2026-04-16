@@ -13,44 +13,6 @@ const FILTER_ALL = "all";
 const CLASS_NAME = "fc--variation-picker";
 const POPUP_TYPE_META_KEY = "_fooconvert_popup_type";
 
-const CATEGORY_CONFIG = [
-    {
-        key: "blank",
-        label: __( "Start from scratch", "fooconvert" ),
-        match: [ "empty", "blank" ],
-    },
-    {
-        key: "commerce",
-        label: __( "Commerce", "fooconvert" ),
-        match: [ "cart", "checkout", "shipping", "coupon" ],
-    },
-    {
-        key: "lead-capture",
-        label: __( "Lead capture", "fooconvert" ),
-        match: [ "newsletter", "subscribe", "signup", "sign up", "download", "lead" ],
-    },
-    {
-        key: "video",
-        label: __( "Video", "fooconvert" ),
-        match: [ "video", "watch" ],
-    },
-    {
-        key: "compliance",
-        label: __( "Compliance", "fooconvert" ),
-        match: [ "cookie", "consent" ],
-    },
-    {
-        key: "promotion",
-        label: __( "Promotion", "fooconvert" ),
-        match: [ "offer", "black friday", "countdown", "discount", "save", "sale" ],
-    },
-    {
-        key: "general",
-        label: __( "General", "fooconvert" ),
-        match: [],
-    },
-];
-
 const getFirstString = ( ...values ) => {
     for ( const value of values ) {
         if ( isString( value, true ) ) {
@@ -60,14 +22,23 @@ const getFirstString = ( ...values ) => {
     return "";
 };
 
-const addTag = ( tags, condition, label ) => {
-    if ( condition ) {
-        tags.add( label );
-    }
+const getPickerData = variation => {
+    return isPlainObject( variation?.picker ) ? variation.picker : {};
+};
+
+const getPickerCategory = variation => {
+    const picker = getPickerData( variation );
+    const category = isPlainObject( picker?.category ) ? picker.category : {};
+
+    return {
+        value: getFirstString( category?.value ).toLocaleLowerCase(),
+        label: getFirstString( category?.label ),
+    };
 };
 
 const getPreviewUrl = variation => {
-    const preview = getFirstString( variation?.preview, variation?.screenshot );
+    const picker = getPickerData( variation );
+    const preview = getFirstString( picker?.preview, variation?.preview, variation?.screenshot );
     if ( preview ) {
         return preview;
     }
@@ -88,9 +59,24 @@ const getThumbnailUrl = variation => {
     return getFirstString( variation?.thumbnail );
 };
 
-const getCategory = searchContent => {
-    const category = CATEGORY_CONFIG.find( item => item.match.some( token => searchContent.includes( token ) ) );
-    return category ?? CATEGORY_CONFIG[ CATEGORY_CONFIG.length - 1 ];
+const getPickerTags = variation => {
+    const picker = getPickerData( variation );
+    if ( !Array.isArray( picker?.tags ) ) {
+        return [];
+    }
+
+    return picker.tags
+        .filter( tag => isPlainObject( tag ) )
+        .map( tag => ( {
+            value: getFirstString( tag?.value ).toLocaleLowerCase(),
+            label: getFirstString( tag?.label ),
+        } ) )
+        .filter( tag => isString( tag.value, true ) && isString( tag.label, true ) );
+};
+
+const getPickerAvailability = variation => {
+    const picker = getPickerData( variation );
+    return getFirstString( picker?.availability ).toLocaleLowerCase();
 };
 
 const getMonogram = title => {
@@ -105,11 +91,18 @@ const getMonogram = title => {
 };
 
 const getPreviewPosition = ( container, element ) => {
+    const containerWindow = container?.ownerDocument?.defaultView;
+    const elementWindow = element?.ownerDocument?.defaultView;
+
     if (
-        typeof window === "undefined" ||
-        typeof HTMLElement === "undefined" ||
-        !( container instanceof HTMLElement ) ||
-        !( element instanceof HTMLElement )
+        !container ||
+        !element ||
+        typeof container.getBoundingClientRect !== "function" ||
+        typeof element.getBoundingClientRect !== "function" ||
+        container.nodeType !== 1 ||
+        element.nodeType !== 1 ||
+        !containerWindow ||
+        !elementWindow
     ) {
         return null;
     }
@@ -119,7 +112,8 @@ const getPreviewPosition = ( container, element ) => {
     const panelWidth = 320;
     const gap = 16;
     const margin = 24;
-    const fitsRight = rect.right + gap + panelWidth <= window.innerWidth - margin;
+    const viewportWidth = elementWindow.innerWidth || containerWindow.innerWidth || 0;
+    const fitsRight = rect.right + gap + panelWidth <= viewportWidth - margin;
     const left = fitsRight
         ? rect.right - containerRect.left + gap
         : Math.max( 12, rect.left - containerRect.left - panelWidth - gap );
@@ -199,23 +193,11 @@ const VariationPicker = ( {
             );
             const templateKey = getFirstString( variation?.attributes?.template, variation?.name, title )
                 .toLocaleLowerCase();
-            const haystack = `${ title } ${ description } ${ templateKey }`.toLocaleLowerCase();
-            const category = getCategory( haystack );
-            const tags = new Set();
-
-            addTag( tags, haystack.includes( "newsletter" ), __( "Newsletter", "fooconvert" ) );
-            addTag( tags, haystack.includes( "subscribe" ) || haystack.includes( "signup" ) || haystack.includes( "sign up" ), __( "Email", "fooconvert" ) );
-            addTag( tags, haystack.includes( "download" ), __( "Download", "fooconvert" ) );
-            addTag( tags, haystack.includes( "video" ) || haystack.includes( "watch" ), __( "Video", "fooconvert" ) );
-            addTag( tags, haystack.includes( "offer" ) || haystack.includes( "discount" ) || haystack.includes( "save" ), __( "Offer", "fooconvert" ) );
-            addTag( tags, haystack.includes( "countdown" ), __( "Countdown", "fooconvert" ) );
-            addTag( tags, haystack.includes( "exit" ), __( "Exit intent", "fooconvert" ) );
-            addTag( tags, haystack.includes( "cookie" ) || haystack.includes( "consent" ), __( "Cookie", "fooconvert" ) );
-            addTag( tags, haystack.includes( "cart" ) || haystack.includes( "checkout" ) || haystack.includes( "shipping" ) || haystack.includes( "coupon" ), __( "Ecommerce", "fooconvert" ) );
-            addTag( tags, haystack.includes( "black friday" ), __( "Seasonal", "fooconvert" ) );
-            addTag( tags, category.key === "blank", __( "Blank", "fooconvert" ) );
-
-            const tagList = Array.from( tags );
+            const category = getPickerCategory( variation );
+            const tags = getPickerTags( variation );
+            const availabilityKey = getPickerAvailability( variation );
+            const tagValues = tags.map( tag => tag.value );
+            const tagLabels = tags.map( tag => tag.label );
 
             return {
                 variation,
@@ -228,51 +210,80 @@ const VariationPicker = ( {
                 popupTypeLabel: popupTypeLibrary.label,
                 blockName: popupTypeLibrary.blockName,
                 defaultVariation: popupTypeLibrary.defaultVariation,
-                categoryKey: category.key,
+                categoryKey: category.value,
                 categoryLabel: category.label,
-                tags: tagList,
+                tagValues,
+                tagLabels,
+                availability: availabilityKey,
                 thumbnailUrl: getThumbnailUrl( variation ),
                 previewUrl: getPreviewUrl( variation ),
-                isPro: variation?.pro ?? false,
+                isPro: availabilityKey === "pro",
                 searchContent: [
                     title,
                     description,
                     templateKey,
                     category.label,
                     popupTypeLibrary.label,
-                    ...tagList,
+                    ...tagValues,
+                    ...tagLabels,
                 ].join( " " ).toLocaleLowerCase(),
             };
         } ) );
     }, [ popupTypeLibraries ] );
 
     const categoryOptions = useMemo( () => {
-        return CATEGORY_CONFIG
-            .map( category => ( {
-                value: category.key,
-                label: category.label,
-                count: libraryItems.filter( item => item.categoryKey === category.key ).length,
-            } ) )
-            .filter( option => option.count > 0 );
-    }, [ libraryItems ] );
-
-    const tagOptions = useMemo( () => {
-        const tagCounts = new Map();
+        const categoryMap = new Map();
 
         libraryItems.forEach( item => {
-            item.tags.forEach( tag => {
-                tagCounts.set( tag, ( tagCounts.get( tag ) ?? 0 ) + 1 );
+            if ( !isString( item.categoryKey, true ) || !isString( item.categoryLabel, true ) ) {
+                return;
+            }
+
+            const existing = categoryMap.get( item.categoryKey );
+            categoryMap.set( item.categoryKey, {
+                value: item.categoryKey,
+                label: item.categoryLabel,
+                count: ( existing?.count ?? 0 ) + 1,
             } );
         } );
 
-        return Array.from( tagCounts.entries() )
-            .sort( ( a, b ) => {
-                if ( b[1] !== a[1] ) {
-                    return b[1] - a[1];
+        return Array.from( categoryMap.values() ).sort( ( left, right ) => {
+            if ( left.value === "blank" && right.value !== "blank" ) {
+                return -1;
+            }
+            if ( right.value === "blank" && left.value !== "blank" ) {
+                return 1;
+            }
+            return left.label.localeCompare( right.label );
+        } );
+    }, [ libraryItems ] );
+
+    const tagOptions = useMemo( () => {
+        const tagMap = new Map();
+
+        libraryItems.forEach( item => {
+            item.tagValues.forEach( ( tagValue, index ) => {
+                const tagLabel = item.tagLabels[ index ];
+                if ( !isString( tagValue, true ) || !isString( tagLabel, true ) ) {
+                    return;
                 }
-                return a[0].localeCompare( b[0] );
-            } )
-            .map( ( [ value, count ] ) => ( { value, label: value, count } ) );
+
+                const existing = tagMap.get( tagValue );
+                tagMap.set( tagValue, {
+                    value: tagValue,
+                    label: tagLabel,
+                    count: ( existing?.count ?? 0 ) + 1,
+                } );
+            } );
+        } );
+
+        return Array.from( tagMap.values() )
+            .sort( ( a, b ) => {
+                if ( b.count !== a.count ) {
+                    return b.count - a.count;
+                }
+                return a.label.localeCompare( b.label );
+            } );
     }, [ libraryItems ] );
 
     useEffect( () => {
@@ -312,15 +323,15 @@ const VariationPicker = ( {
                     return false;
                 }
 
-                if ( selectedTag !== FILTER_ALL && !item.tags.includes( selectedTag ) ) {
+                if ( selectedTag !== FILTER_ALL && !item.tagValues.includes( selectedTag ) ) {
                     return false;
                 }
 
-                if ( availability === "free" && item.isPro ) {
+                if ( availability === "free" && item.availability !== "included" ) {
                     return false;
                 }
 
-                if ( availability === "pro" && !item.isPro ) {
+                if ( availability === "pro" && item.availability !== "pro" ) {
                     return false;
                 }
 
@@ -623,9 +634,9 @@ const VariationPicker = ( {
                                             <p className="fc-variation-picker__card-description">{ item.description }</p>
                                         </div>
                                     </div>
-                                    { item.tags.length > 0 && (
+                                    { item.tagLabels.length > 0 && (
                                         <div className="fc-variation-picker__card-tags">
-                                            { item.tags.slice( 0, 4 ).map( tag => (
+                                            { item.tagLabels.slice( 0, 4 ).map( tag => (
                                                 <span
                                                     key={ `${ item.key }-${ tag }` }
                                                     className="fc-variation-picker__card-tag"

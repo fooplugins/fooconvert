@@ -4,7 +4,13 @@ return array(
 	'name' => '',
 	'title' => __( 'Smart Exit Offer', 'fooconvert' ),
 	'description' => __( 'A smart exit offer flyout lead magnet to help prevent visitors from leaving your site.', 'fooconvert' ),
-    'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__smart_exit_offer.png',
+	'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__smart_exit_offer.png',
+	'picker'      => array(
+		'category'     => 'lead-capture',
+		'tags'         => array( 'offer', 'exit-intent' ),
+		'availability' => 'included',
+		'preview'      => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__smart_exit_offer.png',
+	),
 	'attributes' => array(
 		'template' => 'flyout__smart_exit_offer',
 		'viewState' => 'open',
@@ -275,4 +281,3 @@ return array(
 		'block'
 	)
 );
-
