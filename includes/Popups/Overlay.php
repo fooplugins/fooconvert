@@ -79,12 +79,17 @@ class Overlay extends BasePopup {
      * @inheritDoc
      */
     function get_editor_variations(): array {
-        return apply_filters( 'fooconvert_editor_variations-' . $this->get_post_type(), array(
+        $variations = apply_filters( 'fooconvert_editor_variations-' . $this->get_post_type(), array(
             array(
                 'name'        => 'empty_popup',
                 'title'       => __( 'Empty', 'fooconvert' ),
                 'description' => __( 'A blank slate that you can use to build your own overlay from scratch.', 'fooconvert' ),
                 'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__blank.png',
+                'picker'      => array(
+                    'category'     => 'blank',
+                    'tags'         => array( 'blank' ),
+                    'availability' => 'included',
+                ),
                 'attributes'  => array(
                     'content'     => array(
                         'styles' => array(
@@ -115,6 +120,12 @@ class Overlay extends BasePopup {
                 'title'       => __( 'Black Friday Overlay', 'fooconvert' ),
                 'description' => __( 'A typical Black Friday overlay to help drive sales.', 'fooconvert' ),
                 'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__black_friday.png',
+                'picker'      => array(
+                    'category'     => 'promotion',
+                    'tags'         => array( 'seasonal', 'offer' ),
+                    'availability' => 'included',
+                    'preview'      => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__black_friday.png',
+                ),
                 'attributes'  => array(
                     'settings'    => array(
                         'transitions'    => true,
@@ -254,6 +265,8 @@ class Overlay extends BasePopup {
                 )
             ),
         ) );
+
+        return FooConvert::plugin()->components->variation_picker->prepare_variations( $variations );
     }
 
     /**

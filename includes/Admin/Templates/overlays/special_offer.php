@@ -5,6 +5,12 @@ return array(
     'title'       => __( 'Special Offer Countdown', 'fooconvert' ),
     'description' => __( 'Guide visitors to specific offer with a countdown timer.', 'fooconvert' ),
     'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__special_offer.png',
+    'picker'      => array(
+        'category'     => 'promotion',
+        'tags'         => array( 'offer', 'countdown' ),
+        'availability' => 'included',
+        'preview'      => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__special_offer.png',
+    ),
     'attributes'  => array(
         'template'    => 'popup__special_offer',
         'content'     => array(
@@ -247,4 +253,3 @@ return array(
         'block'
     )
 );
-

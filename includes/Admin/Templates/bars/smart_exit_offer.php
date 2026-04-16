@@ -5,6 +5,12 @@ return array(
 	'title' => __( 'Smart Exit Offer', 'fooconvert' ),
 	'description' => __( 'A smart exit offer bar lead magnet to help prevent visitors from leaving your site.', 'fooconvert' ),
     'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__smart_exit_offer.png',
+    'picker'      => array(
+        'category'     => 'lead-capture',
+        'tags'         => array( 'offer', 'exit-intent' ),
+        'availability' => 'included',
+        'preview'      => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__smart_exit_offer.png',
+    ),
     'attributes'  => array(
         'template'    => 'bar__smart_exit_offer',
         'settings'    => array(
@@ -266,4 +272,3 @@ return array(
         'block'
     )
 );
-

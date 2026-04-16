@@ -15,6 +15,11 @@
 
   @include mixins.background-transparency-grid();
 
+  &:has(.fc-variation-picker) {
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
   .fc--overlay__backdrop {
     box-sizing: border-box;
     display: block;

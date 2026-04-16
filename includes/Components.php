@@ -11,6 +11,7 @@ use FooPlugins\FooConvert\Components\ColorToolsPanel;
 use FooPlugins\FooConvert\Components\DimensionsToolsPanel;
 use FooPlugins\FooConvert\Components\OpenTriggerPanel;
 use FooPlugins\FooConvert\Components\TypographyToolsPanel;
+use FooPlugins\FooConvert\Components\VariationPicker;
 
 /**
  * This class contains utility classes and methods to make dynamic block rendering a bit simpler by providing
@@ -36,6 +37,7 @@ class Components {
         $this->dimensions_tools_panel = new DimensionsToolsPanel( $this->box_unit_control );
         $this->open_trigger_panel = new OpenTriggerPanel();
         $this->typography_tools_panel = new TypographyToolsPanel();
+        $this->variation_picker = new VariationPicker();
     }
 
     public BorderControl $border_control;
@@ -48,6 +50,7 @@ class Components {
     public DimensionsToolsPanel $dimensions_tools_panel;
     public OpenTriggerPanel $open_trigger_panel;
     public TypographyToolsPanel $typography_tools_panel;
+    public VariationPicker $variation_picker;
 
     /**
      * Returns the styles.
