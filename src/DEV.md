@@ -28,18 +28,17 @@ Contains the commands used to build and publish the project.
 {
   "scripts": {
     "check-updates": "npx npm-check-updates",
-    "build:free": "cross-env BUILD_SCOPE=free wp-scripts build --output-path=assets && npm run copy:free",
-    "build": "cross-env BUILD_SCOPE=pro wp-scripts build --output-path=assets && npm run copy:pro",
-    "start:free": "cross-env BUILD_SCOPE=free wp-scripts start --output-path=assets",
-    "start": "cross-env BUILD_SCOPE=pro wp-scripts start --output-path=assets",
-    "develop:free": "cross-env BUILD_SCOPE=free wp-scripts start --no-watch --output-path=assets && npm run copy:free",
-    "develop": "cross-env BUILD_SCOPE=pro wp-scripts start --no-watch --output-path=assets && npm run copy:pro",
-    "i18n": "node make-pot.mjs",
+    "test:js": "vitest run",
+    "test:js:watch": "vitest",
+    "build:dev": "cross-env NODE_ENV=development wp-scripts build --output-path=assets && npm run copy",
+    "build": "wp-scripts build --output-path=assets && npm run copy",
+    "copy": "node build/copy-assets.mjs",
+    "i18n": "node build/make-pot.mjs",
     "composer:install": "composer install --prefer-dist --optimize-autoloader --no-dev",
     "composer:update": "composer update --optimize-autoloader",
     "composer:refresh": "composer dump-autoload --optimize",
-    "package:create-zip": "npm run build:free && npm run i18n && npm run composer:refresh && gulp",
-    "package:deploy": "gulp freemius-deploy"
+    "package:create-zip": "npm run build && npm run i18n && npm run composer:refresh && node build/create-zip.mjs",
+    "package:deploy": "node build/freemius-deploy.mjs"
   }
 }
 ```
@@ -48,23 +47,18 @@ Contains the commands used to build and publish the project.
 
 Utility script for [npm-check-updates](https://www.npmjs.com/package/npm-check-updates).
 
-#### `build`, `start` and `develop`
+#### `build` and `build:dev`
 
 These scripts are wrappers around [wp-scripts](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/) 
-`build` and `start` commands with the output set to the `assets` folder. The default variants target
-`BUILD_SCOPE=pro` so the shared editor runtime stays compatible with the PRO editor chunk in a PRO-enabled
-local site. The `develop` script essentially builds the development version of the plugin without starting
-a file watcher.
-
-Use the `*:free` variants when you explicitly need free-only assets, such as release packaging or
-free-runtime verification.
+`build` command with the output set to the `assets` folder, followed by `build/copy-assets.mjs`.
+`build` runs in production mode. `build:dev` runs the same pipeline with `NODE_ENV=development`.
 
 **_Note:_** The default `@wordpress/scripts/config/webpack.config` is being extended by the projects 
 `webpack.config.js` file.
 
 #### `i18n`
 
-The `make-pot.mjs` file wraps the [wp-cli](https://developer.wordpress.org/cli/commands/i18n/) `make-pot`
+The `build/make-pot.mjs` file wraps the [wp-cli](https://developer.wordpress.org/cli/commands/i18n/) `make-pot`
 command and fills in the `.pot` headers that `--headers` does not reliably provide.
 
 #### `composer:*`
@@ -79,9 +73,9 @@ Composer commands for installing dependencies, updating them, and refreshing the
 
 These scripts are used to bundle the plugin into a `.zip` and deploy it to the Freemius dashboard.
 
-* `package:create-zip` - Run the `build:free`, `i18n`, `composer:refresh` and `gulp` commands in series to produce 
-a new `<name>.v<version>.zip` file in the `dists` folder.
-* `package:deploy` - Use the .gitignored `fsconfig.json` file in the projects root directory to deploy the 
+* `package:create-zip` - Run the `build`, `i18n`, `composer:refresh` and `build/create-zip.mjs` commands in series to produce 
+a new `<name>.v<version>.zip` file in the `dist` folder.
+* `package:deploy` - Use the .gitignored `fs-config.json` file in the projects root directory to deploy the 
 current versions `.zip` file to the freemius dashboard.
 
 ## `webpack.config.js`

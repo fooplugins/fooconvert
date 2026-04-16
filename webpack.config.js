@@ -5,14 +5,9 @@ const { readFileSync } = require( 'fs' );
 const { dirname, extname, join, relative, resolve } = require( 'path' );
 const { sync: glob } = require( 'fast-glob' );
 
-const BUILD_SCOPE = process.env.BUILD_SCOPE === "pro" ? "pro" : "free";
 const PRO_SOURCE_PATH = './pro/src';
 
 const getProBlockEntries = () => {
-    if ( BUILD_SCOPE !== 'pro' ) {
-        return {};
-    }
-
     const sourceRoot = resolve( process.cwd(), PRO_SOURCE_PATH );
     const blockJsonFiles = glob( '**/block.json', {
         absolute: true,
@@ -134,17 +129,15 @@ const entry = () => {
         "editor": "./src/editor/index.js",
         "frontend": "./src/frontend/index.js",
         "admin/display-rules-list/index": "./src/scripts/admin/display-rules-list/index.js",
-    };
-    if ( BUILD_SCOPE === "pro" ) {
-        entries[ "editor-pro" ] = {
+        "editor-pro": {
             "import": "./pro/src/editor/index.js",
             "dependOn": [ "editor" ]
-        };
-        entries[ "frontend-pro" ] = {
+        },
+        "frontend-pro": {
             "import": "./pro/src/frontend/index.js",
             "dependOn": [ "frontend" ]
-        };
-    }
+        },
+    };
     // iterate the default entries and add them to our new entries object
     const resolvedEntries = Object.entries( blockEntries ).reduce( ( acc, [ key, value ] ) => {
         if ( key.includes( "/frontend/" ) ) {
