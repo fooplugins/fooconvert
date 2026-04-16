@@ -9,24 +9,31 @@ const rootDir = dirname( buildDir );
 const pkg = JSON.parse( await readFile( join( rootDir, "package.json" ), { encoding: "utf8" } ) );
 const archiveName = `${ pkg.name }.v${ pkg.version }.zip`;
 const archivePath = join( rootDir, "dist", archiveName );
+const includePatterns = [
+    "fooconvert.php",
+    "assets/**/*",
+    "includes/**/*",
+    "languages/**/*",
+    "pro/start.php",
+    "pro/assets/**/*",
+    "pro/includes/**/*",
+    "vendor/**/*"
+];
 
-const files = ( await globby( "**/*", {
+const files = ( await globby( includePatterns, {
     cwd: rootDir,
     dot: true,
     onlyFiles: true,
     ignore: [
-        "build/**",
-        "dist/**",
-        "node_modules/**",
-        "src/**",
-        ".github/**",
-        ".chatgpt/**",
-        ".gitignore",
-        ".gitmodules",
-        "fs-config.json",
-        "package.json",
-        "package-lock.json",
-        "webpack.config.js"
+        "**/.DS_Store",
+        "**/.git/**",
+        "**/.gitignore",
+        "**/*.map",
+        "vendor/bin/**",
+        "assets/media/templates/fullsize/**",
+        "vendor/**/README.md",
+        "vendor/**/composer.json",
+        "vendor/**/LICENSE*"
     ]
 } ) ).sort();
 
