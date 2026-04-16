@@ -89,7 +89,6 @@ class Overlay extends BasePopup {
                     'category'     => 'blank',
                     'tags'         => array( 'blank' ),
                     'availability' => 'included',
-                    'preview'      => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__blank.png',
                 ),
                 'attributes'  => array(
                     'content'     => array(
