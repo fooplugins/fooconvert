@@ -4,7 +4,7 @@ Tags: popups,bars,flyouts,conversion,marketing
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 7.0
-Stable tag: 2.0.0
+Stable tag: 2.0.0-beta.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -165,14 +165,15 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 == Changelog ==
 
 = 2.0.0 =
-* Date Updated : 8 Apr 2026
-* New : Unified bars, flyouts, and overlays under a single Popup post type with a popup type chooser.
-* New : Added popup type columns, filters, and inline display rule editing on the Popups list screen.
+* Date Updated : 16 Apr 2026
+* New : Introduced a simpler unified popup workflow for bars, flyouts, and overlays.
+* New : Added a clearer popup type chooser to help you start the right campaign faster.
+* New : Improved template browsing with richer previews and a cleaner selection experience.
 * New : Moved 5 professionally designed templates from PRO into the free plugin.
 * New : Moved the Sign Up, Countdown, and Coupon blocks from PRO into the free plugin.
 * New : Moved the Leads admin screen with filtering and export into the free plugin.
 * New : Added Google Fonts support and font settings to the free plugin.
-* Updated : Refreshed admin terminology and workflows around the new Popup-based experience.
+* Updated : Refreshed popup management screens for a more polished campaign-building experience.
 [//]: # fs_premium_only_begin
 * New : Added WooCommerce display rules for shop, cart, checkout, account, and product-focused pages.
 * New : Added WooCommerce triggers for cart, coupon, checkout, and product-intent events.
