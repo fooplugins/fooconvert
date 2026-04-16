@@ -1,67 +1,24 @@
-.fc--popup-type-template-picker__header {
+.fc--popup-type-template-picker {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.fc--popup-type-template-picker__label {
-  display: block;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.4;
-  color: #50575e;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.fc--popup-type-template-picker__tabs {
-  margin: 0;
-  padding-left: 0;
-  border-bottom: 1px solid #c3c4c7;
-}
-
-.fc--popup-type-template-picker__tabs .nav-tab,
-.fc--popup-type-template-picker__tab {
-  appearance: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 36px;
-  margin: 0 4px -1px 0;
-  padding: 3px 14px;
-  border: 1px solid #c3c4c7;
-  border-bottom: 1px solid #c3c4c7;
-  border-radius: 0;
-  background: #f0f0f1;
-  color: #1d2327;
-  cursor: pointer;
-  font-size: 14px;
-  line-height: 2;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
-}
-
-.fc--popup-type-template-picker__tabs .nav-tab:hover,
-.fc--popup-type-template-picker__tab:hover {
-  background: #fff;
-  color: #0a4b78;
-}
-
-.fc--popup-type-template-picker__tabs .nav-tab-active,
-.fc--popup-type-template-picker__tab.nav-tab-active {
-  background: #fff;
-  border-bottom-color: #fff;
-  color: #1d2327;
-}
-
-.fc--popup-type-template-picker__tabs .nav-tab:focus {
-  position: relative;
-  z-index: 1;
-  box-shadow: 0 0 0 1px var(--wp-admin-theme-color, #3858e9);
-  outline: 2px solid transparent;
-}
-
-.fc--popup-type-template-picker__panel {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
   outline: none;
+}
+
+.fc--popup-type-template-picker__picker {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  --fc-variation-picker__background: #ffffff;
+  --fc-variation-picker__background-alt: #f6f7f7;
+  --fc-variation-picker__foreground: #1d2327;
+  --fc-variation-picker__foreground-alt: #646970;
+  --fc-variation-picker__highlight: var(--wp-admin-theme-color, #3858e9);
+  --fc-variation-picker__highlight-inverted: #ffffff;
+  --fc-variation-picker__border: #dcdcde;
 }

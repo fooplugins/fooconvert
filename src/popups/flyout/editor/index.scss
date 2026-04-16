@@ -16,8 +16,8 @@
   @include mixins.background-transparency-grid();
 
   &:has(.fc-variation-picker) {
-    align-items: center;
-    justify-content: center;
+    align-items: stretch;
+    justify-content: flex-start;
   }
 
   &:has(.position-right-top) {
