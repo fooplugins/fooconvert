@@ -1,4 +1,3 @@
-import { createHmac } from "node:crypto";
 import { access, readFile } from "node:fs/promises";
 import { constants } from "node:fs";
 import { dirname, join } from "node:path";
@@ -14,56 +13,34 @@ const dryRun = process.argv.includes( "--dry-run" );
 
 await access( zipPath, constants.R_OK );
 
-if ( !Number.isInteger( config.plugin_id ) || !Number.isInteger( config.developer_id ) ) {
-    throw new Error( "fs-config.json must contain integer developer_id and plugin_id values." );
+if ( !Number.isInteger( config.plugin_id ) ) {
+    throw new Error( "fs-config.json must contain an integer plugin_id value." );
 }
 
-const resourceUrl = `/v1/developers/${ config.developer_id }/plugins/${ config.plugin_id }/tags.json`;
-const boundary = `----${ Date.now().toString( 16 ) }`;
-const contentMd5 = "";
-const date = new Date().toUTCString();
-const stringToSign = [
-    "POST",
-    contentMd5,
-    `multipart/form-data; boundary=${ boundary }`,
-    date,
-    resourceUrl
-].join( "\n" );
-const signature = createHmac( "sha256", config.secret_key )
-    .update( stringToSign )
-    .digest( "hex" );
-const authorization = `FS ${ config.developer_id }:${ config.public_key }:${ Buffer.from( signature, "utf8" ).toString( "base64" ).replace( /=/g, "" ) }`;
+const apiToken = process.env.FREEMIUS_API_TOKEN || config.api_token;
+
+if ( typeof apiToken !== "string" || apiToken.trim() === "" ) {
+    throw new Error( "Missing Freemius API token. Set FREEMIUS_API_TOKEN or add api_token to fs-config.json." );
+}
+
+const resourceUrl = `/v1/products/${ config.plugin_id }/tags.json`;
 
 if ( dryRun ) {
-    console.info( `Validated Freemius deploy configuration for '${ zipName }'.` );
+    console.info( `Validated Freemius bearer deploy configuration for '${ zipName }'.` );
     console.info( `Ready to POST to https://api.freemius.com${ resourceUrl }` );
     process.exit( 0 );
 }
 
 const zipBuffer = await readFile( zipPath );
-const body = Buffer.concat( [
-    Buffer.from(
-        `--${ boundary }\r\n`
-        + `Content-Disposition: form-data; name="add_contributor"\r\n\r\n`
-        + `true\r\n`
-        + `--${ boundary }\r\n`
-        + `Content-Disposition: form-data; name="file"; filename="${ zipName }"\r\n`
-        + "Content-Type: application/zip\r\n\r\n",
-        "utf8"
-    ),
-    zipBuffer,
-    Buffer.from( `\r\n--${ boundary }--\r\n`, "utf8" )
-] );
+const form = new FormData();
+form.set( "file", new Blob( [ zipBuffer ], { type: "application/zip" } ), zipName );
 
 const response = await fetch( `https://api.freemius.com${ resourceUrl }`, {
     method: "POST",
     headers: {
-        "Authorization": authorization,
-        "Content-MD5": contentMd5,
-        "Content-Type": `multipart/form-data; boundary=${ boundary }`,
-        "Date": date
+        "Authorization": `Bearer ${ apiToken }`,
     },
-    body
+    body: form
 } );
 
 const responseText = await response.text();

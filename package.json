@@ -29,6 +29,7 @@
     "composer:update": "composer update --optimize-autoloader",
     "composer:refresh": "composer dump-autoload --optimize",
     "package:create-zip": "npm run build && npm run i18n && npm run composer:refresh && node build/create-zip.mjs",
+    "package:download-free": "node build/download-free.mjs",
     "package:deploy": "node build/freemius-deploy.mjs"
   },
   "devDependencies": {

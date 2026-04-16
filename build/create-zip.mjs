@@ -10,7 +10,10 @@ const pkg = JSON.parse( await readFile( join( rootDir, "package.json" ), { encod
 const archiveName = `${ pkg.name }.v${ pkg.version }.zip`;
 const archivePath = join( rootDir, "dist", archiveName );
 const includePatterns = [
+    "composer.json",
     "fooconvert.php",
+    "LICENSE",
+    "readme.txt",
     "assets/**/*",
     "includes/**/*",
     "languages/**/*",
