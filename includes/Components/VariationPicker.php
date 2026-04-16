@@ -134,6 +134,13 @@ class VariationPicker {
             unset( $picker['availability'] );
         }
 
+        $priority = $this->normalize_priority( $picker['priority'] ?? null );
+        if ( null !== $priority ) {
+            $picker['priority'] = $priority;
+        } else {
+            unset( $picker['priority'] );
+        }
+
         return $picker;
     }
 
@@ -180,6 +187,20 @@ class VariationPicker {
         }
 
         return sanitize_key( $raw_value );
+    }
+
+    /**
+     * Normalizes a picker priority.
+     *
+     * @param mixed $raw_priority Raw picker priority.
+     * @return ?int
+     */
+    private function normalize_priority( $raw_priority ): ?int {
+        if ( is_numeric( $raw_priority ) ) {
+            return intval( $raw_priority );
+        }
+
+        return null;
     }
 
     /**

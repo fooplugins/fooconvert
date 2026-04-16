@@ -8,10 +8,32 @@ import { useDispatch, useSelect } from "@wordpress/data";
 import { store as editorStore } from "@wordpress/editor";
 import { useEffect, useMemo, useRef, useState } from "@wordpress/element";
 import { __, sprintf } from "@wordpress/i18n";
+import { Icon, arrowDown, arrowUp, starFilled } from "@wordpress/icons";
 
 const FILTER_ALL = "all";
 const CLASS_NAME = "fc--variation-picker";
 const POPUP_TYPE_META_KEY = "_fooconvert_popup_type";
+const SORT_RECOMMENDED = "recommended";
+const SORT_TITLE_ASC = "title-asc";
+const SORT_TITLE_DESC = "title-desc";
+
+const SORT_OPTIONS = [
+    {
+        icon: starFilled,
+        label: __( "Recommended", "fooconvert" ),
+        value: SORT_RECOMMENDED,
+    },
+    {
+        icon: arrowUp,
+        label: __( "Name (A-Z)", "fooconvert" ),
+        value: SORT_TITLE_ASC,
+    },
+    {
+        icon: arrowDown,
+        label: __( "Name (Z-A)", "fooconvert" ),
+        value: SORT_TITLE_DESC,
+    },
+];
 
 const getFirstString = ( ...values ) => {
     for ( const value of values ) {
@@ -39,20 +61,7 @@ const getPickerCategory = variation => {
 const getPreviewUrl = variation => {
     const picker = getPickerData( variation );
     const preview = getFirstString( picker?.preview, variation?.preview, variation?.screenshot );
-    if ( preview ) {
-        return preview;
-    }
-
-    const thumbnail = getFirstString( variation?.thumbnail );
-    if ( !thumbnail ) {
-        return "";
-    }
-
-    if ( thumbnail.includes( "/media/templates/" ) ) {
-        return thumbnail.replace( "/media/templates/", "/media/templates/fullsize/" );
-    }
-
-    return thumbnail;
+    return preview || "";
 };
 
 const getThumbnailUrl = variation => {
@@ -77,6 +86,11 @@ const getPickerTags = variation => {
 const getPickerAvailability = variation => {
     const picker = getPickerData( variation );
     return getFirstString( picker?.availability ).toLocaleLowerCase();
+};
+
+const getPickerPriority = variation => {
+    const picker = getPickerData( variation );
+    return Number.isFinite( picker?.priority ) ? picker.priority : 0;
 };
 
 const getMonogram = title => {
@@ -167,6 +181,7 @@ const VariationPicker = ( {
     const [ selectedCategory, setSelectedCategory ] = useState( FILTER_ALL );
     const [ selectedTag, setSelectedTag ] = useState( FILTER_ALL );
     const [ availability, setAvailability ] = useState( FILTER_ALL );
+    const [ sortBy, setSortBy ] = useState( SORT_RECOMMENDED );
     const [ previewState, setPreviewState ] = useState( null );
     const [ proModal, setProModal ] = useState( { open: false, upsell: undefined } );
 
@@ -196,6 +211,7 @@ const VariationPicker = ( {
             const category = getPickerCategory( variation );
             const tags = getPickerTags( variation );
             const availabilityKey = getPickerAvailability( variation );
+            const priority = getPickerPriority( variation );
             const tagValues = tags.map( tag => tag.value );
             const tagLabels = tags.map( tag => tag.label );
 
@@ -215,6 +231,7 @@ const VariationPicker = ( {
                 tagValues,
                 tagLabels,
                 availability: availabilityKey,
+                priority,
                 thumbnailUrl: getThumbnailUrl( variation ),
                 previewUrl: getPreviewUrl( variation ),
                 isPro: availabilityKey === "pro",
@@ -339,20 +356,36 @@ const VariationPicker = ( {
             } )
             .sort( ( left, right ) => {
                 if ( left.categoryKey === "blank" && right.categoryKey !== "blank" ) {
-                    return -1;
-                }
-                if ( right.categoryKey === "blank" && left.categoryKey !== "blank" ) {
                     return 1;
                 }
+                if ( right.categoryKey === "blank" && left.categoryKey !== "blank" ) {
+                    return -1;
+                }
+
+                if ( sortBy === SORT_TITLE_ASC ) {
+                    return left.title.localeCompare( right.title );
+                }
+
+                if ( sortBy === SORT_TITLE_DESC ) {
+                    return right.title.localeCompare( left.title );
+                }
+
+                if ( left.priority !== right.priority ) {
+                    return right.priority - left.priority;
+                }
+
                 if ( left.isPro !== right.isPro ) {
-                    return left.isPro ? 1 : -1;
+                    return left.isPro ? -1 : 1;
                 }
                 if ( left.popupType !== right.popupType ) {
                     return left.popupTypeLabel.localeCompare( right.popupTypeLabel );
                 }
+                if ( left.categoryLabel !== right.categoryLabel ) {
+                    return left.categoryLabel.localeCompare( right.categoryLabel );
+                }
                 return left.title.localeCompare( right.title );
             } );
-    }, [ availability, libraryItems, search, selectedCategory, selectedPopupType, selectedTag ] );
+    }, [ availability, libraryItems, search, selectedCategory, selectedPopupType, selectedTag, sortBy ] );
 
     const filtersAreDirty = search !== "" || selectedPopupType !== FILTER_ALL || selectedCategory !== FILTER_ALL || selectedTag !== FILTER_ALL || availability !== FILTER_ALL;
 
@@ -548,6 +581,15 @@ const VariationPicker = ( {
                                 { __( "Search by name, use case, or tag.", "fooconvert" ) }
                             </p>
                         </div>
+                        <div className="fc-variation-picker__toolbar-count">
+                            <span className="fc-variation-picker__result-count">
+                                { sprintf(
+                                    /* translators: %d: number of templates */
+                                    __( "%d templates", "fooconvert" ),
+                                    filteredItems.length
+                                ) }
+                            </span>
+                        </div>
                         <div className="fc-variation-picker__toolbar-search">
                             <SearchControl
                                 __nextHasNoMarginBottom
@@ -558,13 +600,31 @@ const VariationPicker = ( {
                             />
                         </div>
                         <div className="fc-variation-picker__toolbar-meta">
-                            <span className="fc-variation-picker__result-count">
-                                { sprintf(
-                                    /* translators: %d: number of templates */
-                                    __( "%d templates", "fooconvert" ),
-                                    filteredItems.length
-                                ) }
-                            </span>
+                            <div
+                                className="fc-variation-picker__toolbar-sort"
+                                role="group"
+                                aria-label={ __( "Sort templates", "fooconvert" ) }
+                            >
+                                { SORT_OPTIONS.map( option => (
+                                    <button
+                                        key={ option.value }
+                                        type="button"
+                                        className={ classNames( "fc-variation-picker__sort-button", {
+                                            "is-active": sortBy === option.value,
+                                        } ) }
+                                        aria-pressed={ sortBy === option.value }
+                                        aria-label={ option.label }
+                                        title={ option.label }
+                                        onClick={ () => setSortBy( option.value ) }
+                                    >
+                                        <Icon
+                                            icon={ option.icon }
+                                            size={ 16 }
+                                            className="fc-variation-picker__sort-icon"
+                                        />
+                                    </button>
+                                ) ) }
+                            </div>
                             { filtersAreDirty && (
                                 <Button
                                     size="compact"

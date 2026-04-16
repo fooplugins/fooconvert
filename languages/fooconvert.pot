@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-04-15T17:37:49+00:00\n"
+"POT-Creation-Date: 2026-04-16T14:42:41+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: fooconvert\n"
@@ -39,55 +39,55 @@ msgstr ""
 msgid "https://fooplugins.com/"
 msgstr ""
 
-#: includes/Admin/Dashboard.php:46
+#: includes/Admin/Dashboard.php:41
 #: includes/Admin/Stats.php:96
 msgid "Invalid nonce!!"
 msgstr ""
 
-#: includes/Admin/Dashboard.php:51
+#: includes/Admin/Dashboard.php:45
 msgid "You do not have permission to access this page."
 msgstr ""
 
-#: includes/Admin/Dashboard.php:58
+#: includes/Admin/Dashboard.php:51
 #: includes/Admin/Stats.php:210
 msgid "Nonce is not set."
 msgstr ""
 
-#: includes/Admin/Dashboard.php:76
+#: includes/Admin/Dashboard.php:69
 msgid "Dashboard task is not set."
 msgstr ""
 
-#: includes/Admin/Dashboard.php:145
+#: includes/Admin/Dashboard.php:138
 msgid "Invalid dashboard task!"
 msgstr ""
 
-#: includes/Admin/Dashboard.php:162
+#: includes/Admin/Dashboard.php:155
 msgid "Panel is not set."
 msgstr ""
 
-#: includes/Admin/Dashboard.php:170
+#: includes/Admin/Dashboard.php:163
 msgid "Panel hidden."
 msgstr ""
 
-#: includes/Admin/Dashboard.php:195
+#: includes/Admin/Dashboard.php:185
 msgid "No popups created!"
 msgstr ""
 
 #. Translators: %d refers to the number of demo popups created.
-#: includes/Admin/Dashboard.php:198
+#: includes/Admin/Dashboard.php:188
 #, php-format
 msgid "%d demo popups created successfully!"
 msgstr ""
 
-#: includes/Admin/Dashboard.php:216
+#: includes/Admin/Dashboard.php:206
 msgid "All demo popups deleted!"
 msgstr ""
 
-#: includes/Admin/Dashboard.php:267
+#: includes/Admin/Dashboard.php:257
 msgid "FooConvert Dashboard"
 msgstr ""
 
-#: includes/Admin/Dashboard.php:268
+#: includes/Admin/Dashboard.php:258
 msgid "Dashboard"
 msgstr ""
 
@@ -105,61 +105,64 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
+#: includes/Admin/Init.php:46
 #: includes/Admin/Init.php:47
-#: includes/Admin/Init.php:48
 msgid "FooConvert"
 msgstr ""
 
+#: includes/Admin/Init.php:72
 #: includes/Admin/Init.php:73
-#: includes/Admin/Init.php:74
 msgid "Choose Popup Type"
 msgstr ""
 
-#: includes/Admin/Init.php:155
+#: includes/Admin/Init.php:135
 #: includes/functions.php:221
+#: src/editor/components/popup-type/components/template-picker/Component.js:16
 #: src/editor/hooks/usePostTypeLabels.js:12
 msgid "Bar"
 msgstr ""
 
-#: includes/Admin/Init.php:156
+#: includes/Admin/Init.php:136
 msgid "Create a top or bottom bar with triggers, display rules, and templates."
 msgstr ""
 
-#: includes/Admin/Init.php:159
+#: includes/Admin/Init.php:139
 #: includes/functions.php:223
+#: src/editor/components/popup-type/components/template-picker/Component.js:21
 #: src/editor/hooks/usePostTypeLabels.js:16
 msgid "Flyout"
 msgstr ""
 
-#: includes/Admin/Init.php:160
+#: includes/Admin/Init.php:140
 msgid "Create a side flyout with template variations and the usual FooConvert controls."
 msgstr ""
 
-#: includes/Admin/Init.php:163
+#: includes/Admin/Init.php:143
 #: includes/functions.php:225
+#: src/editor/components/popup-type/components/template-picker/Component.js:26
 #: src/editor/hooks/usePostTypeLabels.js:20
 msgid "Overlay"
 msgstr ""
 
-#: includes/Admin/Init.php:164
+#: includes/Admin/Init.php:144
 msgid "Create a centered overlay and continue into the normal template picker flow."
 msgstr ""
 
-#: includes/Admin/Init.php:169
+#: includes/Admin/Init.php:149
 msgid "Choose a Popup Type"
 msgstr ""
 
-#: includes/Admin/Init.php:170
+#: includes/Admin/Init.php:150
 msgid "Pick the kind of popup you want to create before choosing a template."
 msgstr ""
 
 #. translators: %s is the popup type card title, for example "Bar" or "Overlay".
-#: includes/Admin/Init.php:180
+#: includes/Admin/Init.php:160
 #, php-format
 msgid "Create %s"
 msgstr ""
 
-#: includes/Admin/Init.php:190
+#: includes/Admin/Init.php:170
 msgid "Back to popups"
 msgstr ""
 
@@ -177,6 +180,7 @@ msgstr ""
 
 #: includes/Admin/LeadsTable.php:50
 #: includes/Blocks/SignUp.php:87
+#: includes/Components/VariationPicker.php:60
 #: src/blocks/sign-up/editor/components/inputs/EditBlock.js:21
 #: src/blocks/sign-up/editor/Edit.js:22
 msgid "Email"
@@ -594,13 +598,13 @@ msgid "Events"
 msgstr ""
 
 #: includes/Admin/Stats.php:139
-#: includes/functions.php:472
+#: includes/functions.php:470
 #: pro/includes/Experiments/Admin/Init.php:863
 msgid "Views"
 msgstr ""
 
 #: includes/Admin/Stats.php:147
-#: includes/functions.php:464
+#: includes/functions.php:462
 msgid "Engagements"
 msgstr ""
 
@@ -630,23 +634,24 @@ msgstr ""
 msgid "Digital download signup lead magnet bar."
 msgstr ""
 
-#: includes/Admin/Templates/bars/digital_download_signup.php:108
+#: includes/Admin/Templates/bars/digital_download_signup.php:114
 msgid "Grow Your Traffic in 7 Days – Download our FREE Guide!"
 msgstr ""
 
-#: includes/Admin/Templates/bars/digital_download_signup.php:127
+#: includes/Admin/Templates/bars/digital_download_signup.php:133
 msgid "Thanks! Please check your inbox."
 msgstr ""
 
-#: includes/Admin/Templates/bars/digital_download_signup.php:134
+#: includes/Admin/Templates/bars/digital_download_signup.php:140
 msgid "Enter your email..."
 msgstr ""
 
-#: includes/Admin/Templates/bars/digital_download_signup.php:164
+#: includes/Admin/Templates/bars/digital_download_signup.php:170
+#: includes/Components/VariationPicker.php:57
 msgid "Download"
 msgstr ""
 
-#: includes/Admin/Templates/bars/digital_download_signup.php:206
+#: includes/Admin/Templates/bars/digital_download_signup.php:212
 msgid "Proven tips used by 7,000+ brands to boost traffic!"
 msgstr ""
 
@@ -660,28 +665,28 @@ msgstr ""
 msgid "Newsletter Subscribe marketing themed bar."
 msgstr ""
 
-#: includes/Admin/Templates/bars/newsletter_subscribe.php:143
-#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:106
+#: includes/Admin/Templates/bars/newsletter_subscribe.php:149
+#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:112
 msgid "Get FREE Weekly Tips to help Grow Your business..."
 msgstr ""
 
-#: includes/Admin/Templates/bars/newsletter_subscribe.php:171
-#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:123
+#: includes/Admin/Templates/bars/newsletter_subscribe.php:177
+#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:129
 msgid "Join 5,000+ readers getting exclusive content &amp; tools."
 msgstr ""
 
-#: includes/Admin/Templates/bars/newsletter_subscribe.php:204
-#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:173
+#: includes/Admin/Templates/bars/newsletter_subscribe.php:210
+#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:179
 msgid "Your email address"
 msgstr ""
 
-#: includes/Admin/Templates/bars/newsletter_subscribe.php:236
-#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:166
+#: includes/Admin/Templates/bars/newsletter_subscribe.php:242
+#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:172
 msgid "Thanks for joining!"
 msgstr ""
 
-#: includes/Admin/Templates/bars/newsletter_subscribe.php:241
-#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:205
+#: includes/Admin/Templates/bars/newsletter_subscribe.php:247
+#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:211
 msgid "Join The List"
 msgstr ""
 
@@ -695,18 +700,18 @@ msgstr ""
 msgid "A smart exit offer bar lead magnet to help prevent visitors from leaving your site."
 msgstr ""
 
-#: includes/Admin/Templates/bars/smart_exit_offer.php:124
-#: includes/Admin/Templates/overlays/smart_exit_offer.php:111
+#: includes/Admin/Templates/bars/smart_exit_offer.php:130
+#: includes/Admin/Templates/overlays/smart_exit_offer.php:117
 msgid "HEY... Don’t Go Yet!"
 msgstr ""
 
-#: includes/Admin/Templates/bars/smart_exit_offer.php:153
-#: includes/Admin/Templates/overlays/smart_exit_offer.php:145
+#: includes/Admin/Templates/bars/smart_exit_offer.php:159
+#: includes/Admin/Templates/overlays/smart_exit_offer.php:151
 msgid "Take 10% Off Your First Order – Our Treat!"
 msgstr ""
 
-#: includes/Admin/Templates/bars/smart_exit_offer.php:252
-#: includes/Admin/Templates/overlays/smart_exit_offer.php:245
+#: includes/Admin/Templates/bars/smart_exit_offer.php:258
+#: includes/Admin/Templates/overlays/smart_exit_offer.php:251
 msgid "Only available while you’re still here..."
 msgstr ""
 
@@ -734,15 +739,15 @@ msgstr ""
 msgid "Guide visitors to a watch a specific video."
 msgstr ""
 
-#: includes/Admin/Templates/bars/watch_the_video.php:95
-#: includes/Admin/Templates/flyouts/watch_the_video.php:85
-#: includes/Admin/Templates/overlays/watch_the_video.php:58
+#: includes/Admin/Templates/bars/watch_the_video.php:101
+#: includes/Admin/Templates/flyouts/watch_the_video.php:91
+#: includes/Admin/Templates/overlays/watch_the_video.php:64
 msgid "Add video description..."
 msgstr ""
 
-#: includes/Admin/Templates/bars/watch_the_video.php:131
-#: includes/Admin/Templates/flyouts/watch_the_video.php:133
-#: includes/Admin/Templates/overlays/watch_the_video.php:108
+#: includes/Admin/Templates/bars/watch_the_video.php:137
+#: includes/Admin/Templates/flyouts/watch_the_video.php:139
+#: includes/Admin/Templates/overlays/watch_the_video.php:114
 msgid "Watch the video"
 msgstr ""
 
@@ -762,11 +767,11 @@ msgstr ""
 msgid "Digital download signup themed overlay."
 msgstr ""
 
-#: includes/Admin/Templates/overlays/digital_download_signup.php:197
+#: includes/Admin/Templates/overlays/digital_download_signup.php:203
 msgid "Digital Marketing"
 msgstr ""
 
-#: includes/Admin/Templates/overlays/digital_download_signup.php:198
+#: includes/Admin/Templates/overlays/digital_download_signup.php:204
 msgid "Digital marketing themed overlay."
 msgstr ""
 
@@ -774,11 +779,11 @@ msgstr ""
 msgid "Newsletter Subscribe marketing themed overlay."
 msgstr ""
 
-#: includes/Admin/Templates/overlays/newsletter_subscribe.php:264
+#: includes/Admin/Templates/overlays/newsletter_subscribe.php:270
 msgid "i-Cafe"
 msgstr ""
 
-#: includes/Admin/Templates/overlays/newsletter_subscribe.php:265
+#: includes/Admin/Templates/overlays/newsletter_subscribe.php:271
 msgid "i-Cafe marketing themed overlay."
 msgstr ""
 
@@ -1089,30 +1094,30 @@ msgid "%s Activity"
 msgstr ""
 
 #: includes/Blocks/Countdown.php:81
-#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:189
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:254
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:193
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:258
 #: src/blocks/countdown/editor/Edit.js:19
 msgid "Days"
 msgstr ""
 
 #: includes/Blocks/Countdown.php:85
-#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:190
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:255
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:194
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:259
 #: src/blocks/countdown/editor/Edit.js:20
 msgid "Hours"
 msgstr ""
 
 #: includes/Blocks/Countdown.php:89
-#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:191
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:256
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:195
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:260
 #: src/blocks/countdown/editor/components/container/EditSettings.js:95
 #: src/blocks/countdown/editor/Edit.js:21
 msgid "Minutes"
 msgstr ""
 
 #: includes/Blocks/Countdown.php:93
-#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:192
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:257
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:196
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:261
 #: src/blocks/countdown/editor/Edit.js:22
 msgid "Seconds"
 msgstr ""
@@ -1256,6 +1261,63 @@ msgstr ""
 msgid "The amount of time to wait before opening."
 msgstr ""
 
+#: includes/Components/VariationPicker.php:18
+msgid "Start from scratch"
+msgstr ""
+
+#: includes/Components/VariationPicker.php:21
+msgid "Commerce"
+msgstr ""
+
+#: includes/Components/VariationPicker.php:24
+msgid "Lead capture"
+msgstr ""
+
+#: includes/Components/VariationPicker.php:27
+#: includes/Components/VariationPicker.php:78
+msgid "Video"
+msgstr ""
+
+#: includes/Components/VariationPicker.php:30
+msgid "Compliance"
+msgstr ""
+
+#: includes/Components/VariationPicker.php:33
+msgid "Promotion"
+msgstr ""
+
+#: includes/Components/VariationPicker.php:48
+msgid "Blank"
+msgstr ""
+
+#: includes/Components/VariationPicker.php:51
+msgid "Countdown"
+msgstr ""
+
+#: includes/Components/VariationPicker.php:54
+msgid "Cookie"
+msgstr ""
+
+#: includes/Components/VariationPicker.php:63
+msgid "Ecommerce"
+msgstr ""
+
+#: includes/Components/VariationPicker.php:66
+msgid "Exit intent"
+msgstr ""
+
+#: includes/Components/VariationPicker.php:69
+msgid "Newsletter"
+msgstr ""
+
+#: includes/Components/VariationPicker.php:72
+msgid "Offer"
+msgstr ""
+
+#: includes/Components/VariationPicker.php:75
+msgid "Seasonal"
+msgstr ""
+
 #: includes/DisplayRules.php:61
 msgid "Display rules for FooConvert."
 msgstr ""
@@ -1263,7 +1325,6 @@ msgstr ""
 #: includes/DisplayRules.php:181
 #: includes/DisplayRules.php:188
 #: includes/DisplayRules.php:201
-#: src/editor/components/display-rules-button/Component.js:178
 msgid "Display Rules"
 msgstr ""
 
@@ -1291,9 +1352,9 @@ msgstr ""
 
 #: includes/DisplayRules.php:322
 #: includes/DisplayRules.php:340
-#: src/editor/components/display-rules/components/content-control/Component.js:75
-#: src/editor/components/display-rules/components/content-control/Component.js:84
-#: src/editor/components/display-rules/components/content-control/Component.js:93
+#: src/editor/components/display-rules/components/content-control/Component.js:82
+#: src/editor/components/display-rules/components/content-control/Component.js:91
+#: src/editor/components/display-rules/components/content-control/Component.js:100
 #: src/editor/components/open-trigger-component/Component.js:269
 #: src/editor/components/typography-tools-panel/Component.js:219
 #: src/editor/components/typography-tools-panel/Component.js:253
@@ -1312,8 +1373,7 @@ msgid "Hide from"
 msgstr ""
 
 #: includes/DisplayRules.php:370
-#: src/editor/components/display-rules-button/Component.js:105
-#: src/editor/components/display-rules/components/content-control/Component.js:53
+#: src/editor/components/display-rules/components/content-control/Component.js:60
 #: src/scripts/admin/display-rules-list/index.js:221
 #: src/scripts/admin/display-rules-list/index.js:318
 msgid "Users"
@@ -1445,68 +1505,68 @@ msgstr ""
 msgid "The Google Font family code, for example \"Handlee\" or \"Montserrat:ital,wght@0,100..900;1,100..900\"."
 msgstr ""
 
-#: includes/functions.php:463
+#: includes/functions.php:461
 msgid "engagements"
 msgstr ""
 
-#: includes/functions.php:465
+#: includes/functions.php:463
 msgid "Total number of engagements"
 msgstr ""
 
-#: includes/functions.php:471
+#: includes/functions.php:469
 #: pro/includes/WooCommerce/Triggers.php:283
 msgid "views"
 msgstr ""
 
-#: includes/functions.php:473
+#: includes/functions.php:471
 msgid "Total number of views"
 msgstr ""
 
-#: includes/functions.php:513
+#: includes/functions.php:511
 msgid "ago"
 msgstr ""
 
-#: includes/functions.php:541
+#: includes/functions.php:539
 msgid "Never"
 msgstr ""
 
-#: includes/functions.php:623
+#: includes/functions.php:621
 msgid "Lead Integrations"
 msgstr ""
 
-#: includes/functions.php:624
+#: includes/functions.php:622
 msgid "Send captured leads to Mailchimp, MailPoet, or custom webhook integrations."
 msgstr ""
 
-#: includes/functions.php:628
+#: includes/functions.php:626
 msgid "Longer Retention"
 msgstr ""
 
-#: includes/functions.php:629
+#: includes/functions.php:627
 msgid "Longer retention period for popup analytics. Track popup performance as long as you like!"
 msgstr ""
 
-#: includes/functions.php:633
+#: includes/functions.php:631
 msgid "Advanced Analytics"
 msgstr ""
 
-#: includes/functions.php:634
+#: includes/functions.php:632
 msgid "Advanced popup analytics: Clicks, click-through-rates, conversions, conversion rates, engagement sentiment, engagement ratios, daily activity charts."
 msgstr ""
 
-#: includes/functions.php:638
+#: includes/functions.php:636
 msgid "More Dashboard Metrics"
 msgstr ""
 
-#: includes/functions.php:639
+#: includes/functions.php:637
 msgid "Top Performers by Engagement Rate, Clicks, Click Rate, Conversions, Conversion Rate."
 msgstr ""
 
-#: includes/functions.php:643
+#: includes/functions.php:641
 msgid "Role Exclusion"
 msgstr ""
 
-#: includes/functions.php:644
+#: includes/functions.php:642
 msgid "Exclude roles from logging popup events for analytics (e.g., exclude admin tests)."
 msgstr ""
 
@@ -1520,19 +1580,19 @@ msgstr ""
 msgid "A blank slate that you can use to build your own bar from scratch."
 msgstr ""
 
-#: includes/Popups/Bar.php:130
+#: includes/Popups/Bar.php:135
 msgid "Black Friday Bar"
 msgstr ""
 
-#: includes/Popups/Bar.php:131
+#: includes/Popups/Bar.php:136
 msgid "A typical Black Friday bar to help drive sales."
 msgstr ""
 
-#: includes/Popups/Bar.php:247
+#: includes/Popups/Bar.php:258
 msgid "Cookie Consent Bar"
 msgstr ""
 
-#: includes/Popups/Bar.php:248
+#: includes/Popups/Bar.php:259
 msgid "A simple bottom bar that is dismissed when the button is clicked."
 msgstr ""
 
@@ -1540,11 +1600,11 @@ msgstr ""
 msgid "A blank slate that you can use to build your own flyout from scratch."
 msgstr ""
 
-#: includes/Popups/Flyout.php:130
+#: includes/Popups/Flyout.php:135
 msgid "Black Friday Flyout"
 msgstr ""
 
-#: includes/Popups/Flyout.php:131
+#: includes/Popups/Flyout.php:136
 msgid "A typical Black Friday flyout to help drive sales."
 msgstr ""
 
@@ -1552,11 +1612,11 @@ msgstr ""
 msgid "A blank slate that you can use to build your own overlay from scratch."
 msgstr ""
 
-#: includes/Popups/Overlay.php:115
+#: includes/Popups/Overlay.php:120
 msgid "Black Friday Overlay"
 msgstr ""
 
-#: includes/Popups/Overlay.php:116
+#: includes/Popups/Overlay.php:121
 msgid "A typical Black Friday overlay to help drive sales."
 msgstr ""
 
@@ -1625,20 +1685,20 @@ msgstr ""
 msgid "A low-friction shipping progress bar with a compact coupon action."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:143
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:147
 msgid "Free shipping is close."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:163
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:167
 msgid "You are almost there."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:240
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:244
 msgid "Apply the coupon, then keep moving."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:291
-#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:354
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:295
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:358
 msgid "Apply code"
 msgstr ""
 
@@ -1650,31 +1710,31 @@ msgstr ""
 msgid "An airy post-add-to-cart flyout that keeps the basket building momentum going."
 msgstr ""
 
-#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:121
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:125
 msgid "Added to cart"
 msgstr ""
 
-#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:141
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:145
 msgid "Build the basket while the moment is warm."
 msgstr ""
 
-#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:160
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:164
 msgid "Use the offer now, then keep browsing for the pieces that make sense together."
 msgstr ""
 
-#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:254
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:258
 msgid "Round out the order with one more item."
 msgstr ""
 
-#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:261
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:265
 msgid "Keep the cart closer to free shipping."
 msgstr ""
 
-#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:268
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:272
 msgid "Use the offer before you move on."
 msgstr ""
 
-#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:396
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:400
 msgid "Continue shopping"
 msgstr ""
 
@@ -1686,28 +1746,28 @@ msgstr ""
 msgid "A dense cart recovery popup with a strong FOMO countdown."
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:124
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:128
 msgid "Cart paused"
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:144
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:148
 msgid "Your cart is waiting."
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:163
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:167
 msgid "Apply the code now before this session closes."
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:299
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:303
 msgid "Apply now"
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:338
-#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:332
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:342
+#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:336
 msgid "One tap applies the offer."
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:358
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:362
 msgid "One quick step and your cart is saved."
 msgstr ""
 
@@ -1719,29 +1779,29 @@ msgstr ""
 msgid "A compact checkout recovery popup with a concise rescue offer."
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:138
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:142
 msgid "Checkout rescue"
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:158
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:162
 msgid "Finish your order."
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:177
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:181
 msgid "Apply the code and keep checkout moving."
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:192
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:196
 msgid "This helps keep your order on track."
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:331
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:335
 #: pro/includes/Blocks/ApplyCoupon.php:93
 #: pro/src/blocks/apply-coupon/editor/Edit.js:23
 msgid "Apply"
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:370
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:374
 msgid "Click the button to apply the coupon."
 msgstr ""
 
@@ -1753,23 +1813,23 @@ msgstr ""
 msgid "An airy product offer popup with a promotional split layout."
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:147
+#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:151
 msgid "Product offer"
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:167
+#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:171
 msgid "A better way to buy this item."
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:186
+#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:190
 msgid "Apply the code below to unlock the offer on this order."
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:201
+#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:205
 msgid "A simple offer for the right moment."
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:293
+#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:297
 msgid "Use offer"
 msgstr ""
 
@@ -2074,6 +2134,34 @@ msgstr ""
 
 #: pro/includes/Blocks/ApplyCoupon.php:146
 msgid "Coupon saved. It will be applied when the cart or checkout is available."
+msgstr ""
+
+#: pro/includes/Components/VariationPicker.php:26
+msgid "Recovery"
+msgstr ""
+
+#: pro/includes/Components/VariationPicker.php:43
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:120
+#: src/editor/icons/default/index.js:38
+msgid "Cart"
+msgstr ""
+
+#: pro/includes/Components/VariationPicker.php:46
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:121
+msgid "Checkout"
+msgstr ""
+
+#: pro/includes/Components/VariationPicker.php:49
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:192
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:246
+#: src/blocks/coupon/editor/components/code/EditSettings.js:35
+#: src/blocks/coupon/editor/EditSettings.js:24
+msgid "Coupon"
+msgstr ""
+
+#: pro/includes/Components/VariationPicker.php:52
+#: src/blocks/countdown/editor/components/container/EditSettings.js:38
+msgid "FOMO"
 msgstr ""
 
 #: pro/includes/DisplayRules/WooCommerce.php:31
@@ -2931,22 +3019,22 @@ msgid "Mailchimp API key is required when integration is enabled"
 msgstr ""
 
 #: pro/includes/Leads/Integrations/MailchimpIntegration.php:172
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:115
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:116
 msgid "List"
 msgstr ""
 
 #: pro/includes/Leads/Integrations/MailchimpIntegration.php:173
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:116
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:117
 msgid "Select the list to which leads will be added."
 msgstr ""
 
 #: pro/includes/Leads/Integrations/MailchimpIntegration.php:176
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:119
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:120
 msgid "Select a list"
 msgstr ""
 
 #: pro/includes/Leads/Integrations/MailchimpIntegration.php:193
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:138
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:139
 msgid "No lists found. Please get lists via the \"Get Lists\" button."
 msgstr ""
 
@@ -2955,7 +3043,7 @@ msgid "Test Mailchimp"
 msgstr ""
 
 #: pro/includes/Leads/Integrations/MailchimpIntegration.php:202
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:147
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:148
 #: pro/includes/Leads/Integrations/WebhookIntegration.php:204
 msgid "Test Connection"
 msgstr ""
@@ -2967,8 +3055,8 @@ msgstr ""
 
 #: pro/includes/Leads/Integrations/MailchimpIntegration.php:224
 #: pro/includes/Leads/Integrations/MailchimpIntegration.php:226
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:162
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:164
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:163
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:165
 msgid "Get Lists"
 msgstr ""
 
@@ -2999,40 +3087,40 @@ msgstr ""
 
 #. Translators: %d is the number of lists retrieved.
 #: pro/includes/Leads/Integrations/MailchimpIntegration.php:325
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:221
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:222
 #, php-format
 msgid "%d lists retrieved successfully! Refresh the page to see the lists."
 msgstr ""
 
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:102
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:103
 msgid "MailPoet Integration"
 msgstr ""
 
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:106
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:107
 msgid "Send to MailPoet"
 msgstr ""
 
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:107
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:108
 msgid "Automatically subscribe leads to your selected MailPoet list"
 msgstr ""
 
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:145
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:146
 msgid "Test MailPoet"
 msgstr ""
 
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:189
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:190
 msgid "Successfully connected to MailPoet!"
 msgstr ""
 
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:191
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:192
 msgid "Failed to connect to MailPoet. Do you have MailPoet installed and configured correctly?"
 msgstr ""
 
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:223
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:224
 msgid "Failed to retrieve lists. Please try again."
 msgstr ""
 
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:226
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:227
 msgid "You do not have MailPoet installed or configured correctly."
 msgstr ""
 
@@ -3364,9 +3452,9 @@ msgid "Views in session"
 msgstr ""
 
 #: pro/src/blocks/apply-coupon/editor/EditBlock.js:69
-#: src/blocks/coupon/editor/components/button/EditBlock.js:60
+#: src/blocks/coupon/editor/components/button/EditBlock.js:62
 #: src/blocks/coupon/editor/EditBlock.js:38
-#: src/blocks/sign-up/editor/components/button/EditBlock.js:70
+#: src/blocks/sign-up/editor/components/button/EditBlock.js:72
 msgid "Add text..."
 msgstr ""
 
@@ -3390,7 +3478,7 @@ msgstr ""
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:179
 #: src/blocks/coupon/editor/components/code/EditSettings.js:21
 #: src/blocks/coupon/editor/components/container/EditSettings.js:31
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:29
+#: src/blocks/sign-up/editor/components/button/EditSettings.js:23
 #: src/editor/components/box-units-control/Component.js:30
 #: src/popups/bar/editor/blocks/container/blocks/close-button/EditSettings.js:24
 #: src/popups/bar/editor/blocks/open-button/EditSettings.js:21
@@ -3404,7 +3492,7 @@ msgstr ""
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:183
 #: src/blocks/coupon/editor/components/code/EditSettings.js:25
 #: src/blocks/coupon/editor/components/container/EditSettings.js:35
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:33
+#: src/blocks/sign-up/editor/components/button/EditSettings.js:27
 #: src/popups/flyout/editor/components/position-control/Component.js:59
 msgid "Center"
 msgstr ""
@@ -3413,7 +3501,7 @@ msgstr ""
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:187
 #: src/blocks/coupon/editor/components/code/EditSettings.js:29
 #: src/blocks/coupon/editor/components/container/EditSettings.js:39
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:37
+#: src/blocks/sign-up/editor/components/button/EditSettings.js:31
 #: src/editor/components/box-units-control/Component.js:28
 #: src/popups/bar/editor/blocks/container/blocks/close-button/EditSettings.js:28
 #: src/popups/bar/editor/blocks/open-button/EditSettings.js:25
@@ -3424,9 +3512,9 @@ msgid "Right"
 msgstr ""
 
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:86
-#: src/blocks/coupon/editor/components/button/EditSettings.js:81
+#: src/blocks/coupon/editor/components/button/EditSettings.js:28
 #: src/blocks/coupon/editor/components/container/EditSettings.js:68
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:122
+#: src/blocks/sign-up/editor/components/button/EditSettings.js:70
 #: src/blocks/sign-up/editor/components/form/EditSettings.js:39
 msgid "Layout"
 msgstr ""
@@ -3468,15 +3556,6 @@ msgstr ""
 msgid "Redirect destination"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:120
-#: src/editor/icons/default/index.js:38
-msgid "Cart"
-msgstr ""
-
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:121
-msgid "Checkout"
-msgstr ""
-
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:122
 #: src/editor/components/size-control/Component.js:53
 msgid "Custom"
@@ -3498,13 +3577,6 @@ msgstr ""
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:141
 #: src/blocks/coupon/editor/components/container/EditSettings.js:121
 msgid "Hide the label for the coupon."
-msgstr ""
-
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:192
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:246
-#: src/blocks/coupon/editor/components/code/EditSettings.js:35
-#: src/blocks/coupon/editor/EditSettings.js:24
-msgid "Coupon"
 msgstr ""
 
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:199
@@ -3551,9 +3623,9 @@ msgid "Block"
 msgstr ""
 
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:249
-#: src/blocks/coupon/editor/components/button/EditSettings.js:79
+#: src/blocks/coupon/editor/components/button/EditSettings.js:26
 #: src/blocks/coupon/editor/EditSettings.js:27
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:120
+#: src/blocks/sign-up/editor/components/button/EditSettings.js:68
 #: src/blocks/sign-up/editor/EditSettings.js:24
 msgid "Button"
 msgstr ""
@@ -3763,10 +3835,6 @@ msgstr ""
 msgid "Inline"
 msgstr ""
 
-#: src/blocks/countdown/editor/components/container/EditSettings.js:38
-msgid "FOMO"
-msgstr ""
-
 #: src/blocks/countdown/editor/components/container/EditSettings.js:41
 msgid "Specific"
 msgstr ""
@@ -3835,11 +3903,10 @@ msgstr ""
 
 #: src/blocks/countdown/editor/components/container/EditStyles.js:19
 #: src/blocks/countdown/editor/components/segment/EditStyles.js:26
-#: src/blocks/coupon/editor/components/button/EditStyles.js:30
 #: src/blocks/coupon/editor/components/code/EditStyles.js:29
 #: src/blocks/coupon/editor/components/container/EditStyles.js:26
 #: src/blocks/example-block/editor/Settings.js:43
-#: src/blocks/sign-up/editor/components/button/EditStyles.js:30
+#: src/blocks/shared/editor/buttonStyles.js:32
 #: src/blocks/sign-up/editor/components/form/EditStyles.js:26
 #: src/blocks/sign-up/editor/components/inputs/EditStyles.js:20
 #: src/popups/bar/editor/blocks/container/blocks/close-button/EditStyles.js:26
@@ -3855,10 +3922,9 @@ msgstr ""
 
 #: src/blocks/countdown/editor/components/container/EditStyles.js:44
 #: src/blocks/countdown/editor/components/segment/EditStyles.js:71
-#: src/blocks/coupon/editor/components/button/EditStyles.js:71
 #: src/blocks/coupon/editor/components/code/EditStyles.js:68
 #: src/blocks/coupon/editor/components/container/EditStyles.js:68
-#: src/blocks/sign-up/editor/components/button/EditStyles.js:71
+#: src/blocks/shared/editor/buttonStyles.js:73
 #: src/blocks/sign-up/editor/components/form/EditStyles.js:67
 #: src/blocks/sign-up/editor/components/inputs/EditStyles.js:57
 #: src/editor/components/dimension-tools-panel/Component.js:47
@@ -3871,11 +3937,10 @@ msgid "Segment"
 msgstr ""
 
 #: src/blocks/countdown/editor/components/segment/EditStyles.js:31
-#: src/blocks/coupon/editor/components/button/EditStyles.js:35
 #: src/blocks/coupon/editor/components/code/EditStyles.js:34
 #: src/blocks/coupon/editor/components/container/EditStyles.js:31
 #: src/blocks/example-block/editor/Settings.js:49
-#: src/blocks/sign-up/editor/components/button/EditStyles.js:35
+#: src/blocks/shared/editor/buttonStyles.js:37
 #: src/blocks/sign-up/editor/components/form/EditStyles.js:31
 #: src/blocks/sign-up/editor/components/inputs/EditStyles.js:25
 #: src/popups/bar/editor/blocks/container/blocks/content/EditStyles.js:29
@@ -3892,116 +3957,14 @@ msgstr ""
 msgid "Typography (Digits)"
 msgstr ""
 
-#: src/blocks/coupon/editor/components/button/EditSettings.js:38
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:79
-#: src/editor/components/dimension-tools-panel/Component.js:94
-#: src/editor/components/icon-tools-panel/Component.js:74
-#: src/editor/components/typography-tools-panel/Component.js:33
-#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:81
-#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:81
-msgid "S"
-msgstr ""
-
-#: src/blocks/coupon/editor/components/button/EditSettings.js:39
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:80
-#: src/editor/components/dimension-tools-panel/Component.js:95
-#: src/editor/components/icon-tools-panel/Component.js:75
-#: src/editor/components/typography-tools-panel/Component.js:34
-#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:82
-#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:82
-msgid "Small"
-msgstr ""
-
-#: src/blocks/coupon/editor/components/button/EditSettings.js:42
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:83
-#: src/editor/components/dimension-tools-panel/Component.js:100
-#: src/editor/components/icon-tools-panel/Component.js:78
-#: src/editor/components/typography-tools-panel/Component.js:39
-#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:85
-#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:85
-msgid "M"
-msgstr ""
-
-#: src/blocks/coupon/editor/components/button/EditSettings.js:43
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:84
-#: src/editor/components/dimension-tools-panel/Component.js:101
-#: src/editor/components/font-appearance-control/Component.js:28
-#: src/editor/components/icon-tools-panel/Component.js:79
-#: src/editor/components/typography-tools-panel/Component.js:40
-#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:86
-#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:86
-msgid "Medium"
-msgstr ""
-
-#: src/blocks/coupon/editor/components/button/EditSettings.js:46
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:87
-#: src/editor/components/dimension-tools-panel/Component.js:106
-#: src/editor/components/icon-tools-panel/Component.js:82
-#: src/editor/components/typography-tools-panel/Component.js:45
-#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:89
-#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:89
-msgid "L"
-msgstr ""
-
-#: src/blocks/coupon/editor/components/button/EditSettings.js:47
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:88
-#: src/editor/components/dimension-tools-panel/Component.js:107
-#: src/editor/components/icon-tools-panel/Component.js:83
-#: src/editor/components/typography-tools-panel/Component.js:46
-#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:90
-#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:90
-msgid "Large"
-msgstr ""
-
-#: src/blocks/coupon/editor/components/button/EditSettings.js:50
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:91
-#: src/editor/components/dimension-tools-panel/Component.js:112
-#: src/editor/components/icon-tools-panel/Component.js:86
-#: src/editor/components/typography-tools-panel/Component.js:51
-#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:93
-#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:93
-msgid "XL"
-msgstr ""
-
-#: src/blocks/coupon/editor/components/button/EditSettings.js:51
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:92
-#: src/editor/components/dimension-tools-panel/Component.js:113
-#: src/editor/components/icon-tools-panel/Component.js:87
-#: src/editor/components/typography-tools-panel/Component.js:52
-#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:94
-#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:94
-msgid "Extra Large"
-msgstr ""
-
-#: src/blocks/coupon/editor/components/button/EditSettings.js:59
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:100
-msgid "Text only"
-msgstr ""
-
-#: src/blocks/coupon/editor/components/button/EditSettings.js:63
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:104
-msgid "Icon only"
-msgstr ""
-
-#: src/blocks/coupon/editor/components/button/EditSettings.js:67
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:108
-msgid "Icon before text"
-msgstr ""
-
-#: src/blocks/coupon/editor/components/button/EditSettings.js:71
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:112
-msgid "Text before icon"
-msgstr ""
-
-#: src/blocks/coupon/editor/components/button/EditSettings.js:86
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:127
+#: src/blocks/coupon/editor/components/button/EditSettings.js:33
+#: src/blocks/sign-up/editor/components/button/EditSettings.js:75
 msgid "The layout of the text and/or icon in the button."
 msgstr ""
 
-#: src/blocks/coupon/editor/components/button/EditSettings.js:91
-#: src/blocks/coupon/editor/components/button/EditStyles.js:41
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:151
-#: src/blocks/sign-up/editor/components/button/EditStyles.js:41
+#: src/blocks/coupon/editor/components/button/EditSettings.js:38
+#: src/blocks/shared/editor/buttonStyles.js:43
+#: src/blocks/sign-up/editor/components/button/EditSettings.js:99
 #: src/editor/components/icon-tools-panel/Component.js:16
 #: src/editor/components/icon-tools-panel/Component.js:17
 #: src/popups/bar/editor/blocks/container/blocks/close-button/EditStyles.js:32
@@ -4012,14 +3975,14 @@ msgstr ""
 msgid "Icon"
 msgstr ""
 
-#: src/blocks/coupon/editor/components/button/EditSettings.js:94
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:154
+#: src/blocks/coupon/editor/components/button/EditSettings.js:41
+#: src/blocks/sign-up/editor/components/button/EditSettings.js:102
 #: src/editor/components/icon-tools-panel/Component.js:18
 msgid "Choose the icon to display."
 msgstr ""
 
-#: src/blocks/coupon/editor/components/button/EditSettings.js:97
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:157
+#: src/blocks/coupon/editor/components/button/EditSettings.js:44
+#: src/blocks/sign-up/editor/components/button/EditSettings.js:105
 msgid "Icon Size"
 msgstr ""
 
@@ -4072,29 +4035,118 @@ msgstr ""
 msgid "The URL to redirect to after the coupon is copied."
 msgstr ""
 
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:46
+#: src/blocks/shared/editor/button.js:12
+msgid "Text only"
+msgstr ""
+
+#: src/blocks/shared/editor/button.js:16
+msgid "Icon only"
+msgstr ""
+
+#: src/blocks/shared/editor/button.js:20
+msgid "Icon before text"
+msgstr ""
+
+#: src/blocks/shared/editor/button.js:24
+msgid "Text before icon"
+msgstr ""
+
+#: src/blocks/shared/editor/button.js:30
+#: src/editor/components/dimension-tools-panel/Component.js:94
+#: src/editor/components/icon-tools-panel/Component.js:74
+#: src/editor/components/typography-tools-panel/Component.js:33
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:81
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:81
+msgid "S"
+msgstr ""
+
+#: src/blocks/shared/editor/button.js:31
+#: src/editor/components/dimension-tools-panel/Component.js:95
+#: src/editor/components/icon-tools-panel/Component.js:75
+#: src/editor/components/typography-tools-panel/Component.js:34
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:82
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:82
+msgid "Small"
+msgstr ""
+
+#: src/blocks/shared/editor/button.js:34
+#: src/editor/components/dimension-tools-panel/Component.js:100
+#: src/editor/components/icon-tools-panel/Component.js:78
+#: src/editor/components/typography-tools-panel/Component.js:39
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:85
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:85
+msgid "M"
+msgstr ""
+
+#: src/blocks/shared/editor/button.js:35
+#: src/editor/components/dimension-tools-panel/Component.js:101
+#: src/editor/components/font-appearance-control/Component.js:28
+#: src/editor/components/icon-tools-panel/Component.js:79
+#: src/editor/components/typography-tools-panel/Component.js:40
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:86
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:86
+msgid "Medium"
+msgstr ""
+
+#: src/blocks/shared/editor/button.js:38
+#: src/editor/components/dimension-tools-panel/Component.js:106
+#: src/editor/components/icon-tools-panel/Component.js:82
+#: src/editor/components/typography-tools-panel/Component.js:45
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:89
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:89
+msgid "L"
+msgstr ""
+
+#: src/blocks/shared/editor/button.js:39
+#: src/editor/components/dimension-tools-panel/Component.js:107
+#: src/editor/components/icon-tools-panel/Component.js:83
+#: src/editor/components/typography-tools-panel/Component.js:46
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:90
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:90
+msgid "Large"
+msgstr ""
+
+#: src/blocks/shared/editor/button.js:42
+#: src/editor/components/dimension-tools-panel/Component.js:112
+#: src/editor/components/icon-tools-panel/Component.js:86
+#: src/editor/components/typography-tools-panel/Component.js:51
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:93
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:93
+msgid "XL"
+msgstr ""
+
+#: src/blocks/shared/editor/button.js:43
+#: src/editor/components/dimension-tools-panel/Component.js:113
+#: src/editor/components/icon-tools-panel/Component.js:87
+#: src/editor/components/typography-tools-panel/Component.js:52
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:94
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:94
+msgid "Extra Large"
+msgstr ""
+
+#: src/blocks/sign-up/editor/components/button/EditSettings.js:40
 #: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:77
 #: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:77
 msgid "Fit"
 msgstr ""
 
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:49
+#: src/blocks/sign-up/editor/components/button/EditSettings.js:43
 msgid "25%"
 msgstr ""
 
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:52
+#: src/blocks/sign-up/editor/components/button/EditSettings.js:46
 msgid "50%"
 msgstr ""
 
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:55
+#: src/blocks/sign-up/editor/components/button/EditSettings.js:49
 msgid "75%"
 msgstr ""
 
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:58
+#: src/blocks/sign-up/editor/components/button/EditSettings.js:52
 msgid "100%"
 msgstr ""
 
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:132
+#: src/blocks/sign-up/editor/components/button/EditSettings.js:80
 #: src/popups/bar/editor/blocks/container/blocks/close-button/EditSettings.js:34
 #: src/popups/bar/editor/blocks/container/EditSettings.js:26
 #: src/popups/bar/editor/blocks/container/EditSettings.js:29
@@ -4109,11 +4161,11 @@ msgstr ""
 msgid "Position"
 msgstr ""
 
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:137
+#: src/blocks/sign-up/editor/components/button/EditSettings.js:85
 msgid "Horizontal position of the button in the form."
 msgstr ""
 
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:140
+#: src/blocks/sign-up/editor/components/button/EditSettings.js:88
 #: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:67
 #: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:72
 #: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:67
@@ -4121,7 +4173,7 @@ msgstr ""
 msgid "Width"
 msgstr ""
 
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:144
+#: src/blocks/sign-up/editor/components/button/EditSettings.js:92
 msgid "The width for the button within the form."
 msgstr ""
 
@@ -4296,7 +4348,6 @@ msgstr ""
 #: src/editor/components/box-shadow-control/components/presets-dropdown/Component.js:110
 #: src/editor/components/icon-sets-dropdown/Component.js:106
 #: src/editor/components/icons-dropdown/Component.js:106
-#: src/editor/components/toolbar-variation-menu/Component.js:8
 msgid "Reset"
 msgstr ""
 
@@ -4328,11 +4379,11 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
-#: src/editor/components/compatibility/components/content-control/Component.js:26
+#: src/editor/components/compatibility/components/content-control/Component.js:33
 msgid "A content block attempted to render an inline script."
 msgstr ""
 
-#: src/editor/components/compatibility/components/content-control/Component.js:30
+#: src/editor/components/compatibility/components/content-control/Component.js:37
 msgid "Allow inline scripts"
 msgstr ""
 
@@ -4363,135 +4414,51 @@ msgstr ""
 msgid "Gap"
 msgstr ""
 
-#: src/editor/components/display-rules-button/Component.js:95
-msgid "Location"
-msgstr ""
-
-#: src/editor/components/display-rules-button/Component.js:100
-msgid "Exclude"
-msgstr ""
-
-#: src/editor/components/display-rules-button/Component.js:115
-msgid "Choose where you want to display the modal."
-msgstr ""
-
-#: src/editor/components/display-rules-button/Component.js:126
-msgid "Choose where you do not want to display the modal."
-msgstr ""
-
-#: src/editor/components/display-rules-button/Component.js:137
-msgid "Choose which users will see this modal."
-msgstr ""
-
-#: src/editor/components/display-rules-button/Component.js:153
-msgid "Configured"
-msgstr ""
-
-#: src/editor/components/display-rules-button/Component.js:189
-#: src/scripts/admin/display-rules-list/index.js:333
-msgid "Cancel"
-msgstr ""
-
-#: src/editor/components/display-rules-button/Component.js:192
-#: src/scripts/admin/display-rules-list/index.js:341
-msgid "Save"
-msgstr ""
-
-#: src/editor/components/display-rules-button/components/locations-control/Component.js:63
-msgid "No location rules are set."
-msgstr ""
-
-#: src/editor/components/display-rules-button/components/locations-control/Component.js:64
-#: src/editor/components/display-rules-button/components/roles-control/Component.js:61
-msgid "Add rule"
-msgstr ""
-
-#: src/editor/components/display-rules-button/components/locations-control/location-control/Component.js:67
-msgid "Type to choose page..."
-msgstr ""
-
-#: src/editor/components/display-rules-button/components/locations-control/location-control/Component.js:77
-msgid "Type to choose post..."
-msgstr ""
-
-#: src/editor/components/display-rules-button/components/locations-control/location-control/Component.js:88
-msgid "Type to choose category..."
-msgstr ""
-
-#: src/editor/components/display-rules-button/components/locations-control/location-control/Component.js:98
-msgid "Type to choose tag..."
-msgstr ""
-
-#: src/editor/components/display-rules-button/components/locations-control/location-control/Component.js:108
-#: src/editor/components/display-rules-button/components/roles-control/role-control/Component.js:46
-#: src/editor/components/display-rules/components/locations-control/location-control/Component.js:97
-msgid "Select type"
-msgstr ""
-
-#: src/editor/components/display-rules-button/components/roles-control/Component.js:60
-msgid "No roles rules are set."
-msgstr ""
-
-#: src/editor/components/display-rules-button/utils/compileDisplayRules.js:46
-#: src/editor/components/display-rules/utils/compileDisplayRules.js:46
-msgid "No locations configured."
-msgstr ""
-
-#: src/editor/components/display-rules-button/utils/compileDisplayRules.js:55
-#: src/editor/components/display-rules/utils/compileDisplayRules.js:55
-msgid "No users configured."
-msgstr ""
-
-#: src/editor/components/display-rules-button/utils/compileDisplayRules.js:58
-#: src/editor/components/display-rules/utils/compileDisplayRules.js:58
-msgid "Invalid rules object."
-msgstr ""
-
-#: src/editor/components/display-rules/components/content-control/Component.js:47
+#: src/editor/components/display-rules/components/content-control/Component.js:54
 msgid "Locations"
 msgstr ""
 
-#: src/editor/components/display-rules/components/content-control/Component.js:49
+#: src/editor/components/display-rules/components/content-control/Component.js:56
 msgid "Add at least one location"
 msgstr ""
 
-#: src/editor/components/display-rules/components/content-control/Component.js:55
+#: src/editor/components/display-rules/components/content-control/Component.js:62
 msgid "Add at least one role"
 msgstr ""
 
 #. translators: %s: post singular_label
-#: src/editor/components/display-rules/components/content-control/Component.js:61
+#: src/editor/components/display-rules/components/content-control/Component.js:68
 #, js-format
 msgid "Set where and to whom this %s will be visible."
 msgstr ""
 
-#: src/editor/components/display-rules/components/content-control/Component.js:76
+#: src/editor/components/display-rules/components/content-control/Component.js:83
 msgid "Add location"
 msgstr ""
 
-#: src/editor/components/display-rules/components/content-control/Component.js:77
+#: src/editor/components/display-rules/components/content-control/Component.js:84
 msgid "Remove location"
 msgstr ""
 
-#: src/editor/components/display-rules/components/content-control/Component.js:80
+#: src/editor/components/display-rules/components/content-control/Component.js:87
 msgid "Exclusions"
 msgstr ""
 
-#: src/editor/components/display-rules/components/content-control/Component.js:85
+#: src/editor/components/display-rules/components/content-control/Component.js:92
 #: src/scripts/admin/display-rules-list/index.js:311
 msgid "Add exclusion"
 msgstr ""
 
-#: src/editor/components/display-rules/components/content-control/Component.js:86
+#: src/editor/components/display-rules/components/content-control/Component.js:93
 #: src/scripts/admin/display-rules-list/index.js:312
 msgid "Remove exclusion"
 msgstr ""
 
-#: src/editor/components/display-rules/components/content-control/Component.js:94
+#: src/editor/components/display-rules/components/content-control/Component.js:101
 msgid "Add role"
 msgstr ""
 
-#: src/editor/components/display-rules/components/content-control/Component.js:95
+#: src/editor/components/display-rules/components/content-control/Component.js:102
 msgid "Remove role"
 msgstr ""
 
@@ -4504,8 +4471,12 @@ msgstr ""
 msgid "Display rules"
 msgstr ""
 
-#: src/editor/components/display-rules/components/locations-control/location-control/Component.js:70
+#: src/editor/components/display-rules/components/locations-control/location-control/Component.js:64
 msgid "Type to choose..."
+msgstr ""
+
+#: src/editor/components/display-rules/components/locations-control/location-control/Component.js:91
+msgid "Select type"
 msgstr ""
 
 #: src/editor/components/display-rules/components/post-status-info/Component.js:45
@@ -4513,8 +4484,20 @@ msgstr ""
 msgid "Set"
 msgstr ""
 
-#: src/editor/components/display-rules/components/roles-control/role-control/Component.js:46
+#: src/editor/components/display-rules/components/roles-control/role-control/Component.js:44
 msgid "Select role"
+msgstr ""
+
+#: src/editor/components/display-rules/utils/compileDisplayRules.js:49
+msgid "No locations configured."
+msgstr ""
+
+#: src/editor/components/display-rules/utils/compileDisplayRules.js:58
+msgid "No users configured."
+msgstr ""
+
+#: src/editor/components/display-rules/utils/compileDisplayRules.js:61
+msgid "Invalid rules object."
 msgstr ""
 
 #: src/editor/components/entity-record-control/Component.js:112
@@ -4646,7 +4629,7 @@ msgid "Inner Blocks"
 msgstr ""
 
 #: src/editor/components/inner-blocks-button/Component.js:130
-#: src/editor/components/variation-picker/Component.js:217
+#: src/editor/components/variation-picker/Component.js:758
 #: src/editor/icons/default/index.js:43
 msgid "Close"
 msgstr ""
@@ -4681,6 +4664,10 @@ msgstr ""
 
 #: src/editor/components/popup-type/components/post-status-info/Component.js:23
 msgid "Popup Type"
+msgstr ""
+
+#: src/editor/components/popup-type/components/template-picker/Component.js:114
+msgid "Choose a popup template"
 msgstr ""
 
 #: src/editor/components/repeater-control/Component.js:53
@@ -4747,16 +4734,100 @@ msgstr ""
 msgid "Capitalize"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:189
-msgid "List View"
+#: src/editor/components/variation-picker/Component.js:23
+msgid "Recommended"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:190
-msgid "Grid View"
+#: src/editor/components/variation-picker/Component.js:28
+msgid "Name (A-Z)"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:198
-msgid "Choose a different type"
+#: src/editor/components/variation-picker/Component.js:33
+msgid "Name (Z-A)"
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:204
+msgid "Untitled template"
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:207
+msgid "A ready-made starting point for your popup."
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:482
+msgid "Template filters"
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:483
+msgid "Popup type"
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:486
+msgid "All popup types"
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:503
+msgid "Use case"
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:506
+msgid "All templates"
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:523
+msgid "Availability"
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:526
+#: src/editor/components/variation-picker/Component.js:554
+msgid "All"
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:531
+msgid "Included"
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:536
+msgid "Pro"
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:544
+msgid "Tags"
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:581
+msgid "Search by name, use case, or tag."
+msgstr ""
+
+#. translators: %d: number of templates
+#: src/editor/components/variation-picker/Component.js:588
+#, js-format
+msgid "%d templates"
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:596
+#: src/editor/components/variation-picker/Component.js:597
+msgid "Search templates"
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:606
+msgid "Sort templates"
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:634
+msgid "Clear filters"
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:668
+msgid "PRO"
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:714
+msgid "No templates matched those filters."
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:715
+msgid "Try a broader search term or clear the active filters."
 msgstr ""
 
 #: src/editor/components/variation-picker/components/search/Component.js:17
@@ -4871,12 +4942,6 @@ msgstr ""
 msgid "Choose which side of the bar to display the button."
 msgstr ""
 
-#: src/popups/bar/editor/blocks/container/blocks/content/ContentAppender.js:19
-#: src/popups/flyout/editor/blocks/container/blocks/content/ContentAppender.js:19
-#: src/popups/overlay/editor/blocks/container/blocks/content/ContentAppender.js:19
-msgid "Add block"
-msgstr ""
-
 #: src/popups/bar/editor/blocks/container/EditSettings.js:36
 msgid "Max Width"
 msgstr ""
@@ -4951,38 +5016,6 @@ msgstr ""
 msgid "Add an anchor to a button block and then insert the same value here to close the bar on click."
 msgstr ""
 
-#: src/popups/bar/editor/components/view-state-controls/index.js:10
-#: src/popups/flyout/editor/components/view-state-controls/index.js:10
-msgid "Closed"
-msgstr ""
-
-#: src/popups/bar/editor/components/view-state-controls/index.js:10
-#: src/popups/flyout/editor/components/view-state-controls/index.js:10
-msgid "Open"
-msgstr ""
-
-#. translators: %s: Open/Closed State
-#: src/popups/bar/editor/components/view-state-controls/index.js:13
-#: src/popups/flyout/editor/components/view-state-controls/index.js:13
-#, js-format
-msgid "%s View"
-msgstr ""
-
-#: src/popups/bar/editor/components/view-state-controls/index.js:19
-#: src/popups/flyout/editor/components/view-state-controls/index.js:19
-msgid "Toggle View"
-msgstr ""
-
-#: src/popups/bar/editor/Edit.js:132
-msgid "Choose a template for your bar"
-msgstr ""
-
-#: src/popups/bar/editor/Edit.js:133
-#: src/popups/flyout/editor/Edit.js:129
-#: src/popups/overlay/editor/Edit.js:126
-msgid "Select a template to start with."
-msgstr ""
-
 #: src/popups/bar/editor/EditSettings.js:40
 #: src/popups/flyout/editor/EditSettings.js:50
 #: src/popups/overlay/editor/EditSettings.js:53
@@ -5030,10 +5063,6 @@ msgstr ""
 msgid "Add an anchor to a button block and then insert the same value here to close the flyout on click."
 msgstr ""
 
-#: src/popups/flyout/editor/Edit.js:128
-msgid "Choose a template for your flyout"
-msgstr ""
-
 #: src/popups/flyout/editor/EditSettings.js:39
 #: src/popups/overlay/editor/EditSettings.js:44
 msgid "Maximize on mobile"
@@ -5041,6 +5070,11 @@ msgstr ""
 
 #: src/popups/flyout/editor/EditSettings.js:40
 msgid "Expand the flyout on mobile to use as much screen space as possible."
+msgstr ""
+
+#: src/popups/overlay/editor/blocks/container/blocks/content/ContentAppender.js:19
+#: src/popups/shared/editor/blocks/content/ContentAppender.js:20
+msgid "Add block"
 msgstr ""
 
 #: src/popups/overlay/editor/components/trigger-controls/Component.js:70
@@ -5063,10 +5097,6 @@ msgstr ""
 msgid "Add an anchor to a button block and then insert the same value here to close the overlay on click."
 msgstr ""
 
-#: src/popups/overlay/editor/Edit.js:125
-msgid "Choose a template for your overlay"
-msgstr ""
-
 #: src/popups/overlay/editor/EditSettings.js:33
 msgid "Backdrop"
 msgstr ""
@@ -5085,6 +5115,24 @@ msgstr ""
 
 #: src/popups/overlay/editor/EditSettings.js:63
 msgid "Hide the page scrollbar when open."
+msgstr ""
+
+#: src/popups/shared/editor/components/view-state-controls/index.js:10
+msgid "Closed"
+msgstr ""
+
+#: src/popups/shared/editor/components/view-state-controls/index.js:10
+msgid "Open"
+msgstr ""
+
+#. translators: %s: Open/Closed State
+#: src/popups/shared/editor/components/view-state-controls/index.js:13
+#, js-format
+msgid "%s View"
+msgstr ""
+
+#: src/popups/shared/editor/components/view-state-controls/index.js:20
+msgid "Toggle View"
 msgstr ""
 
 #. translators: %s is the popup title shown in the list table.
@@ -5161,6 +5209,14 @@ msgstr ""
 
 #: src/scripts/admin/display-rules-list/index.js:325
 msgid "Remove audience rule"
+msgstr ""
+
+#: src/scripts/admin/display-rules-list/index.js:333
+msgid "Cancel"
+msgstr ""
+
+#: src/scripts/admin/display-rules-list/index.js:341
+msgid "Save"
 msgstr ""
 
 #: pro/src/blocks/apply-coupon/block.json
