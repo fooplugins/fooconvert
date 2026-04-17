@@ -1,7 +1,7 @@
 import { useState } from "@wordpress/element";
 import clsx from "clsx";
 import { setImmutably } from "../../../utils";
-import { hasBackgroundImageValue } from "../utils";
+import { applySelectedBackgroundImage, hasBackgroundImageValue } from "../utils";
 import BackgroundControlsPanel from "./BackgroundControlsPanel";
 import BackgroundImageControls from "./BackgroundImageControls";
 import BackgroundSizeControls from "./BackgroundSizeControls";
@@ -29,34 +29,11 @@ const BackgroundImageControl = ( {
     const [ isGeneratorOpen, setIsGeneratorOpen ] = useState( false );
 
     const selectBackgroundMedia = ( media ) => {
-        if ( ! media || ! media.url ) {
-            onChange(
-                setImmutably(
-                    value,
-                    [ 'background', 'backgroundImage' ],
-                    undefined
-                )
-            );
-            return;
-        }
-
-        const sizeValue =
-            value?.background?.backgroundSize || defaultValues?.backgroundSize;
-        const positionValue = value?.background?.backgroundPosition;
         onChange(
-            setImmutably( value, [ 'background' ], {
-                ...value?.background,
-                backgroundImage: {
-                    url: media.url,
-                    id: media.id,
-                    source: 'file',
-                    title: media.title || undefined,
-                },
-                backgroundPosition:
-                    ! positionValue && ( 'auto' === sizeValue || ! sizeValue )
-                        ? '50% 0'
-                        : positionValue,
-                backgroundSize: sizeValue,
+            applySelectedBackgroundImage( {
+                style: value,
+                media,
+                defaultValues,
             } )
         );
     };
