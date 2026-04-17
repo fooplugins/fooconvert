@@ -239,7 +239,7 @@ if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
                 ) );
             }
 
-            fclose( $fp );
+            fclose( $fp ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Closing php://output, not a filesystem file handle.
             exit;
         }
     }
