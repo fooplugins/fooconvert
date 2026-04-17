@@ -56,13 +56,11 @@ if ( in_array( 'getting-started', $hidden_panels ) ) {
         </p>
         <ol class="fooconvert-ordered-list">
             <li>
-                <?php esc_html_e( 'Create a new popup and choose whether it should be a bar, flyout, or overlay.', 'fooconvert' ); ?>
-                (<a href="<?php echo esc_url( fooconvert_admin_url_popup_new() ); ?>"
-                    target="_blank"><?php esc_html_e( 'create a new popup', 'fooconvert' ); ?></a>)
+                <a href="<?php echo esc_url( fooconvert_admin_url_popup_new() ); ?>"
+                    target="_blank"><?php esc_html_e( 'Create a new popup!', 'fooconvert' ); ?></a>
             </li>
             <li>
                 <?php esc_html_e( 'Select a pre-made template.', 'fooconvert' ); ?>
-                (<?php esc_html_e( 'e.g. Black Friday Bar, Scroll Flyout, or Exit Intent Overlay', 'fooconvert' ); ?>)
             </li>
             <li>
                 <?php esc_html_e( 'Customize the look and feel &amp; change the content to your liking!', 'fooconvert' ); ?>
