@@ -17,6 +17,12 @@ const SORT_RECOMMENDED = "recommended";
 const SORT_TITLE_ASC = "title-asc";
 const SORT_TITLE_DESC = "title-desc";
 
+const getSelectedPopupTypeOnLoad = ( currentPopupType, popupTypeOptions ) => {
+    return popupTypeOptions.some( option => option.value === currentPopupType )
+        ? currentPopupType
+        : FILTER_ALL;
+};
+
 const SORT_OPTIONS = [
     {
         icon: starFilled,
@@ -177,7 +183,9 @@ const VariationPicker = ( {
 } ) => {
     const rootRef = useRef( null );
     const [ search, setSearch ] = useState( "" );
-    const [ selectedPopupType, setSelectedPopupType ] = useState( FILTER_ALL );
+    const [ selectedPopupType, setSelectedPopupType ] = useState( () => {
+        return getSelectedPopupTypeOnLoad( currentPopupType, popupTypeOptions );
+    } );
     const [ selectedCategory, setSelectedCategory ] = useState( FILTER_ALL );
     const [ selectedTag, setSelectedTag ] = useState( FILTER_ALL );
     const [ availability, setAvailability ] = useState( FILTER_ALL );
@@ -314,6 +322,21 @@ const VariationPicker = ( {
             setSelectedPopupType( FILTER_ALL );
         }
     }, [ popupTypeOptions, selectedPopupType ] );
+
+    useEffect( () => {
+        const popupTypeToSelect = getSelectedPopupTypeOnLoad( currentPopupType, popupTypeOptions );
+        if ( popupTypeToSelect === FILTER_ALL ) {
+            return;
+        }
+
+        setSelectedPopupType( currentValue => {
+            if ( currentValue === FILTER_ALL ) {
+                return popupTypeToSelect;
+            }
+
+            return currentValue;
+        } );
+    }, [ currentPopupType, popupTypeOptions ] );
 
     useEffect( () => {
         if ( selectedTag !== FILTER_ALL && !tagOptions.some( option => option.value === selectedTag ) ) {
