@@ -43,6 +43,9 @@ const EditStyles = props => {
                 value={ styles }
                 defaultValues={ stylesDefaults }
                 onChange={ setStyles }
+                backgroundGenerator={ {
+                    popupType: 'bar'
+                } }
             />
             <BorderToolsPanel
                 panelId={ clientId }

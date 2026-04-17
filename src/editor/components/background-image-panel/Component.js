@@ -79,6 +79,7 @@ export default function BackgroundImagePanel( {
                                                   panelId,
                                                   defaultControls = DEFAULT_CONTROLS,
                                                   defaultValues = {},
+                                                  backgroundGenerator = null,
                                                   headerLabel = __( 'Background Image' ),
                                               } ) {
 
@@ -111,6 +112,7 @@ export default function BackgroundImagePanel( {
                     inheritedValue={ inheritedValue }
                     defaultControls={ defaultControls }
                     defaultValues={ defaultValues }
+                    backgroundGenerator={ backgroundGenerator }
                 />
             </ToolsPanelItem>
         </Wrapper>

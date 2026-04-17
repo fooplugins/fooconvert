@@ -33,6 +33,7 @@
     "package:deploy": "node build/freemius-deploy.mjs"
   },
   "devDependencies": {
+    "@paper-design/shaders-react": "0.0.76",
     "@steveush/utils": "^0.0.2",
     "@woocommerce/dependency-extraction-webpack-plugin": "^4.0.0",
     "@wordpress/blob": "^4.44.0",

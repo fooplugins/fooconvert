@@ -12,6 +12,7 @@ import { Button, DropZone, MenuItem } from "@wordpress/components";
 import { store as noticesStore } from '@wordpress/notices';
 import { focus } from '@wordpress/dom';
 import clsx from "clsx";
+import { VStack } from "../../experimental";
 
 const IMAGE_BACKGROUND_TYPE = 'image';
 
@@ -19,10 +20,13 @@ const BackgroundImageControls = ( {
                                       onChange,
                                       style,
                                       inheritedValue,
+                                      onSelectMedia,
                                       onRemoveImage = () => {},
                                       onResetImage = () => {},
+                                      onOpenBackgroundGenerator = () => {},
                                       displayInPanel,
                                       defaultValues,
+                                      showBackgroundGenerator = false,
                                   } ) => {
     const [ isUploading, setIsUploading ] = useState( false );
     const { getSettings } = useSelect( blockEditorStore, [] );
@@ -46,29 +50,14 @@ const BackgroundImageControls = ( {
             )
         );
 
-    const onSelectMedia = ( media ) => {
+    const applySelectedMedia = ( media ) => {
+        if ( "function" === typeof onSelectMedia ) {
+            onSelectMedia( media );
+            return;
+        }
+
         if ( ! media || ! media.url ) {
             resetBackgroundImage();
-            setIsUploading( false );
-            return;
-        }
-
-        if ( isBlobURL( media.url ) ) {
-            setIsUploading( true );
-            return;
-        }
-
-        // For media selections originated from a file upload.
-        if (
-            ( media.media_type &&
-                media.media_type !== IMAGE_BACKGROUND_TYPE ) ||
-            ( ! media.media_type &&
-                media.type &&
-                media.type !== IMAGE_BACKGROUND_TYPE )
-        ) {
-            onUploadError(
-                __( 'Only images can be used as a background image.' )
-            );
             return;
         }
 
@@ -97,6 +86,35 @@ const BackgroundImageControls = ( {
                 backgroundSize: sizeValue,
             } )
         );
+    };
+
+    const handleSelectMedia = ( media ) => {
+        if ( ! media || ! media.url ) {
+            applySelectedMedia( media );
+            setIsUploading( false );
+            return;
+        }
+
+        if ( isBlobURL( media.url ) ) {
+            setIsUploading( true );
+            return;
+        }
+
+        // For media selections originated from a file upload.
+        if (
+            ( media.media_type &&
+                media.media_type !== IMAGE_BACKGROUND_TYPE ) ||
+            ( ! media.media_type &&
+                media.type &&
+                media.type !== IMAGE_BACKGROUND_TYPE )
+        ) {
+            onUploadError(
+                __( 'Only images can be used as a background image.' )
+            );
+            return;
+        }
+
+        applySelectedMedia( media );
         setIsUploading( false );
     };
 
@@ -106,7 +124,7 @@ const BackgroundImageControls = ( {
             allowedTypes: [ IMAGE_BACKGROUND_TYPE ],
             filesList,
             onFileChange( [ image ] ) {
-                onSelectMedia( image );
+                handleSelectMedia( image );
             },
             onError: onUploadError,
             multiple: false,
@@ -142,47 +160,58 @@ const BackgroundImageControls = ( {
             className="block-editor-global-styles-background-panel__image-tools-panel-item"
         >
             { isUploading && <LoadingSpinner /> }
-            <MediaReplaceFlow
-                mediaId={ id }
-                mediaURL={ url }
-                allowedTypes={ [ IMAGE_BACKGROUND_TYPE ] }
-                accept="image/*"
-                onSelect={ onSelectMedia }
-                popoverProps={ {
-                    className: clsx( {
-                        'block-editor-global-styles-background-panel__media-replace-popover':
-                        displayInPanel,
-                    } ),
-                } }
-                name={
-                    <InspectorImagePreviewItem
-                        className="block-editor-global-styles-background-panel__image-preview"
-                        imgUrl={ url }
-                        filename={ title }
-                        label={ imgLabel }
-                    />
-                }
-                renderToggle={ ( props ) => (
-                    <Button { ...props } __next40pxDefaultSize />
-                ) }
-                onError={ onUploadError }
-                onReset={ () => {
-                    closeAndFocus();
-                    onResetImage();
-                } }
-            >
-                { canRemove && (
-                    <MenuItem
-                        onClick={ () => {
-                            closeAndFocus();
-                            onRemove();
-                            onRemoveImage();
-                        } }
+            <VStack spacing={ 2 }>
+                <MediaReplaceFlow
+                    mediaId={ id }
+                    mediaURL={ url }
+                    allowedTypes={ [ IMAGE_BACKGROUND_TYPE ] }
+                    accept="image/*"
+                    onSelect={ handleSelectMedia }
+                    popoverProps={ {
+                        className: clsx( {
+                            'block-editor-global-styles-background-panel__media-replace-popover':
+                            displayInPanel,
+                        } ),
+                    } }
+                    name={
+                        <InspectorImagePreviewItem
+                            className="block-editor-global-styles-background-panel__image-preview"
+                            imgUrl={ url }
+                            filename={ title }
+                            label={ imgLabel }
+                        />
+                    }
+                    renderToggle={ ( props ) => (
+                        <Button { ...props } __next40pxDefaultSize />
+                    ) }
+                    onError={ onUploadError }
+                    onReset={ () => {
+                        closeAndFocus();
+                        onResetImage();
+                    } }
+                >
+                    { canRemove && (
+                        <MenuItem
+                            onClick={ () => {
+                                closeAndFocus();
+                                onRemove();
+                                onRemoveImage();
+                            } }
+                        >
+                            { __( 'Remove' ) }
+                        </MenuItem>
+                    ) }
+                </MediaReplaceFlow>
+                { showBackgroundGenerator ? (
+                    <Button
+                        variant="secondary"
+                        onClick={ onOpenBackgroundGenerator }
+                        disabled={ isUploading }
                     >
-                        { __( 'Remove' ) }
-                    </MenuItem>
-                ) }
-            </MediaReplaceFlow>
+                        { __( "Generate Background", "fooconvert" ) }
+                    </Button>
+                ) : null }
+            </VStack>
             <DropZone
                 onFilesDrop={ onFilesDrop }
                 label={ __( 'Drop to upload' ) }

@@ -17,6 +17,8 @@ const BackgroundControlsPanel = ( {
                                       filename,
                                       url: imgUrl,
                                       children,
+                                      isOpen = false,
+                                      setIsOpen = () => {},
                                       onToggle: onToggleCallback = () => {},
                                       hasImageValue,
                                   } ) => {
@@ -29,6 +31,9 @@ const BackgroundControlsPanel = ( {
 
     return (
         <Dropdown
+            open={ isOpen }
+            onToggle={ setIsOpen }
+            onClose={ () => setIsOpen( false ) }
             popoverProps={ BACKGROUND_POPOVER_PROPS }
             renderToggle={ ( { onToggle, isOpen } ) => {
                 const toggleProps = {
