@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 return array(
     'name'        => 'flyout__watch_the_video',
     'title'       => __( 'Watch the Video', 'fooconvert' ),

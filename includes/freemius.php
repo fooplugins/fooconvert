@@ -2,6 +2,10 @@
 /**
  * Runs all the Freemius initialization code for FooConvert
  */
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( !function_exists( 'fooconvert_fs' ) ) {
 
     /**

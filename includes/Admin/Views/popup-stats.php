@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 // Get the popup ID from the URL
 // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 $post_id = isset( $_GET['post_id'] ) ? intval( $_GET['post_id'] ) : 0;

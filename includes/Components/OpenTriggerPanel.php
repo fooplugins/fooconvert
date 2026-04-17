@@ -5,6 +5,10 @@ namespace FooPlugins\FooConvert\Components;
 use FooPlugins\FooConvert\Components\Base\BaseComponent;
 use FooPlugins\FooConvert\Utils;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Normalizes popup open-trigger settings for editor and frontend consumers.
  */

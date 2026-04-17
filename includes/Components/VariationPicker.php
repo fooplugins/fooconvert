@@ -2,6 +2,10 @@
 
 namespace FooPlugins\FooConvert\Components;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Normalizes template picker metadata for editor variations.
  */

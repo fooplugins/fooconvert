@@ -7,6 +7,10 @@ use FooPlugins\FooConvert\Blocks\Countdown;
 use FooPlugins\FooConvert\Blocks\Coupon;
 use FooPlugins\FooConvert\Blocks\SignUp;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class Blocks.
  */

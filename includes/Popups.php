@@ -8,6 +8,10 @@ use FooPlugins\FooConvert\Popups\Bar;
 use FooPlugins\FooConvert\Popups\Flyout;
 use FooPlugins\FooConvert\Popups\Overlay;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * This class both initializes and contains high level management utilities for plugin popups.
  */

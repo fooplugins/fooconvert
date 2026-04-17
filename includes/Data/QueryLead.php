@@ -4,6 +4,10 @@ namespace FooPlugins\FooConvert\Data;
 
 use WP_Error;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class QueryLead.
  */

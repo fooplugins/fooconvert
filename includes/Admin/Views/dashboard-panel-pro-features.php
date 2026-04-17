@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $hidden_panels = fooconvert_get_setting( 'hide_dashboard_panels', [] );
 
 if ( in_array( 'pro-features', $hidden_panels ) ) {

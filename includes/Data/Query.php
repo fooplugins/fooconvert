@@ -5,6 +5,10 @@ namespace FooPlugins\FooConvert\Data;
 use WP_Error;
 use wpdb;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * FooConvert Data Query Class
  * Performs all queries for the database for the plugin.

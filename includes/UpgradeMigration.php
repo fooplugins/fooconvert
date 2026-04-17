@@ -5,6 +5,10 @@ namespace FooPlugins\FooConvert;
 use FooPlugins\FooConvert\Data\Base;
 use FooPlugins\FooConvert\Data\Schema;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( !class_exists( __NAMESPACE__ . '\UpgradeMigration' ) ) {
 
     /**

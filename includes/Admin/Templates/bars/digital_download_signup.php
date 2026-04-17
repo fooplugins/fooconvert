@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 return array(
 	'name' => 'bar__digital_download_signup',
 	'title' => __( 'Digital Download Signup', 'fooconvert' ),

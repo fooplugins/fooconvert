@@ -24,6 +24,10 @@
  * @noinspection SpellCheckingInspection
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Get the attributes for the given SVG element tagName.
  *

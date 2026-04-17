@@ -4,6 +4,10 @@ namespace FooPlugins\FooConvert\Admin;
 
 use FooPlugins\FooConvert\FooConvert;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
 
     /**

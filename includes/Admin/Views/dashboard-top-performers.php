@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( empty( $sort ) ) {
     $sort = 'engagement';
 }

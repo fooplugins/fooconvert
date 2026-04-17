@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 return array(
     'name'        => 'popup__special_offer',
     'title'       => __( 'Special Offer Countdown', 'fooconvert' ),

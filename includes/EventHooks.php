@@ -4,6 +4,10 @@ namespace FooPlugins\FooConvert;
 
 use WP_Post;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( !class_exists( __NAMESPACE__ . '\EventHooks' ) ) {
 
     /**

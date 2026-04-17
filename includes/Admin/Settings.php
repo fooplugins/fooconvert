@@ -5,6 +5,10 @@ namespace FooPlugins\FooConvert\Admin;
 use FooPlugins\FooConvert\Admin\FooFields\SettingsPage;
 use FooPlugins\FooConvert\Event;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * FooConvert Admin Settings Class
  */

@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $demos_created = fooconvert_get_setting( 'demo_content' ) === 'on';
 $hidden_panels = fooconvert_get_setting( 'hide_dashboard_panels', [] );
 

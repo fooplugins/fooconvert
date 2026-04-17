@@ -2,6 +2,10 @@
 
 namespace FooPlugins\FooConvert;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( !class_exists( __NAMESPACE__ . '\UpgradeMigration' ) ) {
     require_once __DIR__ . '/UpgradeMigration.php';
 }

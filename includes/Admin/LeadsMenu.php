@@ -2,6 +2,10 @@
 
 namespace FooPlugins\FooConvert\Admin;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( !class_exists( __NAMESPACE__ . '\LeadsMenu' ) ) {
 
     /**

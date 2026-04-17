@@ -5,6 +5,10 @@
 
 namespace FooPlugins\FooConvert;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( !class_exists( __NAMESPACE__ . '\Fonts' ) ) {
 
     /**

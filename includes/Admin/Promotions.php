@@ -2,6 +2,10 @@
 
 namespace FooPlugins\FooConvert\Admin;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * FooConvert Admin Promotion Class
  * Adds all the promotion related info.

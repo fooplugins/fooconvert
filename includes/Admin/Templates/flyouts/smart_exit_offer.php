@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 return array(
 	'name' => '',
 	'title' => __( 'Smart Exit Offer', 'fooconvert' ),

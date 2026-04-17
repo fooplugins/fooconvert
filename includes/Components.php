@@ -13,6 +13,10 @@ use FooPlugins\FooConvert\Components\OpenTriggerPanel;
 use FooPlugins\FooConvert\Components\TypographyToolsPanel;
 use FooPlugins\FooConvert\Components\VariationPicker;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * This class contains utility classes and methods to make dynamic block rendering a bit simpler by providing
  * PHP helpers for the various JavaScript components used to build up the block.

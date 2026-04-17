@@ -4,6 +4,10 @@ namespace FooPlugins\FooConvert;
 
 use WP_Post_Type;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Registers and manages the single popup post type used by FooConvert.
  */

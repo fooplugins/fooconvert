@@ -4,6 +4,10 @@ namespace FooPlugins\FooConvert\Admin;
 
 use FooPlugins\FooConvert\Admin\FooFields\Manager;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * FooConvert FooFields Manager Class
  */

@@ -5,6 +5,10 @@ namespace FooPlugins\FooConvert\Popups\Base;
 use FooPlugins\FooConvert\Blocks\Base\BaseBlock;
 use WP_Block;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class BasePopup.
  */

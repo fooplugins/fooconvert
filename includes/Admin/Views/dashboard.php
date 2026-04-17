@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 <div class="fooconvert-dashboard-container">
     <div class="fooconvert-dashboard-columns">

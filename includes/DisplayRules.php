@@ -9,6 +9,10 @@ use WP_Query;
 use WP_Term;
 use WP_User;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class DisplayRules.
  */

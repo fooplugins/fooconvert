@@ -2,6 +2,10 @@
 
 namespace FooPlugins\FooConvert;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * FooConvert Activation Class
  */

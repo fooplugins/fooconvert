@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $top_performers_sort_options = fooconvert_popup_metric_options();
 $top_performers_sort = fooconvert_top_performers_sort();
 $stats_last_updated = fooconvert_stats_last_updated();

@@ -2,6 +2,10 @@
 
 namespace FooPlugins\FooConvert\Admin\Templates;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
 
     /**

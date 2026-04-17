@@ -5,6 +5,10 @@ namespace FooPlugins\FooConvert\Admin;
 use FooPlugins\FooConvert\Lead;
 use WP_List_Table;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
 
     /**

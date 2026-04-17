@@ -5,6 +5,10 @@ namespace FooPlugins\FooConvert\Components;
 use FooPlugins\FooConvert\Components\Base\BaseComponent;
 use FooPlugins\FooConvert\Utils;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Provides utility methods for working with the JavaScript `BorderControl` component.
  * @extends BaseComponent

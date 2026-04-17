@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 return array(
     'name'        => 'popup__watch_the_video',
     'title'       => __( 'Watch the Video', 'fooconvert' ),

@@ -4,6 +4,10 @@ namespace FooPlugins\FooConvert\Data;
 
 use wpdb;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * FooConvert Data Schema Class
  * Creates the database tables and indexes for the plugin.

@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 return array(
 	'name' => 'bar__newsletter_subscribe',
 	'title' => __( 'Newsletter Subscribe', 'fooconvert' ),
