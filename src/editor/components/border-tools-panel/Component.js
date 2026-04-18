@@ -8,6 +8,7 @@ import { isBoxShadow, BoxShadowControl } from "../box-shadow-control";
 /**
  * @typedef {Omit<import('@wordpress/components/build-types/tools-panel/types').ToolsPanelProps, "children", "resetAll">} FCBorderToolsPanelProps
  * @property {("border"|"borderRadius"|"shadow")[]} [shownByDefault]
+ * @property {boolean} [enableAlpha]
  */
 
 
@@ -18,6 +19,7 @@ const BorderToolsPanel = ( {
                                title,
                                defaults = {},
                                shownByDefault = [],
+                               enableAlpha = true,
                                allowShadow = true,
                                ...props
                            } ) => {
@@ -79,6 +81,7 @@ const BorderToolsPanel = ( {
                     hideLabelFromVision={ !allowShadow }
                     value={ Object.keys( border ).length > 0 ? border : defaultBorder }
                     onChange={ setBorder }
+                    enableAlpha={ enableAlpha }
                     size={ "__unstable-large" }
                     popoverOffset={ 40 }
                     popoverPlacement="left-start"
