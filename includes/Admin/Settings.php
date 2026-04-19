@@ -78,6 +78,19 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                         'label' => __( 'Enable Debug Mode', 'fooconvert' ),
                         'desc'  => __( 'Helps to debug problems and diagnose issues. Enable debugging if you need support for an issue you are having.', 'fooconvert' )
                     ),
+                    'popup_editor_background' => array(
+                        'id'      => 'popup_editor_background',
+                        'order'   => 15,
+                        'type'    => 'select',
+                        'default' => 'transparent',
+                        'label'   => __( 'Editor Background', 'fooconvert' ),
+                        'choices' => array(
+                            'transparent' => __( 'Transparent', 'fooconvert' ),
+                            'white'       => __( 'White', 'fooconvert' ),
+                            'black'       => __( 'Black', 'fooconvert' ),
+                        ),
+                        'desc'    => __( 'Choose the background used in the popup editor for all popup types.', 'fooconvert' )
+                    ),
                     'hide_promos'           => array(
                         'id'    => 'hide_promos',
                         'order' => 20,

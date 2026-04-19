@@ -13,12 +13,12 @@
   max-height: 100%;
   padding: 0;
 
-  @include mixins.background-transparency-grid();
-
   &:has(.fc-variation-picker) {
     align-items: stretch;
     justify-content: flex-start;
   }
+
+  @include mixins.popup-editor-background-variants();
 
   &:has(.position-top) {
     justify-content: flex-start;

@@ -9,6 +9,21 @@
   background-size: $size $size;
 }
 
+@mixin popup-editor-background-variants() {
+  &--transparent {
+    @include background-transparency-grid();
+    background-color: transparent;
+  }
+
+  &--white {
+    background: #ffffff;
+  }
+
+  &--black {
+    background: #000000;
+  }
+}
+
 @mixin typography-vars(
   $name,
   $inherits,

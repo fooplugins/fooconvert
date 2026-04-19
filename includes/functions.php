@@ -92,6 +92,30 @@ function fooconvert_get_setting( $key, $default = false ) {
 }
 
 /**
+ * Sanitizes the popup editor background setting value.
+ *
+ * @param mixed $value Raw popup editor background value.
+ * @return string
+ */
+function fooconvert_sanitize_popup_editor_background( $value ) {
+    $allowed = array( 'transparent', 'white', 'black' );
+    $normalized = is_string( $value ) ? strtolower( trim( $value ) ) : '';
+
+    return in_array( $normalized, $allowed, true ) ? $normalized : 'transparent';
+}
+
+/**
+ * Returns the popup editor background setting.
+ *
+ * @return string
+ */
+function fooconvert_get_popup_editor_background() {
+    return fooconvert_sanitize_popup_editor_background(
+        fooconvert_get_setting( 'popup_editor_background', 'transparent' )
+    );
+}
+
+/**
  * Sets a specific option based on a key
  *
  * @param $key

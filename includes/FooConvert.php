@@ -386,6 +386,10 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
                 if ( Utils::has_keys( $editor, array( 'dependencies', 'version' ) ) ) {
                     wp_enqueue_style( FOOCONVERT_EDITOR_ASSET_HANDLE, FOOCONVERT_ASSETS_URL . 'editor.css', array(), $editor['version'] );
                     wp_enqueue_script( FOOCONVERT_EDITOR_ASSET_HANDLE, FOOCONVERT_ASSETS_URL . 'editor.js', $editor['dependencies'], $editor['version'], true );
+                    $data = apply_filters( 'fooconvert_editor_config', array(
+                        'popupEditorBackground' => fooconvert_get_popup_editor_background(),
+                    ) );
+                    wp_add_inline_script( FOOCONVERT_EDITOR_ASSET_HANDLE, Utils::to_js_script( 'FOOCONVERT_EDITOR_CONFIG', $data ), 'before' );
                     // load translations for the editor JS
                     wp_set_script_translations( FOOCONVERT_EDITOR_ASSET_HANDLE, 'fooconvert' );
                     /**
