@@ -159,25 +159,6 @@ return array(
 							'fc/countdown',
 							array(
 								'uniqueId' => '426766db-4456-472d-92e1-8aec0a2ed27d',
-								'segment' => array(
-									'styles' => array(
-										'typography' => array(
-											'fontSize' => '0.8rem'
-										),
-										'dimensions' => array(
-											'gap' => '2px',
-											'padding' => '15px',
-											'margin' => '-5px'
-										)
-									)
-								),
-								'text' => array(
-									'styles' => array(
-										'typography' => array(
-											'fontSize' => '1.75rem'
-										)
-									)
-								),
 								'styles' => array(
 									'border' => array(
 										'radius' => '0px'
@@ -186,6 +167,24 @@ return array(
 										'gap' => '0px',
 										'margin' => '-20px',
 										'padding' => '0px'
+									)
+								),
+								'segment' => array(
+									'styles' => array(
+										'color' => array(
+											'background' => '#00000030'
+										),
+										'border' => array(
+											'radius' => '15px'
+										),
+										'typography' => array(
+											'fontSize' => '0.8rem'
+										),
+										'dimensions' => array(
+											'gap' => '0px',
+											'padding' => '15px',
+											'margin' => '5px'
+										)
 									)
 								)
 							),

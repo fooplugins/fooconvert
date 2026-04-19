@@ -18,10 +18,14 @@ $cases = array(
     __DIR__ . '/cases/popup-type-core.php',
     __DIR__ . '/cases/top-performers-pro-options.php',
     __DIR__ . '/cases/top-performers-sales-fallback.php',
+    __DIR__ . '/cases/top-performers-trash-filter.php',
     __DIR__ . '/cases/demo-content-pro-top-performers.php',
+    __DIR__ . '/cases/dashboard-panel-recent-empty.php',
+    __DIR__ . '/cases/dashboard-panel-recent-trash-filter.php',
     __DIR__ . '/cases/confetti-block.php',
     __DIR__ . '/cases/free-shipping-progress-block.php',
     __DIR__ . '/cases/pro-admin-templates.php',
+    __DIR__ . '/cases/pro-dashboard-sales-trash-filter.php',
     __DIR__ . '/cases/sales-attribution-woocommerce.php',
 );
 

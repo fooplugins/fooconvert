@@ -445,6 +445,52 @@ function fooconvert_top_performers_sort() {
 }
 
 /**
+ * Returns the popup post statuses that should appear on the dashboard.
+ *
+ * @return array<int,string>
+ */
+function fooconvert_get_dashboard_popup_statuses() {
+    if ( function_exists( 'get_post_stati' ) ) {
+        $statuses = get_post_stati( array( 'show_in_admin_all_list' => true ), 'names' );
+        if ( is_array( $statuses ) && !empty( $statuses ) ) {
+            $statuses = array_values( array_diff( $statuses, array( 'trash', 'auto-draft', 'inherit' ) ) );
+            if ( !empty( $statuses ) ) {
+                return $statuses;
+            }
+        }
+    }
+
+    return array( 'publish', 'future', 'draft', 'pending', 'private' );
+}
+
+/**
+ * Determines whether a popup post should appear in dashboard rankings and tables.
+ *
+ * @param WP_Post|int $thing Popup post object or ID.
+ * @return bool
+ */
+function fooconvert_is_dashboard_popup_post( $thing ) {
+    if ( $thing instanceof WP_Post ) {
+        $post = $thing;
+    } else if ( is_numeric( $thing ) ) {
+        $post = get_post( (int) $thing );
+    } else {
+        return false;
+    }
+
+    if ( !$post instanceof WP_Post || $post->post_type !== FOOCONVERT_CPT_POPUP ) {
+        return false;
+    }
+
+    $status = isset( $post->post_status ) ? (string) $post->post_status : '';
+    if ( $status === '' && function_exists( 'get_post_status' ) ) {
+        $status = (string) get_post_status( $post );
+    }
+
+    return $status !== 'trash';
+}
+
+/**
  * Adds a Google font to the list of fonts used in the editor and frontend.
  *
  * @param array $fonts The list of fonts.

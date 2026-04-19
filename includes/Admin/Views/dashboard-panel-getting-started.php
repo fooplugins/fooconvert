@@ -23,7 +23,7 @@ if ( in_array( 'getting-started', $hidden_panels ) ) {
     <?php if ( !$demos_created ) : ?>
         <div class="fooconvert-panel-section">
             <p>
-                <?php esc_html_e( 'The easiest way to get started is by creating demo content, which will create 4 draft bars, flyouts and overlays.', 'fooconvert' ); ?>
+                <?php esc_html_e( 'The easiest way to get started is by creating demo content, which will create 7 draft popups: 2 bars, 3 flyouts, and 2 overlays.', 'fooconvert' ); ?>
                 <strong><?php esc_html_e( 'It\'s also the best way to see the top performers in action!', 'fooconvert' ); ?> </strong>
             </p>
             <p class="fooconvert-flex fooconvert-create-demo-container">

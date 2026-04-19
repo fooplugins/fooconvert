@@ -37,6 +37,25 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             return parent::get_table_name( FOOCONVERT_DB_TABLE_EVENTS );
         }
 
+        /**
+         * Returns the SQL join used to restrict event queries to non-trashed popup posts.
+         *
+         * @param string $event_alias Alias for the events table in the current query.
+         * @param string $posts_alias Alias to assign to the posts table.
+         * @return string
+         */
+        private static function get_dashboard_popup_join_sql( string $event_alias, string $posts_alias = 'popup_posts' ): string {
+            global $wpdb;
+
+            $posts_table = isset( $wpdb ) && isset( $wpdb->posts ) ? $wpdb->posts : 'wp_posts';
+            $popup_post_type = FOOCONVERT_CPT_POPUP;
+
+            return " INNER JOIN {$posts_table} {$posts_alias}
+                    ON {$event_alias}.post_id = {$posts_alias}.ID
+                   AND {$posts_alias}.post_type = '{$popup_post_type}'
+                   AND {$posts_alias}.post_status != 'trash'";
+        }
+
         // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
         /**
@@ -417,18 +436,26 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
         public static function get_popups_with_events() {
             global $wpdb;
 
-            $table_name = esc_sql( self::get_events_table_name() );
-            $posts_table = esc_sql( $wpdb->prefix . 'posts' );
+            $table_name = self::get_events_table_name();
+            $posts_table = $wpdb->posts;
 
-            $query = "
-                SELECT e.post_id
-                FROM {$table_name} e
-                INNER JOIN {$posts_table} p ON e.post_id = p.ID
-                GROUP BY e.post_id
-            ";
+            $query = "SELECT e.post_id
+                FROM %i e
+                INNER JOIN %i p ON e.post_id = p.ID
+                WHERE p.post_type = %s
+                  AND p.post_status != %s
+                GROUP BY e.post_id";
+
+            $prepared_query = $wpdb->prepare(
+                $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                $table_name,
+                $posts_table,
+                FOOCONVERT_CPT_POPUP,
+                'trash'
+            );
 
             // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-            return $wpdb->get_results( $query, ARRAY_A );
+            return $wpdb->get_results( $prepared_query, ARRAY_A );
         }
 
         /**
@@ -448,13 +475,15 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                 FROM %i p
                 LEFT JOIN %i e ON p.ID = e.post_id
                 WHERE p.post_type = %s
+                  AND p.post_status != %s
                   AND e.post_id IS NULL";
 
             $prepared_query = $wpdb->prepare(
                 $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 $posts_table,
                 $table_name,
-                $post_type
+                $post_type,
+                'trash'
             );
 
             // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -536,35 +565,35 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
                     IFNULL(returning_visitors.total_returning_visitors, 0) as total_returning_visitors
                     FROM (
                         SELECT
-                            post_id,
-                            COUNT(CASE WHEN event_type != 'update' THEN 1 END) as total_events,
-                            COUNT(CASE WHEN event_type = 'open' THEN 1 END) as total_views,
-                            COUNT(CASE WHEN event_subtype = 'engagement' THEN 1 END) as total_engagements,
-                            COUNT(DISTINCT COALESCE(user_id, anonymous_user_guid)) as total_unique_visitors,
-                            COUNT(DISTINCT CASE WHEN event_type != 'update' AND session_id IS NOT NULL THEN session_id END) as total_unique_sessions
-                        FROM {$table_name}
-                        GROUP BY post_id
+                            event_rows.post_id,
+                            COUNT(CASE WHEN event_rows.event_type != 'update' THEN 1 END) as total_events,
+                            COUNT(CASE WHEN event_rows.event_type = 'open' THEN 1 END) as total_views,
+                            COUNT(CASE WHEN event_rows.event_subtype = 'engagement' THEN 1 END) as total_engagements,
+                            COUNT(DISTINCT COALESCE(event_rows.user_id, event_rows.anonymous_user_guid)) as total_unique_visitors,
+                            COUNT(DISTINCT CASE WHEN event_rows.event_type != 'update' AND event_rows.session_id IS NOT NULL THEN event_rows.session_id END) as total_unique_sessions
+                        FROM {$table_name} event_rows" . self::get_dashboard_popup_join_sql( 'event_rows' ) . "
+                        GROUP BY event_rows.post_id
                     ) popup_totals
                     LEFT JOIN (
                         SELECT
-                            post_id,
+                            returning_visitor_groups.post_id,
                             COUNT(*) as total_returning_visitors
                         FROM (
                             SELECT
-                                post_id,
+                                returning_event_rows.post_id,
                                 CASE
-                                    WHEN user_id IS NOT NULL THEN CONCAT('u:', user_id)
-                                    WHEN anonymous_user_guid IS NOT NULL THEN CONCAT('a:', anonymous_user_guid)
+                                    WHEN returning_event_rows.user_id IS NOT NULL THEN CONCAT('u:', returning_event_rows.user_id)
+                                    WHEN returning_event_rows.anonymous_user_guid IS NOT NULL THEN CONCAT('a:', returning_event_rows.anonymous_user_guid)
                                     ELSE NULL
                                 END as visitor_key
-                            FROM {$table_name}
-                            WHERE event_type != 'update'
-                                AND session_id IS NOT NULL
-                                AND ( user_id IS NOT NULL OR anonymous_user_guid IS NOT NULL )
-                            GROUP BY post_id, visitor_key
-                            HAVING COUNT(DISTINCT session_id) >= 2
+                            FROM {$table_name} returning_event_rows" . self::get_dashboard_popup_join_sql( 'returning_event_rows', 'returning_popup_posts' ) . "
+                            WHERE returning_event_rows.event_type != 'update'
+                                AND returning_event_rows.session_id IS NOT NULL
+                                AND ( returning_event_rows.user_id IS NOT NULL OR returning_event_rows.anonymous_user_guid IS NOT NULL )
+                            GROUP BY returning_event_rows.post_id, visitor_key
+                            HAVING COUNT(DISTINCT returning_event_rows.session_id) >= 2
                         ) returning_visitor_groups
-                        GROUP BY post_id
+                        GROUP BY returning_visitor_groups.post_id
                     ) returning_visitors
                     ON popup_totals.post_id = returning_visitors.post_id", $table_name );
 
@@ -726,10 +755,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             $limit = max( 1, intval( $limit ) );
 
             $query = $wpdb->prepare(
-                "SELECT *
-                FROM {$table_name}
-                WHERE event_type = %s
-                ORDER BY timestamp DESC, id DESC
+                "SELECT sale_events.*
+                FROM {$table_name} sale_events" . self::get_dashboard_popup_join_sql( 'sale_events' ) . "
+                WHERE sale_events.event_type = %s
+                ORDER BY sale_events.timestamp DESC, sale_events.id DESC
                 LIMIT %d",
                 FOOCONVERT_EVENT_TYPE_SALE,
                 $limit
@@ -751,10 +780,10 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
             $limit = max( 1, intval( $limit ) );
 
             $query = $wpdb->prepare(
-                "SELECT post_id, COUNT(*) as sale_count, COALESCE(SUM(event_value), 0) as total_sales
-                FROM {$table_name}
-                WHERE event_type = %s
-                GROUP BY post_id
+                "SELECT sale_events.post_id, COUNT(*) as sale_count, COALESCE(SUM(sale_events.event_value), 0) as total_sales
+                FROM {$table_name} sale_events" . self::get_dashboard_popup_join_sql( 'sale_events' ) . "
+                WHERE sale_events.event_type = %s
+                GROUP BY sale_events.post_id
                 ORDER BY total_sales DESC, sale_count DESC
                 LIMIT %d",
                 FOOCONVERT_EVENT_TYPE_SALE,

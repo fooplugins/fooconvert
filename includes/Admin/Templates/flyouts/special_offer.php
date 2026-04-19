@@ -167,6 +167,9 @@ return array(
 										'padDigits' => false
 									),
 									'styles' => array(
+										'color' => array(
+											'background' => '#00000030'
+										),
 										'typography' => array(
 											'fontSize' => '1rem'
 										),

@@ -171,6 +171,9 @@ return array(
 										'padDigits' => false
 									),
 									'styles' => array(
+										'color' => array(
+											'background' => '#00000030'
+										),
 										'border' => array(
 											'radius' => '16px',
 											'style' => 'none',
