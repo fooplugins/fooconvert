@@ -13,7 +13,7 @@ return array(
 		'category' => 'lead-capture',
 		'tags' => array( 'newsletter', 'email' ),
 		'availability' => 'included',
-		'preview' => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__newsletter_subscribe.png',
+		'preview' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-overlay-newsletter-subscribe.webp',
 	),
 	'attributes' => array(
 		'template' => 'popup__newsletter_subscribe',

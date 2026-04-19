@@ -13,7 +13,7 @@ return array(
         'category'     => 'video',
         'tags'         => array( 'video' ),
         'availability' => 'included',
-        'preview'      => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__video.png',
+        'preview'      => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-flyout-watch-the-video.webp',
     ),
     'attributes'  => array(
         'template'    => 'flyout__watch_the_video',
