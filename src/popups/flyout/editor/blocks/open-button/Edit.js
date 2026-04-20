@@ -39,7 +39,7 @@ const Edit = props => {
         }
     }, [ isSelected ] );
 
-    if ( parentViewState === 'open' || settings?.hidden ) {
+    if ( parentViewState === 'open' ) {
         return null;
     }
 
@@ -61,7 +61,7 @@ const Edit = props => {
     return (
         <>
             <ViewStateControls/>
-            <EditBlock { ...customProps }/>
+            <EditBlock { ...customProps } isHidden={ settings?.hidden ?? false }/>
             <EditSettings { ...customProps }/>
             <EditStyles { ...customProps }/>
         </>

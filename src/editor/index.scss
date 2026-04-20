@@ -18,3 +18,64 @@
         1px 1px 0 #FFFFFF,
         3px 3px 5px #23366E;
 }
+
+.fc--sidebar-tabs {
+  .components-tab-panel__tabs {
+    width: 100%;
+  }
+
+  .components-tab-panel__tabs-item {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+.fc--sidebar-tabs--nested {
+  > .components-tab-panel__tabs {
+    margin-top: -1px;
+    position: relative;
+  }
+
+  > .components-tab-panel__tabs::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 1px;
+    background: rgb(221, 221, 221);
+    pointer-events: none;
+  }
+
+  > .components-tab-panel__tabs::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background: rgb(221, 221, 221);
+    pointer-events: none;
+  }
+
+  > .components-tab-panel__tabs > .components-tab-panel__tabs-item::after {
+    display: none;
+  }
+
+  > .components-tab-panel__tabs > .components-tab-panel__tabs-item.is-active {
+    box-shadow: inset 0 calc(-1 * var(--wp-admin-border-width-focus)) 0 0 var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+  }
+
+  > .components-tab-panel__tabs > .components-tab-panel__tabs-item:focus-visible::before {
+    box-shadow: none;
+  }
+
+  > .components-tab-panel__tabs > .components-tab-panel__tabs-item:focus-visible {
+    outline: none;
+  }
+
+  > .components-tab-panel__tab-content > *:first-child {
+    border-top: none !important;
+    box-shadow: none !important;
+  }
+}

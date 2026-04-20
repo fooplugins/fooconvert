@@ -51,7 +51,7 @@ const EditSettings = props => {
         if ( tab.name === 'styles' ) {
             return (
                 <TabPanel
-                    className="fc--coupon__sidebar-tabs"
+                    className="fc--sidebar-tabs fc--sidebar-tabs--nested"
                     tabs={ styleTabs }
                 >
                     { ( styleTab ) => {
@@ -75,7 +75,7 @@ const EditSettings = props => {
     return (
         <InspectorControls>
             <TabPanel
-                className="fc--coupon__sidebar-tabs"
+                className="fc--sidebar-tabs"
                 tabs={ tabs }
             >
                 { renderTabs }
