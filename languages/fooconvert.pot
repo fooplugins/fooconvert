@@ -939,10 +939,10 @@ msgstr ""
 msgid "View Popup Stats"
 msgstr ""
 
-#. translators: %s: refers to the time last modified.
+#. translators: %s: refers to the relative time since the popup was last updated.
 #: includes/Admin/Views/dashboard-panel-recent.php:59
 #, php-format
-msgid "modified %s ago"
+msgid "%s ago"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-recent.php:79
