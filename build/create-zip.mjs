@@ -20,6 +20,7 @@ const includePatterns = [
     "pro/start.php",
     "pro/assets/**/*",
     "pro/includes/**/*",
+    "pro/vendor/**/*",
     "vendor/**/*"
 ];
 
@@ -32,11 +33,11 @@ const files = ( await globby( includePatterns, {
         "**/.git/**",
         "**/.gitignore",
         "**/*.map",
-        "vendor/bin/**",
+        "**/vendor/bin/**",
         "assets/media/templates/fullsize/**",
-        "vendor/**/README.md",
-        "vendor/**/composer.json",
-        "vendor/**/LICENSE*"
+        "**/vendor/**/README.md",
+        "**/vendor/**/composer.json",
+        "**/vendor/**/LICENSE*"
     ]
 } ) ).sort();
 

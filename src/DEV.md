@@ -34,9 +34,9 @@ Contains the commands used to build and publish the project.
     "build": "wp-scripts build --output-path=assets && npm run copy",
     "copy": "node build/copy-assets.mjs",
     "i18n": "node build/make-pot.mjs",
-    "composer:install": "composer install --prefer-dist --optimize-autoloader --no-dev",
-    "composer:update": "composer update --optimize-autoloader",
-    "composer:refresh": "composer dump-autoload --optimize",
+    "composer:install": "composer install --prefer-dist --optimize-autoloader --no-dev && composer install --working-dir=pro --prefer-dist --optimize-autoloader --no-dev",
+    "composer:update": "composer update --optimize-autoloader && composer update --working-dir=pro --optimize-autoloader",
+    "composer:refresh": "composer dump-autoload --optimize && composer dump-autoload --working-dir=pro --optimize",
     "package:create-zip": "npm run build && npm run i18n && npm run composer:refresh && node build/create-zip.mjs",
     "package:deploy": "node build/freemius-deploy.mjs"
   }
@@ -64,10 +64,11 @@ command and fills in the `.pot` headers that `--headers` does not reliably provi
 #### `composer:*`
 
 Composer commands for installing dependencies, updating them, and refreshing the autoloader.
+The root manifest covers free/shared runtime code, while `pro/composer.json` covers premium-only dependencies.
 
-* `composer-install` - Install packages in `composer.json` and generate the classmap for the plugin PHP files.
-* `composer-update` - Update installed packages and refresh the autoloader cache.
-* `composer-refresh` - Recreate the autoloader cache so the classmap stays current.
+* `composer-install` - Install packages for the root plugin and the `pro/` runtime, then generate both autoloaders.
+* `composer-update` - Update packages for the root plugin and the `pro/` runtime, then refresh both autoloaders.
+* `composer-refresh` - Recreate both autoloaders so the classmaps stay current.
 
 #### `package:*`
 

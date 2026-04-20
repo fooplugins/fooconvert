@@ -4,8 +4,7 @@
     "type": "wordpress-plugin",
     "autoload"    : {
         "psr-4" : {
-            "FooPlugins\\FooConvert\\" : "includes/",
-            "FooPlugins\\FooConvert\\Pro\\" : "pro/includes/"
+            "FooPlugins\\FooConvert\\" : "includes/"
         }
     },
     "extra": {
