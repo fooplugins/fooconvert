@@ -8,7 +8,7 @@ Stable tag: 2.0.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-FooConvert is a block editor popup builder for WordPress. Use it to create bars, flyouts, and overlays with templates, targeting rules, triggers, lead capture, and popup analytics.
+Build WordPress bars, flyouts, and overlays in the block editor with templates, targeting, triggers, leads, and analytics.
 
 == Description ==
 
