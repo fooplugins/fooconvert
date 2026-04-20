@@ -67,15 +67,15 @@ if ( in_array( 'getting-started', $hidden_panels ) ) {
                 <?php esc_html_e( 'Select a pre-made template.', 'fooconvert' ); ?>
             </li>
             <li>
-                <?php esc_html_e( 'Customize the look and feel &amp; change the content to your liking!', 'fooconvert' ); ?>
+                <?php esc_html_e( 'Customize the look and feel &amp; update the content!', 'fooconvert' ); ?>
             </li>
             <li>
-                <?php esc_html_e( 'Set the Display Rules locations.', 'fooconvert' ); ?>
-                (<?php esc_html_e( 'e.g. either "Entire Site" or "Front Page"', 'fooconvert' ); ?>)
+                <?php esc_html_e( 'Set the Display Rules.', 'fooconvert' ); ?>
+                (<?php esc_html_e( 'e.g. "Entire Site" or "Front Page"', 'fooconvert' ); ?>)
             </li>
             <li>
                 <?php esc_html_e( 'Select an Open Trigger.', 'fooconvert' ); ?>
-                (<?php esc_html_e( 'e.g. on page load, or exit intent', 'fooconvert' ); ?>)
+                (<?php esc_html_e( 'e.g. on scroll or exit intent', 'fooconvert' ); ?>)
             </li>
             <li>
                 <?php esc_html_e( 'Publish and you\'re done!', 'fooconvert' ); ?>

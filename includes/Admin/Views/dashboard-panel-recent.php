@@ -53,8 +53,8 @@ $has_popups = !empty( $popups );
                         $post_type = fooconvert_get_popup_type_label( $popup );
                         $modified_time = get_post_modified_time( 'U', false, $popup );               // Get the Unix timestamp of the modified date
                         $modified_diff = human_time_diff( $modified_time, current_time( 'timestamp' ) );
-                        // translators: %s: refers to the time last modified.
-                        $modified = sprintf( __( 'modified %s ago', 'fooconvert' ), $modified_diff ); // Friendly time difference
+                        // translators: %s: refers to the relative time since the popup was last updated.
+                        $modified = sprintf( __( '%s ago', 'fooconvert' ), $modified_diff ); // Friendly time difference
 
                         echo '<tr><td>';
                         echo '<span>' . esc_html( $popup_title ) . '</span>';
