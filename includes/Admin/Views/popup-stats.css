@@ -52,6 +52,8 @@
 }
 
 .metric {
+    position: relative;
+    z-index: 0;
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 10px;
@@ -62,8 +64,10 @@
     min-width: 0;
 }
 
-.metric:hover {
+.metric:hover,
+.metric:focus-within {
     transform: translateY(-5px);
+    z-index: 2;
 }
 
 .metric.metric-sales {
