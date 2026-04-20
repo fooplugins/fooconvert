@@ -13,7 +13,11 @@ return array(
 		'category' => 'lead-capture',
 		'tags' => array( 'offer', 'exit-intent' ),
 		'availability' => 'included',
-		'preview' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-overlay-smart-exit-offer.webp',
+		'preview' => array(
+			'url' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-overlay-smart-exit-offer.webp',
+			'width' => 740,
+			'height' => 349,
+		),
 	),
 	'attributes' => array(
 		'template' => 'popup__smart_exit_offer',

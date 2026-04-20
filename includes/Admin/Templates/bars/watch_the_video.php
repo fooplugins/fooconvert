@@ -13,7 +13,11 @@ return array(
         'category'     => 'video',
         'tags'         => array( 'video' ),
         'availability' => 'included',
-        'preview'      => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-bar-watch-the-video.webp',
+        'preview'      => array(
+            'url' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-bar-watch-the-video.webp',
+            'width' => 1440,
+            'height' => 144,
+        ),
     ),
     'attributes'  => array(
         'template'    => 'bar__watch_the_video',

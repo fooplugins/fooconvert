@@ -13,7 +13,11 @@ return array(
         'category'     => 'promotion',
         'tags'         => array( 'offer', 'countdown' ),
         'availability' => 'included',
-        'preview'      => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-bar-special-offer.webp',
+        'preview'      => array(
+            'url' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-bar-special-offer.webp',
+            'width' => 1440,
+            'height' => 117,
+        ),
     ),
     'attributes'  => array(
         'template'    => 'bar__special_offer',

@@ -13,7 +13,11 @@ return array(
 		'category' => 'lead-capture',
 		'tags' => array( 'email', 'download' ),
 		'availability' => 'included',
-		'preview' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-flyout-digital-download-signup.webp',
+		'preview' => array(
+			'url' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-flyout-digital-download-signup.webp',
+			'width' => 449,
+			'height' => 307,
+		),
 	),
 	'attributes' => array(
 		'template' => 'flyout__digital_download_signup',

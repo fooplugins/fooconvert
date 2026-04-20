@@ -8,7 +8,7 @@ import { useDispatch, useSelect } from "@wordpress/data";
 import { store as editorStore } from "@wordpress/editor";
 import { useEffect, useMemo, useRef, useState } from "@wordpress/element";
 import { __, sprintf } from "@wordpress/i18n";
-import { Icon, arrowDown, arrowUp, starFilled } from "@wordpress/icons";
+import { Icon, arrowDown, arrowUp, seen, starFilled } from "@wordpress/icons";
 
 const FILTER_ALL = "all";
 const CLASS_NAME = "fc--variation-picker";
@@ -50,6 +50,11 @@ const getFirstString = ( ...values ) => {
     return "";
 };
 
+const getPositiveNumber = value => {
+    const number = Number( value );
+    return Number.isFinite( number ) && number > 0 ? number : undefined;
+};
+
 const getPickerData = variation => {
     return isPlainObject( variation?.picker ) ? variation.picker : {};
 };
@@ -64,10 +69,15 @@ const getPickerCategory = variation => {
     };
 };
 
-const getPreviewUrl = variation => {
+const getPreviewData = variation => {
     const picker = getPickerData( variation );
-    const preview = getFirstString( picker?.preview, variation?.preview, variation?.screenshot );
-    return preview || "";
+    const preview = isPlainObject( picker?.preview ) ? picker.preview : {};
+
+    return {
+        url: getFirstString( preview?.url, picker?.preview, variation?.preview, variation?.screenshot ),
+        width: getPositiveNumber( preview?.width ),
+        height: getPositiveNumber( preview?.height ),
+    };
 };
 
 const getThumbnailUrl = variation => {
@@ -110,7 +120,27 @@ const getMonogram = title => {
     return letters || title.slice( 0, 2 ).toUpperCase();
 };
 
-const getPreviewPosition = ( container, element ) => {
+const getPreviewPanelMetrics = preview => {
+    const outerPadding = 24;
+    const minPanelWidth = 304;
+    const maxPanelWidth = 664;
+    const fallbackWidth = 320;
+    const fallbackHeight = 180;
+    const copyHeight = 64;
+    const previewWidth = getPositiveNumber( preview?.width ) ?? fallbackWidth;
+    const previewHeight = getPositiveNumber( preview?.height ) ?? fallbackHeight;
+    const aspectRatio = previewHeight / previewWidth;
+    const panelWidth = Math.min( Math.max( previewWidth + outerPadding, minPanelWidth ), maxPanelWidth );
+    const imageWidth = Math.max( 1, panelWidth - outerPadding );
+    const imageHeight = Math.max( 1, Math.round( imageWidth * aspectRatio ) );
+
+    return {
+        panelWidth,
+        panelHeight: imageHeight + copyHeight,
+    };
+};
+
+const getPreviewPosition = ( container, element, previewMetrics ) => {
     const containerWindow = container?.ownerDocument?.defaultView;
     const elementWindow = element?.ownerDocument?.defaultView;
 
@@ -129,19 +159,26 @@ const getPreviewPosition = ( container, element ) => {
 
     const containerRect = container.getBoundingClientRect();
     const rect = element.getBoundingClientRect();
-    const panelWidth = 320;
     const gap = 16;
     const margin = 24;
     const viewportWidth = elementWindow.innerWidth || containerWindow.innerWidth || 0;
+    const panelWidth = Math.min(
+        previewMetrics?.panelWidth ?? 320,
+        Math.max( 220, viewportWidth - ( margin * 2 ) )
+    );
+    const panelHeight = previewMetrics?.panelHeight ?? 420;
     const fitsRight = rect.right + gap + panelWidth <= viewportWidth - margin;
+    const maxLeft = Math.max( 12, containerRect.width - panelWidth - 12 );
     const left = fitsRight
         ? rect.right - containerRect.left + gap
-        : Math.max( 12, rect.left - containerRect.left - panelWidth - gap );
-    const top = Math.max( 12, Math.min( rect.top - containerRect.top, containerRect.height - 420 ) );
+        : rect.left - containerRect.left - panelWidth - gap;
+    const maxTop = Math.max( 12, containerRect.height - panelHeight - 12 );
+    const top = Math.max( 12, Math.min( rect.top - containerRect.top, maxTop ) );
 
     return {
-        left: `${ Math.round( left ) }px`,
+        left: `${ Math.round( Math.max( 12, Math.min( left, maxLeft ) ) ) }px`,
         top: `${ Math.round( top ) }px`,
+        width: `${ Math.round( panelWidth ) }px`,
     };
 };
 
@@ -214,6 +251,7 @@ const VariationPicker = ( {
                 variation?.description,
                 __( "A ready-made starting point for your popup.", "fooconvert" )
             );
+            const preview = getPreviewData( variation );
             const templateKey = getFirstString( variation?.attributes?.template, variation?.name, title )
                 .toLocaleLowerCase();
             const category = getPickerCategory( variation );
@@ -241,7 +279,9 @@ const VariationPicker = ( {
                 availability: availabilityKey,
                 priority,
                 thumbnailUrl: getThumbnailUrl( variation ),
-                previewUrl: getPreviewUrl( variation ),
+                previewUrl: preview.url,
+                previewWidth: preview.width,
+                previewHeight: preview.height,
                 isPro: availabilityKey === "pro",
                 searchContent: [
                     title,
@@ -429,7 +469,14 @@ const VariationPicker = ( {
             return;
         }
 
-        const position = getPreviewPosition( rootRef.current, element );
+        const position = getPreviewPosition(
+            rootRef.current,
+            element,
+            getPreviewPanelMetrics( {
+                width: item.previewWidth,
+                height: item.previewHeight,
+            } )
+        );
         if ( !position ) {
             return;
         }
@@ -663,12 +710,11 @@ const VariationPicker = ( {
                     { filteredItems.length > 0 ? (
                         <div className="fc-variation-picker__cards" role="list">
                             { filteredItems.map( item => (
-                                <button
-                                    type="button"
+                                <div
                                     key={ item.key }
                                     role="listitem"
                                     className={ classNames(
-                                        "fc-variation-picker__card",
+                                        "fc-variation-picker__card-shell",
                                         `is-${ item.categoryKey }`,
                                         `is-${ item.popupType }`,
                                         {
@@ -676,60 +722,78 @@ const VariationPicker = ( {
                                             "has-preview": isString( item.previewUrl, true ),
                                         }
                                     ) }
-                                    onClick={ () => handleChange( item ) }
-                                    onMouseEnter={ event => showPreview( item, event.currentTarget ) }
-                                    onMouseLeave={ hidePreview }
-                                    onFocus={ event => showPreview( item, event.currentTarget ) }
-                                    onBlur={ hidePreview }
                                 >
-                                    <div className="fc-variation-picker__card-header">
-                                        <span className="fc-variation-picker__card-category">{ item.categoryLabel }</span>
-                                        <div className="fc-variation-picker__card-status">
-                                            <span className="fc-variation-picker__card-type">{ item.popupTypeLabel }</span>
-                                            { item.isPro && (
-                                                <span className="fc-variation-picker__card-badge">
-                                                    { __( "PRO", "fooconvert" ) }
-                                                </span>
-                                            ) }
+                                    <button
+                                        type="button"
+                                        className="fc-variation-picker__card"
+                                        onClick={ () => handleChange( item ) }
+                                    >
+                                        <div className="fc-variation-picker__card-header">
+                                            <span className="fc-variation-picker__card-category">{ item.categoryLabel }</span>
+                                            <div className="fc-variation-picker__card-status">
+                                                <span className="fc-variation-picker__card-type">{ item.popupTypeLabel }</span>
+                                                { item.isPro && (
+                                                    <span className="fc-variation-picker__card-badge">
+                                                        { __( "PRO", "fooconvert" ) }
+                                                    </span>
+                                                ) }
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="fc-variation-picker__card-body">
-                                        <div
-                                            className={ classNames( "fc-variation-picker__card-media", {
-                                                "has-thumbnail": isString( item.thumbnailUrl, true ),
-                                            } ) }
-                                            aria-hidden="true"
+                                        <div className="fc-variation-picker__card-body">
+                                            <div
+                                                className={ classNames( "fc-variation-picker__card-media", {
+                                                    "has-thumbnail": isString( item.thumbnailUrl, true ),
+                                                } ) }
+                                                aria-hidden="true"
+                                            >
+                                                { isString( item.thumbnailUrl, true ) ? (
+                                                    <img
+                                                        src={ item.thumbnailUrl }
+                                                        alt=""
+                                                        className="fc-variation-picker__card-thumbnail"
+                                                    />
+                                                ) : (
+                                                    <div className="fc-variation-picker__card-monogram">
+                                                        { item.monogram }
+                                                    </div>
+                                                ) }
+                                            </div>
+                                            <div className="fc-variation-picker__card-copy">
+                                                <span className="fc-variation-picker__card-title">{ item.title }</span>
+                                                <p className="fc-variation-picker__card-description">{ item.description }</p>
+                                            </div>
+                                        </div>
+                                        { item.tagLabels.length > 0 && (
+                                            <div className="fc-variation-picker__card-tags">
+                                                { item.tagLabels.slice( 0, 4 ).map( tag => (
+                                                    <span
+                                                        key={ `${ item.key }-${ tag }` }
+                                                        className="fc-variation-picker__card-tag"
+                                                    >
+                                                        { tag }
+                                                    </span>
+                                                ) ) }
+                                            </div>
+                                        ) }
+                                    </button>
+                                    { isString( item.previewUrl, true ) && (
+                                        <button
+                                            type="button"
+                                            className="fc-variation-picker__card-preview-trigger"
+                                            aria-label={ sprintf(
+                                                /* translators: %s: template title */
+                                                __( "Preview %s", "fooconvert" ),
+                                                item.title
+                                            ) }
+                                            onMouseEnter={ event => showPreview( item, event.currentTarget ) }
+                                            onMouseLeave={ hidePreview }
+                                            onFocus={ event => showPreview( item, event.currentTarget ) }
+                                            onBlur={ hidePreview }
                                         >
-                                            { isString( item.thumbnailUrl, true ) ? (
-                                                <img
-                                                    src={ item.thumbnailUrl }
-                                                    alt=""
-                                                    className="fc-variation-picker__card-thumbnail"
-                                                />
-                                            ) : (
-                                                <div className="fc-variation-picker__card-monogram">
-                                                    { item.monogram }
-                                                </div>
-                                            ) }
-                                        </div>
-                                        <div className="fc-variation-picker__card-copy">
-                                            <span className="fc-variation-picker__card-title">{ item.title }</span>
-                                            <p className="fc-variation-picker__card-description">{ item.description }</p>
-                                        </div>
-                                    </div>
-                                    { item.tagLabels.length > 0 && (
-                                        <div className="fc-variation-picker__card-tags">
-                                            { item.tagLabels.slice( 0, 4 ).map( tag => (
-                                                <span
-                                                    key={ `${ item.key }-${ tag }` }
-                                                    className="fc-variation-picker__card-tag"
-                                                >
-                                                    { tag }
-                                                </span>
-                                            ) ) }
-                                        </div>
+                                            <Icon icon={ seen } size={ 16 } />
+                                        </button>
                                     ) }
-                                </button>
+                                </div>
                             ) ) }
                         </div>
                     ) : (

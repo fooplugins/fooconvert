@@ -143,7 +143,6 @@ class Bar extends BasePopup {
                     'category'     => 'promotion',
                     'tags'         => array( 'seasonal', 'offer' ),
                     'availability' => 'included',
-                    'preview'      => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__black_friday.png',
                 ),
                 'attributes'  => array(
                     'viewState'   => 'open',
@@ -266,7 +265,6 @@ class Bar extends BasePopup {
                     'category'     => 'compliance',
                     'tags'         => array( 'cookie' ),
                     'availability' => 'included',
-                    'preview'      => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__cookie.png',
                 ),
                 'attributes'  => array(
                     'viewState'   => 'open',
