@@ -394,6 +394,24 @@ function fooconvert_admin_url_popup_stats( $post_id ) {
 }
 
 /**
+ * Retrieves the dedicated frontend preview URL for a popup.
+ *
+ * @param int $post_id The ID of the popup to preview.
+ * @return string The URL for the popup preview page.
+ */
+function fooconvert_popup_preview_url( $post_id ) {
+    $post_id = absint( $post_id );
+
+    return add_query_arg(
+        array(
+            'fooconvert_popup_preview' => $post_id,
+            '_fcpreviewnonce' => wp_create_nonce( 'fooconvert-popup-preview-' . $post_id ),
+        ),
+        home_url( '/' )
+    );
+}
+
+/**
  * Retrieves the URL for the FooConvert Popup Edit admin page.
  *
  * @param int $post_id The ID of the popup to edit.
@@ -677,6 +695,17 @@ function fooconvert_is_popup_stats_page() {
     return is_admin() &&
         isset( $_GET['page'] ) && $_GET['page'] === 'fooconvert-popup-stats' &&
         isset( $_GET['post_id'] ) && is_numeric( $_GET['post_id'] );
+}
+
+/**
+ * Checks if the current request is the dedicated popup preview page.
+ *
+ * @return bool True if the current request is a popup preview, false otherwise.
+ */
+function fooconvert_is_popup_preview_request() {
+    return !is_admin() &&
+        isset( $_GET['fooconvert_popup_preview'] ) &&
+        is_numeric( $_GET['fooconvert_popup_preview'] );
 }
 
 /**

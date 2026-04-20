@@ -3,7 +3,6 @@
 namespace FooPlugins\FooConvert\Admin;
 
 use FooPlugins\FooConvert\Event;
-use FooPlugins\FooConvert\FooConvert;
 use WP_Post;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,59 +26,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
             add_action( 'admin_menu', array( $this, 'register_menu' ) );
             add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
             add_action( 'wp_ajax_fooconvert_fetch_stats', array( $this, 'fetch_popup_stats' ) );
-            add_action( 'admin_init', array( $this, 'enqueue_popup' ) );
-            add_action( 'admin_footer', array( $this, 'render_enqueued' ) );
             add_filter( 'post_row_actions', array( $this, 'add_stats_row_action' ), 10, 2 );
-            add_filter( 'fooconvert-popup-frontend-attributes', array( $this, 'override_popup_attributes' ), 10, 4 );
-        }
-
-        /**
-         * Overrides popup attributes.
-         */
-        function override_popup_attributes( $attributes, $instance_id, $tag_name, $block ) {
-            if ( fooconvert_is_popup_stats_page() ) {
-                $attributes['settings']['trigger'] = [
-                    'version'   => 2,
-                    'lifetime'  => 'page',
-                    'frequency' => [
-                        'mode'            => 'repeat',
-                        'cooldownSeconds' => 0
-                    ],
-                    'steps'     => [
-                        [
-                            'event' => 'fc.anchor.click',
-                            'where' => [
-                                'ids' => [ 'fooconvert-popup-preview' ]
-                            ]
-                        ]
-                    ]
-                ];
-            }
-
-            return $attributes;
-        }
-
-        /**
-         * Renders enqueued.
-         */
-        function render_enqueued() {
-            FooConvert::plugin()->display_rules->render_enqueued();
-        }
-
-        /**
-         * Enqueues popup.
-         */
-        function enqueue_popup() {
-            if ( fooconvert_is_popup_stats_page() ) {
-                // This is what the block editor loads behind the scenes
-                //require_once ABSPATH . 'wp-includes/block-editor.php';
-                //register_core_block_types();
-
-                $post_id = absint( $_GET['post_id'] );
-
-                // We need to make sure the popup is enqueued for the admin stats page.
-                FooConvert::plugin()->display_rules->add_to_queue( $post_id, 'admin_stats_preview' );
-            }
         }
 
         /**
@@ -355,15 +302,6 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 'ajaxUrl' => admin_url( 'admin-ajax.php' ),
                 'nonce'   => wp_create_nonce( 'fooconvert-popup-stats' )
             ) );
-
-            FooConvert::plugin()->ensure_frontend_assets_enqueued();
-
-            // 1. Register all blocks (core + plugin)
-            require_once ABSPATH . 'wp-includes/block-editor.php';
-
-            // 2. Trigger enqueue actions manually
-            do_action('enqueue_block_assets');          // Block frontend + editor shared assets
-            do_action('enqueue_block_editor_assets');   // Editor-only assets (the big one)
 
             do_action( 'fooconvert_popup_stats_enqueue_assets' );
         }

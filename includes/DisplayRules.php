@@ -1243,6 +1243,23 @@ class DisplayRules extends BaseComponent {
         do_action( 'fooconvert_enqueue_assets', $this->enqueued );
     }
 
+    /**
+     * Dispatch popup-specific asset hooks for a queue of rendered popups.
+     *
+     * This is useful for non-frontend contexts, such as admin previews, that
+     * still need the same conditional assets as normal popup rendering.
+     *
+     * @param array<int,array<string,mixed>>|null $popups Optional queueable popups. Defaults to the current queue.
+     * @return void
+     */
+    public function enqueue_popup_assets( ?array $popups = null ): void {
+        if ( $popups === null ) {
+            $popups = $this->enqueued;
+        }
+
+        do_action( 'fooconvert_enqueue_required_assets', $popups );
+        do_action( 'fooconvert_enqueue_assets', $popups );
+    }
 
     /**
      * Callback for the `template_redirect` action.
