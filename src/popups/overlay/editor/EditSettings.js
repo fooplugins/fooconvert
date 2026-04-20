@@ -1,14 +1,11 @@
 import { InspectorControls } from "@wordpress/block-editor";
-import { PanelBody, PanelRow, TextControl, ToggleControl } from "@wordpress/components";
+import { PanelBody, PanelRow, ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import {
-    $object, ColorToolsPanel,
+    ColorToolsPanel,
     DimensionToolsPanel,
     InnerBlocksButton,
-    OpenTriggerComponent,
 } from "#editor";
-import { isString } from "@steveush/utils";
-import { useState } from "@wordpress/element";
 
 const EditSettings = props => {
     const {

@@ -7,6 +7,10 @@ use FooPlugins\FooConvert\FooConvert;
 use FooPlugins\FooConvert\Utils;
 use WP_Block;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Dynamic renderer for the countdown block.
  */

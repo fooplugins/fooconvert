@@ -5,6 +5,10 @@ namespace FooPlugins\FooConvert\Admin;
 use FooPlugins\FooConvert\Event;
 use FooPlugins\FooConvert\FooConvert;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * FooConvert Admin Dashboard Class
  */

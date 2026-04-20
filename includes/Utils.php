@@ -5,6 +5,10 @@ namespace FooPlugins\FooConvert;
 use WP_Block_Type;
 use WP_Post;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( !class_exists( __NAMESPACE__ . '\Utils' ) ) {
 
     /**

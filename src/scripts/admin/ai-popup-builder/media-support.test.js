@@ -1,3 +1,5 @@
+import { describe, expect, it } from "vitest";
+
 import { applyMediaItemToDraft, removeMediaItemFromDraft } from "./media-support";
 
 describe( "AI popup builder media support", () => {

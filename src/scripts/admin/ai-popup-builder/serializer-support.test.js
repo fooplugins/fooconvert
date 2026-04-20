@@ -1,3 +1,5 @@
+import { describe, expect, it } from "vitest";
+
 import {
     buildRootAttributes,
     extractListItems,
@@ -7,7 +9,7 @@ import {
 
 describe( "AI popup builder serializer support", () => {
     it( "uses the real Fooconvert block metadata for custom blocks", () => {
-        const popupBlock = fooconvertBlockMetadata.find( metadata => metadata.name === "fc/popup" );
+        const popupBlock = fooconvertBlockMetadata.find( metadata => metadata.name === "fc/overlay" );
         const signUpBlock = fooconvertBlockMetadata.find( metadata => metadata.name === "fc/sign-up" );
 
         expect( popupBlock.apiVersion ).toBe( 3 );

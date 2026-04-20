@@ -2,6 +2,10 @@
 
 namespace FooPlugins\FooConvert;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
 
     /**
@@ -228,15 +232,15 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         private function get_post_ids(): array {
             global $wpdb;
 
-            $query = $wpdb->prepare(
-                "SELECT ID
-                 FROM {$wpdb->posts}
-                 WHERE post_type = %s
-                 AND post_status NOT IN ('auto-draft', 'trash')",
-                $this->get_registered_popup_post_type()
+            $results = $wpdb->get_col(
+                $wpdb->prepare(
+                    "SELECT ID
+                     FROM {$wpdb->posts}
+                     WHERE post_type = %s
+                     AND post_status NOT IN ('auto-draft', 'trash')",
+                    $this->get_registered_popup_post_type()
+                )
             );
-
-            $results = $wpdb->get_col( $query );
 
             return array_map( 'intval', is_array( $results ) ? $results : array() );
         }
@@ -250,15 +254,15 @@ if ( !class_exists( __NAMESPACE__ . '\ContentMigration' ) ) {
         private function get_post_ids_for_post_type( string $post_type ): array {
             global $wpdb;
 
-            $query = $wpdb->prepare(
-                "SELECT ID
-                 FROM {$wpdb->posts}
-                 WHERE post_type = %s
-                 AND post_status NOT IN ('auto-draft', 'trash')",
-                $post_type
+            $results = $wpdb->get_col(
+                $wpdb->prepare(
+                    "SELECT ID
+                     FROM {$wpdb->posts}
+                     WHERE post_type = %s
+                     AND post_status NOT IN ('auto-draft', 'trash')",
+                    $post_type
+                )
             );
-
-            $results = $wpdb->get_col( $query );
 
             return array_map( 'intval', is_array( $results ) ? $results : array() );
         }

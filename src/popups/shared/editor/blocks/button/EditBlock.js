@@ -5,6 +5,7 @@ import classnames from "classnames";
 const PopupButtonEditBlock = ( props ) => {
     const {
         className,
+        isHidden = false,
         positionClassName,
         settings = {},
         settingsDefaults = {},
@@ -31,6 +32,7 @@ const PopupButtonEditBlock = ( props ) => {
 
     const buttonProps = useBlockProps( {
         className: classnames( className, {
+            "is-hidden": isHidden,
             [positionClass]: positionClass !== undefined,
         } ),
         style: {

@@ -3,6 +3,10 @@
 namespace FooPlugins\FooConvert;
 
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * FooConvert Ajax Class
  * Handles the AJAX calls for the plugin.

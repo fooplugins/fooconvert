@@ -364,6 +364,10 @@ class PopupBlueprint {
         return ! in_array(
             $block_name,
             array(
+                'fc/overlay',
+                'fc/overlay-container',
+                'fc/overlay-close-button',
+                'fc/overlay-content',
                 'fc/popup',
                 'fc/popup-container',
                 'fc/popup-close-button',
@@ -1424,7 +1428,7 @@ class PopupBlueprint {
                 return 'fc/flyout-content';
             case FOOCONVERT_POPUP_TYPE_POPUP:
             default:
-                return 'fc/popup-content';
+                return 'fc/overlay-content';
         }
     }
 

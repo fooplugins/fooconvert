@@ -4,6 +4,10 @@ namespace FooPlugins\FooConvert\Data;
 
 use WP_Error;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class QueryLead.
  */
@@ -132,7 +136,10 @@ class QueryLead extends Base {
             WHERE {$table_name}.id IN ({$placeholders})
         ";
 
-        return $wpdb->get_results( $wpdb->prepare( $query, $ids ), ARRAY_A );
+        return $wpdb->get_results(
+            $wpdb->prepare( $query, $ids ), // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Dynamic placeholder count matches the sanitized lead ID list.
+            ARRAY_A
+        );
     }
 
     /**
@@ -186,7 +193,10 @@ class QueryLead extends Base {
         $where_params[] = (int) $args['limit'];
         $where_params[] = (int) $args['offset'];
 
-        return $wpdb->get_results( $wpdb->prepare( $query, $where_params ), ARRAY_A );
+        return $wpdb->get_results(
+            $wpdb->prepare( $query, $where_params ), // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Dynamic WHERE and ORDER BY clauses are assembled from allowlisted or fixed SQL fragments.
+            ARRAY_A
+        );
     }
 
     /**
@@ -218,10 +228,14 @@ class QueryLead extends Base {
         }
 
         if ( empty( $where_params ) ) {
-            return (int) $wpdb->get_var( $query );
+            return (int) $wpdb->get_var(
+                $wpdb->prepare( 'SELECT COUNT(*) FROM %i WHERE (1=1)', $table_name )
+            );
         }
 
-        return (int) $wpdb->get_var( $wpdb->prepare( $query, $where_params ) );
+        return (int) $wpdb->get_var(
+            $wpdb->prepare( $query, $where_params ) // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Dynamic WHERE clauses are assembled from fixed SQL fragments before binding values.
+        );
     }
 
     /**
@@ -252,10 +266,24 @@ class QueryLead extends Base {
         }
 
         if ( empty( $where_params ) ) {
-            return $wpdb->get_row( $query, ARRAY_A );
+            return $wpdb->get_row(
+                $wpdb->prepare(
+                    "SELECT
+                        COUNT(*) as total_leads,
+                        COUNT(DISTINCT email) as unique_emails
+                        FROM %i AS leads
+                        LEFT JOIN {$wpdb->posts} ON leads.post_id = {$wpdb->posts}.ID
+                        WHERE (1=1)",
+                    $table_name
+                ),
+                ARRAY_A
+            );
         }
 
-        return $wpdb->get_row( $wpdb->prepare( $query, $where_params ), ARRAY_A );
+        return $wpdb->get_row(
+            $wpdb->prepare( $query, $where_params ), // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Dynamic WHERE clauses are assembled from fixed SQL fragments before binding values.
+            ARRAY_A
+        );
     }
 
     /**
@@ -305,21 +333,27 @@ class QueryLead extends Base {
         global $wpdb;
 
         $table_name = self::get_leads_table_name();
-        $query = "SELECT
+        $stats = $wpdb->get_row(
+            $wpdb->prepare(
+                "SELECT
                     COUNT(*) as Number_of_Rows,
                     COUNT(DISTINCT post_id) as Unique_Popups,
                     COUNT(DISTINCT email) as Unique_Emails
-                    FROM {$table_name}";
-
-        $stats = $wpdb->get_row( $query, ARRAY_A );
-        $table_size_query = "SELECT
-                            ROUND(SUM(data_length + index_length) / 1024 / 1024, 2) as Size_in_MB
-                            FROM information_schema.tables
-                            WHERE table_schema = DATABASE()
-                            AND table_name = %s";
+                    FROM %i",
+                $table_name
+            ),
+            ARRAY_A
+        );
 
         $table_size = $wpdb->get_row(
-            $wpdb->prepare( $table_size_query, $table_name ),
+            $wpdb->prepare(
+                "SELECT
+                    ROUND(SUM(data_length + index_length) / 1024 / 1024, 2) as Size_in_MB
+                    FROM information_schema.tables
+                    WHERE table_schema = DATABASE()
+                    AND table_name = %s",
+                $table_name
+            ),
             ARRAY_A
         );
 

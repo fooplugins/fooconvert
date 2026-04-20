@@ -47,6 +47,9 @@ const EditStyles = props => {
                 value={ styles }
                 defaultValues={ stylesDefaults }
                 onChange={ setStyles }
+                backgroundGenerator={ {
+                    popupType: 'overlay'
+                } }
             />
             <BorderToolsPanel
                 panelId={ clientId }

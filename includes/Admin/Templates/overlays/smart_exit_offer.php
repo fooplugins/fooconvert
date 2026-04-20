@@ -1,10 +1,24 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 return array(
 	'name' => 'popup__smart_exit_offer',
 	'title' => __( 'Smart Exit Offer', 'fooconvert' ),
 	'description' => __( 'Smart exit offer themed overlay.', 'fooconvert' ),
 	'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/template__smart_exit_offer.png',
+	'picker' => array(
+		'category' => 'lead-capture',
+		'tags' => array( 'offer', 'exit-intent' ),
+		'availability' => 'included',
+		'preview' => array(
+			'url' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-overlay-smart-exit-offer.webp',
+			'width' => 740,
+			'height' => 349,
+		),
+	),
 	'attributes' => array(
 		'template' => 'popup__smart_exit_offer',
 		'settings' => array(
@@ -259,4 +273,3 @@ return array(
 		'block'
 	)
 );
-

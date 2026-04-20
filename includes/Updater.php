@@ -2,6 +2,10 @@
 
 namespace FooPlugins\FooConvert;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * FooConvert Updater Class
  * Handles runtime schema upgrade checks for plugin updates.

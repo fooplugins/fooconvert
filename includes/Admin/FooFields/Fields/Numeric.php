@@ -4,6 +4,10 @@ namespace FooPlugins\FooConvert\Admin\FooFields\Fields;
 
 use FooPlugins\FooConvert\Admin\FooFields\Fields\Field;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( !class_exists( __NAMESPACE__ . '\Numeric' ) ) {
 
     /**

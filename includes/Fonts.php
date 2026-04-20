@@ -5,6 +5,10 @@
 
 namespace FooPlugins\FooConvert;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( !class_exists( __NAMESPACE__ . '\Fonts' ) ) {
 
     /**
@@ -43,7 +47,7 @@ if ( !class_exists( __NAMESPACE__ . '\Fonts' ) ) {
                     array(
                         'id'    => 'font_help',
                         'label' => __( 'Font Help', 'fooconvert' ),
-                        'text'  => __( 'Add Google Fonts here to make them available while editing your popups.', 'fooconvert' ),
+                        'text'  => $this->get_font_help_text(),
                         'type'  => 'help',
                     ),
                     array(
@@ -82,6 +86,64 @@ if ( !class_exists( __NAMESPACE__ . '\Fonts' ) ) {
             $settings['fonts'] = $fonts_tab;
 
             return $settings;
+        }
+
+        /**
+         * Returns the help text shown on the Fonts settings tab.
+         *
+         * @return string
+         */
+        private function get_font_help_text(): string {
+            $message = __( 'Add Google Fonts here to make them available while editing your popups.', 'fooconvert' );
+            $included_font_names = $this->get_included_font_names();
+
+            if ( empty( $included_font_names ) ) {
+                return $message;
+            }
+
+            return sprintf(
+                /* translators: 1: existing help text. 2: comma-separated list of bundled font names. */
+                __( '%1$s Included fonts already available for bundled templates: %2$s.', 'fooconvert' ),
+                $message,
+                implode( ', ', $included_font_names )
+            );
+        }
+
+        /**
+         * Returns the names of fonts already registered by bundled templates.
+         *
+         * @return array<int,string>
+         */
+        private function get_included_font_names(): array {
+            $font_names = array_filter( wp_list_pluck( $this->get_included_fonts(), 'name' ) );
+
+            return array_values( array_unique( $font_names, SORT_STRING ) );
+        }
+
+        /**
+         * Returns the Google Font definitions configured in plugin settings.
+         *
+         * @return array<string,array<string,string>>
+         */
+        private function get_configured_fonts(): array {
+            $fonts_from_settings = fooconvert_get_setting( 'fonts', [] );
+
+            $fonts = [];
+
+            foreach ( $fonts_from_settings as $font ) {
+                fooconvert_add_font( $fonts, $font['name'], $font['url'] );
+            }
+
+            return $fonts;
+        }
+
+        /**
+         * Returns the Google Font definitions registered by bundled templates.
+         *
+         * @return array<string,array<string,string>>
+         */
+        private function get_included_fonts(): array {
+            return apply_filters( 'fooconvert_get_fonts', [] );
         }
 
         /**
@@ -143,15 +205,7 @@ if ( !class_exists( __NAMESPACE__ . '\Fonts' ) ) {
          * @return array<string,array<string,string>>
          */
         function get_fonts() {
-            $fonts_from_settings = fooconvert_get_setting( 'fonts', [] );
-
-            $fonts = [];
-
-            foreach ( $fonts_from_settings as $font ) {
-                fooconvert_add_font( $fonts, $font['name'], $font['url'] );
-            }
-
-            return apply_filters( 'fooconvert_get_fonts', $fonts );
+            return apply_filters( 'fooconvert_get_fonts', $this->get_configured_fonts() );
         }
 
         /**

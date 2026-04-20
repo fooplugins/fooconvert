@@ -10,7 +10,7 @@ namespace FooPlugins\FooConvert\Admin {
                     'meta_input'   => array(
                         FOOCONVERT_META_KEY_POPUP_TYPE => FOOCONVERT_POPUP_TYPE_POPUP,
                     ),
-                    'post_content' => '<!-- wp:fc/popup {"postId":0} --><div>Popup</div><!-- /wp:fc/popup -->',
+                    'post_content' => '<!-- wp:fc/overlay {"postId":0} --><div>Popup</div><!-- /wp:fc/overlay -->',
                 ),
             );
         }

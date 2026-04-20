@@ -98,7 +98,7 @@ namespace {
                 return 'fc/flyout';
             case FOOCONVERT_POPUP_TYPE_POPUP:
             default:
-                return 'fc/popup';
+                return 'fc/overlay';
         }
     }
 
@@ -107,10 +107,10 @@ namespace {
     }
 
     function parse_blocks( string $content ): array {
-        if ( false !== strpos( $content, 'fc/popup' ) ) {
+        if ( false !== strpos( $content, 'fc/overlay' ) ) {
             return array(
                 array(
-                    'blockName'    => 'fc/popup',
+                    'blockName'    => 'fc/overlay',
                     'attrs'        => array(),
                     'innerBlocks'  => array(),
                     'innerHTML'    => '',
@@ -183,7 +183,7 @@ namespace {
             array(
                 'title'        => 'AI Popup Draft',
                 'popup_type'   => FOOCONVERT_POPUP_TYPE_POPUP,
-                'post_content' => '<!-- wp:fc/popup --><div>Popup</div><!-- /wp:fc/popup -->',
+                'post_content' => '<!-- wp:fc/overlay --><div>Popup</div><!-- /wp:fc/overlay -->',
                 'ai_metadata'  => array(
                     'messages' => array(
                         array(

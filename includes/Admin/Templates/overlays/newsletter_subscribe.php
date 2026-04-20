@@ -1,10 +1,24 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 return array(
 	'name' => 'popup__newsletter_subscribe',
 	'title' => __( 'Newsletter Subscribe', 'fooconvert' ),
 	'description' => __( 'Newsletter Subscribe marketing themed overlay.', 'fooconvert' ),
 	'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/template__newsletter_subscribe.png',
+	'picker' => array(
+		'category' => 'lead-capture',
+		'tags' => array( 'newsletter', 'email' ),
+		'availability' => 'included',
+		'preview' => array(
+			'url' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-overlay-newsletter-subscribe.webp',
+			'width' => 740,
+			'height' => 601,
+		),
+	),
 	'attributes' => array(
 		'template' => 'popup__newsletter_subscribe',
 		'settings' => array(

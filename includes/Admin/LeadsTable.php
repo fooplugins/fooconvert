@@ -5,6 +5,10 @@ namespace FooPlugins\FooConvert\Admin;
 use FooPlugins\FooConvert\Lead;
 use WP_List_Table;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
 
     /**
@@ -235,7 +239,7 @@ if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
                 ) );
             }
 
-            fclose( $fp );
+            fclose( $fp ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Closing php://output, not a filesystem file handle.
             exit;
         }
     }

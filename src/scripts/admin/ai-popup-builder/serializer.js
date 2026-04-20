@@ -90,7 +90,7 @@ export const ensurePopupBuilderBlocksRegistered = ( blockCatalog = [] ) => {
 
     fooconvertBlockMetadata.forEach( metadata => {
         const save = [
-            "fc/popup-close-button",
+            "fc/overlay-close-button",
             "fc/flyout-open-button",
             "fc/flyout-close-button",
             "fc/bar-open-button",
@@ -187,15 +187,15 @@ const buildPopupRootBlock = ( draft, templatesBySlug ) => {
     }
 
     return createBlock(
-        "fc/popup",
+        "fc/overlay",
         rootAttributes,
         [
             createBlock(
-                "fc/popup-container",
+                "fc/overlay-container",
                 {},
                 [
-                    createBlock( "fc/popup-close-button", {}, [] ),
-                    createBlock( "fc/popup-content", {}, contentBlocks ),
+                    createBlock( "fc/overlay-close-button", {}, [] ),
+                    createBlock( "fc/overlay-content", {}, contentBlocks ),
                 ]
             ),
         ]

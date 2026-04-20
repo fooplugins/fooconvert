@@ -7,6 +7,10 @@ use FooPlugins\FooConvert\Utils;
 use WP_Block;
 use WP_Block_Type;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * A base class for a dynamic block.
  */

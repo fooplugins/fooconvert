@@ -2,6 +2,10 @@
 
 namespace FooPlugins\FooConvert;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( !class_exists( __NAMESPACE__ . '\Stats' ) ) {
 
     /**
@@ -101,6 +105,7 @@ if ( !class_exists( __NAMESPACE__ . '\Stats' ) ) {
             $query = new \WP_Query( [
                 'post_type'      => FOOCONVERT_CPT_POPUP,
                 'posts_per_page' => $limit,
+                'post_status'    => fooconvert_get_dashboard_popup_statuses(),
                 'meta_key'       => $sort_option['meta_key'], // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
                 'orderby'        => 'meta_value_num',
                 'order'          => 'DESC',
@@ -133,7 +138,7 @@ if ( !class_exists( __NAMESPACE__ . '\Stats' ) ) {
             $index = 1;
 
             foreach ( $posts as $post ) {
-                if ( !$post instanceof \WP_Post ) {
+                if ( !fooconvert_is_dashboard_popup_post( $post ) ) {
                     continue;
                 }
 
@@ -178,7 +183,7 @@ if ( !class_exists( __NAMESPACE__ . '\Stats' ) ) {
                 }
 
                 $post = get_post( intval( $metrics['post_id'] ) );
-                if ( !$post instanceof \WP_Post || $post->post_type !== FOOCONVERT_CPT_POPUP ) {
+                if ( !fooconvert_is_dashboard_popup_post( $post ) ) {
                     continue;
                 }
 
@@ -236,7 +241,7 @@ if ( !class_exists( __NAMESPACE__ . '\Stats' ) ) {
                 }
 
                 $post = get_post( intval( $row['post_id'] ) );
-                if ( !$post instanceof \WP_Post || $post->post_type !== FOOCONVERT_CPT_POPUP ) {
+                if ( !fooconvert_is_dashboard_popup_post( $post ) ) {
                     continue;
                 }
 

@@ -1,10 +1,24 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 return array(
 	'name' => 'popup__digital_download_signup',
 	'title' => __( 'Digital Download Signup', 'fooconvert' ),
 	'description' => __( 'Digital download signup themed overlay.', 'fooconvert' ),
 	'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/template__digital_download_signup.png',
+	'picker' => array(
+		'category' => 'lead-capture',
+		'tags' => array( 'email', 'download' ),
+		'availability' => 'included',
+		'preview' => array(
+			'url' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-overlay-digital-download-signup.webp',
+			'width' => 480,
+			'height' => 319,
+		),
+	),
 	'attributes' => array(
 		'template' => 'popup__digital_download_signup',
 		'content' => array(

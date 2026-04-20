@@ -1,10 +1,24 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 return array(
     'name'        => 'bar__smart_exit_offer',
 	'title' => __( 'Smart Exit Offer', 'fooconvert' ),
 	'description' => __( 'A smart exit offer bar lead magnet to help prevent visitors from leaving your site.', 'fooconvert' ),
     'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__smart_exit_offer.png',
+    'picker'      => array(
+        'category'     => 'lead-capture',
+        'tags'         => array( 'offer', 'exit-intent' ),
+        'availability' => 'included',
+        'preview'      => array(
+            'url' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-bar-smart-exit-offer.webp',
+            'width' => 800,
+            'height' => 305,
+        ),
+    ),
     'attributes'  => array(
         'template'    => 'bar__smart_exit_offer',
         'settings'    => array(
@@ -266,4 +280,3 @@ return array(
         'block'
     )
 );
-

@@ -5,6 +5,10 @@ namespace FooPlugins\FooConvert;
 use FooPlugins\FooConvert\Data\Base;
 use FooPlugins\FooConvert\Data\Schema;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( !class_exists( __NAMESPACE__ . '\UpgradeMigration' ) ) {
 
     /**
@@ -108,7 +112,9 @@ if ( !class_exists( __NAMESPACE__ . '\UpgradeMigration' ) ) {
                 return;
             }
 
-            $wpdb->query( "DROP INDEX {$index_name} ON {$table_name}" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+            $wpdb->query(
+                $wpdb->prepare( 'DROP INDEX %i ON %i', $index_name, $table_name )
+            ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
         }
 
         /**
@@ -120,9 +126,9 @@ if ( !class_exists( __NAMESPACE__ . '\UpgradeMigration' ) ) {
         private function table_exists( string $table_name ): bool {
             global $wpdb;
 
-            $query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name );
-
-            return (string) $wpdb->get_var( $query ) === $table_name; // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+            return (string) $wpdb->get_var(
+                $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name )
+            ) === $table_name; // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
         }
 
         /**
@@ -135,9 +141,11 @@ if ( !class_exists( __NAMESPACE__ . '\UpgradeMigration' ) ) {
         private function column_exists( string $table_name, string $column_name ): bool {
             global $wpdb;
 
-            $query = $wpdb->prepare( "SHOW COLUMNS FROM {$table_name} LIKE %s", $column_name );
-
-            return !empty( $wpdb->get_row( $query ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+            return !empty(
+                $wpdb->get_row(
+                    $wpdb->prepare( 'SHOW COLUMNS FROM %i LIKE %s', $table_name, $column_name )
+                )
+            ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
         }
 
         /**

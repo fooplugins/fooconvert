@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( empty( $sort ) ) {
     $sort = 'engagement';
 }
@@ -46,13 +50,13 @@ if ( empty( $top_performers ) ) {
         $post_type = fooconvert_get_popup_type_label( $top_performer['post_type'] );
         echo '<tr>';
         echo '<td>#' . esc_attr( $index ) . '</td>';
-        echo '<td><span>' . esc_html( $top_performer['title'] ) . '</span>';
+        echo '<td class="fooconvert-top-performers-title-cell"><div class="fooconvert-top-performers-title-row">';
+        echo '<span class="fooconvert-top-performers-title">' . esc_html( $top_performer['title'] ) . '</span>';
         echo '<span class="fooconvert-dashboard-pill">' . esc_html( $post_type ) . '</span>';
         echo '<div class="fooconvert-dashboard-table-actions">';
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo $edit_link . ' ' . $stats_link;
-        echo '</div>';
-        echo '</td>';
+        echo '</div></div></td>';
         echo '<td>' . esc_html( $score ) . '</td>';
         echo '</tr>';
     }

@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $demos_created = fooconvert_get_setting( 'demo_content' ) === 'on';
 $hidden_panels = fooconvert_get_setting( 'hide_dashboard_panels', [] );
 
@@ -19,7 +23,7 @@ if ( in_array( 'getting-started', $hidden_panels ) ) {
     <?php if ( !$demos_created ) : ?>
         <div class="fooconvert-panel-section">
             <p>
-                <?php esc_html_e( 'The easiest way to get started is by creating demo content, which will create 4 draft bars, flyouts and overlays.', 'fooconvert' ); ?>
+                <?php esc_html_e( 'The easiest way to get started is by creating demo content, which will create 7 draft popups: 2 bars, 3 flyouts, and 2 overlays.', 'fooconvert' ); ?>
                 <strong><?php esc_html_e( 'It\'s also the best way to see the top performers in action!', 'fooconvert' ); ?> </strong>
             </p>
             <p class="fooconvert-flex fooconvert-create-demo-container">
@@ -56,24 +60,22 @@ if ( in_array( 'getting-started', $hidden_panels ) ) {
         </p>
         <ol class="fooconvert-ordered-list">
             <li>
-                <?php esc_html_e( 'Create a new popup and choose whether it should be a bar, flyout, or overlay.', 'fooconvert' ); ?>
-                (<a href="<?php echo esc_url( fooconvert_admin_url_popup_type_chooser() ); ?>"
-                    target="_blank"><?php esc_html_e( 'create a new popup', 'fooconvert' ); ?></a>)
+                <a href="<?php echo esc_url( fooconvert_admin_url_popup_new() ); ?>"
+                    target="_blank"><?php esc_html_e( 'Create a new popup!', 'fooconvert' ); ?></a>
             </li>
             <li>
                 <?php esc_html_e( 'Select a pre-made template.', 'fooconvert' ); ?>
-                (<?php esc_html_e( 'e.g. Black Friday Bar, Scroll Flyout, or Exit Intent Overlay', 'fooconvert' ); ?>)
             </li>
             <li>
-                <?php esc_html_e( 'Customize the look and feel &amp; change the content to your liking!', 'fooconvert' ); ?>
+                <?php esc_html_e( 'Customize the look and feel &amp; update the content!', 'fooconvert' ); ?>
             </li>
             <li>
-                <?php esc_html_e( 'Set the Display Rules locations.', 'fooconvert' ); ?>
-                (<?php esc_html_e( 'e.g. either "Entire Site" or "Front Page"', 'fooconvert' ); ?>)
+                <?php esc_html_e( 'Set the Display Rules.', 'fooconvert' ); ?>
+                (<?php esc_html_e( 'e.g. "Entire Site" or "Front Page"', 'fooconvert' ); ?>)
             </li>
             <li>
                 <?php esc_html_e( 'Select an Open Trigger.', 'fooconvert' ); ?>
-                (<?php esc_html_e( 'e.g. on page load, or exit intent', 'fooconvert' ); ?>)
+                (<?php esc_html_e( 'e.g. on scroll or exit intent', 'fooconvert' ); ?>)
             </li>
             <li>
                 <?php esc_html_e( 'Publish and you\'re done!', 'fooconvert' ); ?>

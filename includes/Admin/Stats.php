@@ -3,7 +3,11 @@
 namespace FooPlugins\FooConvert\Admin;
 
 use FooPlugins\FooConvert\Event;
-use FooPlugins\FooConvert\FooConvert;
+use WP_Post;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * FooConvert Admin Stats Class
@@ -21,60 +25,8 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
         function __construct() {
             add_action( 'admin_menu', array( $this, 'register_menu' ) );
             add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
-            add_action( 'admin_init', array( $this, 'register_columns' ) );
             add_action( 'wp_ajax_fooconvert_fetch_stats', array( $this, 'fetch_popup_stats' ) );
-            add_action( 'admin_init', array( $this, 'enqueue_popup' ) );
-            add_action( 'admin_footer', array( $this, 'render_enqueued' ) );
-            add_filter( 'fooconvert-popup-frontend-attributes', array( $this, 'override_popup_attributes' ), 10, 4 );
-        }
-
-        /**
-         * Overrides popup attributes.
-         */
-        function override_popup_attributes( $attributes, $instance_id, $tag_name, $block ) {
-            if ( fooconvert_is_popup_stats_page() ) {
-                $attributes['settings']['trigger'] = [
-                    'version'   => 2,
-                    'lifetime'  => 'page',
-                    'frequency' => [
-                        'mode'            => 'repeat',
-                        'cooldownSeconds' => 0
-                    ],
-                    'steps'     => [
-                        [
-                            'event' => 'fc.anchor.click',
-                            'where' => [
-                                'ids' => [ 'fooconvert-popup-preview' ]
-                            ]
-                        ]
-                    ]
-                ];
-            }
-
-            return $attributes;
-        }
-
-        /**
-         * Renders enqueued.
-         */
-        function render_enqueued() {
-            FooConvert::plugin()->display_rules->render_enqueued();
-        }
-
-        /**
-         * Enqueues popup.
-         */
-        function enqueue_popup() {
-            if ( fooconvert_is_popup_stats_page() ) {
-                // This is what the block editor loads behind the scenes
-                //require_once ABSPATH . 'wp-includes/block-editor.php';
-                //register_core_block_types();
-
-                $post_id = absint( $_GET['post_id'] );
-
-                // We need to make sure the popup is enqueued for the admin stats page.
-                FooConvert::plugin()->display_rules->add_to_queue( $post_id, 'admin_stats_preview' );
-            }
+            add_filter( 'post_row_actions', array( $this, 'add_stats_row_action' ), 10, 2 );
         }
 
         /**
@@ -212,68 +164,39 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
         }
 
         /**
-         * Register a custom column for each post type that FooConvert supports.
+         * Adds the stats link to popup row actions before destructive actions.
          *
-         * The custom column is titled "Stats" and contains a link to the stats page
-         * for the popup.
-         *
-         * @since 1.0.0
+         * @param array   $actions Existing row actions.
+         * @param WP_Post $post Current post object.
+         * @return array
          */
-        public function register_columns() {
-            $post_type = FOOCONVERT_CPT_POPUP;
+        public function add_stats_row_action( array $actions, WP_Post $post ): array {
+            if ( $post->post_type !== FOOCONVERT_CPT_POPUP ) {
+                return $actions;
+            }
 
-            add_filter( "manage_{$post_type}_posts_columns", function ( $columns ) use ( $post_type ) {
-                return $this->create_stats_column( $post_type, $columns );
-            } );
-            add_action( "manage_{$post_type}_posts_custom_column", function ( $column_name, $post_id ) use ( $post_type ) {
-                $this->create_stats_column_content( $post_type, $column_name, $post_id );
-            }, 10, 2 );
-        }
+            $stats_page_url = fooconvert_admin_url_popup_stats( $post->ID );
+            $stats_action = '<a href="' . esc_url( $stats_page_url ) . '">' . esc_html__( 'View Stats', 'fooconvert' ) . '</a>';
 
-        /**
-         * Creates a custom column in the post type list table.
-         *
-         * @param string $post_type The post type that the column is being added to.
-         * @param array $columns The existing columns in the list table.
-         *
-         * @return array The updated columns array.
-         */
-        public function create_stats_column( $post_type, $columns ): array {
-            // add the column after the default title column
+            unset( $actions['fooconvert_stats'] );
+
             $updated = array();
             $inserted = false;
-            foreach ( $columns as $column_name => $column_display_name ) {
-                $updated[$column_name] = $column_display_name;
-                if ( $column_name === 'title' ) {
-                    $updated["{$post_type}_stats"] = __( 'Stats', 'fooconvert' );
+
+            foreach ( $actions as $action_name => $action_html ) {
+                if ( in_array( $action_name, array( 'trash', 'delete' ), true ) && !$inserted ) {
+                    $updated['fooconvert_stats'] = $stats_action;
                     $inserted = true;
                 }
+
+                $updated[ $action_name ] = $action_html;
             }
 
-            // if for some reason the column was not inserted, add it
             if ( !$inserted ) {
-                $updated["{$post_type}_stats"] = __( 'Stats', 'fooconvert' );
+                $updated['fooconvert_stats'] = $stats_action;
             }
+
             return $updated;
-        }
-
-
-        /**
-         * Renders the content of the "Stats" column in the post type list table.
-         *
-         * @param string $post_type The post type that the column is being rendered for.
-         * @param string $column_name The name of the column being rendered.
-         * @param int $post_id The ID of the post being rendered.
-         *
-         * @return void
-         */
-        public function create_stats_column_content( $post_type, $column_name, $post_id ): void {
-            if ( $column_name === "{$post_type}_stats" ) {
-
-                $stats_page_url = fooconvert_admin_url_popup_stats( $post_id );
-
-                echo '<a href="' . esc_url( $stats_page_url ) . '">' . esc_html__( 'View Stats', 'fooconvert' ) . '</a>';
-            }
         }
 
         /**
@@ -379,15 +302,6 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Stats' ) ) {
                 'ajaxUrl' => admin_url( 'admin-ajax.php' ),
                 'nonce'   => wp_create_nonce( 'fooconvert-popup-stats' )
             ) );
-
-            FooConvert::plugin()->ensure_frontend_assets_enqueued();
-
-            // 1. Register all blocks (core + plugin)
-            require_once ABSPATH . 'wp-includes/block-editor.php';
-
-            // 2. Trigger enqueue actions manually
-            do_action('enqueue_block_assets');          // Block frontend + editor shared assets
-            do_action('enqueue_block_editor_assets');   // Editor-only assets (the big one)
 
             do_action( 'fooconvert_popup_stats_enqueue_assets' );
         }

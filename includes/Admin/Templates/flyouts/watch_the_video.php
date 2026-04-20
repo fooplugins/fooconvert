@@ -1,10 +1,24 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 return array(
     'name'        => 'flyout__watch_the_video',
     'title'       => __( 'Watch the Video', 'fooconvert' ),
     'description' => __( 'Guide visitors to a watch a specific video.', 'fooconvert' ),
     'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__video.png',
+    'picker'      => array(
+        'category'     => 'video',
+        'tags'         => array( 'video' ),
+        'availability' => 'included',
+        'preview'      => array(
+            'url' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-flyout-watch-the-video.webp',
+            'width' => 353,
+            'height' => 180,
+        ),
+    ),
     'attributes'  => array(
         'template'    => 'flyout__watch_the_video',
         'content'     => array(
@@ -177,4 +191,3 @@ return array(
         'block'
     )
 );
-

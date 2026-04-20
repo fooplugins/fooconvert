@@ -5,6 +5,10 @@ namespace FooPlugins\FooConvert\Admin;
 use FooPlugins\FooConvert\Admin\FooFields\SettingsPage;
 use FooPlugins\FooConvert\Event;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * FooConvert Admin Settings Class
  */
@@ -73,6 +77,19 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                         'type'  => 'checkbox',
                         'label' => __( 'Enable Debug Mode', 'fooconvert' ),
                         'desc'  => __( 'Helps to debug problems and diagnose issues. Enable debugging if you need support for an issue you are having.', 'fooconvert' )
+                    ),
+                    'popup_editor_background' => array(
+                        'id'      => 'popup_editor_background',
+                        'order'   => 15,
+                        'type'    => 'select',
+                        'default' => 'transparent',
+                        'label'   => __( 'Editor Background', 'fooconvert' ),
+                        'choices' => array(
+                            'transparent' => __( 'Transparent', 'fooconvert' ),
+                            'white'       => __( 'White', 'fooconvert' ),
+                            'black'       => __( 'Black', 'fooconvert' ),
+                        ),
+                        'desc'    => __( 'Choose the background used in the popup editor for all popup types.', 'fooconvert' )
                     ),
                     'hide_promos'           => array(
                         'id'    => 'hide_promos',
@@ -179,27 +196,30 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                     );
 
                     $database_tab['fields'][] = array(
-                        'id'       => 'database_delete_old',
-                        'type'     => 'ajaxbutton',
-                        'callback' => array( $this, 'delete_old_events' ),
-                        'button'   => __( 'Delete Old Events', 'fooconvert' ),
-                        'desc'     => __( 'This will permanently delete all events older than the retention period.', 'fooconvert' ) . ' ' . __( 'Currently :', 'fooconvert' ) . ' ' . fooconvert_retention() . ' ' . __( 'days.', 'fooconvert' ),
+                        'id'                   => 'database_delete_old',
+                        'type'                 => 'ajaxbutton',
+                        'callback'             => array( $this, 'delete_old_events' ),
+                        'button'               => __( 'Delete Old Events', 'fooconvert' ),
+                        'confirmation_message' => __( 'Are you sure you want to permanently delete all events older than the retention period?', 'fooconvert' ),
+                        'desc'                 => __( 'This will permanently delete all events older than the retention period.', 'fooconvert' ) . ' ' . __( 'Currently :', 'fooconvert' ) . ' ' . fooconvert_retention() . ' ' . __( 'days.', 'fooconvert' ),
                     );
 
                     $database_tab['fields'][] = array(
-                        'id'       => 'database_delete_all',
-                        'type'     => 'ajaxbutton',
-                        'callback' => array( $this, 'delete_all_events' ),
-                        'button'   => __( 'Delete All Events', 'fooconvert' ),
-                        'desc'     => __( 'This will permanently delete all events.', 'fooconvert' ),
+                        'id'                   => 'database_delete_all',
+                        'type'                 => 'ajaxbutton',
+                        'callback'             => array( $this, 'delete_all_events' ),
+                        'button'               => __( 'Delete All Events', 'fooconvert' ),
+                        'confirmation_message' => __( 'Are you sure you want to permanently delete all events?', 'fooconvert' ),
+                        'desc'                 => __( 'This will permanently delete all events.', 'fooconvert' ),
                     );
 
                     if ( $orphaned_events > 0 ) {
                         $database_tab['fields'][] = array(
-                            'id'       => 'database_delete_orphans',
-                            'type'     => 'ajaxbutton',
-                            'callback' => array( $this, 'delete_orphans' ),
-                            'button'   => __( 'Delete Orphaned Data', 'fooconvert' ),
+                            'id'                   => 'database_delete_orphans',
+                            'type'                 => 'ajaxbutton',
+                            'callback'             => array( $this, 'delete_orphans' ),
+                            'button'               => __( 'Delete Orphaned Data', 'fooconvert' ),
+                            'confirmation_message' => __( 'Are you sure you want to permanently delete all orphaned data?', 'fooconvert' ),
                         );
                     }
                 }

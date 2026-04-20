@@ -4,7 +4,7 @@ import { isBlobURL } from "@wordpress/blob";
 import { __ } from "@wordpress/i18n";
 import { MediaReplaceFlow, store as blockEditorStore } from "@wordpress/block-editor";
 import { setImmutably } from "../../../utils";
-import { hasBackgroundImageValue } from "../utils";
+import { applySelectedBackgroundImage, hasBackgroundImageValue } from "../utils";
 import { getFilename } from "@wordpress/url";
 import LoadingSpinner from "./LoadingSpinner";
 import InspectorImagePreviewItem from "./InspectorImagePreviewItem";
@@ -12,6 +12,7 @@ import { Button, DropZone, MenuItem } from "@wordpress/components";
 import { store as noticesStore } from '@wordpress/notices';
 import { focus } from '@wordpress/dom';
 import clsx from "clsx";
+import { VStack } from "../../experimental";
 
 const IMAGE_BACKGROUND_TYPE = 'image';
 
@@ -19,10 +20,13 @@ const BackgroundImageControls = ( {
                                       onChange,
                                       style,
                                       inheritedValue,
+                                      onSelectMedia,
                                       onRemoveImage = () => {},
                                       onResetImage = () => {},
+                                      onOpenBackgroundGenerator = () => {},
                                       displayInPanel,
                                       defaultValues,
+                                      showBackgroundGenerator = false,
                                   } ) => {
     const [ isUploading, setIsUploading ] = useState( false );
     const { getSettings } = useSelect( blockEditorStore, [] );
@@ -37,18 +41,24 @@ const BackgroundImageControls = ( {
         setIsUploading( false );
     };
 
-    const resetBackgroundImage = () =>
-        onChange(
-            setImmutably(
-                style,
-                [ 'background', 'backgroundImage' ],
-                undefined
-            )
-        );
+    const applySelectedMedia = ( media ) => {
+        if ( "function" === typeof onSelectMedia ) {
+            onSelectMedia( media );
+            return;
+        }
 
-    const onSelectMedia = ( media ) => {
+        onChange(
+            applySelectedBackgroundImage( {
+                style,
+                media,
+                defaultValues,
+            } )
+        );
+    };
+
+    const handleSelectMedia = ( media ) => {
         if ( ! media || ! media.url ) {
-            resetBackgroundImage();
+            applySelectedMedia( media );
             setIsUploading( false );
             return;
         }
@@ -72,31 +82,7 @@ const BackgroundImageControls = ( {
             return;
         }
 
-        const sizeValue =
-            style?.background?.backgroundSize || defaultValues?.backgroundSize;
-        const positionValue = style?.background?.backgroundPosition;
-        onChange(
-            setImmutably( style, [ 'background' ], {
-                ...style?.background,
-                backgroundImage: {
-                    url: media.url,
-                    id: media.id,
-                    source: 'file',
-                    title: media.title || undefined,
-                },
-                backgroundPosition:
-                /*
-                 * A background image uploaded and set in the editor receives a default background position of '50% 0',
-                 * when the background image size is the equivalent of "Tile".
-                 * This is to increase the chance that the image's focus point is visible.
-                 * This is in-editor only to assist with the user experience.
-                 */
-                    ! positionValue && ( 'auto' === sizeValue || ! sizeValue )
-                        ? '50% 0'
-                        : positionValue,
-                backgroundSize: sizeValue,
-            } )
-        );
+        applySelectedMedia( media );
         setIsUploading( false );
     };
 
@@ -106,7 +92,7 @@ const BackgroundImageControls = ( {
             allowedTypes: [ IMAGE_BACKGROUND_TYPE ],
             filesList,
             onFileChange( [ image ] ) {
-                onSelectMedia( image );
+                handleSelectMedia( image );
             },
             onError: onUploadError,
             multiple: false,
@@ -142,47 +128,58 @@ const BackgroundImageControls = ( {
             className="block-editor-global-styles-background-panel__image-tools-panel-item"
         >
             { isUploading && <LoadingSpinner /> }
-            <MediaReplaceFlow
-                mediaId={ id }
-                mediaURL={ url }
-                allowedTypes={ [ IMAGE_BACKGROUND_TYPE ] }
-                accept="image/*"
-                onSelect={ onSelectMedia }
-                popoverProps={ {
-                    className: clsx( {
-                        'block-editor-global-styles-background-panel__media-replace-popover':
-                        displayInPanel,
-                    } ),
-                } }
-                name={
-                    <InspectorImagePreviewItem
-                        className="block-editor-global-styles-background-panel__image-preview"
-                        imgUrl={ url }
-                        filename={ title }
-                        label={ imgLabel }
-                    />
-                }
-                renderToggle={ ( props ) => (
-                    <Button { ...props } __next40pxDefaultSize />
-                ) }
-                onError={ onUploadError }
-                onReset={ () => {
-                    closeAndFocus();
-                    onResetImage();
-                } }
-            >
-                { canRemove && (
-                    <MenuItem
-                        onClick={ () => {
-                            closeAndFocus();
-                            onRemove();
-                            onRemoveImage();
-                        } }
+            <VStack spacing={ 2 }>
+                <MediaReplaceFlow
+                    mediaId={ id }
+                    mediaURL={ url }
+                    allowedTypes={ [ IMAGE_BACKGROUND_TYPE ] }
+                    accept="image/*"
+                    onSelect={ handleSelectMedia }
+                    popoverProps={ {
+                        className: clsx( {
+                            'block-editor-global-styles-background-panel__media-replace-popover':
+                            displayInPanel,
+                        } ),
+                    } }
+                    name={
+                        <InspectorImagePreviewItem
+                            className="block-editor-global-styles-background-panel__image-preview"
+                            imgUrl={ url }
+                            filename={ title }
+                            label={ imgLabel }
+                        />
+                    }
+                    renderToggle={ ( props ) => (
+                        <Button { ...props } __next40pxDefaultSize />
+                    ) }
+                    onError={ onUploadError }
+                    onReset={ () => {
+                        closeAndFocus();
+                        onResetImage();
+                    } }
+                >
+                    { canRemove && (
+                        <MenuItem
+                            onClick={ () => {
+                                closeAndFocus();
+                                onRemove();
+                                onRemoveImage();
+                            } }
+                        >
+                            { __( 'Remove' ) }
+                        </MenuItem>
+                    ) }
+                </MediaReplaceFlow>
+                { showBackgroundGenerator ? (
+                    <Button
+                        variant="secondary"
+                        onClick={ onOpenBackgroundGenerator }
+                        disabled={ isUploading }
                     >
-                        { __( 'Remove' ) }
-                    </MenuItem>
-                ) }
-            </MediaReplaceFlow>
+                        { __( "Generate Background", "fooconvert" ) }
+                    </Button>
+                ) : null }
+            </VStack>
             <DropZone
                 onFilesDrop={ onFilesDrop }
                 label={ __( 'Drop to upload' ) }

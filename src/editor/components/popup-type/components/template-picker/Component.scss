@@ -1,0 +1,24 @@
+.fc--popup-type-template-picker {
+  display: flex;
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  outline: none;
+}
+
+.fc--popup-type-template-picker__picker {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  --fc-variation-picker__background: #ffffff;
+  --fc-variation-picker__background-alt: #f6f7f7;
+  --fc-variation-picker__foreground: #1d2327;
+  --fc-variation-picker__foreground-alt: #646970;
+  --fc-variation-picker__highlight: var(--wp-admin-theme-color, #3858e9);
+  --fc-variation-picker__highlight-inverted: #ffffff;
+  --fc-variation-picker__border: #dcdcde;
+}

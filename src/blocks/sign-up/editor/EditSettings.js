@@ -47,7 +47,7 @@ const EditSettings = props => {
         if ( tab.name === 'styles' ) {
             return (
                 <TabPanel
-                    className="fc--sidebar-tabs"
+                    className="fc--sidebar-tabs fc--sidebar-tabs--nested"
                     tabs={ styleTabs }
                 >
                     { ( styleTab ) => {

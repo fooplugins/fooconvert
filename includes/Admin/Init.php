@@ -4,6 +4,10 @@ namespace FooPlugins\FooConvert\Admin;
 
 use FooPlugins\FooConvert\FooConvert;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
 
     /**
@@ -18,7 +22,6 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             add_action( 'admin_menu', array( $this, 'reorder_menu' ), 999 );
             add_action( 'in_admin_header', array( $this, 'add_custom_header' ) );
             add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueues' ) );
-            add_action( 'load-post-new.php', array( $this, 'maybe_redirect_popup_creation' ) );
 
             new namespace\Stats();
             new namespace\Dashboard();
@@ -125,25 +128,6 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             }
 
             $submenu[FOOCONVERT_MENU_SLUG] = array_values( $ordered );
-        }
-
-        /**
-         * Redirects generic popup creation requests to the popup type chooser.
-         *
-         * @return void
-         */
-        public function maybe_redirect_popup_creation(): void {
-            $post_type = isset( $_GET['post_type'] ) ? sanitize_key( wp_unslash( $_GET['post_type'] ) ) : 'post';
-            if ( $post_type !== FOOCONVERT_CPT_POPUP ) {
-                return;
-            }
-
-            if ( fooconvert_get_requested_popup_type() !== '' ) {
-                return;
-            }
-
-            wp_safe_redirect( fooconvert_admin_url_popup_type_chooser() );
-            exit;
         }
 
         /**

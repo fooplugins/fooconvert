@@ -1,10 +1,24 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 return array(
     'name'        => 'popup__special_offer',
     'title'       => __( 'Special Offer Countdown', 'fooconvert' ),
     'description' => __( 'Guide visitors to specific offer with a countdown timer.', 'fooconvert' ),
     'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__special_offer.png',
+    'picker'      => array(
+        'category'     => 'promotion',
+        'tags'         => array( 'offer', 'countdown' ),
+        'availability' => 'included',
+        'preview'      => array(
+            'url' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-overlay-special-offer.webp',
+            'width' => 740,
+            'height' => 591,
+        ),
+    ),
     'attributes'  => array(
         'template'    => 'popup__special_offer',
         'content'     => array(
@@ -161,6 +175,9 @@ return array(
 										'padDigits' => false
 									),
 									'styles' => array(
+										'color' => array(
+											'background' => '#00000030'
+										),
 										'border' => array(
 											'radius' => '16px',
 											'style' => 'none',
@@ -247,4 +264,3 @@ return array(
         'block'
     )
 );
-

@@ -5,6 +5,10 @@ namespace FooPlugins\FooConvert\Admin\FooFields\Fields;
 use FooPlugins\FooConvert\Admin\FooFields\Fields\Field;
 use FooPlugins\FooConvert\Utils;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( !class_exists( __NAMESPACE__ . '\Blurb' ) ) {
 
     /**

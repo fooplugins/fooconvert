@@ -7,6 +7,10 @@ use FooPlugins\FooConvert\Popups\Base\BasePopup;
 use FooPlugins\FooConvert\Utils;
 use WP_Block;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class Bar.
  */
@@ -83,12 +87,17 @@ class Bar extends BasePopup {
      * @inheritDoc
      */
     function get_editor_variations(): array {
-        return apply_filters( 'fooconvert_editor_variations-' . $this->get_post_type(), array(
+        $variations = apply_filters( 'fooconvert_editor_variations-' . $this->get_post_type(), array(
             array(
                 'name'        => 'empty_bar',
                 'title'       => __( 'Empty', 'fooconvert' ),
                 'description' => __( 'A blank slate that you can use to build your own bar from scratch.', 'fooconvert' ),
                 'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__blank.png',
+                'picker'      => array(
+                    'category'     => 'blank',
+                    'tags'         => array( 'blank' ),
+                    'availability' => 'included',
+                ),
                 'attributes'  => array(
                     'openButton'  => array(
                         'styles' => array(
@@ -130,6 +139,11 @@ class Bar extends BasePopup {
                 'title'       => __( 'Black Friday Bar', 'fooconvert' ),
                 'description' => __( 'A typical Black Friday bar to help drive sales.', 'fooconvert' ),
                 'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__black_friday.png',
+                'picker'      => array(
+                    'category'     => 'promotion',
+                    'tags'         => array( 'seasonal', 'offer' ),
+                    'availability' => 'included',
+                ),
                 'attributes'  => array(
                     'viewState'   => 'open',
                     'settings'    => array(
@@ -247,6 +261,11 @@ class Bar extends BasePopup {
                 'title'       => __( 'Cookie Consent Bar', 'fooconvert' ),
                 'description' => __( 'A simple bottom bar that is dismissed when the button is clicked.', 'fooconvert' ),
                 'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__cookie.png',
+                'picker'      => array(
+                    'category'     => 'compliance',
+                    'tags'         => array( 'cookie' ),
+                    'availability' => 'included',
+                ),
                 'attributes'  => array(
                     'viewState'   => 'open',
                     'template'    => 'cookie_consent_bar',
@@ -369,6 +388,8 @@ class Bar extends BasePopup {
                 )
             )
         ) );
+
+        return FooConvert::plugin()->components->variation_picker->prepare_variations( $variations );
     }
 
     /**

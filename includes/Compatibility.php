@@ -4,6 +4,10 @@ namespace FooPlugins\FooConvert;
 
 use FooPlugins\FooConvert\Components\Base\BaseComponent;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class Compatibility.
  */

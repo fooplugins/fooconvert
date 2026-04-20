@@ -1,10 +1,24 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 return array(
 	'name' => 'flyout__digital_download_signup',
 	'title' => __( 'Digital Download Signup', 'fooconvert' ),
 	'description' => __( 'Digital download signup themed flyout.', 'fooconvert' ),
 	'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/template__digital_download_signup.png',
+	'picker' => array(
+		'category' => 'lead-capture',
+		'tags' => array( 'email', 'download' ),
+		'availability' => 'included',
+		'preview' => array(
+			'url' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-flyout-digital-download-signup.webp',
+			'width' => 449,
+			'height' => 307,
+		),
+	),
 	'attributes' => array(
 		'template' => 'flyout__digital_download_signup',
 		'viewState' => 'open',
@@ -243,4 +257,3 @@ return array(
 		'block'
 	)
 );
-

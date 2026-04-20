@@ -1,10 +1,24 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 return array(
 	'name' => 'flyout__newsletter_subscribe',
 	'title' => __( 'Newsletter Subscribe', 'fooconvert' ),
 	'description' => __( 'Newsletter subscribe themed flyout.', 'fooconvert' ),
 	'thumbnail' => FOOCONVERT_ASSETS_URL . 'media/templates/template__newsletter_subscribe.png',
+	'picker' => array(
+		'category' => 'lead-capture',
+		'tags' => array( 'newsletter', 'email' ),
+		'availability' => 'included',
+		'preview' => array(
+			'url' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-flyout-newsletter-subscribe.webp',
+			'width' => 300,
+			'height' => 537,
+		),
+	),
 	'attributes' => array(
 		'viewState' => 'open',
 		'template' => 'flyout__newsletter_subscribe',
@@ -242,4 +256,3 @@ return array(
 		'block'
 	)
 );
-

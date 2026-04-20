@@ -1,10 +1,24 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 return array(
 	'name' => 'bar__digital_download_signup',
 	'title' => __( 'Digital Download Signup', 'fooconvert' ),
 	'description' => __( 'Digital download signup lead magnet bar.', 'fooconvert' ),
 	'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__digital_download_signup.png',
+	'picker' => array(
+		'category' => 'lead-capture',
+		'tags' => array( 'email', 'download' ),
+		'availability' => 'included',
+		'preview' => array(
+			'url' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-bar-digital-download-signup.webp',
+			'width' => 800,
+			'height' => 240,
+		),
+	),
 	'attributes' => array(
 		'viewState' => 'open',
 		'template' => 'bar__digital_download_signup',
@@ -230,4 +244,3 @@ return array(
 		'block'
 	)
 );
-

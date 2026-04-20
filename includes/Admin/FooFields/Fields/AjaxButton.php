@@ -2,6 +2,10 @@
 
 namespace FooPlugins\FooConvert\Admin\FooFields\Fields;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( !class_exists( __NAMESPACE__ . '\AjaxButton' ) ) {
 
     /**
@@ -50,6 +54,10 @@ if ( !class_exists( __NAMESPACE__ . '\AjaxButton' ) ) {
             $value = $this->value();
             if ( isset( $value ) ) {
                 $attributes['data-value'] = $value;
+            }
+
+            if ( ! empty( $this->config['confirmation_message'] ) ) {
+                $attributes['data-confirm'] = $this->config['confirmation_message'];
             }
 
             self::render_html_tag( 'a', $attributes, $button_text );

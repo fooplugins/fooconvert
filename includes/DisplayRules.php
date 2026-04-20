@@ -9,6 +9,10 @@ use WP_Query;
 use WP_Term;
 use WP_User;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class DisplayRules.
  */
@@ -232,10 +236,12 @@ class DisplayRules extends BaseComponent {
 
             echo '<div class="fc-display-rules-list__app" data-config="' . esc_attr( $json ) . '">';
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-            echo $this->render_column_summary_markup(
+            echo $this->render_column_app_markup(
                 $config['summary'],
+                $config['canEdit'],
+                $config['showSummary'],
                 $config['lockedMessage'],
-                $config['showSummary']
+                $config['postTitle']
             );
             echo '</div>';
         }
@@ -308,7 +314,7 @@ class DisplayRules extends BaseComponent {
      * Build the fallback summary shown in the popup list table.
      *
      * @param array $rules The display rules.
-     * @return array{location:string, exclude:string, users:string, showExclude:bool, showUsers:bool}
+     * @return array{location:string, exclude:string, users:string, showExclude:bool, showUsers:bool, isNotSet:bool}
      */
     private function get_column_summary( array $rules ): array {
         $location = $this->get_location_summary_text(
@@ -339,13 +345,16 @@ class DisplayRules extends BaseComponent {
             'users'       => $users,
             'showExclude' => $exclude !== __( 'None', 'fooconvert' ),
             'showUsers'   => !$has_all_users,
+            'isNotSet'    => $location === __( 'Not set', 'fooconvert' )
+                && $exclude === __( 'None', 'fooconvert' )
+                && ( $users === __( 'Not set', 'fooconvert' ) || $has_all_users ),
         );
     }
 
     /**
      * Render the fallback column summary markup.
      *
-     * @param array{location:string, exclude:string, users:string, showExclude:bool, showUsers:bool} $summary The current summary strings.
+     * @param array{location:string, exclude:string, users:string, showExclude:bool, showUsers:bool, isNotSet:bool} $summary The current summary strings.
      * @param string                                                                    $locked_message Optional. A lock message to display beneath the summary.
      * @param bool                                                                      $show_summary Whether the summary rows should be rendered.
      * @return string
@@ -355,21 +364,28 @@ class DisplayRules extends BaseComponent {
         ?>
         <?php if ( $show_summary ) : ?>
             <div class="fc-display-rules-list__summary">
-                <div class="fc-display-rules-list__summary-row">
-                    <span class="fc-display-rules-list__summary-label"><?php esc_html_e( 'Show on', 'fooconvert' ); ?></span>
-                    <span class="fc-display-rules-list__summary-value"><?php echo esc_html( Utils::get_string( $summary, 'location' ) ); ?></span>
-                </div>
-                <?php if ( Utils::get_bool( $summary, 'showExclude' ) ) : ?>
-                    <div class="fc-display-rules-list__summary-row">
-                        <span class="fc-display-rules-list__summary-label"><?php esc_html_e( 'Hide from', 'fooconvert' ); ?></span>
-                        <span class="fc-display-rules-list__summary-value"><?php echo esc_html( Utils::get_string( $summary, 'exclude' ) ); ?></span>
+                <?php if ( Utils::get_bool( $summary, 'isNotSet' ) ) : ?>
+                    <div class="fc-display-rules-list__summary-empty">
+                        <span class="fc-display-rules-list__summary-empty-icon dashicons dashicons-warning" aria-hidden="true"></span>
+                        <span class="fc-display-rules-list__summary-empty-text"><?php esc_html_e( 'Not set', 'fooconvert' ); ?></span>
                     </div>
-                <?php endif; ?>
-                <?php if ( Utils::get_bool( $summary, 'showUsers' ) ) : ?>
+                <?php else : ?>
                     <div class="fc-display-rules-list__summary-row">
-                        <span class="fc-display-rules-list__summary-label"><?php esc_html_e( 'Users', 'fooconvert' ); ?></span>
-                        <span class="fc-display-rules-list__summary-value"><?php echo esc_html( Utils::get_string( $summary, 'users' ) ); ?></span>
+                        <span class="fc-display-rules-list__summary-label"><?php esc_html_e( 'Show on', 'fooconvert' ); ?></span>
+                        <span class="fc-display-rules-list__summary-value"><?php echo esc_html( Utils::get_string( $summary, 'location' ) ); ?></span>
                     </div>
+                    <?php if ( Utils::get_bool( $summary, 'showExclude' ) ) : ?>
+                        <div class="fc-display-rules-list__summary-row">
+                            <span class="fc-display-rules-list__summary-label"><?php esc_html_e( 'Hide from', 'fooconvert' ); ?></span>
+                            <span class="fc-display-rules-list__summary-value"><?php echo esc_html( Utils::get_string( $summary, 'exclude' ) ); ?></span>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ( Utils::get_bool( $summary, 'showUsers' ) ) : ?>
+                        <div class="fc-display-rules-list__summary-row">
+                            <span class="fc-display-rules-list__summary-label"><?php esc_html_e( 'Users', 'fooconvert' ); ?></span>
+                            <span class="fc-display-rules-list__summary-value"><?php echo esc_html( Utils::get_string( $summary, 'users' ) ); ?></span>
+                        </div>
+                    <?php endif; ?>
                 <?php endif; ?>
             </div>
         <?php endif; ?>
@@ -377,6 +393,62 @@ class DisplayRules extends BaseComponent {
             <p class="<?php echo esc_attr( $show_summary ? 'description' : 'fc-display-rules-list__locked-message' ); ?>"><?php echo esc_html( $locked_message ); ?></p>
         <?php endif; ?>
         <?php
+        return trim( (string) ob_get_clean() );
+    }
+
+    /**
+     * Render the full fallback list-table app markup so the JS replacement stays visually identical.
+     *
+     * @param array{location:string, exclude:string, users:string, showExclude:bool, showUsers:bool, isNotSet:bool} $summary The current summary strings.
+     * @param bool   $can_edit Whether the current row is editable.
+     * @param bool   $show_summary Whether the summary rows should be rendered for non-editable rows.
+     * @param string $locked_message Optional. A lock message to display beneath the summary.
+     * @param string $post_title Optional. The popup title used for the edit button label.
+     * @return string
+     */
+    private function render_column_app_markup(
+        array $summary,
+        bool $can_edit,
+        bool $show_summary = true,
+        string $locked_message = '',
+        string $post_title = ''
+    ): string {
+        $edit_label = sprintf(
+            __( 'Edit display rules for %s', 'fooconvert' ),
+            $post_title !== '' ? $post_title : __( 'this popup', 'fooconvert' )
+        );
+
+        ob_start();
+        ?>
+        <div class="fc-display-rules-list">
+            <?php if ( $can_edit ) : ?>
+                <button
+                    type="button"
+                    class="fc-display-rules-list__summary-button"
+                    aria-label="<?php echo esc_attr( $edit_label ); ?>">
+                    <?php
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo $this->render_column_summary_markup( $summary, '', true );
+                    ?>
+                    <span class="fc-display-rules-list__summary-action"><?php esc_html_e( 'Edit display rules', 'fooconvert' ); ?></span>
+                </button>
+            <?php elseif ( $show_summary ) : ?>
+                <div class="fc-display-rules-list__summary-card">
+                    <?php
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo $this->render_column_summary_markup( $summary, '', true );
+                    ?>
+                </div>
+            <?php elseif ( $locked_message !== '' ) : ?>
+                <p class="fc-display-rules-list__locked-message"><?php echo esc_html( $locked_message ); ?></p>
+            <?php endif; ?>
+
+            <?php if ( !$can_edit && $show_summary && $locked_message !== '' ) : ?>
+                <p class="fc-display-rules-list__locked-message"><?php echo esc_html( $locked_message ); ?></p>
+            <?php endif; ?>
+        </div>
+        <?php
+
         return trim( (string) ob_get_clean() );
     }
 
@@ -1169,6 +1241,24 @@ class DisplayRules extends BaseComponent {
      */
     public function enqueue_assets() {
         do_action( 'fooconvert_enqueue_assets', $this->enqueued );
+    }
+
+    /**
+     * Dispatch popup-specific asset hooks for a queue of rendered popups.
+     *
+     * This is useful for non-frontend contexts, such as admin previews, that
+     * still need the same conditional assets as normal popup rendering.
+     *
+     * @param array<int,array<string,mixed>>|null $popups Optional queueable popups. Defaults to the current queue.
+     * @return void
+     */
+    public function enqueue_popup_assets( ?array $popups = null ): void {
+        if ( $popups === null ) {
+            $popups = $this->enqueued;
+        }
+
+        do_action( 'fooconvert_enqueue_required_assets', $popups );
+        do_action( 'fooconvert_enqueue_assets', $popups );
     }
 
     /**

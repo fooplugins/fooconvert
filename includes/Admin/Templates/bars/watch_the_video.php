@@ -1,10 +1,24 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 return array(
     'name'        => 'bar__watch_the_video',
     'title'       => __( 'Watch the Video', 'fooconvert' ),
     'description' => __( 'Guide visitors to a watch a specific video.', 'fooconvert' ),
     'thumbnail'   => FOOCONVERT_ASSETS_URL . 'media/templates/template__video.png',
+    'picker'      => array(
+        'category'     => 'video',
+        'tags'         => array( 'video' ),
+        'availability' => 'included',
+        'preview'      => array(
+            'url' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-bar-watch-the-video.webp',
+            'width' => 1440,
+            'height' => 144,
+        ),
+    ),
     'attributes'  => array(
         'template'    => 'bar__watch_the_video',
         'settings'    => array(
@@ -176,4 +190,3 @@ return array(
         'block'
     )
 );
-
