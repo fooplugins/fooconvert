@@ -1,5 +1,6 @@
 import { BaseControl, Button } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
+import { plus } from "@wordpress/icons";
 import classNames from "classnames";
 import { isArray } from "@steveush/utils";
 
@@ -93,9 +94,11 @@ const RepeaterControl = ( {
             <div className={ `${ rootClass }__container` }>
                 <div className={ `${ rootClass }__items` }>
                     { isEmpty && (
-                        <div className={ `${ rootClass }__no-items` }>
-                            { noItemsLabel }
-                        </div>
+                        noItemsLabel ? (
+                            <div className={ `${ rootClass }__no-items` }>
+                                { noItemsLabel }
+                            </div>
+                        ) : null
                     ) }
                     { items.map( ( item, index ) => {
                         return itemRenderer( {
@@ -110,9 +113,12 @@ const RepeaterControl = ( {
                 <div className={ `${ rootClass }__controls` }>
                     <Button
                         className={ `${ rootClass }__add-button` }
-                        variant="link"
+                        variant="secondary"
                         onClick={ addNewItem }
-                        text={ addItemLabel }
+                        icon={ plus }
+                        label={ addItemLabel }
+                        title={ addItemLabel }
+                        aria-label={ addItemLabel }
                     />
                 </div>
             </div>

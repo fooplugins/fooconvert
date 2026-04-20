@@ -1,4 +1,7 @@
 .fc--display-rules__content-control {
+  --fc--display-rules-control-width: 280px;
+  --fc--repeater-control-min-width: var(--fc--display-rules-control-width);
+
   display: flex;
   flex-direction: column;
   gap: 16px;
