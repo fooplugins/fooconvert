@@ -55,6 +55,16 @@ namespace FooPlugins\FooConvert {
         /**
          * @param mixed $value
          * @param string $key
+         * @param bool $default
+         * @return bool
+         */
+        public static function get_bool( $value, string $key, bool $default = false ): bool {
+            return is_array( $value ) && isset( $value[ $key ] ) ? (bool) $value[ $key ] : $default;
+        }
+
+        /**
+         * @param mixed $value
+         * @param string $key
          * @return int
          */
         public static function get_int( $value, string $key ): int {
@@ -81,6 +91,36 @@ namespace {
      * @return string
      */
     function __( string $text ): string {
+        return $text;
+    }
+
+    /**
+     * Stub translation helper with escaping.
+     *
+     * @param string $text The source text.
+     * @return void
+     */
+    function esc_html_e( string $text ): void {
+        echo $text;
+    }
+
+    /**
+     * Stub HTML escaping helper.
+     *
+     * @param string $text The source text.
+     * @return string
+     */
+    function esc_html( string $text ): string {
+        return $text;
+    }
+
+    /**
+     * Stub attribute escaping helper.
+     *
+     * @param string $text The source text.
+     * @return string
+     */
+    function esc_attr( string $text ): string {
         return $text;
     }
 
@@ -251,6 +291,105 @@ namespace {
         ),
         $get_admin_state->invoke( $display_rules, 123, array() ),
         'get_admin_state() should expose extension-controlled lock state for admin rows.'
+    );
+
+    $get_column_summary = $reflection->getMethod( 'get_column_summary' );
+    $get_column_summary->setAccessible( true );
+
+    $render_column_summary_markup = $reflection->getMethod( 'render_column_summary_markup' );
+    $render_column_summary_markup->setAccessible( true );
+
+    $render_column_app_markup = $reflection->getMethod( 'render_column_app_markup' );
+    $render_column_app_markup->setAccessible( true );
+
+    $empty_summary = $get_column_summary->invoke(
+        $display_rules,
+        array(
+            'location' => array(),
+            'exclude'  => array(),
+            'users'    => array( 'general:all_users' ),
+        )
+    );
+
+    Assertions::true(
+        $empty_summary['isNotSet'],
+        'get_column_summary() should flag the default empty state as not set.'
+    );
+
+    $empty_markup = $render_column_summary_markup->invoke( $display_rules, $empty_summary );
+
+    Assertions::true(
+        strpos( $empty_markup, 'fc-display-rules-list__summary-empty' ) !== false,
+        'The fallback summary markup should render the compact not-set state.'
+    );
+
+    Assertions::false(
+        strpos( $empty_markup, 'Show on' ) !== false,
+        'The compact not-set state should not include the Show on label.'
+    );
+
+    $configured_summary = $get_column_summary->invoke(
+        $display_rules,
+        array(
+            'location' => array(
+                array(
+                    'type' => 'general:front_page',
+                    'data' => array(),
+                ),
+            ),
+            'exclude'  => array(),
+            'users'    => array( 'general:all_users' ),
+        )
+    );
+
+    Assertions::false(
+        $configured_summary['isNotSet'],
+        'Configured display rules should not use the compact not-set state.'
+    );
+
+    $configured_markup = $render_column_summary_markup->invoke( $display_rules, $configured_summary );
+
+    Assertions::true(
+        strpos( $configured_markup, 'Show on' ) !== false,
+        'Configured display rules should keep the labeled summary rows.'
+    );
+
+    $editable_app_markup = $render_column_app_markup->invoke(
+        $display_rules,
+        $empty_summary,
+        true,
+        true,
+        '',
+        'Spring popup'
+    );
+
+    Assertions::true(
+        strpos( $editable_app_markup, 'fc-display-rules-list__summary-button' ) !== false,
+        'Editable rows should render the summary button wrapper in the server fallback.'
+    );
+
+    Assertions::true(
+        strpos( $editable_app_markup, 'Edit display rules' ) !== false,
+        'Editable rows should render the summary action text in the server fallback.'
+    );
+
+    $locked_app_markup = $render_column_app_markup->invoke(
+        $display_rules,
+        $configured_summary,
+        false,
+        true,
+        'Managed by experiment',
+        'Spring popup'
+    );
+
+    Assertions::true(
+        strpos( $locked_app_markup, 'fc-display-rules-list__summary-card' ) !== false,
+        'Non-editable rows should render the summary card wrapper in the server fallback.'
+    );
+
+    Assertions::true(
+        strpos( $locked_app_markup, 'Managed by experiment' ) !== false,
+        'Locked rows should keep their lock message in the server fallback.'
     );
 
     echo "display-rules-core: ok\n";
