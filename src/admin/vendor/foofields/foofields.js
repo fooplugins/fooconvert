@@ -6532,11 +6532,17 @@ FooFields.utils, FooFields.utils.fn, FooFields.utils.str);
       self.$button = self.$input.find('a:first');
       self.$spinner = self.$input.find('.spinner');
       self.$message = self.$input.find('.response-message');
+      self.confirmMessage = self.$button.data('confirm') || '';
       self.$button.on("click", function (e) {
         e.preventDefault();
-        e.stopPropagation(); //hide the message if previously shown
+        e.stopPropagation();
 
-        self.$message.hide(); //show the spinner
+        if (self.confirmMessage && !window.confirm(self.confirmMessage)) {
+          return;
+        }
+
+        // Hide any previous response before starting a new request.
+        self.$message.removeClass('success error').hide(); //show the spinner
 
         self.$spinner.addClass('is-active');
         var postData = {

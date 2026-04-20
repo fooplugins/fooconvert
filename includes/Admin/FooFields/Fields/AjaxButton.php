@@ -56,6 +56,10 @@ if ( !class_exists( __NAMESPACE__ . '\AjaxButton' ) ) {
                 $attributes['data-value'] = $value;
             }
 
+            if ( ! empty( $this->config['confirmation_message'] ) ) {
+                $attributes['data-confirm'] = $this->config['confirmation_message'];
+            }
+
             self::render_html_tag( 'a', $attributes, $button_text );
 
             self::render_html_tag( 'span', array( 'class' => 'spinner' ) );
