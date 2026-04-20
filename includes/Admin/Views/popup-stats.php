@@ -26,11 +26,11 @@ if ( $post_id ) {
         $preview_url = fooconvert_popup_preview_url( $post_id );
         $popup_type = fooconvert_get_popup_type_label( $popup );
         $new_tab_icon = '<span class="screen-reader-text">' . esc_html__( ' (opens in a new tab)', 'fooconvert' ) . '</span><span class="dashicons dashicons-external fooconvert-button-with-icon__icon" aria-hidden="true"></span>';
-        $edit_label = esc_html( sprintf( __( 'Edit %s', 'fooconvert' ), $popup_type ) );
-        $preview_label = esc_html( sprintf( __( 'Preview %s', 'fooconvert' ), $popup_type ) );
-        // Translators: %s refers to the link to edit the popup.
+        /* translators: %s: popup type label, for example "Bar" or "Overlay". */
+        $edit_label = esc_html( sprintf( _x( 'Edit %s', 'stats screen action for popup type', 'fooconvert' ), $popup_type ) );
+        /* translators: %s: popup type label, for example "Bar" or "Overlay". */
+        $preview_label = esc_html( sprintf( _x( 'Preview %s', 'stats screen action for popup type', 'fooconvert' ), $popup_type ) );
         $edit_link = '<a class="button fooconvert-button-with-icon" href="' . esc_url( $edit_url ) . '" target="_blank" rel="noopener noreferrer">' . $edit_label . $new_tab_icon . '</a>';
-        // Translators: %s refers to the link to preview the popup.
         $preview_link = '<a class="button fooconvert-button-with-icon" href="' . esc_url( $preview_url ) . '" target="_blank" rel="noopener noreferrer">' . $preview_label . $new_tab_icon . '</a>';
     }
 } else {

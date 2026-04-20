@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-04-17T14:44:35+00:00\n"
+"POT-Creation-Date: 2026-04-20T12:31:19+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: fooconvert\n"
@@ -40,7 +40,7 @@ msgid "https://fooplugins.com/"
 msgstr ""
 
 #: includes/Admin/Dashboard.php:45
-#: includes/Admin/Stats.php:100
+#: includes/Admin/Stats.php:48
 msgid "Invalid nonce!!"
 msgstr ""
 
@@ -49,7 +49,7 @@ msgid "You do not have permission to access this page."
 msgstr ""
 
 #: includes/Admin/Dashboard.php:55
-#: includes/Admin/Stats.php:214
+#: includes/Admin/Stats.php:162
 msgid "Nonce is not set."
 msgstr ""
 
@@ -91,27 +91,31 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: includes/Admin/DemoContent.php:280
+#: includes/Admin/DemoContent.php:269
 msgid "Digital Download Signup Bar [Demo]"
 msgstr ""
 
-#: includes/Admin/DemoContent.php:288
+#: includes/Admin/DemoContent.php:303
 msgid "Special Offer Countdown Bar [Demo]"
 msgstr ""
 
-#: includes/Admin/DemoContent.php:296
+#: includes/Admin/DemoContent.php:341
 msgid "Digital Download Signup Flyout [Demo]"
 msgstr ""
 
-#: includes/Admin/DemoContent.php:304
+#: includes/Admin/DemoContent.php:387
+msgid "Newsletter Subscribe Flyout [Demo]"
+msgstr ""
+
+#: includes/Admin/DemoContent.php:427
 msgid "Smart Exit Offer Flyout [Demo]"
 msgstr ""
 
-#: includes/Admin/DemoContent.php:312
+#: includes/Admin/DemoContent.php:467
 msgid "Smart Exit Offer Overlay [Demo]"
 msgstr ""
 
-#: includes/Admin/DemoContent.php:320
+#: includes/Admin/DemoContent.php:513
 msgid "Special Offer Countdown Overlay [Demo]"
 msgstr ""
 
@@ -140,9 +144,9 @@ msgid "Choose Popup Type"
 msgstr ""
 
 #: includes/Admin/Init.php:139
-#: includes/functions.php:221
-#: src/editor/components/popup-type/components/template-picker/Component.js:16
-#: src/editor/hooks/usePostTypeLabels.js:12
+#: includes/functions.php:245
+#: src/editor/components/popup-type/components/template-picker/Component.js:17
+#: src/editor/hooks/usePostTypeLabels.js:13
 msgid "Bar"
 msgstr ""
 
@@ -151,9 +155,9 @@ msgid "Create a top or bottom bar with triggers, display rules, and templates."
 msgstr ""
 
 #: includes/Admin/Init.php:143
-#: includes/functions.php:223
-#: src/editor/components/popup-type/components/template-picker/Component.js:21
-#: src/editor/hooks/usePostTypeLabels.js:16
+#: includes/functions.php:247
+#: src/editor/components/popup-type/components/template-picker/Component.js:22
+#: src/editor/hooks/usePostTypeLabels.js:17
 msgid "Flyout"
 msgstr ""
 
@@ -162,9 +166,9 @@ msgid "Create a side flyout with template variations and the usual FooConvert co
 msgstr ""
 
 #: includes/Admin/Init.php:147
-#: includes/functions.php:225
-#: src/editor/components/popup-type/components/template-picker/Component.js:26
-#: src/editor/hooks/usePostTypeLabels.js:20
+#: includes/functions.php:249
+#: src/editor/components/popup-type/components/template-picker/Component.js:27
+#: src/editor/hooks/usePostTypeLabels.js:21
 msgid "Overlay"
 msgstr ""
 
@@ -192,7 +196,7 @@ msgstr ""
 
 #: includes/Admin/LeadsMenu.php:33
 #: includes/Admin/LeadsMenu.php:34
-#: pro/includes/Experiments/Admin/Init.php:870
+#: pro/includes/Experiments/Admin/Init.php:897
 #: pro/includes/Experiments/Experiment.php:293
 #: pro/includes/Leads/Init.php:70
 msgid "Leads"
@@ -219,10 +223,10 @@ msgstr ""
 
 #: includes/Admin/LeadsTable.php:56
 #: includes/PostType.php:55
-#: pro/includes/Analytics/Sales.php:260
+#: pro/includes/Analytics/Sales.php:275
 #: src/editor/components/experiment-panel/Component.js:19
 #: src/editor/components/experiment-panel/Component.js:27
-#: src/scripts/admin/display-rules-list/index.js:145
+#: src/scripts/admin/display-rules-list/index.js:148
 msgid "Popup"
 msgstr ""
 
@@ -251,7 +255,7 @@ msgstr ""
 #: includes/Admin/Views/dashboard-panel-getting-started.php:18
 #: includes/Admin/Views/dashboard-panel-help.php:17
 #: includes/Admin/Views/dashboard-panel-pro-features.php:17
-#: includes/Admin/Views/dashboard-panel-recent.php:32
+#: includes/Admin/Views/dashboard-panel-recent.php:29
 #: pro/includes/Admin/Views/dashboard-panel-sales.php:17
 #: pro/includes/Experiments/Admin/Views/dashboard-panel-experiments.php:17
 msgid "Hide Panel"
@@ -291,7 +295,7 @@ msgstr ""
 
 #: includes/Admin/Promotions.php:244
 #: pro/includes/Analytics/Metrics.php:72
-#: pro/includes/Analytics/Metrics.php:476
+#: pro/includes/Analytics/Metrics.php:485
 msgid "Conversion Rate"
 msgstr ""
 
@@ -301,7 +305,7 @@ msgstr ""
 
 #: includes/Admin/Promotions.php:252
 #: pro/includes/Analytics/Metrics.php:80
-#: pro/includes/Analytics/Metrics.php:440
+#: pro/includes/Analytics/Metrics.php:449
 msgid "Engagement Rate"
 msgstr ""
 
@@ -412,8 +416,8 @@ msgstr ""
 
 #: includes/Admin/Settings.php:61
 #: includes/Components/OpenTriggerPanel.php:401
-#: includes/DisplayRules.php:656
-#: includes/DisplayRules.php:779
+#: includes/DisplayRules.php:724
+#: includes/DisplayRules.php:847
 msgid "General"
 msgstr ""
 
@@ -444,165 +448,198 @@ msgstr ""
 msgid "Helps to debug problems and diagnose issues. Enable debugging if you need support for an issue you are having."
 msgstr ""
 
-#: includes/Admin/Settings.php:85
-msgid "Hide Promos"
+#: includes/Admin/Settings.php:86
+msgid "Editor Background"
 msgstr ""
 
-#: includes/Admin/Settings.php:86
-msgid "If enabled, will hide all promotional messages within the admin area, including the free trial admin banners."
+#: includes/Admin/Settings.php:88
+msgid "Transparent"
+msgstr ""
+
+#: includes/Admin/Settings.php:89
+msgid "White"
+msgstr ""
+
+#: includes/Admin/Settings.php:90
+#: src/editor/components/font-appearance-control/Component.js:44
+msgid "Black"
 msgstr ""
 
 #: includes/Admin/Settings.php:92
+msgid "Choose the background used in the popup editor for all popup types."
+msgstr ""
+
+#: includes/Admin/Settings.php:98
+msgid "Hide Promos"
+msgstr ""
+
+#: includes/Admin/Settings.php:99
+msgid "If enabled, will hide all promotional messages within the admin area, including the free trial admin banners."
+msgstr ""
+
+#: includes/Admin/Settings.php:105
 msgid "Hide Dashboard Panels"
 msgstr ""
 
-#: includes/Admin/Settings.php:94
+#: includes/Admin/Settings.php:107
 msgid "Will hide specific dashboard panel if checked."
 msgstr ""
 
-#: includes/Admin/Settings.php:100
+#: includes/Admin/Settings.php:113
 msgid "Demo Content Created"
 msgstr ""
 
-#: includes/Admin/Settings.php:101
+#: includes/Admin/Settings.php:114
 msgid "If the demo content has been created, then this will be checked. You can uncheck this to allow for demo content to be created again."
 msgstr ""
 
-#: includes/Admin/Settings.php:108
-#: includes/Admin/Settings.php:327
+#: includes/Admin/Settings.php:121
+#: includes/Admin/Settings.php:343
 msgid "Database"
 msgstr ""
 
-#: includes/Admin/Settings.php:121
+#: includes/Admin/Settings.php:134
 msgid "Database Error"
 msgstr ""
 
-#: includes/Admin/Settings.php:122
+#: includes/Admin/Settings.php:135
 msgid "Event Table Does Not Exist!"
 msgstr ""
 
-#: includes/Admin/Settings.php:132
+#: includes/Admin/Settings.php:145
 msgid "Database Data"
 msgstr ""
 
-#: includes/Admin/Settings.php:145
+#: includes/Admin/Settings.php:158
 msgid "Table"
 msgstr ""
 
-#: includes/Admin/Settings.php:149
+#: includes/Admin/Settings.php:162
 msgid "Table Size (MB)"
 msgstr ""
 
-#: includes/Admin/Settings.php:153
+#: includes/Admin/Settings.php:166
 msgid "Event Row Count"
 msgstr ""
 
-#: includes/Admin/Settings.php:157
+#: includes/Admin/Settings.php:170
 msgid "Popup Count With Events"
 msgstr ""
 
-#: includes/Admin/Settings.php:161
+#: includes/Admin/Settings.php:174
 msgid "Orphaned Event Count"
 msgstr ""
 
-#: includes/Admin/Settings.php:173
+#: includes/Admin/Settings.php:186
 msgid "Orphaned Popup Count"
 msgstr ""
 
-#: includes/Admin/Settings.php:181
+#: includes/Admin/Settings.php:194
 msgid "Database Stats"
 msgstr ""
 
-#: includes/Admin/Settings.php:189
+#: includes/Admin/Settings.php:202
 msgid "Delete Old Events"
 msgstr ""
 
-#: includes/Admin/Settings.php:190
+#: includes/Admin/Settings.php:203
+msgid "Are you sure you want to permanently delete all events older than the retention period?"
+msgstr ""
+
+#: includes/Admin/Settings.php:204
 msgid "This will permanently delete all events older than the retention period."
 msgstr ""
 
-#: includes/Admin/Settings.php:190
+#: includes/Admin/Settings.php:204
 msgid "Currently :"
 msgstr ""
 
-#: includes/Admin/Settings.php:190
+#: includes/Admin/Settings.php:204
 msgid "days."
 msgstr ""
 
-#: includes/Admin/Settings.php:197
+#: includes/Admin/Settings.php:211
 msgid "Delete All Events"
 msgstr ""
 
-#: includes/Admin/Settings.php:198
+#: includes/Admin/Settings.php:212
+msgid "Are you sure you want to permanently delete all events?"
+msgstr ""
+
+#: includes/Admin/Settings.php:213
 msgid "This will permanently delete all events."
 msgstr ""
 
-#: includes/Admin/Settings.php:206
+#: includes/Admin/Settings.php:221
 msgid "Delete Orphaned Data"
 msgstr ""
 
-#: includes/Admin/Settings.php:214
+#: includes/Admin/Settings.php:222
+msgid "Are you sure you want to permanently delete all orphaned data?"
+msgstr ""
+
+#: includes/Admin/Settings.php:230
 msgid "System Info"
 msgstr ""
 
-#: includes/Admin/Settings.php:220
+#: includes/Admin/Settings.php:236
 msgid "Your System Information"
 msgstr ""
 
-#: includes/Admin/Settings.php:221
+#: includes/Admin/Settings.php:237
 msgid "The below system info can be used when submitting a support ticket, to help us replicate your environment."
 msgstr ""
 
 #. Translators: %d refers to the number of orphaned events that were deleted.
-#: includes/Admin/Settings.php:253
+#: includes/Admin/Settings.php:269
 #, php-format
 msgid "Successfully deleted %d orphaned events."
 msgstr ""
 
 #. Translators: %d refers to the number of events that were deleted.
-#: includes/Admin/Settings.php:270
-#: includes/Admin/Settings.php:287
+#: includes/Admin/Settings.php:286
+#: includes/Admin/Settings.php:303
 #, php-format
 msgid "Successfully deleted %d events."
 msgstr ""
 
-#: includes/Admin/Settings.php:312
+#: includes/Admin/Settings.php:328
 msgid "ERROR : The events table does not exist!"
 msgstr ""
 
-#: includes/Admin/Settings.php:320
+#: includes/Admin/Settings.php:336
 msgid "FooConvert version"
 msgstr ""
 
-#: includes/Admin/Settings.php:321
+#: includes/Admin/Settings.php:337
 msgid "WordPress version"
 msgstr ""
 
-#: includes/Admin/Settings.php:322
+#: includes/Admin/Settings.php:338
 msgid "Activated Theme"
 msgstr ""
 
-#: includes/Admin/Settings.php:323
+#: includes/Admin/Settings.php:339
 msgid "WordPress URL"
 msgstr ""
 
-#: includes/Admin/Settings.php:324
+#: includes/Admin/Settings.php:340
 msgid "PHP version"
 msgstr ""
 
-#: includes/Admin/Settings.php:325
+#: includes/Admin/Settings.php:341
 msgid "Retention"
 msgstr ""
 
-#: includes/Admin/Settings.php:326
+#: includes/Admin/Settings.php:342
 msgid "Cron Jobs"
 msgstr ""
 
-#: includes/Admin/Settings.php:328
+#: includes/Admin/Settings.php:344
 msgid "Active Plugins"
 msgstr ""
 
-#: includes/Admin/Settings.php:329
+#: includes/Admin/Settings.php:345
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:84
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:254
 #: src/blocks/countdown/editor/components/container/EditSettings.js:76
@@ -613,39 +650,37 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: includes/Admin/Stats.php:119
+#: includes/Admin/Stats.php:67
 msgid "Invalid popup ID!!"
 msgstr ""
 
-#: includes/Admin/Stats.php:135
+#: includes/Admin/Stats.php:83
 msgid "Events"
 msgstr ""
 
-#: includes/Admin/Stats.php:143
-#: includes/functions.php:470
-#: pro/includes/Experiments/Admin/Init.php:867
+#: includes/Admin/Stats.php:91
+#: includes/functions.php:558
+#: pro/includes/Experiments/Admin/Init.php:894
 msgid "Views"
 msgstr ""
 
-#: includes/Admin/Stats.php:151
-#: includes/functions.php:462
+#: includes/Admin/Stats.php:99
+#: includes/functions.php:550
 msgid "Engagements"
 msgstr ""
 
-#: includes/Admin/Stats.php:159
+#: includes/Admin/Stats.php:107
 msgid "Unique Visitors"
 msgstr ""
 
-#: includes/Admin/Stats.php:252
-#: includes/Admin/Stats.php:259
-#: includes/Admin/Stats.php:296
-#: includes/Admin/Stats.php:297
-msgid "Stats"
-msgstr ""
-
-#: includes/Admin/Stats.php:279
+#: includes/Admin/Stats.php:179
 #: pro/src/editor/plugins/analytics/Plugin.js:28
 msgid "View Stats"
+msgstr ""
+
+#: includes/Admin/Stats.php:215
+#: includes/Admin/Stats.php:216
+msgid "Stats"
 msgstr ""
 
 #: includes/Admin/Templates/bars/digital_download_signup.php:9
@@ -658,24 +693,24 @@ msgstr ""
 msgid "Digital download signup lead magnet bar."
 msgstr ""
 
-#: includes/Admin/Templates/bars/digital_download_signup.php:118
+#: includes/Admin/Templates/bars/digital_download_signup.php:122
 msgid "Grow Your Traffic in 7 Days – Download our FREE Guide!"
 msgstr ""
 
-#: includes/Admin/Templates/bars/digital_download_signup.php:137
+#: includes/Admin/Templates/bars/digital_download_signup.php:141
 msgid "Thanks! Please check your inbox."
 msgstr ""
 
-#: includes/Admin/Templates/bars/digital_download_signup.php:144
+#: includes/Admin/Templates/bars/digital_download_signup.php:148
 msgid "Enter your email..."
 msgstr ""
 
-#: includes/Admin/Templates/bars/digital_download_signup.php:174
+#: includes/Admin/Templates/bars/digital_download_signup.php:178
 #: includes/Components/VariationPicker.php:61
 msgid "Download"
 msgstr ""
 
-#: includes/Admin/Templates/bars/digital_download_signup.php:216
+#: includes/Admin/Templates/bars/digital_download_signup.php:220
 msgid "Proven tips used by 7,000+ brands to boost traffic!"
 msgstr ""
 
@@ -689,28 +724,28 @@ msgstr ""
 msgid "Newsletter Subscribe marketing themed bar."
 msgstr ""
 
-#: includes/Admin/Templates/bars/newsletter_subscribe.php:153
-#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:116
+#: includes/Admin/Templates/bars/newsletter_subscribe.php:157
+#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:120
 msgid "Get FREE Weekly Tips to help Grow Your business..."
 msgstr ""
 
-#: includes/Admin/Templates/bars/newsletter_subscribe.php:181
-#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:133
+#: includes/Admin/Templates/bars/newsletter_subscribe.php:185
+#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:137
 msgid "Join 5,000+ readers getting exclusive content &amp; tools."
 msgstr ""
 
-#: includes/Admin/Templates/bars/newsletter_subscribe.php:214
-#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:183
+#: includes/Admin/Templates/bars/newsletter_subscribe.php:218
+#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:187
 msgid "Your email address"
 msgstr ""
 
-#: includes/Admin/Templates/bars/newsletter_subscribe.php:246
-#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:176
+#: includes/Admin/Templates/bars/newsletter_subscribe.php:250
+#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:180
 msgid "Thanks for joining!"
 msgstr ""
 
-#: includes/Admin/Templates/bars/newsletter_subscribe.php:251
-#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:215
+#: includes/Admin/Templates/bars/newsletter_subscribe.php:255
+#: includes/Admin/Templates/flyouts/newsletter_subscribe.php:219
 msgid "Join The List"
 msgstr ""
 
@@ -724,18 +759,18 @@ msgstr ""
 msgid "A smart exit offer bar lead magnet to help prevent visitors from leaving your site."
 msgstr ""
 
-#: includes/Admin/Templates/bars/smart_exit_offer.php:134
-#: includes/Admin/Templates/overlays/smart_exit_offer.php:121
+#: includes/Admin/Templates/bars/smart_exit_offer.php:138
+#: includes/Admin/Templates/overlays/smart_exit_offer.php:125
 msgid "HEY... Don’t Go Yet!"
 msgstr ""
 
-#: includes/Admin/Templates/bars/smart_exit_offer.php:163
-#: includes/Admin/Templates/overlays/smart_exit_offer.php:155
+#: includes/Admin/Templates/bars/smart_exit_offer.php:167
+#: includes/Admin/Templates/overlays/smart_exit_offer.php:159
 msgid "Take 10% Off Your First Order – Our Treat!"
 msgstr ""
 
-#: includes/Admin/Templates/bars/smart_exit_offer.php:262
-#: includes/Admin/Templates/overlays/smart_exit_offer.php:255
+#: includes/Admin/Templates/bars/smart_exit_offer.php:266
+#: includes/Admin/Templates/overlays/smart_exit_offer.php:259
 msgid "Only available while you’re still here..."
 msgstr ""
 
@@ -763,15 +798,15 @@ msgstr ""
 msgid "Guide visitors to a watch a specific video."
 msgstr ""
 
-#: includes/Admin/Templates/bars/watch_the_video.php:105
-#: includes/Admin/Templates/flyouts/watch_the_video.php:95
-#: includes/Admin/Templates/overlays/watch_the_video.php:68
+#: includes/Admin/Templates/bars/watch_the_video.php:109
+#: includes/Admin/Templates/flyouts/watch_the_video.php:99
+#: includes/Admin/Templates/overlays/watch_the_video.php:72
 msgid "Add video description..."
 msgstr ""
 
-#: includes/Admin/Templates/bars/watch_the_video.php:141
-#: includes/Admin/Templates/flyouts/watch_the_video.php:143
-#: includes/Admin/Templates/overlays/watch_the_video.php:118
+#: includes/Admin/Templates/bars/watch_the_video.php:145
+#: includes/Admin/Templates/flyouts/watch_the_video.php:147
+#: includes/Admin/Templates/overlays/watch_the_video.php:122
 msgid "Watch the video"
 msgstr ""
 
@@ -791,11 +826,11 @@ msgstr ""
 msgid "Digital download signup themed overlay."
 msgstr ""
 
-#: includes/Admin/Templates/overlays/digital_download_signup.php:207
+#: includes/Admin/Templates/overlays/digital_download_signup.php:211
 msgid "Digital Marketing"
 msgstr ""
 
-#: includes/Admin/Templates/overlays/digital_download_signup.php:208
+#: includes/Admin/Templates/overlays/digital_download_signup.php:212
 msgid "Digital marketing themed overlay."
 msgstr ""
 
@@ -803,11 +838,11 @@ msgstr ""
 msgid "Newsletter Subscribe marketing themed overlay."
 msgstr ""
 
-#: includes/Admin/Templates/overlays/newsletter_subscribe.php:274
+#: includes/Admin/Templates/overlays/newsletter_subscribe.php:278
 msgid "i-Cafe"
 msgstr ""
 
-#: includes/Admin/Templates/overlays/newsletter_subscribe.php:275
+#: includes/Admin/Templates/overlays/newsletter_subscribe.php:279
 msgid "i-Cafe marketing themed overlay."
 msgstr ""
 
@@ -820,7 +855,7 @@ msgid "Getting Started with FooConvert!"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:26
-msgid "The easiest way to get started is by creating demo content, which will create 6 draft popups: 2 bars, 2 flyouts, and 2 overlays."
+msgid "The easiest way to get started is by creating demo content, which will create 7 draft popups: 2 bars, 3 flyouts, and 2 overlays."
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:27
@@ -869,15 +904,15 @@ msgid "Select a pre-made template."
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:70
-msgid "Customize the look and feel &amp; change the content to your liking!"
+msgid "Customize the look and feel &amp; update the content!"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:73
-msgid "Set the Display Rules locations."
+msgid "Set the Display Rules."
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:74
-msgid "e.g. either \"Entire Site\" or \"Front Page\""
+msgid "e.g. \"Entire Site\" or \"Front Page\""
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:77
@@ -885,7 +920,7 @@ msgid "Select an Open Trigger."
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:78
-msgid "e.g. on page load, or exit intent"
+msgid "e.g. on scroll or exit intent"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:81
@@ -924,36 +959,40 @@ msgstr ""
 msgid "Start a Free Trial"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-recent.php:29
+#: includes/Admin/Views/dashboard-panel-recent.php:26
 msgid "Recently Updated"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-recent.php:52
+#: includes/Admin/Views/dashboard-panel-recent.php:50
 #: includes/Admin/Views/dashboard-top-performers.php:43
 #: includes/PostType.php:58
 msgid "Edit Popup"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-recent.php:54
+#: includes/Admin/Views/dashboard-panel-recent.php:52
 #: includes/Admin/Views/dashboard-top-performers.php:45
 msgid "View Popup Stats"
 msgstr ""
 
 #. translators: %s: refers to the relative time since the popup was last updated.
-#: includes/Admin/Views/dashboard-panel-recent.php:59
+#: includes/Admin/Views/dashboard-panel-recent.php:57
 #, php-format
 msgid "%s ago"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-recent.php:79
-msgid "Add New Bar"
+#: includes/Admin/Views/dashboard-panel-recent.php:75
+msgid "No popups yet. Create a bar, flyout, or overlay to get started."
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-recent.php:82
-msgid "Add New Flyout"
+msgid "Add New Bar"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-recent.php:85
+msgid "Add New Flyout"
+msgstr ""
+
+#: includes/Admin/Views/dashboard-panel-recent.php:88
 msgid "Add New Overlay"
 msgstr ""
 
@@ -1036,8 +1075,8 @@ msgid "No leads found for the current filter. Try changing the filter above to s
 msgstr ""
 
 #: includes/Admin/Views/popup-stats.php:9
-#: pro/includes/Analytics/Sales.php:311
-#: pro/includes/Analytics/Sales.php:334
+#: pro/includes/Analytics/Sales.php:326
+#: pro/includes/Analytics/Sales.php:349
 msgid "Unknown"
 msgstr ""
 
@@ -1053,58 +1092,64 @@ msgstr ""
 msgid "Last 7 days"
 msgstr ""
 
-#. Translators: %s refers to the link to edit the popup.
 #: includes/Admin/Views/popup-stats.php:28
+msgid " (opens in a new tab)"
+msgstr ""
+
+#. translators: %s: popup type label, for example "Bar" or "Overlay".
+#: includes/Admin/Views/popup-stats.php:30
 #, php-format
+msgctxt "stats screen action for popup type"
 msgid "Edit %s"
 msgstr ""
 
-#. Translators: %s refers to the link to preview the popup.
-#: includes/Admin/Views/popup-stats.php:30
+#. translators: %s: popup type label, for example "Bar" or "Overlay".
+#: includes/Admin/Views/popup-stats.php:32
 #, php-format
+msgctxt "stats screen action for popup type"
 msgid "Preview %s"
 msgstr ""
 
 #. Translators: %s refers to the title of the popup.
-#: includes/Admin/Views/popup-stats.php:45
+#: includes/Admin/Views/popup-stats.php:49
 #, php-format
 msgid "Stats for %s"
 msgstr ""
 
-#: includes/Admin/Views/popup-stats.php:67
+#: includes/Admin/Views/popup-stats.php:71
 msgid "Total Events"
 msgstr ""
 
-#: includes/Admin/Views/popup-stats.php:69
+#: includes/Admin/Views/popup-stats.php:73
 msgid "Total events logged for the popup over the time period."
 msgstr ""
 
-#: includes/Admin/Views/popup-stats.php:75
+#: includes/Admin/Views/popup-stats.php:79
 msgid "Total Views"
 msgstr ""
 
-#: includes/Admin/Views/popup-stats.php:77
+#: includes/Admin/Views/popup-stats.php:81
 msgid "Total number of times the popup has been viewed by a visitor."
 msgstr ""
 
-#: includes/Admin/Views/popup-stats.php:83
+#: includes/Admin/Views/popup-stats.php:87
 msgid "Total Visitors"
 msgstr ""
 
-#: includes/Admin/Views/popup-stats.php:85
+#: includes/Admin/Views/popup-stats.php:89
 msgid "Total number of unique visitors that have viewed the popup."
 msgstr ""
 
-#: includes/Admin/Views/popup-stats.php:91
+#: includes/Admin/Views/popup-stats.php:95
 msgid "Total Engagements"
 msgstr ""
 
-#: includes/Admin/Views/popup-stats.php:93
+#: includes/Admin/Views/popup-stats.php:97
 msgid "Total number of engagements that have been made with the popup (clicks, opens, etc)."
 msgstr ""
 
 #. Translators: %s refers to the popup type.
-#: includes/Admin/Views/popup-stats.php:105
+#: includes/Admin/Views/popup-stats.php:109
 #, php-format
 msgid "%s Activity"
 msgstr ""
@@ -1227,7 +1272,7 @@ msgstr ""
 #: includes/Components/OpenTriggerPanel.php:505
 #: src/popups/bar/editor/EditSettings.js:37
 #: src/popups/flyout/editor/EditSettings.js:47
-#: src/popups/overlay/editor/EditSettings.js:41
+#: src/popups/overlay/editor/EditSettings.js:38
 msgid "Behavior"
 msgstr ""
 
@@ -1352,25 +1397,27 @@ msgstr ""
 msgid "Display rules unavailable."
 msgstr ""
 
-#: includes/DisplayRules.php:262
+#: includes/DisplayRules.php:264
 msgid "You do not have permission to edit these display rules."
 msgstr ""
 
-#: includes/DisplayRules.php:321
-#: includes/DisplayRules.php:330
+#: includes/DisplayRules.php:323
+#: includes/DisplayRules.php:332
+#: includes/DisplayRules.php:348
+#: includes/DisplayRules.php:350
+#: includes/DisplayRules.php:370
 #: src/editor/components/date-time-control/Component.js:17
 #: src/editor/components/display-rules/components/post-status-info/Component.js:45
 #: src/editor/components/display-rules/components/pre-publish-panel/Component.js:20
 #: src/scripts/admin/display-rules-list/index.js:111
 #: src/scripts/admin/display-rules-list/index.js:121
+#: src/scripts/admin/display-rules-list/index.js:235
 msgid "Not set"
 msgstr ""
 
-#: includes/DisplayRules.php:326
-#: includes/DisplayRules.php:344
-#: src/editor/components/display-rules/components/content-control/Component.js:82
-#: src/editor/components/display-rules/components/content-control/Component.js:91
-#: src/editor/components/display-rules/components/content-control/Component.js:100
+#: includes/DisplayRules.php:328
+#: includes/DisplayRules.php:346
+#: includes/DisplayRules.php:349
 #: src/editor/components/open-trigger-component/Component.js:269
 #: src/editor/components/typography-tools-panel/Component.js:219
 #: src/editor/components/typography-tools-panel/Component.js:253
@@ -1378,86 +1425,103 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: includes/DisplayRules.php:363
-#: src/scripts/admin/display-rules-list/index.js:209
+#: includes/DisplayRules.php:374
+#: src/scripts/admin/display-rules-list/index.js:212
 msgid "Show on"
 msgstr ""
 
-#: includes/DisplayRules.php:368
-#: src/scripts/admin/display-rules-list/index.js:215
+#: includes/DisplayRules.php:379
+#: src/scripts/admin/display-rules-list/index.js:218
 msgid "Hide from"
 msgstr ""
 
-#: includes/DisplayRules.php:374
+#: includes/DisplayRules.php:385
 #: src/editor/components/display-rules/components/content-control/Component.js:60
-#: src/scripts/admin/display-rules-list/index.js:221
-#: src/scripts/admin/display-rules-list/index.js:318
+#: src/scripts/admin/display-rules-list/index.js:224
+#: src/scripts/admin/display-rules-list/index.js:328
 msgid "Users"
 msgstr ""
 
+#. translators: %s is the popup title shown in the list table.
+#: includes/DisplayRules.php:417
+#: src/scripts/admin/display-rules-list/index.js:139
+#, php-format,js-format
+msgid "Edit display rules for %s"
+msgstr ""
+
+#: includes/DisplayRules.php:418
+#: src/scripts/admin/display-rules-list/index.js:142
+msgid "this popup"
+msgstr ""
+
+#: includes/DisplayRules.php:433
+#: src/scripts/admin/display-rules-list/index.js:259
+msgid "Edit display rules"
+msgstr ""
+
 #. translators: %d is the number of remaining labels hidden from the summary.
-#: includes/DisplayRules.php:509
+#: includes/DisplayRules.php:577
 #: src/scripts/admin/display-rules-list/index.js:53
 #, php-format,js-format
 msgid " +%d more"
 msgstr ""
 
-#: includes/DisplayRules.php:660
+#: includes/DisplayRules.php:728
 msgid "Entire Site"
 msgstr ""
 
-#: includes/DisplayRules.php:664
+#: includes/DisplayRules.php:732
 msgid "Front Page"
 msgstr ""
 
-#: includes/DisplayRules.php:668
+#: includes/DisplayRules.php:736
 msgid "Blog"
 msgstr ""
 
-#: includes/DisplayRules.php:672
+#: includes/DisplayRules.php:740
 msgid "Search Results"
 msgstr ""
 
-#: includes/DisplayRules.php:676
+#: includes/DisplayRules.php:744
 msgid "No Search Results"
 msgstr ""
 
-#: includes/DisplayRules.php:680
+#: includes/DisplayRules.php:748
 msgid "404 Template"
 msgstr ""
 
 #. Translators: %s refers to the taxonomy that is being searched for. e.g. "Category".
-#: includes/DisplayRules.php:698
-#: includes/DisplayRules.php:724
+#: includes/DisplayRules.php:766
+#: includes/DisplayRules.php:792
 #, php-format
 msgid "Type to choose %s..."
 msgstr ""
 
-#: includes/DisplayRules.php:707
+#: includes/DisplayRules.php:775
 msgid "Specific Posts"
 msgstr ""
 
-#: includes/DisplayRules.php:733
+#: includes/DisplayRules.php:801
 msgid "Specific Taxonomies"
 msgstr ""
 
-#: includes/DisplayRules.php:752
+#: includes/DisplayRules.php:820
 msgid "Post Archives"
 msgstr ""
 
-#: includes/DisplayRules.php:783
+#: includes/DisplayRules.php:851
 msgid "All Users"
 msgstr ""
 
-#: includes/DisplayRules.php:787
+#: includes/DisplayRules.php:855
 msgid "Logged In"
 msgstr ""
 
-#: includes/DisplayRules.php:791
+#: includes/DisplayRules.php:859
 msgid "Logged Out"
 msgstr ""
 
-#: includes/DisplayRules.php:797
+#: includes/DisplayRules.php:865
 msgid "Roles"
 msgstr ""
 
@@ -1493,10 +1557,6 @@ msgstr ""
 msgid "Font Help"
 msgstr ""
 
-#: includes/Fonts.php:50
-msgid "Add Google Fonts here to make them available while editing your popups."
-msgstr ""
-
 #: includes/Fonts.php:56
 msgid "Add Font"
 msgstr ""
@@ -1521,68 +1581,96 @@ msgstr ""
 msgid "The Google Font family code, for example \"Handlee\" or \"Montserrat:ital,wght@0,100..900;1,100..900\"."
 msgstr ""
 
-#: includes/functions.php:461
+#: includes/Fonts.php:97
+msgid "Add Google Fonts here to make them available while editing your popups."
+msgstr ""
+
+#. translators: 1: existing help text. 2: comma-separated list of bundled font names.
+#: includes/Fonts.php:106
+#, php-format
+msgid "%1$s Included fonts already available for bundled templates: %2$s."
+msgstr ""
+
+#: includes/FooConvert.php:159
+msgid "You are not allowed to preview this popup."
+msgstr ""
+
+#: includes/FooConvert.php:166
+msgid "Popup preview not found."
+msgstr ""
+
+#. translators: %s: popup title shown in the preview page title.
+#: includes/FooConvert.php:213
+#, php-format
+msgid "Preview: %s"
+msgstr ""
+
+#: includes/FooConvert.php:220
+msgid "Popup Preview"
+msgstr ""
+
+#: includes/functions.php:549
 msgid "engagements"
 msgstr ""
 
-#: includes/functions.php:463
+#: includes/functions.php:551
 msgid "Total number of engagements"
 msgstr ""
 
-#: includes/functions.php:469
+#: includes/functions.php:557
 #: pro/includes/WooCommerce/Triggers.php:287
 msgid "views"
 msgstr ""
 
-#: includes/functions.php:471
+#: includes/functions.php:559
 msgid "Total number of views"
 msgstr ""
 
-#: includes/functions.php:511
+#: includes/functions.php:599
 msgid "ago"
 msgstr ""
 
-#: includes/functions.php:539
+#: includes/functions.php:627
 msgid "Never"
 msgstr ""
 
-#: includes/functions.php:621
+#: includes/functions.php:720
 msgid "Lead Integrations"
 msgstr ""
 
-#: includes/functions.php:622
+#: includes/functions.php:721
 msgid "Send captured leads to Mailchimp, MailPoet, or custom webhook integrations."
 msgstr ""
 
-#: includes/functions.php:626
+#: includes/functions.php:725
 msgid "Longer Retention"
 msgstr ""
 
-#: includes/functions.php:627
+#: includes/functions.php:726
 msgid "Longer retention period for popup analytics. Track popup performance as long as you like!"
 msgstr ""
 
-#: includes/functions.php:631
+#: includes/functions.php:730
 msgid "Advanced Analytics"
 msgstr ""
 
-#: includes/functions.php:632
+#: includes/functions.php:731
 msgid "Advanced popup analytics: Clicks, click-through-rates, conversions, conversion rates, engagement sentiment, engagement ratios, daily activity charts."
 msgstr ""
 
-#: includes/functions.php:636
+#: includes/functions.php:735
 msgid "More Dashboard Metrics"
 msgstr ""
 
-#: includes/functions.php:637
+#: includes/functions.php:736
 msgid "Top Performers by Engagement Rate, Clicks, Click Rate, Conversions, Conversion Rate."
 msgstr ""
 
-#: includes/functions.php:641
+#: includes/functions.php:740
 msgid "Role Exclusion"
 msgstr ""
 
-#: includes/functions.php:642
+#: includes/functions.php:741
 msgid "Exclude roles from logging popup events for analytics (e.g., exclude admin tests)."
 msgstr ""
 
@@ -1604,11 +1692,11 @@ msgstr ""
 msgid "A typical Black Friday bar to help drive sales."
 msgstr ""
 
-#: includes/Popups/Bar.php:262
+#: includes/Popups/Bar.php:261
 msgid "Cookie Consent Bar"
 msgstr ""
 
-#: includes/Popups/Bar.php:263
+#: includes/Popups/Bar.php:262
 msgid "A simple bottom bar that is dismissed when the button is clicked."
 msgstr ""
 
@@ -1902,165 +1990,165 @@ msgstr ""
 msgid "Overall sentiment for the popup which ranges from very negative to very positive. It can also be unknown if there are no engagements, or neutral."
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:412
+#: pro/includes/Analytics/Metrics.php:421
 msgid "Very Positive"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:414
+#: pro/includes/Analytics/Metrics.php:423
 msgid "Mostly Positive"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:416
+#: pro/includes/Analytics/Metrics.php:425
 msgid "Slightly Positive"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:418
+#: pro/includes/Analytics/Metrics.php:427
 msgid "Very Negative"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:420
+#: pro/includes/Analytics/Metrics.php:429
 msgid "Mostly Negative"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:422
+#: pro/includes/Analytics/Metrics.php:431
 msgid "Slightly Negative"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:424
+#: pro/includes/Analytics/Metrics.php:433
 msgid "Neutral"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:439
+#: pro/includes/Analytics/Metrics.php:448
 msgid "engagement rate"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:441
+#: pro/includes/Analytics/Metrics.php:450
 msgid "Engagement rate % = total number of engagements / total number of views"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:448
+#: pro/includes/Analytics/Metrics.php:457
 msgid "clicks"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:449
+#: pro/includes/Analytics/Metrics.php:458
 #: pro/includes/Analytics/RecentActivity.php:153
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:195
-#: pro/includes/Experiments/Admin/Init.php:868
+#: pro/includes/Experiments/Admin/Init.php:895
 #: pro/includes/Experiments/Experiment.php:291
 msgid "Clicks"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:450
+#: pro/includes/Analytics/Metrics.php:459
 msgid "Total number of clicks"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:457
+#: pro/includes/Analytics/Metrics.php:466
 msgid "click rate"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:458
+#: pro/includes/Analytics/Metrics.php:467
 msgid "Click Rate"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:459
+#: pro/includes/Analytics/Metrics.php:468
 msgid "Click rate % = total number of clicks / total number of views"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:466
+#: pro/includes/Analytics/Metrics.php:475
 msgid "conversions"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:467
+#: pro/includes/Analytics/Metrics.php:476
 #: pro/includes/Analytics/RecentActivity.php:176
-#: pro/includes/Experiments/Admin/Init.php:869
+#: pro/includes/Experiments/Admin/Init.php:896
 #: pro/includes/Experiments/Experiment.php:292
 msgid "Conversions"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:468
+#: pro/includes/Analytics/Metrics.php:477
 msgid "Total number of conversions"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:475
+#: pro/includes/Analytics/Metrics.php:484
 msgid "conversion rate"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:477
+#: pro/includes/Analytics/Metrics.php:486
 msgid "Conversion rate % = total number of conversions / total number of views"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:484
+#: pro/includes/Analytics/Metrics.php:493
 msgid "sales"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:485
+#: pro/includes/Analytics/Metrics.php:494
 #: pro/includes/Analytics/Sales.php:44
 #: pro/includes/Analytics/Sales.php:79
 #: pro/includes/WooCommerce/Sales.php:43
 msgid "Sales"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:486
+#: pro/includes/Analytics/Metrics.php:495
 msgid "Total attributed WooCommerce sales revenue"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:494
+#: pro/includes/Analytics/Metrics.php:503
 msgid "change in views"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:495
+#: pro/includes/Analytics/Metrics.php:504
 msgid "Change in Views"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:496
+#: pro/includes/Analytics/Metrics.php:505
 msgid "Change in Views (This Week vs Last)"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:502
+#: pro/includes/Analytics/Metrics.php:511
 msgid "change in views %"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:503
+#: pro/includes/Analytics/Metrics.php:512
 msgid "Change in Views %"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:504
+#: pro/includes/Analytics/Metrics.php:513
 msgid "Change in Views (This Week vs Last) as a percentage"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:510
+#: pro/includes/Analytics/Metrics.php:519
 msgid "change in engagements"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:511
+#: pro/includes/Analytics/Metrics.php:520
 msgid "Change in Engagements"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:512
+#: pro/includes/Analytics/Metrics.php:521
 msgid "Change in Engagements (This Week vs Last)"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:518
+#: pro/includes/Analytics/Metrics.php:527
 msgid "change in clicks"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:519
+#: pro/includes/Analytics/Metrics.php:528
 msgid "Change in Clicks"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:520
+#: pro/includes/Analytics/Metrics.php:529
 msgid "Change in Clicks (This Week vs Last)"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:526
+#: pro/includes/Analytics/Metrics.php:535
 msgid "change in conversions"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:527
+#: pro/includes/Analytics/Metrics.php:536
 msgid "Change in Conversions"
 msgstr ""
 
-#: pro/includes/Analytics/Metrics.php:528
+#: pro/includes/Analytics/Metrics.php:537
 msgid "Change in Conversions (This Week vs Last)"
 msgstr ""
 
@@ -2112,7 +2200,7 @@ msgstr ""
 
 #: pro/includes/Analytics/Sales.php:196
 #: pro/includes/Experiments/Admin/Init.php:172
-#: pro/includes/Experiments/Admin/Init.php:602
+#: pro/includes/Experiments/Admin/Init.php:629
 msgid "Status"
 msgstr ""
 
@@ -2129,13 +2217,13 @@ msgid "Date"
 msgstr ""
 
 #. translators: %d is the popup post ID.
-#: pro/includes/Analytics/Sales.php:255
+#: pro/includes/Analytics/Sales.php:270
 #, php-format
 msgid "Popup #%d"
 msgstr ""
 
-#: pro/includes/Analytics/Sales.php:295
-#: pro/includes/Analytics/Sales.php:301
+#: pro/includes/Analytics/Sales.php:310
+#: pro/includes/Analytics/Sales.php:316
 msgid "Guest"
 msgstr ""
 
@@ -2315,32 +2403,32 @@ msgid "Default is 250. Automation must satisfy this minimum-traffic gate before 
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:141
-#: pro/includes/Experiments/Admin/Init.php:1236
+#: pro/includes/Experiments/Admin/Init.php:1263
 msgid "New"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:143
-#: pro/includes/Experiments/Admin/Init.php:1244
+#: pro/includes/Experiments/Admin/Init.php:1271
 msgid "Running"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:145
-#: pro/includes/Experiments/Admin/Init.php:1248
+#: pro/includes/Experiments/Admin/Init.php:1275
 msgid "Paused"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:147
-#: pro/includes/Experiments/Admin/Init.php:1252
+#: pro/includes/Experiments/Admin/Init.php:1279
 msgid "Completed"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:149
-#: pro/includes/Experiments/Admin/Init.php:1256
+#: pro/includes/Experiments/Admin/Init.php:1283
 msgid "Draft"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:151
-#: pro/includes/Experiments/Admin/Init.php:1257
+#: pro/includes/Experiments/Admin/Init.php:1284
 msgid "Not started"
 msgstr ""
 
@@ -2358,19 +2446,19 @@ msgid "Enabled"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:205
-#: pro/includes/Experiments/Admin/Init.php:1274
+#: pro/includes/Experiments/Admin/Init.php:1301
 #: src/editor/components/compatibility/utils/getCompatibilityStatus.js:12
 msgid "Disabled"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:228
-#: pro/includes/Experiments/Admin/Init.php:1283
+#: pro/includes/Experiments/Admin/Init.php:1310
 #: pro/includes/Experiments/Experiment.php:302
 msgid "Complete experiment"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:241
-#: pro/includes/Experiments/Admin/Init.php:1285
+#: pro/includes/Experiments/Admin/Init.php:1312
 #: pro/includes/Experiments/Experiment.php:312
 msgid "Minimum views per participant"
 msgstr ""
@@ -2418,7 +2506,8 @@ msgstr ""
 msgid "Complete"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:335
+#: pro/includes/Experiments/Admin/Init.php:346
+#: pro/includes/Experiments/Admin/Init.php:352
 #: pro/includes/Experiments/Admin/Views/dashboard-panel-experiments.php:29
 #: pro/includes/Experiments/Experiment.php:111
 #: pro/src/editor/plugins/experiments/Plugin.js:44
@@ -2426,365 +2515,365 @@ msgstr ""
 msgid "Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:387
-#: pro/includes/Experiments/Admin/Init.php:388
+#: pro/includes/Experiments/Admin/Init.php:414
+#: pro/includes/Experiments/Admin/Init.php:415
 msgid "A/B Testing"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:420
-#: pro/includes/Experiments/Admin/Init.php:467
-#: pro/includes/Experiments/Admin/Init.php:505
+#: pro/includes/Experiments/Admin/Init.php:447
+#: pro/includes/Experiments/Admin/Init.php:494
+#: pro/includes/Experiments/Admin/Init.php:532
 msgid "You are not allowed to edit this experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:446
+#: pro/includes/Experiments/Admin/Init.php:473
 msgid "You are not allowed to remove this variant."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:470
-#: pro/includes/Experiments/Admin/Init.php:508
+#: pro/includes/Experiments/Admin/Init.php:497
+#: pro/includes/Experiments/Admin/Init.php:535
 msgid "This experiment is currently being processed by automation. Please try again in a moment."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:527
+#: pro/includes/Experiments/Admin/Init.php:554
 msgid "You are not allowed to clean up this experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:533
+#: pro/includes/Experiments/Admin/Init.php:560
 msgid "You are not allowed to delete one or more variants in this experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:553
+#: pro/includes/Experiments/Admin/Init.php:580
 msgid "You are not allowed to export this experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:591
+#: pro/includes/Experiments/Admin/Init.php:618
 msgid "Choose and save a control before creating variants."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:596
+#: pro/includes/Experiments/Admin/Init.php:623
 msgid "Use this list to edit the experiment participants. Before the experiment starts, you can create a new variant from the control or from any existing variant."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:597
+#: pro/includes/Experiments/Admin/Init.php:624
 msgid "Weight controls the relative share of traffic each participant receives. For example, weights of 1 and 1 split traffic evenly, while weights of 2 and 1 send roughly twice as much traffic to the first participant."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:600
+#: pro/includes/Experiments/Admin/Init.php:627
 msgid "Label"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:601
-#: pro/includes/Experiments/Admin/Init.php:866
+#: pro/includes/Experiments/Admin/Init.php:628
+#: pro/includes/Experiments/Admin/Init.php:893
 #: src/editor/components/experiment-panel/Component.js:40
 msgid "Participant"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:603
+#: pro/includes/Experiments/Admin/Init.php:630
 msgid "Weight"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:604
+#: pro/includes/Experiments/Admin/Init.php:631
 msgid "Actions"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:616
+#: pro/includes/Experiments/Admin/Init.php:643
 msgid "Edit Control"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:617
+#: pro/includes/Experiments/Admin/Init.php:644
 msgid "Edit Variant"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:626
+#: pro/includes/Experiments/Admin/Init.php:653
 msgid "Trashed participant"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:627
+#: pro/includes/Experiments/Admin/Init.php:654
 msgid "Deleted participant"
 msgstr ""
 
 #. Translators: %s is the experiment participant label.
-#: pro/includes/Experiments/Admin/Init.php:631
+#: pro/includes/Experiments/Admin/Init.php:658
 #, php-format
 msgid "Create Variant from %s"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:637
+#: pro/includes/Experiments/Admin/Init.php:664
 msgid "Remove this variant from the experiment and move it to trash?"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:643
+#: pro/includes/Experiments/Admin/Init.php:670
 msgid "Winner"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:658
+#: pro/includes/Experiments/Admin/Init.php:685
 msgid "This participant is in the trash."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:660
+#: pro/includes/Experiments/Admin/Init.php:687
 msgid "This participant has been permanently deleted."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:662
+#: pro/includes/Experiments/Admin/Init.php:689
 msgid "Warning: publish this participant before starting the experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:673
+#: pro/includes/Experiments/Admin/Init.php:700
 #: pro/src/editor/components/popup-background-generator/Component.js:545
 msgid "Remove"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:677
+#: pro/includes/Experiments/Admin/Init.php:704
 msgid "Complete With Winner"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:686
+#: pro/includes/Experiments/Admin/Init.php:713
 msgid "Save the experiment after adjusting weights to update the traffic split."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:688
+#: pro/includes/Experiments/Admin/Init.php:715
 msgid "Variant structure and weights are locked after the experiment starts."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:700
+#: pro/includes/Experiments/Admin/Init.php:727
 msgid "Current Status:"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:703
+#: pro/includes/Experiments/Admin/Init.php:730
 msgid "Automation:"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:705
+#: pro/includes/Experiments/Admin/Init.php:732
 msgid "Last Automated Action:"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:713
+#: pro/includes/Experiments/Admin/Init.php:740
 msgid "The winner has been applied. This experiment is now read-only."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:745
+#: pro/includes/Experiments/Admin/Init.php:772
 msgid "Resume Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:748
+#: pro/includes/Experiments/Admin/Init.php:775
 msgid "Start Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:754
+#: pro/includes/Experiments/Admin/Init.php:781
 msgid "Pause Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:755
+#: pro/includes/Experiments/Admin/Init.php:782
 msgid "Complete Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:758
+#: pro/includes/Experiments/Admin/Init.php:785
 msgid "Apply Winner"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:763
+#: pro/includes/Experiments/Admin/Init.php:790
 msgid "This will permanently delete all variants for this experiment. This cannot be undone. Continue?"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:765
+#: pro/includes/Experiments/Admin/Init.php:792
 msgid "Clean Up"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:771
+#: pro/includes/Experiments/Admin/Init.php:798
 msgid "Move to Trash"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:783
-#: pro/includes/Experiments/Admin/Init.php:859
+#: pro/includes/Experiments/Admin/Init.php:810
+#: pro/includes/Experiments/Admin/Init.php:886
 msgid "Add a variant to start collecting comparison data."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:791
-#: pro/includes/Experiments/Admin/Init.php:837
+#: pro/includes/Experiments/Admin/Init.php:818
+#: pro/includes/Experiments/Admin/Init.php:864
 msgid "Winner:"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:792
-#: pro/includes/Experiments/Admin/Init.php:807
+#: pro/includes/Experiments/Admin/Init.php:819
+#: pro/includes/Experiments/Admin/Init.php:834
 msgid "Goal Rate:"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:793
-#: pro/includes/Experiments/Admin/Init.php:808
-#: pro/includes/Experiments/Admin/Init.php:839
+#: pro/includes/Experiments/Admin/Init.php:820
+#: pro/includes/Experiments/Admin/Init.php:835
+#: pro/includes/Experiments/Admin/Init.php:866
 msgid "Confidence:"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:801
+#: pro/includes/Experiments/Admin/Init.php:828
 msgid "No leader yet."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:806
+#: pro/includes/Experiments/Admin/Init.php:833
 msgid "Current Leader:"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:810
+#: pro/includes/Experiments/Admin/Init.php:837
 msgid "Automation Status:"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:814
+#: pro/includes/Experiments/Admin/Init.php:841
 msgid "Health warning: no experiment traffic has been recorded yet."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:816
+#: pro/includes/Experiments/Admin/Init.php:843
 msgid "Health warning: the current leader is not statistically significant yet."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:826
+#: pro/includes/Experiments/Admin/Init.php:853
 msgid "No automated actions have been recorded for this experiment yet."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:835
+#: pro/includes/Experiments/Admin/Init.php:862
 msgid "Reason:"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:840
+#: pro/includes/Experiments/Admin/Init.php:867
 msgid "Views:"
 msgstr ""
 
 #. translators: 1: control views, 2: winner or leader views, 3: total views.
-#: pro/includes/Experiments/Admin/Init.php:843
+#: pro/includes/Experiments/Admin/Init.php:870
 #, php-format
 msgid "control %1$d, decision row %2$d, total %3$d"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:864
+#: pro/includes/Experiments/Admin/Init.php:891
 msgid "Export CSV"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:871
+#: pro/includes/Experiments/Admin/Init.php:898
 #: pro/includes/Experiments/Admin/Views/dashboard-panel-experiments.php:31
 msgid "Goal Rate"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:872
+#: pro/includes/Experiments/Admin/Init.php:899
 msgid "Uplift"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:873
+#: pro/includes/Experiments/Admin/Init.php:900
 #: pro/includes/Experiments/Admin/Views/dashboard-panel-experiments.php:32
 msgid "Confidence"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:880
+#: pro/includes/Experiments/Admin/Init.php:907
 msgid "Current leader"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:921
+#: pro/includes/Experiments/Admin/Init.php:948
 msgid "This participant belongs to an active experiment. Complete or delete the experiment first."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:922
+#: pro/includes/Experiments/Admin/Init.php:949
 msgid "Participant Locked"
 msgstr ""
 
 #. Translators: %s is the experiment participant label.
-#: pro/includes/Experiments/Admin/Init.php:958
+#: pro/includes/Experiments/Admin/Init.php:985
 #, php-format
 msgid "This participant is %s and belongs to experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:988
-#: pro/includes/Experiments/Admin/Init.php:1473
+#: pro/includes/Experiments/Admin/Init.php:1015
+#: pro/includes/Experiments/Admin/Init.php:1500
 msgid "Choose a control before creating the experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:998
+#: pro/includes/Experiments/Admin/Init.php:1025
 #: pro/includes/Experiments/Admin/Views/dashboard-panel-experiments.php:14
 msgid "A/B Testing Experiments"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1240
+#: pro/includes/Experiments/Admin/Init.php:1267
 msgid "Applied"
 msgstr ""
 
 #. translators: 1: action label, 2: threshold percentage, 3: view mode label, 4: minimum views.
-#: pro/includes/Experiments/Admin/Init.php:1282
+#: pro/includes/Experiments/Admin/Init.php:1309
 #, php-format
 msgid "Enabled. %1$s at %2$d%% confidence with %3$s (%4$d)."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1295
+#: pro/includes/Experiments/Admin/Init.php:1322
 msgid "Choose a control and save the experiment before creating variants."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1299
-#: pro/includes/Experiments/Admin/Init.php:1306
+#: pro/includes/Experiments/Admin/Init.php:1326
+#: pro/includes/Experiments/Admin/Init.php:1333
 msgid "Create at least one variant before starting the experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1303
+#: pro/includes/Experiments/Admin/Init.php:1330
 #: pro/includes/Experiments/Experiment.php:628
 msgid "Publish every participant before starting the experiment."
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1314
+#: pro/includes/Experiments/Admin/Init.php:1341
 msgid "Trashed"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1318
-#: pro/includes/Experiments/Admin/Init.php:1323
+#: pro/includes/Experiments/Admin/Init.php:1345
+#: pro/includes/Experiments/Admin/Init.php:1350
 msgid "Deleted"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1354
-#: pro/includes/Experiments/Automation.php:539
+#: pro/includes/Experiments/Admin/Init.php:1381
+#: pro/includes/Experiments/Automation.php:567
 msgid "Automatically applied winner"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1356
-#: pro/includes/Experiments/Automation.php:541
+#: pro/includes/Experiments/Admin/Init.php:1383
+#: pro/includes/Experiments/Automation.php:569
 msgid "Automatically completed with winner"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1358
-#: pro/includes/Experiments/Automation.php:543
+#: pro/includes/Experiments/Admin/Init.php:1385
+#: pro/includes/Experiments/Automation.php:571
 msgid "Automatically completed without winner"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1360
-#: pro/includes/Experiments/Automation.php:545
+#: pro/includes/Experiments/Admin/Init.php:1387
+#: pro/includes/Experiments/Automation.php:573
 msgid "Automated action"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1370
-#: pro/includes/Experiments/Automation.php:558
+#: pro/includes/Experiments/Admin/Init.php:1397
+#: pro/includes/Experiments/Automation.php:586
 msgid "Winner threshold met"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1372
-#: pro/includes/Experiments/Automation.php:560
+#: pro/includes/Experiments/Admin/Init.php:1399
+#: pro/includes/Experiments/Automation.php:588
 msgid "End date reached"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1374
-#: pro/includes/Experiments/Automation.php:562
+#: pro/includes/Experiments/Admin/Init.php:1401
+#: pro/includes/Experiments/Automation.php:590
 msgid "Automated rule matched"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1384
+#: pro/includes/Experiments/Admin/Init.php:1411
 msgid "Unknown time"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1419
+#: pro/includes/Experiments/Admin/Init.php:1446
 msgid "Save Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1420
+#: pro/includes/Experiments/Admin/Init.php:1447
 msgid "Update Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1460
+#: pro/includes/Experiments/Admin/Init.php:1487
 msgid "Create Experiment"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/Init.php:1461
+#: pro/includes/Experiments/Admin/Init.php:1488
 msgid "Choose a control, then create the experiment so you can add variants."
 msgstr ""
 
@@ -2804,67 +2893,76 @@ msgstr ""
 msgid "Not significant yet"
 msgstr ""
 
-#: pro/includes/Experiments/Automation.php:116
+#: pro/includes/Experiments/Automation.php:110
+#: pro/includes/Experiments/Experiment.php:110
+#: pro/includes/Experiments/Experiment.php:120
+msgid "Experiments"
+msgstr ""
+
+#: pro/includes/Experiments/Automation.php:128
 msgid "Email Admin On Auto Winner"
 msgstr ""
 
-#: pro/includes/Experiments/Automation.php:118
+#: pro/includes/Experiments/Automation.php:130
 msgid "Send an email to the site admin when experiment automation completes or applies a winner."
 msgstr ""
 
+#: pro/includes/Experiments/Automation.php:137
+msgid "Show Experiments Column"
+msgstr ""
+
+#: pro/includes/Experiments/Automation.php:139
+msgid "Show the Experiments column on the Popups listing page."
+msgstr ""
+
 #. translators: %s is the experiment title.
-#: pro/includes/Experiments/Automation.php:482
+#: pro/includes/Experiments/Automation.php:510
 #, php-format
 msgid "FooConvert experiment automation update: %s"
 msgstr ""
 
 #. translators: %s is the experiment title.
-#: pro/includes/Experiments/Automation.php:489
+#: pro/includes/Experiments/Automation.php:517
 #, php-format
 msgid "Experiment: %s"
 msgstr ""
 
 #. translators: %s is the automation action label.
-#: pro/includes/Experiments/Automation.php:494
+#: pro/includes/Experiments/Automation.php:522
 #, php-format
 msgid "Action: %s"
 msgstr ""
 
 #. translators: %s is the automation reason label.
-#: pro/includes/Experiments/Automation.php:499
+#: pro/includes/Experiments/Automation.php:527
 #, php-format
 msgid "Reason: %s"
 msgstr ""
 
 #. translators: 1: participant label, 2: confidence percentage.
-#: pro/includes/Experiments/Automation.php:507
+#: pro/includes/Experiments/Automation.php:535
 #, php-format
 msgid "Winner: %1$s (%2$s%% confidence)"
 msgstr ""
 
 #. translators: 1: minimum views mode, 2: required minimum views.
-#: pro/includes/Experiments/Automation.php:515
+#: pro/includes/Experiments/Automation.php:543
 #, php-format
 msgid "Minimum views rule: %1$s (%2$d)"
 msgstr ""
 
-#: pro/includes/Experiments/Automation.php:517
+#: pro/includes/Experiments/Automation.php:545
 msgid "Total views"
 msgstr ""
 
-#: pro/includes/Experiments/Automation.php:518
+#: pro/includes/Experiments/Automation.php:546
 msgid "Per participant"
 msgstr ""
 
 #. translators: %s is a URL to the experiment edit screen.
-#: pro/includes/Experiments/Automation.php:523
+#: pro/includes/Experiments/Automation.php:551
 #, php-format
 msgid "Review experiment: %s"
-msgstr ""
-
-#: pro/includes/Experiments/Experiment.php:110
-#: pro/includes/Experiments/Experiment.php:120
-msgid "Experiments"
 msgstr ""
 
 #: pro/includes/Experiments/Experiment.php:112
@@ -3879,7 +3977,7 @@ msgid "Reset"
 msgstr ""
 
 #: pro/src/editor/components/popup-background-generator/Component.js:369
-#: src/scripts/admin/display-rules-list/index.js:333
+#: src/scripts/admin/display-rules-list/index.js:343
 msgid "Cancel"
 msgstr ""
 
@@ -4765,12 +4863,12 @@ msgid "Exclusions"
 msgstr ""
 
 #: src/editor/components/display-rules/components/content-control/Component.js:92
-#: src/scripts/admin/display-rules-list/index.js:311
+#: src/scripts/admin/display-rules-list/index.js:321
 msgid "Add exclusion"
 msgstr ""
 
 #: src/editor/components/display-rules/components/content-control/Component.js:93
-#: src/scripts/admin/display-rules-list/index.js:312
+#: src/scripts/admin/display-rules-list/index.js:322
 msgid "Remove exclusion"
 msgstr ""
 
@@ -4870,10 +4968,6 @@ msgstr ""
 msgid "Extra Bold"
 msgstr ""
 
-#: src/editor/components/font-appearance-control/Component.js:44
-msgid "Black"
-msgstr ""
-
 #: src/editor/components/font-appearance-control/Component.js:48
 msgid "Thin Italic"
 msgstr ""
@@ -4943,7 +5037,7 @@ msgid "Inner Blocks"
 msgstr ""
 
 #: src/editor/components/inner-blocks-button/Component.js:130
-#: src/editor/components/variation-picker/Component.js:781
+#: src/editor/components/variation-picker/Component.js:845
 #: src/editor/icons/default/index.js:43
 msgid "Close"
 msgstr ""
@@ -4980,15 +5074,15 @@ msgstr ""
 msgid "Popup Type"
 msgstr ""
 
-#: src/editor/components/popup-type/components/template-picker/Component.js:114
+#: src/editor/components/popup-type/components/template-picker/Component.js:116
 msgid "Choose a popup template"
 msgstr ""
 
-#: src/editor/components/repeater-control/Component.js:53
+#: src/editor/components/repeater-control/Component.js:54
 msgid "No items."
 msgstr ""
 
-#: src/editor/components/repeater-control/Component.js:54
+#: src/editor/components/repeater-control/Component.js:55
 msgid "Add item"
 msgstr ""
 
@@ -5060,87 +5154,93 @@ msgstr ""
 msgid "Name (Z-A)"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:212
+#: src/editor/components/variation-picker/Component.js:249
 msgid "Untitled template"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:215
+#: src/editor/components/variation-picker/Component.js:252
 msgid "A ready-made starting point for your popup."
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:505
+#: src/editor/components/variation-picker/Component.js:552
 msgid "Template filters"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:506
+#: src/editor/components/variation-picker/Component.js:553
 msgid "Popup type"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:509
+#: src/editor/components/variation-picker/Component.js:556
 msgid "All popup types"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:526
+#: src/editor/components/variation-picker/Component.js:573
 msgid "Use case"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:529
+#: src/editor/components/variation-picker/Component.js:576
 msgid "All templates"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:546
+#: src/editor/components/variation-picker/Component.js:593
 msgid "Availability"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:549
-#: src/editor/components/variation-picker/Component.js:577
+#: src/editor/components/variation-picker/Component.js:596
+#: src/editor/components/variation-picker/Component.js:624
 msgid "All"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:554
+#: src/editor/components/variation-picker/Component.js:601
 msgid "Included"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:559
+#: src/editor/components/variation-picker/Component.js:606
 msgid "Pro"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:567
+#: src/editor/components/variation-picker/Component.js:614
 msgid "Tags"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:604
+#: src/editor/components/variation-picker/Component.js:651
 msgid "Search by name, use case, or tag."
 msgstr ""
 
 #. translators: %d: number of templates
-#: src/editor/components/variation-picker/Component.js:611
+#: src/editor/components/variation-picker/Component.js:658
 #, js-format
 msgid "%d templates"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:619
-#: src/editor/components/variation-picker/Component.js:620
+#: src/editor/components/variation-picker/Component.js:666
+#: src/editor/components/variation-picker/Component.js:667
 msgid "Search templates"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:629
+#: src/editor/components/variation-picker/Component.js:676
 msgid "Sort templates"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:657
+#: src/editor/components/variation-picker/Component.js:704
 msgid "Clear filters"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:691
+#: src/editor/components/variation-picker/Component.js:737
 msgid "PRO"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:737
+#. translators: %s: template title
+#: src/editor/components/variation-picker/Component.js:785
+#, js-format
+msgid "Preview %s"
+msgstr ""
+
+#: src/editor/components/variation-picker/Component.js:801
 msgid "No templates matched those filters."
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:738
+#: src/editor/components/variation-picker/Component.js:802
 msgid "Try a broader search term or clear the active filters."
 msgstr ""
 
@@ -5152,15 +5252,15 @@ msgstr ""
 msgid "WordPress"
 msgstr ""
 
-#: src/editor/hooks/usePostTypeLabels.js:11
+#: src/editor/hooks/usePostTypeLabels.js:12
 msgid "Bars"
 msgstr ""
 
-#: src/editor/hooks/usePostTypeLabels.js:15
+#: src/editor/hooks/usePostTypeLabels.js:16
 msgid "Flyouts"
 msgstr ""
 
-#: src/editor/hooks/usePostTypeLabels.js:19
+#: src/editor/hooks/usePostTypeLabels.js:20
 msgid "Overlays"
 msgstr ""
 
@@ -5332,7 +5432,7 @@ msgstr ""
 
 #: src/popups/bar/editor/EditSettings.js:40
 #: src/popups/flyout/editor/EditSettings.js:50
-#: src/popups/overlay/editor/EditSettings.js:53
+#: src/popups/overlay/editor/EditSettings.js:50
 msgid "Enable transitions"
 msgstr ""
 
@@ -5343,7 +5443,7 @@ msgstr ""
 
 #: src/popups/bar/editor/EditSettings.js:67
 #: src/popups/flyout/editor/EditSettings.js:77
-#: src/popups/overlay/editor/EditSettings.js:96
+#: src/popups/overlay/editor/EditSettings.js:93
 msgid "Make Variation"
 msgstr ""
 
@@ -5378,7 +5478,7 @@ msgid "Add an anchor to a button block and then insert the same value here to cl
 msgstr ""
 
 #: src/popups/flyout/editor/EditSettings.js:39
-#: src/popups/overlay/editor/EditSettings.js:44
+#: src/popups/overlay/editor/EditSettings.js:41
 msgid "Maximize on mobile"
 msgstr ""
 
@@ -5411,23 +5511,23 @@ msgstr ""
 msgid "Add an anchor to a button block and then insert the same value here to close the overlay on click."
 msgstr ""
 
-#: src/popups/overlay/editor/EditSettings.js:33
+#: src/popups/overlay/editor/EditSettings.js:30
 msgid "Backdrop"
 msgstr ""
 
-#: src/popups/overlay/editor/EditSettings.js:45
+#: src/popups/overlay/editor/EditSettings.js:42
 msgid "Expand the overlay on mobile to use all available screen space."
 msgstr ""
 
-#: src/popups/overlay/editor/EditSettings.js:54
+#: src/popups/overlay/editor/EditSettings.js:51
 msgid "Choose if transitions are used when toggling the overlay."
 msgstr ""
 
-#: src/popups/overlay/editor/EditSettings.js:62
+#: src/popups/overlay/editor/EditSettings.js:59
 msgid "Hide scrollbar"
 msgstr ""
 
-#: src/popups/overlay/editor/EditSettings.js:63
+#: src/popups/overlay/editor/EditSettings.js:60
 msgid "Hide the page scrollbar when open."
 msgstr ""
 
@@ -5449,83 +5549,69 @@ msgstr ""
 msgid "Toggle View"
 msgstr ""
 
-#. translators: %s is the popup title shown in the list table.
-#: src/scripts/admin/display-rules-list/index.js:136
-#, js-format
-msgid "Edit display rules for %s"
-msgstr ""
-
-#: src/scripts/admin/display-rules-list/index.js:139
-msgid "this popup"
-msgstr ""
-
 #. translators: %s is the popup title shown in the modal header.
-#: src/scripts/admin/display-rules-list/index.js:142
+#: src/scripts/admin/display-rules-list/index.js:145
 #, js-format
 msgid "Display Rules: %s"
 msgstr ""
 
-#: src/scripts/admin/display-rules-list/index.js:199
+#: src/scripts/admin/display-rules-list/index.js:202
 msgid "Could not save display rules."
 msgstr ""
 
-#: src/scripts/admin/display-rules-list/index.js:249
-msgid "Edit display rules"
-msgstr ""
-
-#: src/scripts/admin/display-rules-list/index.js:272
+#: src/scripts/admin/display-rules-list/index.js:282
 msgid "Update where this popup appears and who can see it without leaving the listing."
 msgstr ""
 
-#: src/scripts/admin/display-rules-list/index.js:292
+#: src/scripts/admin/display-rules-list/index.js:302
 msgid "Display on"
 msgstr ""
 
-#: src/scripts/admin/display-rules-list/index.js:293
+#: src/scripts/admin/display-rules-list/index.js:303
 msgid "Choose where this popup should appear."
 msgstr ""
 
-#: src/scripts/admin/display-rules-list/index.js:297
+#: src/scripts/admin/display-rules-list/index.js:307
 msgid "No display locations added."
 msgstr ""
 
-#: src/scripts/admin/display-rules-list/index.js:298
+#: src/scripts/admin/display-rules-list/index.js:308
 msgid "Add display location"
 msgstr ""
 
-#: src/scripts/admin/display-rules-list/index.js:299
+#: src/scripts/admin/display-rules-list/index.js:309
 msgid "Remove display location"
 msgstr ""
 
-#: src/scripts/admin/display-rules-list/index.js:305
+#: src/scripts/admin/display-rules-list/index.js:315
 msgid "Exclude from"
 msgstr ""
 
-#: src/scripts/admin/display-rules-list/index.js:306
+#: src/scripts/admin/display-rules-list/index.js:316
 msgid "Choose where this popup should stay hidden."
 msgstr ""
 
-#: src/scripts/admin/display-rules-list/index.js:310
+#: src/scripts/admin/display-rules-list/index.js:320
 msgid "No exclusions added."
 msgstr ""
 
-#: src/scripts/admin/display-rules-list/index.js:319
+#: src/scripts/admin/display-rules-list/index.js:329
 msgid "Choose which visitors can see this popup."
 msgstr ""
 
-#: src/scripts/admin/display-rules-list/index.js:323
+#: src/scripts/admin/display-rules-list/index.js:333
 msgid "No audience rules added."
 msgstr ""
 
-#: src/scripts/admin/display-rules-list/index.js:324
+#: src/scripts/admin/display-rules-list/index.js:334
 msgid "Add audience rule"
 msgstr ""
 
-#: src/scripts/admin/display-rules-list/index.js:325
+#: src/scripts/admin/display-rules-list/index.js:335
 msgid "Remove audience rule"
 msgstr ""
 
-#: src/scripts/admin/display-rules-list/index.js:341
+#: src/scripts/admin/display-rules-list/index.js:351
 msgid "Save"
 msgstr ""
 

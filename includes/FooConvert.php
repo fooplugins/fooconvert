@@ -208,7 +208,10 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             <head>
                 <meta charset="<?php bloginfo( 'charset' ); ?>">
                 <meta name="viewport" content="width=device-width, initial-scale=1">
-                <title><?php echo esc_html( sprintf( __( 'Preview: %s', 'fooconvert' ), $title ) ); ?></title>
+                <title><?php
+                /* translators: %s: popup title shown in the preview page title. */
+                echo esc_html( sprintf( __( 'Preview: %s', 'fooconvert' ), $title ) );
+                ?></title>
                 <?php wp_head(); ?>
             </head>
             <body <?php body_class( 'fooconvert-popup-preview-page' ); ?>>

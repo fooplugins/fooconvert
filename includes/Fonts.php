@@ -101,8 +101,8 @@ if ( !class_exists( __NAMESPACE__ . '\Fonts' ) ) {
                 return $message;
             }
 
-            /* translators: 1: existing help text, 2: comma-separated list of bundled font names. */
             return sprintf(
+                /* translators: 1: existing help text. 2: comma-separated list of bundled font names. */
                 __( '%1$s Included fonts already available for bundled templates: %2$s.', 'fooconvert' ),
                 $message,
                 implode( ', ', $included_font_names )
