@@ -25,7 +25,6 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
 
             new namespace\Stats();
             new namespace\Dashboard();
-            new namespace\AiPopupBuilder();
             new namespace\ContainerManager();
             new namespace\Settings();
             new namespace\LeadsMenu();
@@ -96,12 +95,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                 return;
             }
 
-            $desired_slugs = array(
+            $desired_slugs = apply_filters( 'fooconvert_admin_menu_desired_slugs', array(
                 FOOCONVERT_MENU_SLUG,
                 'edit.php?post_type=' . FOOCONVERT_CPT_POPUP,
                 'post-new.php?post_type=' . FOOCONVERT_CPT_POPUP,
-                FOOCONVERT_MENU_SLUG_AI_POPUP_BUILDER,
-            );
+            ) );
 
             $ordered = array();
             $added = array();

@@ -423,25 +423,6 @@ function fooconvert_admin_url_popup_edit( $post_id ) {
 }
 
 /**
- * Retrieves the base URL for the AI popup preview admin page.
- *
- * @return string
- */
-function fooconvert_admin_url_ai_popup_preview_base() {
-    return 'admin.php?page=' . FOOCONVERT_MENU_SLUG_AI_POPUP_PREVIEW;
-}
-
-/**
- * Retrieves the URL for the AI popup preview admin page.
- *
- * @param int $widget_id The popup ID to preview.
- * @return string
- */
-function fooconvert_admin_url_ai_popup_preview( $widget_id ) {
-    return admin_url( fooconvert_admin_url_ai_popup_preview_base() . '&widget_id=' . absint( $widget_id ) );
-}
-
-/**
  * Retrieves the URL for the FooConvert popup type chooser.
  *
  * @return string
@@ -714,27 +695,6 @@ function fooconvert_is_popup_stats_page() {
     return is_admin() &&
         isset( $_GET['page'] ) && $_GET['page'] === 'fooconvert-popup-stats' &&
         isset( $_GET['post_id'] ) && is_numeric( $_GET['post_id'] );
-}
-
-/**
- * Checks if the current page is the AI popup preview admin page.
- *
- * @return bool
- */
-function fooconvert_is_admin_ai_popup_preview_page() {
-    return is_admin() &&
-        isset( $_GET['page'] ) && $_GET['page'] === FOOCONVERT_MENU_SLUG_AI_POPUP_PREVIEW &&
-        isset( $_GET['widget_id'] ) && is_numeric( $_GET['widget_id'] );
-}
-
-/**
- * Checks if the current page is the AI popup builder admin page.
- *
- * @return bool
- */
-function fooconvert_is_admin_ai_popup_builder_page() {
-    return is_admin() &&
-        isset( $_GET['page'] ) && $_GET['page'] === FOOCONVERT_MENU_SLUG_AI_POPUP_BUILDER;
 }
 
 /**

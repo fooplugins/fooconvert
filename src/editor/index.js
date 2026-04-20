@@ -16,7 +16,6 @@ import * as icons from "./icons";
 import "./filters";
 
 [
-    [ "fc-ai-builder", plugins.AiBuilderPlugin ],
     [ "fc-compatibility", plugins.CompatibilityPlugin ],
     [ "fc-custom-editor", plugins.CustomEditorPlugin ],
     [ "fc-display-rules", plugins.DisplayRulesPlugin ],

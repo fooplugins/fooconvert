@@ -40,18 +40,12 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
             FooConvert::plugin();
 
             if ( is_admin() ) {
-                add_action( 'init', function () {
-                    new Admin\Init();
-                } );
+                new Admin\Init();
             }
 
             new EventHooks();
             new Cron();
             new Fonts();
-            new Brand\Manager();
-            new AI\Abilities();
-            new AI\PopupMedia();
-            new AI\PopupBuilder();
             new Admin\Templates\Init();
             new Updater();
 

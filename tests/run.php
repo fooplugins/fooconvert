@@ -28,10 +28,6 @@ $cases = array(
     __DIR__ . '/cases/pro-admin-templates.php',
     __DIR__ . '/cases/pro-dashboard-sales-trash-filter.php',
     __DIR__ . '/cases/sales-attribution-woocommerce.php',
-    __DIR__ . '/cases/ai-popup-blueprint.php',
-    __DIR__ . '/cases/ai-popup-abilities.php',
-    __DIR__ . '/cases/ai-popup-media.php',
-    __DIR__ . '/cases/ai-popup-save.php',
     __DIR__ . '/cases/stats-row-actions.php',
 );
 

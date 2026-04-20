@@ -514,7 +514,10 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
          * @since 1.0.0
          */
         public function enqueue_editor_assets() {
-            if ( $this->post_type->is_editor() || fooconvert_is_popup_stats_page() || fooconvert_is_admin_ai_popup_preview_page() ) {
+            $should_enqueue = $this->post_type->is_editor() || fooconvert_is_popup_stats_page();
+            $should_enqueue = (bool) apply_filters( 'fooconvert_should_enqueue_editor_assets', $should_enqueue );
+
+            if ( $should_enqueue ) {
                 $editor = include FOOCONVERT_ASSETS_PATH . 'editor.asset.php';
                 if ( Utils::has_keys( $editor, array( 'dependencies', 'version' ) ) ) {
                     wp_enqueue_style( FOOCONVERT_EDITOR_ASSET_HANDLE, FOOCONVERT_ASSETS_URL . 'editor.css', array(), $editor['version'] );
