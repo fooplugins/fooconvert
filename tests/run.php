@@ -12,6 +12,7 @@ $cases = array(
     __DIR__ . '/cases/display-rules-core.php',
     __DIR__ . '/cases/display-rules-woocommerce.php',
     __DIR__ . '/cases/experiments-admin-init.php',
+    __DIR__ . '/cases/experiments-settings-popup-column.php',
     __DIR__ . '/cases/pro-init-woocommerce-bootstrap.php',
     __DIR__ . '/cases/woocommerce-cart-state.php',
     __DIR__ . '/cases/woocommerce-coupon-search.php',
@@ -27,6 +28,7 @@ $cases = array(
     __DIR__ . '/cases/pro-admin-templates.php',
     __DIR__ . '/cases/pro-dashboard-sales-trash-filter.php',
     __DIR__ . '/cases/sales-attribution-woocommerce.php',
+    __DIR__ . '/cases/stats-row-actions.php',
 );
 
 $failures = 0;
