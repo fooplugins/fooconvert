@@ -29,6 +29,7 @@ $cases = array(
     __DIR__ . '/cases/pro-dashboard-sales-trash-filter.php',
     __DIR__ . '/cases/sales-attribution-woocommerce.php',
     __DIR__ . '/cases/stats-row-actions.php',
+    __DIR__ . '/cases/fonts-frontend-enqueue.php',
 );
 
 $failures = 0;
