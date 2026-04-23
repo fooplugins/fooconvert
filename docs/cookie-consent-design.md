@@ -217,7 +217,13 @@ Compact so it stays well under the 4 KB cookie limit and is cheap to parse
 server-side. The `id` is a random UUID (not personally identifying) used to
 correlate with the server-side log.
 
-**Custom table `{$wpdb->prefix}fooconvert_consent_log`** (append-only):
+**Proof-of-consent storage.** Two viable options; see §5.2.1 for the
+trade-off. The design picks **Option A (dedicated table)** but the
+middle-ground Option B is implementable and documented here so the
+decision isn't silent.
+
+Option A — custom table `{$wpdb->prefix}fooconvert_consent_log`
+(append-only):
 
 | column          | type                     | notes                               |
 |-----------------|--------------------------|-------------------------------------|
@@ -236,9 +242,118 @@ Storing raw IPs in a log is itself processing of personal data and is the
 thing we're trying to help users avoid. A truncated + salted hash is
 sufficient to rebut a "I never consented" claim while staying proportionate.
 
-Retention of the log is tied to the existing FooConvert retention setting,
+Log retention is independent of the general FooConvert retention setting,
 with a floor of 12 months (shorter than that defeats the purpose of proof
-of consent).
+of consent) and a ceiling configurable per site.
+
+### 5.2.1 Should we reuse `fooconvert_events` instead?
+
+Worth considering honestly, because "one table per plugin" is a legitimate
+goal and the existing table already captures many of the same fields
+(`session_id`, `anonymous_user_guid`, `page_url`, `user_id`, `timestamp`,
+`extra_data`).
+
+**Option B — reuse `fooconvert_events` with `event_type = 'consent_grant'`
+/ `consent_withdraw'`.** The `ip_hash` / `user_agent_hash` / `consent_id` /
+`version` / `categories` payload lives in `extra_data` JSON. `post_id`
+references either the popup that hosted the banner (if there is one) or
+a sentinel (0 or a reserved `fc-consent` post).
+
+Pros of Option B (reuse):
+
+- **No second table.** Fewer migrations, no new "does the table exist?"
+  support path in §support calls, no extra row in the Database admin tab.
+- **Reuses `Event::track()` entirely.** The anonymous-user-GUID derivation,
+  URL cleaning, session/user wiring, `fooconvert_event_data` filter, and
+  template hook are already there. We'd write ~10 lines of glue instead
+  of a new data layer.
+- **Existing indexes help us.**
+  `idx_session_event_lookup (session_id, event_type, sentiment, timestamp)`
+  and `idx_anonymous_event_lookup (anonymous_user_guid, event_type, …)`
+  already make "what is the latest consent state for this visitor?" a
+  cheap query — no schema work.
+- **Same mental model.** A consent decision *is* a user event; developers
+  reading the code aren't surprised to find it in the events pipeline.
+- **Free tooling.** Dashboard charts, Top Performers, and the Database
+  admin tab's row count / size / orphan detection all just work.
+
+Cons of Option B (reuse):
+
+- **`post_id` is `NOT NULL`.** Consent is site-wide; it is not an event
+  "for" a popup. We'd need a sentinel value (0, or a reserved `fc-consent`
+  post). Every existing query that assumes `post_id` maps to a real popup
+  in `wp_posts` needs an audit — and `delete_orphaned_events` specifically
+  will happily delete any consent row whose sentinel post is missing.
+- **Retention mismatch is the big one.** Current default retention is
+  **14 days**; `FOOCONVERT_CRON_DELETE_EVENTS` purges everything older
+  than `fooconvert_retention()` on a schedule. Proof of consent must
+  survive ≥ 12 months (usually longer). We'd need a per-`event_type`
+  retention override, and every destructive path has to honour it:
+  `Event::delete_old_events`, `Event::delete_all_events`,
+  `Event::delete_orphaned_events`, and the three admin buttons in
+  `Admin\Settings::delete_*`. Missing the override in any one of those
+  paths produces a silently GDPR-hostile bug: the evidence is destroyed
+  exactly when the site is asked to prove it had consent.
+- **"Delete All Events" blast radius grows.** An admin who clicks
+  *Delete All Events* to reset analytics currently wipes analytics. Under
+  Option B, it wipes their legal evidence of consent too. We can carve
+  out consent rows, but it's a footgun we didn't have before.
+- **Every analytics query now has to filter `event_type NOT IN (…)`.**
+  Forgetting the filter leaks consent events into popup metrics
+  ("conversions went up!"). Today that's impossible by construction.
+- **`extra_data` is un-indexed longtext.** "Find me all consent records
+  from ip_hash X" (a DSAR response) is a full scan + JSON parse. A
+  dedicated table can put a simple index on `ip_hash` and `consent_id`.
+- **Schema migrations touch a hot table.** Adding a column for, say, a
+  future TCF consent string means `ALTER TABLE` on a table that gets
+  writes on every popup open/close. A dedicated consent table is small
+  and cold; altering it is safe at any traffic level.
+- **Domain coupling.** Compliance bugs and analytics bugs now share a
+  blast radius. An analytics refactor that changes how `extra_data` is
+  serialised could silently break consent proof, and vice versa.
+- **DSAR/export.** "Give me everything you hold about me" is a clean
+  `SELECT * FROM fooconvert_consent_log WHERE consent_id = ?` with
+  Option A. With Option B it's a filter on event_type in a multi-purpose
+  table and the caller has to know which rows count.
+
+Middle-ground Option B′: reuse the table, but also ship a general
+"per-event-type retention override" map (e.g.,
+`['consent_grant' => 365, 'consent_withdraw' => 365]`) and plumb it
+through every delete path + each admin button. That fixes retention
+and the Delete-All-Events footgun, but not the orphan-cleanup issue,
+not the query-filter tax, not the un-indexed payload, not the domain
+coupling. It's a plausible path if we're strongly opposed to a second
+table, but it pays for reuse with lasting complexity in every destructive
+code path.
+
+**Decision: Option A (dedicated table).**
+
+Short version of why: a consent record is a legal artefact with different
+retention (≥ 12 months vs. 14 days default), different access pattern
+(DSAR lookups by `consent_id` / `ip_hash`), and different deletion
+semantics (must survive "Delete All Events" by design) than an analytics
+event. The cost of a dedicated table is a single `CREATE TABLE` in
+`Data\Schema` and a single cleanup cron hook — trivial, one-time, and
+isolated. The cost of coupling is a permanent surcharge on every
+destructive code path forever, in a domain where the failure mode is a
+regulator-facing compliance bug. That's a poor trade.
+
+We do, however, keep Option B in mind for one thing: the **transient**
+consent interactions that *are* analytics-relevant — banner shown, layer
+2 opened, "Accept all" clicked, "Reject all" clicked, "Customize" clicked
+— belong in `fooconvert_events` against the banner popup's `post_id`
+(reusing `FOOCONVERT_EVENT_TYPE_OPEN` / `CLICK` / `CLOSE`). Those are
+engagement signals; the site owner wants to see them in the popup stats
+dashboard alongside every other popup. Only the *authoritative* consent
+record — the one that has to be produced in court — goes into the
+dedicated table.
+
+So the split is:
+
+| Data                               | Where                       |
+|------------------------------------|-----------------------------|
+| Banner impressions & button clicks | `fooconvert_events` (existing pipeline) |
+| Authoritative grant/withdraw record| `fooconvert_consent_log` (new)          |
 
 ### 5.3 JavaScript runtime
 
@@ -435,7 +550,8 @@ breaks for existing sites that don't turn it on.
 2. Should `EventHooks` emit anonymized events (no visitor id) under
    denied consent, so the dashboard keeps directional totals? Lean yes,
    but it's a policy decision for the product owner.
-3. Consent log in the existing `fooconvert_events` table (with a new
-   event type) vs. a dedicated table? Design above picks dedicated —
-   different retention rules, different access pattern, and it avoids
-   polluting the analytics pipeline. Revisit if maintenance cost is high.
+3. ~~Consent log in the existing `fooconvert_events` table (with a new
+   event type) vs. a dedicated table?~~ **Resolved in §5.2.1** —
+   dedicated `fooconvert_consent_log` for the authoritative record,
+   but the banner's impressions/clicks stay in `fooconvert_events` so
+   they show up in popup stats.
