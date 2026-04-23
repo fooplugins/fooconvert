@@ -106,6 +106,32 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
                 $lead->create( $lead_data );
             }
 
+            if (
+                ( $event_type === FOOCONVERT_EVENT_TYPE_CONSENT_GRANT
+                    || $event_type === FOOCONVERT_EVENT_TYPE_CONSENT_WITHDRAW )
+                && is_array( $extra_data )
+                && !empty( $extra_data['consentId'] )
+                && isset( $extra_data['categories'] )
+                && is_array( $extra_data['categories'] )
+            ) {
+                // Consent decisions are logged through the same endpoint as every
+                // other popup event, but the authoritative proof-of-consent record
+                // lands in `fooconvert_consent_log` rather than `fooconvert_events`
+                // so it can have its own retention and deletion semantics.
+                $consent = new Consent();
+
+                $consent->record( array(
+                    'consent_id' => (string) $extra_data['consentId'],
+                    'event_type' => $event_type,
+                    'categories' => $extra_data['categories'],
+                    'version'    => isset( $extra_data['version'] ) ? (int) $extra_data['version'] : 1,
+                    'page_url'   => $page_url,
+                    'source'     => isset( $extra_data['source'] ) ? (string) $extra_data['source'] : 'banner',
+                    'ip'         => isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '',
+                    'user_agent' => isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '',
+                ) );
+            }
+
             $data = [
                 'post_id'           => $post_id,
                 'event_type'          => $event_type,
