@@ -20,6 +20,13 @@ if ( !class_exists( __NAMESPACE__ . '\Consent' ) ) {
     class Consent {
 
         /**
+         * FooFields settings container id. Produces the option name
+         * `fooconvert-cookie-consent-settings` via the SettingsPage
+         * convention (`{settings_id}-settings`).
+         */
+        const SETTINGS_ID = 'fooconvert-cookie-consent';
+
+        /**
          * Default cookie name used to store the per-visitor consent state
          * on the client. The module is responsible for reading/writing
          * this cookie; core does not know about it.
@@ -45,6 +52,38 @@ if ( !class_exists( __NAMESPACE__ . '\Consent' ) ) {
          * compact serialization used on the wire and in the DB.
          */
         const KNOWN_CATEGORIES = array( 'necessary', 'preferences', 'statistics', 'marketing' );
+
+        /**
+         * Returns the stored settings array for this module.
+         *
+         * @return array<string, mixed>
+         */
+        public static function get_settings(): array {
+            $raw = get_option( self::SETTINGS_ID . '-settings' );
+
+            return is_array( $raw ) ? $raw : array();
+        }
+
+        /**
+         * Returns a single setting value, or the supplied default when
+         * the key is missing.
+         *
+         * @param string $key     Setting key.
+         * @param mixed  $default Fallback when the key isn't stored yet.
+         * @return mixed
+         */
+        public static function get_setting( string $key, $default = null ) {
+            $settings = self::get_settings();
+
+            return array_key_exists( $key, $settings ) ? $settings[ $key ] : $default;
+        }
+
+        /**
+         * Returns true when the module is enabled in settings.
+         */
+        public static function is_enabled(): bool {
+            return (bool) self::get_setting( 'enabled', false );
+        }
 
         /**
          * Records a consent decision.

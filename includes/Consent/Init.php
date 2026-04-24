@@ -32,6 +32,10 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
         public function __construct() {
             add_action( 'fooconvert_create_tables', array( $this, 'on_create_tables' ), 10, 1 );
             add_action( 'fooconvert_log_event', array( $this, 'on_log_event' ), 10, 3 );
+
+            if ( is_admin() ) {
+                new Admin\Settings();
+            }
         }
 
         /**
