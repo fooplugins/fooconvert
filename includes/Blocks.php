@@ -24,6 +24,24 @@ class Blocks {
             new Coupon(),
             new SignUp()
         );
+
+        /**
+         * Fires after the core FooConvert blocks have been instantiated,
+         * so that extensions can register their own `BaseBlock` instances
+         * without touching this class. Subscribers should call
+         * `$blocks->register( new MyBlock() )` to participate in the shared
+         * kses definition and block-instance enumeration.
+         *
+         * Block instances self-register with WordPress via their own
+         * `init` hook (see `BaseBlock::__construct`), so adding a block
+         * here is only necessary when the block contributes a kses
+         * definition or needs to be visible to other block-level features.
+         *
+         * @since 2.1.0
+         *
+         * @param Blocks $blocks The core blocks collection.
+         */
+        do_action( 'fooconvert_register_blocks', $this );
     }
 
     /**

@@ -1,0 +1,16 @@
+// Editor-only styling for the Cookie Consent Preferences block.
+// Mirrors the frontend structure so the admin sees what visitors will see.
+
+.fc-cookie-consent-preferences--editor {
+    padding: 12px;
+    border: 1px dashed rgba( 0, 0, 0, 0.15 );
+    border-radius: 6px;
+    background: rgba( 0, 0, 0, 0.02 );
+
+    .fc-cookie-consent-preferences__editor-note {
+        margin: 0 0 8px 0;
+        font-size: 12px;
+        font-style: italic;
+        opacity: 0.7;
+    }
+}

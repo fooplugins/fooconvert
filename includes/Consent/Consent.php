@@ -65,6 +65,63 @@ if ( !class_exists( __NAMESPACE__ . '\Consent' ) ) {
         }
 
         /**
+         * Default category labels/descriptions, written to be usable
+         * verbatim in the banner — a fresh install renders compliant
+         * copy without any admin editing.
+         *
+         * Admin overrides from the Categories tab are applied on top of
+         * these defaults via `get_category_copy()` below.
+         *
+         * @return array<string, array{label:string, description:string}>
+         */
+        public static function get_category_defaults(): array {
+            return array(
+                'necessary'   => array(
+                    'label'       => __( 'Necessary', 'fooconvert' ),
+                    'description' => __( 'Required for the site to work — these cookies do not track you for advertising or analytics, and cannot be disabled.', 'fooconvert' ),
+                ),
+                'preferences' => array(
+                    'label'       => __( 'Preferences', 'fooconvert' ),
+                    'description' => __( 'Remember choices you make (language, region, display options) so you don\'t have to set them again on every visit.', 'fooconvert' ),
+                ),
+                'statistics'  => array(
+                    'label'       => __( 'Statistics', 'fooconvert' ),
+                    'description' => __( 'Help us understand how visitors use the site — which pages are popular and where people get stuck — in aggregate.', 'fooconvert' ),
+                ),
+                'marketing'   => array(
+                    'label'       => __( 'Marketing', 'fooconvert' ),
+                    'description' => __( 'Used by us or our partners to show you relevant ads on this site and on other sites you visit.', 'fooconvert' ),
+                ),
+            );
+        }
+
+        /**
+         * Returns the effective label + description for each known category:
+         * the default, overridden by any admin customisation stored on the
+         * Categories tab.
+         *
+         * @return array<string, array{label:string, description:string}>
+         */
+        public static function get_category_copy(): array {
+            $defaults = self::get_category_defaults();
+            $settings = self::get_settings();
+            $out = array();
+
+            foreach ( self::KNOWN_CATEGORIES as $key ) {
+                $default = $defaults[ $key ] ?? array( 'label' => ucfirst( $key ), 'description' => '' );
+                $label_override = $settings[ 'category_' . $key . '_label' ] ?? null;
+                $desc_override = $settings[ 'category_' . $key . '_description' ] ?? null;
+
+                $out[ $key ] = array(
+                    'label'       => is_string( $label_override ) && $label_override !== '' ? $label_override : $default['label'],
+                    'description' => is_string( $desc_override ) && $desc_override !== '' ? $desc_override : $default['description'],
+                );
+            }
+
+            return $out;
+        }
+
+        /**
          * Returns a single setting value, or the supplied default when
          * the key is missing.
          *

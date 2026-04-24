@@ -1,0 +1,26 @@
+{
+  "apiVersion": 3,
+  "name": "fc/cookie-consent-preferences",
+  "title": "Cookie Consent Preferences",
+  "description": "Per-category consent toggles shown in the banner's preferences view. Categories are driven by the Cookie Consent settings page — add or edit them there, not here.",
+  "category": "fooconvert",
+  "icon": "privacy",
+  "editorScript": "file:./editor/index.js",
+  "editorStyle": "file:./editor/index.css",
+  "viewStyle": "file:./frontend/index.css",
+  "supports": {
+    "lock": false,
+    "multiple": false,
+    "reusable": false,
+    "className": true,
+    "customClassName": false,
+    "html": false
+  },
+  "attributes": {
+    "startExpanded": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "usesContext": [ "fc/postId", "fc/postType", "fc/template" ]
+}

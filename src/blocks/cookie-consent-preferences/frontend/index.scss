@@ -1,0 +1,57 @@
+// Frontend styling for the server-rendered preferences panel.
+// Interactive behaviour (showing/hiding, toggle state) is supplied by
+// the consent frontend runtime (separate phase); these styles define
+// the presentation so the panel looks correct even before the runtime
+// has upgraded the DOM.
+
+fc-cookie-consent-preferences {
+    display: block;
+
+    &[hidden] {
+        display: none;
+    }
+
+    .fc-cookie-consent-preferences__list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 12px;
+    }
+
+    .fc-cookie-consent-preferences__item {
+        padding: 10px 12px;
+        border-radius: 6px;
+        background: rgba( 255, 255, 255, 0.06 );
+
+        &--locked {
+            opacity: 0.85;
+        }
+    }
+
+    .fc-cookie-consent-preferences__item-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        font-weight: 600;
+    }
+
+    .fc-cookie-consent-preferences__state {
+        font-weight: 400;
+        font-size: 0.85em;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: rgba( 255, 255, 255, 0.12 );
+    }
+
+    .fc-cookie-consent-preferences__item[data-state="on"] .fc-cookie-consent-preferences__state {
+        background: rgba( 72, 187, 120, 0.25 );
+    }
+
+    .fc-cookie-consent-preferences__desc {
+        margin: 6px 0 0 0;
+        font-size: 0.9em;
+        line-height: 1.4;
+        opacity: 0.8;
+    }
+}

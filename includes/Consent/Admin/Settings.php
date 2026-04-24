@@ -190,7 +190,7 @@ if ( !class_exists( __NAMESPACE__ . '\Settings' ) ) {
                 ),
             );
 
-            $defaults = self::get_category_defaults();
+            $defaults = Consent::get_category_defaults();
             $order = 10;
 
             foreach ( Consent::KNOWN_CATEGORIES as $key ) {
@@ -384,32 +384,5 @@ if ( !class_exists( __NAMESPACE__ . '\Settings' ) ) {
             return implode( ', ', $parts );
         }
 
-        /**
-         * Default category labels/descriptions shown in the Categories tab
-         * before the admin customises them. Written to be usable verbatim
-         * in the banner without editing — i.e. compliant copy.
-         *
-         * @return array<string, array{label:string, description:string}>
-         */
-        public static function get_category_defaults(): array {
-            return array(
-                'necessary'   => array(
-                    'label'       => __( 'Necessary', 'fooconvert' ),
-                    'description' => __( 'Required for the site to work — these cookies do not track you for advertising or analytics, and cannot be disabled.', 'fooconvert' ),
-                ),
-                'preferences' => array(
-                    'label'       => __( 'Preferences', 'fooconvert' ),
-                    'description' => __( 'Remember choices you make (language, region, display options) so you don\'t have to set them again on every visit.', 'fooconvert' ),
-                ),
-                'statistics'  => array(
-                    'label'       => __( 'Statistics', 'fooconvert' ),
-                    'description' => __( 'Help us understand how visitors use the site — which pages are popular and where people get stuck — in aggregate.', 'fooconvert' ),
-                ),
-                'marketing'   => array(
-                    'label'       => __( 'Marketing', 'fooconvert' ),
-                    'description' => __( 'Used by us or our partners to show you relevant ads on this site and on other sites you visit.', 'fooconvert' ),
-                ),
-            );
-        }
     }
 }

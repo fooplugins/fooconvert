@@ -32,10 +32,43 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
         public function __construct() {
             add_action( 'fooconvert_create_tables', array( $this, 'on_create_tables' ), 10, 1 );
             add_action( 'fooconvert_log_event', array( $this, 'on_log_event' ), 10, 3 );
+            add_action( 'fooconvert_register_blocks', array( $this, 'on_register_blocks' ), 10, 1 );
+            add_filter( 'fooconvert_editor_variations-fc-bar', array( $this, 'on_register_bar_templates' ), 10, 1 );
 
             if ( is_admin() ) {
                 new Admin\Settings();
             }
+        }
+
+        /**
+         * Hook: `fooconvert_register_blocks`.
+         *
+         * Registers the consent preferences block with the core blocks
+         * collection so its kses definition is picked up alongside the
+         * other first-party blocks. Instantiation also self-registers
+         * with WordPress via `BaseBlock::init()`.
+         *
+         * @param \FooPlugins\FooConvert\Blocks $blocks Core blocks collection.
+         * @return void
+         */
+        public function on_register_blocks( $blocks ): void {
+            $blocks->register( new Blocks\CookieConsentPreferences() );
+        }
+
+        /**
+         * Hook: `fooconvert_editor_variations-fc-bar`.
+         *
+         * Adds the default cookie-consent bar template to the popup
+         * chooser. Kept in the consent module so core templates don't
+         * need to know about consent.
+         *
+         * @param array<int, array<string, mixed>> $variations
+         * @return array<int, array<string, mixed>>
+         */
+        public function on_register_bar_templates( array $variations ): array {
+            $variations[] = require __DIR__ . '/Admin/Templates/bars/cookie_consent.php';
+
+            return $variations;
         }
 
         /**
