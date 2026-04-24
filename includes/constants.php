@@ -15,8 +15,6 @@ define( 'FOOCONVERT_OPTION_TOP_PERFORMERS_SORT', 'fooconvert_top_performers_sort
 define( 'FOOCONVERT_OPTION_STATS_LAST_UPDATED', 'fooconvert_stats_last_updated' );
 define( 'FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS', 'fooconvert_recent_activity_days' );
 define( 'FOOCONVERT_OPTION_DISPLAY_RULES', 'fooconvert_display_rules' );
-define( 'FOOCONVERT_OPTION_CONSENT', 'fooconvert_consent_settings' );
-define( 'FOOCONVERT_OPTION_CONSENT_INVENTORY', 'fooconvert_consent_inventory' );
 
 // Post meta
 define( 'FOOCONVERT_META_KEY_DISPLAY_RULES', '_fooconvert_display_rules' );     // Meta key for the popup display rules.
@@ -45,13 +43,10 @@ define( 'FOOCONVERT_EVENT_TYPE_CLICK', 'click' );
 define( 'FOOCONVERT_EVENT_TYPE_UPDATE', 'update' );
 define( 'FOOCONVERT_EVENT_TYPE_CONVERSION', 'conversion' );
 define( 'FOOCONVERT_EVENT_TYPE_SALE', 'sale' );
-define( 'FOOCONVERT_EVENT_TYPE_CONSENT_GRANT', 'consent_grant' );
-define( 'FOOCONVERT_EVENT_TYPE_CONSENT_WITHDRAW', 'consent_withdraw' );
 define( 'FOOCONVERT_EVENT_SUBTYPE_ENGAGEMENT', 'engagement' );
 
 //other
 define( 'FOOCONVERT_DB_TABLE_EVENTS', 'fooconvert_events' );
-define( 'FOOCONVERT_DB_TABLE_CONSENT_LOG', 'fooconvert_consent_log' );
 define( 'FOOCONVERT_EDITOR_ASSET_HANDLE', 'fc-editor' );
 define( 'FOOCONVERT_FRONTEND_ASSET_HANDLE', 'fc-frontend' );
 define( 'FOOCONVERT_MENU_SLUG', 'fooconvert' );
@@ -60,8 +55,6 @@ define( 'FOOCONVERT_MENU_SLUG_POPUP_STATS', 'fooconvert-popup-stats' );
 define( 'FOOCONVERT_MENU_SLUG_POPUP_CHOOSER', 'fooconvert-popup-chooser' );
 define( 'FOOCONVERT_RETENTION_DEFAULT', 14 );
 define( 'FOOCONVERT_METRICS_DAYS_DEFAULT', 7 );
-define( 'FOOCONVERT_CONSENT_LOG_RETENTION_DEFAULT', 365 );
-define( 'FOOCONVERT_COOKIE_CONSENT', 'fc_consent' );
 
 //CRON
 define( 'FOOCONVERT_CRON_CALC_STATS', 'fooconvert_calculate_popup_stats' );

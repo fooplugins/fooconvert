@@ -1,8 +1,8 @@
 <?php
 
-namespace FooPlugins\FooConvert;
+namespace FooPlugins\FooConvert\Consent;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if ( !defined( 'ABSPATH' ) ) {
     exit;
 }
 
@@ -11,14 +11,33 @@ if ( !class_exists( __NAMESPACE__ . '\Consent' ) ) {
     /**
      * Class Consent.
      *
-     * Writes authoritative proof-of-consent records to the dedicated
-     * `fooconvert_consent_log` table. Follows the same shape as `Lead`:
-     * the frontend fires a `fooconvert_log_event` AJAX call with
-     * `eventType` set to `consent_grant` or `consent_withdraw`, and
-     * `Ajax::handle_log_event` routes the payload here in addition to
-     * writing the banner's engagement row to `fooconvert_events`.
+     * Domain model for writing authoritative proof-of-consent records to
+     * the dedicated `fooconvert_consent_log` table. Kept deliberately small
+     * and dependency-free: input validation / sanitisation / hashing lives
+     * here, storage goes through `QueryConsent`, and wiring into the core
+     * event pipeline is handled by `Init`.
      */
     class Consent {
+
+        /**
+         * Default cookie name used to store the per-visitor consent state
+         * on the client. The module is responsible for reading/writing
+         * this cookie; core does not know about it.
+         */
+        const COOKIE_NAME = 'fc_consent';
+
+        /**
+         * Default retention window (days) for proof-of-consent records.
+         * Longer than the core event retention because a consent record
+         * is a legal artefact, not an analytics row.
+         */
+        const RETENTION_DEFAULT_DAYS = 365;
+
+        /**
+         * Event type identifiers used on the `fooconvert_log_event` hook.
+         */
+        const EVENT_TYPE_GRANT = 'consent_grant';
+        const EVENT_TYPE_WITHDRAW = 'consent_withdraw';
 
         /**
          * Category keys we know about today. Extension is allowed via
@@ -49,7 +68,7 @@ if ( !class_exists( __NAMESPACE__ . '\Consent' ) ) {
             }
 
             $event_type = isset( $data['event_type'] ) ? (string) $data['event_type'] : '';
-            if ( $event_type !== FOOCONVERT_EVENT_TYPE_CONSENT_GRANT && $event_type !== FOOCONVERT_EVENT_TYPE_CONSENT_WITHDRAW ) {
+            if ( $event_type !== self::EVENT_TYPE_GRANT && $event_type !== self::EVENT_TYPE_WITHDRAW ) {
                 return new \WP_Error( 'invalid_event_type', 'event_type must be consent_grant or consent_withdraw' );
             }
 
@@ -89,7 +108,7 @@ if ( !class_exists( __NAMESPACE__ . '\Consent' ) ) {
                 return 0;
             }
 
-            $id = Data\QueryConsent::insert_consent_data( $row );
+            $id = QueryConsent::insert_consent_data( $row );
 
             if ( is_int( $id ) && $id > 0 ) {
                 $row['id'] = $id;
@@ -119,7 +138,7 @@ if ( !class_exists( __NAMESPACE__ . '\Consent' ) ) {
                 return null;
             }
 
-            return Data\QueryConsent::get_latest_for_consent_id( $consent_id );
+            return QueryConsent::get_latest_for_consent_id( $consent_id );
         }
 
         /**
@@ -134,7 +153,7 @@ if ( !class_exists( __NAMESPACE__ . '\Consent' ) ) {
                 return array();
             }
 
-            return Data\QueryConsent::get_history_for_consent_id( $consent_id );
+            return QueryConsent::get_history_for_consent_id( $consent_id );
         }
 
         /**
@@ -143,7 +162,7 @@ if ( !class_exists( __NAMESPACE__ . '\Consent' ) ) {
          * @return array<string, mixed>
          */
         public function get_consent_log_table_stats(): array {
-            return Data\QueryConsent::get_consent_log_table_stats();
+            return QueryConsent::get_consent_log_table_stats();
         }
 
         /**
@@ -152,7 +171,7 @@ if ( !class_exists( __NAMESPACE__ . '\Consent' ) ) {
          * @return int|false
          */
         public function delete_all() {
-            return Data\QueryConsent::delete_all_consent_records();
+            return QueryConsent::delete_all_consent_records();
         }
 
         /**
@@ -161,9 +180,9 @@ if ( !class_exists( __NAMESPACE__ . '\Consent' ) ) {
          * @return int|false
          */
         public function delete_old() {
-            $days = apply_filters( 'fooconvert_consent_log_retention_days', FOOCONVERT_CONSENT_LOG_RETENTION_DEFAULT );
+            $days = apply_filters( 'fooconvert_consent_log_retention_days', self::RETENTION_DEFAULT_DAYS );
 
-            return Data\QueryConsent::delete_old_consent_records( (int) $days );
+            return QueryConsent::delete_old_consent_records( (int) $days );
         }
 
         /**
@@ -229,19 +248,17 @@ if ( !class_exists( __NAMESPACE__ . '\Consent' ) ) {
         }
 
         /**
-         * Accepts either a canonical UUID or any 16–64 char slug-ish string
+         * Accepts either a canonical UUID or any 16–64 char hex/dash string
          * and returns a safe lowercase representation. Returns '' if the
          * input is unusable.
          */
         private function sanitize_consent_id( string $raw ): string {
             $raw = strtolower( trim( $raw ) );
 
-            // Canonical UUID v4-ish.
             if ( preg_match( '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $raw ) ) {
                 return $raw;
             }
 
-            // Allow a relaxed hex/dash id so the frontend can use any RFC-4122 variant.
             if ( preg_match( '/^[0-9a-f-]{16,36}$/', $raw ) ) {
                 return $raw;
             }
@@ -288,7 +305,6 @@ if ( !class_exists( __NAMESPACE__ . '\Consent' ) ) {
             if ( filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 ) ) {
                 $packed = @inet_pton( $ip );
                 if ( $packed !== false && strlen( $packed ) === 16 ) {
-                    // Zero the lower 64 bits.
                     $masked = substr( $packed, 0, 8 ) . str_repeat( "\0", 8 );
                     $out = @inet_ntop( $masked );
                     if ( is_string( $out ) ) {

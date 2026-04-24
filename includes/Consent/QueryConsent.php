@@ -1,32 +1,28 @@
 <?php
 
-namespace FooPlugins\FooConvert\Data;
+namespace FooPlugins\FooConvert\Consent;
 
 use WP_Error;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if ( !defined( 'ABSPATH' ) ) {
     exit;
 }
 
 /**
  * Class QueryConsent.
  *
- * Database access for the `fooconvert_consent_log` table. Intentionally
- * shaped like `QueryLead` so it reads familiarly against the rest of the
- * data layer.
+ * Database access for the `fooconvert_consent_log` table. Shape mirrors
+ * `Data\QueryLead` so it reads familiarly against the rest of the codebase.
  */
-class QueryConsent extends Base {
+class QueryConsent {
     /**
      * @codeCoverageIgnore
      */
     private function __construct() {
     }
 
-    /**
-     * Returns the prefixed consent log table name.
-     */
-    private static function get_consent_log_table_name(): string {
-        return parent::get_table_name( Schema::FOOCONVERT_CONSENT_LOG_TABLE );
+    private static function get_table_name(): string {
+        return Schema::get_consent_log_table_name();
     }
 
     /**
@@ -58,7 +54,7 @@ class QueryConsent extends Base {
             $data['timestamp'] = current_time( 'mysql', true );
         }
 
-        $table_name = self::get_consent_log_table_name();
+        $table_name = self::get_table_name();
         $result = $wpdb->insert( $table_name, $data );
 
         if ( $result === false ) {
@@ -77,7 +73,7 @@ class QueryConsent extends Base {
     public static function get_latest_for_consent_id( string $consent_id ) {
         global $wpdb;
 
-        $table_name = self::get_consent_log_table_name();
+        $table_name = self::get_table_name();
 
         $row = $wpdb->get_row(
             $wpdb->prepare(
@@ -99,7 +95,7 @@ class QueryConsent extends Base {
     public static function get_history_for_consent_id( string $consent_id ): array {
         global $wpdb;
 
-        $table_name = self::get_consent_log_table_name();
+        $table_name = self::get_table_name();
 
         return $wpdb->get_results(
             $wpdb->prepare(
@@ -120,7 +116,7 @@ class QueryConsent extends Base {
     public static function get_recent( int $limit = 100, int $offset = 0 ): array {
         global $wpdb;
 
-        $table_name = self::get_consent_log_table_name();
+        $table_name = self::get_table_name();
         $limit = max( 1, min( 500, $limit ) );
         $offset = max( 0, $offset );
 
@@ -143,7 +139,7 @@ class QueryConsent extends Base {
     public static function delete_all_consent_records() {
         global $wpdb;
 
-        $table_name = self::get_consent_log_table_name();
+        $table_name = self::get_table_name();
         return $wpdb->query( "DELETE FROM {$table_name}" ); // phpcs:ignore WordPress.DB
     }
 
@@ -160,7 +156,7 @@ class QueryConsent extends Base {
 
         $retention_days = max( 30, (int) $retention_days );
 
-        $table_name = self::get_consent_log_table_name();
+        $table_name = self::get_table_name();
 
         return $wpdb->query(
             $wpdb->prepare(
@@ -178,7 +174,7 @@ class QueryConsent extends Base {
     public static function get_consent_log_table_stats(): array {
         global $wpdb;
 
-        $table_name = self::get_consent_log_table_name();
+        $table_name = self::get_table_name();
 
         $stats = $wpdb->get_row(
             $wpdb->prepare(
