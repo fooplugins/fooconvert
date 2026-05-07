@@ -4,12 +4,21 @@ import {
     BackgroundImagePanel,
     BorderToolsPanel,
     ColorToolsPanel,
-    DimensionToolsPanel
+    DimensionToolsPanel,
+    ToolsPanelItem,
 } from "#editor";
+import {
+    BAR_WIDTH_DEFAULT,
+    BarWidthControl,
+    getBarContentWidth,
+    isBarContentWidthMode,
+} from "../../../../size-controls";
 
 const EditStyles = props => {
     const {
         clientId,
+        parentAttributes,
+        parentAttributesDefaults,
         styles,
         setStyles,
         stylesDefaults
@@ -18,6 +27,13 @@ const EditStyles = props => {
     const setColor = value => setStyles( { color: value } );
     const setBorder = value => setStyles( { border: value } );
     const setDimensions = value => setStyles( { dimensions: value } );
+    const setWidth = value => setStyles( {
+        width: value !== stylesDefaults?.width && value !== BAR_WIDTH_DEFAULT ? value : undefined
+    } );
+    const settings = parentAttributes?.settings ?? {};
+    const settingsDefaults = parentAttributesDefaults?.settings ?? {};
+    const isContentWidth = isBarContentWidthMode( settings, settingsDefaults );
+    const hasWidth = isContentWidth && typeof styles?.width === 'string' && styles.width !== stylesDefaults?.width;
 
     const colors = [ {
         key: 'background',
@@ -59,6 +75,20 @@ const EditStyles = props => {
                 onChange={ setDimensions }
                 controls={ [ 'padding', 'margin', 'gap' ] }
                 defaults={ stylesDefaults?.dimensions }
+                itemRenderer={ () => isContentWidth ? (
+                    <ToolsPanelItem
+                        panelId={ clientId }
+                        hasValue={ () => hasWidth }
+                        label={ __( "Width", "fooconvert" ) }
+                        onDeselect={ () => setWidth( undefined ) }
+                        isShownByDefault={ true }
+                    >
+                        <BarWidthControl
+                            value={ getBarContentWidth( styles, stylesDefaults ) }
+                            onChange={ setWidth }
+                        />
+                    </ToolsPanelItem>
+                ) : null }
             />
         </InspectorControls>
     );

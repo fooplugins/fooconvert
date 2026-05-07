@@ -8,6 +8,7 @@ import EditBlock from "./EditBlock";
 import EditSettings from "./EditSettings";
 import ViewStateControls from "./components/view-state-controls";
 import TriggerControls from "./components/trigger-controls/Component";
+import { BAR_WIDTH_MODE_FULL } from "./size-controls";
 
 export const BAR_CLASS_NAME = 'fc--bar';
 const BAR_POST_TYPE = 'fc-bar';
@@ -15,7 +16,8 @@ const BAR_POST_TYPE = 'fc-bar';
 export const BAR_DEFAULTS = {
     settings: {
         position: 'top',
-        transitions: false
+        transitions: false,
+        widthMode: BAR_WIDTH_MODE_FULL
     },
     openButton: {
         settings: {
@@ -75,7 +77,8 @@ const Edit = props => {
             postType: storedPostType,
             viewState,
             settings,
-            styles
+            styles,
+            content
         }
     } = props;
 
@@ -100,6 +103,9 @@ const Edit = props => {
     const setStyles = value => setAttributes( { styles: $object( styles, value ) } );
     const stylesDefaults = { ...( attributesDefaults?.styles ?? {} ) };
 
+    const setContent = value => setAttributes( { content: $object( content, value ) } );
+    const contentDefaults = { ...( attributesDefaults?.content ?? {} ) };
+
     const setViewState = value => setAttributes( { viewState: value } );
 
     const customProps = {
@@ -112,7 +118,10 @@ const Edit = props => {
         settingsDefaults,
         styles,
         setStyles,
-        stylesDefaults
+        stylesDefaults,
+        content,
+        setContent,
+        contentDefaults
     };
 
     return (

@@ -1,0 +1,30 @@
+{
+  "apiVersion": 3,
+  "name": "fc/split-layout",
+  "title": "Split Layout",
+  "description": "A two-panel layout with one fixed panel and one flexible panel.",
+  "category": "fooconvert",
+  "editorScript": "file:./editor/index.js",
+  "editorStyle": "file:./editor/index.css",
+  "viewStyle": "file:./frontend/index.css",
+  "supports": {
+    "lock": false,
+    "multiple": true,
+    "reusable": false,
+    "className": false,
+    "customClassName": false,
+    "html": false
+  },
+  "attributes": {
+    "uniqueId": {
+      "type": "string"
+    },
+    "settings": {
+      "type": "object"
+    },
+    "styles": {
+      "type": "object"
+    }
+  },
+  "usesContext": [ "fc/postId", "fc/postType", "fc/template" ]
+}

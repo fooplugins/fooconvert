@@ -6,6 +6,7 @@ use FooPlugins\FooConvert\Blocks\Base\BaseBlock;
 use FooPlugins\FooConvert\Blocks\Countdown;
 use FooPlugins\FooConvert\Blocks\Coupon;
 use FooPlugins\FooConvert\Blocks\SignUp;
+use FooPlugins\FooConvert\Blocks\SplitLayout;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -22,7 +23,8 @@ class Blocks {
         $this->instances = array(
             new Countdown(),
             new Coupon(),
-            new SignUp()
+            new SignUp(),
+            new SplitLayout()
         );
     }
 

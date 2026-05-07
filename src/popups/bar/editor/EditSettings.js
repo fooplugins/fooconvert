@@ -4,8 +4,18 @@ import { __ } from "@wordpress/i18n";
 import {
     DimensionToolsPanel,
     InnerBlocksButton,
+    UnitControl,
+    $object,
 } from "#editor";
 import { PositionControl } from "./components";
+import {
+    BAR_WIDTH_DEFAULT,
+    BarWidthControl,
+    BarWidthModeControl,
+    getBarContentWidth,
+    getBarWidthMode,
+    isBarContentWidthMode,
+} from "./size-controls";
 
 const EditSettings = props => {
     const {
@@ -16,12 +26,26 @@ const EditSettings = props => {
         styles,
         setStyles,
         stylesDefaults,
+        content,
+        setContent,
+        contentDefaults,
     } = props;
 
     const setTransitions = value => setSettings( { transitions: value !== settingsDefaults?.transitions ? value : undefined } );
     const setPosition = value => setSettings( { position: value !== settingsDefaults?.position ? value : undefined } );
+    const widthMode = getBarWidthMode( settings, settingsDefaults );
+    const setWidthMode = value => setSettings( { widthMode: value !== settingsDefaults?.widthMode ? value : undefined } );
 
     const setDimensions = value => setStyles( { dimensions: value } );
+    const maxWidth = settings?.maxWidth ?? settingsDefaults?.maxWidth;
+    const setMaxWidth = value => setSettings( { maxWidth: value !== settingsDefaults?.maxWidth ? value : undefined } );
+
+    const contentStyles = content?.styles ?? {};
+    const contentStylesDefaults = contentDefaults?.styles ?? {};
+    const setContentStyles = value => setContent( { styles: $object( contentStyles, value ) } );
+    const setWidth = value => setContentStyles( {
+        width: value !== contentStylesDefaults?.width && value !== BAR_WIDTH_DEFAULT ? value : undefined,
+    } );
 
     return (
         <>
@@ -33,6 +57,32 @@ const EditSettings = props => {
                             onChange={ setPosition }
                         />
                     </PanelRow>
+                </PanelBody>
+                <PanelBody title={ __( 'Size', 'fooconvert' ) } initialOpen={ false }>
+                    <PanelRow>
+                        <BarWidthModeControl
+                            value={ widthMode }
+                            onChange={ setWidthMode }
+                        />
+                    </PanelRow>
+                    { isBarContentWidthMode( settings, settingsDefaults ) ? (
+                        <PanelRow>
+                            <BarWidthControl
+                                value={ getBarContentWidth( contentStyles, contentStylesDefaults ) }
+                                onChange={ setWidth }
+                            />
+                        </PanelRow>
+                    ) : (
+                        <PanelRow>
+                            <UnitControl
+                                label={ __( 'Max Width', 'fooconvert' ) }
+                                help={ __( 'Set the maximum width of the bar.', 'fooconvert' ) }
+                                value={ maxWidth }
+                                onChange={ setMaxWidth }
+                                __next40pxDefaultSize
+                            />
+                        </PanelRow>
+                    ) }
                 </PanelBody>
                 <PanelBody title={ __( 'Behavior', 'fooconvert' ) } initialOpen={ false }>
                     <PanelRow>

@@ -29,6 +29,15 @@
     }
   }
 
+  &.fc--coupon__fill-width {
+    width: 100%;
+
+    .fc--coupon__code {
+      flex: 1 1 auto;
+      width: 100%;
+    }
+  }
+
   &.fc--coupon__align-left {
     align-items: flex-start;
   }

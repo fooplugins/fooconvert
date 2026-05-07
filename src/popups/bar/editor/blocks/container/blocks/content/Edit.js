@@ -33,6 +33,9 @@ const Edit = props => {
         ...restProps,
         parentAttributes,
         setParentAttributes,
+        parentAttributesDefaults: {
+            ...BAR_DEFAULTS
+        },
         attributes,
         setAttributes,
         attributesDefaults,

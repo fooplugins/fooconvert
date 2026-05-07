@@ -1,0 +1,27 @@
+{
+  "apiVersion": 3,
+  "name": "fc/split-layout-panel",
+  "title": "Panel",
+  "description": "A panel inside a split layout.",
+  "category": "fooconvert",
+  "parent": [ "fc/split-layout" ],
+  "editorScript": "file:./editor/index.js",
+  "editorStyle": "file:./editor/index.css",
+  "supports": {
+    "lock": false,
+    "multiple": true,
+    "reusable": false,
+    "className": false,
+    "customClassName": false,
+    "html": false
+  },
+  "attributes": {
+    "settings": {
+      "type": "object"
+    },
+    "styles": {
+      "type": "object"
+    }
+  },
+  "usesContext": [ "fc/postId", "fc/postType", "fc/template" ]
+}

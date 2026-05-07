@@ -10,6 +10,7 @@ export const COUPON_CLASS_NAME = 'fc--coupon';
 export const COUPON_DEFAULTS = {
     settings: {
         layout: 'row',
+        fillWidth: false,
         copiedMessage: __( 'Copied!', 'fooconvert' )
     },
     styles: {

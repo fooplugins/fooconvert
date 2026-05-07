@@ -18,12 +18,14 @@ const EditBlock = ( props ) => {
     const layout = settings?.layout ?? settingsDefaults?.layout;
     const textAlign = settings?.textAlign ?? settingsDefaults?.textAlign;
     const noLabel = settings?.noLabel ?? settingsDefaults?.noLabel;
+    const fillWidth = settings?.fillWidth ?? settingsDefaults?.fillWidth;
 
     const containerProps = useBlockProps( {
         className: classnames(
             COUPON_CLASS_NAME, {
                 "fc--coupon__stack": layout === 'stack',
                 "fc--coupon__no-label": noLabel,
+                "fc--coupon__fill-width": fillWidth,
             }
         ),
         style: {

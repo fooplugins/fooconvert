@@ -32,6 +32,7 @@ class Coupon extends BaseBlock {
                 'copy-close'    => true,
                 'copy-redirect' => true,
                 'no-label'      => true,
+                'fill-width'    => true,
             )
         );
     }
@@ -163,6 +164,10 @@ class Coupon extends BaseBlock {
             $no_label = Utils::get_bool( $settings, 'noLabel' );
             if ( ! empty( $no_label ) ) {
                 $attr['no-label'] = '';
+            }
+            $fill_width = Utils::get_bool( $settings, 'fillWidth' );
+            if ( ! empty( $fill_width ) ) {
+                $attr['fill-width'] = '';
             }
             $layout = Utils::get_string( $settings, 'layout' );
             if ( ! empty( $layout ) ) {

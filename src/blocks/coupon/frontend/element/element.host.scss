@@ -143,3 +143,12 @@
     display: none;
   }
 }
+
+:host([fill-width]) {
+  width: 100%;
+
+  &::part(code) {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+}

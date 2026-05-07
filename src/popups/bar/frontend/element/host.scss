@@ -225,6 +225,17 @@
   display: none;
 }
 
+:host([width-mode=content]) {
+  &::part(container) {
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  &::part(content) {
+    width: fit-content;
+  }
+}
+
 :host {
   span[role=img] {
     display: inline-block;
@@ -254,5 +265,12 @@
 @media (max-width: 600px) {
   :host {
     padding: 0;
+  }
+
+  :host([width-mode=content]) {
+    &::part(container),
+    &::part(content) {
+      width: 100% !important;
+    }
   }
 }

@@ -60,6 +60,8 @@ const EditSettings = ( props ) => {
 
     const setNoLabel = value => setSettings( { noLabel: value !== settingsDefaults?.noLabel ? value : undefined } );
     const noLabel = settings?.noLabel ?? settingsDefaults?.noLabel ?? false;
+    const setFillWidth = value => setSettings( { fillWidth: value !== settingsDefaults?.fillWidth ? value : undefined } );
+    const fillWidth = settings?.fillWidth ?? settingsDefaults?.fillWidth ?? false;
 
     return (
         <>
@@ -121,6 +123,12 @@ const EditSettings = ( props ) => {
                     help={ __( 'Hide the label for the coupon.', 'fooconvert' ) }
                     checked={ noLabel }
                     onChange={ setNoLabel }
+                    __nextHasNoMarginBottom
+                />
+                <ToggleControl
+                    label={ __( 'Fill available width', 'fooconvert' ) }
+                    checked={ fillWidth }
+                    onChange={ setFillWidth }
                     __nextHasNoMarginBottom
                 />
             </PanelBody>

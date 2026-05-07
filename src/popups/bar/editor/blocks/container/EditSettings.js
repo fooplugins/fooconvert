@@ -3,6 +3,7 @@ import { PanelBody, PanelRow } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { PositionControl } from "../../components";
 import { $object, UnitControl } from "#editor";
+import { isBarContentWidthMode } from "../../size-controls";
 
 const EditSettings = props => {
     const {
@@ -20,6 +21,7 @@ const EditSettings = props => {
 
     const maxWidth = settings?.maxWidth ?? settingsDefaults?.maxWidth;
     const setMaxWidth = value => setSettings( { maxWidth: value !== settingsDefaults?.maxWidth ? value : undefined } );
+    const isContentWidth = isBarContentWidthMode( settings, settingsDefaults );
 
     return (
         <InspectorControls group="settings">
@@ -31,16 +33,20 @@ const EditSettings = props => {
                         onChange={ setPosition }
                     />
                 </PanelRow>
-                <PanelRow>
-                    <UnitControl
-                        label={ __( 'Max Width', 'fooconvert' ) }
-                        help={ __( 'Set the maximum width of the bar.', 'fooconvert' ) }
-                        value={ maxWidth }
-                        onChange={ setMaxWidth }
-                        __next40pxDefaultSize
-                    />
-                </PanelRow>
             </PanelBody>
+            { !isContentWidth ? (
+                <PanelBody title={ __( 'Size', 'fooconvert' ) } initialOpen={ false }>
+                    <PanelRow>
+                        <UnitControl
+                            label={ __( 'Max Width', 'fooconvert' ) }
+                            help={ __( 'Set the maximum width of the bar.', 'fooconvert' ) }
+                            value={ maxWidth }
+                            onChange={ setMaxWidth }
+                            __next40pxDefaultSize
+                        />
+                    </PanelRow>
+                </PanelBody>
+            ) : null }
         </InspectorControls>
     );
 };

@@ -29,7 +29,8 @@ class Bar extends BasePopup {
                 'position'        => true,
                 'button-position' => true,
                 'close-button'    => true,
-                'open-button'     => true
+                'open-button'     => true,
+                'width-mode'      => true
             )
         );
     }
@@ -411,6 +412,11 @@ class Bar extends BasePopup {
             if ( $position !== 'top' ) {
                 $attr['position'] = $position;
             }
+
+            $width_mode = Utils::get_string( $settings, 'widthMode', 'full' );
+            if ( $width_mode === 'content' ) {
+                $attr['width-mode'] = 'content';
+            }
         }
 
         $close_button = Utils::get_array( $attributes, 'closeButton' );
@@ -506,7 +512,9 @@ class Bar extends BasePopup {
                 $container = array_merge( $container, $components->get_styles( $container_styles_attribute ) );
             }
         }
-        if ( !empty( $settings_attribute ) ) {
+        $is_content_width = Utils::get_string( $settings_attribute, 'widthMode', 'full' ) === 'content';
+
+        if ( !empty( $settings_attribute ) && ! $is_content_width ) {
             $settings_max_width = Utils::get_string( $settings_attribute, 'maxWidth' );
             if ( !empty( $settings_max_width ) ) {
                 $container['max-width'] = $settings_max_width;
@@ -519,6 +527,11 @@ class Bar extends BasePopup {
             $content_styles_attribute = Utils::get_array( $content_attribute, 'styles' );
             if ( !empty( $content_styles_attribute ) ) {
                 $content = array_merge( $content, $components->get_styles( $content_styles_attribute ) );
+
+                $content_width = Utils::get_string( $content_styles_attribute, 'width', 'fit-content' );
+                if ( $is_content_width && !empty( $content_width ) && $content_width !== 'fit-content' ) {
+                    $content['width'] = $content_width;
+                }
             }
         }
 
