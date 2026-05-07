@@ -99,11 +99,11 @@ if ( !class_exists( __NAMESPACE__ . '\Container' ) ) {
          */
         protected function warn_missing_manager( $manager_id ) {
             if ( function_exists( '_doing_it_wrong' ) ) {
-                _doing_it_wrong(
-                    __METHOD__,
-                    sprintf( 'Container manager "%s" has not been registered yet.', (string) $manager_id ),
-                    '2.0.0'
-                );
+	                _doing_it_wrong(
+	                    __METHOD__,
+	                    sprintf( 'Container manager "%s" has not been registered yet.', esc_html( (string) $manager_id ) ),
+	                    '2.0.0'
+	                );
             }
         }
 

@@ -356,19 +356,19 @@ abstract class BaseBlock {
         $frontend_data = $this->get_frontend_data( $instance_id, $attributes, $block );
         $frontend_icons = $this->get_frontend_icons( $instance_id, $attributes, $block );
 
-        $this->enqueue_frontend_styles( $instance_id, $frontend_styles );
-        $this->enqueue_frontend_data( $instance_id, $frontend_data );
+	        $this->enqueue_frontend_styles( $instance_id, $frontend_styles );
+	        $this->enqueue_frontend_data( $instance_id, $frontend_data );
+	        $sanitized_content = $this->kses( $attributes, do_blocks( $content ), $block, 'root' );
 
-        // @formatter:off
-        // phpcs:disable WordPress.Security.EscapeOutput - the content is sanitized by the kses method
-        ob_start();?><<?php echo esc_html( $tag_name ); ?> id="<?php echo esc_attr( $instance_id ) ?>" <?php echo wp_kses_data( get_block_wrapper_attributes( $frontend_attributes ) ); ?>><?php
-        $this->render_frontend_icons( $instance_id, $frontend_icons );
-        ?><?php echo $this->kses( $attributes, do_blocks( $content ), $block, 'root' );
-        ?></<?php echo esc_html( $tag_name ); ?>><?php
-        return ob_get_clean();
-        // phpcs:enable
-        // @formatter:on
-    }
+	        // @formatter:off
+	        ob_start();?><<?php echo esc_html( $tag_name ); ?> id="<?php echo esc_attr( $instance_id ) ?>" <?php echo wp_kses_data( get_block_wrapper_attributes( $frontend_attributes ) ); ?>><?php
+	        $this->render_frontend_icons( $instance_id, $frontend_icons );
+	        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Content is sanitized by BaseBlock::kses() before output.
+	        ?><?php echo $sanitized_content;
+	        ?></<?php echo esc_html( $tag_name ); ?>><?php
+	        return ob_get_clean();
+	        // @formatter:on
+	    }
 
     /**
      * Renders empty.
