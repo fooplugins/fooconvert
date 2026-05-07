@@ -81,6 +81,7 @@ await performCopy( "./pro/src/media/templates/preview", "./pro/assets/media/temp
 await performCopy( "./pro/src", "./pro/assets", [ '**/block.json' ] );
 await performMove( "./assets", "./pro/assets", [ 'editor-pro*.*', 'frontend-pro*.*' ], false );
 await performMove( "./assets/admin/ai-popup-builder", "./pro/assets/admin/ai-popup-builder", [ '**/*' ], false );
+await performMove( "./assets/admin/brand-context", "./pro/assets/admin/brand-context", [ '**/*' ], false );
 
 const proBlockFiles = await globby( 'blocks/**/block.json', { cwd: './pro/src' } );
 for ( const file of proBlockFiles ) {
