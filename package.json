@@ -21,6 +21,7 @@
     "test:js": "vitest run",
     "test:js:watch": "vitest",
     "test:php": "php tests/run.php",
+    "plugin-check": "node build/run-plugin-check.mjs",
     "build:dev": "cross-env NODE_ENV=development wp-scripts build --output-path=assets && npm run copy",
     "build": "wp-scripts build --output-path=assets && npm run copy",
     "copy": "node build/copy-assets.mjs",
