@@ -95,11 +95,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                 return;
             }
 
-            $desired_slugs = array(
+            $desired_slugs = apply_filters( 'fooconvert_admin_menu_desired_slugs', array(
                 FOOCONVERT_MENU_SLUG,
                 'edit.php?post_type=' . FOOCONVERT_CPT_POPUP,
                 'post-new.php?post_type=' . FOOCONVERT_CPT_POPUP,
-            );
+            ) );
 
             $ordered = array();
             $added = array();

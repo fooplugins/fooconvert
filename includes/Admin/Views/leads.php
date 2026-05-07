@@ -7,17 +7,17 @@ if ( !defined( 'ABSPATH' ) ) {
     <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
     <?php
-    $lead_stats = ( new \FooPlugins\FooConvert\Lead() )->get_leads_table_stats();
-    $total_leads = isset( $lead_stats['Number_of_Rows'] ) ? intval( $lead_stats['Number_of_Rows'] ) : 0;
-    $unique_emails = isset( $lead_stats['Unique_Emails'] ) ? intval( $lead_stats['Unique_Emails'] ) : 0;
+    $fooconvert_lead_stats = ( new \FooPlugins\FooConvert\Lead() )->get_leads_table_stats();
+    $fooconvert_total_leads = isset( $fooconvert_lead_stats['Number_of_Rows'] ) ? intval( $fooconvert_lead_stats['Number_of_Rows'] ) : 0;
+    $fooconvert_unique_emails = isset( $fooconvert_lead_stats['Unique_Emails'] ) ? intval( $fooconvert_lead_stats['Unique_Emails'] ) : 0;
     ?>
     <div style="margin-bottom: 16px;">
-        <?php if ( $total_leads === $unique_emails ) : ?>
-            <strong><?php echo esc_html( number_format_i18n( $total_leads ) ); ?></strong> <?php esc_html_e( 'Leads (unique emails)', 'fooconvert' ); ?>
+        <?php if ( $fooconvert_total_leads === $fooconvert_unique_emails ) : ?>
+            <strong><?php echo esc_html( number_format_i18n( $fooconvert_total_leads ) ); ?></strong> <?php esc_html_e( 'Leads (unique emails)', 'fooconvert' ); ?>
         <?php else : ?>
-            <strong><?php echo esc_html( number_format_i18n( $total_leads ) ); ?></strong> <?php esc_html_e( 'Total Leads', 'fooconvert' ); ?>
+            <strong><?php echo esc_html( number_format_i18n( $fooconvert_total_leads ) ); ?></strong> <?php esc_html_e( 'Total Leads', 'fooconvert' ); ?>
             &nbsp;|&nbsp;
-            <strong><?php echo esc_html( number_format_i18n( $unique_emails ) ); ?></strong> <?php esc_html_e( 'Unique Emails', 'fooconvert' ); ?>
+            <strong><?php echo esc_html( number_format_i18n( $fooconvert_unique_emails ) ); ?></strong> <?php esc_html_e( 'Unique Emails', 'fooconvert' ); ?>
         <?php endif; ?>
     </div>
 
@@ -43,13 +43,13 @@ if ( !defined( 'ABSPATH' ) ) {
     <form method="get">
         <input type="hidden" name="page" value="fooconvert-leads" />
         <?php
-        $table = new \FooPlugins\FooConvert\Admin\LeadsTable();
-        $table->prepare_items();
-        $table->display();
+        $fooconvert_table = new \FooPlugins\FooConvert\Admin\LeadsTable();
+        $fooconvert_table->prepare_items();
+        $fooconvert_table->display();
         ?>
     </form>
 
-    <?php if ( empty( $table->items ) && $total_leads > 0 ) : ?>
+    <?php if ( empty( $fooconvert_table->items ) && $fooconvert_total_leads > 0 ) : ?>
         <div style="margin-top:20px; padding:12px; background:#fffbe5; border:1px solid #ffe066; color:#856404; border-radius:4px;">
             <?php esc_html_e( 'No leads found for the current filter. Try changing the filter above to see more leads.', 'fooconvert' ); ?>
         </div>

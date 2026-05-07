@@ -24,6 +24,7 @@ define( 'FOOCONVERT_META_KEY_METRICS', '_fooconvert_metrics' );                 
 define( 'FOOCONVERT_META_KEY_METRIC_VIEWS', '_fooconvert_metric_views' );
 define( 'FOOCONVERT_META_KEY_METRIC_ENGAGEMENTS', '_fooconvert_metric_engagements' );
 define( 'FOOCONVERT_META_KEY_POPUP_TYPE', '_fooconvert_popup_type' );
+define( 'FOOCONVERT_META_KEY_USED_FONTS', '_fooconvert_popup_used_fonts' );
 
 //CPT's
 define( 'FOOCONVERT_CPT_BAR', 'fc-bar' );

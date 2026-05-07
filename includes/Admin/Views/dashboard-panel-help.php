@@ -3,9 +3,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$hidden_panels = fooconvert_get_setting( 'hide_dashboard_panels', [] );
+$fooconvert_hidden_panels = fooconvert_get_setting( 'hide_dashboard_panels', [] );
 
-if ( in_array( 'help', $hidden_panels ) ) {
+if ( in_array( 'help', $fooconvert_hidden_panels ) ) {
     return;
 }
 ?>

@@ -3,10 +3,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$demos_created = fooconvert_get_setting( 'demo_content' ) === 'on';
-$hidden_panels = fooconvert_get_setting( 'hide_dashboard_panels', [] );
+$fooconvert_demos_created = fooconvert_get_setting( 'demo_content' ) === 'on';
+$fooconvert_hidden_panels = fooconvert_get_setting( 'hide_dashboard_panels', [] );
 
-if ( in_array( 'getting-started', $hidden_panels ) ) {
+if ( in_array( 'getting-started', $fooconvert_hidden_panels ) ) {
     return;
 }
 ?>
@@ -20,7 +20,7 @@ if ( in_array( 'getting-started', $hidden_panels ) ) {
             </a>
         </div>
     </div>
-    <?php if ( !$demos_created ) : ?>
+    <?php if ( !$fooconvert_demos_created ) : ?>
         <div class="fooconvert-panel-section">
             <p>
                 <?php esc_html_e( 'The easiest way to get started is by creating demo content, which will create 7 draft popups: 2 bars, 3 flyouts, and 2 overlays.', 'fooconvert' ); ?>

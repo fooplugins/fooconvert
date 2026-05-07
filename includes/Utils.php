@@ -633,7 +633,13 @@ if ( !class_exists( __NAMESPACE__ . '\Utils' ) ) {
          * @return WP_Block_Type|false The registered block type on success, or false on failure.
          */
         static function register_popup_block( string $file_or_folder, array $args = array() ) {
-            if ( is_admin() && !fooconvert_is_popup_stats_page() && !self::is_post_type_editor( FOOCONVERT_CPT_POPUP ) ) {
+            $allow_admin_registration = (bool) apply_filters( 'fooconvert_should_register_popup_blocks_in_admin', false );
+
+            if ( is_admin()
+                && !$allow_admin_registration
+                && !fooconvert_is_popup_stats_page()
+                && !self::is_post_type_editor( FOOCONVERT_CPT_POPUP )
+            ) {
                 return false;
             }
 

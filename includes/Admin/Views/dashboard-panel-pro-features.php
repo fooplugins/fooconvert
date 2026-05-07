@@ -3,9 +3,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$hidden_panels = fooconvert_get_setting( 'hide_dashboard_panels', [] );
+$fooconvert_hidden_panels = fooconvert_get_setting( 'hide_dashboard_panels', [] );
 
-if ( in_array( 'pro-features', $hidden_panels ) ) {
+if ( in_array( 'pro-features', $fooconvert_hidden_panels ) ) {
     return;
 }
 ?>
@@ -22,12 +22,12 @@ if ( in_array( 'pro-features', $hidden_panels ) ) {
     <div class="fooconvert-panel-section fooconvert-panel-no-bottom-border fooconvert-panel-section-pro-details">
         <h3><?php esc_html_e( 'Unlock these PRO features:', 'fooconvert' ); ?></h3>
         <ul class="ul-disc">
-            <?php foreach ( function_exists('fooconvert_pro_features_list') ? fooconvert_pro_features_list() : [] as $feature ) : ?>
+            <?php foreach ( function_exists('fooconvert_pro_features_list') ? fooconvert_pro_features_list() : [] as $fooconvert_feature ) : ?>
                 <li>
-                    <strong><?php echo esc_html( $feature['title'] ); ?>:</strong>
-                    <?php echo esc_html( $feature['feature'] ); ?>
-                    <?php if ( !empty( $feature['link'] ) ) : ?>
-                        <a href="<?php echo esc_url( $feature['link'] ); ?>" target="_blank" rel="noopener">
+                    <strong><?php echo esc_html( $fooconvert_feature['title'] ); ?>:</strong>
+                    <?php echo esc_html( $fooconvert_feature['feature'] ); ?>
+                    <?php if ( !empty( $fooconvert_feature['link'] ) ) : ?>
+                        <a href="<?php echo esc_url( $fooconvert_feature['link'] ); ?>" target="_blank" rel="noopener">
                             <?php esc_html_e('Read more', 'fooconvert'); ?>
                         </a>
                     <?php endif; ?>
