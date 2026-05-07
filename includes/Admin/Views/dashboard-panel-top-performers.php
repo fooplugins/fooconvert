@@ -3,9 +3,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$top_performers_sort_options = fooconvert_popup_metric_options();
-$top_performers_sort = fooconvert_top_performers_sort();
-$stats_last_updated = fooconvert_stats_last_updated();
+$fooconvert_top_performers_sort_options = fooconvert_popup_metric_options();
+$fooconvert_top_performers_sort = fooconvert_top_performers_sort();
+$fooconvert_stats_last_updated = fooconvert_stats_last_updated();
 ?>
 <div class="fooconvert-panel">
     <div class="fooconvert-panel-section fooconvert-panel-section-flex">
@@ -15,9 +15,9 @@ $stats_last_updated = fooconvert_stats_last_updated();
                 <?php esc_html_e( 'Sort by', 'fooconvert' ); ?>
                 <select class="fooconvert-top-performers-sort">
                     <?php
-                    foreach ( $top_performers_sort_options as $key => $sort_object ) {
-                        if ( isset( $sort_object['dropdown_option'] ) ) {
-                            echo '<option ' . selected( $key, $top_performers_sort ) . ' value="' . esc_attr( $key ) . '">' . esc_html( $sort_object['dropdown_option'] ) . '</option>';
+                    foreach ( $fooconvert_top_performers_sort_options as $fooconvert_metric_key => $fooconvert_sort_object ) {
+                        if ( isset( $fooconvert_sort_object['dropdown_option'] ) ) {
+                            echo '<option ' . selected( $fooconvert_metric_key, $fooconvert_top_performers_sort ) . ' value="' . esc_attr( $fooconvert_metric_key ) . '">' . esc_html( $fooconvert_sort_object['dropdown_option'] ) . '</option>';
                         }
                     }
                     ?>
@@ -39,7 +39,7 @@ $stats_last_updated = fooconvert_stats_last_updated();
         </p>
         <p>
             <strong><?php esc_html_e( 'Last Updated : ', 'fooconvert' ); ?></strong>
-            <span class="fooconvert-last-updated"><?php echo esc_html( $stats_last_updated ); ?></span>
+            <span class="fooconvert-last-updated"><?php echo esc_html( $fooconvert_stats_last_updated ); ?></span>
         </p>
     </div>
 </div>
