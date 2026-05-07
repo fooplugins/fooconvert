@@ -3,6 +3,7 @@ import { store as editorStore } from "@wordpress/editor";
 import { store as coreStore } from "@wordpress/core-data";
 import { useEffect } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
+import { getPopupTypeFromLocation, normalizePopupType } from "../utils/popupType";
 
 const POPUP_TYPE_META_KEY = "_fooconvert_popup_type";
 
@@ -19,36 +20,6 @@ const POPUP_TYPE_LABELS = {
         name: __( "Overlays", "fooconvert" ),
         singular_name: __( "Overlay", "fooconvert" ),
     },
-};
-
-const normalizePopupType = value => {
-    switch ( `${ value || "" }`.trim().toLowerCase() ) {
-        case "bar":
-        case "fc-bar":
-        case "fc/bar":
-            return "bar";
-        case "flyout":
-        case "fc-flyout":
-        case "fc/flyout":
-            return "flyout";
-        case "overlay":
-        case "popup":
-        case "fc-popup":
-        case "fc-overlay":
-        case "fc/overlay":
-        case "fc/popup":
-            return "overlay";
-        default:
-            return "";
-    }
-};
-
-const getPopupTypeFromLocation = () => {
-    if ( typeof window?.location?.search !== "string" ) {
-        return "";
-    }
-
-    return normalizePopupType( new URLSearchParams( window.location.search ).get( "popup_type" ) );
 };
 
 const usePostTypeLabels = ( defaults = {} ) => {

@@ -4,115 +4,101 @@ Tags: popups,bars,flyouts,conversion,marketing
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 7.0
-Stable tag: 2.0.0-beta.1
+Stable tag: 2.0.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-FooConvert is a powerful popup builder for WordPress that helps you create bars, flyouts, and overlays that turn more visitors into leads, subscribers, and customers.
+Build WordPress bars, flyouts, and overlays in the block editor with templates, targeting, triggers, leads, and analytics.
 
 == Description ==
 
-Create beautiful, high-converting popups, floating bars, exit-intent offers, slide-in flyouts, scroll boxes, and more — all inside the WordPress block editor.
-Whether you want to grow your email list, promote a sale, increase conversions, or highlight important announcements, FooConvert makes it easy with flexible targeting, smart triggers, and built-in performance analytics.
+FooConvert lets you create bars, flyouts, and overlays directly in the WordPress block editor.
+It includes popup templates, built-in popup blocks, display rules, open triggers, lead capture, popup stats, and styling controls for building campaigns without leaving wp-admin.
 
-[Launch Your Own FooConvert Demo](https://app.instawp.io/launch?t=fooconvert-free-demo&d=v2)
+[Read the FooConvert documentation](https://fooplugins.com/documentation/fooconvert/)
 
-[Visit the FooConvert Homepage](https://fooplugins.com/fooconvert/)
+[Try the FooConvert demo](https://app.instawp.io/launch?t=fooconvert-free-demo&d=v2)
 
-= Build High-Converting Bars, Flyouts, and Overlays  (Free Version Includes): =
+= What FooConvert Includes =
 
-- Lightbox Overlays
-- Exit-intent Overlays
-- Floating Bars
-- Sticky Bars
-- Slide-in Flyouts
-- Sidebar Forms
-- Scroll Boxes
+- Bars, flyouts, and overlays managed from the same workflow
+- 15 bundled templates across bars, flyouts, and overlays
+- Sign Up, Countdown, and Coupon blocks
+- Support for WordPress core blocks, embeds, and shortcodes inside popup content
+- Display rules for locations, exclusions, and user targeting
+- Triggers for page load, timers, scroll depth, exit intent, and element interactions
+- Leads capture with CSV export
+- Popup stats with daily activity charts
+- Google Fonts support and popup styling controls
 
-= Why FooConvert? =
+= Popup Types =
 
-Your website visitors won’t convert unless you grab their attention at the right time.
-FooConvert gives you the tools to do exactly that, without slowing down your site or requiring separate editors, bulky page builders, or complicated setup.
+- `Bar`: top or bottom announcements, promo strips, newsletter bars, and sticky calls to action.
+- `Flyout`: slide-in messages and sidebar-style opt-ins that stay visible without taking over the whole screen.
+- `Overlay`: centered modal popups for forms, announcements, coupon offers, and embedded content.
 
-FooConvert’s mission is simple:
+= Building Popup Content =
 
-*Maximize your conversions and help your business grow.*
+- Use WordPress core blocks and most third-party blocks inside popup content.
+- Shortcodes and embedded content are supported inside popups.
+- `Sign Up` block: capture name and email, or run email-only forms, with configurable labels, placeholders, button text, and success behavior.
+- `Countdown` block: build evergreen or fixed countdown campaigns with editable labels and optional close-on-expire behavior.
+- `Coupon` block: show a coupon code with copy-to-clipboard behavior, custom button text, copied message, and optional close-on-copy behavior.
 
-= FooConvert Key Features =
+= Templates And Design Controls =
 
-- Manage bars, flyouts, and overlays from one streamlined popup workflow.
-- Customize bar, flyout, and overlay design, color, spacing, and positioning.
-- Add any core or third-party WordPress blocks.
-- Add shortcodes inside popup content.
-- Use built-in Sign Up, Countdown, and Coupon blocks for lead capture, urgency, and offers.
-- Capture leads and export them from the built-in Leads screen.
-- Add custom Google Fonts to keep campaigns on-brand.
-- Build responsive popups that look great on all devices.
+- Start from one of the 15 bundled templates or build from scratch.
+- Adjust colors, spacing, borders, radius, shadows, dimensions, and typography in the editor.
+- Add background images to popup designs.
+- Choose a global editor background so the editing canvas is easier to work with.
+- Register Google Fonts from the settings screen and reuse fonts bundled with templates.
+- Build responsive popups for desktop and mobile layouts.
 
-= Free Version Includes In 2.0 =
+= Display Rules =
 
-- 5 professionally designed templates for bars, flyouts, and overlays
-- Sign Up block for lead capture
-- Countdown block for urgency campaigns
-- Coupon block for promo and discount offers
-- Leads admin screen with filtering and export
-- Custom Google Fonts in the popup editor
+- Show popups on the entire site, front page, blog index, search results, no-results pages, and 404 pages.
+- Target specific posts, pages, public custom post types, public taxonomies, and post type archives.
+- Add exclusions so a popup appears only where it makes sense.
+- Target all users, only logged-in users, only logged-out users, or specific user roles.
 
-= Advanced Display Rules =
+= Open Triggers =
 
-Show Bars, Flyouts, and Overlays based on:
+- Open on page load.
+- Open after a timer elapses.
+- Open after a visitor scrolls a chosen percentage of the page.
+- Open on exit intent.
+- Open when an anchor is clicked.
+- Open when an anchor becomes visible.
+- Open when a selected element is clicked.
 
-- Page location (entire site, homepage, specific URLs, posts, taxonomies, WooCommerce pages, etc.)
-- Exclusions (skip pages or user flows you don’t want to interrupt)
-- User targeting (logged-in only, logged-out only, specific user roles)
+= Leads And Popup Stats =
 
-= Smart Trigger Options =
+- View captured leads from the built-in Leads screen in wp-admin.
+- Search, sort, bulk delete, and export selected leads to CSV.
+- View per-popup stats including views, unique visitors, engagements, and daily activity charts.
+- Open popup stats directly from the popup list table.
+- Popup analytics data is retained for 14 days by default.
 
-Open Bars, Flyouts, and Overlays based on:
+= Settings And Admin Tools =
 
-- Page load
-- Exit intent
-- Scroll depth
-- Timer
-- Anchor click
-- Element click
-- Element visible
+- Add demo content to see example bars, flyouts, and overlays on a real site.
+- Choose the popup editor background for all popup types.
+- Enable debug mode when troubleshooting an issue.
+- Hide selected dashboard panels or promo messages if you want a cleaner admin area.
+- Review database stats and remove old or orphaned event data.
+- Copy system information when contacting support.
 
-= Built-In Analytics = 
+= Typical Use Cases =
 
-Free version includes:
+- Newsletter signup bar on the homepage.
+- Coupon or limited-time offer overlay.
+- Slide-in lead magnet or content upgrade.
+- Announcement bar for site-wide notices.
+- Embedded video or shortcode-based popup content.
 
-- Views
-- Visitors
-- Engagements
-- Daily performance charts
+= Pro Version =
 
-= Data Retention = 
-
-Free: 14-day analytics history
-Pro: Unlimited history
-
-= FooConvert PRO for WooCommerce & Optimization =
-
-FooConvert PRO adds advanced WooCommerce targeting, storefront-specific conversion blocks, revenue attribution, and built-in A/B testing for more serious optimization workflows.
-
-- WooCommerce display rules for shop, cart, checkout, account, and product pages
-- WooCommerce triggers for cart, coupon, checkout, and product-intent events
-- Apply Coupon, Free Shipping, Cart Threshold Progress, and Confetti blocks
-- Revenue attribution with sales metrics and dashboard reporting
-- A/B testing with automated winner selection
-
-= Benefits for Your Website =
-
-- *Increase Conversion Rates* – Turn passive visitors into engaged leads
-- *Boost Lead Generation* – Grow your list with targeted offers
-- *Sell More Products* – Promote discounts, sales, & cross-sell offers
-- *Optimize Your Funnel* – Personalize messages based on user behavior
-- *Make Data-Driven Decisions* – See exactly which popups perform best
-
-[Launch Your Own FooConvert Demo](https://app.instawp.io/launch?t=fooconvert-free-demo&d=v2)
-
-[Visit the FooConvert Homepage](https://fooplugins.com/fooconvert/)
+The Pro version adds WooCommerce-specific targeting, extra store blocks, revenue attribution, and A/B testing. FooConvert works on its own and includes all features listed above.
 
 == Installation ==
 
@@ -127,23 +113,29 @@ FooConvert PRO adds advanced WooCommerce targeting, storefront-specific conversi
 
 There is NO limit to the number of popups you can create.
 There is NO limit to the number of views each popup can have.
-Most alternative conversion solutions limit how many popups you can create or limit how many times each popup is displayed. Not FooConvert!
-
-The only limitation is the data retention for popup analytics. The data is stored for 14 days only.
-FooConvert PRO has a longer retention period for popup analytics, so you can track performance as long as your like!
+The main limitation is analytics retention. Popup analytics data is stored for 14 days by default.
 
 = Is FooConvert compatible with my theme? =
 
 FooConvert is designed to work with most WordPress themes. If you encounter any compatibility issues, please contact our support team.
+
+= Can I use WordPress blocks, embeds, or shortcodes inside a popup? =
+
+Yes. FooConvert is built for the block editor and supports WordPress core blocks, most third-party blocks, embedded content, and shortcodes inside popup content.
+
+= Where are captured leads stored? =
+
+Captured leads are stored in WordPress and can be viewed from the Leads screen in wp-admin. You can search, sort, bulk delete, and export selected leads to CSV.
 
 = Is FooConvert compatible with Classic Editor plugin? =
 
 Not really. The FooConvert designer is built on top of the Gutenberg block editor, which means you need to enable the block editor to create and edit popups. You will not be able to easily create or edit popups using the Classic Editor.
 If you have the Classic Editor plugin installed, You will need to enable the setting "Allow users to switch editors" from Settings -> Writing, so that you can switch to the block editor when adding or editing FooConvert popups.
 
-= Can I use FooConvert with other e-commerce plugins? =
+= Can I use FooConvert on ecommerce sites? =
 
-Yes, FooConvert integrates seamlessly with the popular e-commerce plugin WooCommerce.
+Yes. FooConvert can be used on ecommerce sites for announcements, list building, coupon messaging, and timed offers.
+WooCommerce-specific targeting rules and store event triggers are available in the Pro version.
 
 = Does FooConvert slow down my website? =
 
@@ -165,21 +157,23 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 == Changelog ==
 
 = 2.0.0 =
-* Date Updated : 16 Apr 2026
-* New : Introduced a simpler unified popup workflow for bars, flyouts, and overlays.
-* New : Added a clearer popup type chooser to help you start the right campaign faster.
-* New : Improved template browsing with richer previews and a cleaner selection experience.
-* New : Moved 5 professionally designed templates from PRO into the free plugin.
-* New : Moved the Sign Up, Countdown, and Coupon blocks from PRO into the free plugin.
-* New : Moved the Leads admin screen with filtering and export into the free plugin.
-* New : Added Google Fonts support and font settings to the free plugin.
-* Updated : Refreshed popup management screens for a more polished campaign-building experience.
+* Date Updated : 20 Apr 2026
+* New : Launched FooConvert 2.0 with a streamlined popup builder for bars, flyouts, and overlays in one consistent workflow.
+* New : Added a guided popup type chooser with richer template previews so you can launch campaigns faster.
+* New : Added 15 bundled templates across bars, flyouts, and overlays for quicker campaign launches.
+* New : Added the Sign Up, Countdown, and Coupon blocks for lead capture and promotional campaigns.
+* New : Added the Leads screen with filtering and export.
+* New : Added Google Fonts support, bundled font listings, and a global popup editor background setting for stronger on-brand design control.
+* Updated : Refined display rule controls and popup list summaries so campaign targeting is easier to review at a glance.
+* Updated : Polished dashboard widgets, recent activity, and popup stats previews for clearer performance reporting.
+* Updated : Added a confirmation step before deleting analytics data for safer admin workflows.
+* Updated : Refreshed template previews and demo content to better showcase launch-ready campaigns.
 [//]: # fs_premium_only_begin
-* New : Added WooCommerce display rules for shop, cart, checkout, account, and product-focused pages.
-* New : Added WooCommerce triggers for cart, coupon, checkout, and product-intent events.
-* New : Added Apply Coupon, Free Shipping Progress, Free Shipping Text, Free Shipping Bar, Cart Threshold Progress, and Confetti blocks.
-* New : Added WooCommerce revenue attribution, sales metrics, and recent sales dashboard reporting.
-* New : Added A/B testing experiments with automated winner selection.
+* New : Added WooCommerce display rules for shop, cart, checkout, account, and product-focused journeys.
+* New : Added WooCommerce triggers for cart, coupon, checkout, and product-intent shopper events.
+* New : Added Apply Coupon, Free Shipping Progress, Free Shipping Text, Free Shipping Bar, Cart Threshold Progress, and Confetti blocks for more persuasive store campaigns.
+* New : Added WooCommerce revenue attribution, sales metrics, and recent sales dashboard reporting to connect popup performance with revenue.
+* New : Added A/B testing experiments with automated winner selection for faster campaign optimization.
 [//]: # fs_premium_only_end
 
 = 1.2.6 =

@@ -122,6 +122,9 @@ const getSummary = ( rules ) => {
         ),
         showExclude: compiled.exclude.length > 0,
         showUsers: !hasAllUsers,
+        isNotSet: compiled.location.length === 0
+            && compiled.exclude.length === 0
+            && ( hasAllUsers || compiled.users.length === 0 ),
         reasons: compiled.reasons,
     };
 };
@@ -226,12 +229,19 @@ const DisplayRulesListApp = ( { config } ) => {
 
     const renderSummary = () => (
         <div className={ `${ rootClass }__summary` }>
-            { summaryRows.map( ( row ) => (
-                <div key={ row.key } className={ `${ rootClass }__summary-row` }>
-                    <span className={ `${ rootClass }__summary-label` }>{ row.label }</span>
-                    <span className={ `${ rootClass }__summary-value` }>{ row.value }</span>
+            { summary.isNotSet ? (
+                <div className={ `${ rootClass }__summary-empty` }>
+                    <span className={ `${ rootClass }__summary-empty-icon dashicons dashicons-warning` } aria-hidden="true"></span>
+                    <span className={ `${ rootClass }__summary-empty-text` }>{ __( "Not set", "fooconvert" ) }</span>
                 </div>
-            ) ) }
+            ) : (
+                summaryRows.map( ( row ) => (
+                    <div key={ row.key } className={ `${ rootClass }__summary-row` }>
+                        <span className={ `${ rootClass }__summary-label` }>{ row.label }</span>
+                        <span className={ `${ rootClass }__summary-value` }>{ row.value }</span>
+                    </div>
+                ) )
+            ) }
         </div>
     );
 

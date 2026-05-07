@@ -143,7 +143,6 @@ class Flyout extends BasePopup {
                     'category'     => 'promotion',
                     'tags'         => array( 'seasonal', 'offer' ),
                     'availability' => 'included',
-                    'preview'      => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__black_friday.png',
                 ),
                 'attributes'  => array(
                     'viewState'   => 'open',

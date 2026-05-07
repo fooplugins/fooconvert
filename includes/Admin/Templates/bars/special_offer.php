@@ -13,7 +13,11 @@ return array(
         'category'     => 'promotion',
         'tags'         => array( 'offer', 'countdown' ),
         'availability' => 'included',
-        'preview'      => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__special_offer.png',
+        'preview'      => array(
+            'url' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-bar-special-offer.webp',
+            'width' => 1440,
+            'height' => 117,
+        ),
     ),
     'attributes'  => array(
         'template'    => 'bar__special_offer',
@@ -159,25 +163,6 @@ return array(
 							'fc/countdown',
 							array(
 								'uniqueId' => '426766db-4456-472d-92e1-8aec0a2ed27d',
-								'segment' => array(
-									'styles' => array(
-										'typography' => array(
-											'fontSize' => '0.8rem'
-										),
-										'dimensions' => array(
-											'gap' => '2px',
-											'padding' => '15px',
-											'margin' => '-5px'
-										)
-									)
-								),
-								'text' => array(
-									'styles' => array(
-										'typography' => array(
-											'fontSize' => '1.75rem'
-										)
-									)
-								),
 								'styles' => array(
 									'border' => array(
 										'radius' => '0px'
@@ -186,6 +171,24 @@ return array(
 										'gap' => '0px',
 										'margin' => '-20px',
 										'padding' => '0px'
+									)
+								),
+								'segment' => array(
+									'styles' => array(
+										'color' => array(
+											'background' => '#00000030'
+										),
+										'border' => array(
+											'radius' => '15px'
+										),
+										'typography' => array(
+											'fontSize' => '0.8rem'
+										),
+										'dimensions' => array(
+											'gap' => '0px',
+											'padding' => '15px',
+											'margin' => '5px'
+										)
 									)
 								)
 							),

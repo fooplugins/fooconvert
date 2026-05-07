@@ -14,7 +14,11 @@ return array(
         'category'     => 'video',
         'tags'         => array( 'video' ),
         'availability' => 'included',
-        'preview'      => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__video.png',
+        'preview'      => array(
+            'url' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-overlay-watch-the-video.webp',
+            'width' => 500,
+            'height' => 321,
+        ),
     ),
     'attributes'  => array(
         'template'    => 'popup__watch_the_video',

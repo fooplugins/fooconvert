@@ -3,8 +3,8 @@
   grid-template-columns: 24px minmax(176px, 1fr) 32px;
   grid-auto-rows: auto;
 
-  width: 248px;
-  min-width: 248px;
+  width: var(--fc--display-rules-control-width, 248px);
+  min-width: var(--fc--display-rules-control-width, 248px);
   max-width: 100%;
   gap: 4px;
 

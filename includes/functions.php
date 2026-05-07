@@ -92,6 +92,30 @@ function fooconvert_get_setting( $key, $default = false ) {
 }
 
 /**
+ * Sanitizes the popup editor background setting value.
+ *
+ * @param mixed $value Raw popup editor background value.
+ * @return string
+ */
+function fooconvert_sanitize_popup_editor_background( $value ) {
+    $allowed = array( 'transparent', 'white', 'black' );
+    $normalized = is_string( $value ) ? strtolower( trim( $value ) ) : '';
+
+    return in_array( $normalized, $allowed, true ) ? $normalized : 'transparent';
+}
+
+/**
+ * Returns the popup editor background setting.
+ *
+ * @return string
+ */
+function fooconvert_get_popup_editor_background() {
+    return fooconvert_sanitize_popup_editor_background(
+        fooconvert_get_setting( 'popup_editor_background', 'transparent' )
+    );
+}
+
+/**
  * Sets a specific option based on a key
  *
  * @param $key
@@ -370,6 +394,24 @@ function fooconvert_admin_url_popup_stats( $post_id ) {
 }
 
 /**
+ * Retrieves the dedicated frontend preview URL for a popup.
+ *
+ * @param int $post_id The ID of the popup to preview.
+ * @return string The URL for the popup preview page.
+ */
+function fooconvert_popup_preview_url( $post_id ) {
+    $post_id = absint( $post_id );
+
+    return add_query_arg(
+        array(
+            'fooconvert_popup_preview' => $post_id,
+            '_fcpreviewnonce' => wp_create_nonce( 'fooconvert-popup-preview-' . $post_id ),
+        ),
+        home_url( '/' )
+    );
+}
+
+/**
  * Retrieves the URL for the FooConvert Popup Edit admin page.
  *
  * @param int $post_id The ID of the popup to edit.
@@ -418,6 +460,52 @@ function fooconvert_admin_url_popup_new( $popup_type = '' ) {
  */
 function fooconvert_top_performers_sort() {
     return get_option( FOOCONVERT_OPTION_TOP_PERFORMERS_SORT, 'engagements' );
+}
+
+/**
+ * Returns the popup post statuses that should appear on the dashboard.
+ *
+ * @return array<int,string>
+ */
+function fooconvert_get_dashboard_popup_statuses() {
+    if ( function_exists( 'get_post_stati' ) ) {
+        $statuses = get_post_stati( array( 'show_in_admin_all_list' => true ), 'names' );
+        if ( is_array( $statuses ) && !empty( $statuses ) ) {
+            $statuses = array_values( array_diff( $statuses, array( 'trash', 'auto-draft', 'inherit' ) ) );
+            if ( !empty( $statuses ) ) {
+                return $statuses;
+            }
+        }
+    }
+
+    return array( 'publish', 'future', 'draft', 'pending', 'private' );
+}
+
+/**
+ * Determines whether a popup post should appear in dashboard rankings and tables.
+ *
+ * @param WP_Post|int $thing Popup post object or ID.
+ * @return bool
+ */
+function fooconvert_is_dashboard_popup_post( $thing ) {
+    if ( $thing instanceof WP_Post ) {
+        $post = $thing;
+    } else if ( is_numeric( $thing ) ) {
+        $post = get_post( (int) $thing );
+    } else {
+        return false;
+    }
+
+    if ( !$post instanceof WP_Post || $post->post_type !== FOOCONVERT_CPT_POPUP ) {
+        return false;
+    }
+
+    $status = isset( $post->post_status ) ? (string) $post->post_status : '';
+    if ( $status === '' && function_exists( 'get_post_status' ) ) {
+        $status = (string) get_post_status( $post );
+    }
+
+    return $status !== 'trash';
 }
 
 /**
@@ -607,6 +695,17 @@ function fooconvert_is_popup_stats_page() {
     return is_admin() &&
         isset( $_GET['page'] ) && $_GET['page'] === 'fooconvert-popup-stats' &&
         isset( $_GET['post_id'] ) && is_numeric( $_GET['post_id'] );
+}
+
+/**
+ * Checks if the current request is the dedicated popup preview page.
+ *
+ * @return bool True if the current request is a popup preview, false otherwise.
+ */
+function fooconvert_is_popup_preview_request() {
+    return !is_admin() &&
+        isset( $_GET['fooconvert_popup_preview'] ) &&
+        is_numeric( $_GET['fooconvert_popup_preview'] );
 }
 
 /**

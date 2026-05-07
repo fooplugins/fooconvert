@@ -1,6 +1,6 @@
 {
   "name": "fooconvert",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0",
   "license": "GPL-3.0-or-later",
   "title": "FooConvert",
   "description": "Turning clicks into conversions, visitors into customers – the ultimate catalyst for online success!",
@@ -30,7 +30,8 @@
     "composer:refresh": "composer dump-autoload --optimize",
     "package:create-zip": "npm run build && npm run i18n && npm run composer:refresh && node build/create-zip.mjs",
     "package:download-free": "node build/download-free.mjs",
-    "package:deploy": "node build/freemius-deploy.mjs"
+    "package:deploy": "node build/freemius-deploy.mjs",
+    "deploy-wp": "bash ./bin/deploy-wp.sh"
   },
   "devDependencies": {
     "@paper-design/shaders-react": "0.0.76",

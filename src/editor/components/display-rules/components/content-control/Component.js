@@ -79,7 +79,7 @@ const DisplayRulesContentControl = ( props ) => {
                 options={ editorData?.location }
                 items={ rules?.location }
                 onChange={ value => updateRules( { location: value } ) }
-                noItemsLabel={ __( 'None', 'fooconvert' ) }
+                noItemsLabel=""
                 addItemLabel={ __( 'Add location', 'fooconvert' ) }
                 removeItemLabel={ __( 'Remove location', 'fooconvert' ) }
             />
@@ -88,7 +88,7 @@ const DisplayRulesContentControl = ( props ) => {
                 options={ editorData?.exclude }
                 items={ rules?.exclude }
                 onChange={ value => updateRules( { exclude: value } ) }
-                noItemsLabel={ __( 'None', 'fooconvert' ) }
+                noItemsLabel=""
                 addItemLabel={ __( 'Add exclusion', 'fooconvert' ) }
                 removeItemLabel={ __( 'Remove exclusion', 'fooconvert' ) }
             />
@@ -97,7 +97,7 @@ const DisplayRulesContentControl = ( props ) => {
                 options={ editorData?.users }
                 items={ rules?.users }
                 onChange={ value => updateRules( { users: value } ) }
-                noItemsLabel={ __( 'None', 'fooconvert' ) }
+                noItemsLabel=""
                 addItemLabel={ __( 'Add role', 'fooconvert' ) }
                 removeItemLabel={ __( 'Remove role', 'fooconvert' ) }
             />

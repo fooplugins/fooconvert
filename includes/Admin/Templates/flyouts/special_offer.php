@@ -13,7 +13,11 @@ return array(
         'category'     => 'promotion',
         'tags'         => array( 'offer', 'countdown' ),
         'availability' => 'included',
-        'preview'      => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__special_offer.png',
+        'preview'      => array(
+            'url' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-flyout-special-offer.webp',
+            'width' => 597,
+            'height' => 369,
+        ),
     ),
     'attributes'  => array(
         'template'    => 'flyout__special_offer',
@@ -167,6 +171,9 @@ return array(
 										'padDigits' => false
 									),
 									'styles' => array(
+										'color' => array(
+											'background' => '#00000030'
+										),
 										'typography' => array(
 											'fontSize' => '1rem'
 										),

@@ -18,7 +18,7 @@
     height: 100%;
     margin: 0;
     width: 100%;
-    min-width: 248px;
+    min-width: var(--fc--repeater-control-min-width, 248px);
     max-width: 100%;
 
     .fc--repeater-control__items {
@@ -43,10 +43,18 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: right;
+      justify-content: flex-start;
       width: 100%;
       gap: 8px;
       height: 32px;
     }
+  }
+
+  .fc--repeater-control__add-button {
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    padding: 0;
+    justify-content: center;
   }
 }

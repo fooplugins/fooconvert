@@ -13,7 +13,11 @@ return array(
         'category'     => 'promotion',
         'tags'         => array( 'offer', 'countdown' ),
         'availability' => 'included',
-        'preview'      => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__special_offer.png',
+        'preview'      => array(
+            'url' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-overlay-special-offer.webp',
+            'width' => 740,
+            'height' => 591,
+        ),
     ),
     'attributes'  => array(
         'template'    => 'popup__special_offer',
@@ -171,6 +175,9 @@ return array(
 										'padDigits' => false
 									),
 									'styles' => array(
+										'color' => array(
+											'background' => '#00000030'
+										),
 										'border' => array(
 											'radius' => '16px',
 											'style' => 'none',

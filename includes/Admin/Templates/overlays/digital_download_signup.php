@@ -13,7 +13,11 @@ return array(
 		'category' => 'lead-capture',
 		'tags' => array( 'email', 'download' ),
 		'availability' => 'included',
-		'preview' => FOOCONVERT_ASSETS_URL . 'media/templates/fullsize/template__digital_download_signup.png',
+		'preview' => array(
+			'url' => FOOCONVERT_ASSETS_URL . 'media/templates/preview/preview-overlay-digital-download-signup.webp',
+			'width' => 480,
+			'height' => 319,
+		),
 	),
 	'attributes' => array(
 		'template' => 'popup__digital_download_signup',

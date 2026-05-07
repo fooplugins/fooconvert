@@ -6,6 +6,7 @@ import { useEffect, useRef } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 
 import { VariationPicker } from "../../../variation-picker";
+import { getPopupTypeFromLocation } from "../../../../utils/popupType";
 import "./Component.scss";
 
 const POPUP_TYPE_META_KEY = "_fooconvert_popup_type";
@@ -35,6 +36,7 @@ const PopupTypeTemplatePicker = ( {
     currentPopupType,
     ...props
 } ) => {
+    const requestedPopupType = getPopupTypeFromLocation();
     const restoreSidebarRef = useRef( "" );
     const meta = useSelect( select => {
         return select( editorStore )?.getEditedPostAttribute( "meta" ) || {};
@@ -107,7 +109,7 @@ const PopupTypeTemplatePicker = ( {
                 { ...props }
                 clientId={ clientId }
                 className={ `${ ROOT_CLASS }__picker` }
-                currentPopupType={ currentPopupType }
+                currentPopupType={ requestedPopupType }
                 popupTypeOptions={ POPUP_TYPE_OPTIONS }
                 onSelectPopupType={ switchPopupType }
                 onSelectTemplate={ restoreEditorSidebar }

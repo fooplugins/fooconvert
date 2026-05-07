@@ -1,4 +1,5 @@
 import {
+    getPopupEditorBackground,
     useInnerBlocks,
     PopupTypeTemplatePicker,
     $object
@@ -132,10 +133,11 @@ const EditPlaceholder = props => {
 
 const EditWrapper = props => {
     const { clientId } = props;
+    const editorBackground = getPopupEditorBackground();
     const { hasInnerBlocks, innerBlocks } = useInnerBlocks( clientId );
     const Component = hasInnerBlocks ? Edit : EditPlaceholder;
     return (
-        <div className={ `${ FLYOUT_CLASS_NAME }__editor` }>
+        <div className={ `${ FLYOUT_CLASS_NAME }__editor ${ FLYOUT_CLASS_NAME }__editor--${ editorBackground }` }>
             <Component { ...{ ...props, hasInnerBlocks, innerBlocks } } />
         </div>
     );

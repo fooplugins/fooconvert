@@ -4,6 +4,7 @@ export { default as getBackgroundAndColorStyles } from "./getBackgroundAndColorS
 export { default as getCSSBackgroundProperty } from "./getCSSBackgroundProperty";
 export { default as getBlockSettings } from "./getBlockSettings";
 export { default as getEditorDocument } from "./getEditorDocument";
+export { default as getPopupEditorBackground } from "./popupEditorBackground";
 export { default as isCSSGradient } from "./isCSSGradient";
 export { default as isStringNotEmpty } from "./isStringNotEmpty";
 export { default as isStringOrUndefined } from "./isStringOrUndefined";
