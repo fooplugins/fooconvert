@@ -234,15 +234,16 @@ class DisplayRules extends BaseComponent {
                 return;
             }
 
-            echo '<div class="fc-display-rules-list__app" data-config="' . esc_attr( $json ) . '">';
-            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-            echo $this->render_column_app_markup(
+            $column_markup = $this->render_column_app_markup(
                 $config['summary'],
                 $config['canEdit'],
                 $config['showSummary'],
                 $config['lockedMessage'],
                 $config['postTitle']
             );
+            echo '<div class="fc-display-rules-list__app" data-config="' . esc_attr( $json ) . '">';
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Markup is escaped by the renderer before being returned.
+            echo $column_markup;
             echo '</div>';
         }
     }
@@ -414,6 +415,7 @@ class DisplayRules extends BaseComponent {
         string $post_title = ''
     ): string {
         $edit_label = sprintf(
+            /* translators: %s: popup title. */
             __( 'Edit display rules for %s', 'fooconvert' ),
             $post_title !== '' ? $post_title : __( 'this popup', 'fooconvert' )
         );
