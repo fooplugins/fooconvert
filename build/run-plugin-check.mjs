@@ -14,6 +14,7 @@ const excludedDirectories = [
     "test",
     "dist",
     "bin",
+    "src",
 ];
 
 const excludedFiles = [
