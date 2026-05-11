@@ -5,6 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 <div class="fooconvert-dashboard-container">
+    <h1 class="fooconvert-dashboard-heading"><?php esc_html_e( 'Popup Dashboard', 'fooconvert' ); ?></h1>
     <div class="fooconvert-dashboard-columns">
         <div class="fooconvert-dashboard-column fooconvert-dashboard-left">
             <?php do_action( 'fooconvert_admin_dashboard_left_top' ); ?>
@@ -19,4 +20,3 @@ if ( ! defined( 'ABSPATH' ) ) {
         </div>
     </div>
 </div>
-

@@ -12,7 +12,7 @@ if ( in_array( 'getting-started', $fooconvert_hidden_panels ) ) {
 ?>
 <div class="fooconvert-panel" data-panel="getting-started">
     <div class="fooconvert-panel-section fooconvert-panel-section-flex">
-        <h2>🚀 <?php esc_html_e( 'Getting Started with FooConvert!', 'fooconvert' ); ?></h2>
+        <h2>🚀 <?php esc_html_e( 'Getting Started with Popups!', 'fooconvert' ); ?></h2>
         <div class="fooconvert-panel-section-right">
             <a class="fooconvert-hide-panel" data-panel="getting-started" href="#hide"
                title="<?php esc_html_e( 'Hide Panel', 'fooconvert' ); ?>">

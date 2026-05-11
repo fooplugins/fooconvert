@@ -23,7 +23,7 @@ if ( in_array( 'help', $fooconvert_hidden_panels ) ) {
         <ul class="ul-disc">
             <li>
                 <a href="https://fooplugins.com/documentation/fooconvert/" target="_blank">
-                    <?php esc_html_e( 'Read FooConvert documentation', 'fooconvert' ); ?>
+                    <?php esc_html_e( 'Read documentation', 'fooconvert' ); ?>
                 </a>
             </li>
             <li>

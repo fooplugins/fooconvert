@@ -20,7 +20,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
         function __construct() {
             add_action( 'admin_menu', array( $this, 'register_menu' ) );
             add_action( 'admin_menu', array( $this, 'reorder_menu' ), 999 );
-            add_action( 'in_admin_header', array( $this, 'add_custom_header' ) );
+            add_action( 'in_admin_footer', array( $this, 'add_custom_footer' ) );
             add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueues' ) );
 
             new namespace\Stats();
@@ -52,7 +52,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                 'manage_options',
                 FOOCONVERT_MENU_SLUG,
                 '__return_null',
-                'dashicons-chart-bar',
+                'dashicons-format-chat',
                 50
             );
 
@@ -84,7 +84,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
         }
 
         /**
-         * Ensures the FooConvert submenu order is Dashboard, Popups, then Add New Popup.
+         * Ensures the submenu order is Popups, Add New Popup, then Dashboard.
          *
          * @return void
          */
@@ -96,9 +96,9 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             }
 
             $desired_slugs = apply_filters( 'fooconvert_admin_menu_desired_slugs', array(
-                FOOCONVERT_MENU_SLUG,
                 'edit.php?post_type=' . FOOCONVERT_CPT_POPUP,
                 'post-new.php?post_type=' . FOOCONVERT_CPT_POPUP,
+                FOOCONVERT_MENU_SLUG,
             ) );
 
             $ordered = array();
@@ -141,7 +141,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                 ),
                 FOOCONVERT_POPUP_TYPE_FLYOUT => array(
                     'title'       => __( 'Flyout', 'fooconvert' ),
-                    'description' => __( 'Create a side flyout with template variations and the usual FooConvert controls.', 'fooconvert' ),
+                    'description' => __( 'Create a side flyout with template variations and the usual popup controls.', 'fooconvert' ),
                 ),
                 FOOCONVERT_POPUP_TYPE_OVERLAY => array(
                     'title'       => __( 'Overlay', 'fooconvert' ),
@@ -215,27 +215,13 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
         }
 
         /**
-         * Adds custom header.
+         * Adds minimal footer branding on plugin admin pages.
          */
-        public function add_custom_header() {
+        public function add_custom_footer() {
             if ( $this->is_valid_page() ) {
-                $current_screen = get_current_screen();
-
-                $drop = '';
-                $pages = array( 'contact', 'pricing' );
-                foreach ( $pages as $page ) {
-                    $check = FOOCONVERT_MENU_SLUG . '-' . $page;
-                    if ( fooconvert_str_contains( $current_screen->id, $check ) ) {
-                        $drop = 'drop';
-                        break;
-                    }
-                }
                 ?>
-                <div class="fooconvert-admin-header <?php echo esc_attr( $drop ); ?>">
-                    <div class="fooconvert-title">
-                        <img class="fooconvert-logo" src="<?php echo esc_url( FOOCONVERT_ASSETS_URL . 'admin/img/horizontal-logo-50.png' ); ?>" alt="FooConvert Logo">
-                        <p>Version <?php echo esc_html( FOOCONVERT_VERSION ); ?></p>
-                    </div>
+                <div class="fooconvert-admin-footer">
+                    <?php echo esc_html( sprintf( 'FooConvert v%s', FOOCONVERT_VERSION ) ); ?>
                 </div>
                 <?php
             }

@@ -46,7 +46,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
          */
         function get_tabs() {
 
-            $pro_link = '<a href="' . fooconvert_admin_url_pricing() . '" target="_blank">' . __( 'FooConvert PRO', 'fooconvert' ) . '</a>';
+            $pro_link = '<a href="' . fooconvert_admin_url_pricing() . '" target="_blank">' . __( 'PRO', 'fooconvert' ) . '</a>';
 
             $hide_dashboard_panels_choices = apply_filters( 'fooconvert_hide_dashboard_panels_choices', array(
                 'recent'          => __( 'Recent', 'fooconvert' ),
@@ -68,7 +68,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
                         'type'  => 'html',
                         'label' => __( 'Retention Period', 'fooconvert' ),
                         'html'  => '<pre>' . esc_html( fooconvert_retention() ) . ' ' . __( 'days', 'fooconvert' ) . '</pre>',
-                        // Translators: %s refers to the link to the FooConvert PRO Pricing page.
+                        // Translators: %s refers to the link to the PRO Pricing page.
                         'desc'  => __( 'The number of days before data is deleted.', 'fooconvert' ) . ' ' . sprintf( __( 'This can only be changed with %s.', 'fooconvert' ), $pro_link )
                     ),
                     'debug'                 => array(
@@ -333,7 +333,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Settings' ) ) {
             $cron_jobs = $this->get_cron_jobs();
 
             $debug_info = array(
-                __( 'FooConvert version', 'fooconvert' ) => FOOCONVERT_VERSION,
+                __( 'Plugin version', 'fooconvert' )    => FOOCONVERT_VERSION,
                 __( 'WordPress version', 'fooconvert' )  => $wp_version,
                 __( 'Activated Theme', 'fooconvert' )    => $current_theme['Name'],
                 __( 'WordPress URL', 'fooconvert' )      => get_site_url(),

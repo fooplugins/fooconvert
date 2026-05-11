@@ -15,7 +15,7 @@ $fooconvert_top_performers = $fooconvert_stats->get_top_performers( $fooconvert_
 if ( empty( $fooconvert_top_performers ) ) {
     if ( isset( $fooconvert_sort_object['pro_feature'] ) && $fooconvert_sort_object['pro_feature'] ) {
         echo '<p class="fooconvert-padding">' . esc_html( $fooconvert_sort_object['pro_message'] ) . '</p>';
-        echo '<p class="fooconvert-padding"><a class="button button-primary button-large" href="' . esc_url( fooconvert_admin_url_pricing() ) . '">' . esc_html__( 'Buy FooConvert PRO!', 'fooconvert' ) . '</a></p>';
+        echo '<p class="fooconvert-padding"><a class="button button-primary button-large" href="' . esc_url( fooconvert_admin_url_pricing() ) . '">' . esc_html__( 'Upgrade to PRO', 'fooconvert' ) . '</a></p>';
     } else if ( fooconvert_has_stats_last_updated() ) {
         echo '<p class="fooconvert-padding">' . esc_html__( 'No top performers found!', 'fooconvert' ) . '</p>';
     } else {

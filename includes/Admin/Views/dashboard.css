@@ -2,6 +2,12 @@
     margin-left: -20px;
 }
 
+.fooconvert-dashboard-heading {
+    max-width: 1032px;
+    margin: 20px auto 0;
+    padding: 0 20px;
+}
+
 .fooconvert-dashboard-columns {
     display: flex;
     flex-wrap: wrap;

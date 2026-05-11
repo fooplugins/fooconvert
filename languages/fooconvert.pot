@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-04-20T12:31:19+00:00\n"
+"POT-Creation-Date: 2026-05-11T14:28:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: fooconvert\n"
@@ -84,7 +84,8 @@ msgid "All demo popups deleted!"
 msgstr ""
 
 #: includes/Admin/Dashboard.php:261
-msgid "FooConvert Dashboard"
+#: includes/Admin/Views/dashboard.php:8
+msgid "Popup Dashboard"
 msgstr ""
 
 #: includes/Admin/Dashboard.php:262
@@ -145,6 +146,8 @@ msgstr ""
 
 #: includes/Admin/Init.php:139
 #: includes/functions.php:245
+#: pro/src/blocks/free-shipping-progress/editor/blocks/bar/editor/Edit.js:196
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:208
 #: src/editor/components/popup-type/components/template-picker/Component.js:17
 #: src/editor/hooks/usePostTypeLabels.js:13
 msgid "Bar"
@@ -162,7 +165,7 @@ msgid "Flyout"
 msgstr ""
 
 #: includes/Admin/Init.php:144
-msgid "Create a side flyout with template variations and the usual FooConvert controls."
+msgid "Create a side flyout with template variations and the usual popup controls."
 msgstr ""
 
 #: includes/Admin/Init.php:147
@@ -223,6 +226,7 @@ msgstr ""
 
 #: includes/Admin/LeadsTable.php:56
 #: includes/PostType.php:55
+#: pro/includes/AI/PopupMedia.php:1058
 #: pro/includes/Analytics/Sales.php:275
 #: src/editor/components/experiment-panel/Component.js:19
 #: src/editor/components/experiment-panel/Component.js:27
@@ -239,6 +243,7 @@ msgid "Date Added"
 msgstr ""
 
 #: includes/Admin/LeadsTable.php:150
+#: pro/src/admin/ai-popup-builder/index.js:2687
 msgid "Delete"
 msgstr ""
 
@@ -341,12 +346,12 @@ msgid "Overall sentiment which ranges from very negative to very positive. It ca
 msgstr ""
 
 #: includes/Admin/Promotions.php:286
-msgid "These advanced metrics are available in FooConvert PRO."
+msgid "These advanced metrics are available in PRO."
 msgstr ""
 
 #: includes/Admin/Promotions.php:287
-#: includes/Admin/Views/dashboard-top-performers.php:20
-msgid "Buy FooConvert PRO!"
+#: includes/Admin/Views/dashboard-top-performers.php:18
+msgid "Upgrade to PRO"
 msgstr ""
 
 #: includes/Admin/Promotions.php:301
@@ -354,7 +359,7 @@ msgid "engagement rate (PRO)"
 msgstr ""
 
 #: includes/Admin/Promotions.php:303
-msgid "Top performers by engagement rate is only available in FooConvert PRO."
+msgid "Top performers by engagement rate is only available in PRO."
 msgstr ""
 
 #: includes/Admin/Promotions.php:307
@@ -362,7 +367,7 @@ msgid "clicks (PRO)"
 msgstr ""
 
 #: includes/Admin/Promotions.php:309
-msgid "Top performers by clicks is only available in FooConvert PRO."
+msgid "Top performers by clicks is only available in PRO."
 msgstr ""
 
 #: includes/Admin/Promotions.php:313
@@ -370,7 +375,7 @@ msgid "click rate (PRO)"
 msgstr ""
 
 #: includes/Admin/Promotions.php:315
-msgid "Top performers by click rate is only available in FooConvert PRO."
+msgid "Top performers by click rate is only available in PRO."
 msgstr ""
 
 #: includes/Admin/Promotions.php:319
@@ -378,7 +383,7 @@ msgid "conversions (PRO)"
 msgstr ""
 
 #: includes/Admin/Promotions.php:321
-msgid "Top performers by conversions is only available in FooConvert PRO."
+msgid "Top performers by conversions is only available in PRO."
 msgstr ""
 
 #: includes/Admin/Promotions.php:325
@@ -386,7 +391,7 @@ msgid "conversion rate (PRO)"
 msgstr ""
 
 #: includes/Admin/Promotions.php:327
-msgid "Top performers by conversion rate is only available in FooConvert PRO."
+msgid "Top performers by conversion rate is only available in PRO."
 msgstr ""
 
 #: includes/Admin/Settings.php:41
@@ -394,7 +399,8 @@ msgid "FooConvert Settings"
 msgstr ""
 
 #: includes/Admin/Settings.php:49
-msgid "FooConvert PRO"
+#: src/editor/components/variation-picker/Component.js:737
+msgid "PRO"
 msgstr ""
 
 #: includes/Admin/Settings.php:52
@@ -416,8 +422,8 @@ msgstr ""
 
 #: includes/Admin/Settings.php:61
 #: includes/Components/OpenTriggerPanel.php:401
-#: includes/DisplayRules.php:724
-#: includes/DisplayRules.php:847
+#: includes/DisplayRules.php:726
+#: includes/DisplayRules.php:849
 msgid "General"
 msgstr ""
 
@@ -429,12 +435,12 @@ msgstr ""
 msgid "days"
 msgstr ""
 
-#. Translators: %s refers to the link to the FooConvert PRO Pricing page.
+#. Translators: %s refers to the link to the PRO Pricing page.
 #: includes/Admin/Settings.php:72
 msgid "The number of days before data is deleted."
 msgstr ""
 
-#. Translators: %s refers to the link to the FooConvert PRO Pricing page.
+#. Translators: %s refers to the link to the PRO Pricing page.
 #: includes/Admin/Settings.php:72
 #, php-format
 msgid "This can only be changed with %s."
@@ -608,7 +614,7 @@ msgid "ERROR : The events table does not exist!"
 msgstr ""
 
 #: includes/Admin/Settings.php:336
-msgid "FooConvert version"
+msgid "Plugin version"
 msgstr ""
 
 #: includes/Admin/Settings.php:337
@@ -640,11 +646,12 @@ msgid "Active Plugins"
 msgstr ""
 
 #: includes/Admin/Settings.php:345
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:84
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:254
+#: pro/src/admin/ai-popup-builder/index.js:113
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:86
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:262
 #: src/blocks/countdown/editor/components/container/EditSettings.js:76
 #: src/blocks/countdown/editor/EditSettings.js:26
-#: src/blocks/coupon/editor/components/container/EditSettings.js:66
+#: src/blocks/coupon/editor/components/container/EditSettings.js:68
 #: src/blocks/coupon/editor/EditSettings.js:32
 #: src/blocks/sign-up/editor/EditSettings.js:29
 msgid "Settings"
@@ -851,7 +858,7 @@ msgid "Smart exit offer themed overlay."
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:15
-msgid "Getting Started with FooConvert!"
+msgid "Getting Started with Popups!"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-getting-started.php:26
@@ -932,7 +939,7 @@ msgid "Need Help? We're here for you!"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-help.php:26
-msgid "Read FooConvert documentation"
+msgid "Read documentation"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-help.php:31
@@ -964,13 +971,13 @@ msgid "Recently Updated"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-recent.php:50
-#: includes/Admin/Views/dashboard-top-performers.php:43
+#: includes/Admin/Views/dashboard-top-performers.php:41
 #: includes/PostType.php:58
 msgid "Edit Popup"
 msgstr ""
 
 #: includes/Admin/Views/dashboard-panel-recent.php:52
-#: includes/Admin/Views/dashboard-top-performers.php:45
+#: includes/Admin/Views/dashboard-top-performers.php:43
 msgid "View Popup Stats"
 msgstr ""
 
@@ -1012,24 +1019,24 @@ msgstr ""
 msgid "Last Updated : "
 msgstr ""
 
-#: includes/Admin/Views/dashboard-top-performers.php:22
+#: includes/Admin/Views/dashboard-top-performers.php:20
 msgid "No top performers found!"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-top-performers.php:24
+#: includes/Admin/Views/dashboard-top-performers.php:22
 msgid "Please update stats in order to see top performers."
 msgstr ""
 
-#: includes/Admin/Views/dashboard-top-performers.php:30
+#: includes/Admin/Views/dashboard-top-performers.php:28
 msgid "Rank"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-top-performers.php:31
+#: includes/Admin/Views/dashboard-top-performers.php:29
 #: src/editor/plugins/custom-editor/Plugin.js:24
 msgid "Title"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-top-performers.php:33
+#: includes/Admin/Views/dashboard-top-performers.php:31
 msgid "Metric"
 msgstr ""
 
@@ -1077,6 +1084,8 @@ msgstr ""
 #: includes/Admin/Views/popup-stats.php:9
 #: pro/includes/Analytics/Sales.php:326
 #: pro/includes/Analytics/Sales.php:349
+#: pro/src/admin/ai-popup-builder/index.js:648
+#: pro/src/admin/ai-popup-builder/index.js:656
 msgid "Unknown"
 msgstr ""
 
@@ -1156,21 +1165,21 @@ msgstr ""
 
 #: includes/Blocks/Countdown.php:85
 #: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:197
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:262
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:260
 #: src/blocks/countdown/editor/Edit.js:19
 msgid "Days"
 msgstr ""
 
 #: includes/Blocks/Countdown.php:89
 #: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:198
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:263
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:261
 #: src/blocks/countdown/editor/Edit.js:20
 msgid "Hours"
 msgstr ""
 
 #: includes/Blocks/Countdown.php:93
 #: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:199
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:264
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:262
 #: src/blocks/countdown/editor/components/container/EditSettings.js:95
 #: src/blocks/countdown/editor/Edit.js:21
 msgid "Minutes"
@@ -1178,23 +1187,25 @@ msgstr ""
 
 #: includes/Blocks/Countdown.php:97
 #: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:200
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:265
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:263
 #: src/blocks/countdown/editor/Edit.js:22
 msgid "Seconds"
 msgstr ""
 
-#: includes/Blocks/Coupon.php:93
-#: src/blocks/coupon/editor/Edit.js:23
+#: includes/Blocks/Coupon.php:94
+#: pro/src/admin/ai-popup-builder/index.js:2602
+#: src/blocks/coupon/editor/Edit.js:24
 #: src/editor/icons/default/index.js:45
 msgid "Copy"
 msgstr ""
 
-#: includes/Blocks/Coupon.php:127
-#: src/blocks/coupon/editor/Edit.js:13
+#: includes/Blocks/Coupon.php:128
+#: src/blocks/coupon/editor/Edit.js:14
 msgid "Copied!"
 msgstr ""
 
 #: includes/Blocks/SignUp.php:100
+#: pro/src/admin/ai-popup-builder/preview.js:117
 #: src/blocks/sign-up/editor/Edit.js:43
 msgid "Submit"
 msgstr ""
@@ -1205,7 +1216,7 @@ msgid "Thanks!"
 msgstr ""
 
 #: includes/Compatibility.php:77
-msgid "Compatibility settings for FooConvert."
+msgid "Compatibility settings for popups."
 msgstr ""
 
 #: includes/Components/OpenTriggerPanel.php:403
@@ -1270,7 +1281,7 @@ msgstr ""
 #: includes/Components/OpenTriggerPanel.php:465
 #: includes/Components/OpenTriggerPanel.php:485
 #: includes/Components/OpenTriggerPanel.php:505
-#: src/popups/bar/editor/EditSettings.js:37
+#: src/popups/bar/editor/EditSettings.js:87
 #: src/popups/flyout/editor/EditSettings.js:47
 #: src/popups/overlay/editor/EditSettings.js:38
 msgid "Behavior"
@@ -1364,6 +1375,7 @@ msgid "Ecommerce"
 msgstr ""
 
 #: includes/Components/VariationPicker.php:70
+#: pro/src/admin/ai-popup-builder/index.js:321
 msgid "Exit intent"
 msgstr ""
 
@@ -1372,6 +1384,8 @@ msgid "Newsletter"
 msgstr ""
 
 #: includes/Components/VariationPicker.php:76
+#: pro/src/admin/ai-popup-builder/index.js:781
+#: pro/src/editor/plugins/ai-builder/Plugin.js:101
 msgid "Offer"
 msgstr ""
 
@@ -1380,7 +1394,7 @@ msgid "Seasonal"
 msgstr ""
 
 #: includes/DisplayRules.php:65
-msgid "Display rules for FooConvert."
+msgid "Display rules for popups."
 msgstr ""
 
 #: includes/DisplayRules.php:185
@@ -1397,15 +1411,21 @@ msgstr ""
 msgid "Display rules unavailable."
 msgstr ""
 
-#: includes/DisplayRules.php:264
+#: includes/DisplayRules.php:265
 msgid "You do not have permission to edit these display rules."
 msgstr ""
 
-#: includes/DisplayRules.php:323
-#: includes/DisplayRules.php:332
-#: includes/DisplayRules.php:348
-#: includes/DisplayRules.php:350
-#: includes/DisplayRules.php:370
+#: includes/DisplayRules.php:324
+#: includes/DisplayRules.php:333
+#: includes/DisplayRules.php:349
+#: includes/DisplayRules.php:351
+#: includes/DisplayRules.php:371
+#: pro/src/admin/ai-popup-builder/index.js:778
+#: pro/src/admin/ai-popup-builder/index.js:782
+#: pro/src/admin/ai-popup-builder/index.js:2000
+#: pro/src/admin/ai-popup-builder/index.js:2001
+#: pro/src/admin/ai-popup-builder/index.js:2217
+#: pro/src/admin/brand-context/components.js:163
 #: src/editor/components/date-time-control/Component.js:17
 #: src/editor/components/display-rules/components/post-status-info/Component.js:45
 #: src/editor/components/display-rules/components/pre-publish-panel/Component.js:20
@@ -1415,9 +1435,9 @@ msgstr ""
 msgid "Not set"
 msgstr ""
 
-#: includes/DisplayRules.php:328
-#: includes/DisplayRules.php:346
-#: includes/DisplayRules.php:349
+#: includes/DisplayRules.php:329
+#: includes/DisplayRules.php:347
+#: includes/DisplayRules.php:350
 #: src/editor/components/open-trigger-component/Component.js:269
 #: src/editor/components/typography-tools-panel/Component.js:219
 #: src/editor/components/typography-tools-panel/Component.js:253
@@ -1425,17 +1445,17 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: includes/DisplayRules.php:374
+#: includes/DisplayRules.php:375
 #: src/scripts/admin/display-rules-list/index.js:212
 msgid "Show on"
 msgstr ""
 
-#: includes/DisplayRules.php:379
+#: includes/DisplayRules.php:380
 #: src/scripts/admin/display-rules-list/index.js:218
 msgid "Hide from"
 msgstr ""
 
-#: includes/DisplayRules.php:385
+#: includes/DisplayRules.php:386
 #: src/editor/components/display-rules/components/content-control/Component.js:60
 #: src/scripts/admin/display-rules-list/index.js:224
 #: src/scripts/admin/display-rules-list/index.js:328
@@ -1443,85 +1463,85 @@ msgid "Users"
 msgstr ""
 
 #. translators: %s is the popup title shown in the list table.
-#: includes/DisplayRules.php:417
+#: includes/DisplayRules.php:419
 #: src/scripts/admin/display-rules-list/index.js:139
 #, php-format,js-format
 msgid "Edit display rules for %s"
 msgstr ""
 
-#: includes/DisplayRules.php:418
+#: includes/DisplayRules.php:420
 #: src/scripts/admin/display-rules-list/index.js:142
 msgid "this popup"
 msgstr ""
 
-#: includes/DisplayRules.php:433
+#: includes/DisplayRules.php:435
 #: src/scripts/admin/display-rules-list/index.js:259
 msgid "Edit display rules"
 msgstr ""
 
 #. translators: %d is the number of remaining labels hidden from the summary.
-#: includes/DisplayRules.php:577
+#: includes/DisplayRules.php:579
 #: src/scripts/admin/display-rules-list/index.js:53
 #, php-format,js-format
 msgid " +%d more"
 msgstr ""
 
-#: includes/DisplayRules.php:728
+#: includes/DisplayRules.php:730
 msgid "Entire Site"
 msgstr ""
 
-#: includes/DisplayRules.php:732
+#: includes/DisplayRules.php:734
 msgid "Front Page"
 msgstr ""
 
-#: includes/DisplayRules.php:736
+#: includes/DisplayRules.php:738
 msgid "Blog"
 msgstr ""
 
-#: includes/DisplayRules.php:740
+#: includes/DisplayRules.php:742
 msgid "Search Results"
 msgstr ""
 
-#: includes/DisplayRules.php:744
+#: includes/DisplayRules.php:746
 msgid "No Search Results"
 msgstr ""
 
-#: includes/DisplayRules.php:748
+#: includes/DisplayRules.php:750
 msgid "404 Template"
 msgstr ""
 
 #. Translators: %s refers to the taxonomy that is being searched for. e.g. "Category".
-#: includes/DisplayRules.php:766
-#: includes/DisplayRules.php:792
+#: includes/DisplayRules.php:768
+#: includes/DisplayRules.php:794
 #, php-format
 msgid "Type to choose %s..."
 msgstr ""
 
-#: includes/DisplayRules.php:775
+#: includes/DisplayRules.php:777
 msgid "Specific Posts"
 msgstr ""
 
-#: includes/DisplayRules.php:801
+#: includes/DisplayRules.php:803
 msgid "Specific Taxonomies"
 msgstr ""
 
-#: includes/DisplayRules.php:820
+#: includes/DisplayRules.php:822
 msgid "Post Archives"
 msgstr ""
 
-#: includes/DisplayRules.php:851
+#: includes/DisplayRules.php:853
 msgid "All Users"
 msgstr ""
 
-#: includes/DisplayRules.php:855
+#: includes/DisplayRules.php:857
 msgid "Logged In"
 msgstr ""
 
-#: includes/DisplayRules.php:859
+#: includes/DisplayRules.php:861
 msgid "Logged Out"
 msgstr ""
 
-#: includes/DisplayRules.php:865
+#: includes/DisplayRules.php:867
 msgid "Roles"
 msgstr ""
 
@@ -1549,44 +1569,44 @@ msgstr ""
 msgid "Styling Updated"
 msgstr ""
 
-#: includes/Fonts.php:43
+#: includes/Fonts.php:47
 msgid "Fonts"
 msgstr ""
 
-#: includes/Fonts.php:49
+#: includes/Fonts.php:53
 msgid "Font Help"
 msgstr ""
 
-#: includes/Fonts.php:56
+#: includes/Fonts.php:60
 msgid "Add Font"
 msgstr ""
 
-#: includes/Fonts.php:57
+#: includes/Fonts.php:61
 msgid "No Google fonts have been added."
 msgstr ""
 
-#: includes/Fonts.php:66
+#: includes/Fonts.php:70
 msgid "Font Name"
 msgstr ""
 
-#: includes/Fonts.php:67
+#: includes/Fonts.php:71
 msgid "The name of the font."
 msgstr ""
 
-#: includes/Fonts.php:72
+#: includes/Fonts.php:76
 msgid "Font Family"
 msgstr ""
 
-#: includes/Fonts.php:73
+#: includes/Fonts.php:77
 msgid "The Google Font family code, for example \"Handlee\" or \"Montserrat:ital,wght@0,100..900;1,100..900\"."
 msgstr ""
 
-#: includes/Fonts.php:97
+#: includes/Fonts.php:101
 msgid "Add Google Fonts here to make them available while editing your popups."
 msgstr ""
 
 #. translators: 1: existing help text. 2: comma-separated list of bundled font names.
-#: includes/Fonts.php:106
+#: includes/Fonts.php:110
 #, php-format
 msgid "%1$s Included fonts already available for bundled templates: %2$s."
 msgstr ""
@@ -1607,6 +1627,12 @@ msgstr ""
 
 #: includes/FooConvert.php:220
 msgid "Popup Preview"
+msgstr ""
+
+#: includes/FooConvert.php:559
+#: pro/src/admin/ai-popup-builder/index.js:1803
+#: pro/src/admin/ai-popup-builder/serializer.js:31
+msgid "Popup Blocks"
 msgstr ""
 
 #: includes/functions.php:549
@@ -1674,29 +1700,29 @@ msgstr ""
 msgid "Exclude roles from logging popup events for analytics (e.g., exclude admin tests)."
 msgstr ""
 
-#: includes/Popups/Bar.php:93
+#: includes/Popups/Bar.php:94
 #: includes/Popups/Flyout.php:93
 #: includes/Popups/Overlay.php:89
 msgid "Empty"
 msgstr ""
 
-#: includes/Popups/Bar.php:94
+#: includes/Popups/Bar.php:95
 msgid "A blank slate that you can use to build your own bar from scratch."
 msgstr ""
 
-#: includes/Popups/Bar.php:139
+#: includes/Popups/Bar.php:140
 msgid "Black Friday Bar"
 msgstr ""
 
-#: includes/Popups/Bar.php:140
+#: includes/Popups/Bar.php:141
 msgid "A typical Black Friday bar to help drive sales."
 msgstr ""
 
-#: includes/Popups/Bar.php:261
+#: includes/Popups/Bar.php:262
 msgid "Cookie Consent Bar"
 msgstr ""
 
-#: includes/Popups/Bar.php:262
+#: includes/Popups/Bar.php:263
 msgid "A simple bottom bar that is dismissed when the button is clicked."
 msgstr ""
 
@@ -1726,6 +1752,8 @@ msgstr ""
 
 #: includes/PostType.php:54
 #: includes/PostType.php:64
+#: pro/src/admin/ai-popup-builder/index.js:1914
+#: pro/src/admin/ai-popup-builder/index.js:2285
 msgid "Popups"
 msgstr ""
 
@@ -1758,6 +1786,9 @@ msgid "No Popups found in Trash"
 msgstr ""
 
 #: includes/PostType.php:151
+#: pro/src/admin/ai-popup-builder/index.js:647
+#: pro/src/admin/ai-popup-builder/index.js:773
+#: pro/src/editor/plugins/ai-builder/Plugin.js:89
 msgid "Type"
 msgstr ""
 
@@ -1781,65 +1812,182 @@ msgstr ""
 msgid "Update WordPress now."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:9
+#: pro/includes/Admin/AiPopupBuilder.php:49
+#: pro/includes/Admin/AiPopupBuilder.php:50
+#: pro/includes/Admin/AiPopupBuilderSettings.php:50
+#: pro/src/admin/ai-popup-builder/index.js:2124
+msgid "AI Popup Builder"
+msgstr ""
+
+#: pro/includes/Admin/AiPopupBuilder.php:226
+msgid "Build a Black Friday popup that offers 15% off the first order and captures email addresses."
+msgstr ""
+
+#: pro/includes/Admin/AiPopupBuilder.php:227
+msgid "Create a minimal flyout for a free shipping threshold campaign with one primary CTA."
+msgstr ""
+
+#: pro/includes/Admin/AiPopupBuilder.php:228
+msgid "Make a newsletter popup for a content brand that feels premium and low pressure."
+msgstr ""
+
+#: pro/includes/Admin/AiPopupBuilder.php:229
+msgid "Design a mobile-friendly announcement bar promoting a limited launch offer."
+msgstr ""
+
+#: pro/includes/Admin/AiPopupBuilderSettings.php:58
+msgid "Override Model"
+msgstr ""
+
+#: pro/includes/Admin/AiPopupBuilderSettings.php:59
+#: pro/src/admin/ai-popup-builder/index.js:1675
+msgid "Optional custom model name"
+msgstr ""
+
+#: pro/includes/Admin/AiPopupBuilderSettings.php:60
+msgid "When set, chat requests ask the AI client to prefer this model."
+msgstr ""
+
+#: pro/includes/Admin/AiPopupBuilderSettings.php:66
+#: pro/src/admin/ai-popup-builder/index.js:1702
+msgid "Disabled Params"
+msgstr ""
+
+#: pro/includes/Admin/AiPopupBuilderSettings.php:68
+msgid "One parameter per line or comma-separated. Listed optional parameters are not sent with AI chat requests."
+msgstr ""
+
+#: pro/includes/Admin/AiPopupBuilderSettings.php:74
+#: pro/src/admin/ai-popup-builder/index.js:1680
+msgid "Timeout"
+msgstr ""
+
+#: pro/includes/Admin/AiPopupBuilderSettings.php:78
+msgid "Maximum time in seconds to wait for an AI chat response."
+msgstr ""
+
+#: pro/includes/Admin/AiPopupBuilderSettings.php:84
+#: pro/src/admin/ai-popup-builder/index.js:1690
+msgid "Max Tool Calls"
+msgstr ""
+
+#: pro/includes/Admin/AiPopupBuilderSettings.php:88
+msgid "Maximum number of AI tool-call rounds allowed while building one popup response. Increase this if complex prompts stop with the tool-call limit error."
+msgstr ""
+
+#: pro/includes/Admin/BrandContext.php:33
+#: pro/includes/Admin/BrandContext.php:41
+#: pro/src/admin/ai-popup-builder/index.js:1749
+#: pro/src/admin/brand-context/components.js:756
+msgid "Brand Context"
+msgstr ""
+
+#: pro/includes/Admin/BrandContext.php:43
+msgid "Store reusable brand colors, typography, spacing, and button styling for popup tools."
+msgstr ""
+
+#: pro/includes/Admin/BrandContext.php:153
+msgid "Open Brand Context"
+msgstr ""
+
+#. translators: %s is the remaining amount token.
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:63
+#, php-format
+msgid "You're %s away from free shipping"
+msgstr ""
+
+#. translators: %s is the threshold amount token.
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:76
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:114
+#, php-format
+msgid "Free shipping at %s"
+msgstr ""
+
+#. translators: %s is the remaining amount token.
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:101
+#, php-format
+msgid "Almost there. Add %s more to unlock free shipping."
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:137
+msgid "Free shipping unlocked"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:158
+msgid "Free shipping details are currently unavailable."
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:179
 msgid "Almost Free Shipping Bar"
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:10
-msgid "A low-friction shipping progress bar with a compact coupon action."
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:180
+msgid "A checkout-style free shipping bar with a progress prompt and compact coupon action."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:151
-msgid "Free shipping is close."
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:335
+msgid "Shipping rescue"
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:171
-msgid "You are almost there."
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:355
+msgid "Unlock free shipping."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:248
-msgid "Apply the coupon, then keep moving."
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:374
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:182
+msgid "Apply the offer and keep checkout moving."
 msgstr ""
 
-#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:299
-#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:362
-msgid "Apply code"
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:389
+msgid "A quick push before the cart cools off."
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:531
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:337
+#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:255
+#: pro/includes/Blocks/ApplyCoupon.php:98
+#: pro/src/blocks/apply-coupon/editor/Edit.js:24
+msgid "Apply"
+msgstr ""
+
+#: pro/includes/Admin/Templates/bars/almost_free_shipping_bar.php:570
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:376
+#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:294
+msgid "Click the button to apply the coupon."
 msgstr ""
 
 #: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:9
-msgid "Add To Cart Unlock Flyout"
+msgid "Cart Unlock Flyout"
 msgstr ""
 
 #: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:10
-msgid "An airy post-add-to-cart flyout that keeps the basket building momentum going."
+msgid "A post-cart flyout with a cleaner layout, a coupon action, and softer upsell copy."
 msgstr ""
 
-#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:129
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:131
 msgid "Added to cart"
 msgstr ""
 
-#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:149
-msgid "Build the basket while the moment is warm."
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:151
+msgid "Keep it going."
 msgstr ""
 
-#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:168
-msgid "Use the offer now, then keep browsing for the pieces that make sense together."
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:170
+msgid "Apply the code now before the moment passes."
 msgstr ""
 
-#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:262
-msgid "Round out the order with one more item."
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:254
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:307
+msgid "Apply now"
 msgstr ""
 
-#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:269
-msgid "Keep the cart closer to free shipping."
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:293
+#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:346
+msgid "One tap applies the offer."
 msgstr ""
 
-#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:276
-msgid "Use the offer before you move on."
-msgstr ""
-
-#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:404
-msgid "Continue shopping"
+#: pro/includes/Admin/Templates/flyouts/add_to_cart_unlock.php:313
+msgid "One quick step and your offer is in place."
 msgstr ""
 
 #: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:9
@@ -1862,15 +2010,6 @@ msgstr ""
 msgid "Apply the code now before this session closes."
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:307
-msgid "Apply now"
-msgstr ""
-
-#: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:346
-#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:340
-msgid "One tap applies the offer."
-msgstr ""
-
 #: pro/includes/Admin/Templates/overlays/cart_idle_rescue.php:366
 msgid "One quick step and your cart is saved."
 msgstr ""
@@ -1883,30 +2022,16 @@ msgstr ""
 msgid "A compact checkout recovery popup with a concise rescue offer."
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:146
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:143
 msgid "Checkout rescue"
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:166
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:163
 msgid "Finish your order."
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:185
-msgid "Apply the code and keep checkout moving."
-msgstr ""
-
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:200
-msgid "This helps keep your order on track."
-msgstr ""
-
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:339
-#: pro/includes/Blocks/ApplyCoupon.php:97
-#: pro/src/blocks/apply-coupon/editor/Edit.js:23
-msgid "Apply"
-msgstr ""
-
-#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:378
-msgid "Click the button to apply the coupon."
+#: pro/includes/Admin/Templates/overlays/checkout_exit_save.php:197
+msgid "A quick save before you leave checkout."
 msgstr ""
 
 #: pro/includes/Admin/Templates/overlays/high_intent_offer.php:9
@@ -1917,24 +2042,16 @@ msgstr ""
 msgid "An airy product offer popup with a promotional split layout."
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:155
+#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:126
 msgid "Product offer"
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:175
-msgid "A better way to buy this item."
+#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:146
+msgid "Unlock<br>a better price."
 msgstr ""
 
-#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:194
-msgid "Apply the code below to unlock the offer on this order."
-msgstr ""
-
-#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:209
-msgid "A simple offer for the right moment."
-msgstr ""
-
-#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:301
-msgid "Use offer"
+#: pro/includes/Admin/Templates/overlays/high_intent_offer.php:165
+msgid "Use this offer code to unlock savings on this order."
 msgstr ""
 
 #: pro/includes/Admin/Views/dashboard-panel-sales.php:14
@@ -1961,6 +2078,790 @@ msgid "%d sale"
 msgid_plural "%d sales"
 msgstr[0] ""
 msgstr[1] ""
+
+#: pro/includes/AI/Abilities.php:113
+msgid "Popup Builder"
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:114
+msgid "Popup strategy, template context, and validation tools for AI-assisted popup creation."
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:129
+msgid "List Popup Templates"
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:130
+msgid "List bundled popup, flyout, and bar templates. Use `template_slug` to inspect one template in detail, or `popup_type` to narrow the list."
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:178
+msgid "Get Block Catalog"
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:179
+msgid "Return the supported content blocks and nesting rules for AI-generated popup content."
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:215
+msgid "Get Conversion Playbook"
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:216
+msgid "Return popup conversion best practices, popup type guidance, and copywriting tactics."
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:243
+msgid "Validate Popup Blueprint"
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:244
+msgid "Evaluate a structured popup draft for conversion fundamentals, CTA focus, and popup-type fit."
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:276
+msgid "List Popup Media"
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:277
+msgid "Return recently generated popup images for the current builder user."
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:312
+msgid "Generate Popup Image Prompt"
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:313
+msgid "Create an image-generation prompt tailored to the current popup draft and offer."
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:348
+msgid "Generate Popup Image"
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:349
+msgid "Generate raw popup image data from an image prompt."
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:384
+msgid "Import Popup Image"
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:385
+msgid "Import generated popup image data into the media library and return a reusable attachment payload."
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:439
+msgid "Create Popup Image"
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:440
+msgid "Generate and import a conversion-oriented popup image in one step. Prefer this when the popup needs a ready-to-use visual asset."
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:476
+msgid "Create Popup Background"
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:477
+msgid "Generate and import a brand-aligned popup background image that stays supportive of popup copy and CTA treatment."
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:538
+msgid "You do not have permission to generate popup images."
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:642
+msgid "A popup_draft object is required for validation."
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:677
+msgid "A popup_draft object is required to generate a popup image prompt."
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:708
+msgid "An image prompt is required to generate popup media."
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:739
+msgid "Base64 popup image data is required for import."
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:777
+msgid "A popup_draft object is required to create a popup image."
+msgstr ""
+
+#: pro/includes/AI/Abilities.php:801
+msgid "A popup_draft object is required to create a popup background."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:302
+#: pro/src/admin/brand-context/components.js:577
+msgid "Heading"
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:303
+msgid "Primary or secondary copy block for strong popup headlines."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:314
+msgid "Paragraph"
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:315
+msgid "Support copy, urgency lines, benefit statements, or disclaimers."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:325
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:172
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:116
+msgid "List"
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:326
+msgid "Bullet list for benefits, proof points, or offer details."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:339
+msgid "Buttons"
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:340
+msgid "Container for one primary CTA and, if needed, a quieter secondary CTA."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:352
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:257
+#: src/blocks/coupon/editor/components/button/EditSettings.js:26
+#: src/blocks/coupon/editor/EditSettings.js:27
+#: src/blocks/sign-up/editor/components/button/EditSettings.js:68
+#: src/blocks/sign-up/editor/EditSettings.js:24
+msgid "Button"
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:353
+msgid "Primary or secondary call-to-action button."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:364
+msgid "Group"
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:365
+msgid "Flexible layout wrapper for stacking content with spacing."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:378
+msgid "Columns"
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:379
+msgid "Two-column content layout, useful for lead magnets or image-plus-copy popups."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:386
+msgid "Column"
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:387
+msgid "Child column within a columns layout."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:396
+msgid "Image"
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:397
+msgid "Simple product, lead magnet, or promotional image block."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:407
+msgid "Separator"
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:408
+msgid "Visual divider between offer sections."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:415
+msgid "Spacer"
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:416
+msgid "Adds breathing room between popup sections."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:434
+msgid "Popup Sign Up"
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:435
+msgid "Lead capture form block with configurable placeholders and button copy."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:474
+msgid "Copy Code"
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:488
+msgid "Apply Coupon"
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:896
+msgid "Sample text"
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:900
+msgid "Image alt text"
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:960
+msgid "Lead with one clear benefit in the first line."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:961
+msgid "Keep to a single primary CTA unless the user explicitly asks for alternatives."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:962
+msgid "Use urgency carefully: real scarcity, deadlines, or fast outcomes outperform vague hype."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:963
+msgid "Match friction to intent: low-friction offers for cold visitors, richer forms for high-intent visitors."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:964
+msgid "Support the headline with proof, specificity, or a concise value stack."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:965
+msgid "Mobile legibility matters: short copy, spacious padding, and scannable sections."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:969
+msgid "High-focus offers, lead capture, launch promos, and exit-intent campaigns."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:970
+msgid "Avoid too many sections or competing CTAs."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:973
+msgid "Mid-journey nudges, content upgrades, sticky promos, and lower interruption offers."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:974
+msgid "Keep the width tight and copy concise."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:977
+msgid "Announcements, coupon reveals, shipping thresholds, and lightweight newsletter asks."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:978
+msgid "Bars work best with one-line value and one action."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:982
+msgid "Favor concrete outcomes over generic adjectives."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:983
+msgid "Use CTA verbs that imply immediacy: claim, unlock, get, start, reserve."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:984
+msgid "If asking for email, explain the reward or next step immediately."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:985
+msgid "Use supportive microcopy to reduce risk: cancel anytime, no spam, ships today, limited batch."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:1262
+msgid "The draft includes a clear headline block."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:1265
+msgid "Add a strong headline so the offer lands immediately."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:1270
+msgid "The popup includes a direct conversion action."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:1273
+msgid "There is no obvious CTA or form yet."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:1278
+msgid "Multiple CTA buttons can reduce focus. Keep one primary action unless a second one is essential."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:1283
+msgid "The popup may be text-heavy. Tighten the copy to keep it scannable."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:1288
+msgid "Bars convert best when they stay compact. Reduce the number of content blocks."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:1293
+msgid "If the form is intentional, mention the reward for joining in the copy."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:1297
+msgid "Make sure the root attributes and supporting blocks reflect the extracted brand palette, typography, and spacing."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:1299
+msgid "A bundled template is being used as a structural reference."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:1304
+msgid "Choose a trigger so the popup appears with intent."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:1309
+msgid "The draft is structurally ready for a first pass in the block editor."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:1337
+msgid "Concise assistant response describing the popup draft or asking the next question."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:1341
+msgid "Leave empty when the popup draft is ready. Use only when more input is truly needed."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:1345
+msgid "Up to four useful follow-up prompts for refining the popup."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:1352
+msgid "Generated popup images available for the builder media panel."
+msgstr ""
+
+#: pro/includes/AI/PopupBlueprint.php:1357
+msgid "The structured popup blueprint. Omit or use null when asking a clarifying question."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:352
+msgid "A valid popup type is required."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:360
+msgid "Popup block HTML is required before saving."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:371
+msgid "The generated block HTML does not match the selected popup type."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:383
+msgid "The popup draft could not be found."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:391
+msgid "You do not have permission to update this popup draft."
+msgstr ""
+
+#. translators: %s: popup type label
+#: pro/includes/AI/PopupBuilder.php:404
+#, php-format
+msgid "AI %s Draft"
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:558
+msgid "At least one user message is required."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:682
+msgid "The AI popup builder requires WordPress 7 or newer."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:695
+msgid "The WordPress AI client is not available on this site."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:708
+msgid "Streaming chat is not available on this site."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:766
+#: pro/src/admin/ai-popup-builder/activity-support.js:6
+msgid "Preparing popup context"
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:767
+#: pro/src/admin/ai-popup-builder/activity-support.js:7
+msgid "Packing the current brand, draft, media, and conversation into the request."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:779
+#: pro/src/admin/ai-popup-builder/activity-support.js:11
+msgid "Calling AI model"
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:780
+#: pro/src/admin/ai-popup-builder/activity-support.js:12
+msgid "The model may request template, block, validation, or media abilities before it answers."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:792
+#: pro/src/admin/ai-popup-builder/activity-support.js:16
+msgid "Building popup draft"
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:793
+#: pro/src/admin/ai-popup-builder/activity-support.js:17
+msgid "Waiting for the popup response and any tool-call results to complete."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:805
+msgid "Repairing AI response format"
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:806
+msgid "The model returned JSON that did not match the popup builder contract, so the builder requested one corrected JSON object."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:916
+msgid "The AI client returned no candidates."
+msgstr ""
+
+#. translators: %s: AI request parameter name.
+#: pro/includes/AI/PopupBuilder.php:1380
+#, php-format
+msgid "Disabled unsupported AI parameter: %s"
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:1383
+msgid "The model rejected this optional request parameter, so it was added to Disabled Params and the chat request was retried."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:1860
+msgid "The previous response cannot be used by the popup builder."
+msgstr ""
+
+#. translators: %s: AI response shape detail.
+#: pro/includes/AI/PopupBuilder.php:1865
+#: pro/includes/AI/PopupBuilder.php:2129
+#: pro/includes/AI/PopupBuilder.php:2277
+#, php-format
+msgid "Problem detail: %s"
+msgstr ""
+
+#. translators: %s: clipped AI response preview.
+#: pro/includes/AI/PopupBuilder.php:1874
+#, php-format
+msgid "Previous response preview: %s"
+msgstr ""
+
+#. translators: 1: response keys. 2: popup draft keys.
+#: pro/includes/AI/PopupBuilder.php:1890
+#, php-format
+msgid "Final response format requirement: return only one valid JSON object with these top-level keys: %1$s. Do not return an empty object. If you can build a popup, popup_draft must be a complete object containing these keys: %2$s, and popup_draft.content_blocks must contain at least one supported block. If you truly cannot build a popup, set popup_draft to null and put one specific question in clarifying_question. The first non-whitespace character must be `{`. Do not include Markdown headings, bullet lists, explanations, or fenced code outside the JSON object."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2115
+msgid "Expected a single JSON object with no Markdown or prose outside it."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2116
+msgid "The AI returned an invalid popup response."
+msgstr ""
+
+#. translators: %s: JSON parser error detail.
+#: pro/includes/AI/PopupBuilder.php:2121
+#, php-format
+msgid "JSON parse detail: %s"
+msgstr ""
+
+#. translators: %s: comma-separated expected JSON keys.
+#: pro/includes/AI/PopupBuilder.php:2136
+#: pro/includes/AI/PopupBuilder.php:2292
+#, php-format
+msgid "Expected top-level keys: %s."
+msgstr ""
+
+#. translators: %s: clipped AI response preview.
+#: pro/includes/AI/PopupBuilder.php:2143
+#: pro/includes/AI/PopupBuilder.php:2299
+#, php-format
+msgid "Response preview: %s"
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2226
+msgid "The response did not include popup_draft and did not ask a clarifying_question, so there is no popup to preview or show in Popup Details."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2229
+msgid "popup_draft must be a JSON object or null."
+msgstr ""
+
+#. translators: %s: comma-separated missing popup draft keys.
+#: pro/includes/AI/PopupBuilder.php:2239
+#, php-format
+msgid "Missing popup_draft keys: %s."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2245
+msgid "popup_draft.popup_type is required so the builder knows whether to render a bar, flyout, or popup."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2249
+msgid "popup_draft.content_blocks must contain at least one supported block; otherwise the preview and Popup Details tabs are empty."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2272
+msgid "The AI returned valid JSON, but it was not a usable popup builder response."
+msgstr ""
+
+#. translators: %s: comma-separated missing response keys.
+#: pro/includes/AI/PopupBuilder.php:2285
+#, php-format
+msgid "Missing top-level keys: %s."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2340
+msgid "The response was wrapped in Markdown fences, but the fenced content was not a valid JSON object."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2344
+msgid "The response appears to be Markdown or prose instead of the required machine-readable JSON object."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2350
+msgid "The response started as a JSON object but could not be parsed. It may contain trailing prose, invalid quoting, unescaped line breaks, or truncated JSON."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2354
+msgid "The response starts with a JSON array, but the builder requires one JSON object."
+msgstr ""
+
+#. translators: %s: first non-whitespace character in the AI response.
+#: pro/includes/AI/PopupBuilder.php:2359
+#, php-format
+msgid "The response starts with \"%s\" instead of \"{\"."
+msgstr ""
+
+#. translators: %d: current maximum tool-call rounds.
+#: pro/includes/AI/PopupBuilder.php:2377
+#, php-format
+msgid "The AI popup builder reached its tool-call limit before completing the popup. Current limit: %d. Increase the Max Tool Calls setting near Timeout in AI Popup Builder settings if this model needs more tool calls for complex prompts."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2397
+msgid "The response body was empty."
+msgstr ""
+
+#. translators: %s: JSON parser error after removing Markdown fences.
+#: pro/includes/AI/PopupBuilder.php:2421
+#, php-format
+msgid "After removing Markdown fences: %s"
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2559
+msgid "I also generated a popup background and applied it to the draft."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2610
+msgid "I also generated a popup image and wired it into the draft."
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2641
+#: pro/includes/AI/PopupBuilder.php:2675
+msgid "unknown ability"
+msgstr ""
+
+#. translators: %d: number of returned popup templates.
+#: pro/includes/AI/PopupBuilder.php:2701
+#, php-format
+msgid "Returned %d templates"
+msgstr ""
+
+#. translators: %d: number of returned content blocks.
+#: pro/includes/AI/PopupBuilder.php:2706
+#, php-format
+msgid "Returned %d blocks"
+msgstr ""
+
+#. translators: %d: number of returned media items.
+#: pro/includes/AI/PopupBuilder.php:2711
+#, php-format
+msgid "Returned %d media items"
+msgstr ""
+
+#. translators: %d: validation score from 0 to 100.
+#: pro/includes/AI/PopupBuilder.php:2716
+#, php-format
+msgid "Validation score %d/100"
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2720
+msgid "Generated an image prompt"
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2724
+msgid "Prepared a popup image"
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2728
+msgid "Loaded the conversion playbook"
+msgstr ""
+
+#. translators: %s: comma-separated payload keys
+#: pro/includes/AI/PopupBuilder.php:2735
+#, php-format
+msgid "Payload keys: %s"
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2747
+msgid "Completed successfully"
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2747
+msgid "Returned false"
+msgstr ""
+
+#: pro/includes/AI/PopupBuilder.php:2754
+#: pro/includes/Experiments/Admin/ConfigMetabox.php:147
+#: pro/includes/Experiments/Admin/Init.php:1279
+msgid "Completed"
+msgstr ""
+
+#: pro/includes/AI/PopupMedia.php:340
+msgid "The WordPress AI client is not available for popup image prompts."
+msgstr ""
+
+#: pro/includes/AI/PopupMedia.php:371
+msgid "The AI client did not return an image prompt."
+msgstr ""
+
+#: pro/includes/AI/PopupMedia.php:390
+msgid "The WordPress AI client is not available for popup background prompts."
+msgstr ""
+
+#: pro/includes/AI/PopupMedia.php:422
+msgid "The AI client did not return a popup background prompt."
+msgstr ""
+
+#: pro/includes/AI/PopupMedia.php:440
+msgid "The WordPress AI client is not available for popup image generation."
+msgstr ""
+
+#: pro/includes/AI/PopupMedia.php:464
+msgid "The popup reference image is not valid base64 image data."
+msgstr ""
+
+#: pro/includes/AI/PopupMedia.php:481
+#: pro/includes/AI/PopupMedia.php:501
+msgid "No image data was generated for the popup."
+msgstr ""
+
+#: pro/includes/AI/PopupMedia.php:518
+msgid "You do not have permission to import popup images."
+msgstr ""
+
+#: pro/includes/AI/PopupMedia.php:541
+msgid "The popup image data is not valid base64."
+msgstr ""
+
+#: pro/includes/AI/PopupMedia.php:548
+msgid "The popup image data is not a valid image."
+msgstr ""
+
+#: pro/includes/AI/PopupMedia.php:556
+msgid "No popup image data was found to import."
+msgstr ""
+
+#: pro/includes/AI/PopupMedia.php:717
+msgid "The generated popup image could not be found."
+msgstr ""
+
+#: pro/includes/AI/PopupMedia.php:725
+msgid "You do not have permission to delete this popup image."
+msgstr ""
+
+#: pro/includes/AI/PopupMedia.php:733
+msgid "Only popup-builder generated images can be deleted from this panel."
+msgstr ""
+
+#: pro/includes/AI/PopupMedia.php:742
+msgid "The generated popup image could not be deleted."
+msgstr ""
+
+#: pro/includes/AI/PopupMedia.php:1035
+msgid "Popup Visual"
+msgstr ""
+
+#. translators: %s: popup title or offer
+#: pro/includes/AI/PopupMedia.php:1040
+#, php-format
+msgid "%s Image"
+msgstr ""
+
+#. translators: %s: popup title or offer
+#: pro/includes/AI/PopupMedia.php:1063
+#, php-format
+msgid "%s Background"
+msgstr ""
+
+#. translators: 1: offer text, 2: audience
+#: pro/includes/AI/PopupMedia.php:1081
+#, php-format
+msgid "%1$s visual for %2$s"
+msgstr ""
+
+#. translators: %s: popup offer
+#: pro/includes/AI/PopupMedia.php:1090
+#, php-format
+msgid "%s popup visual"
+msgstr ""
+
+#. translators: 1: offer text, 2: audience
+#: pro/includes/AI/PopupMedia.php:1111
+#, php-format
+msgid "%1$s popup background for %2$s"
+msgstr ""
+
+#. translators: %s: popup offer
+#: pro/includes/AI/PopupMedia.php:1120
+#, php-format
+msgid "%s popup background"
+msgstr ""
+
+#. translators: %s: AI provider name.
+#: pro/includes/AI/PopupMedia.php:1141
+#, php-format
+msgid "Generated by %s"
+msgstr ""
+
+#. translators: %s: AI model name.
+#: pro/includes/AI/PopupMedia.php:1143
+#, php-format
+msgid "using %s"
+msgstr ""
+
+#. translators: %s: image generation prompt.
+#: pro/includes/AI/PopupMedia.php:1145
+#, php-format
+msgid "Prompt: %s"
+msgstr ""
+
+#: pro/includes/AI/PopupMedia.php:1380
+msgid "The popup image could not be decoded from base64."
+msgstr ""
+
+#: pro/includes/AI/PopupMedia.php:1388
+msgid "A temporary file could not be created for the popup image."
+msgstr ""
+
+#: pro/includes/AI/PopupMedia.php:1397
+msgid "The popup image could not be written to a temporary file."
+msgstr ""
 
 #: pro/includes/Analytics/Metrics.php:50
 msgid "Total number of clicks made within the popup."
@@ -2227,27 +3128,43 @@ msgstr ""
 msgid "Guest"
 msgstr ""
 
-#: pro/includes/Blocks/ApplyCoupon.php:146
-#: pro/includes/Blocks/ApplyCoupon.php:151
+#: pro/includes/Blocks/ApplyCoupon.php:147
+#: pro/includes/Blocks/ApplyCoupon.php:152
 msgid "Coupon apply is unavailable on this page."
 msgstr ""
 
-#: pro/includes/Blocks/ApplyCoupon.php:149
+#: pro/includes/Blocks/ApplyCoupon.php:150
 msgid "Select a WooCommerce coupon before applying it."
 msgstr ""
 
-#: pro/includes/Blocks/ApplyCoupon.php:150
+#: pro/includes/Blocks/ApplyCoupon.php:151
 msgid "Coupon saved. It will be applied when the cart or checkout is available."
 msgstr ""
 
-#: pro/includes/Blocks/ApplyCoupon.php:152
+#: pro/includes/Blocks/ApplyCoupon.php:153
 msgid "Coupon code applied successfully."
 msgstr ""
 
 #. translators: %s is the applied coupon code.
-#: pro/includes/Blocks/ApplyCoupon.php:154
+#: pro/includes/Blocks/ApplyCoupon.php:155
 #, php-format
 msgid "Coupon code \"%s\" has been applied to your cart."
+msgstr ""
+
+#: pro/includes/Brand/Manager.php:158
+msgid "A remote URL is required for remote brand extraction."
+msgstr ""
+
+#. translators: %s: remote request error message.
+#: pro/includes/Brand/RemoteExtractor.php:39
+#, php-format
+msgid "Could not fetch the URL: %s"
+msgstr ""
+
+#. translators: %d: HTTP response status code.
+#: pro/includes/Brand/RemoteExtractor.php:51
+#, php-format
+msgid "The site responded with HTTP %d."
 msgstr ""
 
 #: pro/includes/Components/VariationPicker.php:30
@@ -2255,19 +3172,19 @@ msgid "Recovery"
 msgstr ""
 
 #: pro/includes/Components/VariationPicker.php:47
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:120
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:122
 #: src/editor/icons/default/index.js:38
 msgid "Cart"
 msgstr ""
 
 #: pro/includes/Components/VariationPicker.php:50
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:121
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:123
 msgid "Checkout"
 msgstr ""
 
 #: pro/includes/Components/VariationPicker.php:53
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:192
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:246
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:200
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:254
 #: src/blocks/coupon/editor/components/code/EditSettings.js:35
 #: src/blocks/coupon/editor/EditSettings.js:24
 msgid "Coupon"
@@ -2279,6 +3196,7 @@ msgid "FOMO"
 msgstr ""
 
 #: pro/includes/DisplayRules/WooCommerce.php:35
+#: pro/src/admin/ai-popup-builder/index.js:1811
 msgid "WooCommerce"
 msgstr ""
 
@@ -2347,6 +3265,8 @@ msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:68
 #: pro/includes/Experiments/Admin/Init.php:175
+#: pro/src/admin/ai-popup-builder/index.js:777
+#: pro/src/editor/plugins/ai-builder/Plugin.js:93
 msgid "Goal"
 msgstr ""
 
@@ -2417,13 +3337,9 @@ msgstr ""
 msgid "Paused"
 msgstr ""
 
-#: pro/includes/Experiments/Admin/ConfigMetabox.php:147
-#: pro/includes/Experiments/Admin/Init.php:1279
-msgid "Completed"
-msgstr ""
-
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:149
 #: pro/includes/Experiments/Admin/Init.php:1283
+#: pro/src/admin/ai-popup-builder/index.js:939
 msgid "Draft"
 msgstr ""
 
@@ -2858,6 +3774,7 @@ msgid "Automated rule matched"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/Init.php:1411
+#: pro/src/admin/ai-popup-builder/index.js:542
 msgid "Unknown time"
 msgstr ""
 
@@ -2918,7 +3835,7 @@ msgstr ""
 #. translators: %s is the experiment title.
 #: pro/includes/Experiments/Automation.php:510
 #, php-format
-msgid "FooConvert experiment automation update: %s"
+msgid "Experiment automation update: %s"
 msgstr ""
 
 #. translators: %s is the experiment title.
@@ -3143,11 +4060,6 @@ msgstr ""
 msgid "Mailchimp API key is required when integration is enabled"
 msgstr ""
 
-#: pro/includes/Leads/Integrations/MailchimpIntegration.php:172
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:116
-msgid "List"
-msgstr ""
-
 #: pro/includes/Leads/Integrations/MailchimpIntegration.php:173
 #: pro/includes/Leads/Integrations/MailpoetIntegration.php:117
 msgid "Select the list to which leads will be added."
@@ -3322,7 +4234,7 @@ msgid "Attribution Lookback (days)"
 msgstr ""
 
 #: pro/includes/WooCommerce/Sales.php:65
-msgid "How far back FooConvert should look for the latest qualifying click or conversion before the order was created."
+msgid "How far back sales attribution should look for the latest qualifying click or conversion before the order was created."
 msgstr ""
 
 #: pro/includes/WooCommerce/Sales.php:71
@@ -3346,7 +4258,7 @@ msgid "Allow multiple orders per session"
 msgstr ""
 
 #: pro/includes/WooCommerce/Sales.php:85
-msgid "When enabled, FooConvert will attribute each qualifying order in the same visitor session instead of limiting attribution to the first order only."
+msgid "When enabled, each qualifying order in the same visitor session can be attributed instead of limiting attribution to the first order only."
 msgstr ""
 
 #: pro/includes/WooCommerce/Triggers.php:28
@@ -3576,34 +4488,1146 @@ msgstr ""
 msgid "Views in session"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditBlock.js:69
+#: pro/src/admin/ai-popup-builder/index.js:97
+msgid "Context"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:101
+msgid "Chat"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:105
+#: pro/src/admin/ai-popup-builder/index.js:2512
+msgid "Popup Details"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:109
+#: pro/src/admin/ai-popup-builder/index.js:943
+#: pro/src/admin/ai-popup-builder/index.js:2626
+msgid "Media"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:120
+msgid "Debug"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:291
+msgid "Lead capture form included"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:295
+msgid "Primary CTA button included"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:298
+msgid "No CTA yet"
+msgstr ""
+
+#. translators: %d is the delay duration in seconds.
+#: pro/src/admin/ai-popup-builder/index.js:308
+#, js-format
+msgid "%ds delay"
+msgstr ""
+
+#. translators: %d is the scroll percentage that triggers the popup.
+#: pro/src/admin/ai-popup-builder/index.js:314
+#, js-format
+msgid "%d%% scroll"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:318
+msgid "Immediate"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:352
+#: pro/src/admin/ai-popup-builder/index.js:2416
+#: pro/src/editor/plugins/ai-builder/Plugin.js:22
+msgid "AI strategist"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:352
+#: pro/src/editor/plugins/ai-builder/Plugin.js:22
+msgid "You"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:372
+#: pro/src/editor/plugins/ai-builder/Plugin.js:135
+msgid "Conversion score"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:377
+#: pro/src/editor/plugins/ai-builder/Plugin.js:168
+msgid "Strengths"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:385
+#: pro/src/editor/plugins/ai-builder/Plugin.js:169
+msgid "Watchouts"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:393
+#: pro/src/editor/plugins/ai-builder/Plugin.js:170
+msgid "Suggestions"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:420
+#: src/popups/shared/editor/components/view-state-controls/index.js:61
+msgid "Open"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:477
+msgid "No context available yet."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:497
+msgid "Tool calls, validation runs, and builder status updates will appear here for each response."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:507
+msgid "tool result"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:521
+msgid "Working"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:529
+msgid "Result:"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:569
+msgid "Invalid AI Responses"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:571
+msgid "FooConvert debug mode stores invalid popup builder responses here so the raw model output and response contract can be inspected."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:576
+msgid "Loading..."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:576
+msgid "Refresh"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:579
+msgid "Clearing..."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:579
+msgid "Clear Responses"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:592
+msgid "Response Schema Sent To The AI Client"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:596
+msgid "JSON schema"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:608
+msgid "Loading stored invalid responses..."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:614
+msgid "No invalid AI popup builder responses have been stored yet."
+msgstr ""
+
+#. translators: %d is the response number in the debug list.
+#: pro/src/admin/ai-popup-builder/index.js:630
+#, js-format
+msgid "Stored response #%d"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:640
+msgid "Retried"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:640
+msgid "Returned error"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:651
+msgid "Attempt"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:655
+msgid "Error"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:659
+msgid "Length"
+msgstr ""
+
+#. translators: %d is the response length in bytes.
+#: pro/src/admin/ai-popup-builder/index.js:663
+#, js-format
+msgid "%d bytes"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:666
+msgid "(truncated)"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:673
+msgid "Latest user message"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:680
+msgid "Error message"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:686
+msgid "Raw AI response"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:692
+msgid "Error data"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:785
+msgid "Action"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:789
+#: src/editor/components/open-trigger-component/Component.js:674
+msgid "Trigger"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:817
+#: pro/src/admin/brand-context/components.js:310
+#: pro/src/admin/brand-context/components.js:484
+#: pro/src/admin/brand-context/components.js:573
+msgid "Primary"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:821
+#: pro/src/admin/brand-context/components.js:314
+#: pro/src/admin/brand-context/components.js:490
+msgid "Secondary"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:825
+#: pro/src/admin/brand-context/components.js:318
+#: pro/src/admin/brand-context/components.js:496
+msgid "Accent"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:829
+#: pro/src/admin/brand-context/components.js:322
+#: pro/src/admin/brand-context/components.js:502
+#: pro/src/blocks/free-shipping-progress/editor/blocks/bar/editor/Edit.js:25
+#: pro/src/blocks/free-shipping-progress/editor/blocks/bar/editor/Edit.js:96
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:257
+#: pro/src/editor/components/popup-background-generator/config.js:510
+#: src/blocks/countdown/editor/components/container/EditStyles.js:19
+#: src/blocks/countdown/editor/components/segment/EditStyles.js:26
+#: src/blocks/coupon/editor/components/code/EditStyles.js:29
+#: src/blocks/coupon/editor/components/container/EditStyles.js:26
+#: src/blocks/example-block/editor/Settings.js:43
+#: src/blocks/shared/editor/buttonStyles.js:32
+#: src/blocks/sign-up/editor/components/form/EditStyles.js:26
+#: src/blocks/sign-up/editor/components/inputs/EditStyles.js:20
+#: src/blocks/split-layout/blocks/panel/editor/EditStyles.js:115
+#: src/popups/bar/editor/blocks/container/blocks/close-button/EditStyles.js:26
+#: src/popups/bar/editor/blocks/container/blocks/content/EditStyles.js:40
+#: src/popups/bar/editor/blocks/open-button/EditStyles.js:26
+#: src/popups/flyout/editor/blocks/container/blocks/close-button/EditStyles.js:26
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:28
+#: src/popups/flyout/editor/blocks/open-button/EditStyles.js:26
+#: src/popups/overlay/editor/blocks/container/blocks/close-button/EditStyles.js:26
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:28
+msgid "Background"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:833
+#: pro/src/admin/brand-context/components.js:326
+#: pro/src/admin/brand-context/components.js:508
+msgid "Primary text"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:837
+#: pro/src/admin/brand-context/components.js:330
+#: pro/src/admin/brand-context/components.js:514
+msgid "Secondary text"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:931
+msgid "Messages"
+msgstr ""
+
+#. translators: %d is the number of conversation turns.
+#: pro/src/admin/ai-popup-builder/index.js:934
+#, js-format
+msgid "%d turns"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:940
+#: src/editor/components/variation-picker/Component.js:601
+msgid "Included"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:940
+msgid "None yet"
+msgstr ""
+
+#. translators: %d is the number of generated media items.
+#: pro/src/admin/ai-popup-builder/index.js:946
+#, js-format
+msgid "%d items"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:951
+#: pro/src/admin/ai-popup-builder/index.js:2205
+msgid "Brand"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:952
+msgid "Always attached separately"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1017
+msgid "A starter brand profile was extracted from the current site so the builder can style popups from the site itself."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1021
+msgid "Brand extraction failed. You can fill in the brand details manually and save them."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1068
+msgid "The popup draft could not be serialized into blocks."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1104
+msgid "Draft popup updated automatically. Preview or edit it whenever you want."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1105
+msgid "Draft popup created automatically. Preview it or open it in the editor."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1110
+msgid "The popup draft could not be saved."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1212
+msgid "I prepared a popup direction for you."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1280
+msgid "The AI popup builder could not complete that request."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1302
+msgid "Popup block HTML copied to the clipboard."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1305
+msgid "Could not copy the block HTML to the clipboard."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1313
+#: pro/src/admin/brand-context/index.js:75
+msgid "Enter a remote URL before starting remote brand extraction."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1341
+#: pro/src/admin/brand-context/index.js:104
+msgid "Remote brand extraction completed. The extracted values are ready to review and save."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1342
+#: pro/src/admin/brand-context/index.js:105
+msgid "Brand extraction completed. The extracted values are ready to review and save."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1348
+#: pro/src/admin/brand-context/index.js:111
+msgid "Brand extraction failed."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1375
+msgid "Brand saved for reuse. The AI builder will now use it as the main styling source."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1381
+msgid "The brand profile could not be saved."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1409
+msgid "AI Popup Builder settings saved."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1413
+msgid "The AI Popup Builder settings could not be saved."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1514
+msgid "The stored AI responses could not be loaded."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1531
+msgid "Clear all stored invalid AI popup builder responses?"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1549
+msgid "Stored invalid AI responses cleared."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1553
+msgid "The stored AI responses could not be cleared."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1566
+msgid "Generate a new popup image that fits this popup and incorporate it into the draft."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1599
+msgid "Delete this generated image from the media library?"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1630
+msgid "The generated image could not be deleted."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1666
+msgid "This account can use the current settings for chat requests but cannot save AI Popup Builder defaults."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1672
+msgid "Override model"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1696
+msgid "Increase this if complex prompts stop with the tool-call limit error."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1722
+#: pro/src/admin/ai-popup-builder/index.js:1842
+msgid "Saving…"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1722
+msgid "Save Settings"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1767
+msgid "Supported Blocks"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1774
+msgid "Choose which available blocks are included in the AI context, response schema, and block-catalog ability. Core and popup blocks are selected by default; WooCommerce starts with a popup-focused subset."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1778
+msgid "This account can inspect the selected blocks but cannot save block context defaults."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1787
+#: pro/src/admin/ai-popup-builder/index.js:1906
+#: pro/src/admin/ai-popup-builder/index.js:2245
+#: pro/src/admin/ai-popup-builder/index.js:2281
+msgid "Total"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1795
+msgid "Core"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1821
+msgid "Select visible"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1828
+msgid "Clear visible"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1835
+msgid "Reset defaults"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1842
+msgid "Save selection"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1878
+msgid "No blocks in this filter"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1879
+msgid "Try another source pill to inspect a different set of supported blocks."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1891
+msgid "Structural Templates"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1898
+msgid "Templates stay secondary to the brand. The AI can request these bundled patterns when it needs a structural guide for bars, flyouts, or popups."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1922
+#: src/editor/hooks/usePostTypeLabels.js:16
+msgid "Flyouts"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1930
+#: src/editor/hooks/usePostTypeLabels.js:12
+msgid "Bars"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1959
+msgid "No templates in this filter"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1960
+msgid "Try another template type pill to inspect a different set of structural guides."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1972
+msgid "Conversion Playbook"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1979
+msgid "This playbook is available to the AI through abilities when it needs conversion heuristics, popup-type fit, or copy tactics."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1983
+#: pro/src/admin/ai-popup-builder/index.js:2316
+msgid "Principles"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1993
+msgid "Popup Type Guidance"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2000
+msgid "Best for:"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2001
+msgid "Watchouts:"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2009
+msgid "Copy Tactics"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2025
+#: pro/src/admin/ai-popup-builder/index.js:2330
+msgid "System Prompt"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2032
+msgid "This is the default builder instruction. Per-turn image rules are appended automatically depending on whether AI image generation is enabled for that request."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2035
+msgid "Builder system instruction"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2047
+#: pro/src/admin/ai-popup-builder/index.js:2341
+msgid "Abilities"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2054
+msgid "These are the tool calls the AI can use while building or validating a popup. The builder can request them on demand during a chat turn."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2059
+msgid "Abilities API"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2060
+msgid "Available"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2060
+#: pro/src/admin/ai-popup-builder/index.js:2352
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:39
+msgid "Unavailable"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2063
+msgid "Allowed tools"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2083
+msgid "Current Request Context"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2090
+msgid "On each turn the latest user message is augmented with the current popup draft, generated media, and brand JSON. The recent message history is also sent directly."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2094
+msgid "Conversation"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2097
+msgid "No messages yet."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2101
+msgid "Current popup draft JSON"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2102
+msgid "No popup draft yet."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2106
+msgid "Current media JSON"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2107
+msgid "No generated media yet."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2126
+msgid "Use the site brand as the primary styling source, then let the builder assemble a popup with popup blocks, WooCommerce blocks, and supported core blocks."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2139
+msgid "See Preview"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2147
+msgid "Edit In New Tab"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2151
+msgid "Saving draft…"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2153
+msgid "Draft ready for preview and editing."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2154
+msgid "A draft popup will be created automatically after the AI responds."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2163
+msgid "The WordPress AI client is not configured on this site yet, so chat-based popup generation is currently unavailable."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2197
+msgid "AI Context"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2199
+msgid "This is the context available to the builder. Brand and live request data are passed directly, while blocks, templates, the playbook, and media tooling are available through abilities when the model needs them."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2206
+msgid "Saved brand data is attached to every builder request and should drive the popup styling first."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2213
+msgid "Overview"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2234
+msgid "Blocks"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2235
+msgid "The AI can inspect the installed content blocks and nesting rules before composing advanced layouts."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2249
+msgid "Sources"
+msgstr ""
+
+#. translators: %1$d selected popup blocks; %2$d available popup blocks; %3$d selected WooCommerce blocks; %4$d available WooCommerce blocks.
+#: pro/src/admin/ai-popup-builder/index.js:2252
+#, js-format
+msgid "%1$d/%2$d popup / %3$d/%4$d WooCommerce"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2270
+msgid "Templates"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2271
+msgid "Bundled templates provide structure only, not the primary styling direction."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2289
+msgid "Mix"
+msgstr ""
+
+#. translators: %1$d is the number of popup templates; %2$d is the number of flyout templates.
+#: pro/src/admin/ai-popup-builder/index.js:2292
+#, js-format
+msgid "%1$d popups / %2$d flyouts"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2308
+msgid "Playbook"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2309
+msgid "Conversion heuristics, popup-type fit, and copy tactics the model can request while planning."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2320
+msgid "Copy tactics"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2331
+msgid "Builder rules that shape how the AI should think, validate, and respond."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2342
+msgid "Available tool calls the model can use for templates, blocks, validation, media, and image generation."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2349
+msgid "Tools"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2362
+msgid "Current Request"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2363
+msgid "Recent messages are sent each turn, and the latest user prompt is augmented with the current draft and media state."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2382
+msgid "Chat Builder"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2384
+msgid "Describe the goal, offer, audience, and any structural direction. Brand data is always included automatically."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2394
+msgid "Start with a natural-language brief. Mention the conversion goal, target audience, offer, popup type if you know it, and any constraints. The builder will style from the brand first and use templates only for structure."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2431
+msgid "Describe the popup you want"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2437
+msgid "Brand extraction is still running. Wait for it to finish before sending the next request."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2438
+msgid "Tip: mention the audience, offer, trigger, and tone. Use Ctrl/Command + Enter to send."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2451
+msgid "Allow AI image generation on submit"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2457
+msgid "Disabled by default. Turn it on only when you want the AI to generate new popup imagery during the chat flow."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2458
+msgid "Image generation requires media upload permission and a connected AI provider with image support."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2479
+msgid "Generate Popup"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2488
+msgid "Activity"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2492
+msgid "While the builder is working you will see its current stage here. Completed responses also show the actual ability and tool activity used during that turn."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2514
+msgid "Review the strategy, checklist, AI guidance, and the exact popup HTML that will be stored in the draft."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2521
+msgid "Generate a popup in the chat tab first. The draft popup will be created automatically and its strategy details will appear here."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2527
+msgid "Strategy Summary"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2531
+msgid "Draft title"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2538
+msgid "The draft is saved automatically. Title changes are synced when this field loses focus."
+msgstr ""
+
+#. translators: %s is the template title used as a structural guide.
+#: pro/src/admin/ai-popup-builder/index.js:2556
+#, js-format
+msgid "Structural template guide: %s"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2566
+msgid "Conversion Checklist"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2573
+msgid "Validation results will appear here once the popup draft has been scored."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2581
+msgid "AI Guidance"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2584
+msgid "Why this should convert"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2585
+msgid "Implementation notes"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2589
+msgid "Ask the AI to explain the conversion strategy or refine the popup for another audience, trigger, or offer."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2599
+msgid "Popup HTML"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2628
+msgid "Generate supporting images, apply them to the current popup draft, or remove them from the media library."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2637
+msgid "Generate Image"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2647
+msgid "New image direction"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2650
+msgid "Optional. Describe a product shot, scene, mood, or art direction for the next generated popup image."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2664
+#: pro/src/editor/plugins/ai-builder/Plugin.js:53
+msgid "Generated popup image"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2674
+msgid "Use In Popup"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2678
+#: pro/src/admin/brand-context/components.js:250
+msgid "Edit"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2687
+msgid "Deleting…"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2697
+msgid "Generate a popup image here, or let the AI create one during chat when image generation is enabled."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2698
+msgid "Generate a popup draft first, then create matching images for it here."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2704
+msgid "This user account cannot upload media, so popup image generation and import are unavailable."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2721
+msgid "Live Popup Preview"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2735
+msgid "Open Preview In New Tab"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2738
+msgid "Edit Draft"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2746
+msgid "Loading live preview…"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:2751
+msgid "Popup preview"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/preview.js:107
+msgid "Your name"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/preview.js:114
+msgid "Enter your email"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/preview.js:166
+msgid "Call to action"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/preview.js:194
+msgid "Image placeholder"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/preview.js:214
+msgid "Your popup preview will appear here as soon as the AI produces a draft."
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/preview.js:254
+#: src/editor/components/inner-blocks-button/Component.js:130
+#: src/editor/components/variation-picker/Component.js:845
+#: src/editor/icons/default/index.js:43
+msgid "Close"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:180
+#: pro/src/admin/brand-context/components.js:530
+msgid "Dark"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:181
+#: pro/src/admin/brand-context/components.js:526
+#: src/editor/components/font-appearance-control/Component.js:20
+msgid "Light"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:250
+#: src/scripts/admin/display-rules-list/index.js:351
+msgid "Save"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:343
+msgid "Brand context gives popup tools shared colors, typography, spacing, and button styling for generated and assisted experiences."
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:368
+#: pro/src/admin/brand-context/components.js:405
+msgid "Extracting..."
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:368
+msgid "Extract Current Site"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:375
+msgid "Hide Remote URL"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:375
+msgid "Extract Remote URL"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:382
+msgid "Saving..."
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:382
+msgid "Save Brand"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:393
+msgid "Remote URL"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:405
+msgid "Run Remote Extract"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:410
+msgid "Optional. Use this when you want to extract brand details from another live URL instead of the current site."
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:420
+#: pro/src/admin/brand-context/components.js:435
+msgid "Brand Overview"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:427
+msgid "Add a short brand overview so generated popups have tone and positioning context."
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:438
+msgid "This starts from the site tagline on first run and gives generated popups tone and positioning context."
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:448
+msgid "Palette"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:456
+msgid "scheme"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:476
+msgid "Extract or set the core brand colors to guide popup styling."
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:521
+msgid "Color scheme"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:542
+#: src/editor/components/typography-tools-panel/Component.js:118
+msgid "Typography"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:556
+msgid "Headline Sample"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:566
+msgid "Body copy sample for popup descriptions, proof points, and CTA support text."
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:581
+#: pro/src/admin/brand-context/components.js:613
+msgid "H1 size"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:585
+#: pro/src/admin/brand-context/components.js:620
+msgid "Body size"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:589
+msgid "Weights"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:599
+msgid "Primary font family"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:606
+msgid "Heading font family"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:627
+msgid "Regular weight"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:635
+msgid "Bold weight"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:647
+#: pro/src/editor/components/popup-background-generator/Component.js:579
+msgid "Controls"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:654
+msgid "Primary CTA"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:657
+msgid "Secondary CTA"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:664
+msgid "Base unit"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:668
+#: src/editor/components/border-tools-panel/Component.js:95
+#: src/editor/components/border-tools-panel/Component.js:100
+msgid "Radius"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:672
+msgid "Primary button"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:676
+msgid "Secondary border"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:686
+msgid "Base spacing unit"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:694
+msgid "Global border radius"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:702
+msgid "Primary button background"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:708
+msgid "Primary button text"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:713
+msgid "Primary button radius"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:721
+msgid "Secondary button background"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:727
+msgid "Secondary button text"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:733
+msgid "Secondary button border"
+msgstr ""
+
+#: pro/src/admin/brand-context/components.js:738
+msgid "Secondary button radius"
+msgstr ""
+
+#: pro/src/admin/brand-context/index.js:139
+msgid "Brand context saved for reuse across popup tools."
+msgstr ""
+
+#: pro/src/admin/brand-context/index.js:145
+msgid "The brand context could not be saved."
+msgstr ""
+
+#: pro/src/blocks/apply-coupon/editor/EditBlock.js:71
 #: src/blocks/coupon/editor/components/button/EditBlock.js:62
 #: src/blocks/coupon/editor/EditBlock.js:38
 #: src/blocks/sign-up/editor/components/button/EditBlock.js:72
 msgid "Add text..."
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditBlock.js:76
+#: pro/src/blocks/apply-coupon/editor/EditBlock.js:78
 msgid "Select a coupon in the sidebar..."
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:61
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:63
 #: src/blocks/coupon/editor/components/container/EditSettings.js:18
 #: src/blocks/sign-up/editor/components/form/EditSettings.js:18
 msgid "Row"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:65
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:67
 #: src/blocks/coupon/editor/components/container/EditSettings.js:22
 #: src/blocks/sign-up/editor/components/form/EditSettings.js:22
 msgid "Stack"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:71
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:179
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:73
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:187
 #: src/blocks/coupon/editor/components/code/EditSettings.js:21
 #: src/blocks/coupon/editor/components/container/EditSettings.js:31
 #: src/blocks/sign-up/editor/components/button/EditSettings.js:23
+#: src/blocks/split-layout/blocks/panel/editor/EditStyles.js:42
+#: src/blocks/split-layout/editor/EditSettings.js:96
 #: src/editor/components/box-units-control/Component.js:30
 #: src/popups/bar/editor/blocks/container/blocks/close-button/EditSettings.js:24
 #: src/popups/bar/editor/blocks/open-button/EditSettings.js:21
@@ -3613,21 +5637,26 @@ msgstr ""
 msgid "Left"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:75
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:183
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:77
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:191
 #: pro/src/editor/components/popup-background-generator/config.js:724
 #: src/blocks/coupon/editor/components/code/EditSettings.js:25
 #: src/blocks/coupon/editor/components/container/EditSettings.js:35
 #: src/blocks/sign-up/editor/components/button/EditSettings.js:27
+#: src/blocks/split-layout/blocks/panel/editor/EditStyles.js:29
+#: src/blocks/split-layout/blocks/panel/editor/EditStyles.js:47
+#: src/blocks/split-layout/editor/EditSettings.js:47
 #: src/popups/flyout/editor/components/position-control/Component.js:59
 msgid "Center"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:79
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:187
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:81
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:195
 #: src/blocks/coupon/editor/components/code/EditSettings.js:29
 #: src/blocks/coupon/editor/components/container/EditSettings.js:39
 #: src/blocks/sign-up/editor/components/button/EditSettings.js:31
+#: src/blocks/split-layout/blocks/panel/editor/EditStyles.js:52
+#: src/blocks/split-layout/editor/EditSettings.js:100
 #: src/editor/components/box-units-control/Component.js:28
 #: src/popups/bar/editor/blocks/container/blocks/close-button/EditSettings.js:28
 #: src/popups/bar/editor/blocks/open-button/EditSettings.js:25
@@ -3637,128 +5666,128 @@ msgstr ""
 msgid "Right"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:86
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:88
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:234
 #: src/blocks/coupon/editor/components/button/EditSettings.js:28
-#: src/blocks/coupon/editor/components/container/EditSettings.js:68
+#: src/blocks/coupon/editor/components/container/EditSettings.js:70
 #: src/blocks/sign-up/editor/components/button/EditSettings.js:70
 #: src/blocks/sign-up/editor/components/form/EditSettings.js:39
+#: src/blocks/split-layout/blocks/panel/editor/EditStyles.js:86
+#: src/blocks/split-layout/editor/EditSettings.js:87
 msgid "Layout"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:91
-#: src/blocks/coupon/editor/components/container/EditSettings.js:73
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:93
+#: src/blocks/coupon/editor/components/container/EditSettings.js:75
 msgid "The overall layout of elements in the coupon."
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:94
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:194
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:96
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:202
 #: src/blocks/coupon/editor/components/code/EditSettings.js:37
-#: src/blocks/coupon/editor/components/container/EditSettings.js:76
+#: src/blocks/coupon/editor/components/container/EditSettings.js:78
 msgid "Text Align"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:99
-#: src/blocks/coupon/editor/components/container/EditSettings.js:81
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:101
+#: src/blocks/coupon/editor/components/container/EditSettings.js:83
 msgid "The general text alignment within the coupon."
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:102
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:104
 msgid "Close on apply"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:103
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:105
 msgid "Close the parent popup after the coupon is applied or queued for handoff."
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:109
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:111
 msgid "Redirect on apply"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:110
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:112
 msgid "Redirect after the coupon is applied or queued for handoff."
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:117
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:119
 msgid "Redirect destination"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:122
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:124
 #: pro/src/editor/components/popup-background-generator/config.js:493
 #: src/editor/components/size-control/Component.js:53
 msgid "Custom"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:131
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:133
 msgid "Custom redirect URL"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:134
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:136
 msgid "The URL to redirect to after the coupon is applied."
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:140
-#: src/blocks/coupon/editor/components/container/EditSettings.js:120
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:142
+#: src/blocks/coupon/editor/components/container/EditSettings.js:122
 msgid "Hide label"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:141
-#: src/blocks/coupon/editor/components/container/EditSettings.js:121
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:143
+#: src/blocks/coupon/editor/components/container/EditSettings.js:123
 msgid "Hide the label for the coupon."
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:199
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:149
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:236
+#: src/blocks/coupon/editor/components/container/EditSettings.js:129
+msgid "Fill available width"
+msgstr ""
+
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:207
 #: src/blocks/coupon/editor/components/code/EditSettings.js:42
 msgid "The text alignment for the coupon code."
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:208
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:216
 msgid "Search published WooCommerce coupons by code."
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:209
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:217
 msgid "WooCommerce must be active to search for coupons."
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:213
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:221
 msgid "Override Applied Text"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:216
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:224
 msgid "If supplied, this text will be applied instead of the visible coupon code."
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:221
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:229
 #: src/blocks/sign-up/editor/components/form/EditSettings.js:47
 msgid "Success Message"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:224
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:232
 msgid "If supplied, this message is shown briefly after the coupon is applied successfully."
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:229
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:237
 msgid "Friendly Error Message"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:232
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:240
 msgid "If supplied, this message replaces the WooCommerce error shown when the coupon apply fails."
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:243
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:251
 #: src/blocks/coupon/editor/EditSettings.js:21
 msgid "Block"
 msgstr ""
 
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:249
-#: src/blocks/coupon/editor/components/button/EditSettings.js:26
-#: src/blocks/coupon/editor/EditSettings.js:27
-#: src/blocks/sign-up/editor/components/button/EditSettings.js:68
-#: src/blocks/sign-up/editor/EditSettings.js:24
-msgid "Button"
-msgstr ""
-
-#: pro/src/blocks/apply-coupon/editor/EditSettings.js:258
-#: pro/src/blocks/free-shipping-text/editor/Edit.js:50
+#: pro/src/blocks/apply-coupon/editor/EditSettings.js:266
 #: src/blocks/countdown/editor/EditSettings.js:30
 #: src/blocks/coupon/editor/EditSettings.js:36
 #: src/blocks/sign-up/editor/EditSettings.js:33
@@ -3785,171 +5814,183 @@ msgstr ""
 msgid "No frontend UI. Plays a confetti effect when the parent popup opens."
 msgstr ""
 
-#: pro/src/blocks/free-shipping-bar/editor/Edit.js:135
-msgid "Display"
+#: pro/src/blocks/free-shipping-progress/editor/blocks/bar/editor/Edit.js:31
+#: pro/src/blocks/free-shipping-progress/editor/blocks/bar/editor/Edit.js:102
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:263
+#: src/blocks/countdown/editor/components/segment/EditStyles.js:31
+#: src/blocks/coupon/editor/components/code/EditStyles.js:34
+#: src/blocks/coupon/editor/components/container/EditStyles.js:31
+#: src/blocks/example-block/editor/Settings.js:49
+#: src/blocks/shared/editor/buttonStyles.js:37
+#: src/blocks/sign-up/editor/components/form/EditStyles.js:31
+#: src/blocks/sign-up/editor/components/inputs/EditStyles.js:25
+#: src/blocks/split-layout/blocks/panel/editor/EditStyles.js:121
+#: src/popups/bar/editor/blocks/container/blocks/content/EditStyles.js:45
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:33
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:33
+msgid "Text"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-bar/editor/Edit.js:137
-msgid "Show percent"
+#: pro/src/blocks/free-shipping-progress/editor/blocks/bar/editor/Edit.js:74
+msgid "Spacing"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-bar/editor/Edit.js:142
-msgid "Show the rounded progress percentage inside the fill when progress is known."
-msgstr ""
-
-#: pro/src/blocks/free-shipping-bar/editor/Edit.js:149
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:107
-#: src/blocks/countdown/editor/EditSettings.js:18
-msgid "Container"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-bar/editor/Edit.js:156
-msgid "Track"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-bar/editor/Edit.js:163
+#: pro/src/blocks/free-shipping-progress/editor/blocks/bar/editor/Edit.js:200
 msgid "Fill"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:46
-msgid "Preview"
+#: pro/src/blocks/free-shipping-progress/editor/blocks/bar/editor/Edit.js:204
+#: src/editor/icons/default/index.js:50
+msgid "Percent"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:48
-msgid "Preview state"
+#: pro/src/blocks/free-shipping-progress/editor/blocks/bar/editor/Edit.js:211
+msgid "Display"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:52
-msgid "Preview state templates without saving a runtime state."
+#: pro/src/blocks/free-shipping-progress/editor/blocks/bar/editor/Edit.js:213
+msgid "Show percent"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:54
+#: pro/src/blocks/free-shipping-progress/editor/blocks/bar/editor/Edit.js:218
+msgid "Show the rounded progress percentage inside the fill when progress is known."
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/blocks/content/editor/Edit.js:11
+msgid "Locked Content"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/blocks/content/editor/Edit.js:12
+msgid "Almost Content"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/blocks/content/editor/Edit.js:13
+msgid "Unlocked Content"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/blocks/content/editor/Edit.js:14
+msgid "Unavailable Content"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/blocks/content/editor/Edit.js:17
+msgid "Free Shipping Content"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:24
 msgid "Locked"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:55
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:25
+msgid "Shown when the shopper has a cart subtotal, but they are still well below the free shipping threshold."
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:29
 msgid "Almost"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:56
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:30
+msgid "Shown when the shopper is close to the threshold and you want to increase urgency before they unlock free shipping."
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:34
 msgid "Unlocked"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:57
-msgid "Unavailable"
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:35
+msgid "Shown once the cart subtotal meets or exceeds the free shipping threshold."
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:62
-msgid "Frontend remains in the unavailable state until a valid threshold amount is configured."
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:40
+msgid "Fallback state used when the block cannot calculate progress, usually because the threshold or cart totals are unavailable."
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:66
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:95
+msgid "Preview State"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:99
+msgid "Preview state"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:145
 msgid "Rules"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:68
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:147
 msgid "Free shipping threshold"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:71
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:150
 msgid "Merchant-entered decimal amount, for example 50 or 50.00."
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:76
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:155
+msgid "Threshold warning"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:181
+msgid "Threshold required"
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:184
+msgid "Frontend remains in the unavailable state until a valid threshold amount is configured."
+msgstr ""
+
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:190
 msgid "Almost there percentage"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:83
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:197
 msgid "Switch to the almost-there state when progress reaches this percentage."
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:87
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:201
 msgid "Round totals"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:88
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:202
 msgid "Round displayed amounts to whole currency values, for example 39.80 to 40."
 msgstr ""
 
-#: pro/src/blocks/free-shipping-state/editor/Edit.js:9
-msgid "Locked State"
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:210
+msgid "Show in locked state"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-state/editor/Edit.js:10
-msgid "Almost State"
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:216
+msgid "Show in almost state"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-state/editor/Edit.js:11
-msgid "Unlocked State"
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:222
+msgid "Show in unlocked state"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-state/editor/Edit.js:12
-msgid "Unavailable State"
+#: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:228
+msgid "Show in unavailable state"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-state/editor/Edit.js:15
-msgid "Free Shipping State"
+#: pro/src/blocks/free-shipping-progress/editor/formats/placeholder/index.js:30
+msgid "Remaining amount"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-text/editor/Edit.js:22
-msgid "Paragraph"
+#: pro/src/blocks/free-shipping-progress/editor/formats/placeholder/index.js:34
+msgid "Threshold amount"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-text/editor/Edit.js:23
-msgid "Heading 1"
+#: pro/src/blocks/free-shipping-progress/editor/formats/placeholder/index.js:38
+msgid "Cart subtotal"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-text/editor/Edit.js:24
-msgid "Heading 2"
+#: pro/src/blocks/free-shipping-progress/editor/formats/placeholder/index.js:42
+msgid "Progress percent"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-text/editor/Edit.js:25
-msgid "Heading 3"
+#: pro/src/blocks/free-shipping-progress/editor/formats/placeholder/index.js:85
+#: src/blocks/sign-up/editor/components/inputs/EditStyles.js:28
+msgid "Placeholder"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-text/editor/Edit.js:26
-msgid "Heading 4"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-text/editor/Edit.js:27
-msgid "Heading 5"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-text/editor/Edit.js:28
-msgid "Heading 6"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-text/editor/Edit.js:29
-msgid "Division"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-text/editor/Edit.js:30
-msgid "Span"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-text/editor/Edit.js:131
-msgid "Markup"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-text/editor/Edit.js:133
-msgid "HTML tag"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-text/editor/Edit.js:139
-msgid "Wrap the resolved text in a semantic HTML tag."
-msgstr ""
-
-#: pro/src/blocks/free-shipping-text/editor/Edit.js:143
-msgid "Tokens"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-text/editor/Edit.js:144
-msgid "Supported tokens: {remaining}, {threshold}, {subtotal}, {progress_percent}."
-msgstr ""
-
-#: pro/src/blocks/free-shipping-text/editor/Edit.js:157
-#: pro/src/blocks/free-shipping-text/editor/Edit.js:164
-msgid "Add free shipping text with tokens…"
+#: pro/src/blocks/free-shipping-progress/editor/formats/placeholder/index.js:112
+msgid "Free shipping placeholder"
 msgstr ""
 
 #: pro/src/editor/components/popup-background-generator/Component.js:39
@@ -4016,6 +6057,8 @@ msgstr ""
 
 #: pro/src/editor/components/popup-background-generator/Component.js:478
 #: src/blocks/sign-up/editor/components/button/EditSettings.js:88
+#: src/popups/bar/editor/blocks/container/blocks/content/EditStyles.js:82
+#: src/popups/bar/editor/size-controls.js:75
 #: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:70
 #: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:75
 #: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:70
@@ -4043,10 +6086,6 @@ msgstr ""
 
 #: pro/src/editor/components/popup-background-generator/Component.js:557
 msgid "+ Add color"
-msgstr ""
-
-#: pro/src/editor/components/popup-background-generator/Component.js:579
-msgid "Controls"
 msgstr ""
 
 #: pro/src/editor/components/popup-background-generator/Component.js:587
@@ -4083,26 +6122,6 @@ msgstr ""
 
 #: pro/src/editor/components/popup-background-generator/config.js:488
 msgid "Banner 3:1"
-msgstr ""
-
-#: pro/src/editor/components/popup-background-generator/config.js:510
-#: src/blocks/countdown/editor/components/container/EditStyles.js:19
-#: src/blocks/countdown/editor/components/segment/EditStyles.js:26
-#: src/blocks/coupon/editor/components/code/EditStyles.js:29
-#: src/blocks/coupon/editor/components/container/EditStyles.js:26
-#: src/blocks/example-block/editor/Settings.js:43
-#: src/blocks/shared/editor/buttonStyles.js:32
-#: src/blocks/sign-up/editor/components/form/EditStyles.js:26
-#: src/blocks/sign-up/editor/components/inputs/EditStyles.js:20
-#: src/popups/bar/editor/blocks/container/blocks/close-button/EditStyles.js:26
-#: src/popups/bar/editor/blocks/container/blocks/content/EditStyles.js:24
-#: src/popups/bar/editor/blocks/open-button/EditStyles.js:26
-#: src/popups/flyout/editor/blocks/container/blocks/close-button/EditStyles.js:26
-#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:28
-#: src/popups/flyout/editor/blocks/open-button/EditStyles.js:26
-#: src/popups/overlay/editor/blocks/container/blocks/close-button/EditStyles.js:26
-#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:28
-msgid "Background"
 msgstr ""
 
 #: pro/src/editor/components/popup-background-generator/config.js:511
@@ -4279,7 +6298,87 @@ msgstr ""
 #: src/editor/components/icon-tools-panel/Component.js:19
 #: src/editor/components/typography-tools-panel/Component.js:139
 #: src/editor/components/typography-tools-panel/Component.js:144
+#: src/popups/bar/editor/blocks/container/EditSettings.js:38
+#: src/popups/bar/editor/EditSettings.js:61
 msgid "Size"
+msgstr ""
+
+#: pro/src/editor/plugins/ai-builder/Plugin.js:55
+msgid "Edit media"
+msgstr ""
+
+#: pro/src/editor/plugins/ai-builder/Plugin.js:97
+msgid "Audience"
+msgstr ""
+
+#: pro/src/editor/plugins/ai-builder/Plugin.js:105
+msgid "Template"
+msgstr ""
+
+#: pro/src/editor/plugins/ai-builder/Plugin.js:111
+msgid "AI Builder"
+msgstr ""
+
+#: pro/src/editor/plugins/ai-builder/Plugin.js:116
+msgid "Generated with AI Popup Builder"
+msgstr ""
+
+#. translators: %s is the formatted date and time when the popup draft was saved.
+#: pro/src/editor/plugins/ai-builder/Plugin.js:121
+#, js-format
+msgid "Saved %s"
+msgstr ""
+
+#: pro/src/editor/plugins/ai-builder/Plugin.js:128
+msgid "Open builder"
+msgstr ""
+
+#: pro/src/editor/plugins/ai-builder/Plugin.js:142
+msgid "Saved strategy"
+msgstr ""
+
+#: pro/src/editor/plugins/ai-builder/Plugin.js:156
+msgid "Builder summary"
+msgstr ""
+
+#: pro/src/editor/plugins/ai-builder/Plugin.js:163
+msgid "Clarifying question"
+msgstr ""
+
+#: pro/src/editor/plugins/ai-builder/Plugin.js:174
+msgid "Recent transcript"
+msgstr ""
+
+#: pro/src/editor/plugins/ai-builder/Plugin.js:185
+msgid "Suggested next prompts"
+msgstr ""
+
+#: pro/src/editor/plugins/ai-builder/Plugin.js:198
+msgid "Generated media"
+msgstr ""
+
+#: pro/src/editor/plugins/free-shipping-progress-validation/Plugin.js:126
+msgid "Free Shipping Progress"
+msgstr ""
+
+#: pro/src/editor/plugins/free-shipping-progress-validation/Plugin.js:133
+msgid "Threshold"
+msgstr ""
+
+#: pro/src/editor/plugins/free-shipping-progress-validation/Plugin.js:136
+msgid "50.00"
+msgstr ""
+
+#: pro/src/editor/plugins/free-shipping-progress-validation/Plugin.js:140
+msgid "Enter a valid amount to enable the block before saving or publishing."
+msgstr ""
+
+#: pro/src/editor/plugins/free-shipping-progress-validation/Plugin.js:141
+msgid "Enter a valid amount for the selected free shipping block before saving or publishing."
+msgstr ""
+
+#: pro/src/editor/plugins/free-shipping-progress-validation/Plugin.js:142
+msgid "Set the threshold amount used by the free shipping progress block."
 msgstr ""
 
 #: src/blocks/countdown/editor/components/container/EditSettings.js:27
@@ -4305,6 +6404,7 @@ msgid "Persist"
 msgstr ""
 
 #: src/blocks/countdown/editor/components/container/EditSettings.js:78
+#: src/popups/bar/editor/size-controls.js:66
 msgid "Mode"
 msgstr ""
 
@@ -4374,25 +6474,16 @@ msgstr ""
 msgid "Segment"
 msgstr ""
 
-#: src/blocks/countdown/editor/components/segment/EditStyles.js:31
-#: src/blocks/coupon/editor/components/code/EditStyles.js:34
-#: src/blocks/coupon/editor/components/container/EditStyles.js:31
-#: src/blocks/example-block/editor/Settings.js:49
-#: src/blocks/shared/editor/buttonStyles.js:37
-#: src/blocks/sign-up/editor/components/form/EditStyles.js:31
-#: src/blocks/sign-up/editor/components/inputs/EditStyles.js:25
-#: src/popups/bar/editor/blocks/container/blocks/content/EditStyles.js:29
-#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:33
-#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:33
-msgid "Text"
-msgstr ""
-
 #: src/blocks/countdown/editor/components/segment/EditStyles.js:34
 msgid "Digits"
 msgstr ""
 
 #: src/blocks/countdown/editor/components/segment/EditStyles.js:60
 msgid "Typography (Digits)"
+msgstr ""
+
+#: src/blocks/countdown/editor/EditSettings.js:18
+msgid "Container"
 msgstr ""
 
 #: src/blocks/coupon/editor/components/button/EditSettings.js:33
@@ -4441,35 +6532,35 @@ msgstr ""
 msgid "Inner Padding"
 msgstr ""
 
-#: src/blocks/coupon/editor/components/container/EditSettings.js:84
+#: src/blocks/coupon/editor/components/container/EditSettings.js:86
 msgid "Copied Message"
 msgstr ""
 
-#: src/blocks/coupon/editor/components/container/EditSettings.js:87
+#: src/blocks/coupon/editor/components/container/EditSettings.js:89
 msgid "A short message displayed after the coupon is copied."
 msgstr ""
 
-#: src/blocks/coupon/editor/components/container/EditSettings.js:93
+#: src/blocks/coupon/editor/components/container/EditSettings.js:95
 msgid "Close on copy"
 msgstr ""
 
-#: src/blocks/coupon/editor/components/container/EditSettings.js:94
+#: src/blocks/coupon/editor/components/container/EditSettings.js:96
 msgid "Close the parent popup after the coupon is copied."
 msgstr ""
 
-#: src/blocks/coupon/editor/components/container/EditSettings.js:102
+#: src/blocks/coupon/editor/components/container/EditSettings.js:104
 msgid "Redirect on copy"
 msgstr ""
 
-#: src/blocks/coupon/editor/components/container/EditSettings.js:103
+#: src/blocks/coupon/editor/components/container/EditSettings.js:105
 msgid "Redirect to the supplied URL after the coupon is copied."
 msgstr ""
 
-#: src/blocks/coupon/editor/components/container/EditSettings.js:111
+#: src/blocks/coupon/editor/components/container/EditSettings.js:113
 msgid "Redirect URL"
 msgstr ""
 
-#: src/blocks/coupon/editor/components/container/EditSettings.js:114
+#: src/blocks/coupon/editor/components/container/EditSettings.js:116
 msgid "The URL to redirect to after the coupon is copied."
 msgstr ""
 
@@ -4490,55 +6581,67 @@ msgid "Text before icon"
 msgstr ""
 
 #: src/blocks/shared/editor/button.js:30
+#: src/blocks/split-layout/editor/EditSettings.js:19
 #: src/editor/components/dimension-tools-panel/Component.js:94
 #: src/editor/components/icon-tools-panel/Component.js:74
 #: src/editor/components/typography-tools-panel/Component.js:33
+#: src/popups/bar/editor/size-controls.js:27
 #: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:84
 #: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:84
 msgid "S"
 msgstr ""
 
 #: src/blocks/shared/editor/button.js:31
+#: src/blocks/split-layout/editor/EditSettings.js:20
 #: src/editor/components/dimension-tools-panel/Component.js:95
 #: src/editor/components/icon-tools-panel/Component.js:75
 #: src/editor/components/typography-tools-panel/Component.js:34
+#: src/popups/bar/editor/size-controls.js:28
 #: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:85
 #: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:85
 msgid "Small"
 msgstr ""
 
 #: src/blocks/shared/editor/button.js:34
+#: src/blocks/split-layout/editor/EditSettings.js:24
 #: src/editor/components/dimension-tools-panel/Component.js:100
 #: src/editor/components/icon-tools-panel/Component.js:78
 #: src/editor/components/typography-tools-panel/Component.js:39
+#: src/popups/bar/editor/size-controls.js:32
 #: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:88
 #: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:88
 msgid "M"
 msgstr ""
 
 #: src/blocks/shared/editor/button.js:35
+#: src/blocks/split-layout/editor/EditSettings.js:25
 #: src/editor/components/dimension-tools-panel/Component.js:101
 #: src/editor/components/font-appearance-control/Component.js:28
 #: src/editor/components/icon-tools-panel/Component.js:79
 #: src/editor/components/typography-tools-panel/Component.js:40
+#: src/popups/bar/editor/size-controls.js:33
 #: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:89
 #: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:89
 msgid "Medium"
 msgstr ""
 
 #: src/blocks/shared/editor/button.js:38
+#: src/blocks/split-layout/editor/EditSettings.js:29
 #: src/editor/components/dimension-tools-panel/Component.js:106
 #: src/editor/components/icon-tools-panel/Component.js:82
 #: src/editor/components/typography-tools-panel/Component.js:45
+#: src/popups/bar/editor/size-controls.js:37
 #: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:92
 #: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:92
 msgid "L"
 msgstr ""
 
 #: src/blocks/shared/editor/button.js:39
+#: src/blocks/split-layout/editor/EditSettings.js:30
 #: src/editor/components/dimension-tools-panel/Component.js:107
 #: src/editor/components/icon-tools-panel/Component.js:83
 #: src/editor/components/typography-tools-panel/Component.js:46
+#: src/popups/bar/editor/size-controls.js:38
 #: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:93
 #: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:93
 msgid "Large"
@@ -4548,6 +6651,7 @@ msgstr ""
 #: src/editor/components/dimension-tools-panel/Component.js:112
 #: src/editor/components/icon-tools-panel/Component.js:86
 #: src/editor/components/typography-tools-panel/Component.js:51
+#: src/popups/bar/editor/size-controls.js:42
 #: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:96
 #: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:96
 msgid "XL"
@@ -4557,12 +6661,14 @@ msgstr ""
 #: src/editor/components/dimension-tools-panel/Component.js:113
 #: src/editor/components/icon-tools-panel/Component.js:87
 #: src/editor/components/typography-tools-panel/Component.js:52
+#: src/popups/bar/editor/size-controls.js:43
 #: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:97
 #: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:97
 msgid "Extra Large"
 msgstr ""
 
 #: src/blocks/sign-up/editor/components/button/EditSettings.js:40
+#: src/popups/bar/editor/size-controls.js:22
 #: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:80
 #: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:80
 msgid "Fit"
@@ -4586,10 +6692,10 @@ msgstr ""
 
 #: src/blocks/sign-up/editor/components/button/EditSettings.js:80
 #: src/popups/bar/editor/blocks/container/blocks/close-button/EditSettings.js:34
-#: src/popups/bar/editor/blocks/container/EditSettings.js:26
-#: src/popups/bar/editor/blocks/container/EditSettings.js:29
+#: src/popups/bar/editor/blocks/container/EditSettings.js:28
+#: src/popups/bar/editor/blocks/container/EditSettings.js:31
 #: src/popups/bar/editor/blocks/open-button/EditSettings.js:31
-#: src/popups/bar/editor/EditSettings.js:29
+#: src/popups/bar/editor/EditSettings.js:53
 #: src/popups/flyout/editor/blocks/container/blocks/close-button/EditSettings.js:32
 #: src/popups/flyout/editor/blocks/container/blocks/close-button/EditSettings.js:35
 #: src/popups/flyout/editor/blocks/container/EditSettings.js:23
@@ -4673,8 +6779,49 @@ msgstr ""
 msgid "Display labels above the input elements."
 msgstr ""
 
-#: src/blocks/sign-up/editor/components/inputs/EditStyles.js:28
-msgid "Placeholder"
+#: src/blocks/split-layout/blocks/panel/editor/EditStyles.js:24
+#: src/blocks/split-layout/editor/EditSettings.js:42
+#: src/editor/components/box-units-control/Component.js:27
+#: src/popups/bar/editor/components/position-control/Component.js:20
+#: src/popups/flyout/editor/components/position-control/Component.js:55
+msgid "Top"
+msgstr ""
+
+#: src/blocks/split-layout/blocks/panel/editor/EditStyles.js:34
+#: src/blocks/split-layout/editor/EditSettings.js:52
+#: src/editor/components/box-units-control/Component.js:29
+#: src/popups/bar/editor/components/position-control/Component.js:24
+#: src/popups/flyout/editor/components/position-control/Component.js:63
+msgid "Bottom"
+msgstr ""
+
+#: src/blocks/split-layout/blocks/panel/editor/EditStyles.js:57
+#: src/blocks/split-layout/editor/EditSettings.js:57
+msgid "Stretch"
+msgstr ""
+
+#: src/blocks/split-layout/blocks/panel/editor/EditStyles.js:89
+#: src/popups/flyout/editor/components/position-control/Component.js:78
+msgid "Vertical"
+msgstr ""
+
+#: src/blocks/split-layout/blocks/panel/editor/EditStyles.js:98
+#: src/popups/bar/editor/blocks/container/blocks/close-button/EditSettings.js:37
+#: src/popups/bar/editor/blocks/open-button/EditSettings.js:34
+#: src/popups/flyout/editor/components/position-control/Component.js:71
+msgid "Horizontal"
+msgstr ""
+
+#: src/blocks/split-layout/editor/EditSettings.js:90
+msgid "Fixed side"
+msgstr ""
+
+#: src/blocks/split-layout/editor/EditSettings.js:107
+msgid "Fixed width"
+msgstr ""
+
+#: src/blocks/split-layout/editor/EditSettings.js:116
+msgid "Vertical alignment"
 msgstr ""
 
 #: src/editor/components/background-image-panel/utils/backgroundSizeHelpText.js:5
@@ -4722,23 +6869,18 @@ msgstr ""
 msgid "Mixed"
 msgstr ""
 
-#: src/editor/components/border-tools-panel/Component.js:65
+#: src/editor/components/border-tools-panel/Component.js:67
 msgid "Border & Shadow"
 msgstr ""
 
-#: src/editor/components/border-tools-panel/Component.js:65
-#: src/editor/components/border-tools-panel/Component.js:73
-#: src/editor/components/border-tools-panel/Component.js:78
+#: src/editor/components/border-tools-panel/Component.js:67
+#: src/editor/components/border-tools-panel/Component.js:75
+#: src/editor/components/border-tools-panel/Component.js:80
 msgid "Border"
 msgstr ""
 
-#: src/editor/components/border-tools-panel/Component.js:92
-#: src/editor/components/border-tools-panel/Component.js:97
-msgid "Radius"
-msgstr ""
-
-#: src/editor/components/border-tools-panel/Component.js:106
-#: src/editor/components/border-tools-panel/Component.js:111
+#: src/editor/components/border-tools-panel/Component.js:109
+#: src/editor/components/border-tools-panel/Component.js:114
 msgid "Shadow"
 msgstr ""
 
@@ -4772,18 +6914,6 @@ msgstr ""
 
 #: src/editor/components/box-shadow-control/components/presets-dropdown/Component.js:85
 msgid "Box shadow"
-msgstr ""
-
-#: src/editor/components/box-units-control/Component.js:27
-#: src/popups/bar/editor/components/position-control/Component.js:20
-#: src/popups/flyout/editor/components/position-control/Component.js:55
-msgid "Top"
-msgstr ""
-
-#: src/editor/components/box-units-control/Component.js:29
-#: src/popups/bar/editor/components/position-control/Component.js:24
-#: src/popups/flyout/editor/components/position-control/Component.js:63
-msgid "Bottom"
 msgstr ""
 
 #: src/editor/components/box-units-control/Component.js:96
@@ -4948,10 +7078,6 @@ msgstr ""
 msgid "Extra Light"
 msgstr ""
 
-#: src/editor/components/font-appearance-control/Component.js:20
-msgid "Light"
-msgstr ""
-
 #: src/editor/components/font-appearance-control/Component.js:24
 msgid "Regular"
 msgstr ""
@@ -5036,12 +7162,6 @@ msgstr ""
 msgid "Inner Blocks"
 msgstr ""
 
-#: src/editor/components/inner-blocks-button/Component.js:130
-#: src/editor/components/variation-picker/Component.js:845
-#: src/editor/icons/default/index.js:43
-msgid "Close"
-msgstr ""
-
 #: src/editor/components/open-trigger-component/Component.js:278
 msgid "Other"
 msgstr ""
@@ -5052,10 +7172,6 @@ msgstr ""
 
 #: src/editor/components/open-trigger-component/Component.js:658
 msgid "Once closed will not be shown to a user again."
-msgstr ""
-
-#: src/editor/components/open-trigger-component/Component.js:674
-msgid "Trigger"
 msgstr ""
 
 #: src/editor/components/open-trigger-component/Component.js:694
@@ -5096,10 +7212,6 @@ msgstr ""
 
 #: src/editor/components/size-control/Component.js:92
 msgid "Sizes"
-msgstr ""
-
-#: src/editor/components/typography-tools-panel/Component.js:118
-msgid "Typography"
 msgstr ""
 
 #: src/editor/components/typography-tools-panel/Component.js:167
@@ -5191,10 +7303,6 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:601
-msgid "Included"
-msgstr ""
-
 #: src/editor/components/variation-picker/Component.js:606
 msgid "Pro"
 msgstr ""
@@ -5226,10 +7334,6 @@ msgstr ""
 msgid "Clear filters"
 msgstr ""
 
-#: src/editor/components/variation-picker/Component.js:737
-msgid "PRO"
-msgstr ""
-
 #. translators: %s: template title
 #: src/editor/components/variation-picker/Component.js:785
 #, js-format
@@ -5250,14 +7354,6 @@ msgstr ""
 
 #: src/editor/hooks/use-icon-sets/hook.js:21
 msgid "WordPress"
-msgstr ""
-
-#: src/editor/hooks/usePostTypeLabels.js:12
-msgid "Bars"
-msgstr ""
-
-#: src/editor/hooks/usePostTypeLabels.js:16
-msgid "Flyouts"
 msgstr ""
 
 #: src/editor/hooks/usePostTypeLabels.js:20
@@ -5320,10 +7416,6 @@ msgstr ""
 msgid "Plus Small"
 msgstr ""
 
-#: src/editor/icons/default/index.js:50
-msgid "Percent"
-msgstr ""
-
 #: src/editor/icons/default/index.js:51
 msgid "Tag"
 msgstr ""
@@ -5346,21 +7438,17 @@ msgstr ""
 msgid "Inherited"
 msgstr ""
 
-#: src/popups/bar/editor/blocks/container/blocks/close-button/EditSettings.js:37
-#: src/popups/bar/editor/blocks/open-button/EditSettings.js:34
-#: src/popups/flyout/editor/components/position-control/Component.js:71
-msgid "Horizontal"
-msgstr ""
-
 #: src/popups/bar/editor/blocks/container/blocks/close-button/EditSettings.js:38
 msgid "Choose which side of the bar to display the button."
 msgstr ""
 
-#: src/popups/bar/editor/blocks/container/EditSettings.js:36
+#: src/popups/bar/editor/blocks/container/EditSettings.js:41
+#: src/popups/bar/editor/EditSettings.js:78
 msgid "Max Width"
 msgstr ""
 
-#: src/popups/bar/editor/blocks/container/EditSettings.js:37
+#: src/popups/bar/editor/blocks/container/EditSettings.js:42
+#: src/popups/bar/editor/EditSettings.js:79
 msgid "Set the maximum width of the bar."
 msgstr ""
 
@@ -5430,21 +7518,35 @@ msgstr ""
 msgid "Add an anchor to a button block and then insert the same value here to close the bar on click."
 msgstr ""
 
-#: src/popups/bar/editor/EditSettings.js:40
+#: src/popups/bar/editor/EditSettings.js:90
 #: src/popups/flyout/editor/EditSettings.js:50
 #: src/popups/overlay/editor/EditSettings.js:50
 msgid "Enable transitions"
 msgstr ""
 
-#: src/popups/bar/editor/EditSettings.js:41
+#: src/popups/bar/editor/EditSettings.js:91
 #: src/popups/flyout/editor/EditSettings.js:51
 msgid "Choose if transitions are used when toggling the bar."
 msgstr ""
 
-#: src/popups/bar/editor/EditSettings.js:67
+#: src/popups/bar/editor/EditSettings.js:117
 #: src/popups/flyout/editor/EditSettings.js:77
 #: src/popups/overlay/editor/EditSettings.js:93
 msgid "Make Variation"
+msgstr ""
+
+#: src/popups/bar/editor/size-controls.js:11
+msgid "Full width"
+msgstr ""
+
+#: src/popups/bar/editor/size-controls.js:15
+msgid "Content width"
+msgstr ""
+
+#: src/popups/bar/editor/size-controls.js:23
+#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:81
+#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:81
+msgid "Fit Content"
 msgstr ""
 
 #: src/popups/flyout/editor/blocks/container/blocks/close-button/EditSettings.js:40
@@ -5452,17 +7554,8 @@ msgstr ""
 msgid "Choose which side the button is displayed."
 msgstr ""
 
-#: src/popups/flyout/editor/blocks/container/blocks/content/EditStyles.js:81
-#: src/popups/overlay/editor/blocks/container/blocks/content/EditStyles.js:81
-msgid "Fit Content"
-msgstr ""
-
 #: src/popups/flyout/editor/components/position-control/Component.js:30
 msgid "Choose where to display the flyout within the page."
-msgstr ""
-
-#: src/popups/flyout/editor/components/position-control/Component.js:78
-msgid "Vertical"
 msgstr ""
 
 #: src/popups/flyout/editor/components/trigger-controls/Component.js:77
@@ -5531,21 +7624,17 @@ msgstr ""
 msgid "Hide the page scrollbar when open."
 msgstr ""
 
-#: src/popups/shared/editor/components/view-state-controls/index.js:10
+#: src/popups/shared/editor/components/view-state-controls/index.js:61
 msgid "Closed"
 msgstr ""
 
-#: src/popups/shared/editor/components/view-state-controls/index.js:10
-msgid "Open"
-msgstr ""
-
 #. translators: %s: Open/Closed State
-#: src/popups/shared/editor/components/view-state-controls/index.js:13
+#: src/popups/shared/editor/components/view-state-controls/index.js:64
 #, js-format
 msgid "%s View"
 msgstr ""
 
-#: src/popups/shared/editor/components/view-state-controls/index.js:20
+#: src/popups/shared/editor/components/view-state-controls/index.js:71
 msgid "Toggle View"
 msgstr ""
 
@@ -5611,10 +7700,6 @@ msgstr ""
 msgid "Remove audience rule"
 msgstr ""
 
-#: src/scripts/admin/display-rules-list/index.js:351
-msgid "Save"
-msgstr ""
-
 #: pro/src/blocks/apply-coupon/block.json
 msgctxt "block title"
 msgid "Apply Coupon"
@@ -5635,16 +7720,6 @@ msgctxt "block description"
 msgid "Plays a confetti effect when the parent popup opens."
 msgstr ""
 
-#: pro/src/blocks/free-shipping-bar/block.json
-msgctxt "block title"
-msgid "Free Shipping Bar"
-msgstr ""
-
-#: pro/src/blocks/free-shipping-bar/block.json
-msgctxt "block description"
-msgid "Dynamic free shipping progress bar."
-msgstr ""
-
 #: pro/src/blocks/free-shipping-progress/block.json
 msgctxt "block title"
 msgid "Free Shipping Progress"
@@ -5655,24 +7730,24 @@ msgctxt "block description"
 msgid "A WooCommerce free shipping progress block."
 msgstr ""
 
-#: pro/src/blocks/free-shipping-state/block.json
+#: pro/src/blocks/free-shipping-progress/editor/blocks/bar/block.json
 msgctxt "block title"
-msgid "Free Shipping State"
+msgid "Free Shipping Bar"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-state/block.json
+#: pro/src/blocks/free-shipping-progress/editor/blocks/bar/block.json
 msgctxt "block description"
-msgid "A free shipping state template container."
+msgid "Shared free shipping progress bar."
 msgstr ""
 
-#: pro/src/blocks/free-shipping-text/block.json
+#: pro/src/blocks/free-shipping-progress/editor/blocks/content/block.json
 msgctxt "block title"
-msgid "Free Shipping Text"
+msgid "Free Shipping Content"
 msgstr ""
 
-#: pro/src/blocks/free-shipping-text/block.json
+#: pro/src/blocks/free-shipping-progress/editor/blocks/content/block.json
 msgctxt "block description"
-msgid "Token-aware free shipping text."
+msgid "State content for the free shipping progress block."
 msgstr ""
 
 #: src/blocks/countdown/block.json
@@ -5697,7 +7772,7 @@ msgstr ""
 
 #: src/blocks/example-block/block.json
 msgctxt "block title"
-msgid "FooConvert - Example Block"
+msgid "Example Block"
 msgstr ""
 
 #: src/blocks/example-block/block.json
@@ -5713,6 +7788,26 @@ msgstr ""
 #: src/blocks/sign-up/block.json
 msgctxt "block description"
 msgid "A simple email sign up form."
+msgstr ""
+
+#: src/blocks/split-layout/block.json
+msgctxt "block title"
+msgid "Split Layout"
+msgstr ""
+
+#: src/blocks/split-layout/block.json
+msgctxt "block description"
+msgid "A two-panel layout with one fixed panel and one flexible panel."
+msgstr ""
+
+#: src/blocks/split-layout/blocks/panel/block.json
+msgctxt "block title"
+msgid "Panel"
+msgstr ""
+
+#: src/blocks/split-layout/blocks/panel/block.json
+msgctxt "block description"
+msgid "A panel inside a split layout."
 msgstr ""
 
 #: src/popups/bar/block.json

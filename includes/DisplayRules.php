@@ -62,7 +62,7 @@ class DisplayRules extends BaseComponent {
             'object_subtype' => FOOCONVERT_CPT_POPUP,
             'single'         => true,
             'type'           => 'object',
-            'description'    => __( 'Display rules for FooConvert.', 'fooconvert' ),
+            'description'    => __( 'Display rules for popups.', 'fooconvert' ),
             'auth_callback'  => array( $this, 'auth_callback' ),
             'default'        => $this->defaults(),
             'show_in_rest'   => array( 'schema' => $this->schema() )
@@ -415,7 +415,7 @@ class DisplayRules extends BaseComponent {
         string $post_title = ''
     ): string {
         $edit_label = sprintf(
-            /* translators: %s: popup title. */
+            /* translators: %s is the popup title shown in the list table. */
             __( 'Edit display rules for %s', 'fooconvert' ),
             $post_title !== '' ? $post_title : __( 'this popup', 'fooconvert' )
         );

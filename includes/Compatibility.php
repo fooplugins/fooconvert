@@ -74,7 +74,7 @@ class Compatibility extends BaseComponent {
             'object_subtype' => FOOCONVERT_CPT_POPUP,
             'single'         => true,
             'type'           => 'object',
-            'description'    => __( 'Compatibility settings for FooConvert.', 'fooconvert' ),
+            'description'    => __( 'Compatibility settings for popups.', 'fooconvert' ),
             'auth_callback'  => array( $this, 'auth_callback' ),
             'default'        => $this->defaults(),
             'show_in_rest'   => array( 'schema' => $this->schema() )

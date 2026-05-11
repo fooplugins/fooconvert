@@ -1,7 +1,7 @@
 {
   "apiVersion": 3,
   "name": "fc/example-block",
-  "title": "FooConvert - Example Block",
+  "title": "Example Block",
   "description": "This block serves no purpose other than to be an example.",
   "category": "fooconvert",
   "editorScript": "file:./editor/index.js",
