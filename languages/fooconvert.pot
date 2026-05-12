@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: FooConvert - Boost Conversions & Lead Generation 2.0.0\n"
+"Project-Id-Version: FooConvert - Boost Conversions & Lead Generation 2.0.1\n"
 "Report-Msgid-Bugs-To: https://github.com/fooplugins/fooconvert/issues\n"
 "Last-Translator: FooPlugins <info@fooplugins.com>\n"
 "Language-Team: FooPlugins <info@fooplugins.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-11T14:28:33+00:00\n"
+"POT-Creation-Date: 2026-05-12T15:03:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: fooconvert\n"
@@ -92,31 +92,31 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: includes/Admin/DemoContent.php:269
+#: includes/Admin/DemoContent.php:460
 msgid "Digital Download Signup Bar [Demo]"
 msgstr ""
 
-#: includes/Admin/DemoContent.php:303
+#: includes/Admin/DemoContent.php:494
 msgid "Special Offer Countdown Bar [Demo]"
 msgstr ""
 
-#: includes/Admin/DemoContent.php:341
+#: includes/Admin/DemoContent.php:532
 msgid "Digital Download Signup Flyout [Demo]"
 msgstr ""
 
-#: includes/Admin/DemoContent.php:387
+#: includes/Admin/DemoContent.php:578
 msgid "Newsletter Subscribe Flyout [Demo]"
 msgstr ""
 
-#: includes/Admin/DemoContent.php:427
+#: includes/Admin/DemoContent.php:618
 msgid "Smart Exit Offer Flyout [Demo]"
 msgstr ""
 
-#: includes/Admin/DemoContent.php:467
+#: includes/Admin/DemoContent.php:658
 msgid "Smart Exit Offer Overlay [Demo]"
 msgstr ""
 
-#: includes/Admin/DemoContent.php:513
+#: includes/Admin/DemoContent.php:704
 msgid "Special Offer Countdown Overlay [Demo]"
 msgstr ""
 
@@ -201,7 +201,7 @@ msgstr ""
 #: includes/Admin/LeadsMenu.php:34
 #: pro/includes/Experiments/Admin/Init.php:897
 #: pro/includes/Experiments/Experiment.php:293
-#: pro/includes/Leads/Init.php:70
+#: pro/includes/Leads/Init.php:77
 msgid "Leads"
 msgstr ""
 
@@ -227,7 +227,7 @@ msgstr ""
 #: includes/Admin/LeadsTable.php:56
 #: includes/PostType.php:55
 #: pro/includes/AI/PopupMedia.php:1058
-#: pro/includes/Analytics/Sales.php:275
+#: pro/includes/Analytics/Sales.php:271
 #: src/editor/components/experiment-panel/Component.js:19
 #: src/editor/components/experiment-panel/Component.js:27
 #: src/scripts/admin/display-rules-list/index.js:148
@@ -422,6 +422,9 @@ msgstr ""
 
 #: includes/Admin/Settings.php:61
 #: includes/Components/OpenTriggerPanel.php:401
+#: includes/Components/OpenTriggerPanel.php:465
+#: includes/Components/OpenTriggerPanel.php:485
+#: includes/Components/OpenTriggerPanel.php:505
 #: includes/DisplayRules.php:726
 #: includes/DisplayRules.php:849
 msgid "General"
@@ -1082,8 +1085,8 @@ msgid "No leads found for the current filter. Try changing the filter above to s
 msgstr ""
 
 #: includes/Admin/Views/popup-stats.php:9
-#: pro/includes/Analytics/Sales.php:326
-#: pro/includes/Analytics/Sales.php:349
+#: pro/includes/Analytics/Sales.php:322
+#: pro/includes/Analytics/Sales.php:345
 #: pro/src/admin/ai-popup-builder/index.js:648
 #: pro/src/admin/ai-popup-builder/index.js:656
 msgid "Unknown"
@@ -1276,15 +1279,6 @@ msgstr ""
 
 #: includes/Components/OpenTriggerPanel.php:459
 msgid "A CSS selector that specifies the element(s) to target."
-msgstr ""
-
-#: includes/Components/OpenTriggerPanel.php:465
-#: includes/Components/OpenTriggerPanel.php:485
-#: includes/Components/OpenTriggerPanel.php:505
-#: src/popups/bar/editor/EditSettings.js:87
-#: src/popups/flyout/editor/EditSettings.js:47
-#: src/popups/overlay/editor/EditSettings.js:38
-msgid "Behavior"
 msgstr ""
 
 #: includes/Components/OpenTriggerPanel.php:467
@@ -1630,9 +1624,7 @@ msgid "Popup Preview"
 msgstr ""
 
 #: includes/FooConvert.php:559
-#: pro/src/admin/ai-popup-builder/index.js:1803
-#: pro/src/admin/ai-popup-builder/serializer.js:31
-msgid "Popup Blocks"
+msgid "Popup Blocks (FooConvert)"
 msgstr ""
 
 #: includes/functions.php:549
@@ -2213,6 +2205,7 @@ msgid "Support copy, urgency lines, benefit statements, or disclaimers."
 msgstr ""
 
 #: pro/includes/AI/PopupBlueprint.php:325
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:134
 #: pro/includes/Leads/Integrations/MailchimpIntegration.php:172
 #: pro/includes/Leads/Integrations/MailpoetIntegration.php:116
 msgid "List"
@@ -3096,35 +3089,27 @@ msgid "Order"
 msgstr ""
 
 #: pro/includes/Analytics/Sales.php:195
-msgid "Customer"
-msgstr ""
-
-#: pro/includes/Analytics/Sales.php:196
 #: pro/includes/Experiments/Admin/Init.php:172
 #: pro/includes/Experiments/Admin/Init.php:629
 msgid "Status"
 msgstr ""
 
-#: pro/includes/Analytics/Sales.php:197
+#: pro/includes/Analytics/Sales.php:196
 msgid "Value"
 msgstr ""
 
-#: pro/includes/Analytics/Sales.php:198
-msgid "Source"
-msgstr ""
-
-#: pro/includes/Analytics/Sales.php:199
+#: pro/includes/Analytics/Sales.php:197
 msgid "Date"
 msgstr ""
 
 #. translators: %d is the popup post ID.
-#: pro/includes/Analytics/Sales.php:270
+#: pro/includes/Analytics/Sales.php:266
 #, php-format
 msgid "Popup #%d"
 msgstr ""
 
-#: pro/includes/Analytics/Sales.php:310
-#: pro/includes/Analytics/Sales.php:316
+#: pro/includes/Analytics/Sales.php:306
+#: pro/includes/Analytics/Sales.php:312
 msgid "Guest"
 msgstr ""
 
@@ -4028,12 +4013,122 @@ msgstr ""
 msgid "control"
 msgstr ""
 
-#: pro/includes/Leads/Init.php:78
+#: pro/includes/Leads/Init.php:85
 msgid "Configure automatic distribution of leads to external services after they are saved in your database."
 msgstr ""
 
-#: pro/includes/Leads/Init.php:93
+#: pro/includes/Leads/Init.php:101
 msgid "Integration Error Log"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:104
+msgid "Brevo Integration"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:108
+msgid "Send to Brevo"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:109
+msgid "Automatically add leads to your selected Brevo list"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:115
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:154
+msgid "API Key"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:116
+msgid "Enter your Brevo API v3 key."
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:127
+msgid "Brevo API key is required when integration is enabled"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:135
+msgid "Select the Brevo list to which leads will be added."
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:138
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:176
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:120
+msgid "Select a list"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:148
+msgid "Brevo list is required when integration is enabled"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:161
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:193
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:139
+msgid "No lists found. Please get lists via the \"Get Lists\" button."
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:168
+msgid "Test Brevo"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:170
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:202
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:148
+#: pro/includes/Leads/Integrations/WebhookIntegration.php:204
+msgid "Test Connection"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:184
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:216
+#: pro/includes/Leads/Integrations/WebhookIntegration.php:218
+msgid "Please save settings to test the connection."
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:192
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:194
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:224
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:226
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:163
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:165
+msgid "Get Lists"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:218
+msgid "You do not have permission to test the Brevo connection."
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:225
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:253
+msgid "Please enter your Brevo API key"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:231
+msgid "Successfully connected to Brevo!"
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:233
+msgid "Failed to connect to Brevo. Please check your API key."
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:246
+msgid "You do not have permission to retrieve Brevo lists."
+msgstr ""
+
+#. Translators: %d is the number of lists retrieved.
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:267
+#: pro/includes/Leads/Integrations/MailchimpIntegration.php:325
+#: pro/includes/Leads/Integrations/MailpoetIntegration.php:222
+#, php-format
+msgid "%d lists retrieved successfully! Refresh the page to see the lists."
+msgstr ""
+
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:378
+msgid "Unexpected Brevo API response. Please try again."
+msgstr ""
+
+#. translators: %d is the HTTP status code returned by Brevo.
+#: pro/includes/Leads/Integrations/BrevoIntegration.php:417
+#, php-format
+msgid "Brevo API request failed with HTTP status %d."
 msgstr ""
 
 #: pro/includes/Leads/Integrations/MailchimpIntegration.php:143
@@ -4046,10 +4141,6 @@ msgstr ""
 
 #: pro/includes/Leads/Integrations/MailchimpIntegration.php:148
 msgid "Automatically subscribe leads to your selected Mailchimp audience"
-msgstr ""
-
-#: pro/includes/Leads/Integrations/MailchimpIntegration.php:154
-msgid "API Key"
 msgstr ""
 
 #: pro/includes/Leads/Integrations/MailchimpIntegration.php:155
@@ -4065,36 +4156,8 @@ msgstr ""
 msgid "Select the list to which leads will be added."
 msgstr ""
 
-#: pro/includes/Leads/Integrations/MailchimpIntegration.php:176
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:120
-msgid "Select a list"
-msgstr ""
-
-#: pro/includes/Leads/Integrations/MailchimpIntegration.php:193
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:139
-msgid "No lists found. Please get lists via the \"Get Lists\" button."
-msgstr ""
-
 #: pro/includes/Leads/Integrations/MailchimpIntegration.php:200
 msgid "Test Mailchimp"
-msgstr ""
-
-#: pro/includes/Leads/Integrations/MailchimpIntegration.php:202
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:148
-#: pro/includes/Leads/Integrations/WebhookIntegration.php:204
-msgid "Test Connection"
-msgstr ""
-
-#: pro/includes/Leads/Integrations/MailchimpIntegration.php:216
-#: pro/includes/Leads/Integrations/WebhookIntegration.php:218
-msgid "Please save settings to test the connection."
-msgstr ""
-
-#: pro/includes/Leads/Integrations/MailchimpIntegration.php:224
-#: pro/includes/Leads/Integrations/MailchimpIntegration.php:226
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:163
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:165
-msgid "Get Lists"
 msgstr ""
 
 #: pro/includes/Leads/Integrations/MailchimpIntegration.php:252
@@ -4120,13 +4183,6 @@ msgstr ""
 
 #: pro/includes/Leads/Integrations/MailchimpIntegration.php:310
 msgid "Unexpected API response. Please try again."
-msgstr ""
-
-#. Translators: %d is the number of lists retrieved.
-#: pro/includes/Leads/Integrations/MailchimpIntegration.php:325
-#: pro/includes/Leads/Integrations/MailpoetIntegration.php:222
-#, php-format
-msgid "%d lists retrieved successfully! Refresh the page to see the lists."
 msgstr ""
 
 #: pro/includes/Leads/Integrations/MailpoetIntegration.php:103
@@ -4692,7 +4748,7 @@ msgid "Action"
 msgstr ""
 
 #: pro/src/admin/ai-popup-builder/index.js:789
-#: src/editor/components/open-trigger-component/Component.js:674
+#: src/editor/components/open-trigger-component/Component.js:670
 msgid "Trigger"
 msgstr ""
 
@@ -4934,6 +4990,11 @@ msgstr ""
 
 #: pro/src/admin/ai-popup-builder/index.js:1795
 msgid "Core"
+msgstr ""
+
+#: pro/src/admin/ai-popup-builder/index.js:1803
+#: pro/src/admin/ai-popup-builder/serializer.js:31
+msgid "Popup Blocks"
 msgstr ""
 
 #: pro/src/admin/ai-popup-builder/index.js:1821
@@ -7166,23 +7227,23 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
-#: src/editor/components/open-trigger-component/Component.js:657
+#: src/editor/components/open-trigger-component/Component.js:653
 msgid "Only show once"
 msgstr ""
 
-#: src/editor/components/open-trigger-component/Component.js:658
+#: src/editor/components/open-trigger-component/Component.js:654
 msgid "Once closed will not be shown to a user again."
 msgstr ""
 
-#: src/editor/components/open-trigger-component/Component.js:694
-#: src/editor/components/open-trigger-component/Component.js:768
+#: src/editor/components/open-trigger-component/Component.js:690
+#: src/editor/components/open-trigger-component/Component.js:764
 #: src/popups/bar/editor/components/trigger-controls/Component.js:63
 #: src/popups/flyout/editor/components/trigger-controls/Component.js:63
 #: src/popups/overlay/editor/components/trigger-controls/Component.js:56
 msgid "Open Trigger"
 msgstr ""
 
-#: src/editor/components/open-trigger-component/Component.js:695
+#: src/editor/components/open-trigger-component/Component.js:691
 msgid "Select how this popup is opened."
 msgstr ""
 
@@ -7516,6 +7577,12 @@ msgstr ""
 
 #: src/popups/bar/editor/components/trigger-controls/Component.js:125
 msgid "Add an anchor to a button block and then insert the same value here to close the bar on click."
+msgstr ""
+
+#: src/popups/bar/editor/EditSettings.js:87
+#: src/popups/flyout/editor/EditSettings.js:47
+#: src/popups/overlay/editor/EditSettings.js:38
+msgid "Behavior"
 msgstr ""
 
 #: src/popups/bar/editor/EditSettings.js:90

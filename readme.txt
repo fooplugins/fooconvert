@@ -4,7 +4,7 @@ Tags: popups,bars,flyouts,conversion,marketing
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 7.0
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -101,6 +101,7 @@ It includes popup templates, built-in popup blocks, display rules, open triggers
 FooConvert Pro adds tools for WooCommerce stores and marketers who want to build better campaigns, learn what works, and connect popups to real business results.
 
 - AI-assisted popup creation.
+- A built-in background image generator for polished popup visuals.
 - A/B testing for popup ideas and offers.
 - WooCommerce revenue attribution.
 - Store-focused popup blocks.
@@ -118,6 +119,16 @@ Start with a simple prompt and let FooConvert Pro create an editable popup draft
 - Match popup colors, fonts, spacing, and button styles to your brand.
 - Generate or reuse matching popup images and backgrounds when image generation is enabled.
 - Preview the popup and review the conversion strategy before publishing.
+
+= Background Image Generator =
+
+Create polished popup backgrounds without opening a design tool or hunting for stock images. FooConvert Pro turns adjustable visual styles into ready-to-use background images, so every campaign can feel branded and intentional.
+
+- Generate a new background directly from the popup background image controls.
+- Start with modern styles like gradients, swirls, soft noise, pattern textures, and colorful shapes.
+- Match the image to your campaign with custom colors, presets, variation, and size controls.
+- Use popup-friendly layouts for bars, flyouts, overlays, or a custom shape.
+- Save and apply the generated background to the popup in one step.
 
 = A/B Testing =
 
@@ -189,8 +200,6 @@ Understand more than whether a popup was seen. FooConvert Pro gives you deeper c
 - Add clicks, conversions, closes, sales, and update markers to activity charts.
 - Compare week-over-week changes for views, engagements, clicks, and conversions.
 - Keep analytics data longer with the Pro default of 30 days and configurable retention settings.
-
-
 
 == Installation ==
 
