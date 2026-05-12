@@ -556,7 +556,7 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             // using unshift to place our category first
             array_unshift( $categories, array(
                 'slug'  => FOOCONVERT_SLUG,
-                'title' => __( 'Popup Blocks', 'fooconvert' )
+                'title' => __( 'Popup Blocks (FooConvert)', 'fooconvert' )
             ) );
             return $categories;
         }

@@ -276,11 +276,7 @@ const getTriggerOptions = selectedEvent => {
             ...definition,
             value: definition.event,
             group: isString( definition?.group, true ) ? definition.group : __( "Other", "fooconvert" )
-        }) )
-        .sort( ( left, right ) => {
-            const groupSort = left.group.localeCompare( right.group );
-            return groupSort !== 0 ? groupSort : left.label.localeCompare( right.label );
-        } );
+        }) );
 
     const grouped = definitions.reduce( ( result, definition ) => {
         const existing = result.find( entry => entry.group === definition.group );

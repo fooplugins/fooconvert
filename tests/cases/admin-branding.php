@@ -174,9 +174,9 @@ namespace {
     );
 
     Assertions::same(
-        'Popup Blocks',
+        'Popup Blocks (FooConvert)',
         $categories[0]['title'] ?? '',
-        'Block category title should be agency-friendly.'
+        'Block category title should include the FooConvert brand.'
     );
 
     Assertions::same(

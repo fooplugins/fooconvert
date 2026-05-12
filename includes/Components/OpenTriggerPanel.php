@@ -462,7 +462,7 @@ class OpenTriggerPanel extends BaseComponent {
                 )
             ),
             array(
-                'group'        => __( 'Behavior', 'fooconvert' ),
+                'group'        => __( 'General', 'fooconvert' ),
                 'event'        => 'fc.exit_intent',
                 'label'        => __( 'On exit intent', 'fooconvert' ),
                 'help'         => __( 'Open when the mouse exits the top of the window.', 'fooconvert' ),
@@ -482,7 +482,7 @@ class OpenTriggerPanel extends BaseComponent {
                 )
             ),
             array(
-                'group'        => __( 'Behavior', 'fooconvert' ),
+                'group'        => __( 'General', 'fooconvert' ),
                 'event'        => 'fc.scroll.percent',
                 'label'        => __( 'On page scroll', 'fooconvert' ),
                 'help'         => __( 'Open after the page has been scrolled.', 'fooconvert' ),
@@ -502,7 +502,7 @@ class OpenTriggerPanel extends BaseComponent {
                 )
             ),
             array(
-                'group'        => __( 'Behavior', 'fooconvert' ),
+                'group'        => __( 'General', 'fooconvert' ),
                 'event'        => 'fc.timer.elapsed',
                 'label'        => __( 'On timer elapsed', 'fooconvert' ),
                 'help'         => __( 'Open after a specified amount of time.', 'fooconvert' ),
