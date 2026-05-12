@@ -306,8 +306,8 @@
 
 .fooconvert-sales-table th:last-child,
 .fooconvert-sales-table td:last-child,
-.fooconvert-sales-table th:nth-child(4),
-.fooconvert-sales-table td:nth-child(4) {
+.fooconvert-sales-table th:nth-child(3),
+.fooconvert-sales-table td:nth-child(3) {
     white-space: nowrap;
 }
 

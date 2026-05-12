@@ -35,11 +35,183 @@ namespace {
     use FooPlugins\FooConvert\Pro\Analytics\DemoContent as ProDemoContent;
     use FooPlugins\FooConvert\Tests\Support\Assertions;
 
+    class WooCommerce {}
+
+    class WC_Product {
+        /** @var int */
+        private $id;
+
+        /** @var string */
+        private $type;
+
+        /** @var string */
+        private $name;
+
+        /** @var float */
+        private $price;
+
+        /**
+         * @param int $id Product ID.
+         * @param string $type Product type.
+         * @param string $name Product name.
+         * @param float $price Product price.
+         */
+        public function __construct( int $id, string $type, string $name, float $price ) {
+            $this->id = $id;
+            $this->type = $type;
+            $this->name = $name;
+            $this->price = $price;
+        }
+
+        /**
+         * @return int
+         */
+        public function get_id(): int {
+            return $this->id;
+        }
+
+        /**
+         * @return string
+         */
+        public function get_type(): string {
+            return $this->type;
+        }
+
+        /**
+         * @param string $type Product type.
+         * @return bool
+         */
+        public function is_type( string $type ): bool {
+            return $this->type === $type;
+        }
+
+        /**
+         * @return string
+         */
+        public function get_name(): string {
+            return $this->name;
+        }
+
+        /**
+         * @return string
+         */
+        public function get_price(): string {
+            return (string) $this->price;
+        }
+
+        /**
+         * @return string
+         */
+        public function get_permalink(): string {
+            return 'https://example.test/product/' . $this->id;
+        }
+    }
+
+    class FC_Test_Order_Item {
+        /** @var WC_Product */
+        private $product;
+
+        /**
+         * @param WC_Product $product Product.
+         */
+        public function __construct( WC_Product $product ) {
+            $this->product = $product;
+        }
+
+        /**
+         * @return WC_Product
+         */
+        public function get_product(): WC_Product {
+            return $this->product;
+        }
+
+        /**
+         * @return int
+         */
+        public function get_product_id(): int {
+            return $this->product->get_id();
+        }
+    }
+
+    class WC_Order {
+        /** @var int */
+        private $id;
+
+        /** @var string */
+        private $number;
+
+        /** @var string */
+        private $status;
+
+        /** @var string */
+        private $currency;
+
+        /** @var array<int,FC_Test_Order_Item> */
+        private $items;
+
+        /**
+         * @param int $id Order ID.
+         * @param string $number Order number.
+         * @param string $status Order status.
+         * @param string $currency Currency code.
+         * @param array<int,FC_Test_Order_Item> $items Order line items.
+         */
+        public function __construct( int $id, string $number, string $status, string $currency, array $items ) {
+            $this->id = $id;
+            $this->number = $number;
+            $this->status = $status;
+            $this->currency = $currency;
+            $this->items = $items;
+        }
+
+        /**
+         * @return int
+         */
+        public function get_id(): int {
+            return $this->id;
+        }
+
+        /**
+         * @return string
+         */
+        public function get_order_number(): string {
+            return $this->number;
+        }
+
+        /**
+         * @return string
+         */
+        public function get_status(): string {
+            return $this->status;
+        }
+
+        /**
+         * @return string
+         */
+        public function get_currency(): string {
+            return $this->currency;
+        }
+
+        /**
+         * @param string $type Item type.
+         * @return array<int,FC_Test_Order_Item>
+         */
+        public function get_items( string $type = 'line_item' ): array {
+            return $this->items;
+        }
+    }
+
     /** @var array<string,array<int,array{callback:mixed,accepted_args:int}>> */
     $GLOBALS['fc_test_actions'] = array();
 
     /** @var array<int,int> */
     $GLOBALS['fc_test_wp_rand_values'] = array();
+
+    /** @var array<int,WC_Order> */
+    $GLOBALS['fc_test_wc_orders'] = array();
+
+    /** @var array<int,WC_Product> */
+    $GLOBALS['fc_test_wc_products'] = array();
 
     /**
      * @param string $text
@@ -113,6 +285,30 @@ namespace {
         return $default;
     }
 
+    /**
+     * @param array<string,mixed> $args Query args.
+     * @return array<int,WC_Order>
+     */
+    function wc_get_orders( array $args = array() ): array {
+        return $GLOBALS['fc_test_wc_orders'];
+    }
+
+    /**
+     * @param array<string,mixed> $args Query args.
+     * @return array<int,WC_Product>
+     */
+    function wc_get_products( array $args = array() ): array {
+        return $GLOBALS['fc_test_wc_products'];
+    }
+
+    /**
+     * @param mixed $value Decimal candidate.
+     * @return string
+     */
+    function wc_format_decimal( $value ): string {
+        return number_format( (float) $value, 2, '.', '' );
+    }
+
     if ( !defined( 'ABSPATH' ) ) {
         define( 'ABSPATH', __DIR__ );
     }
@@ -140,8 +336,6 @@ namespace {
         20,
         1,
         5,
-        42,
-        15000,
         6,
         (int) floor( $max_rand * 0.95 ),
         3,
@@ -227,6 +421,10 @@ namespace {
         $click_event['data']['conversion'] ?? null,
         'Expected the deterministic click event to create conversion data for conversion-based top performer metrics.'
     );
+    Assertions::false(
+        isset( $click_event['data']['extra_data']['order_id'] ),
+        'Expected base demo conversion events to omit WooCommerce order metadata when real orders/products are unavailable.'
+    );
 
     Assertions::same(
         array(
@@ -269,14 +467,132 @@ namespace {
         $seed_click['data']['extra_data']['pro_top_performer_seed'] ?? false,
         'Expected the seeded PRO click event to be marked for top performer demo analytics.'
     );
+    Assertions::false(
+        isset( $seed_click['data']['extra_data']['order_id'] ),
+        'Expected the seeded PRO click event to omit WooCommerce order metadata when real orders/products are unavailable.'
+    );
+
+    Assertions::same(
+        0,
+        count( $sale_events ),
+        'Expected PRO demo analytics to skip sale events when real WooCommerce orders/products are unavailable.'
+    );
+
+    Event::reset();
+
+    $simple_product_a = new WC_Product( 701, 'simple', 'Simple Mug', 24.5 );
+    $simple_product_b = new WC_Product( 702, 'simple', 'Simple Shirt', 39.95 );
+    $variable_product = new WC_Product( 703, 'variable', 'Variable Hoodie', 89.0 );
+
+    $GLOBALS['fc_test_wc_products'] = array(
+        $variable_product,
+        $simple_product_a,
+        $simple_product_b,
+    );
+    $GLOBALS['fc_test_wc_orders'] = array(
+        new WC_Order(
+            501,
+            'FC-501',
+            'processing',
+            'GBP',
+            array(
+                new FC_Test_Order_Item( $variable_product ),
+                new FC_Test_Order_Item( $simple_product_a ),
+            )
+        ),
+        new WC_Order(
+            502,
+            'FC-502',
+            'completed',
+            'GBP',
+            array(
+                new FC_Test_Order_Item( $simple_product_b ),
+            )
+        ),
+    );
+
+    Event::reset();
+    $GLOBALS['fc_test_wp_rand_values'] = array(
+        (int) floor( $max_rand * 0.8 ),
+        1,
+        0,
+        0,
+        1,
+        1,
+        1,
+    );
+    $demo->create_events( 2313, array( 'demo' => true ), 1 );
+
+    $base_real_click = Event::$created[0];
+    Assertions::same(
+        501,
+        $base_real_click['data']['extra_data']['order_id'] ?? null,
+        'Expected base demo conversion metadata to point at a real WooCommerce order when available.'
+    );
+    Assertions::same(
+        24.5,
+        $base_real_click['data']['extra_data']['order_value'] ?? null,
+        'Expected base demo conversion metadata to use a real simple product price.'
+    );
+    Assertions::same(
+        'simple',
+        $base_real_click['data']['extra_data']['product_type'] ?? '',
+        'Expected base demo conversion metadata to use simple products only.'
+    );
+
+    Event::reset();
+    $pro_demo = new ProDemoContent();
+    $pro_demo->create_sales_events( 2313, array( 'demo' => true ), 500 );
+
+    $real_sale_events = array_values(
+        array_filter(
+            Event::$created,
+            static function( array $entry ): bool {
+                return $entry['data']['event_type'] === FOOCONVERT_EVENT_TYPE_SALE;
+            }
+        )
+    );
 
     Assertions::same(
         2,
-        count( $sale_events ),
-        'Expected PRO demo analytics to add deterministic sale events for top performer sales.'
+        count( $real_sale_events ),
+        'Expected PRO demo analytics to add sale events when real orders and simple products are available.'
     );
 
-    foreach ( $sale_events as $entry ) {
+    Assertions::same(
+        array( 24.5, 39.95 ),
+        array_map(
+            static function( array $entry ): float {
+                return $entry['data']['event_value'];
+            },
+            $real_sale_events
+        ),
+        'Expected demo sale event values to use real simple product prices.'
+    );
+
+    Assertions::same(
+        array( 501, 502 ),
+        array_map(
+            static function( array $entry ): int {
+                return $entry['data']['extra_data']['order_id'];
+            },
+            $real_sale_events
+        ),
+        'Expected demo sale events to point at real WooCommerce orders.'
+    );
+
+    Assertions::same(
+        array( 701, 702 ),
+        array_map(
+            static function( array $entry ): int {
+                return $entry['data']['extra_data']['product_id'];
+            },
+            $real_sale_events
+        ),
+        'Expected demo sale events to use simple product IDs and ignore variable products.'
+    );
+
+    foreach ( $real_sale_events as $entry ) {
         Assertions::same(
             2313,
             $entry['data']['post_id'],
@@ -287,11 +603,52 @@ namespace {
             $entry['meta']['demo'] ?? false,
             'Expected PRO demo sale events to retain the demo marker meta.'
         );
-        Assertions::true(
-            isset( $entry['data']['event_value'] ) && $entry['data']['event_value'] > 0,
-            'Expected PRO demo sale events to include a positive sale amount.'
+        Assertions::same(
+            true,
+            $entry['data']['extra_data']['demo'] ?? false,
+            'Expected PRO demo sale event metadata to retain the demo marker.'
+        );
+        Assertions::same(
+            'simple',
+            $entry['data']['extra_data']['product_type'] ?? '',
+            'Expected PRO demo sale events to only use simple product metadata.'
+        );
+        Assertions::same(
+            'GBP',
+            $entry['data']['extra_data']['order_currency'] ?? '',
+            'Expected PRO demo sale events to retain the order currency.'
         );
     }
+
+    Event::reset();
+    $pro_demo->create_top_performer_seed_data( 2313, array( 'demo' => true ), 500 );
+
+    $real_seed_click = null;
+    foreach ( Event::$created as $entry ) {
+        if (
+            $entry['data']['event_type'] === FOOCONVERT_EVENT_TYPE_CLICK
+            && !empty( $entry['data']['extra_data']['pro_top_performer_seed'] )
+        ) {
+            $real_seed_click = $entry;
+            break;
+        }
+    }
+
+    Assertions::same(
+        501,
+        $real_seed_click['data']['extra_data']['order_id'] ?? null,
+        'Expected PRO seeded click conversion metadata to point at a real WooCommerce order when available.'
+    );
+    Assertions::same(
+        24.5,
+        $real_seed_click['data']['extra_data']['order_value'] ?? null,
+        'Expected PRO seeded click conversion metadata to use a real simple product price.'
+    );
+    Assertions::same(
+        'simple',
+        $real_seed_click['data']['extra_data']['product_type'] ?? '',
+        'Expected PRO seeded click conversion metadata to use simple products only.'
+    );
 
     echo "demo-content-pro-top-performers: ok\n";
 }

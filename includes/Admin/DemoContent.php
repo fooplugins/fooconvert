@@ -166,6 +166,8 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 		 */
 		function create_events( $post_id, $meta, $num_events = 1000 ) {
 			$event = new Event();
+			$woocommerce_order_sources = $this->get_demo_woocommerce_order_sources();
+			$woocommerce_order_source_index = 0;
 
 			// Bias demo data toward positive engagement so the dashboard does not
 			// look empty or artificially hostile on first load.
@@ -207,12 +209,10 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 				$device_type  = $device_types[ array_rand( $device_types ) ];
 
 				$extra_data = array();
-				if ( 1 === $conversion ) {
-					$extra_data = array(
-						'conversion_type' => 'woocommerce_order',
-						'order_id'        => wp_rand( 1, 100 ),
-						'order_value'     => wp_rand( 100 * 100, 500 * 100 ) / 100,
-					);
+				if ( 1 === $conversion && isset( $woocommerce_order_sources[ $woocommerce_order_source_index ] ) ) {
+					$order_source = $woocommerce_order_sources[ $woocommerce_order_source_index ];
+					$woocommerce_order_source_index++;
+					$extra_data = $this->build_demo_woocommerce_order_extra_data( $order_source );
 				}
 
 				$event->create(
@@ -234,6 +234,197 @@ if ( ! class_exists( 'FooPlugins\FooConvert\Admin\DemoContent' ) ) {
 			}
 
 			do_action( 'fooconvert_demo_content_after_create_events', $post_id, $meta, $num_events );
+		}
+
+		/**
+		 * Returns real WooCommerce order/product sources for demo conversion metadata.
+		 *
+		 * @return array<int,array<string,mixed>>
+		 */
+		private function get_demo_woocommerce_order_sources() {
+			if ( function_exists( 'fooconvert_is_woocommerce_active' ) && ! fooconvert_is_woocommerce_active() ) {
+				return array();
+			}
+
+			if ( ! class_exists( 'WooCommerce' ) || ! function_exists( 'wc_get_orders' ) || ! function_exists( 'wc_get_products' ) ) {
+				return array();
+			}
+
+			$orders = $this->get_demo_woocommerce_orders( 10 );
+			$products = $this->get_demo_simple_woocommerce_products( 10 );
+
+			if ( empty( $orders ) || empty( $products ) ) {
+				return array();
+			}
+
+			$sources = array();
+			$product_index = 0;
+
+			foreach ( $orders as $order ) {
+				if ( ! $order instanceof \WC_Order ) {
+					continue;
+				}
+
+				$product = $products[ $product_index % count( $products ) ];
+				$product_index++;
+
+				$sources[] = array(
+					'order_id'       => method_exists( $order, 'get_id' ) ? intval( $order->get_id() ) : 0,
+					'order_number'   => method_exists( $order, 'get_order_number' ) ? (string) $order->get_order_number() : '',
+					'order_status'   => method_exists( $order, 'get_status' ) ? (string) $order->get_status() : '',
+					'order_currency' => method_exists( $order, 'get_currency' ) ? (string) $order->get_currency() : get_option( 'woocommerce_currency', 'USD' ),
+					'product_id'     => method_exists( $product, 'get_id' ) ? intval( $product->get_id() ) : 0,
+					'product_name'   => method_exists( $product, 'get_name' ) ? (string) $product->get_name() : '',
+					'product_type'   => method_exists( $product, 'get_type' ) ? (string) $product->get_type() : 'simple',
+					'product_amount' => $this->get_demo_simple_product_amount( $product ),
+				);
+			}
+
+			return $sources;
+		}
+
+		/**
+		 * Returns recent WooCommerce orders for demo metadata.
+		 *
+		 * @param int $limit Maximum number of orders.
+		 * @return array<int,\WC_Order>
+		 */
+		private function get_demo_woocommerce_orders( $limit ) {
+			$args = array(
+				'limit'   => max( 1, intval( $limit ) ),
+				'orderby' => 'date',
+				'order'   => 'DESC',
+				'return'  => 'objects',
+			);
+
+			if ( function_exists( 'wc_get_order_statuses' ) ) {
+				$args['status'] = array_keys( wc_get_order_statuses() );
+			}
+
+			try {
+				$orders = wc_get_orders( $args );
+			} catch ( \Throwable $exception ) {
+				return array();
+			}
+
+			if ( ! is_array( $orders ) ) {
+				return array();
+			}
+
+			$normalized = array();
+			foreach ( $orders as $order ) {
+				if ( ! $order instanceof \WC_Order && is_numeric( $order ) && function_exists( 'wc_get_order' ) ) {
+					$order = wc_get_order( intval( $order ) );
+				}
+
+				if ( $order instanceof \WC_Order ) {
+					$normalized[] = $order;
+				}
+			}
+
+			return $normalized;
+		}
+
+		/**
+		 * Returns simple, non-variable WooCommerce products with positive prices.
+		 *
+		 * @param int $limit Maximum number of products.
+		 * @return array<int,\WC_Product>
+		 */
+		private function get_demo_simple_woocommerce_products( $limit ) {
+			try {
+				$products = wc_get_products(
+					array(
+						'limit'   => max( 1, intval( $limit ) ),
+						'status'  => array( 'publish', 'private' ),
+						'type'    => 'simple',
+						'orderby' => 'date',
+						'order'   => 'DESC',
+						'return'  => 'objects',
+					)
+				);
+			} catch ( \Throwable $exception ) {
+				return array();
+			}
+
+			if ( ! is_array( $products ) ) {
+				return array();
+			}
+
+			$simple_products = array();
+			foreach ( $products as $product ) {
+				if ( ! $product instanceof \WC_Product && is_numeric( $product ) && function_exists( 'wc_get_product' ) ) {
+					$product = wc_get_product( intval( $product ) );
+				}
+
+				if ( $this->is_demo_simple_product( $product ) && $this->get_demo_simple_product_amount( $product ) > 0 ) {
+					$simple_products[] = $product;
+				}
+			}
+
+			return $simple_products;
+		}
+
+		/**
+		 * Builds WooCommerce order conversion metadata.
+		 *
+		 * @param array<string,mixed> $order_source Order/product source.
+		 * @return array<string,mixed>
+		 */
+		private function build_demo_woocommerce_order_extra_data( $order_source ) {
+			return array(
+				'conversion_type' => 'woocommerce_order',
+				'order_id'        => intval( $order_source['order_id'] ),
+				'order_number'    => (string) $order_source['order_number'],
+				'order_status'    => (string) $order_source['order_status'],
+				'order_currency'  => (string) $order_source['order_currency'],
+				'order_value'     => $order_source['product_amount'],
+				'product_id'      => intval( $order_source['product_id'] ),
+				'product_name'    => (string) $order_source['product_name'],
+				'product_type'    => (string) $order_source['product_type'],
+				'product_amount'  => $order_source['product_amount'],
+			);
+		}
+
+		/**
+		 * Checks whether a product is a simple product.
+		 *
+		 * @param mixed $product Candidate product.
+		 * @return bool
+		 */
+		private function is_demo_simple_product( $product ) {
+			if ( ! $product instanceof \WC_Product ) {
+				return false;
+			}
+
+			if ( method_exists( $product, 'is_type' ) ) {
+				return $product->is_type( 'simple' );
+			}
+
+			return method_exists( $product, 'get_type' ) && 'simple' === $product->get_type();
+		}
+
+		/**
+		 * Returns a simple product's current amount.
+		 *
+		 * @param \WC_Product $product Product.
+		 * @return float
+		 */
+		private function get_demo_simple_product_amount( $product ) {
+			if ( ! $this->is_demo_simple_product( $product ) ) {
+				return 0.0;
+			}
+
+			$price = method_exists( $product, 'get_price' ) ? $product->get_price() : '';
+			if ( '' === $price && method_exists( $product, 'get_regular_price' ) ) {
+				$price = $product->get_regular_price();
+			}
+
+			if ( function_exists( 'wc_format_decimal' ) ) {
+				$price = wc_format_decimal( $price );
+			}
+
+			return round( floatval( $price ), 2 );
 		}
 
 		/**
