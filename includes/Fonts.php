@@ -26,6 +26,7 @@ if ( !class_exists( __NAMESPACE__ . '\Fonts' ) ) {
         public function __construct() {
             if ( is_admin() ) {
                 add_filter( 'fooconvert_admin_settings', array( $this, 'change_settings' ) );
+                add_filter( 'wp_theme_json_data_theme', array( $this, 'register_fonts_theme_json' ) );
                 add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_fonts_in_editor' ) );
                 add_action( 'enqueue_block_assets', array( $this, 'enqueue_fonts_in_editor' ) );
                 add_filter( 'block_editor_settings_all', array( $this, 'register_fonts_editor' ) );
@@ -176,6 +177,12 @@ if ( !class_exists( __NAMESPACE__ . '\Fonts' ) ) {
          * @return array
          */
         function register_fonts_editor( $editor_settings ) {
+            $font_families = $this->get_editor_font_families();
+
+            if ( empty( $font_families ) ) {
+                return $editor_settings;
+            }
+
             if ( !isset( $editor_settings['__experimentalFeatures'] ) ) {
                 $editor_settings['__experimentalFeatures'] = [];
             }
@@ -192,15 +199,112 @@ if ( !class_exists( __NAMESPACE__ . '\Fonts' ) ) {
                 $editor_settings['__experimentalFeatures']['typography']['fontFamilies']['theme'] = [];
             }
 
+            $editor_settings['__experimentalFeatures']['typography']['fontFamilies']['theme'] = $this->merge_editor_font_families(
+                $editor_settings['__experimentalFeatures']['typography']['fontFamilies']['theme'],
+                $font_families
+            );
+
+            return $editor_settings;
+        }
+
+        /**
+         * Registers configured fonts with the theme JSON data used by editor controls.
+         *
+         * @param mixed $theme_json Theme JSON data object.
+         * @return mixed
+         */
+        function register_fonts_theme_json( $theme_json ) {
+            if ( !is_object( $theme_json ) || !method_exists( $theme_json, 'get_data' ) || !method_exists( $theme_json, 'update_with' ) ) {
+                return $theme_json;
+            }
+
+            $font_families = $this->get_editor_font_families();
+
+            if ( empty( $font_families ) ) {
+                return $theme_json;
+            }
+
+            $data = $theme_json->get_data();
+            $typography = isset( $data['settings']['typography'] ) && is_array( $data['settings']['typography'] ) ? $data['settings']['typography'] : [];
+            $existing_font_families = isset( $typography['fontFamilies'] ) && is_array( $typography['fontFamilies'] ) ? $typography['fontFamilies'] : [];
+
+            if ( !isset( $existing_font_families['theme'] ) || !is_array( $existing_font_families['theme'] ) ) {
+                $existing_font_families['theme'] = [];
+            }
+
+            $existing_font_families['theme'] = $this->merge_editor_font_families(
+                $existing_font_families['theme'],
+                $font_families
+            );
+
+            $theme_json->update_with( [
+                'version'  => isset( $data['version'] ) ? $data['version'] : 3,
+                'settings' => [
+                    'typography' => [
+                        'fontFamilies' => $existing_font_families,
+                    ],
+                ],
+            ] );
+
+            return $theme_json;
+        }
+
+        /**
+         * Returns font family entries in the shape expected by editor typography settings.
+         *
+         * @return array<int,array<string,string>>
+         */
+        private function get_editor_font_families(): array {
+            $font_families = [];
+
             foreach ( $this->get_fonts() as $font ) {
-                $editor_settings['__experimentalFeatures']['typography']['fontFamilies']['theme'][] = [
+                if ( empty( $font['name'] ) || empty( $font['slug'] ) ) {
+                    continue;
+                }
+
+                $font_families[] = [
                     'fontFamily' => $font['name'],
                     'name'       => $font['name'],
                     'slug'       => $font['slug'],
                 ];
             }
 
-            return $editor_settings;
+            return $font_families;
+        }
+
+        /**
+         * Merges editor font family entries without duplicating existing slugs.
+         *
+         * @param array<int,array<string,mixed>> $existing Existing font family entries.
+         * @param array<int,array<string,string>> $additional Additional font family entries.
+         * @return array<int,array<string,mixed>>
+         */
+        private function merge_editor_font_families( array $existing, array $additional ): array {
+            $merged = [];
+            $seen = [];
+
+            foreach ( array_merge( $existing, $additional ) as $font_family ) {
+                if ( !is_array( $font_family ) ) {
+                    continue;
+                }
+
+                $slug = isset( $font_family['slug'] ) && is_string( $font_family['slug'] ) ? $font_family['slug'] : '';
+                if ( $slug === '' ) {
+                    $slug = isset( $font_family['name'] ) && is_string( $font_family['name'] ) ? sanitize_title( $font_family['name'] ) : '';
+                }
+                if ( $slug === '' && isset( $font_family['fontFamily'] ) && is_string( $font_family['fontFamily'] ) ) {
+                    $slug = sanitize_title( $font_family['fontFamily'] );
+                }
+                if ( $slug === '' || isset( $seen[ $slug ] ) ) {
+                    continue;
+                }
+
+                $font_family['slug'] = $slug;
+                $merged[] = $font_family;
+                $seen[ $slug ] = true;
+            }
+
+            return $merged;
         }
 
         /**

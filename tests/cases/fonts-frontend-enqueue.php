@@ -33,6 +33,35 @@ namespace {
         }
     }
 
+    class Test_Theme_JSON_Data {
+        /** @var array<string,mixed> */
+        private $data;
+
+        /**
+         * @param array<string,mixed> $data
+         */
+        public function __construct( array $data ) {
+            $this->data = $data;
+        }
+
+        /**
+         * @return array<string,mixed>
+         */
+        public function get_data(): array {
+            return $this->data;
+        }
+
+        /**
+         * @param array<string,mixed> $new_data
+         * @return self
+         */
+        public function update_with( array $new_data ): self {
+            $this->data = array_replace_recursive( $this->data, $new_data );
+
+            return $this;
+        }
+    }
+
     /**
      * @param string $text
      * @param string|null $domain
@@ -223,6 +252,80 @@ namespace {
     $GLOBALS['fc_test_post_content'][42] = '<!-- wp:fc/flyout {"content":{"styles":{"typography":{"fontFamily":{"key":"open-sans","name":"Open Sans","style":{"fontFamily":"Open Sans"}}}}} /-->';
 
     $fonts = new Fonts();
+
+    $editor_settings = $fonts->register_fonts_editor(
+        array(
+            '__experimentalFeatures' => array(
+                'typography' => array(
+                    'fontFamilies' => array(
+                        'theme' => array(
+                            array(
+                                'fontFamily' => 'system-ui',
+                                'name'       => 'System',
+                                'slug'       => 'system',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        )
+    );
+
+    Assertions::same(
+        array(
+            array(
+                'fontFamily' => 'system-ui',
+                'name'       => 'System',
+                'slug'       => 'system',
+            ),
+            array(
+                'fontFamily' => 'Open Sans',
+                'name'       => 'Open Sans',
+                'slug'       => 'open-sans',
+            ),
+        ),
+        $editor_settings['__experimentalFeatures']['typography']['fontFamilies']['theme'] ?? array(),
+        'Configured fonts should be added to block editor typography settings.'
+    );
+
+    $theme_json = new Test_Theme_JSON_Data(
+        array(
+            'version'  => 3,
+            'settings' => array(
+                'typography' => array(
+                    'fontFamilies' => array(
+                        'theme' => array(
+                            array(
+                                'fontFamily' => 'system-ui',
+                                'name'       => 'System',
+                                'slug'       => 'system',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        )
+    );
+
+    $fonts->register_fonts_theme_json( $theme_json );
+
+    Assertions::same(
+        array(
+            array(
+                'fontFamily' => 'system-ui',
+                'name'       => 'System',
+                'slug'       => 'system',
+            ),
+            array(
+                'fontFamily' => 'Open Sans',
+                'name'       => 'Open Sans',
+                'slug'       => 'open-sans',
+            ),
+        ),
+        $theme_json->get_data()['settings']['typography']['fontFamilies']['theme'] ?? array(),
+        'Configured fonts should be merged into theme JSON font families for editor controls.'
+    );
+
     $post = new WP_Post();
     $post->ID = 42;
     $post->post_type = FOOCONVERT_CPT_POPUP;
