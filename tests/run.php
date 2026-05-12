@@ -31,6 +31,7 @@ $cases = array(
     __DIR__ . '/cases/sales-attribution-woocommerce.php',
     __DIR__ . '/cases/stats-row-actions.php',
     __DIR__ . '/cases/fonts-frontend-enqueue.php',
+    __DIR__ . '/cases/pro-leads-brevo-integration.php',
 );
 
 $failures = 0;
