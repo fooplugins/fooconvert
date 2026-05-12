@@ -98,96 +98,97 @@ It includes popup templates, built-in popup blocks, display rules, open triggers
 
 = Pro Version =
 
-The Pro version of FooConvert includes:
+FooConvert Pro adds tools for WooCommerce stores and marketers who want to build better campaigns, learn what works, and connect popups to real business results.
 
-- AI Popup Builder.
-- A/B Testing.
-- Sales revenue attribution.
-- More blocks for your popups (WooCommerce Apply Coupon Block; WooCommerce Free Shipping Progress Block; Confetti Block).
-- WooCommerce Display Rules.
-- WooCommerce triggers for ecommerce targeting.
-- Lead automation integrations (send to Mailchimp; Mailpoet; Brevo; Custom Webhook).
-- Advanced analytics + longer retention.
+- AI-assisted popup creation.
+- A/B testing for popup ideas and offers.
+- WooCommerce revenue attribution.
+- Store-focused popup blocks.
+- WooCommerce targeting rules and shopper behavior triggers.
+- Lead delivery to Mailchimp, MailPoet, Brevo, and custom webhooks.
+- More detailed analytics with longer data retention.
 
 = AI Popup Builder =
 
-Create popup drafts from a chat-based builder that uses FooConvert templates, supported block metadata, conversion guidance, and optional brand context to generate editable bars, flyouts, and overlays.
+Start with a simple prompt and let FooConvert Pro create an editable popup draft for you. It can help with campaign ideas, copy, layout, images, and brand fit, so you can launch faster without starting from a blank canvas.
 
-- Generate draft popup content from guided prompts and starter campaign ideas.
-- Save generated designs as draft FooConvert popups for editing in the block editor.
-- Use saved Brand Context, local or remote brand extraction, and selected block catalogs to guide output.
-- Generate, import, reuse, or delete AI-created popup images and background images when media generation is available.
-- Review the strategy summary, conversion checklist, activity log, and live preview before editing the draft.
+- Create bars, flyouts, and overlays from natural-language prompts.
+- Use starter prompts for common campaigns like discounts, free shipping, newsletters, and launch offers.
+- Save generated campaigns as draft popups and keep editing them in the block editor.
+- Match popup colors, fonts, spacing, and button styles to your brand.
+- Generate or reuse matching popup images and backgrounds when image generation is enabled.
+- Preview the popup and review the conversion strategy before publishing.
 
 = A/B Testing =
 
-Run controlled popup experiments so you can compare a published control against one or more variants and choose a winner from real visitor behavior.
+Test different popup ideas against each other and use real visitor behavior to decide what works best. Run experiments for offers, headlines, layouts, calls to action, and timing.
 
-- Create A/B testing experiments from existing published popups and duplicate variants from the control or another variant.
-- Split traffic across participants with configurable weights and persistent visitor assignments.
-- Optimize for clicks, conversions, or leads.
-- Review views, clicks, conversions, leads, goal rate, uplift, confidence, and winning participant status.
-- Enable an automatic winner based of your chosen criteria.
+- Create an experiment from an existing published popup.
+- Duplicate the control popup to make variants faster.
+- Split traffic evenly or choose custom traffic weights.
+- Pick the goal that matters most: clicks, conversions, or leads.
+- Compare views, clicks, conversions, leads, goal rate, improvement, and confidence.
+- Let FooConvert Pro automatically complete the test or apply a winner when your rules are met.
 
 = Sales Revenue Attribution =
 
-Connect FooConvert popup engagement to WooCommerce orders so popup performance can be measured by attributed revenue, not only views and clicks.
+See which popups help drive WooCommerce orders. FooConvert Pro connects popup engagement to sales, so you can measure campaigns by revenue instead of guessing from views and clicks alone.
 
-- Attribute sales to the latest qualifying popup click or conversion before the order.
-- Choose whether sales are credited when the order is created or when payment is completed.
-- Configure the attribution lookback window, dedupe mode, and whether multiple orders in one session can be credited.
-- Store attribution details on WooCommerce orders and FooConvert sale events.
-- View attributed revenue, sale counts, order rows, recent sales, and top revenue popups in admin reporting.
+- Credit sales to the popup interaction that helped lead to the order.
+- Choose whether to count revenue when an order is created or after payment is confirmed.
+- Set how far back FooConvert should look for a matching popup interaction.
+- Avoid duplicate credit for the same shopper session.
+- View attributed revenue, order counts, recent sales, and top revenue popups in wp-admin.
 
 = PRO Blocks =
 
-Add WooCommerce-focused and engagement-focused blocks to build more persuasive store campaigns inside FooConvert popups.
+FooConvert Pro includes extra popup blocks built for ecommerce offers, cart incentives, and sales campaigns.
 
-- `Apply Coupon` block: search WooCommerce coupons, apply them from a popup, and optionally close or redirect after apply.
-- `Apply Coupon` customization: set layout, label visibility, button style, override applied text, success messages, and friendly error messages.
-- `Free Shipping Progress` block: show locked, almost-there, unlocked, or unavailable content based on live cart progress.
-- `Free Shipping Progress` customization: set the threshold, almost-there percentage, tokenized messages, progress bar visibility, percentage display, and styles.
-- `Confetti` block: trigger a confetti burst when the popup opens. A great effect for coupons or sales popups.
+- `Apply Coupon` block: let shoppers apply a WooCommerce coupon directly from a popup.
+- Choose what happens after a coupon is applied, including closing the popup or sending shoppers to the cart or checkout.
+- `Free Shipping Progress` block: show shoppers how close they are to free shipping using their live cart total.
+- Customize the free shipping threshold, almost-there message, unlocked message, progress bar, and styling.
+- `Confetti` block: add a celebratory effect when a coupon, offer, or sale popup opens.
 
 = WooCommerce Display Rules =
 
-Target popups to WooCommerce-specific locations so store campaigns only appear on the shopper journeys where they make sense.
+Show store campaigns only where they make sense. WooCommerce display rules help you match the popup to the page, product, and stage of the buying journey.
 
-- Show popups on the shop, cart, checkout, and My Account pages.
-- Target any product page, product tag archive, or product category archive.
-- Target any page that contains a WooCommerce template.
-- Target any WooCommerce page, including cart, checkout, shop, account, and product areas.
-- Use these rules alongside the standard FooConvert include and exclusion rules.
+- Target the shop, cart, checkout, and My Account pages.
+- Show campaigns on product pages, product category pages, or product tag pages.
+- Target any WooCommerce page when you want a broader store-wide campaign.
+- Use exclusions to keep popups away from pages where they do not belong.
+- Combine WooCommerce rules with FooConvert's standard location and user targeting.
 
 = WooCommerce Triggers =
 
-Open popups in response to shopper behavior, cart changes, coupon events, checkout events, and product intent signals.
+Open popups at the right moment in the shopping journey. WooCommerce triggers react to cart activity, coupons, checkout events, and product interest.
 
-- Trigger on product added to cart, product removed from cart, or cart updated.
-- Limit cart triggers by selected products or subtotal comparisons.
-- Trigger on successful coupon application or invalid coupon attempts.
-- Trigger on checkout page view, checkout exit intent, checkout errors, or payment failure.
-- Trigger on cart idle time, product page views, or high-intent product engagement based on scroll depth, time on page, or repeat views.
+- Show an offer after a shopper adds or removes a product from the cart.
+- Trigger campaigns when cart value is above or below a chosen amount.
+- Respond when a coupon is applied or when a coupon fails.
+- Rescue checkout visitors with checkout view, exit intent, error, and payment failure triggers.
+- Reach high-intent shoppers based on product views, time on page, scroll depth, repeat views, or cart idle time.
 
 = Lead Automation Integrations =
 
-Send captured leads to external marketing and automation tools after FooConvert saves them locally.
+Keep leads moving after they are captured. FooConvert Pro can send new subscribers to the tools your business already uses while still saving the lead inside WordPress.
 
-- Subscribe leads to a selected Mailchimp audience, with connection testing and list retrieval.
-- Subscribe leads to a selected MailPoet list when MailPoet is installed.
-- Add or update contacts in a selected Brevo list, including first-name and last-name attributes when available.
-- POST leads as JSON to a custom webhook endpoint for Zapier, Make, n8n, or custom workflows.
-- Add optional webhook headers and review integration error logs from the Leads settings.
+- Send leads to a selected Mailchimp audience.
+- Add subscribers to a selected MailPoet list.
+- Add or update contacts in Brevo.
+- Send lead data to Zapier, Make, n8n, or custom systems with webhooks.
+- Test connections, fetch available lists, add webhook headers, and review integration errors from the settings screen.
 
 = Advanced Analytics + Retention =
 
-Expand popup reporting with deeper engagement metrics, richer activity charts, WooCommerce revenue data, and configurable data retention.
+Understand more than whether a popup was seen. FooConvert Pro gives you deeper campaign reporting so you can improve popups based on clicks, conversions, revenue, and visitor engagement.
 
-- Track clicks, click-through rate, conversions, conversion rate, engagement rate, positive and negative engagements, and overall sentiment.
-- Include unique visitors, unique sessions, returning visitors, closes, and attributed sales in popup metric queries.
-- Add clicks, conversions, closes, sales, and update annotations to popup activity charts.
-- Compare week-over-week changes for views, engagements, clicks, and conversions in dashboard metric options.
-- Extend analytics retention from the free default to the Pro default of 30 days, with configurable retention and longer activity ranges.
+- Track clicks, click-through rate, conversions, conversion rate, engagement rate, and overall sentiment.
+- See unique visitors, unique sessions, returning visitors, closes, and attributed sales.
+- Add clicks, conversions, closes, sales, and update markers to activity charts.
+- Compare week-over-week changes for views, engagements, clicks, and conversions.
+- Keep analytics data longer with the Pro default of 30 days and configurable retention settings.
 
 
 
