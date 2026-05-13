@@ -11,7 +11,19 @@ import { cleanObject, isArray } from "@steveush/utils";
  */
 const useParentAttributes = ( clientId, parentName, last = false ) => {
     const parents = useSelect(
-        select => select( blockEditorStore )?.getBlockParentsByBlockName( clientId, [ parentName ] ) ?? [],
+        select => {
+            const blockEditorSelect = select( blockEditorStore );
+            const getBlockName = blockEditorSelect?.getBlockName;
+            const getBlockParents = blockEditorSelect?.getBlockParents;
+
+            if ( typeof getBlockName !== "function" || typeof getBlockParents !== "function" ) {
+                return [];
+            }
+
+            return ( getBlockParents( clientId ) ?? [] ).filter( parentClientId => {
+                return getBlockName( parentClientId ) === parentName;
+            } );
+        },
         [ clientId, parentName ]
     );
     if ( isArray( parents, true ) ) {
