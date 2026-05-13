@@ -263,7 +263,7 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 * Fixed : Fix for Split Layout block missing frontend styles.
 [//]: # fs_premium_only_begin
 * Added : Added Brevo integration for lead automation.
-* Added : Expanded AI Popup Builder support for real FooConvert and WooCommerce trigger events in generated popup drafts.
+* Added : Expanded AI Popup Builder support for real trigger events in generated popup drafts.
 * Updated : Improved AI Popup Builder connector warnings, page copy, starter prompts, and system prompt guidance.
 * Fixed : improved dummy data using actual WooCommerce orders and product pricing.
 * Fixed : fixed PHP fatal error when using < WP7.
