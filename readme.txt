@@ -4,7 +4,7 @@ Tags: popups,bars,flyouts,conversion,marketing
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 7.0
-Stable tag: 2.0.1
+Stable tag: 2.0.3
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -256,6 +256,18 @@ No, FooConvert is optimized for performance and has minimal impact on your websi
 The source code for this plugin is available publicly on GitHub [here](https://github.com/fooplugins/fooconvert).
 
 == Changelog ==
+
+= 2.0.3 =
+* Date Updated : 13 May 2026
+* Fixed : Fixed bug where fonts added in settings were not showing in block editor font selector.
+* Fixed : Fix for Split Layout block missing frontend styles.
+[//]: # fs_premium_only_begin
+* Added : Added Brevo integration for lead automation.
+* Added : Expanded AI Popup Builder support for real FooConvert and WooCommerce trigger events in generated popup drafts.
+* Updated : Improved AI Popup Builder connector warnings, page copy, starter prompts, and system prompt guidance.
+* Fixed : improved dummy data using actual WooCommerce orders and product pricing.
+* Fixed : fixed PHP fatal error when using < WP7.
+[//]: # fs_premium_only_end
 
 = 2.0.1 =
 * Date Updated : 12 May 2026
