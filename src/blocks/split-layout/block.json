@@ -6,6 +6,7 @@
   "category": "fooconvert",
   "editorScript": "file:./editor/index.js",
   "editorStyle": "file:./editor/index.css",
+  "viewScript": "file:./frontend/index.js",
   "viewStyle": "file:./frontend/index.css",
   "supports": {
     "lock": false,
