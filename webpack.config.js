@@ -128,8 +128,8 @@ const entry = () => {
     const entries = {
         "editor": "./src/editor/index.js",
         "frontend": "./src/frontend/index.js",
-        "admin/ai-popup-builder/index": "./pro/src/admin/ai-popup-builder/index.js",
-        "admin/brand-context/index": "./pro/src/admin/brand-context/index.js",
+        "admin/ai-popup-builder/index": "./src/admin/ai-popup-builder/index.js",
+        "admin/brand-context/index": "./src/admin/brand-context/index.js",
         "admin/display-rules-list/index": "./src/scripts/admin/display-rules-list/index.js",
         "editor-pro": {
             "import": "./pro/src/editor/index.js",

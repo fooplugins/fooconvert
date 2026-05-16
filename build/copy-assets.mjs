@@ -71,7 +71,11 @@ await resizeTemplates("./src/media/templates/fullsize", "./src/media/templates")
 
 await performCopy( "./src/media", "./assets/media", mediaPatterns );
 await performCopy( "./src/media/templates/preview", "./assets/media/templates/preview", previewPatterns );
-await performCopy( "./src/admin", "./assets/admin", [ '**/*' ] );
+await performCopy( "./src/admin", "./assets/admin", [
+    '**/*',
+    '!ai-popup-builder/**',
+    '!brand-context/**'
+] );
 
 await rm( "./assets/pro", { force: true, recursive: true } );
 await rm( "./pro/assets/blocks", { force: true, recursive: true } );
