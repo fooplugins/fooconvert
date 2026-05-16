@@ -1,4 +1,4 @@
-=== FooConvert – Popup, Flyout & Announcement Bar Builder for the Block Editor ===
+=== FooConvert - Popup Builder for Block Editor ===
 Contributors: fooplugins, bradvin, steveush
 Tags: flyout, popups, popup, announcement-bar, promo-bar
 Requires at least: 6.5
@@ -8,12 +8,12 @@ Stable tag: 2.0.3
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Build popups, flyouts, and announcement bars in the WordPress block editor. Free popup templates, exit intent, targeting rules, and lead capture.
+Build popups, flyouts, and announcement bars in the WordPress block editor. Free popup templates, AI drafts, targeting rules, and lead capture.
 
 == Description ==
 
 FooConvert lets you create bars, flyouts, and overlay popups directly in the WordPress block editor.
-It includes free templates, built-in popup blocks, display rules, open triggers, lead capture, popup analytics, and styling controls for building campaigns without leaving wp-admin.
+It includes free templates, built-in popup blocks, display rules, open triggers, lead capture, popup analytics, styling controls, and AI-assisted campaign drafts for building campaigns without leaving wp-admin.
 
 [Read the FooConvert documentation](https://fooplugins.com/documentation/fooconvert/)
 
@@ -30,6 +30,7 @@ It includes free templates, built-in popup blocks, display rules, open triggers,
 - Leads capture with CSV export
 - Popup stats with daily activity charts
 - Google Fonts support and popup styling controls
+- AI Popup Builder and Brand Context tools for WordPress 7+ sites with a configured WordPress AI connector
 
 = Popup Types =
 
@@ -83,6 +84,7 @@ It includes free templates, built-in popup blocks, display rules, open triggers,
 
 - Add demo content to see example bars, flyouts, and overlays on a real site.
 - Choose the popup editor background for all popup types.
+- Save reusable Brand Context details so generated campaigns can match your colors, typography, voice, and offer style.
 - Enable debug mode when troubleshooting an issue.
 - Hide selected dashboard panels or promo messages if you want a cleaner admin area.
 - Review database stats and remove old or orphaned event data.
@@ -100,8 +102,6 @@ It includes free templates, built-in popup blocks, display rules, open triggers,
 
 FooConvert Pro adds tools for WooCommerce stores and marketers who want to build better campaigns, learn what works, and connect popups to real business results.
 
-- AI-assisted popup creation.
-- A built-in background image generator for polished popup visuals.
 - A/B testing for popup ideas and offers.
 - WooCommerce revenue attribution.
 - Store-focused popup blocks.
@@ -111,18 +111,21 @@ FooConvert Pro adds tools for WooCommerce stores and marketers who want to build
 
 = AI Popup Builder =
 
-Start with a simple prompt and let FooConvert Pro create an editable popup draft for you. It can help with campaign ideas, copy, layout, images, and brand fit, so you can launch faster without starting from a blank canvas.
+Start with a simple prompt and let FooConvert create an editable popup draft for you. It can help with campaign ideas, copy, layout, images, and brand fit, so you can launch faster without starting from a blank canvas.
+The AI tools require WordPress 7 or newer and a configured WordPress AI connector.
 
 - Create bars, flyouts, and overlays from natural-language prompts.
 - Use starter prompts for common campaigns like discounts, free shipping, newsletters, and launch offers.
 - Save generated campaigns as draft popups and keep editing them in the block editor.
 - Match popup colors, fonts, spacing, and button styles to your brand.
+- Reuse saved Brand Context across generated campaigns.
 - Generate or reuse matching popup images and backgrounds when image generation is enabled.
 - Preview the popup and review the conversion strategy before publishing.
 
 = Background Image Generator =
 
-Create polished popup backgrounds without opening a design tool or hunting for stock images. FooConvert Pro turns adjustable visual styles into ready-to-use background images, so every campaign can feel branded and intentional.
+Create polished popup backgrounds without opening a design tool or hunting for stock images. FooConvert turns adjustable visual styles into ready-to-use background images, so every campaign can feel branded and intentional.
+Image generation is available from the AI Popup Builder when your configured WordPress AI connector supports image generation.
 
 - Generate a new background directly from the popup background image controls.
 - Start with modern styles like gradients, swirls, soft noise, pattern textures, and colorful shapes.
@@ -224,6 +227,11 @@ FooConvert is designed to work with most WordPress themes. If you encounter any 
 
 Yes. FooConvert is built for the block editor and supports WordPress core blocks, most third-party blocks, embedded content, and shortcodes inside popup content.
 
+= Why do I not see the AI Popup Builder? =
+
+The AI Popup Builder requires WordPress 7 or newer. Generating popup drafts also requires a configured WordPress AI connector, and image generation requires connector support for images.
+All standard popup building features continue to work on WordPress 6.5 or newer.
+
 = Where are captured leads stored? =
 
 Captured leads are stored in WordPress and can be viewed from the Leads screen in wp-admin. You can search, sort, bulk delete, and export selected leads to CSV.
@@ -259,14 +267,15 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 
 = 2.0.3 =
 * Date Updated : 13 May 2026
+* New : Moved AI Popup Builder, Brand Context, and background image generation into the free plugin for WordPress 7+ sites.
+* Added : Expanded AI Popup Builder support for real trigger events in generated popup drafts.
+* Updated : Improved AI Popup Builder connector warnings, page copy, starter prompts, and system prompt guidance.
+* Fixed : fixed PHP fatal error when using WordPress versions earlier than 7.0.
 * Fixed : Fixed bug where fonts added in settings were not showing in block editor font selector.
 * Fixed : Fix for Split Layout block missing frontend styles.
 [//]: # fs_premium_only_begin
 * Added : Added Brevo integration for lead automation.
-* Added : Expanded AI Popup Builder support for real trigger events in generated popup drafts.
-* Updated : Improved AI Popup Builder connector warnings, page copy, starter prompts, and system prompt guidance.
 * Fixed : improved dummy data using actual WooCommerce orders and product pricing.
-* Fixed : fixed PHP fatal error when using < WP7.
 [//]: # fs_premium_only_end
 
 = 2.0.1 =
