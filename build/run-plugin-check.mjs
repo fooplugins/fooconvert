@@ -10,6 +10,7 @@ const passthroughArgs = process.argv.slice( 2 );
 
 const excludedDirectories = [
     ".git",
+    ".github",
     "tests",
     "test",
     "dist",
@@ -18,8 +19,10 @@ const excludedDirectories = [
 ];
 
 const excludedFiles = [
+    ".DS_Store",
     ".gitignore",
     ".gitmodules",
+    "CLAUDE.md",
     "pro/.git",
     "pro/.gitignore",
 ];
