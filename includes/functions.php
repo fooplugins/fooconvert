@@ -317,7 +317,7 @@ function fooconvert_get_popup_type( $thing ) {
  */
 function fooconvert_get_requested_popup_type() {
     $popup_type = isset( $_GET['popup_type'] ) ? $_GET['popup_type'] : '';
-    $popup_type = wp_unslash( $popup_type );
+    $popup_type = sanitize_key( wp_unslash( $popup_type ) );
 
     return fooconvert_normalize_popup_type( $popup_type );
 }
