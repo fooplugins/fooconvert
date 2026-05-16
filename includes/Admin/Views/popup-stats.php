@@ -35,7 +35,7 @@ if ( $post_id ) {
     }
 } else {
     // Redirect to the popup list page if the popup ID is not provided
-    wp_redirect( admin_url( 'admin.php?page=fooconvert' ) );
+    wp_safe_redirect( admin_url( 'admin.php?page=fooconvert' ) );
     exit;
 }
 ?>
