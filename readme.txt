@@ -21,7 +21,7 @@ It includes free templates, built-in popup blocks, display rules, open triggers,
 
 = What FooConvert Includes =
 
-- Bars, flyouts, and overlay popups managed from the same workflow
+- Create bars, flyouts, and overlay popups with the block editor
 - 15 bundled popup templates
 - Sign Up, Countdown, and Coupon blocks
 - Support for WordPress core blocks, embeds, and shortcodes inside popup content
