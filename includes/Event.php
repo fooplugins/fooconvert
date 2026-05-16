@@ -39,10 +39,10 @@ if ( !class_exists( __NAMESPACE__ . '\Event' ) ) {
                 } else {
                     $data['user_id'] = 0;
 
-                    $remote_addr = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
-                    $user_agent = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) );
+                    $remote_addr = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+                    $user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
 
-                    if ( empty( $anonymous_user_guid ) && isset( $remote_addr ) && isset( $user_agent ) ) {
+                    if ( empty( $anonymous_user_guid ) && '' !== $remote_addr && '' !== $user_agent ) {
                         // Fall back to a stable anonymous fingerprint when the
                         // frontend did not supply a GUID from local storage/cookies.
                         $anonymous_user_guid = hash( 'sha256', $remote_addr . $user_agent );
