@@ -29,6 +29,7 @@
     "require": {
         "php": ">=7.4",
         "composer/installers": "v1.12.0",
-        "freemius/wordpress-sdk": "^2.13.1"
+        "freemius/wordpress-sdk": "^2.13.1",
+        "bradvin/wp-ai-client-streaming": "^0.1.2"
     }
 }

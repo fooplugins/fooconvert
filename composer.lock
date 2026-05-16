@@ -4,8 +4,60 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7099f692e34907b90b27fc738e2c4cd3",
+    "content-hash": "4349f9d9b334aed4389ca421ddb6f94b",
     "packages": [
+        {
+            "name": "bradvin/wp-ai-client-streaming",
+            "version": "v0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bradvin/wp-ai-client-streaming.git",
+                "reference": "1d89ace8937333f9fb3bd2e21be9b3444e193d2c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bradvin/wp-ai-client-streaming/zipball/1d89ace8937333f9fb3bd2e21be9b3444e193d2c",
+                "reference": "1d89ace8937333f9fb3bd2e21be9b3444e193d2c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "suggest": {
+                "ext-curl": "Required for true incremental streaming; without cURL the package falls back to the stock HTTP client."
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "load.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "bradvin",
+                    "homepage": "https://github.com/bradvin",
+                    "role": "Developer"
+                }
+            ],
+            "description": "WordPress AI streaming adapter package that mirrors WordPress 7 AI integration patterns.",
+            "homepage": "https://github.com/bradvin/wp-ai-client-streaming",
+            "keywords": [
+                "ai",
+                "composer",
+                "streaming",
+                "wordpress",
+                "wp-ai-client"
+            ],
+            "support": {
+                "issues": "https://github.com/bradvin/wp-ai-client-streaming/issues",
+                "source": "https://github.com/bradvin/wp-ai-client-streaming"
+            },
+            "time": "2026-05-13T11:45:30+00:00"
+        },
         {
             "name": "composer/installers",
             "version": "v1.12.0",

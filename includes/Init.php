@@ -51,6 +51,14 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
             new Brand\Manager();
             new AI\PopupBuilder\Plugin();
 
+            if (
+                AI\PopupBuilder\Config::supports_ai_popup_builder()
+                && class_exists( 'WP_AI_Client_Streaming_Discovery_Strategy' )
+                && method_exists( 'WP_AI_Client_Streaming_Discovery_Strategy', 'init' )
+            ) {
+                \WP_AI_Client_Streaming_Discovery_Strategy::init();
+            }
+
             if ( fooconvert_fs()->can_use_premium_code__premium_only() ) {
                 // Check if the PRO version is running and run the PRO code.
                 if ( file_exists( FOOCONVERT_PATH . 'pro/start.php' ) ) {

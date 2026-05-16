@@ -29,6 +29,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
             new namespace\Settings();
             new namespace\LeadsMenu();
             new namespace\BrandContext();
+            new \FooPlugins\FooConvert\AI\PopupBuilder\Admin();
             if ( fooconvert_fs()->is_not_paying() ) {
                 new namespace\Promotions();
             }

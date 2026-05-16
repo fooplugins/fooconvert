@@ -5,6 +5,43 @@ namespace FooPlugins\FooConvert\Tests\Support;
 
 use RuntimeException;
 
+spl_autoload_register(
+    static function( string $class ): void {
+        $root       = dirname( __DIR__, 2 );
+        $pro_prefix = 'FooPlugins\\FooConvert\\Pro\\';
+
+        if ( 0 === strpos( $class, $pro_prefix ) ) {
+            $relative = substr( $class, strlen( $pro_prefix ) );
+            if ( ! is_string( $relative ) || '' === $relative ) {
+                return;
+            }
+
+            $file = $root . '/pro/includes/' . str_replace( '\\', '/', $relative ) . '.php';
+            if ( file_exists( $file ) ) {
+                require_once $file;
+            }
+
+            return;
+        }
+
+        $prefix = 'FooPlugins\\FooConvert\\';
+
+        if ( 0 !== strpos( $class, $prefix ) ) {
+            return;
+        }
+
+        $relative = substr( $class, strlen( $prefix ) );
+        if ( ! is_string( $relative ) || '' === $relative ) {
+            return;
+        }
+
+        $file = $root . '/includes/' . str_replace( '\\', '/', $relative ) . '.php';
+        if ( file_exists( $file ) ) {
+            require_once $file;
+        }
+    }
+);
+
 /**
  * Lightweight assertion helpers for the dependency-free PHP smoke tests.
  */

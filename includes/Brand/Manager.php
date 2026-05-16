@@ -303,7 +303,7 @@ class Manager {
                     'borderRadius' => sanitize_text_field( (string) ( $components['buttonPrimary']['borderRadius'] ?? '' ) ),
                 ),
                 'buttonSecondary' => array(
-                    'background'   => sanitize_text_field( (string) ( $components['buttonSecondary']['background'] ?? '' ) ),
+                    'background'   => self::sanitize_color( $components['buttonSecondary']['background'] ?? '' ),
                     'textColor'    => self::sanitize_color( $components['buttonSecondary']['textColor'] ?? '' ),
                     'borderColor'  => self::sanitize_color( $components['buttonSecondary']['borderColor'] ?? '' ),
                     'borderRadius' => sanitize_text_field( (string) ( $components['buttonSecondary']['borderRadius'] ?? '' ) ),
