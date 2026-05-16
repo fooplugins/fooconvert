@@ -54,8 +54,22 @@ define( 'FOOCONVERT_MENU_SLUG', 'fooconvert' );
 define( 'FOOCONVERT_MENU_SLUG_DASHBOARD', 'fooconvert-dashboard' );
 define( 'FOOCONVERT_MENU_SLUG_POPUP_STATS', 'fooconvert-popup-stats' );
 define( 'FOOCONVERT_MENU_SLUG_POPUP_CHOOSER', 'fooconvert-popup-chooser' );
+define( 'FOOCONVERT_MENU_SLUG_AI_POPUP_BUILDER', 'fooconvert-ai-popup-builder' );
 define( 'FOOCONVERT_RETENTION_DEFAULT', 14 );
 define( 'FOOCONVERT_METRICS_DAYS_DEFAULT', 7 );
+
+// AI options and metadata.
+define( 'FOOCONVERT_OPTION_AI_BRAND', 'fooconvert_ai_brand' );
+define( 'FOOCONVERT_OPTION_BRAND_CONTEXT', FOOCONVERT_OPTION_AI_BRAND );
+define( 'FOOCONVERT_OPTION_AI_POPUP_BUILDER_DEBUG_RESPONSES', 'fooconvert_ai_popup_builder_debug_responses' );
+define( 'FOOCONVERT_META_KEY_AI_BUILDER_METADATA', '_fooconvert_ai_builder_metadata' );
+define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_MODEL', 'ai_popup_builder_override_model' );
+define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_DISABLED_PARAMS', 'ai_popup_builder_disabled_params' );
+define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_TIMEOUT', 'ai_popup_builder_timeout' );
+define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_MAX_TOOL_CALLS', 'ai_popup_builder_max_tool_calls' );
+define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_SELECTED_BLOCKS', 'ai_popup_builder_selected_blocks' );
+define( 'FOOCONVERT_AI_POPUP_BUILDER_TIMEOUT_DEFAULT', 45 );
+define( 'FOOCONVERT_AI_POPUP_BUILDER_MAX_TOOL_CALLS_DEFAULT', 10 );
 
 //CRON
 define( 'FOOCONVERT_CRON_CALC_STATS', 'fooconvert_calculate_popup_stats' );

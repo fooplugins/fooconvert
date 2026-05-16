@@ -48,6 +48,8 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
             new Fonts();
             new Admin\Templates\Init();
             new Updater();
+            new Brand\Manager();
+            new AI\PopupBuilder\Plugin();
 
             if ( fooconvert_fs()->can_use_premium_code__premium_only() ) {
                 // Check if the PRO version is running and run the PRO code.

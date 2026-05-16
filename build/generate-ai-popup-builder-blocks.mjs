@@ -5,7 +5,7 @@ import { globby } from "globby";
 
 const buildDir = dirname( fileURLToPath( import.meta.url ) );
 const rootDir = dirname( buildDir );
-const outputPath = join( rootDir, "pro/includes/AI/PopupBuilder/Blueprint/generated-fooconvert-blocks.php" );
+const outputPath = join( rootDir, "includes/AI/PopupBuilder/Blueprint/generated-fooconvert-blocks.php" );
 const sourceRoots = [
     "src",
     "pro/src",
