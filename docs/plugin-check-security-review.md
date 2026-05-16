@@ -9,11 +9,12 @@ This document tracks Plugin Check findings that were not changed automatically b
 
 - `includes/Blocks/SplitLayout.php`: documented the existing KSES output path with a targeted PHPCS ignore.
 - `includes/Admin/Views/popup-stats.php`: changed the fallback redirect from `wp_redirect()` to `wp_safe_redirect()`.
+- `includes/Admin/Views/popup-stats.php`: sanitized the read-only `post_id` request value with `wp_unslash()` and `absint()`.
 - `includes/Event.php`: added existence checks before reading `$_SERVER` values.
 - `includes/functions.php`: sanitized popup type and popup request helper values.
 - `includes/PostType.php`: sanitized popup type list-filter values.
 - `includes/AI/PopupBuilder/Config.php`: sanitized the AI builder admin page value.
-- `pro/includes/functions.php`: sanitized shared cookie reads and gated integration `error_log()` output behind FooConvert debug mode.
+- `pro/includes/functions.php`: sanitized shared cookie reads, gated integration `error_log()` output behind FooConvert debug mode, and documented the debug-only log with a targeted PHPCS ignore.
 - `build/run-plugin-check.mjs`: excluded local-only repository files from the project Plugin Check wrapper.
 
 ## Review Items
@@ -121,23 +122,7 @@ Options:
 Recommendation:
 Keep it for now with a targeted suppression or filter. Removing it could change streaming behavior.
 
-### 7. Pro integration error logging
-
-File:
-- `pro/includes/functions.php`
-
-Finding:
-`error_log()` remains flagged even after gating it behind `fooconvert_is_debug()`.
-
-Options:
-- Remove the `error_log()` call entirely and rely on the existing `fooconvert_lead_integration_errors` option.
-- Keep the debug-mode gate and add a targeted PHPCS suppression.
-- Replace `error_log()` with a pluggable logger abstraction if Pro needs external log integrations later.
-
-Recommendation:
-Remove the call entirely if the stored option is sufficient for support. Otherwise keep the debug gate and suppress the Plugin Check warning.
-
-### 8. Translation loading warning
+### 7. Translation loading warning
 
 File:
 - `includes/Init.php`
