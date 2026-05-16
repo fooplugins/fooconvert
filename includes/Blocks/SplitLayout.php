@@ -134,6 +134,7 @@ class SplitLayout extends BaseBlock {
 
         ob_start();
         ?><div <?php echo wp_kses_data( get_block_wrapper_attributes( $wrapper_attributes ) ); ?>><?php
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Dynamic inner block HTML is filtered by kses() before output.
             echo $this->kses( $attributes, do_blocks( $content ), $block, 'content' );
         ?></div><?php
         return ob_get_clean();
