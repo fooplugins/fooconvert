@@ -94,9 +94,11 @@ class Config {
      * @return bool
      */
     public static function is_admin_page(): bool {
-        $page = isset( $_GET['page'] ) ? $_GET['page'] : '';
-        $page = function_exists( 'wp_unslash' ) ? wp_unslash( $page ) : $page;
-        $page = function_exists( 'sanitize_key' ) ? sanitize_key( $page ) : preg_replace( '/[^a-z0-9_\-]/', '', strtolower( (string) $page ) );
+        $page = '';
+        if ( isset( $_GET['page'] ) ) {
+            $page = function_exists( 'wp_unslash' ) ? wp_unslash( $_GET['page'] ) : $_GET['page'];
+            $page = function_exists( 'sanitize_key' ) ? sanitize_key( $page ) : preg_replace( '/[^a-z0-9_\-]/', '', strtolower( (string) $page ) );
+        }
 
         return is_admin()
             && FOOCONVERT_MENU_SLUG_AI_POPUP_BUILDER === $page;
