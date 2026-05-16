@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Get the popup ID from the URL
 // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-$post_id = isset( $_GET['post_id'] ) ? intval( $_GET['post_id'] ) : 0;
+$post_id = isset( $_GET['post_id'] ) ? absint( wp_unslash( $_GET['post_id'] ) ) : 0;
 $fooconvert_popup_title = __( 'Unknown', 'fooconvert' );
 $fooconvert_filter_days = intval( get_option( FOOCONVERT_OPTION_RECENT_ACTIVITY_DAYS, FOOCONVERT_METRICS_DAYS_DEFAULT ) );
 $fooconvert_filter_options = apply_filters( 'fooconvert_popup_stats_recent_activity_options',
