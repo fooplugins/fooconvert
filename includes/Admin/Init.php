@@ -36,6 +36,16 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Init' ) ) {
                 if ( FooConvert::plugin()->post_type->is_editor() ) {
                     $settings['localAutosaveInterval'] = 0;
                     $settings['autosaveInterval'] = 0;
+
+                    if ( isset( $context->post ) && $context->post instanceof \WP_Post ) {
+                        $block_name = fooconvert_get_popup_type_block_name( fooconvert_get_popup_type( $context->post ) );
+                        if ( $block_name !== '' ) {
+                            $settings['template'] = array(
+                                array( $block_name ),
+                            );
+                            $settings['templateLock'] = 'all';
+                        }
+                    }
                 }
 
                 return $settings;
