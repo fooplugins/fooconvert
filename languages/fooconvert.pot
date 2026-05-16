@@ -3526,7 +3526,7 @@ msgid "This participant has been permanently deleted."
 msgstr ""
 
 #: pro/includes/Experiments/Admin/Init.php:689
-msgid "Warning: publish this participant before starting the experiment."
+msgid "Warning: publish before starting the experiment."
 msgstr ""
 
 #: pro/includes/Experiments/Admin/Init.php:700
