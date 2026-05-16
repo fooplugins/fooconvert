@@ -6,6 +6,7 @@ use FooPlugins\FooConvert\AI\Abilities;
 use FooPlugins\FooConvert\AI\PopupBuilder\Blueprint\Catalog;
 use FooPlugins\FooConvert\AI\PopupBuilder\Blueprint\Schema;
 use FooPlugins\FooConvert\AI\PopupBuilder\Media\Attachments as PopupMedia;
+use FooPlugins\FooConvert\Admin\ScriptDependencies;
 use FooPlugins\FooConvert\Brand\Manager as BrandManager;
 
 defined( 'ABSPATH' ) || exit;
@@ -72,6 +73,7 @@ class Admin {
                 'dependencies' => array( 'wp-api-fetch', 'wp-components', 'wp-element', 'wp-i18n' ),
                 'version'      => FOOCONVERT_VERSION,
             );
+        $asset['dependencies'] = ScriptDependencies::prepare( $asset['dependencies'] );
 
         wp_enqueue_style(
             'fooconvert-ai-popup-builder',
