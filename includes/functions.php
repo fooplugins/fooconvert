@@ -692,9 +692,12 @@ function fooconvert_get_popup_type_label( $thing ) {
  * @return bool True if the current page is a FooConvert popup stats page, false otherwise.
  */
 function fooconvert_is_popup_stats_page() {
+    $page = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : '';
+    $post_id = isset( $_GET['post_id'] ) ? absint( wp_unslash( $_GET['post_id'] ) ) : 0;
+
     return is_admin() &&
-        isset( $_GET['page'] ) && $_GET['page'] === 'fooconvert-popup-stats' &&
-        isset( $_GET['post_id'] ) && is_numeric( $_GET['post_id'] );
+        $page === 'fooconvert-popup-stats' &&
+        $post_id > 0;
 }
 
 /**
@@ -703,9 +706,10 @@ function fooconvert_is_popup_stats_page() {
  * @return bool True if the current request is a popup preview, false otherwise.
  */
 function fooconvert_is_popup_preview_request() {
+    $preview_id = isset( $_GET['fooconvert_popup_preview'] ) ? absint( wp_unslash( $_GET['fooconvert_popup_preview'] ) ) : 0;
+
     return !is_admin() &&
-        isset( $_GET['fooconvert_popup_preview'] ) &&
-        is_numeric( $_GET['fooconvert_popup_preview'] );
+        $preview_id > 0;
 }
 
 /**
