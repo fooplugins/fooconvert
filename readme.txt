@@ -1,6 +1,6 @@
-=== Popup Builder for Block Editor - FooConvert ===
+=== FooConvert – Popup, Flyout & Announcement Bar Builder for the Block Editor ===
 Contributors: fooplugins, bradvin, steveush
-Tags: popups,bars,flyouts,conversion,marketing
+Tags: flyout, popups, popup, announcement-bar, promo-bar
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 7.0
@@ -8,21 +8,21 @@ Stable tag: 2.0.3
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Build WordPress bars, flyouts, and overlays in the block editor with templates, targeting, triggers, leads, and analytics.
+Build popups, flyouts, and announcement bars in the WordPress block editor. Free popup templates, exit intent, targeting rules, and lead capture.
 
 == Description ==
 
-FooConvert lets you create bars, flyouts, and overlays directly in the WordPress block editor.
-It includes popup templates, built-in popup blocks, display rules, open triggers, lead capture, popup stats, and styling controls for building campaigns without leaving wp-admin.
+FooConvert lets you create bars, flyouts, and overlay popups directly in the WordPress block editor.
+It includes free templates, built-in popup blocks, display rules, open triggers, lead capture, popup analytics, and styling controls for building campaigns without leaving wp-admin.
 
 [Read the FooConvert documentation](https://fooplugins.com/documentation/fooconvert/)
 
-[Try the FooConvert demo](https://app.instawp.io/launch?t=fooconvert-free-demo&d=v2)
+[Try the FooConvert backend demo](https://app.instawp.io/launch?t=fooconvert-free-demo&d=v2)
 
 = What FooConvert Includes =
 
-- Bars, flyouts, and overlays managed from the same workflow
-- 15 bundled templates across bars, flyouts, and overlays
+- Bars, flyouts, and overlay popups managed from the same workflow
+- 15 bundled popup templates
 - Sign Up, Countdown, and Coupon blocks
 - Support for WordPress core blocks, embeds, and shortcodes inside popup content
 - Display rules for locations, exclusions, and user targeting
@@ -33,8 +33,8 @@ It includes popup templates, built-in popup blocks, display rules, open triggers
 
 = Popup Types =
 
-- `Bar`: top or bottom announcements, promo strips, newsletter bars, and sticky calls to action.
-- `Flyout`: slide-in messages and sidebar-style opt-ins that stay visible without taking over the whole screen.
+- `Bar`: top or bottom bar announcements, promo strips, newsletter bars, and sticky calls to action.
+- `Flyout`: slide-in messages and sidebar-style flyouts that stay visible without taking over the whole screen.
 - `Overlay`: centered modal popups for forms, announcements, coupon offers, and embedded content.
 
 = Building Popup Content =
@@ -61,7 +61,7 @@ It includes popup templates, built-in popup blocks, display rules, open triggers
 - Add exclusions so a popup appears only where it makes sense.
 - Target all users, only logged-in users, only logged-out users, or specific user roles.
 
-= Open Triggers =
+= Popup Triggers =
 
 - Open on page load.
 - Open after a timer elapses.
