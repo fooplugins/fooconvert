@@ -92,9 +92,13 @@ if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
             $per_page = max( 1, $this->get_items_per_page( 'leads_per_page', 20 ) );
 
             $args = array(
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only list table sorting parameter.
                 'orderby'    => isset( $_GET['orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) : 'timestamp',
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only list table sorting parameter.
                 'order'      => isset( $_GET['order'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_GET['order'] ) ) ) : 'DESC',
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only list table search parameter.
                 'email'      => isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( $_GET['s'] ) ) : '',
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only list table date filter.
                 'date_range' => isset( $_GET['date_range'] ) ? sanitize_text_field( wp_unslash( $_GET['date_range'] ) ) : '24hours',
             );
 

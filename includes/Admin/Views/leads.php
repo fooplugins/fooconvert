@@ -10,6 +10,8 @@ if ( !defined( 'ABSPATH' ) ) {
     $fooconvert_lead_stats = ( new \FooPlugins\FooConvert\Lead() )->get_leads_table_stats();
     $fooconvert_total_leads = isset( $fooconvert_lead_stats['Number_of_Rows'] ) ? intval( $fooconvert_lead_stats['Number_of_Rows'] ) : 0;
     $fooconvert_unique_emails = isset( $fooconvert_lead_stats['Unique_Emails'] ) ? intval( $fooconvert_lead_stats['Unique_Emails'] ) : 0;
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only admin date filter.
+    $fooconvert_selected_date_range = isset( $_GET['date_range'] ) ? sanitize_text_field( wp_unslash( $_GET['date_range'] ) ) : '24hours';
     ?>
     <div style="margin-bottom: 16px;">
         <?php if ( $fooconvert_total_leads === $fooconvert_unique_emails ) : ?>
@@ -26,10 +28,10 @@ if ( !defined( 'ABSPATH' ) ) {
             <form method="get">
                 <input type="hidden" name="page" value="fooconvert-leads" />
                 <select name="date_range" id="date_range" class="date-range">
-                    <option value="24hours" <?php selected( isset( $_GET['date_range'] ) ? sanitize_text_field( wp_unslash( $_GET['date_range'] ) ) : '24hours', '24hours' ); ?>><?php esc_html_e( 'Last 24 Hours', 'fooconvert' ); ?></option>
-                    <option value="7days" <?php selected( isset( $_GET['date_range'] ) ? sanitize_text_field( wp_unslash( $_GET['date_range'] ) ) : '24hours', '7days' ); ?>><?php esc_html_e( 'Last 7 Days', 'fooconvert' ); ?></option>
-                    <option value="30days" <?php selected( isset( $_GET['date_range'] ) ? sanitize_text_field( wp_unslash( $_GET['date_range'] ) ) : '24hours', '30days' ); ?>><?php esc_html_e( 'Last 30 Days', 'fooconvert' ); ?></option>
-                    <option value="forever" <?php selected( isset( $_GET['date_range'] ) ? sanitize_text_field( wp_unslash( $_GET['date_range'] ) ) : '24hours', 'forever' ); ?>><?php esc_html_e( 'All Time', 'fooconvert' ); ?></option>
+                    <option value="24hours" <?php selected( $fooconvert_selected_date_range, '24hours' ); ?>><?php esc_html_e( 'Last 24 Hours', 'fooconvert' ); ?></option>
+                    <option value="7days" <?php selected( $fooconvert_selected_date_range, '7days' ); ?>><?php esc_html_e( 'Last 7 Days', 'fooconvert' ); ?></option>
+                    <option value="30days" <?php selected( $fooconvert_selected_date_range, '30days' ); ?>><?php esc_html_e( 'Last 30 Days', 'fooconvert' ); ?></option>
+                    <option value="forever" <?php selected( $fooconvert_selected_date_range, 'forever' ); ?>><?php esc_html_e( 'All Time', 'fooconvert' ); ?></option>
                 </select>
                 <input type="submit" value="<?php esc_attr_e( 'Filter', 'fooconvert' ); ?>" class="button">
             </form>
