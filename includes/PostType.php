@@ -196,9 +196,9 @@ class PostType {
             return;
         }
 
-        $selected_popup_type = isset( $_GET['fooconvert_popup_type'] ) ? fooconvert_normalize_popup_type( sanitize_key( wp_unslash( $_GET['fooconvert_popup_type'] ) ) ) : '';
+        $selected_popup_type = fooconvert_get_requested_popup_type();
         ?>
-        <select name="fooconvert_popup_type">
+        <select name="popup_type">
             <option value=""><?php esc_html_e( 'All Types', 'fooconvert' ); ?></option>
             <?php foreach ( fooconvert_get_popup_types() as $popup_type ) : ?>
                 <option value="<?php echo esc_attr( $popup_type ); ?>" <?php selected( $selected_popup_type, $popup_type ); ?>>
@@ -224,7 +224,7 @@ class PostType {
             return;
         }
 
-        $selected_popup_type = isset( $_GET['fooconvert_popup_type'] ) ? fooconvert_normalize_popup_type( sanitize_key( wp_unslash( $_GET['fooconvert_popup_type'] ) ) ) : '';
+        $selected_popup_type = fooconvert_get_requested_popup_type();
         if ( $selected_popup_type === '' ) {
             return;
         }
