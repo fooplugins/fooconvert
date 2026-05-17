@@ -4,6 +4,7 @@ import {
 	buildRootAttributes,
 	extractListItems,
 	fooconvertBlockMetadata,
+	normalizeAttributeTextEntities,
 	normalizeDraftBlockAttributes,
 	resolveTriggerEvent,
 	supportedTriggerEvents,
@@ -62,6 +63,43 @@ describe( 'AI popup builder serializer support', () => {
 			'Claim your first-order discount',
 			'Get launch updates by email',
 		] );
+	} );
+
+	it( 'decodes ampersand entities before block attributes are serialized', () => {
+		expect( normalizeAttributeTextEntities( 'Copy &amp; save' ) ).toBe(
+			'Copy & save'
+		);
+		expect( normalizeAttributeTextEntities( 'Copy &amp;amp; save' ) ).toBe(
+			'Copy & save'
+		);
+
+		expect(
+			normalizeDraftBlockAttributes( 'core/button', {
+				text: 'Copy code &amp; save 65%',
+			} )
+		).toMatchObject( {
+			text: 'Copy code & save 65%',
+		} );
+
+		expect(
+			normalizeDraftBlockAttributes( 'fc/sign-up', {
+				button: {
+					settings: {
+						text: 'Join &amp; save',
+					},
+				},
+				successMessage: 'Code copied &amp; sent',
+			} )
+		).toMatchObject( {
+			button: {
+				settings: {
+					text: 'Join & save',
+				},
+			},
+			settings: {
+				successMessage: 'Code copied & sent',
+			},
+		} );
 	} );
 
 	it( "maps shorthand sign-up aliases into the block's nested attribute shape", () => {

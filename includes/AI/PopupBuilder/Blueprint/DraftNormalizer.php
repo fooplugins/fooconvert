@@ -2311,7 +2311,7 @@ class DraftNormalizer {
             }
 
             if ( in_array( $last_segment, array( 'url', 'href', 'src' ), true ) ) {
-                return esc_url_raw( $value );
+                return self::decode_ampersand_entities( esc_url_raw( $value ) );
             }
 
             return self::sanitize_plain_text( $value );
@@ -2343,7 +2343,7 @@ class DraftNormalizer {
      * @return string
      */
     private static function sanitize_plain_text( $value ): string {
-        return is_string( $value ) ? sanitize_text_field( $value ) : '';
+        return is_string( $value ) ? self::decode_ampersand_entities( sanitize_text_field( $value ) ) : '';
     }
 
     /**
@@ -2353,7 +2353,26 @@ class DraftNormalizer {
      * @return string
      */
     private static function sanitize_rich_text( $value ): string {
-        return is_string( $value ) ? wp_kses_post( $value ) : '';
+        return is_string( $value ) ? self::decode_ampersand_entities( wp_kses_post( $value ) ) : '';
+    }
+
+    /**
+     * Decodes ampersand entities without turning escaped markup into tags.
+     *
+     * @param string $value Source string.
+     * @return string
+     */
+    private static function decode_ampersand_entities( string $value ): string {
+        for ( $index = 0; $index < 3; $index++ ) {
+            $decoded = preg_replace( '/&(?:amp|#0*38|#x0*26);/i', '&', $value );
+            if ( ! is_string( $decoded ) || $decoded === $value ) {
+                break;
+            }
+
+            $value = $decoded;
+        }
+
+        return $value;
     }
 
     /**

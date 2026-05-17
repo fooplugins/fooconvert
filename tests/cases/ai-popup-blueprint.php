@@ -541,6 +541,57 @@ namespace {
         'Image shorthand media IDs should map to the core/image id attribute.'
     );
 
+    $entity_draft = PopupBlueprint::sanitize_popup_draft(
+        array(
+            'popup_type'     => FOOCONVERT_POPUP_TYPE_POPUP,
+            'content_blocks' => array(
+                array(
+                    'name'       => 'core/button',
+                    'attributes' => array(
+                        'text' => 'Copy code &amp; save 65%',
+                    ),
+                ),
+                array(
+                    'name'       => 'core/paragraph',
+                    'attributes' => array(
+                        'content' => '<strong>Copy code &amp; save 65%</strong>',
+                    ),
+                ),
+                array(
+                    'name'       => 'fc/sign-up',
+                    'attributes' => array(
+                        'buttonText'     => 'Join &amp; save',
+                        'successMessage' => 'Code copied &amp; sent',
+                    ),
+                ),
+            ),
+        )
+    );
+
+    Assertions::same(
+        'Copy code & save 65%',
+        $entity_draft['content_blocks'][0]['attributes']['text'],
+        'AI popup drafts should decode ampersand entities in core button text before block serialization.'
+    );
+
+    Assertions::same(
+        '<strong>Copy code & save 65%</strong>',
+        $entity_draft['content_blocks'][1]['attributes']['content'],
+        'AI popup drafts should decode ampersand entities in rich text content without removing markup.'
+    );
+
+    Assertions::same(
+        'Join & save',
+        $entity_draft['content_blocks'][2]['attributes']['button']['settings']['text'],
+        'AI popup drafts should decode ampersand entities in sign-up button aliases.'
+    );
+
+    Assertions::same(
+        'Code copied & sent',
+        $entity_draft['content_blocks'][2]['attributes']['settings']['successMessage'],
+        'AI popup drafts should decode ampersand entities in sign-up success messages.'
+    );
+
     $aligned_text_draft = PopupBlueprint::sanitize_popup_draft(
         array(
             'popup_type'     => FOOCONVERT_POPUP_TYPE_POPUP,

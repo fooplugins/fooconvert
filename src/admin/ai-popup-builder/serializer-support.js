@@ -58,6 +58,44 @@ export const cloneDeep = ( value ) => {
 	return value;
 };
 
+const decodeAmpersandEntities = ( value ) => {
+	let decoded = value;
+
+	for ( let index = 0; index < 3; index++ ) {
+		const nextDecoded = decoded.replace(
+			/&(?:amp|#0*38|#x0*26);/gi,
+			'&'
+		);
+
+		if ( nextDecoded === decoded ) {
+			break;
+		}
+
+		decoded = nextDecoded;
+	}
+
+	return decoded;
+};
+
+export const normalizeAttributeTextEntities = ( value ) => {
+	if ( typeof value === 'string' ) {
+		return decodeAmpersandEntities( value );
+	}
+
+	if ( Array.isArray( value ) ) {
+		return value.map( normalizeAttributeTextEntities );
+	}
+
+	if ( isPlainObject( value ) ) {
+		return Object.entries( value ).reduce( ( nextValue, [ key, item ] ) => {
+			nextValue[ key ] = normalizeAttributeTextEntities( item );
+			return nextValue;
+		}, {} );
+	}
+
+	return value;
+};
+
 const deepMerge = ( base, overrides ) => {
 	if ( Array.isArray( overrides ) ) {
 		return overrides.map( cloneDeep );
@@ -489,7 +527,7 @@ export const buildRootAttributes = ( draft, templatesBySlug = {} ) => {
 		delete rootAttributes.openButton;
 	}
 
-	return rootAttributes;
+	return normalizeAttributeTextEntities( rootAttributes );
 };
 
 export const extractListItems = ( attributes ) => {
@@ -561,9 +599,9 @@ const applyTextBlockAlignment = ( attributes, primaryAttribute ) => {
 };
 
 export const normalizeDraftBlockAttributes = ( blockName, attributes ) => {
-	const nextAttributes = isPlainObject( attributes )
-		? cloneDeep( attributes )
-		: {};
+	const nextAttributes = normalizeAttributeTextEntities(
+		isPlainObject( attributes ) ? cloneDeep( attributes ) : {}
+	);
 
 	switch ( blockName ) {
 		case 'core/heading':
