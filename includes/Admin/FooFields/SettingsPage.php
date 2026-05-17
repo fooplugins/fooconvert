@@ -197,7 +197,10 @@ if ( !class_exists( __NAMESPACE__ . '\SettingsPage' ) ) {
                 }
             }
 
-            if ( isset($_POST['option_page']) && $_POST['option_page'] === $this->container_id() ) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Settings API option_page value is used only to detect the current settings page.
+            $option_page = isset( $_POST['option_page'] ) ? sanitize_text_field( wp_unslash( $_POST['option_page'] ) ) : '';
+
+            if ( $option_page === $this->container_id() ) {
                 // This IS your settings page save
                 return true;
             }
