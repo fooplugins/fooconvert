@@ -95,7 +95,9 @@ class Config {
      */
     public static function is_admin_page(): bool {
         $page = '';
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only admin page check.
         if ( isset( $_GET['page'] ) ) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only admin page check.
             $page = sanitize_key( wp_unslash( $_GET['page'] ) );
         }
 
