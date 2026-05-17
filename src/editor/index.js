@@ -20,6 +20,7 @@ import "./filters";
     [ "fc-custom-editor", plugins.CustomEditorPlugin ],
     [ "fc-display-rules", plugins.DisplayRulesPlugin ],
     [ "fc-override-template-validity", plugins.OverrideTemplateValidityPlugin ],
+    [ "fc-ai-builder-action", plugins.AiBuilderActionPlugin ],
 ].forEach( ( [ name, render ] ) => {
     if ( ! getPlugin( name ) ) {
         registerPlugin( name, { render } );

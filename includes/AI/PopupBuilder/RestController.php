@@ -579,6 +579,7 @@ class RestController {
             'builderUrl' => Config::supports_ai_popup_builder()
                 ? admin_url( 'admin.php?page=' . FOOCONVERT_MENU_SLUG_AI_POPUP_BUILDER )
                 : '',
+            'statsUrlBase' => admin_url( fooconvert_admin_url_popup_stats_base() ),
             'labels'     => array(
                 FOOCONVERT_POPUP_TYPE_BAR    => fooconvert_get_popup_type_label( FOOCONVERT_POPUP_TYPE_BAR ),
                 FOOCONVERT_POPUP_TYPE_FLYOUT => fooconvert_get_popup_type_label( FOOCONVERT_POPUP_TYPE_FLYOUT ),

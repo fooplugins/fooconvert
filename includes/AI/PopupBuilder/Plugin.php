@@ -17,11 +17,11 @@ class Plugin {
      */
     public function __construct() {
         new SettingsPage();
+        new RestController();
 
         if ( Config::supports_ai_popup_builder() ) {
             new Abilities();
             new Attachments();
-            new RestController();
         }
     }
 }

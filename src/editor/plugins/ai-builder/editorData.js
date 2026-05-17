@@ -6,6 +6,7 @@ const objectName = 'FC_AI_BUILDER';
  * @typedef AiBuilderEditorData
  * @property {{ key: string, defaults: Record<string, unknown> }} meta       Metadata storage configuration.
  * @property {string}                                             builderUrl AI popup builder admin URL.
+ * @property {string}                                             statsUrlBase Popup stats admin URL without post_id.
  * @property {Record<string,string>}                              labels     Popup type labels.
  */
 

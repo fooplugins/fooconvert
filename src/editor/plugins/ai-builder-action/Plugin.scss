@@ -1,0 +1,34 @@
+.fc--ai-builder-action__post-status-info {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: flex-start;
+	gap: 8px;
+	width: 100%;
+
+	.fc--ai-builder-action__label {
+		display: flex;
+		align-items: center;
+		flex-shrink: 0;
+		hyphens: auto;
+		line-height: 20px;
+		min-height: 32px;
+		padding: 6px 0;
+		width: 33%;
+	}
+
+	.fc--ai-builder-action__control {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		flex-grow: 1;
+		gap: 4px;
+		min-height: 32px;
+	}
+
+	.fc--ai-builder-action__hint {
+		color: #757575;
+		font-size: 12px;
+		line-height: 16px;
+	}
+}
