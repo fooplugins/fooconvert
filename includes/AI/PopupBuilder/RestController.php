@@ -710,7 +710,7 @@ class RestController {
         }
 
         if ( function_exists( 'set_time_limit' ) ) {
-            @set_time_limit( 0 );
+            @set_time_limit( 0 ); // phpcs:ignore Squiz.PHP.DiscouragedFunctions.Discouraged -- Streaming responses need to remain open while the AI provider sends events.
         }
 
         while ( ob_get_level() > 0 ) {
