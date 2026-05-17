@@ -56,7 +56,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Ajax' ) ) {
                 exit;
             }
 
-            $data = json_decode( wp_unslash( $_POST['data'] ), true );
+            $data = json_decode( wp_unslash( $_POST['data'] ), true ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Raw JSON payload is decoded before validating and sanitizing individual fields.
 
             if ( !is_array( $data ) ) {
                 wp_send_json_error( 'Invalid data format!' );
