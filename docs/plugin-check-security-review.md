@@ -8,7 +8,7 @@ This document tracks Plugin Check security findings and the options for items th
 ## Current Security Result
 
 - Security errors: none.
-- Security warnings remaining: 19.
+- Security warnings remaining: 11.
 - Remaining security warnings are limited to Pro experiment request handling:
   - `pro/includes/Experiments/Admin/Init.php`
   - `pro/includes/Experiments/Experiment.php`
@@ -31,39 +31,30 @@ This document tracks Plugin Check security findings and the options for items th
 - `includes/Admin/FooFields/SettingsPage.php`: sanitized the Settings API `option_page` value and documented the page-detection PHPCS nonce exception.
 - `includes/AI/PopupBuilder/RestController.php`: documented the streaming `set_time_limit( 0 )` timeout extension with a targeted PHPCS ignore.
 - `includes/Init.php`: documented the `load_plugin_textdomain()` call with a targeted PHPCS ignore for bundled translation loading.
+- `pro/includes/Experiments/Admin/Init.php`: documented read-only experiment list state filters and admin notice request values with targeted PHPCS ignores.
 - `pro/includes/functions.php`: sanitized shared cookie reads, gated integration `error_log()` output behind FooConvert debug mode, and documented the debug-only log with a targeted PHPCS ignore.
 - `build/run-plugin-check.mjs`: excluded local-only repository files from the project Plugin Check wrapper.
 
 ## Remaining Security Warnings
 
-### 1. Pro experiment list filters and request-driven admin state
+### 1. Pro experiment request-driven admin state
 
 File: `pro/includes/Experiments/Admin/Init.php`
 
 Warnings:
-- Line 217: `WordPress.Security.NonceVerification.Recommended` for `$_GET['fc_run_state']` in the experiment list view link current-state check.
-- Line 217: `WordPress.Security.NonceVerification.Recommended` for the sanitized `$_GET['fc_run_state']` value used in the same read-only list view comparison.
-- Line 242: `WordPress.Security.NonceVerification.Recommended` for `$_GET['fc_run_state']` in experiment list query filtering.
-- Line 246: `WordPress.Security.NonceVerification.Recommended` for the sanitized `$_GET['fc_run_state']` value used to filter the experiment list query.
-- Line 926: `WordPress.Security.NonceVerification.Recommended` for `$_REQUEST['post']` in popup deletion blocking.
-- Line 930: `WordPress.Security.NonceVerification.Recommended` for reading `$_REQUEST['post']` in popup deletion blocking.
-- Line 930: `WordPress.Security.ValidatedSanitizedInput.InputNotSanitized` for passing `$_REQUEST['post']` through `wp_unslash()` before array/scalar `absint()` handling.
-- Line 960: `WordPress.Security.NonceVerification.Recommended` for `$_GET['post']` in popup edit notice rendering.
-- Line 964: `WordPress.Security.NonceVerification.Recommended` for the sanitized `$_GET['post']` value used in popup edit notice rendering.
-- Line 1000: `WordPress.Security.NonceVerification.Recommended` for `$_GET['fc_experiment_error']` in experiment notice rendering.
-- Line 1009: `WordPress.Security.NonceVerification.Recommended` for the sanitized `$_GET['fc_experiment_error']` value used in experiment notice rendering.
-- Line 1371: `WordPress.Security.NonceVerification.Missing` for `$_POST['fc_experiment_action']` in create-request detection.
-- Line 1371: `WordPress.Security.NonceVerification.Missing` for the sanitized `$_POST['fc_experiment_action']` value used in create-request detection.
+- Line 929: `WordPress.Security.NonceVerification.Recommended` for `$_REQUEST['post']` in popup deletion blocking.
+- Line 933: `WordPress.Security.NonceVerification.Recommended` for reading `$_REQUEST['post']` in popup deletion blocking.
+- Line 933: `WordPress.Security.ValidatedSanitizedInput.InputNotSanitized` for passing `$_REQUEST['post']` through `wp_unslash()` before array/scalar `absint()` handling.
+- Line 1378: `WordPress.Security.NonceVerification.Missing` for `$_POST['fc_experiment_action']` in create-request detection.
+- Line 1378: `WordPress.Security.NonceVerification.Missing` for the sanitized `$_POST['fc_experiment_action']` value used in create-request detection.
 
 Options:
-- Classify each request read as read-only filtering/navigation, passive protection, or state-changing form handling.
-- Add targeted PHPCS suppressions for read-only list filters and notices after confirming these inputs cannot mutate state.
 - For popup deletion blocking, verify whether this runs inside a core post deletion request that has already passed WordPress nonce/capability checks; if so, add a targeted suppression near the guarded read. If not, add explicit nonce/capability verification before reading `post`.
 - For `fc_experiment_action`, verify the experiment creation form nonce and capability path before suppressing or adding an explicit nonce check here.
 - Introduce a small experiment admin request helper only if it reduces repeated sanitization and keeps nonce handling obvious.
 
 Recommendation:
-Do not blanket-suppress this file. Handle the read-only list and notice reads separately from create/delete request paths so nonce requirements stay clear.
+Do not blanket-suppress this file. The remaining warnings are tied to create/delete request paths, so verify their nonce and capability flow before adding suppressions or explicit checks.
 
 ### 2. Pro experiment configuration POST handling
 
