@@ -34,6 +34,7 @@ $cases = array(
     __DIR__ . '/cases/ai-popup-generated-image.php',
     __DIR__ . '/cases/ai-popup-submit-background.php',
     __DIR__ . '/cases/ai-popup-save.php',
+    __DIR__ . '/cases/ai-popup-load-existing.php',
     __DIR__ . '/cases/top-performers-pro-options.php',
     __DIR__ . '/cases/top-performers-sales-fallback.php',
     __DIR__ . '/cases/top-performers-trash-filter.php',

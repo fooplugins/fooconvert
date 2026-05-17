@@ -189,6 +189,7 @@ class Admin {
                 'settingsPath'    => '/fooconvert/v1/ai-popup-builder/settings',
                 'debugResponsesPath' => '/fooconvert/v1/ai-popup-builder/debug-responses',
                 'extractBrandPath' => '/fooconvert/v1/brand-context/extract',
+                'loadPopupPath'    => '/fooconvert/v1/ai-popup-builder/popup',
             ),
             'restRoot'         => esc_url_raw( get_rest_url() ),
             'restNonce'        => wp_create_nonce( 'wp_rest' ),
@@ -219,6 +220,7 @@ class Admin {
                 'defaultBrand'  => BrandManager::get_default_brand(),
             ),
             'settings'         => Settings::to_response(),
+            'initialPostId'    => $this->get_initial_post_id(),
             'debug'            => array(
                 'enabled'        => function_exists( 'fooconvert_is_debug' ) && (bool) fooconvert_is_debug(),
                 'canManage'      => function_exists( 'current_user_can' ) && current_user_can( 'manage_options' ),
@@ -233,6 +235,16 @@ class Admin {
                 __( 'Goal: promote a product launch. Audience: mobile visitors. Offer: limited launch deal. Type: bar. Trigger: immediate. Tone: concise and energetic.', 'fooconvert' ),
             ),
         );
+    }
+
+    /**
+     * Returns the popup post ID requested for AI editing.
+     *
+     * @return int
+     */
+    private function get_initial_post_id(): int {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only admin page context.
+        return isset( $_GET['post_id'] ) ? absint( wp_unslash( $_GET['post_id'] ) ) : 0;
     }
 
     /**

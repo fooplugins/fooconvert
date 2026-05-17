@@ -203,6 +203,22 @@ class RestController {
 
         register_rest_route(
             'fooconvert/v1',
+            '/ai-popup-builder/popup/(?P<post_id>\d+)',
+            array(
+                'methods'             => 'GET',
+                'callback'            => array( $this, 'handle_get_popup' ),
+                'permission_callback' => array( $this, 'can_edit_popup_from_request' ),
+                'args'                => array(
+                    'post_id' => array(
+                        'type'     => 'integer',
+                        'required' => true,
+                    ),
+                ),
+            )
+        );
+
+        register_rest_route(
+            'fooconvert/v1',
             '/ai-popup-builder/save',
             array(
                 'methods'             => 'POST',
@@ -344,6 +360,79 @@ class RestController {
     }
 
     /**
+     * Loads an existing popup into the AI builder draft shape.
+     *
+     * @param WP_REST_Request $request REST request.
+     * @return WP_REST_Response|WP_Error
+     */
+    public function handle_get_popup( WP_REST_Request $request ) {
+        $post_id = absint( $request->get_param( 'post_id' ) );
+        $post    = get_post( $post_id );
+
+        if ( ! $post || FOOCONVERT_CPT_POPUP !== $post->post_type ) {
+            return new WP_Error(
+                'fooconvert_ai_popup_builder_popup_not_found',
+                __( 'The popup could not be found.', 'fooconvert' ),
+                array( 'status' => 404 )
+            );
+        }
+
+        if ( ! current_user_can( 'edit_post', $post_id ) ) {
+            return new WP_Error(
+                'fooconvert_ai_popup_builder_cannot_edit_popup',
+                __( 'You do not have permission to edit this popup with AI.', 'fooconvert' ),
+                array( 'status' => 403 )
+            );
+        }
+
+        $extracted = PopupBlueprint::extract_popup_draft_from_post( $post );
+        $draft     = is_array( $extracted['draft'] ?? null ) ? $extracted['draft'] : null;
+
+        if ( null === $draft ) {
+            $unsupported_blocks = is_array( $extracted['unsupported_blocks'] ?? null ) ? $extracted['unsupported_blocks'] : array();
+            $message            = empty( $unsupported_blocks )
+                ? __( 'This popup could not be loaded into the AI builder safely.', 'fooconvert' )
+                : sprintf(
+                    /* translators: %s is a comma-separated list of unsupported block names. */
+                    __( 'This popup uses blocks the AI builder cannot safely edit yet: %s.', 'fooconvert' ),
+                    implode( ', ', array_map( 'sanitize_text_field', $unsupported_blocks ) )
+                );
+
+            return new WP_Error(
+                'fooconvert_ai_popup_builder_cannot_load_popup',
+                $message,
+                array(
+                    'status'             => 400,
+                    'unsupported_blocks' => $unsupported_blocks,
+                )
+            );
+        }
+
+        $metadata = PopupBlueprint::sanitize_builder_metadata(
+            get_post_meta( $post_id, FOOCONVERT_META_KEY_AI_BUILDER_METADATA, true )
+        );
+        $response = is_array( $metadata['response'] ?? null ) ? $metadata['response'] : array();
+
+        return new WP_REST_Response(
+            array(
+                'postId'          => $post_id,
+                'title'           => get_the_title( $post_id ),
+                'status'          => $post->post_status,
+                'popupType'       => $draft['popup_type'] ?? PopupBlueprint::normalize_builder_popup_type( fooconvert_get_popup_type( $post ) ),
+                'editUrl'         => fooconvert_admin_url_popup_edit( $post_id ),
+                'previewUrl'      => fooconvert_popup_preview_url( $post_id ),
+                'draft'           => $draft,
+                'validation'      => PopupBlueprint::evaluate_popup_draft( $draft ),
+                'messages'        => is_array( $metadata['messages'] ?? null ) ? $metadata['messages'] : array(),
+                'mediaItems'      => is_array( $response['media_items'] ?? null ) ? $response['media_items'] : array(),
+                'suggestedPrompts' => is_array( $response['suggested_prompts'] ?? null ) ? $response['suggested_prompts'] : array(),
+                'assistantMessage' => is_string( $response['assistant_message'] ?? null ) ? $response['assistant_message'] : '',
+                'clarifyingQuestion' => is_string( $response['clarifying_question'] ?? null ) ? $response['clarifying_question'] : '',
+            )
+        );
+    }
+
+    /**
      * Saves a generated popup draft as a draft popup post.
      *
      * @param WP_REST_Request $request REST request.
@@ -417,6 +506,7 @@ class RestController {
         }
 
         $post_id = $requested_post_id;
+        $post_status = $existing_post instanceof \WP_Post ? $existing_post->post_status : 'draft';
 
         if ( $post_id <= 0 ) {
             $post_id = wp_insert_post(
@@ -431,6 +521,8 @@ class RestController {
             if ( is_wp_error( $post_id ) ) {
                 return $post_id;
             }
+
+            $post_status = 'draft';
         }
 
         if ( ! isset( $blocks[0]['attrs'] ) || ! is_array( $blocks[0]['attrs'] ) ) {
@@ -444,7 +536,7 @@ class RestController {
             array(
                 'ID'           => $post_id,
                 'post_title'   => $title,
-                'post_status'  => 'draft',
+                'post_status'  => $post_status,
                 'post_content' => serialize_blocks( $blocks ),
             ),
             true
@@ -467,6 +559,7 @@ class RestController {
                 'editUrl'  => fooconvert_admin_url_popup_edit( $post_id ),
                 'previewUrl' => fooconvert_popup_preview_url( $post_id ),
                 'popupType' => $popup_type,
+                'status'   => $post_status,
                 'updatedExisting' => $requested_post_id > 0,
             )
         );
@@ -521,13 +614,39 @@ class RestController {
      *
      * @return bool
      */
-    public function can_manage_popups(): bool {
+    public function can_manage_popups( $request = null ): bool {
+        if ( $request instanceof WP_REST_Request ) {
+            $post_id = absint( $request->get_param( 'post_id' ) );
+            if ( $post_id > 0 ) {
+                $post = get_post( $post_id );
+
+                return $post
+                    && FOOCONVERT_CPT_POPUP === $post->post_type
+                    && current_user_can( 'edit_post', $post_id );
+            }
+        }
+
         $post_type_object = get_post_type_object( FOOCONVERT_CPT_POPUP );
         $capability       = $post_type_object && isset( $post_type_object->cap->create_posts )
             ? $post_type_object->cap->create_posts
             : 'manage_options';
 
         return current_user_can( $capability );
+    }
+
+    /**
+     * Checks whether the current user can edit the requested popup.
+     *
+     * @param WP_REST_Request $request REST request.
+     * @return bool
+     */
+    public function can_edit_popup_from_request( WP_REST_Request $request ): bool {
+        $post_id = absint( $request->get_param( 'post_id' ) );
+        $post    = $post_id > 0 ? get_post( $post_id ) : null;
+
+        return $post
+            && FOOCONVERT_CPT_POPUP === $post->post_type
+            && current_user_can( 'edit_post', $post_id );
     }
 
     /**

@@ -1073,6 +1073,103 @@ class DraftNormalizer {
     }
 
     /**
+     * Extracts an AI popup draft from a saved popup post.
+     *
+     * @param mixed $post Popup post object.
+     * @return array{draft:array<string,mixed>|null,unsupported_blocks:array<int,string>,root_block_name:string}
+     */
+    public static function extract_popup_draft_from_post( $post ): array {
+        if ( ! is_object( $post ) ) {
+            return self::get_empty_extracted_popup_draft();
+        }
+
+        $content = is_string( $post->post_content ?? null ) ? $post->post_content : '';
+        $title   = is_string( $post->post_title ?? null ) ? $post->post_title : '';
+
+        return self::extract_popup_draft_from_post_content(
+            $content,
+            $title,
+            fooconvert_get_popup_type( $post )
+        );
+    }
+
+    /**
+     * Extracts an AI popup draft from saved popup block markup.
+     *
+     * @param string $content Saved popup post content.
+     * @param string $title Popup title.
+     * @param string $popup_type Optional popup type hint.
+     * @return array{draft:array<string,mixed>|null,unsupported_blocks:array<int,string>,root_block_name:string}
+     */
+    public static function extract_popup_draft_from_post_content( string $content, string $title = '', string $popup_type = '' ): array {
+        $result = self::get_empty_extracted_popup_draft();
+        $blocks = parse_blocks( $content );
+
+        if ( ! is_array( $blocks ) || empty( $blocks ) ) {
+            return $result;
+        }
+
+        $root_block = self::find_popup_root_block( $blocks, $popup_type );
+        if ( empty( $root_block ) ) {
+            return $result;
+        }
+
+        $root_block_name = is_string( $root_block['blockName'] ?? null ) ? $root_block['blockName'] : '';
+        $builder_type    = self::normalize_builder_popup_type( $root_block_name );
+
+        if ( '' === $builder_type ) {
+            $builder_type = self::normalize_builder_popup_type( $popup_type );
+        }
+
+        if ( '' === $builder_type ) {
+            return $result;
+        }
+
+        $root_attributes = is_array( $root_block['attrs'] ?? null ) ? $root_block['attrs'] : array();
+        $inner_blocks    = is_array( $root_block['innerBlocks'] ?? null ) ? $root_block['innerBlocks'] : array();
+        $content_result  = self::extract_content_blocks_from_parsed_blocks( $builder_type, $inner_blocks );
+        $root_raw_blocks = self::parsed_block_has_raw_content( $root_block ) ? array( 'freeform-html' ) : array();
+        $shell_unsupported_blocks = self::collect_unsupported_popup_shell_blocks( $builder_type, $inner_blocks );
+        $top_level_unsupported_blocks = self::collect_unsupported_top_level_popup_siblings( $blocks, $root_block_name );
+        $settings        = is_array( $root_attributes['settings'] ?? null ) ? $root_attributes['settings'] : array();
+        $trigger_unsupported_blocks = self::collect_unsupported_import_trigger( $settings['trigger'] ?? array() );
+        $duplicate_content_containers = self::count_content_container_blocks( $builder_type, $inner_blocks ) > 1
+            ? array( 'multiple-content-containers' )
+            : array();
+
+        $result['root_block_name']    = $root_block_name;
+        $result['unsupported_blocks'] = array_values(
+            array_unique(
+                array_merge(
+                    $content_result['unsupported_blocks'],
+                    $root_raw_blocks,
+                    $shell_unsupported_blocks,
+                    $top_level_unsupported_blocks,
+                    $trigger_unsupported_blocks,
+                    $duplicate_content_containers
+                )
+            )
+        );
+
+        if ( ! empty( $result['unsupported_blocks'] ) ) {
+            return $result;
+        }
+
+        $result['draft'] = self::sanitize_popup_draft(
+            array(
+                'title'         => $title,
+                'popup_type'    => $builder_type,
+                'template_slug' => is_string( $root_attributes['template'] ?? null ) ? $root_attributes['template'] : '',
+                'trigger'       => is_array( $settings['trigger'] ?? null ) ? $settings['trigger'] : array(),
+                'root_attributes' => $root_attributes,
+                'content_blocks'  => $content_result['content_blocks'],
+            )
+        );
+
+        return $result;
+    }
+
+    /**
      * Sanitizes the AI response payload.
      *
      * @param mixed $payload AI response payload.
@@ -1758,20 +1855,636 @@ class DraftNormalizer {
     }
 
     /**
+     * Returns the default extraction result for popup-to-draft imports.
+     *
+     * @return array{draft:null,unsupported_blocks:array<int,string>,root_block_name:string}
+     */
+    private static function get_empty_extracted_popup_draft(): array {
+        return array(
+            'draft'              => null,
+            'unsupported_blocks' => array(),
+            'root_block_name'    => '',
+        );
+    }
+
+    /**
+     * Finds the popup root block in parsed block markup.
+     *
+     * @param array<int,array<string,mixed>> $blocks Parsed blocks.
+     * @param string                         $popup_type Optional popup type hint.
+     * @return array<string,mixed>|null
+     */
+    private static function find_popup_root_block( array $blocks, string $popup_type = '' ): ?array {
+        $expected_block_name = fooconvert_get_popup_type_block_name( $popup_type );
+        $fallback_root       = null;
+
+        foreach ( $blocks as $block ) {
+            if ( ! is_array( $block ) ) {
+                continue;
+            }
+
+            $block_name = is_string( $block['blockName'] ?? null ) ? $block['blockName'] : '';
+
+            if ( '' !== $block_name && '' !== self::normalize_builder_popup_type( $block_name ) ) {
+                if ( '' === $expected_block_name || $expected_block_name === $block_name ) {
+                    return $block;
+                }
+
+                if ( null === $fallback_root ) {
+                    $fallback_root = $block;
+                }
+            }
+
+            $inner_blocks = is_array( $block['innerBlocks'] ?? null ) ? $block['innerBlocks'] : array();
+            if ( ! empty( $inner_blocks ) ) {
+                $inner_root = self::find_popup_root_block( $inner_blocks, $popup_type );
+                if ( null !== $inner_root ) {
+                    return $inner_root;
+                }
+            }
+        }
+
+        return $fallback_root;
+    }
+
+    /**
+     * Extracts AI content blocks from parsed popup root inner blocks.
+     *
+     * @param string                        $popup_type Popup type.
+     * @param array<int,array<string,mixed>> $blocks Parsed inner blocks.
+     * @return array{content_blocks:array<int,array<string,mixed>>,unsupported_blocks:array<int,string>}
+     */
+    private static function extract_content_blocks_from_parsed_blocks( string $popup_type, array $blocks ): array {
+        $content_block_names = self::get_content_container_block_names( $popup_type );
+
+        foreach ( $blocks as $block ) {
+            if ( ! is_array( $block ) ) {
+                continue;
+            }
+
+            $name  = is_string( $block['blockName'] ?? null ) ? $block['blockName'] : '';
+            $inner = is_array( $block['innerBlocks'] ?? null ) ? $block['innerBlocks'] : array();
+
+            if ( in_array( $name, $content_block_names, true ) ) {
+                if ( self::parsed_block_has_raw_content( $block ) ) {
+                    return array(
+                        'content_blocks'     => array(),
+                        'unsupported_blocks' => array( 'freeform-html' ),
+                    );
+                }
+
+                return self::normalize_parsed_content_blocks( $inner );
+            }
+
+            $found = self::extract_content_blocks_from_parsed_blocks( $popup_type, $inner );
+            if ( ! empty( $found['content_blocks'] ) || ! empty( $found['unsupported_blocks'] ) ) {
+                return $found;
+            }
+        }
+
+        return array(
+            'content_blocks'     => array(),
+            'unsupported_blocks' => array(),
+        );
+    }
+
+    /**
+     * Collects unsupported blocks in the popup shell that would be dropped by serialization.
+     *
+     * @param string                         $popup_type Popup type.
+     * @param array<int,array<string,mixed>> $blocks Parsed root inner blocks.
+     * @return array<int,string>
+     */
+    private static function collect_unsupported_popup_shell_blocks( string $popup_type, array $blocks ): array {
+        $content_block_names = self::get_content_container_block_names( $popup_type );
+        $shell_block_names   = self::get_popup_shell_block_names( $popup_type );
+        $unsupported         = array();
+
+        foreach ( $blocks as $block ) {
+            if ( ! is_array( $block ) ) {
+                continue;
+            }
+
+            $name = is_string( $block['blockName'] ?? null ) ? trim( $block['blockName'] ) : '';
+
+            if ( '' === $name ) {
+                if ( self::parsed_block_has_raw_content( $block ) ) {
+                    $unsupported['freeform-html'] = 'freeform-html';
+                }
+                continue;
+            }
+
+            $inner_blocks = is_array( $block['innerBlocks'] ?? null ) ? $block['innerBlocks'] : array();
+
+            if ( in_array( $name, $content_block_names, true ) ) {
+                if ( self::parsed_block_has_raw_content( $block ) ) {
+                    $unsupported['freeform-html'] = 'freeform-html';
+                }
+                continue;
+            }
+
+            if ( ! in_array( $name, $shell_block_names, true ) ) {
+                $unsupported[ $name ] = $name;
+                continue;
+            }
+
+            if ( self::parsed_block_has_raw_content( $block ) ) {
+                $unsupported['freeform-html'] = 'freeform-html';
+                continue;
+            }
+
+            $inner_unsupported = self::collect_unsupported_popup_shell_blocks(
+                $popup_type,
+                $inner_blocks
+            );
+
+            foreach ( $inner_unsupported as $unsupported_block_name ) {
+                $unsupported[ $unsupported_block_name ] = $unsupported_block_name;
+            }
+        }
+
+        return array_values( $unsupported );
+    }
+
+    /**
+     * Collects top-level blocks outside the popup root that would be dropped on save.
+     *
+     * @param array<int,array<string,mixed>> $blocks Parsed top-level blocks.
+     * @param string                         $root_block_name Root block name.
+     * @return array<int,string>
+     */
+    private static function collect_unsupported_top_level_popup_siblings( array $blocks, string $root_block_name ): array {
+        $unsupported = array();
+        $root_seen   = false;
+
+        foreach ( $blocks as $block ) {
+            if ( ! is_array( $block ) ) {
+                continue;
+            }
+
+            $name = is_string( $block['blockName'] ?? null ) ? trim( $block['blockName'] ) : '';
+
+            if ( '' === $name ) {
+                if ( self::parsed_block_has_raw_content( $block ) ) {
+                    $unsupported['freeform-html'] = 'freeform-html';
+                }
+                continue;
+            }
+
+            if ( $name === $root_block_name && ! $root_seen ) {
+                $root_seen = true;
+                continue;
+            }
+
+            $unsupported_name = '' !== self::normalize_builder_popup_type( $name )
+                ? 'multiple-popup-roots'
+                : $name;
+            $unsupported[ $unsupported_name ] = $unsupported_name;
+        }
+
+        return array_values( $unsupported );
+    }
+
+    /**
+     * Counts content containers in a parsed popup shell.
+     *
+     * @param string                         $popup_type Popup type.
+     * @param array<int,array<string,mixed>> $blocks Parsed blocks.
+     * @return int
+     */
+    private static function count_content_container_blocks( string $popup_type, array $blocks ): int {
+        $content_block_names = self::get_content_container_block_names( $popup_type );
+        $count               = 0;
+
+        foreach ( $blocks as $block ) {
+            if ( ! is_array( $block ) ) {
+                continue;
+            }
+
+            $name = is_string( $block['blockName'] ?? null ) ? trim( $block['blockName'] ) : '';
+            if ( in_array( $name, $content_block_names, true ) ) {
+                $count++;
+                continue;
+            }
+
+            $count += self::count_content_container_blocks(
+                $popup_type,
+                is_array( $block['innerBlocks'] ?? null ) ? $block['innerBlocks'] : array()
+            );
+        }
+
+        return $count;
+    }
+
+    /**
+     * Normalizes parsed Gutenberg blocks into the AI popup draft content shape.
+     *
+     * @param array<int,array<string,mixed>> $blocks Parsed content blocks.
+     * @param int                            $depth Current recursion depth.
+     * @return array{content_blocks:array<int,array<string,mixed>>,unsupported_blocks:array<int,string>}
+     */
+    private static function normalize_parsed_content_blocks( array $blocks, int $depth = 0 ): array {
+        $result = array(
+            'content_blocks'     => array(),
+            'unsupported_blocks' => array(),
+        );
+
+        if ( $depth > 4 ) {
+            $result['unsupported_blocks'][] = 'nested-block-depth-limit';
+            return $result;
+        }
+
+        $catalog = self::get_block_catalog_map();
+
+        foreach ( $blocks as $block ) {
+            if ( ! is_array( $block ) ) {
+                continue;
+            }
+
+            $name = is_string( $block['blockName'] ?? null ) ? trim( $block['blockName'] ) : '';
+            if ( '' === $name ) {
+                if ( self::parsed_block_has_raw_content( $block ) ) {
+                    $result['unsupported_blocks']['freeform-html'] = 'freeform-html';
+                }
+                continue;
+            }
+
+            if ( ! isset( $catalog[ $name ] ) ) {
+                $result['unsupported_blocks'][ $name ] = $name;
+                continue;
+            }
+
+            if ( ! empty( $catalog[ $name ]['supports_children'] ) && self::parsed_wrapper_block_has_direct_raw_content( $block ) ) {
+                $result['unsupported_blocks']['freeform-html'] = 'freeform-html';
+                continue;
+            }
+
+            if ( count( $result['content_blocks'] ) >= 16 ) {
+                $result['unsupported_blocks']['content-block-limit'] = 'content-block-limit';
+                continue;
+            }
+
+            $attributes = is_array( $block['attrs'] ?? null ) ? $block['attrs'] : array();
+            $attributes = self::extract_source_attributes_from_parsed_block( $name, $attributes, $block );
+            if ( 'core/list' === $name ) {
+                if ( self::parsed_list_has_nested_items( $block ) ) {
+                    $result['unsupported_blocks']['core/list:nested'] = 'core/list:nested';
+                    continue;
+                }
+
+                $items = self::extract_list_items_from_parsed_block( $block );
+                if ( ! empty( $items ) ) {
+                    $attributes['items'] = $items;
+                }
+            }
+
+            $item = array(
+                'name' => $name,
+            );
+
+            if ( ! empty( $attributes ) ) {
+                $item['attributes'] = self::sanitize_recursive( $attributes, 'attributes.' . $name );
+            }
+
+            if ( ! empty( $catalog[ $name ]['supports_children'] ) ) {
+                $child_result = self::normalize_parsed_content_blocks(
+                    is_array( $block['innerBlocks'] ?? null ) ? $block['innerBlocks'] : array(),
+                    $depth + 1
+                );
+
+                foreach ( $child_result['unsupported_blocks'] as $unsupported_block ) {
+                    $result['unsupported_blocks'][ $unsupported_block ] = $unsupported_block;
+                }
+
+                $children = $child_result['content_blocks'];
+                if ( ! empty( $catalog[ $name ]['allowed_children'] ) ) {
+                    $allowed_children = $catalog[ $name ]['allowed_children'];
+                    foreach ( $children as $child ) {
+                        if ( ! in_array( $child['name'], $allowed_children, true ) ) {
+                            $result['unsupported_blocks'][ $child['name'] ] = $child['name'];
+                        }
+                    }
+                    $children = array_values(
+                        array_filter(
+                            $children,
+                            static function( array $child ) use ( $allowed_children ): bool {
+                                return in_array( $child['name'], $allowed_children, true );
+                            }
+                        )
+                    );
+                }
+
+                if ( ! empty( $children ) ) {
+                    $item['inner_blocks'] = $children;
+                }
+            }
+
+            $result['content_blocks'][] = $item;
+        }
+
+        $result['unsupported_blocks'] = array_values( array_unique( $result['unsupported_blocks'] ) );
+
+        return $result;
+    }
+
+    /**
+     * Checks whether a parsed freeform block contains raw content that cannot be safely imported.
+     *
+     * @param array<string,mixed> $block Parsed block.
+     * @return bool
+     */
+    private static function parsed_block_has_raw_content( array $block ): bool {
+        if ( is_string( $block['innerHTML'] ?? null ) && '' !== trim( $block['innerHTML'] ) ) {
+            return true;
+        }
+
+        if ( ! is_array( $block['innerContent'] ?? null ) ) {
+            return false;
+        }
+
+        foreach ( $block['innerContent'] as $content ) {
+            if ( is_string( $content ) && '' !== trim( $content ) ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Restores source-backed block attributes from parsed block HTML.
+     *
+     * @param string              $name Block name.
+     * @param array<string,mixed> $attributes Parsed attributes.
+     * @param array<string,mixed> $block Parsed block.
+     * @return array<string,mixed>
+     */
+    private static function extract_source_attributes_from_parsed_block( string $name, array $attributes, array $block ): array {
+        $inner_html = is_string( $block['innerHTML'] ?? null ) ? $block['innerHTML'] : '';
+
+        switch ( $name ) {
+            case 'core/heading':
+                if ( ! is_string( $attributes['content'] ?? null ) || '' === trim( $attributes['content'] ) ) {
+                    $heading = self::extract_first_html_tag( $inner_html, 'h[1-6]' );
+                    if ( '' !== $heading['content'] ) {
+                        $attributes['content'] = $heading['content'];
+                    }
+                    if ( ! isset( $attributes['level'] ) && preg_match( '/^h([1-6])$/i', $heading['tag'], $matches ) ) {
+                        $attributes['level'] = absint( $matches[1] );
+                    }
+                }
+                break;
+
+            case 'core/paragraph':
+                if ( ! is_string( $attributes['content'] ?? null ) || '' === trim( $attributes['content'] ) ) {
+                    $paragraph = self::extract_first_html_tag( $inner_html, 'p' );
+                    if ( '' !== $paragraph['content'] ) {
+                        $attributes['content'] = $paragraph['content'];
+                    }
+                }
+                break;
+
+            case 'core/button':
+                $anchor = self::extract_first_html_tag( $inner_html, 'a' );
+                if ( ( ! is_string( $attributes['text'] ?? null ) || '' === trim( $attributes['text'] ) ) && '' !== $anchor['content'] ) {
+                    $attributes['text'] = $anchor['content'];
+                }
+                if ( ( ! is_string( $attributes['url'] ?? null ) || '' === trim( $attributes['url'] ) ) && '' !== $anchor['html'] ) {
+                    $href = self::extract_html_attribute( $anchor['html'], 'href' );
+                    if ( '' !== $href ) {
+                        $attributes['url'] = $href;
+                    }
+                }
+                break;
+
+            case 'core/image':
+                $image = self::extract_first_html_tag( $inner_html, 'img', false );
+                if ( '' !== $image['html'] ) {
+                    if ( ! is_string( $attributes['url'] ?? null ) || '' === trim( $attributes['url'] ) ) {
+                        $src = self::extract_html_attribute( $image['html'], 'src' );
+                        if ( '' !== $src ) {
+                            $attributes['url'] = $src;
+                        }
+                    }
+                    if ( ! is_string( $attributes['alt'] ?? null ) || '' === trim( $attributes['alt'] ) ) {
+                        $alt = self::extract_html_attribute( $image['html'], 'alt' );
+                        if ( '' !== $alt ) {
+                            $attributes['alt'] = $alt;
+                        }
+                    }
+                }
+                if ( ! is_string( $attributes['caption'] ?? null ) || '' === trim( $attributes['caption'] ) ) {
+                    $caption = self::extract_first_html_tag( $inner_html, 'figcaption' );
+                    if ( '' !== $caption['content'] ) {
+                        $attributes['caption'] = $caption['content'];
+                    }
+                }
+                break;
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * Extracts the first matching HTML tag from a parsed block fragment.
+     *
+     * @param string $html HTML fragment.
+     * @param string $tag_pattern Tag name or regular expression fragment.
+     * @param bool   $requires_close Whether the tag must have a closing tag.
+     * @return array{tag:string,html:string,content:string}
+     */
+    private static function extract_first_html_tag( string $html, string $tag_pattern, bool $requires_close = true ): array {
+        $result = array(
+            'tag'     => '',
+            'html'    => '',
+            'content' => '',
+        );
+
+        $pattern = $requires_close
+            ? '/<(' . $tag_pattern . ')\b[^>]*>(.*?)<\/\1>/is'
+            : '/<(' . $tag_pattern . ')\b[^>]*>/is';
+
+        if ( ! preg_match( $pattern, $html, $matches ) ) {
+            return $result;
+        }
+
+        $result['tag']  = strtolower( $matches[1] );
+        $result['html'] = $matches[0];
+
+        if ( $requires_close ) {
+            $result['content'] = self::sanitize_rich_text( $matches[2] ?? '' );
+        }
+
+        return $result;
+    }
+
+    /**
+     * Extracts a quoted HTML attribute from a tag string.
+     *
+     * @param string $html Tag HTML.
+     * @param string $attribute Attribute name.
+     * @return string
+     */
+    private static function extract_html_attribute( string $html, string $attribute ): string {
+        if ( ! preg_match( '/\s' . preg_quote( $attribute, '/' ) . '\s*=\s*([\'"])(.*?)\1/is', $html, $matches ) ) {
+            return '';
+        }
+
+        return self::sanitize_plain_text( html_entity_decode( $matches[2], ENT_QUOTES, 'UTF-8' ) );
+    }
+
+    /**
+     * Extracts list item copy from parsed core/list blocks.
+     *
+     * @param array<string,mixed> $block Parsed core/list block.
+     * @return array<int,string>
+     */
+    private static function extract_list_items_from_parsed_block( array $block ): array {
+        $items = array();
+
+        foreach ( is_array( $block['innerBlocks'] ?? null ) ? $block['innerBlocks'] : array() as $inner_block ) {
+            if ( ! is_array( $inner_block ) || ( $inner_block['blockName'] ?? '' ) !== 'core/list-item' ) {
+                continue;
+            }
+
+            $attributes = is_array( $inner_block['attrs'] ?? null ) ? $inner_block['attrs'] : array();
+            $content    = self::sanitize_rich_text( $attributes['content'] ?? '' );
+
+            if ( '' === $content ) {
+                $list_item = self::extract_first_html_tag(
+                    is_string( $inner_block['innerHTML'] ?? null ) ? $inner_block['innerHTML'] : '',
+                    'li'
+                );
+                $content = $list_item['content'];
+            }
+
+            if ( '' !== $content ) {
+                $items[] = $content;
+            }
+        }
+
+        if ( empty( $items ) && is_string( $block['innerHTML'] ?? null ) ) {
+            if ( preg_match_all( '/<li\b[^>]*>(.*?)<\/li>/is', $block['innerHTML'], $matches ) ) {
+                foreach ( $matches[1] as $item_content ) {
+                    $content = self::sanitize_rich_text( $item_content );
+                    if ( '' !== $content ) {
+                        $items[] = $content;
+                    }
+                }
+            }
+        }
+
+        return $items;
+    }
+
+    /**
+     * Detects loose content inside supported wrapper blocks that child blocks cannot represent.
+     *
+     * @param array<string,mixed> $block Parsed wrapper block.
+     * @return bool
+     */
+    private static function parsed_wrapper_block_has_direct_raw_content( array $block ): bool {
+        if ( ! is_array( $block['innerContent'] ?? null ) ) {
+            return false;
+        }
+
+        foreach ( $block['innerContent'] as $content ) {
+            if ( ! is_string( $content ) ) {
+                continue;
+            }
+
+            $content = trim( preg_replace( '/<!--.*?-->/s', '', $content ) ?? '' );
+            if ( '' === $content ) {
+                continue;
+            }
+
+            if ( '' !== trim( wp_strip_all_tags( $content ) ) ) {
+                return true;
+            }
+
+            if ( preg_match_all( '/<\/?([a-z][a-z0-9-]*)\b[^>]*>/i', $content, $matches ) ) {
+                foreach ( $matches[1] as $tag_name ) {
+                    if ( ! in_array( strtolower( $tag_name ), array( 'article', 'aside', 'div', 'footer', 'header', 'main', 'section' ), true ) ) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Detects nested list structures that cannot be represented by the flat AI list shape.
+     *
+     * @param array<string,mixed> $block Parsed core/list block.
+     * @return bool
+     */
+    private static function parsed_list_has_nested_items( array $block ): bool {
+        foreach ( is_array( $block['innerBlocks'] ?? null ) ? $block['innerBlocks'] : array() as $inner_block ) {
+            if ( ! is_array( $inner_block ) || ( $inner_block['blockName'] ?? '' ) !== 'core/list-item' ) {
+                continue;
+            }
+
+            if ( ! empty( $inner_block['innerBlocks'] ) ) {
+                return true;
+            }
+        }
+
+        return is_string( $block['innerHTML'] ?? null )
+            && preg_match( '/<li\b[^>]*>[\s\S]*<(ul|ol)\b/i', $block['innerHTML'] ) === 1;
+    }
+
+    /**
      * Returns the content container block name for a popup type.
      *
      * @param string $popup_type Popup type.
      * @return string
      */
     private static function get_content_container_block_name( string $popup_type ): string {
+        $block_names = self::get_content_container_block_names( $popup_type );
+
+        return $block_names[0] ?? 'fc/overlay-content';
+    }
+
+    /**
+     * Returns supported current and legacy content container block names.
+     *
+     * @param string $popup_type Popup type.
+     * @return array<int,string>
+     */
+    private static function get_content_container_block_names( string $popup_type ): array {
         switch ( self::normalize_builder_popup_type( $popup_type ) ) {
             case FOOCONVERT_POPUP_TYPE_BAR:
-                return 'fc/bar-content';
+                return array( 'fc/bar-content' );
             case FOOCONVERT_POPUP_TYPE_FLYOUT:
-                return 'fc/flyout-content';
+                return array( 'fc/flyout-content' );
             case FOOCONVERT_POPUP_TYPE_POPUP:
             default:
-                return 'fc/overlay-content';
+                return array( 'fc/overlay-content', 'fc/popup-content' );
+        }
+    }
+
+    /**
+     * Returns current and legacy popup shell blocks that the serializer recreates.
+     *
+     * @param string $popup_type Popup type.
+     * @return array<int,string>
+     */
+    private static function get_popup_shell_block_names( string $popup_type ): array {
+        switch ( self::normalize_builder_popup_type( $popup_type ) ) {
+            case FOOCONVERT_POPUP_TYPE_BAR:
+                return array( 'fc/bar-open-button', 'fc/bar-container', 'fc/bar-close-button' );
+            case FOOCONVERT_POPUP_TYPE_FLYOUT:
+                return array( 'fc/flyout-open-button', 'fc/flyout-container', 'fc/flyout-close-button' );
+            case FOOCONVERT_POPUP_TYPE_POPUP:
+            default:
+                return array(
+                    'fc/overlay-container',
+                    'fc/overlay-close-button',
+                    'fc/popup-container',
+                    'fc/popup-close-button',
+                );
         }
     }
 
@@ -1784,11 +2497,21 @@ class DraftNormalizer {
      */
     private static function sanitize_trigger( $trigger, string $popup_type ): array {
         $trigger      = is_array( $trigger ) ? $trigger : array();
+        if ( empty( $trigger['steps'] ) ) {
+            $legacy_trigger = self::normalize_legacy_trigger( $trigger );
+            if ( ! empty( $legacy_trigger ) ) {
+                $trigger = array_merge( $trigger, $legacy_trigger );
+            }
+        }
+
+        $steps        = self::sanitize_trigger_steps( $trigger['steps'] ?? array() );
+        $first_step   = $steps[0] ?? array();
         $type_value   = is_string( $trigger['type'] ?? null ) ? trim( $trigger['type'] ) : '';
-        $event_value  = is_string( $trigger['event'] ?? null ) ? trim( $trigger['event'] ) : '';
+        $event_value  = is_string( $trigger['event'] ?? null ) ? trim( $trigger['event'] ) : ( is_string( $first_step['event'] ?? null ) ? $first_step['event'] : '' );
         $event        = self::normalize_trigger_event( $event_value );
         $event        = '' !== $event ? $event : self::normalize_trigger_event( $type_value );
         $type         = in_array( $type_value, self::get_supported_trigger_type_values(), true ) ? $type_value : '';
+        $frequency    = self::sanitize_trigger_frequency( $trigger['frequency'] ?? '', $event );
 
         if ( '' === $event ) {
             $type  = self::get_default_trigger_type( $popup_type );
@@ -1799,15 +2522,344 @@ class DraftNormalizer {
             $type = self::get_trigger_type_for_event( $event );
         }
 
+        if ( is_array( $trigger['frequency'] ?? null ) ) {
+            $frequency = array(
+                'mode'            => $frequency,
+                'cooldownSeconds' => max( 0, absint( $trigger['frequency']['cooldownSeconds'] ?? 0 ) ),
+            );
+        }
+
         return array(
             'type'           => $type,
             'event'          => $event,
-            'where'          => self::sanitize_trigger_where( $trigger['where'] ?? array() ),
+            'where'          => self::sanitize_trigger_where( ! empty( $trigger['where'] ) ? $trigger['where'] : ( $first_step['where'] ?? array() ) ),
             'delay_seconds'  => max( 0, min( 60, absint( $trigger['delay_seconds'] ?? self::get_default_delay( $type ) ) ) ),
             'scroll_percent' => max( 1, min( 100, absint( $trigger['scroll_percent'] ?? 20 ) ) ),
             'lifetime'       => in_array( $trigger['lifetime'] ?? '', array( 'page', 'session', 'visit' ), true ) ? $trigger['lifetime'] : 'page',
-            'frequency'      => self::sanitize_trigger_frequency( $trigger['frequency'] ?? '', $event ),
+            'frequency'      => $frequency,
+            'steps'          => $steps,
         );
+    }
+
+    /**
+     * Detects saved trigger payloads that cannot be imported without changing behavior.
+     *
+     * @param mixed $trigger Raw saved trigger payload.
+     * @return array<int,string>
+     */
+    private static function collect_unsupported_import_trigger( $trigger ): array {
+        if ( ! is_array( $trigger ) || empty( $trigger ) ) {
+            return array();
+        }
+
+        if ( array_key_exists( 'steps', $trigger ) || 2 === absint( $trigger['version'] ?? 0 ) ) {
+            return self::collect_unsupported_import_v2_trigger( $trigger );
+        }
+
+        if ( ! empty( self::normalize_legacy_trigger( $trigger ) ) ) {
+            return array();
+        }
+
+        $type = is_string( $trigger['type'] ?? null ) ? trim( $trigger['type'] ) : '';
+
+        return array(
+            'trigger:' . ( '' !== $type ? $type : 'unsupported' ),
+        );
+    }
+
+    /**
+     * Detects unsupported saved V2 trigger step payloads.
+     *
+     * @param array<string,mixed> $trigger Raw V2 trigger payload.
+     * @return array<int,string>
+     */
+    private static function collect_unsupported_import_v2_trigger( array $trigger ): array {
+        $unsupported = array();
+        $steps       = $trigger['steps'] ?? null;
+
+        if ( ! is_array( $steps ) || empty( $steps ) ) {
+            return array( 'trigger:missing-steps' );
+        }
+
+        if ( count( $steps ) > 4 ) {
+            $unsupported['trigger:too-many-steps'] = 'trigger:too-many-steps';
+        }
+
+        if (
+            array_key_exists( 'lifetime', $trigger )
+            && ! in_array( $trigger['lifetime'], array( 'page', 'session', 'visit' ), true )
+        ) {
+            $unsupported['trigger:invalid-lifetime'] = 'trigger:invalid-lifetime';
+        }
+
+        foreach ( array_values( $steps ) as $step ) {
+            if ( ! is_array( $step ) ) {
+                $unsupported['trigger:invalid-step'] = 'trigger:invalid-step';
+                continue;
+            }
+
+            $event = is_string( $step['event'] ?? null ) ? trim( $step['event'] ) : '';
+            if ( '' === $event || ! in_array( $event, self::get_supported_trigger_events(), true ) ) {
+                $unsupported[ 'trigger:' . ( '' !== $event ? $event : 'unsupported-event' ) ] = 'trigger:' . ( '' !== $event ? $event : 'unsupported-event' );
+            }
+
+            if (
+                array_key_exists( 'withinSeconds', $step )
+                && (
+                    ! is_numeric( $step['withinSeconds'] )
+                    || (float) $step['withinSeconds'] < 0
+                )
+            ) {
+                $unsupported['trigger:invalid-within-seconds'] = 'trigger:invalid-within-seconds';
+            }
+        }
+
+        if ( array_key_exists( 'frequency', $trigger ) && ! is_array( $trigger['frequency'] ) ) {
+            $unsupported['trigger:invalid-frequency'] = 'trigger:invalid-frequency';
+        } elseif ( is_array( $trigger['frequency'] ?? null ) ) {
+            $frequency_mode = $trigger['frequency']['mode'] ?? null;
+            if ( ! in_array( $frequency_mode, array( 'once', 'repeat' ), true ) ) {
+                $unsupported['trigger:invalid-frequency-mode'] = 'trigger:invalid-frequency-mode';
+            }
+
+            if (
+                array_key_exists( 'cooldownSeconds', $trigger['frequency'] )
+                && (
+                    ! is_numeric( $trigger['frequency']['cooldownSeconds'] )
+                    || (float) $trigger['frequency']['cooldownSeconds'] < 0
+                )
+            ) {
+                $unsupported['trigger:invalid-cooldown'] = 'trigger:invalid-cooldown';
+            }
+        }
+
+        return array_values( $unsupported );
+    }
+
+    /**
+     * Normalizes legacy trigger payloads into the V2 trigger structure.
+     *
+     * @param array<string,mixed> $trigger Raw trigger payload.
+     * @return array<string,mixed>
+     */
+    private static function normalize_legacy_trigger( array $trigger ): array {
+        $trigger_type = is_string( $trigger['type'] ?? null ) ? trim( $trigger['type'] ) : '';
+        $trigger_data = $trigger['data'] ?? null;
+        $step         = null;
+
+        switch ( $trigger_type ) {
+            case 'immediate':
+                $step = array(
+                    'event' => 'fc.immediate',
+                    'where' => array(),
+                );
+                break;
+            case 'anchor':
+                $ids = self::normalize_legacy_trigger_string_array( $trigger_data );
+                if ( ! empty( $ids ) ) {
+                    $step = array(
+                        'event' => 'fc.anchor.click',
+                        'where' => array(
+                            'ids' => $ids,
+                        ),
+                    );
+                }
+                break;
+            case 'element':
+                $selector = self::sanitize_plain_text( $trigger_data );
+                if ( '' !== $selector ) {
+                    $step = array(
+                        'event' => 'fc.element.click',
+                        'where' => array(
+                            'selector' => $selector,
+                        ),
+                    );
+                }
+                break;
+            case 'visible':
+                $ids = self::normalize_legacy_trigger_string_array( $trigger_data );
+                if ( ! empty( $ids ) ) {
+                    $step = array(
+                        'event' => 'fc.element.visible',
+                        'where' => array(
+                            'ids' => $ids,
+                        ),
+                    );
+                }
+                break;
+            case 'exit-intent':
+            case 'exit_intent':
+                if ( is_numeric( $trigger_data ) ) {
+                    $step = array(
+                        'event' => 'fc.exit_intent',
+                        'where' => array(
+                            'delaySeconds' => max( 0, min( 100, absint( $trigger_data ) ) ),
+                        ),
+                    );
+                }
+                break;
+            case 'scroll':
+            case 'scroll_percent':
+                if ( is_numeric( $trigger_data ) ) {
+                    $step = array(
+                        'event' => 'fc.scroll.percent',
+                        'where' => array(
+                            'percent' => max( 1, min( 100, absint( $trigger_data ) ) ),
+                        ),
+                    );
+                }
+                break;
+            case 'timer':
+            case 'delay':
+                $step = array(
+                    'event' => 'fc.timer.elapsed',
+                    'where' => array(
+                        'seconds' => is_numeric( $trigger_data )
+                            ? max( 0, min( 100, absint( $trigger_data ) ) )
+                            : 15,
+                    ),
+                );
+                break;
+        }
+
+        if ( empty( $step ) ) {
+            return array();
+        }
+
+        $trigger_once = array_key_exists( 'once', $trigger )
+            ? self::sanitize_bool( $trigger['once'] )
+            : ! in_array( $trigger_type, array( 'anchor', 'element' ), true );
+
+        return array(
+            'version'        => 2,
+            'lifetime'       => 'page',
+            'frequency'      => array(
+                'mode'            => $trigger_once ? 'once' : 'repeat',
+                'cooldownSeconds' => 0,
+            ),
+            'steps'          => array( $step ),
+            'where'          => $step['where'],
+            'delay_seconds'  => self::get_legacy_trigger_delay( $step ),
+            'scroll_percent' => self::get_legacy_trigger_scroll_percent( $step ),
+        );
+    }
+
+    /**
+     * Converts a legacy string or list trigger value into unique strings.
+     *
+     * @param mixed $value Raw trigger value.
+     * @return array<int,string>
+     */
+    private static function normalize_legacy_trigger_string_array( $value ): array {
+        $values    = is_array( $value ) ? $value : explode( ',', (string) $value );
+        $sanitized = array();
+
+        foreach ( $values as $entry ) {
+            $entry = self::sanitize_plain_text( $entry );
+            if ( '' !== $entry ) {
+                $sanitized[ $entry ] = $entry;
+            }
+        }
+
+        return array_values( $sanitized );
+    }
+
+    /**
+     * Sanitizes mixed boolean-like values.
+     *
+     * @param mixed $value Raw value.
+     * @return bool
+     */
+    private static function sanitize_bool( $value ): bool {
+        if ( is_bool( $value ) ) {
+            return $value;
+        }
+
+        if ( is_string( $value ) ) {
+            $normalized = strtolower( trim( $value ) );
+            if ( in_array( $normalized, array( '1', 'true', 'yes', 'on' ), true ) ) {
+                return true;
+            }
+            if ( in_array( $normalized, array( '0', 'false', 'no', 'off', '' ), true ) ) {
+                return false;
+            }
+        }
+
+        return (bool) $value;
+    }
+
+    /**
+     * Returns the legacy delay value represented by a normalized step.
+     *
+     * @param array<string,mixed> $step Normalized trigger step.
+     * @return int
+     */
+    private static function get_legacy_trigger_delay( array $step ): int {
+        $where = is_array( $step['where'] ?? null ) ? $step['where'] : array();
+
+        if ( 'fc.timer.elapsed' === ( $step['event'] ?? '' ) ) {
+            return max( 0, min( 100, absint( $where['seconds'] ?? 0 ) ) );
+        }
+
+        if ( 'fc.exit_intent' === ( $step['event'] ?? '' ) ) {
+            return max( 0, min( 100, absint( $where['delaySeconds'] ?? 0 ) ) );
+        }
+
+        return 0;
+    }
+
+    /**
+     * Returns the legacy scroll value represented by a normalized step.
+     *
+     * @param array<string,mixed> $step Normalized trigger step.
+     * @return int
+     */
+    private static function get_legacy_trigger_scroll_percent( array $step ): int {
+        $where = is_array( $step['where'] ?? null ) ? $step['where'] : array();
+
+        if ( 'fc.scroll.percent' === ( $step['event'] ?? '' ) ) {
+            return max( 1, min( 100, absint( $where['percent'] ?? 20 ) ) );
+        }
+
+        return 20;
+    }
+
+    /**
+     * Sanitizes a versioned trigger step list.
+     *
+     * @param mixed $steps Trigger steps.
+     * @return array<int,array<string,mixed>>
+     */
+    private static function sanitize_trigger_steps( $steps ): array {
+        if ( ! is_array( $steps ) ) {
+            return array();
+        }
+
+        $sanitized = array();
+
+        foreach ( array_slice( array_values( $steps ), 0, 4 ) as $step ) {
+            if ( ! is_array( $step ) ) {
+                continue;
+            }
+
+            $event = self::normalize_trigger_event( $step['event'] ?? '' );
+            if ( '' === $event ) {
+                continue;
+            }
+
+            $sanitized_step = array(
+                'event' => $event,
+                'where' => self::sanitize_trigger_where( $step['where'] ?? array() ),
+            );
+
+            if ( isset( $step['withinSeconds'] ) ) {
+                $sanitized_step['withinSeconds'] = max( 0, (int) $step['withinSeconds'] );
+            }
+
+            $sanitized[] = $sanitized_step;
+        }
+
+        return $sanitized;
     }
 
     /**
@@ -2016,25 +3068,21 @@ class DraftNormalizer {
      */
     private static function sanitize_root_attributes( $attributes, string $popup_type ): array {
         $attributes = is_array( $attributes ) ? $attributes : array();
-        $allowed    = array( 'settings', 'styles', 'openButton', 'closeButton', 'content', 'template' );
         $sanitized  = array();
 
-        foreach ( $allowed as $key ) {
-            if ( ! array_key_exists( $key, $attributes ) ) {
+        foreach ( $attributes as $key => $value ) {
+            if ( ! is_string( $key ) && ! is_int( $key ) ) {
                 continue;
             }
 
             if ( 'template' === $key ) {
-                $sanitized[ $key ] = self::normalize_template_slug( $attributes[ $key ] );
+                $sanitized[ $key ] = self::normalize_template_slug( $value );
                 continue;
             }
 
-            if ( FOOCONVERT_POPUP_TYPE_POPUP === $popup_type && 'openButton' === $key ) {
-                continue;
-            }
-
-            if ( is_array( $attributes[ $key ] ) ) {
-                $sanitized[ $key ] = self::sanitize_recursive( $attributes[ $key ] );
+            $clean = self::sanitize_recursive( $value, 'root_attributes.' . (string) $key );
+            if ( null !== $clean ) {
+                $sanitized[ $key ] = $clean;
             }
         }
 
@@ -2306,7 +3354,7 @@ class DraftNormalizer {
                 $last_segment = end( $path_parts );
             }
 
-            if ( in_array( $last_segment, array( 'content', 'text', 'values', 'description' ), true ) ) {
+            if ( in_array( $last_segment, array( 'caption', 'content', 'text', 'values', 'description' ), true ) ) {
                 return self::sanitize_rich_text( $value );
             }
 
