@@ -196,15 +196,23 @@ if ( !class_exists( __NAMESPACE__ . '\LeadsTable' ) ) {
          * @return void
          */
         public function process_bulk_action() {
+            $action = $this->current_action();
+
+            if ( !in_array( $action, array( 'delete', 'export' ), true ) ) {
+                return;
+            }
+
+            check_admin_referer( 'bulk-leads' );
+
             $lead_ids = isset( $_REQUEST['leads'] ) ? array_map( 'intval', (array) wp_unslash( $_REQUEST['leads'] ) ) : array();
 
-            if ( 'delete' === $this->current_action() && !empty( $lead_ids ) ) {
+            if ( 'delete' === $action && !empty( $lead_ids ) ) {
                 foreach ( $lead_ids as $lead_id ) {
                     $this->lead->delete_lead( $lead_id );
                 }
             }
 
-            if ( 'export' === $this->current_action() && !empty( $lead_ids ) ) {
+            if ( 'export' === $action && !empty( $lead_ids ) ) {
                 $this->export_leads( $lead_ids );
             }
         }
