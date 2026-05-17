@@ -13,26 +13,10 @@ import {
 	formatAiBuilderDate,
 	hasAiBuilderMetadata,
 	normalizeAiBuilderMetadata,
-	truncateAiBuilderText,
 } from './utils';
 import './Plugin.scss';
 
 const rootClass = 'fc--ai-builder-panel';
-
-const TranscriptMessage = ( { role, content } ) => (
-	<div
-		className={ `${ rootClass }__message ${ rootClass }__message--${ role }` }
-	>
-		<div className={ `${ rootClass }__message-label` }>
-			{ role === 'assistant'
-				? __( 'AI strategist', 'fooconvert' )
-				: __( 'You', 'fooconvert' ) }
-		</div>
-		<div className={ `${ rootClass }__message-body` }>
-			{ truncateAiBuilderText( content, 220 ) }
-		</div>
-	</div>
-);
 
 const GuidanceList = ( { title, items } ) => {
 	if ( ! Array.isArray( items ) || items.length === 0 ) {
@@ -50,30 +34,6 @@ const GuidanceList = ( { title, items } ) => {
 		</div>
 	);
 };
-
-const MediaItemCard = ( { item } ) => (
-	<div className={ `${ rootClass }__media-item` }>
-		{ item.previewUrl && (
-			<div className={ `${ rootClass }__media-preview` }>
-				<img
-					src={ item.previewUrl }
-					alt={ item.alt || item.title || '' }
-				/>
-			</div>
-		) }
-		<div className={ `${ rootClass }__media-copy` }>
-			<strong>
-				{ item.title || __( 'Generated popup image', 'fooconvert' ) }
-			</strong>
-			{ item.prompt && <p>{ truncateAiBuilderText( item.prompt ) }</p> }
-			{ item.editUrl && (
-				<ExternalLink href={ item.editUrl }>
-					{ __( 'Edit media', 'fooconvert' ) }
-				</ExternalLink>
-			) }
-		</div>
-	</div>
-);
 
 const AiBuilderPlugin = () => {
 	const metadataKey = editorData?.meta?.key || '';
@@ -110,7 +70,6 @@ const AiBuilderPlugin = () => {
 	const popupDraft = response?.popup_draft;
 	const validation = response?.validation;
 	const formattedSavedAt = formatAiBuilderDate( metadata.saved_at );
-	const transcript = metadata.messages.slice( -4 );
 	const summaryRows = [
 		popupDraft?.popup_type
 			? {
@@ -234,21 +193,6 @@ const AiBuilderPlugin = () => {
 					items={ validation?.suggestions }
 				/>
 
-				{ transcript.length > 0 && (
-					<div className={ `${ rootClass }__section` }>
-						<h3>{ __( 'Recent transcript', 'fooconvert' ) }</h3>
-						<div className={ `${ rootClass }__transcript` }>
-							{ transcript.map( ( message, index ) => (
-								<TranscriptMessage
-									key={ `${ message.role }-${ index }` }
-									role={ message.role }
-									content={ message.content }
-								/>
-							) ) }
-						</div>
-					</div>
-				) }
-
 				{ response?.suggested_prompts?.length > 0 && (
 					<div className={ `${ rootClass }__section` }>
 						<h3>
@@ -262,20 +206,6 @@ const AiBuilderPlugin = () => {
 								>
 									{ prompt }
 								</span>
-							) ) }
-						</div>
-					</div>
-				) }
-
-				{ response?.media_items?.length > 0 && (
-					<div className={ `${ rootClass }__section` }>
-						<h3>{ __( 'Generated media', 'fooconvert' ) }</h3>
-						<div className={ `${ rootClass }__media-grid` }>
-							{ response.media_items.map( ( item ) => (
-								<MediaItemCard
-									key={ `${ item.id || item.url }` }
-									item={ item }
-								/>
 							) ) }
 						</div>
 					</div>
