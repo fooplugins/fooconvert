@@ -22,12 +22,17 @@ if ( in_array( 'help', $fooconvert_hidden_panels ) ) {
     <div class="fooconvert-panel-section">
         <ul class="ul-disc">
             <li>
-                <a href="https://fooplugins.com/documentation/fooconvert/" target="_blank">
+                <a href="<?php echo esc_url( FOOCONVERT_HOME_URL ); ?>" target="_blank">
+                    <?php esc_html_e( 'Visit the FooConvert homepage', 'fooconvert' ); ?>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo esc_url( FOOCONVERT_DOCS_URL ); ?>" target="_blank">
                     <?php esc_html_e( 'Read documentation', 'fooconvert' ); ?>
                 </a>
             </li>
             <li>
-                <a href="https://fooplugins.com/support/" target="_blank">
+                <a href="<?php echo esc_url( FOOCONVERT_SUPPORT_URL ); ?>" target="_blank">
                     <?php esc_html_e( 'Get Support', 'fooconvert' ); ?>
                 </a>
             </li>

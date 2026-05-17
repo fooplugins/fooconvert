@@ -722,31 +722,43 @@ function fooconvert_is_popup_preview_request() {
  * @return array[]
  */
 function fooconvert_pro_features_list() {
+    $url = FOOCONVERT_HOME_URL;
+
     return [
-        'leads' => [
-            'title'   => __( 'Lead Integrations', 'fooconvert' ),
-            'feature' => __( 'Send captured leads to Mailchimp, MailPoet, or custom webhook integrations.', 'fooconvert' ),
-            'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/gathering-leads/',
+        'ab-testing' => [
+            'title'   => __( 'A/B Testing', 'fooconvert' ),
+            'feature' => __( 'Test popup ideas, split traffic, compare goal rates, and let FooConvert Pro apply a winner automatically.', 'fooconvert' ),
+            'link'    => $url,
         ],
-        'retention' => [
-            'title'   => __( 'Longer Retention', 'fooconvert' ),
-            'feature' => __( 'Longer retention period for popup analytics. Track popup performance as long as you like!', 'fooconvert' ),
-            'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/pro-analytics/#retention',
+        'sales-revenue-attribution' => [
+            'title'   => __( 'Sales Revenue Attribution', 'fooconvert' ),
+            'feature' => __( 'Connect popup engagement to WooCommerce orders and report attributed revenue, order counts, recent sales, and top revenue popups.', 'fooconvert' ),
+            'link'    => $url,
         ],
-        'analytics' => [
-            'title'   => __( 'Advanced Analytics', 'fooconvert' ),
-            'feature' => __( 'Advanced popup analytics: Clicks, click-through-rates, conversions, conversion rates, engagement sentiment, engagement ratios, daily activity charts.', 'fooconvert' ),
-            'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/pro-analytics/',
+        'pro-blocks' => [
+            'title'   => __( 'Store-Focused Popup Blocks', 'fooconvert' ),
+            'feature' => __( 'Add Apply Coupon, Free Shipping Progress, and Confetti blocks for ecommerce offers, cart incentives, and sales campaigns.', 'fooconvert' ),
+            'link'    => $url,
         ],
-        'metrics' => [
-            'title'   => __( 'More Dashboard Metrics', 'fooconvert' ),
-            'feature' => __( 'Top Performers by Engagement Rate, Clicks, Click Rate, Conversions, Conversion Rate.', 'fooconvert' ),
-            'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/pro-analytics/',
+        'woocommerce-display-rules' => [
+            'title'   => __( 'WooCommerce Display Rules', 'fooconvert' ),
+            'feature' => __( 'Target shop, cart, checkout, account, product, product category, and product tag pages with store-aware campaign rules.', 'fooconvert' ),
+            'link'    => $url,
         ],
-        'exclusions' => [
-            'title'   => __( 'Role Exclusion', 'fooconvert' ),
-            'feature' => __( 'Exclude roles from logging popup events for analytics (e.g., exclude admin tests).', 'fooconvert' ),
-            'link'    => 'https://fooplugins.com/documentation/fooconvert/pro-features-fooconvert/exclude-roles/',
+        'woocommerce-triggers' => [
+            'title'   => __( 'WooCommerce Triggers', 'fooconvert' ),
+            'feature' => __( 'React to cart changes, coupon activity, checkout behavior, payment failures, and high-intent product browsing.', 'fooconvert' ),
+            'link'    => $url,
+        ],
+        'lead-automation-integrations' => [
+            'title'   => __( 'Lead Automation Integrations', 'fooconvert' ),
+            'feature' => __( 'Send captured leads to Mailchimp, MailPoet, Brevo, Zapier, Make, n8n, or custom webhook workflows.', 'fooconvert' ),
+            'link'    => $url,
+        ],
+        'advanced-analytics-retention' => [
+            'title'   => __( 'Advanced Analytics + Retention', 'fooconvert' ),
+            'feature' => __( 'Track clicks, conversions, engagement, attributed sales, visitor behavior, week-over-week changes, and longer configurable retention.', 'fooconvert' ),
+            'link'    => $url,
         ],
     ];
 }

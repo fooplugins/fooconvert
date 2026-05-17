@@ -37,7 +37,9 @@ if ( ! defined( 'FOOCONVERT_SLUG' ) ) {
     define( 'FOOCONVERT_VERSION', '2.0.3' );
     define( 'FOOCONVERT_MIN_PHP', '7.4.0' );
     define( 'FOOCONVERT_MIN_WP', '6.5.0' );
+    define( 'FOOCONVERT_HOME_URL', 'https://fooplugins.com/fooconvert/' );
     define( 'FOOCONVERT_DOCS_URL', 'https://fooplugins.com/documentation/fooconvert/' );
+    define( 'FOOCONVERT_SUPPORT_URL', 'https://fooplugins.com/support/' );
 }
 
 // Include other essential FooConvert constants.
