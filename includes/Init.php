@@ -31,6 +31,7 @@ if ( !class_exists( __NAMESPACE__ . '\Init' ) ) {
             // Load the plugin text domain for translations.
             add_action( 'init', function () {
                 $plugin_rel_path = dirname( plugin_basename( FOOCONVERT_FILE ) ) . '/languages/';
+                // phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound -- FooConvert ships translations from its plugin languages directory.
                 load_plugin_textdomain( FOOCONVERT_SLUG, false, $plugin_rel_path );
             } );
 
