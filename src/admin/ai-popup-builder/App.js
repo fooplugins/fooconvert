@@ -53,6 +53,10 @@ import {
 	applyMediaItemToDraft,
 	removeMediaItemFromDraft,
 } from './media-support';
+import {
+	buildLoadPopupPath,
+	normalizeLoadedPopupResponse,
+} from './initial-popup-support';
 import { isPlainObject } from './serializer-support';
 import { normalizePopupType, serializeDraftToMarkup } from './serializer';
 import { streamChatRequest } from './stream-support';
@@ -103,6 +107,11 @@ const aiConnectionMessage =
 				'AI Popup Builder chat needs a valid WordPress AI connector before it can generate popups. Go to Settings > Connectors to add or verify a connector, then reload this page.',
 				'fooconvert'
 		  );
+const configuredInitialPostId = Number( config?.initialPostId );
+const initialPostId =
+	Number.isFinite( configuredInitialPostId ) && configuredInitialPostId > 0
+		? Math.floor( configuredInitialPostId )
+		: 0;
 
 setupApiFetch();
 
@@ -928,6 +937,9 @@ export const App = () => {
 	const [ titleTouched, setTitleTouched ] = useState( false );
 	const [ isSending, setSending ] = useState( false );
 	const [ isSavingDraft, setSavingDraft ] = useState( false );
+	const [ isLoadingInitialPopup, setLoadingInitialPopup ] = useState(
+		initialPostId > 0
+	);
 	const [ deletingMediaId, setDeletingMediaId ] = useState( 0 );
 	const [ error, setError ] = useState( '' );
 	const [ statusNotice, setStatusNotice ] = useState( null );
@@ -1040,13 +1052,14 @@ export const App = () => {
 		activityLog,
 		hasExistingDraft: requestHasExistingDraft,
 	} );
-	const chatIsBusy = isSending || isExtractingBrand;
+	const chatIsBusy = isSending || isExtractingBrand || isLoadingInitialPopup;
 	const starterPrompts = Array.isArray( config?.starterPrompts )
 		? config.starterPrompts
 		: [];
 	const conversationPayloadMessages =
 		getConversationPayloadMessages( messages );
 	const previewUrl = savedPopup?.previewUrl || '';
+	const savedPopupUpdatesExisting = Boolean( savedPopup?.updatedExisting );
 	const draftActionsVisible = Boolean(
 		draft &&
 			savedPopup?.postId &&
@@ -1229,7 +1242,13 @@ export const App = () => {
 		String( ability ).replace( 'fooconvert/', '' )
 	);
 	let initialBuilderTab = 'context';
-	if ( ! initialContextModalName && hasSavedBrandProfile && ! brandIsDirty ) {
+	if ( initialPostId > 0 ) {
+		initialBuilderTab = 'chat';
+	} else if (
+		! initialContextModalName &&
+		hasSavedBrandProfile &&
+		! brandIsDirty
+	) {
 		initialBuilderTab = 'chat';
 	}
 	const liveRequestSummaryRows = [
@@ -1266,6 +1285,79 @@ export const App = () => {
 			setSaveTitle( draft.title );
 		}
 	}, [ draft, titleTouched ] );
+
+	useEffect( () => {
+		if ( initialPostId <= 0 ) {
+			return undefined;
+		}
+
+		let isCurrent = true;
+
+		const loadInitialPopup = async () => {
+			setLoadingInitialPopup( true );
+			setError( '' );
+
+			try {
+				const response = await apiFetch( {
+					path: buildLoadPopupPath(
+						config?.api?.loadPopupPath,
+						initialPostId
+					),
+					method: 'GET',
+				} );
+				const loaded = normalizeLoadedPopupResponse( response );
+
+				if ( ! loaded.draft ) {
+					throw new Error(
+						__(
+							'The saved popup could not be loaded into the AI builder.',
+							'fooconvert'
+						)
+					);
+				}
+
+				if ( ! isCurrent ) {
+					return;
+				}
+
+				setDraft( loaded.draft );
+				setValidation( loaded.validation );
+				setMessages( loaded.messages );
+				setMediaItems( loaded.mediaItems );
+				setSuggestedPrompts( loaded.suggestedPrompts );
+				setLastResponse( loaded.lastResponse );
+				setSavedPopup( loaded.savedPopup );
+				setSaveTitle( loaded.saveTitle || loaded.draft.title || '' );
+				setTitleTouched( false );
+				setActivityLog( [] );
+				setStatusNotice( {
+					status: 'info',
+					message: __(
+						'Popup loaded. Ask AI for changes and they will update this popup.',
+						'fooconvert'
+					),
+				} );
+				setLoadingInitialPopup( false );
+			} catch ( exception ) {
+				if ( isCurrent ) {
+					setError(
+						exception?.message ||
+							__(
+								'The saved popup could not be loaded into the AI builder.',
+								'fooconvert'
+							)
+					);
+					setLoadingInitialPopup( false );
+				}
+			}
+		};
+
+		loadInitialPopup();
+
+		return () => {
+			isCurrent = false;
+		};
+	}, [] );
 
 	useEffect( () => {
 		chatEndRef.current?.scrollIntoView( {
@@ -1426,7 +1518,7 @@ export const App = () => {
 				status: 'success',
 				message: response?.updatedExisting
 					? __(
-							'Draft popup updated automatically. Preview or edit it whenever you want.',
+							'Popup updated automatically. Preview or edit it whenever you want.',
 							'fooconvert'
 					  )
 					: __(
@@ -2265,6 +2357,11 @@ export const App = () => {
 			'Configure a valid WordPress AI connector before sending requests.',
 			'fooconvert'
 		);
+	} else if ( isLoadingInitialPopup ) {
+		promptInputHelp = __(
+			'Loading the saved popup before chat starts.',
+			'fooconvert'
+		);
 	} else if ( isExtractingBrand ) {
 		promptInputHelp = __(
 			'Brand extraction is still running. Wait for it to finish before sending the next request.',
@@ -3088,10 +3185,21 @@ export const App = () => {
 							</p>
 						</div>
 
-						{ ( isSavingDraft || savedPopup?.postId ) && (
+						{ ( isLoadingInitialPopup ||
+							isSavingDraft ||
+							savedPopup?.postId ) && (
 							<div className={ `${ rootClass }__header-status` }>
-								{ isSavingDraft
-									? __( 'Saving draft…', 'fooconvert' )
+								{ isLoadingInitialPopup
+									? __( 'Loading popup…', 'fooconvert' )
+									: isSavingDraft
+									? savedPopupUpdatesExisting
+										? __( 'Saving popup…', 'fooconvert' )
+										: __( 'Saving draft…', 'fooconvert' )
+									: savedPopupUpdatesExisting
+									? __(
+											'Popup ready for preview and editing.',
+											'fooconvert'
+									  )
 									: __(
 											'Draft ready for preview and editing.',
 											'fooconvert'
@@ -3763,10 +3871,15 @@ export const App = () => {
 																			isSavingDraft
 																		}
 																	>
-																		{ __(
-																			'Edit Draft',
-																			'fooconvert'
-																		) }
+																		{ savedPopupUpdatesExisting
+																			? __(
+																					'Edit Popup',
+																					'fooconvert'
+																			  )
+																			: __(
+																					'Edit Draft',
+																					'fooconvert'
+																			  ) }
 																	</Button>
 																</Fragment>
 															) }
