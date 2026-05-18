@@ -24,6 +24,115 @@
     padding-top: 40px;
 }
 
+@property --fooconvert-ai-builder-glow-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: -90deg;
+}
+
+@keyframes fooconvert-ai-builder-glow {
+    to {
+        --fooconvert-ai-builder-glow-angle: 270deg;
+    }
+}
+
+.fooconvert-admin-page-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    max-width: 920px;
+}
+
+.fooconvert-admin-page-heading__copy {
+    min-width: 0;
+}
+
+.fooconvert-admin-page-heading__copy h1 {
+    margin-bottom: 8px;
+}
+
+.fooconvert-admin-page-heading__copy p {
+    margin-top: 0;
+}
+
+.fooconvert-ai-popup-builder-button {
+    --fooconvert-ai-builder-surface: #4f39ca;
+    --fooconvert-ai-builder-surface-hover: #3f27b4;
+    --fooconvert-ai-builder-glow: #ff3d81, #ffb703, #2dd4bf, #38bdf8, #a78bfa, #ff3d81;
+
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 36px;
+    padding: 0 14px;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    background:
+        linear-gradient(var(--fooconvert-ai-builder-surface) 0 0) padding-box,
+        conic-gradient(from var(--fooconvert-ai-builder-glow-angle), var(--fooconvert-ai-builder-glow)) border-box;
+    color: #fff;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    white-space: nowrap;
+    box-shadow: none;
+    animation: fooconvert-ai-builder-glow 7s linear infinite;
+    transition: box-shadow 120ms ease, filter 120ms ease;
+}
+
+.fooconvert-ai-popup-builder-button::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -4px;
+    border-radius: 7px;
+    background: conic-gradient(from var(--fooconvert-ai-builder-glow-angle), var(--fooconvert-ai-builder-glow));
+    filter: blur(8px);
+    opacity: 0.22;
+    pointer-events: none;
+}
+
+.fooconvert-ai-popup-builder-button:hover,
+.fooconvert-ai-popup-builder-button:focus {
+    --fooconvert-ai-builder-surface: var(--fooconvert-ai-builder-surface-hover);
+
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 0 0 1px #fff, 0 0 0 3px #5b43d6;
+    filter: saturate(1.08);
+    outline: none;
+}
+
+.fooconvert-ai-popup-builder-button__icon {
+    display: block;
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    color: currentColor;
+    fill: currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fooconvert-ai-popup-builder-button {
+        animation: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .fooconvert-admin-page-heading {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .fooconvert-ai-popup-builder-button {
+        white-space: normal;
+    }
+}
+
 /* Settings Overrides */
 .foofields-type-checkboxlist .foofields-field-input label {
     padding-left: 0 !important;

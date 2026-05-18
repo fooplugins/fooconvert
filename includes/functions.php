@@ -432,6 +432,15 @@ function fooconvert_admin_url_popup_type_chooser() {
 }
 
 /**
+ * Retrieves the URL for the FooConvert AI Popup Builder.
+ *
+ * @return string
+ */
+function fooconvert_admin_url_ai_popup_builder() {
+    return admin_url( 'admin.php?page=' . FOOCONVERT_MENU_SLUG_AI_POPUP_BUILDER );
+}
+
+/**
  * Retrieves the URL for creating a new FooConvert popup.
  *
  * @param string $popup_type Optional popup type.

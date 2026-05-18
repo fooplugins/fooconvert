@@ -155,10 +155,25 @@
   min-width: 0;
 }
 
+.fc-variation-picker__heading-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-width: 0;
+}
+
 .fc-variation-picker__label {
   margin: 0 0 2px;
   font-size: 20px;
   line-height: 1.2;
+}
+
+.fc-variation-picker__toolbar-action {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  margin-bottom: 2px;
 }
 
 .fc-variation-picker__subheading {

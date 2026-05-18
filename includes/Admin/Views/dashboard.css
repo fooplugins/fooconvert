@@ -2,10 +2,18 @@
     margin-left: -20px;
 }
 
-.fooconvert-dashboard-heading {
+.fooconvert-dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
     max-width: 1032px;
     margin: 20px auto 0;
     padding: 0 20px;
+}
+
+.fooconvert-dashboard-heading {
+    margin: 0;
 }
 
 .fooconvert-dashboard-columns {
@@ -351,6 +359,11 @@ ol.fooconvert-ordered-list li::before {
     .fooconvert-dashboard-container {
         flex-direction: column;
         margin-left: -10px;
+    }
+
+    .fooconvert-dashboard-header {
+        align-items: flex-start;
+        flex-direction: column;
     }
 
     .fooconvert-dashboard-columns {

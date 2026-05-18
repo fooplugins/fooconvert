@@ -22,3 +22,79 @@
   --fc-variation-picker__highlight-inverted: #ffffff;
   --fc-variation-picker__border: #dcdcde;
 }
+
+@property --fooconvert-ai-builder-glow-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: -90deg;
+}
+
+@keyframes fooconvert-ai-builder-glow {
+  to {
+    --fooconvert-ai-builder-glow-angle: 270deg;
+  }
+}
+
+.components-button.fc--popup-type-template-picker__ai-button {
+  --fooconvert-ai-builder-surface: #4f39ca;
+  --fooconvert-ai-builder-surface-hover: #3f27b4;
+  --fooconvert-ai-builder-glow: #ff3d81, #ffb703, #2dd4bf, #38bdf8, #a78bfa, #ff3d81;
+
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  background:
+    linear-gradient(var(--fooconvert-ai-builder-surface) 0 0) padding-box,
+    conic-gradient(from var(--fooconvert-ai-builder-glow-angle), var(--fooconvert-ai-builder-glow)) border-box;
+  color: #ffffff;
+  font-weight: 600;
+  line-height: 1.2;
+  box-shadow: none;
+  white-space: nowrap;
+  animation: fooconvert-ai-builder-glow 7s linear infinite;
+  transition: box-shadow 120ms ease, filter 120ms ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -4px;
+    border-radius: 7px;
+    background: conic-gradient(from var(--fooconvert-ai-builder-glow-angle), var(--fooconvert-ai-builder-glow));
+    filter: blur(8px);
+    opacity: 0.22;
+    pointer-events: none;
+  }
+
+  &:hover,
+  &:focus {
+    --fooconvert-ai-builder-surface: var(--fooconvert-ai-builder-surface-hover);
+
+    color: #ffffff;
+    box-shadow: 0 0 0 1px #ffffff, 0 0 0 3px #5b43d6;
+    filter: saturate(1.08);
+    outline: none;
+  }
+}
+
+.fc--popup-type-template-picker__ai-button-icon {
+  display: block;
+  flex: 0 0 auto;
+  width: 17px;
+  height: 17px;
+  color: currentColor;
+  fill: currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .components-button.fc--popup-type-template-picker__ai-button {
+    animation: none;
+  }
+}

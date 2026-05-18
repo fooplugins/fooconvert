@@ -214,6 +214,7 @@ const VariationPicker = ( {
     reset,
     className,
     label = "",
+    toolbarAction = null,
     currentPopupType = "",
     popupTypeOptions = [],
     onSelectTemplate,
@@ -644,9 +645,16 @@ const VariationPicker = ( {
                 <section className="fc-variation-picker__content">
                     <div className="fc-variation-picker__toolbar">
                         <div className="fc-variation-picker__toolbar-copy">
-                            { isString( label, true ) && (
-                                <h2 className="fc-variation-picker__label">{ label }</h2>
-                            ) }
+                            <div className="fc-variation-picker__heading-row">
+                                { isString( label, true ) && (
+                                    <h2 className="fc-variation-picker__label">{ label }</h2>
+                                ) }
+                                { toolbarAction && (
+                                    <div className="fc-variation-picker__toolbar-action">
+                                        { toolbarAction }
+                                    </div>
+                                ) }
+                            </div>
                             <p className="fc-variation-picker__subheading">
                                 { __( "Search by name, use case, or tag.", "fooconvert" ) }
                             </p>
