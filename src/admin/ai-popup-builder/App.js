@@ -1151,6 +1151,20 @@ export const App = () => {
 			} ),
 		[ draft, selectedBlockNameSet, aiImageGenerationAvailable ]
 	);
+	const suggestionsHaveFollowUpContext = Boolean(
+		draft ||
+			lastResponse ||
+			messages.some( ( message ) => message?.role === 'assistant' )
+	);
+	const suggestionsHelpText = suggestionsHaveFollowUpContext
+		? __(
+				'Use these to refine the current popup or continue from the latest response.',
+				'fooconvert'
+		  )
+		: __(
+				'Use these as a starting point, then refine the popup in chat.',
+				'fooconvert'
+		  );
 	const blockSourceCounts = useMemo(
 		() =>
 			blockCatalog.reduce(
@@ -3989,7 +4003,7 @@ export const App = () => {
 											<CardHeader>
 												<h2>
 													{ __(
-														'Suggestions',
+														'Prompt Suggestions',
 														'fooconvert'
 													) }
 												</h2>
@@ -3998,10 +4012,7 @@ export const App = () => {
 												<p
 													className={ `${ rootClass }__muted-copy` }
 												>
-													{ __(
-														'Use these as a starting point, then refine the popup in chat.',
-														'fooconvert'
-													) }
+													{ suggestionsHelpText }
 												</p>
 												<div
 													className={ `${ rootClass }__starter-list` }
@@ -4029,33 +4040,6 @@ export const App = () => {
 																		suggestion.text
 																	}
 																</span>
-																{ Array.isArray(
-																	suggestion.tags
-																) &&
-																	suggestion
-																		.tags
-																		.length >
-																		0 && (
-																		<span
-																			className={ `${ rootClass }__starter-tags` }
-																		>
-																			{ suggestion.tags.map(
-																				(
-																					tag
-																				) => (
-																					<small
-																						key={
-																							tag
-																						}
-																					>
-																						{
-																							tag
-																						}
-																					</small>
-																				)
-																			) }
-																		</span>
-																	) }
 															</button>
 														)
 													) }
