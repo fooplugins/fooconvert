@@ -5,7 +5,6 @@ import {
 } from '@wordpress/editor';
 import { useMemo } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
-import { getPlugin, registerPlugin } from '@wordpress/plugins';
 
 import editorData from './editorData';
 import {
@@ -183,9 +182,5 @@ const AiBuilderPlugin = () => {
 		</PluginDocumentSettingPanel>
 	);
 };
-
-if ( ! getPlugin( 'fc-ai-builder' ) ) {
-	registerPlugin( 'fc-ai-builder', { render: AiBuilderPlugin } );
-}
 
 export default AiBuilderPlugin;

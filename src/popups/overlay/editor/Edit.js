@@ -1,4 +1,5 @@
 import {
+    AiBuilderPlugin,
     getPopupEditorBackground,
     useInnerBlocks,
     PopupTypeTemplatePicker,
@@ -113,6 +114,7 @@ const Edit = props => {
     return (
         <>
             <TriggerControls/>
+            <AiBuilderPlugin/>
             <EditBlock { ...customProps }/>
             <EditSettings { ...customProps }/>
         </>
