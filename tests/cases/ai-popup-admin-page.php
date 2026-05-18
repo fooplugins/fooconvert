@@ -230,12 +230,24 @@ namespace {
         return false;
     }
 
+    function fc_ai_builder_decode_config_script( string $config_script ): array {
+        $prefix = 'window.FC_AI_POPUP_BUILDER = ';
+        if ( 0 !== strpos( $config_script, $prefix ) ) {
+            return array();
+        }
+
+        $json = rtrim( substr( $config_script, strlen( $prefix ) ), ';' );
+        $data = json_decode( $json, true );
+
+        return is_array( $data ) ? $data : array();
+    }
+
     require_once dirname( __DIR__, 2 ) . '/includes/Admin/ScriptDependencies.php';
     require_once dirname( __DIR__, 2 ) . '/includes/AI/PopupBuilder/Admin.php';
 
     $GLOBALS['fc_ai_builder_next_hook_suffix'] = 'popups_page_fooconvert-ai-popup-builder';
-    $GLOBALS['fc_ai_builder_text_models']      = array( 'stub-text-model' );
-    $GLOBALS['fc_ai_builder_image_models']     = array( 'stub-image-model' );
+    $GLOBALS['fc_ai_builder_text_models']      = array( array( 'openai', 'stub-text-model' ) );
+    $GLOBALS['fc_ai_builder_image_models']     = array( array( 'google', 'stub-image-model' ) );
     $builder = new AiPopupBuilder();
     $builder->register_menu();
 
@@ -270,20 +282,49 @@ namespace {
     );
 
     $config_script = $GLOBALS['fc_ai_builder_inline_scripts']['fooconvert-ai-popup-builder'][1]['data'] ?? '';
+    $config        = fc_ai_builder_decode_config_script( $config_script );
     Assertions::true(
         false !== strpos( $config_script, '"aiConnectionReady":true' ),
         'The AI popup builder config should expose the valid AI connection status.'
     );
 
-    Assertions::true(
-        false !== strpos( $config_script, '"currentTextModel":"stub-text-model"' ),
+    Assertions::same(
+        'openai/stub-text-model',
+        $config['models']['currentTextModel'] ?? '',
         'The AI popup builder config should expose the current preferred text model.'
     );
 
-    Assertions::true(
-        false !== strpos( $config_script, '"currentImageModel":"stub-image-model"' ),
+    Assertions::same(
+        'google/stub-image-model',
+        $config['models']['currentImageModel'] ?? '',
         'The AI popup builder config should expose the current preferred image model.'
     );
+
+    Assertions::false(
+        array_key_exists( 'starterPrompts', $config ),
+        'The AI popup builder config should not expose starter prompts after they move to the admin app.'
+    );
+
+    unset( $GLOBALS['fc_ai_builder_enqueued_scripts'], $GLOBALS['fc_ai_builder_enqueued_styles'], $GLOBALS['fc_ai_builder_inline_scripts'] );
+    $GLOBALS['fc_ai_builder_override_model'] = 'custom-text-model';
+    $GLOBALS['fc_ai_builder_image_models']   = array();
+    $builder_without_image_models = new AiPopupBuilder();
+    $builder_without_image_models->enqueue_assets( 'admin_page_fooconvert-ai-popup-builder' );
+
+    $no_image_model_config = fc_ai_builder_decode_config_script( $GLOBALS['fc_ai_builder_inline_scripts']['fooconvert-ai-popup-builder'][1]['data'] ?? '' );
+    Assertions::same(
+        'custom-text-model',
+        $no_image_model_config['models']['currentTextModel'] ?? '',
+        'The AI popup builder config should expose a selected text model override.'
+    );
+
+    Assertions::same(
+        '',
+        $no_image_model_config['models']['currentImageModel'] ?? null,
+        'The AI popup builder config should expose an empty image model when image model preferences are unavailable.'
+    );
+
+    unset( $GLOBALS['fc_ai_builder_override_model'] );
 
     unset( $GLOBALS['fc_ai_builder_enqueued_scripts'], $GLOBALS['fc_ai_builder_enqueued_styles'], $GLOBALS['fc_ai_builder_inline_scripts'] );
     $GLOBALS['fc_ai_builder_has_valid_ai_connection'] = false;

@@ -294,17 +294,34 @@ class Admin {
 
         $model_names = array();
         foreach ( $models as $model ) {
-            if ( ! is_scalar( $model ) ) {
-                continue;
-            }
-
-            $model = $this->sanitize_model_label( $model );
+            $model = $this->normalize_model_preference_label( $model );
             if ( '' !== $model ) {
                 $model_names[] = $model;
             }
         }
 
         return array_values( array_unique( $model_names ) );
+    }
+
+    /**
+     * Normalizes a WordPress AI model preference into a displayable label.
+     *
+     * @param mixed $model Raw model preference.
+     * @return string
+     */
+    private function normalize_model_preference_label( $model ): string {
+        if ( is_array( $model ) ) {
+            $provider   = $this->sanitize_model_label( $model[0] ?? '' );
+            $model_name = $this->sanitize_model_label( $model[1] ?? '' );
+
+            if ( '' !== $provider && '' !== $model_name ) {
+                return $provider . '/' . $model_name;
+            }
+
+            return '' !== $model_name ? $model_name : $provider;
+        }
+
+        return $this->sanitize_model_label( $model );
     }
 
     /**
