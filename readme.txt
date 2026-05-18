@@ -4,7 +4,7 @@ Tags: flyout, popups, popup, announcement-bar, promo-bar
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 7.0
-Stable tag: 2.0.3
+Stable tag: 2.1.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -22,6 +22,7 @@ It includes free templates, built-in popup blocks, display rules, open triggers,
 = What FooConvert Includes =
 
 - Create bars, flyouts, and overlay popups with the block editor
+- AI Popup Builder and Brand Context tools for WordPress 7+ sites with a configured WordPress AI connector
 - 15 bundled popup templates
 - Sign Up, Countdown, and Coupon blocks
 - Support for WordPress core blocks, embeds, and shortcodes inside popup content
@@ -30,13 +31,25 @@ It includes free templates, built-in popup blocks, display rules, open triggers,
 - Leads capture with CSV export
 - Popup stats with daily activity charts
 - Google Fonts support and popup styling controls
-- AI Popup Builder and Brand Context tools for WordPress 7+ sites with a configured WordPress AI connector
 
 = Popup Types =
 
 - `Bar`: top or bottom bar announcements, promo strips, newsletter bars, and sticky calls to action.
 - `Flyout`: slide-in messages and sidebar-style flyouts that stay visible without taking over the whole screen.
 - `Overlay`: centered modal popups for forms, announcements, coupon offers, and embedded content.
+
+= AI Popup Builder =
+
+Start with a simple prompt and let FooConvert create an editable popup draft for you. It can help with campaign ideas, copy, layout, images, and brand fit, so you can launch faster without starting from a blank canvas.
+The AI tools require WordPress 7 or newer and a configured WordPress AI connector.
+
+- Create bars, flyouts, and overlays from natural-language prompts.
+- Use starter prompts for common campaigns like discounts, free shipping, newsletters, and launch offers.
+- Save generated campaigns as draft popups and keep editing them in the block editor.
+- Match popup colors, fonts, spacing, and button styles to your brand.
+- Reuse saved Brand Context across generated campaigns.
+- Generate or reuse matching popup images and backgrounds when image generation is enabled.
+- Preview the popup and review the conversion strategy before publishing.
 
 = Building Popup Content =
 
@@ -108,19 +121,6 @@ FooConvert Pro adds tools for WooCommerce stores and marketers who want to build
 - WooCommerce targeting rules and shopper behavior triggers.
 - Lead delivery to Mailchimp, MailPoet, Brevo, and custom webhooks.
 - More detailed analytics with longer data retention.
-
-= AI Popup Builder =
-
-Start with a simple prompt and let FooConvert create an editable popup draft for you. It can help with campaign ideas, copy, layout, images, and brand fit, so you can launch faster without starting from a blank canvas.
-The AI tools require WordPress 7 or newer and a configured WordPress AI connector.
-
-- Create bars, flyouts, and overlays from natural-language prompts.
-- Use starter prompts for common campaigns like discounts, free shipping, newsletters, and launch offers.
-- Save generated campaigns as draft popups and keep editing them in the block editor.
-- Match popup colors, fonts, spacing, and button styles to your brand.
-- Reuse saved Brand Context across generated campaigns.
-- Generate or reuse matching popup images and backgrounds when image generation is enabled.
-- Preview the popup and review the conversion strategy before publishing.
 
 = Background Image Generator =
 
@@ -227,7 +227,7 @@ FooConvert is designed to work with most WordPress themes. If you encounter any 
 
 Yes. FooConvert is built for the block editor and supports WordPress core blocks, most third-party blocks, embedded content, and shortcodes inside popup content.
 
-= Why do I not see the AI Popup Builder? =
+= Why can I not use the AI Popup Builder? =
 
 The AI Popup Builder requires WordPress 7 or newer. Generating popup drafts also requires a configured WordPress AI connector, and image generation requires connector support for images.
 All standard popup building features continue to work on WordPress 6.5 or newer.
@@ -265,9 +265,9 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 
 == Changelog ==
 
-= 2.0.3 =
-* Date Updated : 13 May 2026
-* New : Moved AI Popup Builder, Brand Context, and background image generation into the free plugin for WordPress 7+ sites.
+= 2.1.0 =
+* Date Updated : 18 May 2026
+* Added : AI Popup Builder, Brand Context, and background image generation for WordPress 7+ sites.
 * Added : Expanded AI Popup Builder support for real trigger events in generated popup drafts.
 * Updated : Improved AI Popup Builder connector warnings, page copy, starter prompts, and system prompt guidance.
 * Fixed : fixed PHP fatal error when using WordPress versions earlier than 7.0.
