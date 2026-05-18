@@ -771,7 +771,7 @@ class RestController {
     private function get_ai_popup_builder_version_error(): WP_Error {
         return new WP_Error(
             'fooconvert_ai_popup_builder_wp7_required',
-            __( 'The AI popup builder requires WordPress 7 or newer.', 'fooconvert' ),
+            __( 'WP 7.0 is required for this feature to work', 'fooconvert' ),
             array( 'status' => 501 )
         );
     }
@@ -784,7 +784,7 @@ class RestController {
     private function get_ai_popup_builder_unavailable_error(): WP_Error {
         return new WP_Error(
             'fooconvert_ai_popup_builder_unavailable',
-            __( 'The WordPress AI client is not available on this site.', 'fooconvert' ),
+            __( 'WP 7.0 is required for this feature to work', 'fooconvert' ),
             array( 'status' => 501 )
         );
     }

@@ -282,11 +282,18 @@ namespace {
         'The AI popup builder warning should use the configured connector setup message.'
     );
 
-    unset( $GLOBALS['fc_ai_builder_actions'], $GLOBALS['fc_ai_builder_filters'] );
+    unset(
+        $GLOBALS['fc_ai_builder_actions'],
+        $GLOBALS['fc_ai_builder_filters'],
+        $GLOBALS['fc_ai_builder_enqueued_scripts'],
+        $GLOBALS['fc_ai_builder_enqueued_styles'],
+        $GLOBALS['fc_ai_builder_inline_scripts']
+    );
     $GLOBALS['fc_ai_builder_has_ai_client']             = false;
     $GLOBALS['fc_ai_builder_has_valid_ai_connection']   = false;
     $builder_without_ai_client = new AiPopupBuilder();
     $builder_without_ai_client->register_menu();
+    $builder_without_ai_client->enqueue_assets( 'admin_page_fooconvert-ai-popup-builder' );
 
     Assertions::true(
         isset( $GLOBALS['fc_ai_builder_actions']['fooconvert_admin_menu_after_post_types'] ),
@@ -297,6 +304,22 @@ namespace {
         FOOCONVERT_MENU_SLUG_AI_POPUP_BUILDER,
         $GLOBALS['fc_ai_builder_registered_submenu']['menu_slug'] ?? '',
         'The AI popup builder submenu should still be added when no AI client connection is available.'
+    );
+
+    $missing_ai_client_config = $GLOBALS['fc_ai_builder_inline_scripts']['fooconvert-ai-popup-builder'][1]['data'] ?? '';
+    Assertions::true(
+        false !== strpos( $missing_ai_client_config, '"aiClientAvailable":false' ),
+        'The AI popup builder config should tell the app when the WordPress AI client is unavailable.'
+    );
+
+    Assertions::true(
+        false !== strpos( $missing_ai_client_config, 'update-core.php' ),
+        'The AI popup builder config should include the WordPress update URL when the AI client is unavailable.'
+    );
+
+    Assertions::true(
+        false !== strpos( $missing_ai_client_config, 'WP 7.0 is required for this feature to work' ),
+        'The AI popup builder warning should use the WordPress upgrade message when the AI client is unavailable.'
     );
 
     fwrite( STDOUT, "ai-popup-admin-page: ok\n" );

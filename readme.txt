@@ -4,7 +4,7 @@ Tags: flyout, popups, popup, announcement-bar, promo-bar
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 7.0
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -264,6 +264,10 @@ No, FooConvert is optimized for performance and has minimal impact on your websi
 The source code for this plugin is available publicly on GitHub [here](https://github.com/fooplugins/fooconvert).
 
 == Changelog ==
+
+= 2.1.1 =
+* Date Updated : 18 May 2026
+* Fixed : Improved AI Popup Builder handling for missing WordPress AI Client and unconfigured AI connectors.
 
 = 2.1.0 =
 * Date Updated : 18 May 2026

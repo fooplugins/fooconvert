@@ -206,6 +206,8 @@ class Admin {
             'systemPrompt'     => PromptFactory::get_default_system_instruction_preview(),
             'mediaItems'       => PopupMedia::list_generated_images( 12 ),
             'aiClientAvailable' => $ai_client_available,
+            'aiClientUpgradeUrl' => admin_url( 'update-core.php' ),
+            'aiClientMessage' => __( 'WP 7.0 is required for this feature to work', 'fooconvert' ),
             'aiConnectionReady' => $ai_connection_ready,
             'aiConnectionSetupUrl' => current_user_can( 'manage_options' ) ? admin_url( 'options-connectors.php' ) : '',
             'aiConnectionMessage' => __( 'AI Popup Builder chat needs a valid WordPress AI connector before it can generate popups. Go to Settings > Connectors to add or verify a connector, then reload this page.', 'fooconvert' ),

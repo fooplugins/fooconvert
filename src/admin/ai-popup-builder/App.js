@@ -95,6 +95,15 @@ const aiConnectionReady =
 const aiChatAvailable = aiClientAvailable && aiConnectionReady;
 const aiImageGenerationAvailable =
 	aiChatAvailable && Boolean( config?.imageGenerationAvailable );
+const aiClientUpgradeUrl =
+	typeof config?.aiClientUpgradeUrl === 'string'
+		? config.aiClientUpgradeUrl
+		: '';
+const aiClientMessage =
+	typeof config?.aiClientMessage === 'string' &&
+	config.aiClientMessage.length > 0
+		? config.aiClientMessage
+		: __( 'WP 7.0 is required for this feature to work', 'fooconvert' );
 const aiConnectionSetupUrl =
 	typeof config?.aiConnectionSetupUrl === 'string'
 		? config.aiConnectionSetupUrl
@@ -107,6 +116,15 @@ const aiConnectionMessage =
 				'AI Popup Builder chat needs a valid WordPress AI connector before it can generate popups. Go to Settings > Connectors to add or verify a connector, then reload this page.',
 				'fooconvert'
 		  );
+const aiUnavailableMessage = aiClientAvailable
+	? aiConnectionMessage
+	: aiClientMessage;
+const aiUnavailableActionUrl = aiClientAvailable
+	? aiConnectionSetupUrl
+	: aiClientUpgradeUrl;
+const aiUnavailableActionLabel = aiClientAvailable
+	? __( 'Open Settings > Connectors', 'fooconvert' )
+	: __( 'Upgrade WordPress', 'fooconvert' );
 const configuredInitialPostId = Number( config?.initialPostId );
 const initialPostId =
 	Number.isFinite( configuredInitialPostId ) && configuredInitialPostId > 0
@@ -3213,16 +3231,13 @@ export const App = () => {
 			{ ! aiChatAvailable && (
 				<Notice status="warning" isDismissible={ false }>
 					<div className={ `${ rootClass }__connection-notice` }>
-						<span>{ aiConnectionMessage }</span>
-						{ aiConnectionSetupUrl && (
+						<span>{ aiUnavailableMessage }</span>
+						{ aiUnavailableActionUrl && (
 							<Button
 								variant="secondary"
-								href={ aiConnectionSetupUrl }
+								href={ aiUnavailableActionUrl }
 							>
-								{ __(
-									'Open Settings > Connectors',
-									'fooconvert'
-								) }
+								{ aiUnavailableActionLabel }
 							</Button>
 						) }
 					</div>

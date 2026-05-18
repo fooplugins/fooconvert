@@ -19,6 +19,7 @@ $cases = array(
     __DIR__ . '/cases/woocommerce-coupon-search.php',
     __DIR__ . '/cases/popup-type-core.php',
     __DIR__ . '/cases/ai-popup-support.php',
+    __DIR__ . '/cases/ai-popup-connection-detection.php',
     __DIR__ . '/cases/ai-popup-admin-init.php',
     __DIR__ . '/cases/ai-popup-admin-page.php',
     __DIR__ . '/cases/ai-popup-settings-route.php',

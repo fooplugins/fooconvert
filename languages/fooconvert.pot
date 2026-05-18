@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: FooConvert - Popup Builder for Block Editor 2.1.0\n"
+"Project-Id-Version: FooConvert - Popup Builder for Block Editor 2.1.1\n"
 "Report-Msgid-Bugs-To: https://github.com/fooplugins/fooconvert/issues\n"
 "Last-Translator: FooPlugins <info@fooplugins.com>\n"
 "Language-Team: FooPlugins <info@fooplugins.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-18T16:29:53+00:00\n"
+"POT-Creation-Date: 2026-05-18T17:42:25+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: fooconvert\n"
@@ -41,7 +41,7 @@ msgstr ""
 
 #: includes/Admin/BrandContext.php:33
 #: includes/Admin/BrandContext.php:41
-#: src/admin/ai-popup-builder/App.js:2495
+#: src/admin/ai-popup-builder/App.js:2513
 #: src/admin/brand-context/components.js:1061
 msgid "Brand Context"
 msgstr ""
@@ -243,7 +243,7 @@ msgstr ""
 #: includes/AI/PopupBuilder/Media/Attachments.php:1224
 #: includes/PostType.php:55
 #: pro/includes/Analytics/Sales.php:271
-#: src/admin/ai-popup-builder/App.js:3389
+#: src/admin/ai-popup-builder/App.js:3404
 #: src/editor/components/experiment-panel/Component.js:19
 #: src/editor/components/experiment-panel/Component.js:27
 #: src/scripts/admin/display-rules-list/index.js:148
@@ -259,8 +259,8 @@ msgid "Date Added"
 msgstr ""
 
 #: includes/Admin/LeadsTable.php:154
-#: src/admin/ai-popup-builder/App.js:2276
-#: src/admin/ai-popup-builder/App.js:4384
+#: src/admin/ai-popup-builder/App.js:2294
+#: src/admin/ai-popup-builder/App.js:4399
 msgid "Delete"
 msgstr ""
 
@@ -668,7 +668,7 @@ msgstr ""
 #: includes/Admin/Settings.php:345
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:86
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:262
-#: src/admin/ai-popup-builder/App.js:150
+#: src/admin/ai-popup-builder/App.js:168
 #: src/blocks/countdown/editor/components/container/EditSettings.js:76
 #: src/blocks/countdown/editor/EditSettings.js:26
 #: src/blocks/coupon/editor/components/container/EditSettings.js:68
@@ -999,7 +999,7 @@ msgstr ""
 #: includes/Admin/Views/dashboard-panel-recent.php:50
 #: includes/Admin/Views/dashboard-top-performers.php:41
 #: includes/PostType.php:58
-#: src/admin/ai-popup-builder/App.js:3875
+#: src/admin/ai-popup-builder/App.js:3890
 msgid "Edit Popup"
 msgstr ""
 
@@ -1111,8 +1111,8 @@ msgstr ""
 #: includes/Admin/Views/popup-stats.php:9
 #: pro/includes/Analytics/Sales.php:322
 #: pro/includes/Analytics/Sales.php:345
-#: src/admin/ai-popup-builder/App.js:767
-#: src/admin/ai-popup-builder/App.js:794
+#: src/admin/ai-popup-builder/App.js:785
+#: src/admin/ai-popup-builder/App.js:812
 msgid "Unknown"
 msgstr ""
 
@@ -1428,28 +1428,35 @@ msgstr ""
 #: includes/AI/PopupBuilder/Admin.php:46
 #: includes/AI/PopupBuilder/Admin.php:47
 #: includes/AI/PopupBuilder/SettingsPage.php:50
-#: src/admin/ai-popup-builder/App.js:3179
+#: src/admin/ai-popup-builder/App.js:3197
 msgid "AI Popup Builder"
 msgstr ""
 
-#: includes/AI/PopupBuilder/Admin.php:211
+#: includes/AI/PopupBuilder/Admin.php:210
+#: includes/AI/PopupBuilder/RestController.php:774
+#: includes/AI/PopupBuilder/RestController.php:787
 #: src/admin/ai-popup-builder/App.js:106
+msgid "WP 7.0 is required for this feature to work"
+msgstr ""
+
+#: includes/AI/PopupBuilder/Admin.php:213
+#: src/admin/ai-popup-builder/App.js:115
 msgid "AI Popup Builder chat needs a valid WordPress AI connector before it can generate popups. Go to Settings > Connectors to add or verify a connector, then reload this page."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Admin.php:232
+#: includes/AI/PopupBuilder/Admin.php:234
 msgid "Goal: Black Friday email signup. Audience: first-time shoppers. Offer: 15% off. Type: popup. Trigger: exit intent. Tone: urgent and polished."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Admin.php:233
+#: includes/AI/PopupBuilder/Admin.php:235
 msgid "Goal: increase cart value with free shipping. Audience: active shoppers. Offer: free shipping threshold. Type: flyout. Trigger: 4s delay. Tone: helpful and clear."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Admin.php:234
+#: includes/AI/PopupBuilder/Admin.php:236
 msgid "Goal: grow newsletter subscribers. Audience: returning readers. Offer: weekly tips. Type: popup. Trigger: 50% scroll. Tone: premium and low pressure."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Admin.php:235
+#: includes/AI/PopupBuilder/Admin.php:237
 msgid "Goal: promote a product launch. Audience: mobile visitors. Offer: limited launch deal. Type: bar. Trigger: immediate. Tone: concise and energetic."
 msgstr ""
 
@@ -1963,13 +1970,6 @@ msgstr ""
 msgid "At least one user message is required."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Admin.php:210
-#: includes/AI/PopupBuilder/RestController.php:774
-#: includes/AI/PopupBuilder/RestController.php:787
-#: src/admin/ai-popup-builder/App.js:106
-msgid "WP 7.0 is required for this feature to work"
-msgstr ""
-
 #: includes/AI/PopupBuilder/RestController.php:800
 msgid "A valid WordPress AI connector is required before chat-based popup generation can run."
 msgstr ""
@@ -1983,7 +1983,7 @@ msgid "Override Model"
 msgstr ""
 
 #: includes/AI/PopupBuilder/SettingsPage.php:59
-#: src/admin/ai-popup-builder/App.js:2394
+#: src/admin/ai-popup-builder/App.js:2412
 msgid "Optional custom model name"
 msgstr ""
 
@@ -1992,7 +1992,7 @@ msgid "When set, chat requests ask the AI client to prefer this model."
 msgstr ""
 
 #: includes/AI/PopupBuilder/SettingsPage.php:66
-#: src/admin/ai-popup-builder/App.js:2438
+#: src/admin/ai-popup-builder/App.js:2456
 msgid "Disabled Params"
 msgstr ""
 
@@ -2001,7 +2001,7 @@ msgid "One parameter per line or comma-separated. Listed optional parameters are
 msgstr ""
 
 #: includes/AI/PopupBuilder/SettingsPage.php:74
-#: src/admin/ai-popup-builder/App.js:2402
+#: src/admin/ai-popup-builder/App.js:2420
 msgid "Timeout"
 msgstr ""
 
@@ -2010,7 +2010,7 @@ msgid "Maximum time in seconds to wait for an AI chat response."
 msgstr ""
 
 #: includes/AI/PopupBuilder/SettingsPage.php:84
-#: src/admin/ai-popup-builder/App.js:2417
+#: src/admin/ai-popup-builder/App.js:2435
 msgid "Max Tool Calls"
 msgstr ""
 
@@ -2048,7 +2048,7 @@ msgid "Seconds"
 msgstr ""
 
 #: includes/Blocks/Coupon.php:94
-#: src/admin/ai-popup-builder/App.js:4183
+#: src/admin/ai-popup-builder/App.js:4198
 #: src/blocks/coupon/editor/Edit.js:24
 #: src/editor/icons/default/index.js:45
 msgid "Copy"
@@ -2246,7 +2246,7 @@ msgid "Newsletter"
 msgstr ""
 
 #: includes/Components/VariationPicker.php:76
-#: src/admin/ai-popup-builder/App.js:1013
+#: src/admin/ai-popup-builder/App.js:1031
 #: src/editor/plugins/ai-builder/Plugin.js:94
 msgid "Offer"
 msgstr ""
@@ -2282,9 +2282,9 @@ msgstr ""
 #: includes/DisplayRules.php:349
 #: includes/DisplayRules.php:351
 #: includes/DisplayRules.php:371
-#: src/admin/ai-popup-builder/App.js:1010
-#: src/admin/ai-popup-builder/App.js:1014
-#: src/admin/ai-popup-builder/App.js:3313
+#: src/admin/ai-popup-builder/App.js:1028
+#: src/admin/ai-popup-builder/App.js:1032
+#: src/admin/ai-popup-builder/App.js:3328
 #: src/admin/brand-context/components.js:169
 #: src/editor/components/date-time-control/Component.js:17
 #: src/editor/components/display-rules/components/post-status-info/Component.js:45
@@ -2628,7 +2628,7 @@ msgstr ""
 
 #: includes/PostType.php:54
 #: includes/PostType.php:64
-#: src/admin/ai-popup-builder/App.js:2764
+#: src/admin/ai-popup-builder/App.js:2782
 msgid "Popups"
 msgstr ""
 
@@ -2661,8 +2661,8 @@ msgid "No Popups found in Trash"
 msgstr ""
 
 #: includes/PostType.php:151
-#: src/admin/ai-popup-builder/App.js:763
-#: src/admin/ai-popup-builder/App.js:1002
+#: src/admin/ai-popup-builder/App.js:781
+#: src/admin/ai-popup-builder/App.js:1020
 #: src/editor/plugins/ai-builder/Plugin.js:74
 msgid "Type"
 msgstr ""
@@ -3185,8 +3185,8 @@ msgid "FOMO"
 msgstr ""
 
 #: pro/includes/DisplayRules/WooCommerce.php:35
-#: src/admin/ai-popup-builder/App.js:2584
-#: src/admin/ai-popup-builder/App.js:3396
+#: src/admin/ai-popup-builder/App.js:2602
+#: src/admin/ai-popup-builder/App.js:3411
 msgid "WooCommerce"
 msgstr ""
 
@@ -3255,7 +3255,7 @@ msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:68
 #: pro/includes/Experiments/Admin/Init.php:175
-#: src/admin/ai-popup-builder/App.js:1009
+#: src/admin/ai-popup-builder/App.js:1027
 #: src/editor/plugins/ai-builder/Plugin.js:82
 msgid "Goal"
 msgstr ""
@@ -3329,7 +3329,7 @@ msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:149
 #: pro/includes/Experiments/Admin/Init.php:1289
-#: src/admin/ai-popup-builder/App.js:1264
+#: src/admin/ai-popup-builder/App.js:1282
 msgid "Draft"
 msgstr ""
 
@@ -3759,7 +3759,7 @@ msgid "Automated rule matched"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/Init.php:1417
-#: src/admin/ai-popup-builder/App.js:595
+#: src/admin/ai-popup-builder/App.js:613
 msgid "Unknown time"
 msgstr ""
 
@@ -4764,7 +4764,7 @@ msgstr ""
 #: pro/src/blocks/free-shipping-progress/editor/blocks/bar/editor/Edit.js:96
 #: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:257
 #: pro/src/editor/components/popup-background-generator/config.js:510
-#: src/admin/ai-popup-builder/App.js:1088
+#: src/admin/ai-popup-builder/App.js:1106
 #: src/admin/brand-context/components.js:355
 #: src/admin/brand-context/components.js:613
 #: src/blocks/countdown/editor/components/container/EditStyles.js:19
@@ -4874,8 +4874,8 @@ msgid "Shown once the cart subtotal meets or exceeds the free shipping threshold
 msgstr ""
 
 #: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:39
-#: src/admin/ai-popup-builder/App.js:3061
-#: src/admin/ai-popup-builder/App.js:3612
+#: src/admin/ai-popup-builder/App.js:3079
+#: src/admin/ai-popup-builder/App.js:3627
 msgid "Unavailable"
 msgstr ""
 
@@ -4997,7 +4997,7 @@ msgid "Reset"
 msgstr ""
 
 #: pro/src/editor/components/popup-background-generator/Component.js:369
-#: src/admin/ai-popup-builder/App.js:2147
+#: src/admin/ai-popup-builder/App.js:2165
 #: src/scripts/admin/display-rules-list/index.js:343
 msgid "Cancel"
 msgstr ""
@@ -5312,691 +5312,7 @@ msgstr ""
 msgid "Set the threshold amount used by the free shipping progress block."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:134
-msgid "Context"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:138
-msgid "Chat"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:142
-#: src/admin/ai-popup-builder/App.js:3968
-msgid "Popup Details"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:146
-#: src/admin/ai-popup-builder/App.js:1270
-#: src/admin/ai-popup-builder/App.js:4215
-msgid "Media"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:157
-msgid "Debug"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:201
-msgid "Thinking"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:221
-#: src/admin/ai-popup-builder/App.js:258
-msgid "Popup Assistant"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:222
-msgid "You"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:270
-msgid "Preparing response"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:294
-#: src/editor/plugins/ai-builder/Plugin.js:132
-msgid "Conversion score"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:303
-#: src/editor/plugins/ai-builder/Plugin.js:170
-msgid "Strengths"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:313
-#: src/editor/plugins/ai-builder/Plugin.js:174
-msgid "Watchouts"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:323
-#: src/editor/plugins/ai-builder/Plugin.js:178
-msgid "Suggestions"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:360
-msgid "Best for:"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:361
-msgid "Watchouts:"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:362
-msgid "Length:"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:363
-msgid "Exit intent:"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:397
-msgid "Before:"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:403
-msgid "After:"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:418
-#: src/popups/shared/editor/components/view-state-controls/index.js:61
-msgid "Open"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:485
-msgid "No context available yet."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:516
-msgid "Activity"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:520
-msgid "1 event"
-msgstr ""
-
-#. translators: %d is the number of activity events.
-#: src/admin/ai-popup-builder/App.js:523
-#, js-format
-msgid "%d events"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:543
-msgid "tool result"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:569
-msgid "Working"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:579
-msgid "Result:"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:622
-msgid "AI Response Debug"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:624
-msgid "Raw invalid or repaired responses for troubleshooting."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:637
-msgid "Loading…"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:638
-msgid "Refresh"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:649
-msgid "Clearing…"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:650
-msgid "Clear Responses"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:664
-msgid "Response Schema Sent To The AI Client"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:672
-msgid "JSON schema"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:685
-msgid "Loading stored invalid responses…"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:697
-msgid "No invalid AI popup builder responses have been stored yet."
-msgstr ""
-
-#. translators: %d is the response number in the debug list.
-#: src/admin/ai-popup-builder/App.js:727
-#, js-format
-msgid "Stored response #%d"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:747
-msgid "Retried"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:748
-msgid "Returned error"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:777
-msgid "Attempt"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:790
-msgid "Error"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:804
-msgid "Length"
-msgstr ""
-
-#. translators: %d is the response length in bytes.
-#: src/admin/ai-popup-builder/App.js:809
-#, js-format
-msgid "%d bytes"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:819
-msgid "(truncated)"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:831
-msgid "Repair"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:845
-msgid "Latest user message"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:855
-msgid "Error message"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:864
-msgid "Raw AI response"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:874
-msgid "Repaired AI response"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:884
-msgid "Error data"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1017
-msgid "Action"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1021
-#: src/editor/components/open-trigger-component/Component.js:670
-msgid "Trigger"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1076
-#: src/admin/brand-context/components.js:343
-#: src/admin/brand-context/components.js:589
-#: src/admin/brand-context/components.js:713
-msgid "Primary"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1080
-#: src/admin/brand-context/components.js:347
-#: src/admin/brand-context/components.js:597
-msgid "Secondary"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1084
-#: src/admin/brand-context/components.js:351
-#: src/admin/brand-context/components.js:605
-msgid "Accent"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1092
-#: src/admin/brand-context/components.js:359
-#: src/admin/brand-context/components.js:621
-msgid "Primary text"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1096
-#: src/admin/brand-context/components.js:363
-#: src/admin/brand-context/components.js:629
-msgid "Secondary text"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1256
-msgid "Messages"
-msgstr ""
-
-#. translators: %d is the number of conversation turns.
-#: src/admin/ai-popup-builder/App.js:1259
-#, js-format
-msgid "%d turns"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1266
-#: src/editor/components/variation-picker/Component.js:601
-msgid "Included"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1267
-msgid "None yet"
-msgstr ""
-
-#. translators: %d is the number of generated media items.
-#: src/admin/ai-popup-builder/App.js:1273
-#, js-format
-msgid "%d items"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1278
-#: src/admin/ai-popup-builder/App.js:3286
-msgid "Brand"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1279
-msgid "Always attached separately"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1312
-#: src/admin/ai-popup-builder/App.js:1345
-msgid "The saved popup could not be loaded into the AI builder."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1335
-msgid "Popup loaded. Ask AI for changes and they will update this popup."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1422
-msgid "Starter brand profile extracted."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1431
-msgid "Brand extraction failed. You can fill in the brand details manually and save them."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1475
-msgid "The popup draft could not be serialized into blocks."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1520
-msgid "Popup updated automatically. Preview or edit it whenever you want."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1524
-msgid "Draft popup created automatically. Preview it or open it in the editor."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1534
-msgid "The popup draft could not be saved."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1677
-msgid "I prepared a popup direction for you."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1793
-msgid "The AI popup builder could not complete that request."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1835
-msgid "Popup block HTML copied to the clipboard."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1842
-msgid "Could not copy the block HTML to the clipboard."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1855
-#: src/admin/brand-context/index.js:96
-msgid "Enter a remote URL before starting remote brand extraction."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1891
-#: src/admin/brand-context/index.js:133
-msgid "Remote brand extraction completed. The extracted values are ready to review and save."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1895
-#: src/admin/brand-context/index.js:137
-msgid "Brand extraction completed. The extracted values are ready to review and save."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1906
-#: src/admin/brand-context/index.js:148
-msgid "Brand extraction failed."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1934
-msgid "Brand saved for reuse. The AI builder will now use it as the main styling source."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1945
-msgid "The brand profile could not be saved."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1979
-msgid "AI Popup Builder settings saved."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:1988
-msgid "The AI Popup Builder settings could not be saved."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2123
-msgid "The stored AI responses could not be loaded."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2143
-msgid "Confirm action"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2145
-msgid "Confirm"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2172
-msgid "Clear all stored invalid AI popup builder responses?"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2177
-msgid "Clear"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2203
-msgid "Stored invalid AI responses cleared."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2212
-msgid "The stored AI responses could not be cleared."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2230
-msgid "Generate a new popup image that fits this popup and incorporate it into the draft."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2271
-msgid "Delete this generated image from the media library?"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2318
-msgid "The generated image could not be deleted."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2356
-msgid "Configure a valid WordPress AI connector before sending requests."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2361
-msgid "Loading the saved popup before chat starts."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2366
-msgid "Brand extraction is still running. Wait for it to finish before sending the next request."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2376
-msgid "You can view settings but cannot save defaults."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2384
-msgid "Tune model behavior and block context."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2389
-msgid "Override model"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2412
-msgid "Maximum seconds to wait."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2429
-msgid "Increase this if complex prompts stop with the tool-call limit error."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2448
-msgid "One parameter per line."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2467
-#: src/admin/ai-popup-builder/App.js:2632
-#: src/admin/brand-context/components.js:441
-msgid "Saving…"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2468
-msgid "Save Settings"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2513
-msgid "Supported Blocks"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2520
-msgid "Choose blocks the builder may use."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2527
-msgid "You can inspect blocks but cannot save defaults."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2543
-#: src/admin/ai-popup-builder/App.js:2752
-#: src/admin/ai-popup-builder/App.js:3375
-#: src/admin/ai-popup-builder/App.js:3430
-msgid "Total"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2555
-#: src/admin/ai-popup-builder/App.js:3382
-msgid "Core"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2568
-#: src/admin/ai-popup-builder/serializer.js:44
-msgid "Popup Blocks"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2601
-msgid "Select visible"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2613
-msgid "Clear visible"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2620
-msgid "Reset defaults"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2633
-msgid "Save selection"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2708
-msgid "No blocks in this filter"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2714
-msgid "Try another filter."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2730
-msgid "Structural Templates"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2737
-#: src/admin/ai-popup-builder/App.js:3413
-msgid "Optional layout starting points."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2776
-#: src/admin/ai-popup-builder/App.js:3449
-#: src/editor/hooks/usePostTypeLabels.js:16
-msgid "Flyouts"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2788
-#: src/admin/ai-popup-builder/App.js:3439
-#: src/editor/hooks/usePostTypeLabels.js:12
-msgid "Bars"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2844
-msgid "No templates in this filter"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2850
-msgid "Try another type."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2866
-msgid "Conversion Playbook"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2873
-#: src/admin/ai-popup-builder/App.js:3479
-msgid "Conversion guidance available to the builder."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2880
-#: src/admin/ai-popup-builder/App.js:3495
-msgid "Principles"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2893
-#: src/admin/ai-popup-builder/App.js:3504
-msgid "Avoid"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2908
-msgid "Popup Types"
-msgstr ""
-
-#. translators: %s is a conversion playbook field label.
-#: src/admin/ai-popup-builder/App.js:2937
-#, js-format
-msgid "%s:"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2957
-msgid "Copy Tactics"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2971
-msgid "Proof Hierarchy"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2986
-msgid "Ranked proof types"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:2998
-#: src/admin/ai-popup-builder/App.js:3542
-msgid "Examples"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3015
-#: src/admin/ai-popup-builder/App.js:3557
-msgid "System Prompt"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3022
-msgid "Default instructions for generated popups."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3028
-msgid "Builder system instruction"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3043
-#: src/admin/ai-popup-builder/App.js:3584
-msgid "Abilities"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3050
-#: src/admin/ai-popup-builder/App.js:3588
-msgid "Tools available during generation."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3058
-msgid "Abilities API"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3060
-msgid "Available"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3064
-msgid "Allowed tools"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3087
-msgid "Current Request Context"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3094
-#: src/admin/ai-popup-builder/App.js:3634
-msgid "Data sent with the next chat message."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3101
-msgid "Conversation"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3110
-msgid "No messages yet."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3115
-msgid "Current popup draft JSON"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3122
-msgid "No popup draft yet."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3127
-msgid "Current media JSON"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3131
-msgid "No generated media yet."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3181
-msgid "Create a draft popup from your brand, offer, audience, and trigger."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3193
-msgid "Loading popup…"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3196
-msgid "Saving popup…"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3197
-msgid "Saving draft…"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3199
-msgid "Popup ready for preview and editing."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3203
-msgid "Draft ready for preview and editing."
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:3222
+#: src/admin/ai-popup-builder/App.js:126
 msgid "Open Settings > Connectors"
 msgstr ""
 
@@ -6004,208 +5320,892 @@ msgstr ""
 msgid "Upgrade WordPress"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3269
+#: src/admin/ai-popup-builder/App.js:152
+msgid "Context"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:156
+msgid "Chat"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:160
+#: src/admin/ai-popup-builder/App.js:3983
+msgid "Popup Details"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:164
+#: src/admin/ai-popup-builder/App.js:1288
+#: src/admin/ai-popup-builder/App.js:4230
+msgid "Media"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:175
+msgid "Debug"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:219
+msgid "Thinking"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:239
+#: src/admin/ai-popup-builder/App.js:276
+msgid "Popup Assistant"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:240
+msgid "You"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:288
+msgid "Preparing response"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:312
+#: src/editor/plugins/ai-builder/Plugin.js:132
+msgid "Conversion score"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:321
+#: src/editor/plugins/ai-builder/Plugin.js:170
+msgid "Strengths"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:331
+#: src/editor/plugins/ai-builder/Plugin.js:174
+msgid "Watchouts"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:341
+#: src/editor/plugins/ai-builder/Plugin.js:178
+msgid "Suggestions"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:378
+msgid "Best for:"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:379
+msgid "Watchouts:"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:380
+msgid "Length:"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:381
+msgid "Exit intent:"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:415
+msgid "Before:"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:421
+msgid "After:"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:436
+#: src/popups/shared/editor/components/view-state-controls/index.js:61
+msgid "Open"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:503
+msgid "No context available yet."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:534
+msgid "Activity"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:538
+msgid "1 event"
+msgstr ""
+
+#. translators: %d is the number of activity events.
+#: src/admin/ai-popup-builder/App.js:541
+#, js-format
+msgid "%d events"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:561
+msgid "tool result"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:587
+msgid "Working"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:597
+msgid "Result:"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:640
+msgid "AI Response Debug"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:642
+msgid "Raw invalid or repaired responses for troubleshooting."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:655
+msgid "Loading…"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:656
+msgid "Refresh"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:667
+msgid "Clearing…"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:668
+msgid "Clear Responses"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:682
+msgid "Response Schema Sent To The AI Client"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:690
+msgid "JSON schema"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:703
+msgid "Loading stored invalid responses…"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:715
+msgid "No invalid AI popup builder responses have been stored yet."
+msgstr ""
+
+#. translators: %d is the response number in the debug list.
+#: src/admin/ai-popup-builder/App.js:745
+#, js-format
+msgid "Stored response #%d"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:765
+msgid "Retried"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:766
+msgid "Returned error"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:795
+msgid "Attempt"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:808
+msgid "Error"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:822
+msgid "Length"
+msgstr ""
+
+#. translators: %d is the response length in bytes.
+#: src/admin/ai-popup-builder/App.js:827
+#, js-format
+msgid "%d bytes"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:837
+msgid "(truncated)"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:849
+msgid "Repair"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:863
+msgid "Latest user message"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:873
+msgid "Error message"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:882
+msgid "Raw AI response"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:892
+msgid "Repaired AI response"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:902
+msgid "Error data"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1035
+msgid "Action"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1039
+#: src/editor/components/open-trigger-component/Component.js:670
+msgid "Trigger"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1094
+#: src/admin/brand-context/components.js:343
+#: src/admin/brand-context/components.js:589
+#: src/admin/brand-context/components.js:713
+msgid "Primary"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1098
+#: src/admin/brand-context/components.js:347
+#: src/admin/brand-context/components.js:597
+msgid "Secondary"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1102
+#: src/admin/brand-context/components.js:351
+#: src/admin/brand-context/components.js:605
+msgid "Accent"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1110
+#: src/admin/brand-context/components.js:359
+#: src/admin/brand-context/components.js:621
+msgid "Primary text"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1114
+#: src/admin/brand-context/components.js:363
+#: src/admin/brand-context/components.js:629
+msgid "Secondary text"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1274
+msgid "Messages"
+msgstr ""
+
+#. translators: %d is the number of conversation turns.
+#: src/admin/ai-popup-builder/App.js:1277
+#, js-format
+msgid "%d turns"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1284
+#: src/editor/components/variation-picker/Component.js:601
+msgid "Included"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1285
+msgid "None yet"
+msgstr ""
+
+#. translators: %d is the number of generated media items.
+#: src/admin/ai-popup-builder/App.js:1291
+#, js-format
+msgid "%d items"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1296
+#: src/admin/ai-popup-builder/App.js:3301
+msgid "Brand"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1297
+msgid "Always attached separately"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1330
+#: src/admin/ai-popup-builder/App.js:1363
+msgid "The saved popup could not be loaded into the AI builder."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1353
+msgid "Popup loaded. Ask AI for changes and they will update this popup."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1440
+msgid "Starter brand profile extracted."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1449
+msgid "Brand extraction failed. You can fill in the brand details manually and save them."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1493
+msgid "The popup draft could not be serialized into blocks."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1538
+msgid "Popup updated automatically. Preview or edit it whenever you want."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1542
+msgid "Draft popup created automatically. Preview it or open it in the editor."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1552
+msgid "The popup draft could not be saved."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1695
+msgid "I prepared a popup direction for you."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1811
+msgid "The AI popup builder could not complete that request."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1853
+msgid "Popup block HTML copied to the clipboard."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1860
+msgid "Could not copy the block HTML to the clipboard."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1873
+#: src/admin/brand-context/index.js:96
+msgid "Enter a remote URL before starting remote brand extraction."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1909
+#: src/admin/brand-context/index.js:133
+msgid "Remote brand extraction completed. The extracted values are ready to review and save."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1913
+#: src/admin/brand-context/index.js:137
+msgid "Brand extraction completed. The extracted values are ready to review and save."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1924
+#: src/admin/brand-context/index.js:148
+msgid "Brand extraction failed."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1952
+msgid "Brand saved for reuse. The AI builder will now use it as the main styling source."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1963
+msgid "The brand profile could not be saved."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:1997
+msgid "AI Popup Builder settings saved."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2006
+msgid "The AI Popup Builder settings could not be saved."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2141
+msgid "The stored AI responses could not be loaded."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2161
+msgid "Confirm action"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2163
+msgid "Confirm"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2190
+msgid "Clear all stored invalid AI popup builder responses?"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2195
+msgid "Clear"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2221
+msgid "Stored invalid AI responses cleared."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2230
+msgid "The stored AI responses could not be cleared."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2248
+msgid "Generate a new popup image that fits this popup and incorporate it into the draft."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2289
+msgid "Delete this generated image from the media library?"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2336
+msgid "The generated image could not be deleted."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2374
+msgid "Configure a valid WordPress AI connector before sending requests."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2379
+msgid "Loading the saved popup before chat starts."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2384
+msgid "Brand extraction is still running. Wait for it to finish before sending the next request."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2394
+msgid "You can view settings but cannot save defaults."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2402
+msgid "Tune model behavior and block context."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2407
+msgid "Override model"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2430
+msgid "Maximum seconds to wait."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2447
+msgid "Increase this if complex prompts stop with the tool-call limit error."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2466
+msgid "One parameter per line."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2485
+#: src/admin/ai-popup-builder/App.js:2650
+#: src/admin/brand-context/components.js:441
+msgid "Saving…"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2486
+msgid "Save Settings"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2531
+msgid "Supported Blocks"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2538
+msgid "Choose blocks the builder may use."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2545
+msgid "You can inspect blocks but cannot save defaults."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2561
+#: src/admin/ai-popup-builder/App.js:2770
+#: src/admin/ai-popup-builder/App.js:3390
+#: src/admin/ai-popup-builder/App.js:3445
+msgid "Total"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2573
+#: src/admin/ai-popup-builder/App.js:3397
+msgid "Core"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2586
+#: src/admin/ai-popup-builder/serializer.js:44
+msgid "Popup Blocks"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2619
+msgid "Select visible"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2631
+msgid "Clear visible"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2638
+msgid "Reset defaults"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2651
+msgid "Save selection"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2726
+msgid "No blocks in this filter"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2732
+msgid "Try another filter."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2748
+msgid "Structural Templates"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2755
+#: src/admin/ai-popup-builder/App.js:3428
+msgid "Optional layout starting points."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2794
+#: src/admin/ai-popup-builder/App.js:3464
+#: src/editor/hooks/usePostTypeLabels.js:16
+msgid "Flyouts"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2806
+#: src/admin/ai-popup-builder/App.js:3454
+#: src/editor/hooks/usePostTypeLabels.js:12
+msgid "Bars"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2862
+msgid "No templates in this filter"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2868
+msgid "Try another type."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2884
+msgid "Conversion Playbook"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2891
+#: src/admin/ai-popup-builder/App.js:3494
+msgid "Conversion guidance available to the builder."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2898
+#: src/admin/ai-popup-builder/App.js:3510
+msgid "Principles"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2911
+#: src/admin/ai-popup-builder/App.js:3519
+msgid "Avoid"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2926
+msgid "Popup Types"
+msgstr ""
+
+#. translators: %s is a conversion playbook field label.
+#: src/admin/ai-popup-builder/App.js:2955
+#, js-format
+msgid "%s:"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2975
+msgid "Copy Tactics"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2989
+msgid "Proof Hierarchy"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3004
+msgid "Ranked proof types"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3016
+#: src/admin/ai-popup-builder/App.js:3557
+msgid "Examples"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3033
+#: src/admin/ai-popup-builder/App.js:3572
+msgid "System Prompt"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3040
+msgid "Default instructions for generated popups."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3046
+msgid "Builder system instruction"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3061
+#: src/admin/ai-popup-builder/App.js:3599
+msgid "Abilities"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3068
+#: src/admin/ai-popup-builder/App.js:3603
+msgid "Tools available during generation."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3076
+msgid "Abilities API"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3078
+msgid "Available"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3082
+msgid "Allowed tools"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3105
+msgid "Current Request Context"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3112
+#: src/admin/ai-popup-builder/App.js:3649
+msgid "Data sent with the next chat message."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3119
+msgid "Conversation"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3128
+msgid "No messages yet."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3133
+msgid "Current popup draft JSON"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3140
+msgid "No popup draft yet."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3145
+msgid "Current media JSON"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3149
+msgid "No generated media yet."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3199
+msgid "Create a draft popup from your brand, offer, audience, and trigger."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3211
+msgid "Loading popup…"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3214
+msgid "Saving popup…"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3215
+msgid "Saving draft…"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3217
+msgid "Popup ready for preview and editing."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3221
+msgid "Draft ready for preview and editing."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3284
 msgid "AI Context"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3275
+#: src/admin/ai-popup-builder/App.js:3290
 msgid "Review what the builder can use."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3290
+#: src/admin/ai-popup-builder/App.js:3305
 msgid "Brand details sent with each request."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3304
+#: src/admin/ai-popup-builder/App.js:3319
 msgid "Overview"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3356
+#: src/admin/ai-popup-builder/App.js:3371
 msgid "Blocks"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3360
+#: src/admin/ai-popup-builder/App.js:3375
 msgid "Blocks the builder may use."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3409
+#: src/admin/ai-popup-builder/App.js:3424
 msgid "Templates"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3459
+#: src/admin/ai-popup-builder/App.js:3474
 #: src/editor/hooks/usePostTypeLabels.js:20
 msgid "Overlays"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3475
+#: src/admin/ai-popup-builder/App.js:3490
 msgid "Playbook"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3513
+#: src/admin/ai-popup-builder/App.js:3528
 msgid "Popup types"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3524
+#: src/admin/ai-popup-builder/App.js:3539
 msgid "Copy tactics"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3533
+#: src/admin/ai-popup-builder/App.js:3548
 msgid "Proof hierarchy"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3561
+#: src/admin/ai-popup-builder/App.js:3576
 msgid "Default builder instructions."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3604
+#: src/admin/ai-popup-builder/App.js:3619
 msgid "Tools"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3630
+#: src/admin/ai-popup-builder/App.js:3645
 msgid "Current Request"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3671
+#: src/admin/ai-popup-builder/App.js:3686
 msgid "Chat Builder"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3679
+#: src/admin/ai-popup-builder/App.js:3694
 msgid "Include the goal, audience, offer, popup type, trigger, and tone."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3697
+#: src/admin/ai-popup-builder/App.js:3712
 msgid "Start with a clear popup brief or choose a starter prompt from the sidebar."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3744
+#: src/admin/ai-popup-builder/App.js:3759
 msgid "Describe the popup you want"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3779
+#: src/admin/ai-popup-builder/App.js:3794
 msgid "Generate AI Images"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3796
+#: src/admin/ai-popup-builder/App.js:3811
 msgid "Requires media upload permission and image support."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3853
+#: src/admin/ai-popup-builder/App.js:3868
 msgid "Open Preview"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3879
+#: src/admin/ai-popup-builder/App.js:3894
 msgid "Edit Draft"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3897
+#: src/admin/ai-popup-builder/App.js:3912
 #: src/editor/icons/default/index.js:52
 msgid "Send"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3911
+#: src/admin/ai-popup-builder/App.js:3926
 msgid "Starter Prompts"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3921
+#: src/admin/ai-popup-builder/App.js:3936
 msgid "Use these as a starting point, then refine the popup in chat."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3974
+#: src/admin/ai-popup-builder/App.js:3989
 msgid "Review the saved draft, strategy, and generated HTML."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3987
+#: src/admin/ai-popup-builder/App.js:4002
 msgid "Generate a popup in Chat first."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3999
+#: src/admin/ai-popup-builder/App.js:4014
 msgid "Strategy Summary"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4007
+#: src/admin/ai-popup-builder/App.js:4022
 msgid "Draft title"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4025
+#: src/admin/ai-popup-builder/App.js:4040
 msgid "Title changes sync on blur."
 msgstr ""
 
 #. translators: %s is the template title used as a structural guide.
-#: src/admin/ai-popup-builder/App.js:4069
+#: src/admin/ai-popup-builder/App.js:4084
 #, js-format
 msgid "Structural template guide: %s"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4086
+#: src/admin/ai-popup-builder/App.js:4101
 msgid "Conversion Checklist"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4103
+#: src/admin/ai-popup-builder/App.js:4118
 msgid "Validation appears after scoring."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4115
+#: src/admin/ai-popup-builder/App.js:4130
 msgid "AI Guidance"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4123
+#: src/admin/ai-popup-builder/App.js:4138
 msgid "Why this should convert"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4132
+#: src/admin/ai-popup-builder/App.js:4147
 msgid "Implementation notes"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4148
+#: src/admin/ai-popup-builder/App.js:4163
 msgid "Ask the AI to explain or refine the strategy."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4165
+#: src/admin/ai-popup-builder/App.js:4180
 msgid "Popup HTML"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4221
+#: src/admin/ai-popup-builder/App.js:4236
 msgid "Generate images for the current popup draft."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4241
+#: src/admin/ai-popup-builder/App.js:4256
 msgid "Generate Image"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4254
+#: src/admin/ai-popup-builder/App.js:4269
 msgid "New image direction"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4264
+#: src/admin/ai-popup-builder/App.js:4279
 msgid "Describe the next popup image."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4313
+#: src/admin/ai-popup-builder/App.js:4328
 msgid "Generated popup image"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4340
+#: src/admin/ai-popup-builder/App.js:4355
 msgid "Use In Popup"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4355
+#: src/admin/ai-popup-builder/App.js:4370
 #: src/admin/brand-context/components.js:281
 msgid "Edit"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4380
+#: src/admin/ai-popup-builder/App.js:4395
 msgid "Deleting…"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4400
+#: src/admin/ai-popup-builder/App.js:4415
 msgid "Generate an image or let chat create one."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4404
+#: src/admin/ai-popup-builder/App.js:4419
 msgid "Generate a popup draft first."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4415
+#: src/admin/ai-popup-builder/App.js:4430
 msgid "This account cannot upload media."
 msgstr ""
 

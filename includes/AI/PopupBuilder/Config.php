@@ -68,15 +68,65 @@ class Config {
                 return (bool) \WordPress\AI\has_valid_ai_credentials();
             }
 
+            $has_configured_ai_connector = self::has_configured_ai_connector();
+            if ( false === $has_configured_ai_connector ) {
+                return false;
+            }
+
             $prompt = wp_ai_client_prompt( 'Test' );
-            if ( is_object( $prompt ) && method_exists( $prompt, 'is_supported_for_text_generation' ) ) {
-                return (bool) $prompt->is_supported_for_text_generation();
+            if ( is_object( $prompt ) && is_callable( array( $prompt, 'is_supported_for_text_generation' ) ) ) {
+                $supported = $prompt->is_supported_for_text_generation();
+
+                if ( function_exists( 'is_wp_error' ) && is_wp_error( $supported ) ) {
+                    return false;
+                }
+
+                return (bool) $supported;
             }
         } catch ( \Throwable $throwable ) {
             return false;
         }
 
-        return true;
+        return false;
+    }
+
+    /**
+     * Returns whether a WordPress AI provider connector has credentials.
+     *
+     * @return bool|null True/false when the Connectors API is available, null when unknown.
+     */
+    private static function has_configured_ai_connector(): ?bool {
+        if ( ! function_exists( 'wp_get_connectors' ) ) {
+            return null;
+        }
+
+        $connectors      = wp_get_connectors();
+        $has_credentials = false;
+
+        foreach ( $connectors as $connector_data ) {
+            if ( ! is_array( $connector_data ) || 'ai_provider' !== ( $connector_data['type'] ?? '' ) ) {
+                continue;
+            }
+
+            $auth = isset( $connector_data['authentication'] ) && is_array( $connector_data['authentication'] )
+                ? $connector_data['authentication']
+                : array();
+
+            if ( 'api_key' !== ( $auth['method'] ?? '' ) || empty( $auth['setting_name'] ) || ! function_exists( 'get_option' ) ) {
+                continue;
+            }
+
+            if ( '' !== get_option( $auth['setting_name'], '' ) ) {
+                $has_credentials = true;
+                break;
+            }
+        }
+
+        if ( function_exists( 'apply_filters' ) ) {
+            $has_credentials = (bool) apply_filters( 'wpai_has_ai_credentials', $has_credentials, $connectors );
+        }
+
+        return $has_credentials;
     }
 
     /**
