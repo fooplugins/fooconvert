@@ -128,6 +128,31 @@ namespace {
         return false;
     }
 
+    function add_filter( string $hook, $callback, int $priority = 10, int $accepted_args = 1 ): void {
+        $GLOBALS['fc_test_filters'][ $hook ][ $priority ][] = array(
+            'callback'      => $callback,
+            'accepted_args' => $accepted_args,
+        );
+    }
+
+    function apply_filters( string $hook, $value, ...$args ) {
+        if ( empty( $GLOBALS['fc_test_filters'][ $hook ] ) || ! is_array( $GLOBALS['fc_test_filters'][ $hook ] ) ) {
+            return $value;
+        }
+
+        ksort( $GLOBALS['fc_test_filters'][ $hook ] );
+
+        foreach ( $GLOBALS['fc_test_filters'][ $hook ] as $callbacks ) {
+            foreach ( $callbacks as $filter ) {
+                $accepted_args = isset( $filter['accepted_args'] ) ? (int) $filter['accepted_args'] : 1;
+                $filter_args   = array_slice( array_merge( array( $value ), $args ), 0, $accepted_args );
+                $value         = call_user_func_array( $filter['callback'], $filter_args );
+            }
+        }
+
+        return $value;
+    }
+
     if ( ! defined( 'ABSPATH' ) ) {
         define( 'ABSPATH', __DIR__ );
     }
@@ -236,16 +261,59 @@ namespace {
         'The AI popup builder template library should include popup templates.'
     );
 
-    $generated_block_metadata = require dirname( __DIR__, 2 ) . '/includes/AI/PopupBuilder/Blueprint/generated-fooconvert-blocks.php';
+    $generated_block_metadata     = require dirname( __DIR__, 2 ) . '/includes/AI/PopupBuilder/Blueprint/generated-fooconvert-blocks.php';
+    $generated_pro_block_metadata = require dirname( __DIR__, 2 ) . '/pro/includes/AI/PopupBuilder/Blueprint/generated-fooconvert-pro-blocks.php';
 
     Assertions::true(
         isset( $generated_block_metadata['fc/example-block'] ),
-        'The generated FooConvert block metadata file should include every source block before AI support filtering.'
+        'The generated free FooConvert block metadata file should include every free source block before AI support filtering.'
     );
 
     Assertions::true(
         isset( $generated_block_metadata['fc/bar'] ),
-        'The generated FooConvert block metadata file should include popup shell blocks before AI support filtering.'
+        'The generated free FooConvert block metadata file should include free popup shell blocks before AI support filtering.'
+    );
+
+    foreach (
+        array(
+            'fc/confetti',
+            'fc/apply-coupon',
+            'fc/free-shipping-progress',
+            'fc/free-shipping-progress-content',
+            'fc/free-shipping-progress-bar',
+        ) as $expected_pro_block_name
+    ) {
+        Assertions::false(
+            isset( $generated_block_metadata[ $expected_pro_block_name ] ),
+            sprintf( 'The generated free FooConvert block metadata file should not include the PRO `%s` block.', $expected_pro_block_name )
+        );
+
+        Assertions::true(
+            isset( $generated_pro_block_metadata[ $expected_pro_block_name ] ),
+            sprintf( 'The generated PRO FooConvert block metadata file should include the PRO `%s` block.', $expected_pro_block_name )
+        );
+    }
+
+    $free_block_catalog = PopupBlueprint::get_block_catalog();
+    $free_block_names   = array_column( $free_block_catalog, 'name' );
+
+    foreach ( array_keys( $generated_pro_block_metadata ) as $pro_block_name ) {
+        Assertions::false(
+            in_array( $pro_block_name, $free_block_names, true ),
+            sprintf( 'The free AI block catalog should not include the PRO `%s` block before PRO filters run.', $pro_block_name )
+        );
+    }
+
+    $popup_blueprint_reflection = new ReflectionClass( PopupBlueprint::class );
+    $block_catalog_property     = $popup_blueprint_reflection->getProperty( 'block_catalog' );
+    $block_catalog_property->setAccessible( true );
+    $block_catalog_property->setValue( null, null );
+
+    add_filter(
+        'fooconvert_ai_popup_builder_block_metadata',
+        static function( array $metadata_map ) use ( $generated_pro_block_metadata ): array {
+            return array_merge( $metadata_map, $generated_pro_block_metadata );
+        }
     );
 
     $block_catalog   = PopupBlueprint::get_block_catalog();

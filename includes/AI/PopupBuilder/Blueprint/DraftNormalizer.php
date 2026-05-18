@@ -663,6 +663,19 @@ class DraftNormalizer {
         }
 
         $metadata_map = require $file;
+        $metadata_map = is_array( $metadata_map ) ? $metadata_map : array();
+
+        if ( function_exists( 'apply_filters' ) ) {
+            /**
+             * Filters the generated FooConvert block metadata used by the AI popup builder.
+             *
+             * The default value contains the free block metadata. PRO extensions can add
+             * their generated block metadata here without shipping it in the free array.
+             *
+             * @param array<string,array<string,mixed>> $metadata_map Generated free block metadata keyed by block name.
+             */
+            $metadata_map = apply_filters( 'fooconvert_ai_popup_builder_block_metadata', $metadata_map );
+        }
 
         return is_array( $metadata_map ) ? $metadata_map : array();
     }
