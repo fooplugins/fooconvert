@@ -64,6 +64,7 @@ define( 'FOOCONVERT_OPTION_BRAND_CONTEXT', FOOCONVERT_OPTION_AI_BRAND );
 define( 'FOOCONVERT_OPTION_AI_POPUP_BUILDER_DEBUG_RESPONSES', 'fooconvert_ai_popup_builder_debug_responses' );
 define( 'FOOCONVERT_META_KEY_AI_BUILDER_METADATA', '_fooconvert_ai_builder_metadata' );
 define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_MODEL', 'ai_popup_builder_override_model' );
+define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL', 'ai_popup_builder_override_image_model' );
 define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_DISABLED_PARAMS', 'ai_popup_builder_disabled_params' );
 define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_TIMEOUT', 'ai_popup_builder_timeout' );
 define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_MAX_TOOL_CALLS', 'ai_popup_builder_max_tool_calls' );

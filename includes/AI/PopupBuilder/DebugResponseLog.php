@@ -220,6 +220,7 @@ class DebugResponseLog {
     private static function get_settings_snapshot( array $settings ): array {
         return array(
             'override_model'       => Settings::sanitize_model( $settings['override_model'] ?? '' ),
+            'override_image_model' => Settings::sanitize_model( $settings['override_image_model'] ?? '' ),
             'disabled_params'      => Settings::sanitize_disabled_params( $settings['disabled_params'] ?? array() ),
             'selected_block_names' => Settings::sanitize_selected_block_names( $settings['selected_block_names'] ?? array() ),
             'timeout'              => Settings::sanitize_timeout( $settings['timeout'] ?? Settings::get_default_timeout() ),

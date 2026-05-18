@@ -3,6 +3,14 @@ declare(strict_types=1);
 
 namespace FooPlugins\FooConvert\AI\PopupBuilder\Media {
     class Attachments {
+        public static function set_runtime_ai_settings( array $settings ): void {
+            $GLOBALS['fc_submit_background_runtime_ai_settings'] = $settings;
+        }
+
+        public static function clear_runtime_ai_settings(): void {
+            $GLOBALS['fc_submit_background_runtime_ai_settings_cleared'] = true;
+        }
+
         public static function list_generated_images( int $limit = 12 ): array {
             return array();
         }
@@ -334,6 +342,7 @@ namespace {
     if ( ! defined( 'FOOCONVERT_OPTION_DATA' ) ) {
         define( 'FOOCONVERT_OPTION_DATA', 'fooconvert_settings' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_MODEL', 'ai_popup_builder_override_model' );
+        define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL', 'ai_popup_builder_override_image_model' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_DISABLED_PARAMS', 'ai_popup_builder_disabled_params' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_TIMEOUT', 'ai_popup_builder_timeout' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_MAX_TOOL_CALLS', 'ai_popup_builder_max_tool_calls' );
@@ -361,6 +370,9 @@ namespace {
             'brand'                  => array(),
             'generate_images'        => true,
             'force_image_generation' => false,
+            'settings'               => array(
+                'override_image_model' => 'custom-image-model',
+            ),
         )
     );
 
@@ -395,6 +407,17 @@ namespace {
         'Build a popup for a launch discount.',
         (string) ( $GLOBALS['fc_generated_background_instructions'] ?? '' ),
         'The automatic popup background generation should use the latest user message as additional direction.'
+    );
+
+    Assertions::same(
+        'custom-image-model',
+        $GLOBALS['fc_submit_background_runtime_ai_settings']['override_image_model'] ?? '',
+        'Submit-time image generation should receive the request image model override.'
+    );
+
+    Assertions::true(
+        ! empty( $GLOBALS['fc_submit_background_runtime_ai_settings_cleared'] ),
+        'Submit-time image generation should clear request-scoped AI settings after the chat response.'
     );
 
     echo "ai-popup-submit-background: ok\n";

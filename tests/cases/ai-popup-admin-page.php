@@ -127,7 +127,8 @@ namespace FooPlugins\FooConvert\AI\PopupBuilder {
     class Settings {
         public static function to_response( ?array $settings = null ): array {
             return array(
-                'overrideModel' => $GLOBALS['fc_ai_builder_override_model'] ?? '',
+                'overrideModel'      => $GLOBALS['fc_ai_builder_override_model'] ?? '',
+                'overrideImageModel' => $GLOBALS['fc_ai_builder_override_image_model'] ?? '',
             );
         }
     }
@@ -439,6 +440,7 @@ namespace {
 
     unset( $GLOBALS['fc_ai_builder_enqueued_scripts'], $GLOBALS['fc_ai_builder_enqueued_styles'], $GLOBALS['fc_ai_builder_inline_scripts'] );
     $GLOBALS['fc_ai_builder_override_model'] = 'custom-text-model';
+    $GLOBALS['fc_ai_builder_override_image_model'] = 'custom-image-model';
     $GLOBALS['fc_ai_builder_image_models']   = array();
     $builder_without_image_models = new AiPopupBuilder();
     $builder_without_image_models->enqueue_assets( 'admin_page_fooconvert-ai-popup-builder' );
@@ -451,12 +453,13 @@ namespace {
     );
 
     Assertions::same(
-        '',
+        'custom-image-model',
         $no_image_model_config['models']['currentImageModel'] ?? null,
-        'The AI popup builder config should expose an empty image model when image model preferences are unavailable.'
+        'The AI popup builder config should expose a selected image model override.'
     );
 
     unset( $GLOBALS['fc_ai_builder_override_model'] );
+    unset( $GLOBALS['fc_ai_builder_override_image_model'] );
 
     unset( $GLOBALS['fc_ai_builder_enqueued_scripts'], $GLOBALS['fc_ai_builder_enqueued_styles'], $GLOBALS['fc_ai_builder_inline_scripts'] );
     $GLOBALS['fc_ai_builder_text_models'] = array(

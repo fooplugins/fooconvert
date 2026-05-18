@@ -55,9 +55,17 @@ class SettingsPage {
                     'id'          => FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_MODEL,
                     'order'       => 10,
                     'type'        => 'text',
-                    'label'       => __( 'Override Model', 'fooconvert' ),
-                    'placeholder' => __( 'Optional custom model name', 'fooconvert' ),
-                    'desc'        => __( 'When set, chat requests ask the AI client to prefer this model.', 'fooconvert' ),
+                    'label'       => __( 'Override Text Model', 'fooconvert' ),
+                    'placeholder' => __( 'Optional custom text model name', 'fooconvert' ),
+                    'desc'        => __( 'When set, text requests ask the AI client to prefer this model.', 'fooconvert' ),
+                ),
+                FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL => array(
+                    'id'          => FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL,
+                    'order'       => 20,
+                    'type'        => 'text',
+                    'label'       => __( 'Override Image Model', 'fooconvert' ),
+                    'placeholder' => __( 'Optional custom image model name', 'fooconvert' ),
+                    'desc'        => __( 'When set, image generation requests ask the AI client to prefer this model.', 'fooconvert' ),
                 ),
                 FOOCONVERT_SETTING_AI_POPUP_BUILDER_DISABLED_PARAMS => array(
                     'id'          => FOOCONVERT_SETTING_AI_POPUP_BUILDER_DISABLED_PARAMS,
@@ -116,6 +124,9 @@ class SettingsPage {
                         'overrideModel'      => array(
                             'type' => 'string',
                         ),
+                        'overrideImageModel' => array(
+                            'type' => 'string',
+                        ),
                         'disabledParams'     => array(
                             'type' => 'array',
                         ),
@@ -160,6 +171,7 @@ class SettingsPage {
         $settings = Settings::save(
             array(
                 'overrideModel'      => $request->get_param( 'overrideModel' ),
+                'overrideImageModel' => $request->get_param( 'overrideImageModel' ),
                 'disabledParams'     => $request->get_param( 'disabledParams' ),
                 'disabledParamsText' => $request->get_param( 'disabledParamsText' ),
                 'timeout'            => $request->get_param( 'timeout' ),

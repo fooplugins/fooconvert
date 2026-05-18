@@ -112,6 +112,9 @@ class RestController {
                     'model' => array(
                         'type' => 'string',
                     ),
+                    'image_model' => array(
+                        'type' => 'string',
+                    ),
                     'timeout' => array(
                         'type' => 'integer',
                     ),
@@ -156,6 +159,9 @@ class RestController {
                         'type' => 'object',
                     ),
                     'model' => array(
+                        'type' => 'string',
+                    ),
+                    'image_model' => array(
                         'type' => 'string',
                     ),
                     'timeout' => array(
@@ -735,6 +741,11 @@ class RestController {
         $model = $request->get_param( 'model' );
         if ( null !== $model ) {
             $settings['override_model'] = Settings::sanitize_model( $model );
+        }
+
+        $image_model = $request->get_param( 'image_model' );
+        if ( null !== $image_model ) {
+            $settings['override_image_model'] = Settings::sanitize_model( $image_model );
         }
 
         $timeout = $request->get_param( 'timeout' );

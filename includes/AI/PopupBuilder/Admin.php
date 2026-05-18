@@ -217,7 +217,7 @@ class Admin {
             'canUploadMedia'   => PopupMedia::can_manage_media(),
             'models'           => array(
                 'currentTextModel'  => $this->get_current_text_model( $settings ),
-                'currentImageModel' => $this->get_current_image_model(),
+                'currentImageModel' => $this->get_current_image_model( $settings ),
             ),
             'abilitiesAvailable' => Abilities::wp_api_available(),
             'abilities'        => Abilities::get_allowed_abilities(),
@@ -278,7 +278,12 @@ class Admin {
      *
      * @return string
      */
-    private function get_current_image_model(): string {
+    private function get_current_image_model( array $settings ): string {
+        $override_model = $this->sanitize_model_label( $settings['overrideImageModel'] ?? '' );
+        if ( '' !== $override_model ) {
+            return $override_model;
+        }
+
         $resolved_model = $this->get_resolved_ai_model_label(
             'image',
             'WordPress\\AI\\get_preferred_image_models'

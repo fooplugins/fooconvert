@@ -38,6 +38,13 @@ class Attachments {
     private static array $runtime_disabled_ai_params = array();
 
     /**
+     * AI popup builder request settings for the current chat turn.
+     *
+     * @var array<string,mixed>|null
+     */
+    private static ?array $runtime_ai_settings = null;
+
+    /**
      * Registers attachment meta used by the popup builder media workflow.
      */
     public function __construct() {
@@ -102,6 +109,25 @@ class Attachments {
      */
     public static function can_manage_media(): bool {
         return current_user_can( 'upload_files' );
+    }
+
+    /**
+     * Sets request-scoped AI settings for media generation.
+     *
+     * @param array<string,mixed> $settings AI popup builder settings.
+     * @return void
+     */
+    public static function set_runtime_ai_settings( array $settings ): void {
+        self::$runtime_ai_settings = Settings::sanitize_payload( $settings );
+    }
+
+    /**
+     * Clears request-scoped AI settings for media generation.
+     *
+     * @return void
+     */
+    public static function clear_runtime_ai_settings(): void {
+        self::$runtime_ai_settings = null;
     }
 
     /**
@@ -461,6 +487,7 @@ class Attachments {
      */
     private static function build_text_prompt_builder( string $content, string $system_instruction, float $temperature ) {
         $prompt_builder = wp_ai_client_prompt( $content );
+        $settings       = self::get_ai_settings();
 
         if ( '' !== $system_instruction && ! self::is_ai_param_disabled( 'system_instruction' ) && method_exists( $prompt_builder, 'using_system_instruction' ) ) {
             $prompt_builder = $prompt_builder->using_system_instruction( $system_instruction );
@@ -470,10 +497,17 @@ class Attachments {
             $prompt_builder = $prompt_builder->using_temperature( $temperature );
         }
 
-        if ( ! self::is_ai_param_disabled( 'model' ) && function_exists( '\WordPress\AI\get_preferred_models_for_text_generation' ) && method_exists( $prompt_builder, 'using_model_preference' ) ) {
-            $models = \WordPress\AI\get_preferred_models_for_text_generation();
-            if ( is_array( $models ) && ! empty( $models ) ) {
-                $prompt_builder = $prompt_builder->using_model_preference( ...$models );
+        if ( ! self::is_ai_param_disabled( 'model' ) && method_exists( $prompt_builder, 'using_model_preference' ) ) {
+            $override_model = Settings::sanitize_model( $settings['override_model'] ?? '' );
+            if ( '' !== $override_model ) {
+                return $prompt_builder->using_model_preference( $override_model );
+            }
+
+            if ( function_exists( '\WordPress\AI\get_preferred_models_for_text_generation' ) ) {
+                $models = \WordPress\AI\get_preferred_models_for_text_generation();
+                if ( is_array( $models ) && ! empty( $models ) ) {
+                    $prompt_builder = $prompt_builder->using_model_preference( ...$models );
+                }
             }
         }
 
@@ -505,7 +539,7 @@ class Attachments {
      * @return bool
      */
     private static function is_ai_param_disabled( string $param ): bool {
-        $settings = Settings::get();
+        $settings = self::get_ai_settings();
         $params   = is_array( $settings['disabled_params'] ?? null ) ? $settings['disabled_params'] : array();
         $params   = array_merge( $params, self::$runtime_disabled_ai_params );
         $lookup   = self::get_disabled_param_lookup( $params );
@@ -517,6 +551,17 @@ class Attachments {
         }
 
         return false;
+    }
+
+    /**
+     * Returns request-scoped settings when available, otherwise saved settings.
+     *
+     * @return array<string,mixed>
+     */
+    private static function get_ai_settings(): array {
+        return null !== self::$runtime_ai_settings
+            ? self::$runtime_ai_settings
+            : Settings::get();
     }
 
     /**
@@ -614,10 +659,17 @@ class Attachments {
             ->using_request_options( $request_options )
             ->as_output_file_type( FileTypeEnum::inline() );
 
-        if ( function_exists( '\WordPress\AI\get_preferred_image_models' ) ) {
-            $models = \WordPress\AI\get_preferred_image_models();
-            if ( is_array( $models ) && ! empty( $models ) ) {
-                $prompt_builder = $prompt_builder->using_model_preference( ...$models );
+        if ( ! self::is_ai_param_disabled( 'model' ) && method_exists( $prompt_builder, 'using_model_preference' ) ) {
+            $settings       = self::get_ai_settings();
+            $override_model = Settings::sanitize_model( $settings['override_image_model'] ?? '' );
+
+            if ( '' !== $override_model ) {
+                $prompt_builder = $prompt_builder->using_model_preference( $override_model );
+            } elseif ( function_exists( '\WordPress\AI\get_preferred_image_models' ) ) {
+                $models = \WordPress\AI\get_preferred_image_models();
+                if ( is_array( $models ) && ! empty( $models ) ) {
+                    $prompt_builder = $prompt_builder->using_model_preference( ...$models );
+                }
             }
         }
 

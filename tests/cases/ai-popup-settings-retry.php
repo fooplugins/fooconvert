@@ -90,6 +90,10 @@ namespace FooPlugins\FooConvert\AI\PopupBuilder\Blueprint {
 
 namespace FooPlugins\FooConvert\AI\PopupBuilder\Media {
     class Attachments {
+        public static function set_runtime_ai_settings( array $settings ): void {}
+
+        public static function clear_runtime_ai_settings(): void {}
+
         public static function list_generated_images( int $limit ): array {
             return array();
         }
@@ -298,6 +302,7 @@ namespace {
     if ( ! defined( 'FOOCONVERT_OPTION_DATA' ) ) {
         define( 'FOOCONVERT_OPTION_DATA', 'fooconvert_settings' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_MODEL', 'ai_popup_builder_override_model' );
+        define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL', 'ai_popup_builder_override_image_model' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_DISABLED_PARAMS', 'ai_popup_builder_disabled_params' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_TIMEOUT', 'ai_popup_builder_timeout' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_MAX_TOOL_CALLS', 'ai_popup_builder_max_tool_calls' );

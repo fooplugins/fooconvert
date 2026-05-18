@@ -147,6 +147,9 @@ class Settings {
             'override_model'       => self::sanitize_model(
                 fooconvert_get_setting( FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_MODEL, '' )
             ),
+            'override_image_model' => self::sanitize_model(
+                fooconvert_get_setting( FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL, '' )
+            ),
             'disabled_params'      => $disabled_params,
             'disabled_params_text' => implode( "\n", $disabled_params ),
             'selected_block_names' => self::sanitize_selected_block_names(
@@ -172,6 +175,7 @@ class Settings {
 
         return array(
             'overrideModel'       => $settings['override_model'],
+            'overrideImageModel'  => $settings['override_image_model'],
             'disabledParams'      => $settings['disabled_params'],
             'disabledParamsText'  => $settings['disabled_params_text'],
             'timeout'             => $settings['timeout'],
@@ -197,6 +201,7 @@ class Settings {
         }
 
         $override_model = $payload['overrideModel'] ?? $payload['override_model'] ?? $current['override_model'];
+        $override_image_model = $payload['overrideImageModel'] ?? $payload['override_image_model'] ?? $current['override_image_model'];
         $disabled_params = $payload['disabledParams'] ?? $payload['disabled_params'] ?? null;
         if ( null === $disabled_params ) {
             $disabled_params = $payload['disabledParamsText'] ?? $payload['disabled_params_text'] ?? $current['disabled_params'];
@@ -208,6 +213,7 @@ class Settings {
 
         return array(
             'override_model'       => self::sanitize_model( $override_model ),
+            'override_image_model' => self::sanitize_model( $override_image_model ),
             'disabled_params'      => $disabled_params,
             'disabled_params_text' => implode( "\n", $disabled_params ),
             'selected_block_names' => self::sanitize_selected_block_names( $selected_block_names ),
@@ -230,6 +236,7 @@ class Settings {
         }
 
         $option[ FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_MODEL ] = $settings['override_model'];
+        $option[ FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL ] = $settings['override_image_model'];
         $option[ FOOCONVERT_SETTING_AI_POPUP_BUILDER_DISABLED_PARAMS ] = $settings['disabled_params_text'];
         $option[ FOOCONVERT_SETTING_AI_POPUP_BUILDER_TIMEOUT ] = $settings['timeout'];
         $option[ FOOCONVERT_SETTING_AI_POPUP_BUILDER_MAX_TOOL_CALLS ] = $settings['max_tool_calls'];

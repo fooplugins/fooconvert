@@ -9,7 +9,21 @@ namespace {
         define( 'ABSPATH', __DIR__ . '/' );
     }
 
+    if ( ! defined( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_MODEL' ) ) {
+        define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_MODEL', 'ai_popup_builder_override_model' );
+        define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL', 'ai_popup_builder_override_image_model' );
+        define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_DISABLED_PARAMS', 'ai_popup_builder_disabled_params' );
+        define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_TIMEOUT', 'ai_popup_builder_timeout' );
+        define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_MAX_TOOL_CALLS', 'ai_popup_builder_max_tool_calls' );
+        define( 'FOOCONVERT_AI_POPUP_BUILDER_TIMEOUT_DEFAULT', 45 );
+        define( 'FOOCONVERT_AI_POPUP_BUILDER_MAX_TOOL_CALLS_DEFAULT', 10 );
+    }
+
     require_once dirname( __DIR__ ) . '/support/Assertions.php';
+
+    function __( string $text, ?string $domain = null ): string {
+        return $text;
+    }
 
     function add_action( string $hook, $callback, int $priority = 10, int $accepted_args = 1 ): void {
         $GLOBALS['fc_ai_settings_actions'][ $hook ][] = compact( 'callback', 'priority', 'accepted_args' );
@@ -70,6 +84,24 @@ namespace {
         'POST',
         $route_args[1]['methods'] ?? '',
         'The settings route should expose the save endpoint.'
+    );
+
+    Assertions::true(
+        isset( $route_args[1]['args']['overrideImageModel'] ),
+        'The settings route should accept the image model override setting.'
+    );
+
+    $settings = ( new AiPopupBuilderSettings() )->add_settings_tab( array() );
+    Assertions::same(
+        'Override Text Model',
+        $settings['ai_popup_builder']['fields'][ FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_MODEL ]['label'] ?? '',
+        'The existing override model field should be relabeled for text models.'
+    );
+
+    Assertions::same(
+        'Override Image Model',
+        $settings['ai_popup_builder']['fields'][ FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL ]['label'] ?? '',
+        'The settings tab should expose a separate image model override field.'
     );
 
     fwrite( STDOUT, "ai-popup-settings-route: ok\n" );

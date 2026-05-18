@@ -36,52 +36,60 @@ class ChatService {
         $activity_log           = array();
         $is_update_turn         = ! empty( $popup_draft );
 
-        if ( ! $is_update_turn ) {
-            ActivityLog::append_item(
+        try {
+            ImageGenerator::set_runtime_ai_settings( $settings );
+
+            if ( ! $is_update_turn ) {
+                ActivityLog::append_item(
+                    $activity_log,
+                    ActivityLog::preparing_context(),
+                    $stream_callbacks,
+                    'on_status'
+                );
+            }
+
+            $response = $this->generate_ai_response(
+                $messages,
+                $popup_draft,
+                $existing_media,
+                $brand,
+                $generate_images,
+                $force_image_generation,
+                $is_update_turn,
+                $settings,
                 $activity_log,
-                ActivityLog::preparing_context(),
-                $stream_callbacks,
-                'on_status'
+                $stream_callbacks
             );
-        }
 
-        $response = $this->generate_ai_response(
-            $messages,
-            $popup_draft,
-            $existing_media,
-            $brand,
-            $generate_images,
-            $force_image_generation,
-            $is_update_turn,
-            $settings,
-            $activity_log,
-            $stream_callbacks
-        );
+            ImageGenerator::set_runtime_ai_settings( $settings );
 
-        if ( is_wp_error( $response ) ) {
+            if ( is_wp_error( $response ) ) {
+                return $response;
+            }
+
+            $response = $this->maybe_force_generate_popup_background(
+                $response,
+                $messages,
+                $brand,
+                $generate_images,
+                $force_image_generation
+            );
+
+            $response = $this->maybe_force_generate_popup_image(
+                $response,
+                $messages,
+                array_column( $existing_media, 'id' ),
+                $force_image_generation
+            );
+
+            $response['media_items']  = PopupMedia::list_generated_images( self::MEDIA_ITEMS_LIMIT );
+            $response['activity_log'] = $activity_log;
+            $response['settings']     = $this->get_ai_settings_response( $settings );
+
             return $response;
+        } finally {
+            ImageGenerator::clear_runtime_ai_settings();
         }
-
-        $response = $this->maybe_force_generate_popup_background(
-            $response,
-            $messages,
-            $brand,
-            $generate_images,
-            $force_image_generation
-        );
-
-        $response = $this->maybe_force_generate_popup_image(
-            $response,
-            $messages,
-            array_column( $existing_media, 'id' ),
-            $force_image_generation
-        );
-
-        $response['media_items']  = PopupMedia::list_generated_images( self::MEDIA_ITEMS_LIMIT );
-        $response['activity_log'] = $activity_log;
-        $response['settings']     = $this->get_ai_settings_response( $settings );
-
-        return $response;
     }
 
     /**

@@ -51,6 +51,7 @@ describe( 'AI popup builder settings support', () => {
 				normalizeAiSettings(
 					{
 						overrideModel: '  gpt-test  ',
+						overrideImageModel: '  gpt-image-test  ',
 						disabledParamsText: 'temperature',
 						timeout: '20',
 						maxToolCalls: '7',
@@ -62,6 +63,7 @@ describe( 'AI popup builder settings support', () => {
 			)
 		).toEqual( {
 			overrideModel: 'gpt-test',
+			overrideImageModel: 'gpt-image-test',
 			disabledParams: [ 'temperature' ],
 			disabledParamsText: 'temperature',
 			timeout: 20,

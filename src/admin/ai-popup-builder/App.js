@@ -1290,7 +1290,9 @@ export const App = () => {
 	const currentTextModel = String(
 		aiSettings?.overrideModel || configuredCurrentTextModel || ''
 	).trim();
-	const currentImageModel = String( configuredCurrentImageModel || '' ).trim();
+	const currentImageModel = String(
+		aiSettings?.overrideImageModel || configuredCurrentImageModel || ''
+	).trim();
 	const currentImageModelLabel =
 		currentImageModel ||
 		( aiImageGenerationAvailable
@@ -1629,6 +1631,7 @@ export const App = () => {
 				brand,
 				settings: settingsPayload,
 				model: settingsPayload.overrideModel || undefined,
+				image_model: settingsPayload.overrideImageModel || undefined,
 				timeout: settingsPayload.timeout,
 				max_tool_calls: settingsPayload.maxToolCalls,
 				disabled_params: settingsPayload.disabledParams,
@@ -2482,13 +2485,26 @@ export const App = () => {
 
 			<div className={ `${ rootClass }__field-grid` }>
 				<TextControl
-					label={ __( 'Override model', 'fooconvert' ) }
+					label={ __( 'Override Text Model', 'fooconvert' ) }
 					value={ aiSettings?.overrideModel || '' }
 					onChange={ ( value ) =>
 						updateAiSettings( { overrideModel: value } )
 					}
 					placeholder={ __(
-						'Optional custom model name',
+						'Optional custom text model name',
+						'fooconvert'
+					) }
+					__nextHasNoMarginBottom
+					__next40pxDefaultSize
+				/>
+				<TextControl
+					label={ __( 'Override Image Model', 'fooconvert' ) }
+					value={ aiSettings?.overrideImageModel || '' }
+					onChange={ ( value ) =>
+						updateAiSettings( { overrideImageModel: value } )
+					}
+					placeholder={ __(
+						'Optional custom image model name',
 						'fooconvert'
 					) }
 					__nextHasNoMarginBottom

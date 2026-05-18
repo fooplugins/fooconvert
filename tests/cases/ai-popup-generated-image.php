@@ -34,6 +34,18 @@ namespace WordPress\AiClient\Providers\Models\DTO {
     }
 }
 
+namespace FooPlugins\FooConvert\AI\PopupBuilder\Blueprint {
+    class Catalog {
+        public static function sanitize_selected_block_names( $selected_block_names ): array {
+            return is_array( $selected_block_names ) ? array_values( array_filter( $selected_block_names, 'is_string' ) ) : array();
+        }
+
+        public static function get_default_selected_block_names(): array {
+            return array();
+        }
+    }
+}
+
 namespace {
     use FooPlugins\FooConvert\AI\PopupBuilder\Media\Attachments as PopupMedia;
     use FooPlugins\FooConvert\Tests\Support\Assertions;
@@ -127,6 +139,20 @@ namespace {
         return trim( strip_tags( (string) $value ) );
     }
 
+    function absint( $value ): int {
+        return abs( (int) $value );
+    }
+
+    function fooconvert_get_setting( string $key, $default = null ) {
+        $settings = $GLOBALS['fc_generated_image_settings'] ?? array();
+
+        return array_key_exists( $key, $settings ) ? $settings[ $key ] : $default;
+    }
+
+    function fooconvert_get_settings(): array {
+        return $GLOBALS['fc_generated_image_settings'] ?? array();
+    }
+
     function wp_ai_client_prompt( string $content = '' ): PopupGeneratedImagePromptBuilderStub {
         $GLOBALS['fc_generated_image_prompt'] = $content;
 
@@ -135,6 +161,15 @@ namespace {
 
     function is_wp_error( $thing ): bool {
         return $thing instanceof WP_Error;
+    }
+
+    if ( ! defined( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_MODEL' ) ) {
+        define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_MODEL', 'ai_popup_builder_override_model' );
+        define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL', 'ai_popup_builder_override_image_model' );
+        define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_DISABLED_PARAMS', 'ai_popup_builder_disabled_params' );
+        define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_TIMEOUT', 'ai_popup_builder_timeout' );
+        define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_MAX_TOOL_CALLS', 'ai_popup_builder_max_tool_calls' );
+        define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_SELECTED_BLOCKS', 'ai_popup_builder_selected_blocks' );
     }
 
     require_once __DIR__ . '/../support/Assertions.php';
@@ -164,6 +199,19 @@ namespace {
         array( 'stub-image-model' ),
         $GLOBALS['fc_generated_image_models'] ?? array(),
         'Generating popup image data should honor the preferred image model list when available.'
+    );
+
+    $GLOBALS['fc_generated_image_settings'] = array(
+        FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL => 'custom-image-model',
+    );
+    unset( $GLOBALS['fc_generated_image_models'] );
+
+    PopupMedia::generate_image_from_prompt( 'Create another calm branded popup background.' );
+
+    Assertions::same(
+        array( 'custom-image-model' ),
+        $GLOBALS['fc_generated_image_models'] ?? array(),
+        'Generating popup image data should prefer the configured image model override when it is set.'
     );
 
     echo "ai-popup-generated-image: ok\n";
