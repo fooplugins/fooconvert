@@ -260,6 +260,14 @@ class Admin {
             return $override_model;
         }
 
+        $resolved_model = $this->get_resolved_ai_model_label(
+            'text',
+            'WordPress\\AI\\get_preferred_models_for_text_generation'
+        );
+        if ( '' !== $resolved_model ) {
+            return $resolved_model;
+        }
+
         $models = $this->get_preferred_ai_models( 'WordPress\\AI\\get_preferred_models_for_text_generation' );
 
         return $models[0] ?? '';
@@ -271,9 +279,194 @@ class Admin {
      * @return string
      */
     private function get_current_image_model(): string {
+        $resolved_model = $this->get_resolved_ai_model_label(
+            'image',
+            'WordPress\\AI\\get_preferred_image_models'
+        );
+        if ( '' !== $resolved_model ) {
+            return $resolved_model;
+        }
+
         $models = $this->get_preferred_ai_models( 'WordPress\\AI\\get_preferred_image_models' );
 
         return $models[0] ?? '';
+    }
+
+    /**
+     * Returns the model the WP AI client would select from configured providers.
+     *
+     * @param string $capability Capability to resolve. Supports "text" and "image".
+     * @param string $preference_function Fully-qualified preferred-model function name.
+     * @return string
+     */
+    private function get_resolved_ai_model_label( string $capability, string $preference_function ): string {
+        $required_classes = array(
+            'WordPress\\AiClient\\AiClient',
+            'WordPress\\AiClient\\Messages\\DTO\\MessagePart',
+            'WordPress\\AiClient\\Messages\\DTO\\UserMessage',
+            'WordPress\\AiClient\\Providers\\Models\\DTO\\ModelConfig',
+            'WordPress\\AiClient\\Providers\\Models\\DTO\\ModelRequirements',
+            'WordPress\\AiClient\\Providers\\Models\\Enums\\CapabilityEnum',
+        );
+
+        if ( 'image' === $capability ) {
+            $required_classes[] = 'WordPress\\AiClient\\Files\\Enums\\FileTypeEnum';
+        }
+
+        foreach ( $required_classes as $class_name ) {
+            if ( ! class_exists( $class_name ) ) {
+                return '';
+            }
+        }
+
+        try {
+            $ai_client_class = 'WordPress\\AiClient\\AiClient';
+            if ( ! method_exists( $ai_client_class, 'defaultRegistry' ) ) {
+                return '';
+            }
+
+            $registry = call_user_func( array( $ai_client_class, 'defaultRegistry' ) );
+            if ( ! is_object( $registry ) || ! method_exists( $registry, 'findModelsMetadataForSupport' ) ) {
+                return '';
+            }
+
+            $requirements = $this->create_ai_model_requirements( $capability );
+            if ( null === $requirements ) {
+                return '';
+            }
+
+            $provider_models = $registry->findModelsMetadataForSupport( $requirements );
+            if ( ! is_array( $provider_models ) ) {
+                return '';
+            }
+
+            $candidates = $this->get_ai_model_candidate_labels( $provider_models );
+            if ( empty( $candidates ) ) {
+                return '';
+            }
+
+            foreach ( $this->get_ai_model_preference_keys( $preference_function ) as $preference_key ) {
+                if ( isset( $candidates[ $preference_key ] ) ) {
+                    return $candidates[ $preference_key ];
+                }
+            }
+
+            $first_candidate = reset( $candidates );
+
+            return is_string( $first_candidate ) ? $first_candidate : '';
+        } catch ( \Throwable $error ) {
+            return '';
+        }
+    }
+
+    /**
+     * Creates model requirements matching the popup builder request type.
+     *
+     * @param string $capability Capability to resolve. Supports "text" and "image".
+     * @return object|null
+     */
+    private function create_ai_model_requirements( string $capability ) {
+        try {
+            $message_part_class   = 'WordPress\\AiClient\\Messages\\DTO\\MessagePart';
+            $user_message_class   = 'WordPress\\AiClient\\Messages\\DTO\\UserMessage';
+            $model_config_class   = 'WordPress\\AiClient\\Providers\\Models\\DTO\\ModelConfig';
+            $requirements_class   = 'WordPress\\AiClient\\Providers\\Models\\DTO\\ModelRequirements';
+            $capability_enum_class = 'WordPress\\AiClient\\Providers\\Models\\Enums\\CapabilityEnum';
+
+            $model_config = 'image' === $capability
+                ? $this->create_image_model_config( $model_config_class )
+                : new $model_config_class();
+            $message      = new $user_message_class( array( new $message_part_class( 'FooConvert popup builder' ) ) );
+            $method       = 'image' === $capability ? 'imageGeneration' : 'textGeneration';
+
+            if ( ! is_callable( array( $capability_enum_class, $method ) ) || ! method_exists( $requirements_class, 'fromPromptData' ) ) {
+                return null;
+            }
+
+            $ai_capability = call_user_func( array( $capability_enum_class, $method ) );
+
+            return call_user_func(
+                array( $requirements_class, 'fromPromptData' ),
+                $ai_capability,
+                array( $message ),
+                $model_config
+            );
+        } catch ( \Throwable $error ) {
+            return null;
+        }
+    }
+
+    /**
+     * Creates the image request model config used by popup image generation.
+     *
+     * @param string $model_config_class Fully-qualified ModelConfig class name.
+     * @return object
+     */
+    private function create_image_model_config( string $model_config_class ) {
+        if ( method_exists( $model_config_class, 'fromArray' ) ) {
+            return call_user_func(
+                array( $model_config_class, 'fromArray' ),
+                array( 'outputFileType' => 'inline' )
+            );
+        }
+
+        return new $model_config_class();
+    }
+
+    /**
+     * Returns candidate model labels keyed like WP AI client's preference map.
+     *
+     * @param array<int,mixed> $provider_models Provider model groups from the AI registry.
+     * @return array<string,string>
+     */
+    private function get_ai_model_candidate_labels( array $provider_models ): array {
+        $candidates = array();
+
+        foreach ( $provider_models as $provider_model_group ) {
+            if (
+                ! is_object( $provider_model_group )
+                || ! method_exists( $provider_model_group, 'getProvider' )
+                || ! method_exists( $provider_model_group, 'getModels' )
+            ) {
+                continue;
+            }
+
+            $provider = $provider_model_group->getProvider();
+            $models   = $provider_model_group->getModels();
+            if ( ! is_object( $provider ) || ! method_exists( $provider, 'getId' ) || ! is_array( $models ) ) {
+                continue;
+            }
+
+            $provider_id = $this->sanitize_model_label( $provider->getId() );
+            if ( '' === $provider_id ) {
+                continue;
+            }
+
+            foreach ( $models as $model ) {
+                if ( ! is_object( $model ) || ! method_exists( $model, 'getId' ) ) {
+                    continue;
+                }
+
+                $model_id = $this->sanitize_model_label( $model->getId() );
+                if ( '' === $model_id ) {
+                    continue;
+                }
+
+                $label              = $this->format_ai_model_label( $provider_id, $model_id );
+                $provider_model_key = $this->create_ai_provider_model_preference_key( $provider_id, $model_id );
+                $model_key          = $this->create_ai_model_preference_key( $model_id );
+
+                if ( ! isset( $candidates[ $provider_model_key ] ) ) {
+                    $candidates[ $provider_model_key ] = $label;
+                }
+
+                if ( ! isset( $candidates[ $model_key ] ) ) {
+                    $candidates[ $model_key ] = $label;
+                }
+            }
+        }
+
+        return $candidates;
     }
 
     /**
@@ -283,17 +476,8 @@ class Admin {
      * @return array<int,string>
      */
     private function get_preferred_ai_models( string $function ): array {
-        if ( ! function_exists( $function ) ) {
-            return array();
-        }
-
-        $models = call_user_func( $function );
-        if ( ! is_array( $models ) ) {
-            return array();
-        }
-
         $model_names = array();
-        foreach ( $models as $model ) {
+        foreach ( $this->get_raw_preferred_ai_models( $function ) as $model ) {
             $model = $this->normalize_model_preference_label( $model );
             if ( '' !== $model ) {
                 $model_names[] = $model;
@@ -301,6 +485,141 @@ class Admin {
         }
 
         return array_values( array_unique( $model_names ) );
+    }
+
+    /**
+     * Returns raw preferred model values from a WordPress AI helper function.
+     *
+     * @param string $function Fully-qualified function name.
+     * @return array<int,mixed>
+     */
+    private function get_raw_preferred_ai_models( string $function ): array {
+        if ( ! function_exists( $function ) ) {
+            return array();
+        }
+
+        try {
+            $models = call_user_func( $function );
+        } catch ( \Throwable $error ) {
+            return array();
+        }
+
+        return is_array( $models ) ? $models : array();
+    }
+
+    /**
+     * Returns normalized preferred model keys matching WP AI client discovery.
+     *
+     * @param string $function Fully-qualified preferred-model function name.
+     * @return array<int,string>
+     */
+    private function get_ai_model_preference_keys( string $function ): array {
+        $preference_keys = array();
+
+        foreach ( $this->get_raw_preferred_ai_models( $function ) as $model ) {
+            $preference_key = $this->normalize_ai_model_preference_key( $model );
+            if ( '' !== $preference_key ) {
+                $preference_keys[] = $preference_key;
+            }
+        }
+
+        return array_values( array_unique( $preference_keys ) );
+    }
+
+    /**
+     * Normalizes a WordPress AI model preference into a discovery key.
+     *
+     * @param mixed $model Raw model preference.
+     * @return string
+     */
+    private function normalize_ai_model_preference_key( $model ): string {
+        if ( is_array( $model ) ) {
+            $provider   = $this->sanitize_model_label( $model[0] ?? '' );
+            $model_name = $this->sanitize_model_label( $model[1] ?? '' );
+
+            return '' !== $provider && '' !== $model_name
+                ? $this->create_ai_provider_model_preference_key( $provider, $model_name )
+                : '';
+        }
+
+        if ( is_object( $model ) ) {
+            return $this->normalize_ai_model_object_preference_key( $model );
+        }
+
+        $model_name = $this->sanitize_model_label( $model );
+
+        return '' !== $model_name ? $this->create_ai_model_preference_key( $model_name ) : '';
+    }
+
+    /**
+     * Normalizes a model object preference into a discovery key.
+     *
+     * @param object $model Model preference object.
+     * @return string
+     */
+    private function normalize_ai_model_object_preference_key( object $model ): string {
+        if ( ! method_exists( $model, 'metadata' ) || ! method_exists( $model, 'providerMetadata' ) ) {
+            return '';
+        }
+
+        try {
+            $metadata          = $model->metadata();
+            $provider_metadata = $model->providerMetadata();
+        } catch ( \Throwable $error ) {
+            return '';
+        }
+
+        if (
+            ! is_object( $metadata )
+            || ! method_exists( $metadata, 'getId' )
+            || ! is_object( $provider_metadata )
+            || ! method_exists( $provider_metadata, 'getId' )
+        ) {
+            return '';
+        }
+
+        $provider_id = $this->sanitize_model_label( $provider_metadata->getId() );
+        $model_id    = $this->sanitize_model_label( $metadata->getId() );
+
+        return '' !== $provider_id && '' !== $model_id
+            ? $this->create_ai_provider_model_preference_key( $provider_id, $model_id )
+            : '';
+    }
+
+    /**
+     * Creates a provider/model preference key compatible with WP AI client.
+     *
+     * @param string $provider_id Provider identifier.
+     * @param string $model_id Model identifier.
+     * @return string
+     */
+    private function create_ai_provider_model_preference_key( string $provider_id, string $model_id ): string {
+        return 'providerModel::' . $provider_id . '::' . $model_id;
+    }
+
+    /**
+     * Creates a model preference key compatible with WP AI client.
+     *
+     * @param string $model_id Model identifier.
+     * @return string
+     */
+    private function create_ai_model_preference_key( string $model_id ): string {
+        return 'model::' . $model_id;
+    }
+
+    /**
+     * Formats a resolved AI model for display.
+     *
+     * @param string $provider_id Provider identifier.
+     * @param string $model_id Model identifier.
+     * @return string
+     */
+    private function format_ai_model_label( string $provider_id, string $model_id ): string {
+        if ( '' !== $provider_id && '' !== $model_id ) {
+            return $provider_id . '/' . $model_id;
+        }
+
+        return '' !== $model_id ? $model_id : $provider_id;
     }
 
     /**

@@ -24,6 +24,75 @@ namespace WordPress\AI {
     }
 }
 
+namespace WordPress\AiClient {
+    class AiClient {
+        public static function defaultRegistry(): object {
+            return $GLOBALS['fc_ai_builder_ai_registry'] ?? new \FcAiBuilderRegistryStub( array() );
+        }
+    }
+}
+
+namespace WordPress\AiClient\Messages\DTO {
+    class MessagePart {
+        public function __construct( string $text ) {}
+    }
+
+    class UserMessage {
+        public function __construct( array $parts ) {}
+    }
+}
+
+namespace WordPress\AiClient\Providers\Models\Enums {
+    class CapabilityEnum {
+        public string $value;
+
+        private function __construct( string $value ) {
+            $this->value = $value;
+        }
+
+        public static function textGeneration(): self {
+            return new self( 'text_generation' );
+        }
+
+        public static function imageGeneration(): self {
+            return new self( 'image_generation' );
+        }
+    }
+}
+
+namespace WordPress\AiClient\Providers\Models\DTO {
+    class ModelConfig {
+        public array $data = array();
+
+        public static function fromArray( array $data ): self {
+            $config       = new self();
+            $config->data = $data;
+
+            return $config;
+        }
+    }
+
+    class ModelRequirements {
+        public object $capability;
+        public array $messages;
+        public object $model_config;
+
+        public function __construct( object $capability, array $messages, object $model_config ) {
+            $this->capability   = $capability;
+            $this->messages     = $messages;
+            $this->model_config = $model_config;
+        }
+
+        public static function fromPromptData( object $capability, array $messages, object $model_config ): self {
+            return new self( $capability, $messages, $model_config );
+        }
+    }
+}
+
+namespace WordPress\AiClient\Files\Enums {
+    class FileTypeEnum {}
+}
+
 namespace FooPlugins\FooConvert\AI\PopupBuilder\Blueprint {
     class DraftNormalizer {
         public static function get_template_library(): array {
@@ -230,6 +299,69 @@ namespace {
         return false;
     }
 
+    class FcAiBuilderRegistryStub {
+        private array $groups_by_capability;
+
+        public function __construct( array $groups_by_capability ) {
+            $this->groups_by_capability = $groups_by_capability;
+        }
+
+        public function findModelsMetadataForSupport( $requirements ): array {
+            $capability = is_object( $requirements ) && isset( $requirements->capability->value )
+                ? $requirements->capability->value
+                : '';
+
+            $GLOBALS['fc_ai_builder_model_requirements'][ $capability ] = $requirements;
+
+            return $this->groups_by_capability[ $capability ] ?? array();
+        }
+    }
+
+    class FcAiBuilderProviderModelsStub {
+        private FcAiBuilderProviderStub $provider;
+        private array $models;
+
+        public function __construct( string $provider_id, array $model_ids ) {
+            $this->provider = new FcAiBuilderProviderStub( $provider_id );
+            $this->models   = array_map(
+                static fn( string $model_id ): FcAiBuilderModelStub => new FcAiBuilderModelStub( $model_id ),
+                $model_ids
+            );
+        }
+
+        public function getProvider(): FcAiBuilderProviderStub {
+            return $this->provider;
+        }
+
+        public function getModels(): array {
+            return $this->models;
+        }
+    }
+
+    class FcAiBuilderProviderStub {
+        private string $id;
+
+        public function __construct( string $id ) {
+            $this->id = $id;
+        }
+
+        public function getId(): string {
+            return $this->id;
+        }
+    }
+
+    class FcAiBuilderModelStub {
+        private string $id;
+
+        public function __construct( string $id ) {
+            $this->id = $id;
+        }
+
+        public function getId(): string {
+            return $this->id;
+        }
+    }
+
     function fc_ai_builder_decode_config_script( string $config_script ): array {
         $prefix = 'window.FC_AI_POPUP_BUILDER = ';
         if ( 0 !== strpos( $config_script, $prefix ) ) {
@@ -325,6 +457,46 @@ namespace {
     );
 
     unset( $GLOBALS['fc_ai_builder_override_model'] );
+
+    unset( $GLOBALS['fc_ai_builder_enqueued_scripts'], $GLOBALS['fc_ai_builder_enqueued_styles'], $GLOBALS['fc_ai_builder_inline_scripts'] );
+    $GLOBALS['fc_ai_builder_text_models'] = array(
+        array( 'anthropic', 'missing-text-model' ),
+        array( 'openai', 'resolved-text-model' ),
+    );
+    $GLOBALS['fc_ai_builder_image_models'] = array();
+    $GLOBALS['fc_ai_builder_ai_registry']  = new FcAiBuilderRegistryStub(
+        array(
+            'text_generation'  => array(
+                new FcAiBuilderProviderModelsStub( 'openai', array( 'resolved-text-model' ) ),
+            ),
+            'image_generation' => array(
+                new FcAiBuilderProviderModelsStub( 'openai', array( 'resolved-image-model' ) ),
+            ),
+        )
+    );
+    $builder_with_resolved_models = new AiPopupBuilder();
+    $builder_with_resolved_models->enqueue_assets( 'admin_page_fooconvert-ai-popup-builder' );
+
+    $resolved_model_config = fc_ai_builder_decode_config_script( $GLOBALS['fc_ai_builder_inline_scripts']['fooconvert-ai-popup-builder'][1]['data'] ?? '' );
+    Assertions::same(
+        'openai/resolved-text-model',
+        $resolved_model_config['models']['currentTextModel'] ?? '',
+        'The AI popup builder config should expose the resolved configured text model instead of an unavailable preferred model.'
+    );
+
+    Assertions::same(
+        'openai/resolved-image-model',
+        $resolved_model_config['models']['currentImageModel'] ?? '',
+        'The AI popup builder config should expose the resolved configured image model when image preferences are unavailable.'
+    );
+
+    Assertions::same(
+        'inline',
+        $GLOBALS['fc_ai_builder_model_requirements']['image_generation']->model_config->data['outputFileType'] ?? '',
+        'Image model discovery should match the inline image output config used by popup media generation.'
+    );
+
+    unset( $GLOBALS['fc_ai_builder_ai_registry'], $GLOBALS['fc_ai_builder_model_requirements'] );
 
     unset( $GLOBALS['fc_ai_builder_enqueued_scripts'], $GLOBALS['fc_ai_builder_enqueued_styles'], $GLOBALS['fc_ai_builder_inline_scripts'] );
     $GLOBALS['fc_ai_builder_has_valid_ai_connection'] = false;
