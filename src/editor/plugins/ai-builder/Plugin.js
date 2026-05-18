@@ -1,5 +1,4 @@
 import { useSelect } from '@wordpress/data';
-import { ExternalLink, Flex, FlexBlock } from '@wordpress/components';
 import {
 	PluginDocumentSettingPanel,
 	store as editorStore,
@@ -113,30 +112,18 @@ const AiBuilderPlugin = () => {
 		>
 			<div className={ `${ rootClass }__stack` }>
 				<div className={ `${ rootClass }__section` }>
-					<Flex align="flex-start" justify="space-between">
-						<FlexBlock>
-							<strong>
-								{ __(
-									'Generated with AI Popup Builder',
-									'fooconvert'
-								) }
-							</strong>
-							{ formattedSavedAt && (
-								<p className={ `${ rootClass }__muted` }>
-									{ sprintf(
-										/* translators: %s is the formatted date and time when the popup draft was saved. */
-										__( 'Saved %s', 'fooconvert' ),
-										formattedSavedAt
-									) }
-								</p>
+					<strong>
+						{ __( 'Generated with AI Popup Builder', 'fooconvert' ) }
+					</strong>
+					{ formattedSavedAt && (
+						<p className={ `${ rootClass }__muted` }>
+							{ sprintf(
+								/* translators: %s is the formatted date and time when the popup draft was saved. */
+								__( 'Saved %s', 'fooconvert' ),
+								formattedSavedAt
 							) }
-						</FlexBlock>
-						{ editorData?.builderUrl && (
-							<ExternalLink href={ editorData.builderUrl }>
-								{ __( 'Open builder', 'fooconvert' ) }
-							</ExternalLink>
-						) }
-					</Flex>
+						</p>
+					) }
 				</div>
 
 				{ validation?.score !== null &&
@@ -192,24 +179,6 @@ const AiBuilderPlugin = () => {
 					title={ __( 'Suggestions', 'fooconvert' ) }
 					items={ validation?.suggestions }
 				/>
-
-				{ response?.suggested_prompts?.length > 0 && (
-					<div className={ `${ rootClass }__section` }>
-						<h3>
-							{ __( 'Suggested next prompts', 'fooconvert' ) }
-						</h3>
-						<div className={ `${ rootClass }__prompt-list` }>
-							{ response.suggested_prompts.map( ( prompt ) => (
-								<span
-									key={ prompt }
-									className={ `${ rootClass }__prompt-chip` }
-								>
-									{ prompt }
-								</span>
-							) ) }
-						</div>
-					</div>
-				) }
 			</div>
 		</PluginDocumentSettingPanel>
 	);
