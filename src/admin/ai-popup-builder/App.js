@@ -1291,6 +1291,11 @@ export const App = () => {
 		aiSettings?.overrideModel || configuredCurrentTextModel || ''
 	).trim();
 	const currentImageModel = String( configuredCurrentImageModel || '' ).trim();
+	const currentImageModelLabel =
+		currentImageModel ||
+		( aiImageGenerationAvailable
+			? __( 'Connector default', 'fooconvert' )
+			: __( 'None available', 'fooconvert' ) );
 	const initialBuilderTab = initialContextModalName ? 'context' : 'chat';
 	const liveRequestSummaryRows = [
 		{
@@ -2434,10 +2439,6 @@ export const App = () => {
 				</Notice>
 			) }
 
-			<p className={ `${ rootClass }__muted-copy` }>
-				{ __( 'Tune model behavior and block context.', 'fooconvert' ) }
-			</p>
-
 			<Card>
 				<CardHeader>
 					<h3>{ __( 'Current Models', 'fooconvert' ) }</h3>
@@ -2463,13 +2464,11 @@ export const App = () => {
 										'Current Image Model',
 										'fooconvert'
 									),
-									value:
-										currentImageModel ||
-										__( 'None available', 'fooconvert' ),
+									value: currentImageModelLabel,
 								},
 							] }
 						/>
-						{ ! currentImageModel && (
+						{ ! aiImageGenerationAvailable && (
 							<Notice status="info" isDismissible={ false }>
 								{ __(
 									'No image generation model is available.',
