@@ -76,6 +76,7 @@ import {
 	getTriggerSummary,
 	truncateText,
 } from './summary-support';
+import { getSuggestionPrompts } from './suggestion-support';
 
 const defaultBrandContext = isPlainObject( config?.brand?.defaultBrand )
 	? config.brand.defaultBrand
@@ -1081,9 +1082,6 @@ export const App = () => {
 		hasExistingDraft: requestHasExistingDraft,
 	} );
 	const chatIsBusy = isSending || isExtractingBrand || isLoadingInitialPopup;
-	const starterPrompts = Array.isArray( config?.starterPrompts )
-		? config.starterPrompts
-		: [];
 	const conversationPayloadMessages =
 		getConversationPayloadMessages( messages );
 	const previewUrl = savedPopup?.previewUrl || '';
@@ -1140,8 +1138,18 @@ export const App = () => {
 					aiSettings?.selectedBlockNames,
 					blockCatalog
 				)
-			),
+		),
 		[ aiSettings?.selectedBlockNames, blockCatalog ]
+	);
+	const suggestionPrompts = useMemo(
+		() =>
+			getSuggestionPrompts( {
+				draft,
+				selectedBlockNames: selectedBlockNameSet,
+				imageGenerationAvailable: aiImageGenerationAvailable,
+				limit: 5,
+			} ),
+		[ draft, selectedBlockNameSet ]
 	);
 	const blockSourceCounts = useMemo(
 		() =>
@@ -3767,7 +3775,7 @@ export const App = () => {
 														>
 															<p>
 																{ __(
-																	'Start with a clear popup brief or choose a starter prompt from the sidebar.',
+																	'Start with a clear popup brief or choose a suggestion from the sidebar.',
 																	'fooconvert'
 																) }
 															</p>
@@ -3981,7 +3989,7 @@ export const App = () => {
 											<CardHeader>
 												<h2>
 													{ __(
-														'Starter Prompts',
+														'Suggestions',
 														'fooconvert'
 													) }
 												</h2>
@@ -3998,15 +4006,17 @@ export const App = () => {
 												<div
 													className={ `${ rootClass }__starter-list` }
 												>
-													{ starterPrompts.map(
-														( prompt ) => (
+													{ suggestionPrompts.map(
+														( suggestion ) => (
 															<button
-																key={ prompt }
+																key={
+																	suggestion.text
+																}
 																type="button"
 																className={ `${ rootClass }__starter-card` }
 																onClick={ () =>
 																	sendPrompt(
-																		prompt
+																		suggestion.text
 																	)
 																}
 																disabled={
@@ -4015,8 +4025,37 @@ export const App = () => {
 																}
 															>
 																<span>
-																	{ prompt }
+																	{
+																		suggestion.text
+																	}
 																</span>
+																{ Array.isArray(
+																	suggestion.tags
+																) &&
+																	suggestion
+																		.tags
+																		.length >
+																		0 && (
+																		<span
+																			className={ `${ rootClass }__starter-tags` }
+																		>
+																			{ suggestion.tags.map(
+																				(
+																					tag
+																				) => (
+																					<small
+																						key={
+																							tag
+																						}
+																					>
+																						{
+																							tag
+																						}
+																					</small>
+																				)
+																			) }
+																		</span>
+																	) }
 															</button>
 														)
 													) }

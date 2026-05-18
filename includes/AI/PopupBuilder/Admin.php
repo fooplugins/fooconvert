@@ -235,12 +235,6 @@ class Admin {
                     ? Schema::get_assistant_response_schema()
                     : null,
             ),
-            'starterPrompts'   => array(
-                __( 'Goal: Black Friday email signup. Audience: first-time shoppers. Offer: 15% off. Type: popup. Trigger: exit intent. Tone: urgent and polished.', 'fooconvert' ),
-                __( 'Goal: increase cart value with free shipping. Audience: active shoppers. Offer: free shipping threshold. Type: flyout. Trigger: 4s delay. Tone: helpful and clear.', 'fooconvert' ),
-                __( 'Goal: grow newsletter subscribers. Audience: returning readers. Offer: weekly tips. Type: popup. Trigger: 50% scroll. Tone: premium and low pressure.', 'fooconvert' ),
-                __( 'Goal: promote a product launch. Audience: mobile visitors. Offer: limited launch deal. Type: bar. Trigger: immediate. Tone: concise and energetic.', 'fooconvert' ),
-            ),
         );
     }
 

@@ -665,7 +665,9 @@
 }
 
 .fc-ai-popup-builder__starter-card {
-	display: flex;
+	display: grid;
+	gap: 10px;
+	justify-items: start;
 	min-height: 96px;
 	padding: 14px;
 	border: 1px solid var(--fc-ai-border);
@@ -694,6 +696,22 @@
 
 .fc-ai-popup-builder__starter-card span {
 	line-height: 1.55;
+}
+
+.fc-ai-popup-builder__starter-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.fc-ai-popup-builder__starter-tags small {
+	padding: 2px 8px;
+	border: 1px solid var(--fc-ai-border);
+	border-radius: 999px;
+	background: var(--fc-ai-surface-subtle);
+	color: var(--fc-ai-muted);
+	font-size: 11px;
+	line-height: 1.4;
 }
 
 .fc-ai-popup-builder__composer {
