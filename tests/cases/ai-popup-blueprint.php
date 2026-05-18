@@ -471,6 +471,58 @@ namespace {
         'Popup drafts should default to an exit-intent trigger when none is provided.'
     );
 
+    $close_button_margin_draft = PopupBlueprint::sanitize_popup_draft(
+        array(
+            'popup_type'      => FOOCONVERT_POPUP_TYPE_POPUP,
+            'root_attributes' => array(
+                'content'     => array(
+                    'styles' => array(
+                        'border'     => array(
+                            'radius' => '18px',
+                        ),
+                        'dimensions' => array(
+                            'margin' => '24px',
+                        ),
+                    ),
+                ),
+                'closeButton' => array(
+                    'styles' => array(
+                        'dimensions' => array(
+                            'margin' => '4px',
+                        ),
+                    ),
+                ),
+            ),
+        )
+    );
+
+    Assertions::same(
+        '24px',
+        $close_button_margin_draft['root_attributes']['closeButton']['styles']['dimensions']['margin'] ?? '',
+        'Close button margins should match content margins when AI popup content is inset.'
+    );
+
+    $rounded_close_button_draft = PopupBlueprint::sanitize_popup_draft(
+        array(
+            'popup_type'      => FOOCONVERT_POPUP_TYPE_POPUP,
+            'root_attributes' => array(
+                'content' => array(
+                    'styles' => array(
+                        'border' => array(
+                            'radius' => '16px',
+                        ),
+                    ),
+                ),
+            ),
+        )
+    );
+
+    Assertions::same(
+        '10px',
+        $rounded_close_button_draft['root_attributes']['closeButton']['styles']['dimensions']['margin'] ?? '',
+        'Close button margins should get a small inset when AI popup content has rounded corners.'
+    );
+
     $normalized_draft = PopupBlueprint::sanitize_popup_draft(
         array(
             'popup_type'    => FOOCONVERT_POPUP_TYPE_POPUP,

@@ -226,6 +226,9 @@ describe( 'AI popup builder serializer support', () => {
 			popupAttributes.settings.trigger.steps[ 0 ].where.delaySeconds
 		).toBe( 7 );
 		expect( popupAttributes.content.styles.width ).toBe( '720px' );
+		expect(
+			popupAttributes.closeButton.styles.dimensions.margin
+		).toBe( '10px' );
 		expect( popupAttributes.openButton ).toBeUndefined();
 
 		const flyoutAttributes = buildRootAttributes(
@@ -252,6 +255,91 @@ describe( 'AI popup builder serializer support', () => {
 		expect(
 			flyoutAttributes.settings.trigger.steps[ 0 ].where.percent
 		).toBe( 35 );
+		expect(
+			flyoutAttributes.closeButton.styles.dimensions.margin
+		).toBe( '18px' );
+	} );
+
+	it( 'keeps generated close buttons inside content margins and rounded corners', () => {
+		const marginAttributes = buildRootAttributes(
+			{
+				popup_type: 'flyout',
+				root_attributes: {
+					content: {
+						styles: {
+							dimensions: {
+								margin: '24px',
+							},
+							border: {
+								radius: '18px',
+							},
+						},
+					},
+					closeButton: {
+						styles: {
+							dimensions: {
+								margin: '4px',
+							},
+						},
+					},
+				},
+			},
+			{}
+		);
+
+		expect(
+			marginAttributes.closeButton.styles.dimensions.margin
+		).toBe( '24px' );
+
+		const preservedAttributes = buildRootAttributes(
+			{
+				popup_type: 'popup',
+				root_attributes: {
+					content: {
+						styles: {
+							dimensions: {
+								margin: '12px',
+							},
+						},
+					},
+					closeButton: {
+						styles: {
+							dimensions: {
+								margin: '20px',
+							},
+						},
+					},
+				},
+			},
+			{}
+		);
+
+		expect(
+			preservedAttributes.closeButton.styles.dimensions.margin
+		).toBe( '20px' );
+
+		const roundedAttributes = buildRootAttributes(
+			{
+				popup_type: 'popup',
+				root_attributes: {
+					content: {
+						styles: {
+							border: {
+								radius: '16px',
+							},
+							dimensions: {
+								margin: '0px',
+							},
+						},
+					},
+				},
+			},
+			{}
+		);
+
+		expect(
+			roundedAttributes.closeButton.styles.dimensions.margin
+		).toBe( '10px' );
 	} );
 
 	it( 'preserves advanced Pro trigger events from AI drafts', () => {

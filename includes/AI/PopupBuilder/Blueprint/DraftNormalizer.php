@@ -3086,7 +3086,206 @@ class DraftNormalizer {
             }
         }
 
-        return $sanitized;
+        return self::apply_content_aware_close_button_margin( $sanitized );
+    }
+
+    /**
+     * Keeps the generated close button inside content margins and rounded corners.
+     *
+     * @param array<string,mixed> $attributes Root attributes.
+     * @return array<string,mixed>
+     */
+    private static function apply_content_aware_close_button_margin( array $attributes ): array {
+        $content_styles      = is_array( $attributes['content']['styles'] ?? null ) ? $attributes['content']['styles'] : array();
+        $close_button_styles = is_array( $attributes['closeButton']['styles'] ?? null ) ? $attributes['closeButton']['styles'] : array();
+        $content_margin      = $content_styles['dimensions']['margin'] ?? null;
+        $close_button_margin = $close_button_styles['dimensions']['margin'] ?? null;
+        $resolved_margin     = null;
+
+        if ( self::has_non_zero_css_value( $content_margin ) ) {
+            $resolved_margin = self::is_at_least_box_unit( $close_button_margin, $content_margin ) ? null : $content_margin;
+        } elseif ( ! self::has_non_zero_css_value( $close_button_margin ) && self::has_non_zero_css_value( $content_styles['border']['radius'] ?? null ) ) {
+            $resolved_margin = '10px';
+        }
+
+        if ( null === $resolved_margin ) {
+            return $attributes;
+        }
+
+        if ( ! isset( $attributes['closeButton'] ) || ! is_array( $attributes['closeButton'] ) ) {
+            $attributes['closeButton'] = array();
+        }
+
+        if ( ! isset( $attributes['closeButton']['styles'] ) || ! is_array( $attributes['closeButton']['styles'] ) ) {
+            $attributes['closeButton']['styles'] = array();
+        }
+
+        if ( ! isset( $attributes['closeButton']['styles']['dimensions'] ) || ! is_array( $attributes['closeButton']['styles']['dimensions'] ) ) {
+            $attributes['closeButton']['styles']['dimensions'] = array();
+        }
+
+        $attributes['closeButton']['styles']['dimensions']['margin'] = $resolved_margin;
+
+        return $attributes;
+    }
+
+    /**
+     * Checks whether a CSS-like value contains a non-zero length or token.
+     *
+     * @param mixed $value CSS value.
+     * @return bool
+     */
+    private static function has_non_zero_css_value( $value ): bool {
+        if ( is_string( $value ) ) {
+            $trimmed = trim( $value );
+            if ( '' === $trimmed ) {
+                return false;
+            }
+
+            if ( preg_match_all( '/-?\d*\.?\d+/', $trimmed, $matches ) && ! empty( $matches[0] ) ) {
+                foreach ( $matches[0] as $number ) {
+                    if ( abs( (float) $number ) > 0 ) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            return 'none' !== strtolower( $trimmed );
+        }
+
+        if ( is_array( $value ) ) {
+            foreach ( $value as $item ) {
+                if ( self::has_non_zero_css_value( $item ) ) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns top/right/bottom/left values for a box-unit value.
+     *
+     * @param mixed $value Box-unit value.
+     * @return array<string,string>|null
+     */
+    private static function get_box_unit_sides( $value ): ?array {
+        if ( is_string( $value ) ) {
+            $trimmed = trim( $value );
+            if ( '' === $trimmed ) {
+                return null;
+            }
+
+            if ( false !== stripos( $trimmed, 'calc(' ) ) {
+                return array(
+                    'top'    => $trimmed,
+                    'right'  => $trimmed,
+                    'bottom' => $trimmed,
+                    'left'   => $trimmed,
+                );
+            }
+
+            $parts = preg_split( '/\s+/', $trimmed );
+            if ( ! is_array( $parts ) || empty( $parts ) ) {
+                return null;
+            }
+
+            $top    = $parts[0] ?? '';
+            $right  = $parts[1] ?? $top;
+            $bottom = $parts[2] ?? $top;
+            $left   = $parts[3] ?? $right;
+
+            return compact( 'top', 'right', 'bottom', 'left' );
+        }
+
+        if ( is_array( $value ) ) {
+            return array(
+                'top'    => is_string( $value['top'] ?? null ) ? trim( $value['top'] ) : '',
+                'right'  => is_string( $value['right'] ?? null ) ? trim( $value['right'] ) : '',
+                'bottom' => is_string( $value['bottom'] ?? null ) ? trim( $value['bottom'] ) : '',
+                'left'   => is_string( $value['left'] ?? null ) ? trim( $value['left'] ) : '',
+            );
+        }
+
+        return null;
+    }
+
+    /**
+     * Parses simple comparable CSS lengths.
+     *
+     * @param mixed $value CSS length.
+     * @return array{amount:float,unit:string}|null
+     */
+    private static function parse_comparable_css_length( $value ): ?array {
+        if ( ! is_string( $value ) || ! preg_match( '/^(-?(?:\d+|\d*\.\d+))([a-z%]*)$/i', trim( $value ), $matches ) ) {
+            return null;
+        }
+
+        return array(
+            'amount' => (float) $matches[1],
+            'unit'   => strtolower( $matches[2] ?? '' ),
+        );
+    }
+
+    /**
+     * Checks whether a candidate CSS length is at least the required minimum.
+     *
+     * @param mixed $candidate Candidate value.
+     * @param mixed $minimum Minimum value.
+     * @return bool
+     */
+    private static function is_at_least_css_length( $candidate, $minimum ): bool {
+        if ( ! self::has_non_zero_css_value( $minimum ) ) {
+            return true;
+        }
+
+        if ( ! self::has_non_zero_css_value( $candidate ) ) {
+            return false;
+        }
+
+        $candidate_length = self::parse_comparable_css_length( $candidate );
+        $minimum_length   = self::parse_comparable_css_length( $minimum );
+
+        if ( null === $candidate_length || null === $minimum_length ) {
+            return true;
+        }
+
+        if ( $candidate_length['unit'] !== $minimum_length['unit'] ) {
+            return true;
+        }
+
+        return $candidate_length['amount'] >= $minimum_length['amount'];
+    }
+
+    /**
+     * Checks whether a candidate margin is at least the required margin on all sides.
+     *
+     * @param mixed $candidate Candidate margin.
+     * @param mixed $minimum Minimum margin.
+     * @return bool
+     */
+    private static function is_at_least_box_unit( $candidate, $minimum ): bool {
+        if ( ! self::has_non_zero_css_value( $candidate ) ) {
+            return false;
+        }
+
+        $candidate_sides = self::get_box_unit_sides( $candidate );
+        $minimum_sides   = self::get_box_unit_sides( $minimum );
+
+        if ( null === $candidate_sides || null === $minimum_sides ) {
+            return false;
+        }
+
+        foreach ( array( 'top', 'right', 'bottom', 'left' ) as $side ) {
+            if ( ! self::is_at_least_css_length( $candidate_sides[ $side ] ?? '', $minimum_sides[ $side ] ?? '' ) ) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

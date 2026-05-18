@@ -118,6 +118,158 @@ const deepMerge = ( base, overrides ) => {
 	return merged;
 };
 
+const CLOSE_BUTTON_ROUNDED_CONTENT_MARGIN = '10px';
+const boxUnitSides = [ 'top', 'right', 'bottom', 'left' ];
+
+const hasNonZeroCssValue = ( value ) => {
+	if ( typeof value === 'string' ) {
+		const trimmed = value.trim();
+		if ( trimmed.length === 0 ) {
+			return false;
+		}
+
+		const numericParts = trimmed.match( /-?\d*\.?\d+/g );
+		if ( Array.isArray( numericParts ) && numericParts.length > 0 ) {
+			return numericParts.some( ( part ) => Math.abs( Number( part ) ) > 0 );
+		}
+
+		return trimmed.toLowerCase() !== 'none';
+	}
+
+	if ( isPlainObject( value ) ) {
+		return Object.values( value ).some( hasNonZeroCssValue );
+	}
+
+	return false;
+};
+
+const parseComparableCssLength = ( value ) => {
+	if ( typeof value !== 'string' ) {
+		return null;
+	}
+
+	const match = value.trim().match( /^(-?(?:\d+|\d*\.\d+))([a-z%]*)$/i );
+	if ( ! match ) {
+		return null;
+	}
+
+	return {
+		amount: Number( match[ 1 ] ),
+		unit: match[ 2 ].toLowerCase(),
+	};
+};
+
+const getBoxUnitSides = ( value ) => {
+	if ( typeof value === 'string' ) {
+		const trimmed = value.trim();
+		if ( trimmed.length === 0 ) {
+			return null;
+		}
+
+		if ( /\bcalc\(/i.test( trimmed ) ) {
+			return {
+				top: trimmed,
+				right: trimmed,
+				bottom: trimmed,
+				left: trimmed,
+			};
+		}
+
+		const parts = trimmed.split( /\s+/ );
+		const [ top, right = top, bottom = top, left = right ] = parts;
+		return { top, right, bottom, left };
+	}
+
+	if ( isPlainObject( value ) ) {
+		return boxUnitSides.reduce( ( sides, side ) => {
+			sides[ side ] =
+				typeof value[ side ] === 'string' ? value[ side ].trim() : '';
+			return sides;
+		}, {} );
+	}
+
+	return null;
+};
+
+const isAtLeastCssLength = ( candidate, minimum ) => {
+	if ( ! hasNonZeroCssValue( minimum ) ) {
+		return true;
+	}
+
+	if ( ! hasNonZeroCssValue( candidate ) ) {
+		return false;
+	}
+
+	const candidateLength = parseComparableCssLength( candidate );
+	const minimumLength = parseComparableCssLength( minimum );
+
+	if ( ! candidateLength || ! minimumLength ) {
+		return true;
+	}
+
+	if ( candidateLength.unit !== minimumLength.unit ) {
+		return true;
+	}
+
+	return candidateLength.amount >= minimumLength.amount;
+};
+
+const isAtLeastBoxUnit = ( candidate, minimum ) => {
+	if ( ! hasNonZeroCssValue( candidate ) ) {
+		return false;
+	}
+
+	const candidateSides = getBoxUnitSides( candidate );
+	const minimumSides = getBoxUnitSides( minimum );
+
+	if ( ! candidateSides || ! minimumSides ) {
+		return false;
+	}
+
+	return boxUnitSides.every( ( side ) =>
+		isAtLeastCssLength( candidateSides[ side ], minimumSides[ side ] )
+	);
+};
+
+const getContentAwareCloseButtonMargin = ( rootAttributes ) => {
+	const contentStyles = rootAttributes?.content?.styles || {};
+	const closeButtonStyles = rootAttributes?.closeButton?.styles || {};
+	const contentMargin = contentStyles?.dimensions?.margin;
+	const closeButtonMargin = closeButtonStyles?.dimensions?.margin;
+
+	if ( hasNonZeroCssValue( contentMargin ) ) {
+		return isAtLeastBoxUnit( closeButtonMargin, contentMargin )
+			? undefined
+			: cloneDeep( contentMargin );
+	}
+
+	if ( hasNonZeroCssValue( closeButtonMargin ) ) {
+		return undefined;
+	}
+
+	return hasNonZeroCssValue( contentStyles?.border?.radius )
+		? CLOSE_BUTTON_ROUNDED_CONTENT_MARGIN
+		: undefined;
+};
+
+const applyContentAwareCloseButtonMargin = ( rootAttributes ) => {
+	const margin = getContentAwareCloseButtonMargin( rootAttributes );
+
+	if ( typeof margin === 'undefined' ) {
+		return rootAttributes;
+	}
+
+	return deepMerge( rootAttributes, {
+		closeButton: {
+			styles: {
+				dimensions: {
+					margin,
+				},
+			},
+		},
+	} );
+};
+
 export const supportedTriggerEvents = [
 	'fc.immediate',
 	'fc.anchor.click',
@@ -526,6 +678,8 @@ export const buildRootAttributes = ( draft, templatesBySlug = {} ) => {
 	} else {
 		delete rootAttributes.openButton;
 	}
+
+	rootAttributes = applyContentAwareCloseButtonMargin( rootAttributes );
 
 	return normalizeAttributeTextEntities( rootAttributes );
 };
