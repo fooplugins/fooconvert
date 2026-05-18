@@ -624,7 +624,7 @@ const formatDebugTimestamp = ( value ) => {
 
 const DebugResponseInspector = ( {
 	responses,
-	responseSchema,
+	currentResponse,
 	isLoading,
 	isClearing,
 	error,
@@ -678,17 +678,18 @@ const DebugResponseInspector = ( {
 
 			<Card>
 				<CardHeader>
-					<h3>
-						{ __(
-							'Response Schema Sent To The AI Client',
-							'fooconvert'
-						) }
-					</h3>
+					<h3>{ __( 'Current Response', 'fooconvert' ) }</h3>
 				</CardHeader>
 				<CardBody>
 					<ReadOnlyTextField
-						label={ __( 'JSON schema', 'fooconvert' ) }
-						value={ formatJsonValue( responseSchema || null ) }
+						label={ __( 'Streaming response chunks', 'fooconvert' ) }
+						value={
+							currentResponse ||
+							__(
+								'Send a chat request to watch response chunks stream here.',
+								'fooconvert'
+							)
+						}
 						rows={ 14 }
 					/>
 				</CardBody>
@@ -965,6 +966,7 @@ export const App = () => {
 	const [ activityLog, setActivityLog ] = useState( [] );
 	const [ liveActivityLog, setLiveActivityLog ] = useState( [] );
 	const [ liveReasoningSummary, setLiveReasoningSummary ] = useState( '' );
+	const [ currentResponse, setCurrentResponse ] = useState( '' );
 	const [ pendingActivityIndex, setPendingActivityIndex ] = useState( 0 );
 	const [ requestHasExistingDraft, setRequestHasExistingDraft ] =
 		useState( false );
@@ -1586,6 +1588,7 @@ export const App = () => {
 		requestReasoningSummaryRef.current = '';
 		setLiveActivityLog( [] );
 		setLiveReasoningSummary( '' );
+		setCurrentResponse( '' );
 
 		try {
 			const settingsPayload = buildAiSettingsPayload(
@@ -1624,6 +1627,17 @@ export const App = () => {
 							'/fooconvert/v1/ai-popup-builder/chat-stream',
 						nonce: config?.restNonce,
 						payload: requestPayload,
+						onChunk: ( chunk ) => {
+							if ( typeof chunk !== 'string' || chunk.length === 0 ) {
+								return;
+							}
+
+							startTransition( () => {
+								setCurrentResponse(
+									( current ) => `${ current }${ chunk }`
+								);
+							} );
+						},
 						onEvent: ( event ) => {
 							if ( ! isPlainObject( event ) ) {
 								return;
@@ -1687,6 +1701,7 @@ export const App = () => {
 					method: 'POST',
 					data: requestPayload,
 				} );
+				setCurrentResponse( formatJsonValue( response || null ) );
 			}
 
 			const assistantMessage =
@@ -2492,7 +2507,7 @@ export const App = () => {
 	const debugContent = debugTabAvailable ? (
 		<DebugResponseInspector
 			responses={ debugResponses }
-			responseSchema={ config?.debug?.responseSchema }
+			currentResponse={ currentResponse }
 			isLoading={ isLoadingDebugResponses }
 			isClearing={ isClearingDebugResponses }
 			error={ debugResponseError }

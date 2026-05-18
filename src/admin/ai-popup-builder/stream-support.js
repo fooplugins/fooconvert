@@ -146,6 +146,7 @@ export const streamChatRequest = async ( {
 	nonce,
 	payload,
 	signal,
+	onChunk,
 	onEvent,
 } ) => {
 	const response = await fetch( buildRestApiUrl( restRoot, path ), {
@@ -193,10 +194,16 @@ export const streamChatRequest = async ( {
 			break;
 		}
 
-		parser.push( decoder.decode( value, { stream: true } ) );
+		const chunk = decoder.decode( value, { stream: true } );
+		onChunk?.( chunk );
+		parser.push( chunk );
 	}
 
-	parser.push( decoder.decode() );
+	const finalChunk = decoder.decode();
+	if ( finalChunk.length > 0 ) {
+		onChunk?.( finalChunk );
+	}
+	parser.push( finalChunk );
 	parser.end();
 
 	if ( streamError.length > 0 ) {
