@@ -125,6 +125,14 @@ const aiUnavailableActionUrl = aiClientAvailable
 const aiUnavailableActionLabel = aiClientAvailable
 	? __( 'Open Settings > Connectors', 'fooconvert' )
 	: __( 'Upgrade WordPress', 'fooconvert' );
+const configuredCurrentTextModel =
+	typeof config?.models?.currentTextModel === 'string'
+		? config.models.currentTextModel
+		: '';
+const configuredCurrentImageModel =
+	typeof config?.models?.currentImageModel === 'string'
+		? config.models.currentImageModel
+		: '';
 const configuredInitialPostId = Number( config?.initialPostId );
 const initialPostId =
 	Number.isFinite( configuredInitialPostId ) && configuredInitialPostId > 0
@@ -148,12 +156,12 @@ const templatesBySlug = Array.isArray( config?.templates )
 	: {};
 const tabDefinitions = [
 	{
-		name: 'context',
-		title: __( 'Context', 'fooconvert' ),
-	},
-	{
 		name: 'chat',
 		title: __( 'Chat', 'fooconvert' ),
+	},
+	{
+		name: 'context',
+		title: __( 'Context', 'fooconvert' ),
 	},
 	{
 		name: 'details',
@@ -1125,10 +1133,6 @@ export const App = () => {
 	const abilityNames = Array.isArray( config?.abilities )
 		? config.abilities
 		: [];
-	const hasSavedBrandProfile =
-		config?.brand?.hasSavedBrand ||
-		serializeComparable( savedBrandSnapshot ) !==
-			serializeComparable( createEmptyBrand() );
 	const selectedBlockNameSet = useMemo(
 		() =>
 			new Set(
@@ -1261,16 +1265,11 @@ export const App = () => {
 	const abilityPreviewLabels = abilityNames.map( ( ability ) =>
 		String( ability ).replace( 'fooconvert/', '' )
 	);
-	let initialBuilderTab = 'context';
-	if ( initialPostId > 0 ) {
-		initialBuilderTab = 'chat';
-	} else if (
-		! initialContextModalName &&
-		hasSavedBrandProfile &&
-		! brandIsDirty
-	) {
-		initialBuilderTab = 'chat';
-	}
+	const currentTextModel = String(
+		aiSettings?.overrideModel || configuredCurrentTextModel || ''
+	).trim();
+	const currentImageModel = String( configuredCurrentImageModel || '' ).trim();
+	const initialBuilderTab = initialContextModalName ? 'context' : 'chat';
 	const liveRequestSummaryRows = [
 		{
 			label: __( 'Messages', 'fooconvert' ),
@@ -2416,6 +2415,49 @@ export const App = () => {
 			<p className={ `${ rootClass }__muted-copy` }>
 				{ __( 'Tune model behavior and block context.', 'fooconvert' ) }
 			</p>
+
+			<Card>
+				<CardHeader>
+					<h3>{ __( 'Current Models', 'fooconvert' ) }</h3>
+				</CardHeader>
+				<CardBody>
+					<div className={ `${ rootClass }__preview-stack` }>
+						<BrandPreviewList
+							rows={ [
+								{
+									label: __(
+										'Current Text Model',
+										'fooconvert'
+									),
+									value:
+										currentTextModel ||
+										__(
+											'Connector default',
+											'fooconvert'
+										),
+								},
+								{
+									label: __(
+										'Current Image Model',
+										'fooconvert'
+									),
+									value:
+										currentImageModel ||
+										__( 'None available', 'fooconvert' ),
+								},
+							] }
+						/>
+						{ ! currentImageModel && (
+							<Notice status="info" isDismissible={ false }>
+								{ __(
+									'No image generation model is available.',
+									'fooconvert'
+								) }
+							</Notice>
+						) }
+					</div>
+				</CardBody>
+			</Card>
 
 			<div className={ `${ rootClass }__field-grid` }>
 				<TextControl

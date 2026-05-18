@@ -14,6 +14,16 @@ namespace FooPlugins\FooConvert\AI {
 
 }
 
+namespace WordPress\AI {
+    function get_preferred_models_for_text_generation(): array {
+        return $GLOBALS['fc_ai_builder_text_models'] ?? array();
+    }
+
+    function get_preferred_image_models(): array {
+        return $GLOBALS['fc_ai_builder_image_models'] ?? array();
+    }
+}
+
 namespace FooPlugins\FooConvert\AI\PopupBuilder\Blueprint {
     class DraftNormalizer {
         public static function get_template_library(): array {
@@ -47,7 +57,9 @@ namespace FooPlugins\FooConvert\AI\PopupBuilder {
 
     class Settings {
         public static function to_response( ?array $settings = null ): array {
-            return array();
+            return array(
+                'overrideModel' => $GLOBALS['fc_ai_builder_override_model'] ?? '',
+            );
         }
     }
 
@@ -222,6 +234,8 @@ namespace {
     require_once dirname( __DIR__, 2 ) . '/includes/AI/PopupBuilder/Admin.php';
 
     $GLOBALS['fc_ai_builder_next_hook_suffix'] = 'popups_page_fooconvert-ai-popup-builder';
+    $GLOBALS['fc_ai_builder_text_models']      = array( 'stub-text-model' );
+    $GLOBALS['fc_ai_builder_image_models']     = array( 'stub-image-model' );
     $builder = new AiPopupBuilder();
     $builder->register_menu();
 
@@ -259,6 +273,16 @@ namespace {
     Assertions::true(
         false !== strpos( $config_script, '"aiConnectionReady":true' ),
         'The AI popup builder config should expose the valid AI connection status.'
+    );
+
+    Assertions::true(
+        false !== strpos( $config_script, '"currentTextModel":"stub-text-model"' ),
+        'The AI popup builder config should expose the current preferred text model.'
+    );
+
+    Assertions::true(
+        false !== strpos( $config_script, '"currentImageModel":"stub-image-model"' ),
+        'The AI popup builder config should expose the current preferred image model.'
     );
 
     unset( $GLOBALS['fc_ai_builder_enqueued_scripts'], $GLOBALS['fc_ai_builder_enqueued_styles'], $GLOBALS['fc_ai_builder_inline_scripts'] );

@@ -178,6 +178,7 @@ class Admin {
     private function get_editor_config(): array {
         $ai_client_available = Config::has_ai_client();
         $ai_connection_ready = Config::has_valid_ai_connection();
+        $settings            = Settings::to_response();
 
         return array(
             'api'              => array(
@@ -214,6 +215,10 @@ class Admin {
             'streamingAvailable' => $ai_connection_ready && Config::supports_streaming(),
             'imageGenerationAvailable' => $ai_connection_ready && PopupMedia::can_manage_media(),
             'canUploadMedia'   => PopupMedia::can_manage_media(),
+            'models'           => array(
+                'currentTextModel'  => $this->get_current_text_model( $settings ),
+                'currentImageModel' => $this->get_current_image_model(),
+            ),
             'abilitiesAvailable' => Abilities::wp_api_available(),
             'abilities'        => Abilities::get_allowed_abilities(),
             'brand'            => array(
@@ -221,7 +226,7 @@ class Admin {
                 'hasSavedBrand' => BrandManager::has_saved_brand(),
                 'defaultBrand'  => BrandManager::get_default_brand(),
             ),
-            'settings'         => Settings::to_response(),
+            'settings'         => $settings,
             'initialPostId'    => $this->get_initial_post_id(),
             'debug'            => array(
                 'enabled'        => function_exists( 'fooconvert_is_debug' ) && (bool) fooconvert_is_debug(),
@@ -247,6 +252,79 @@ class Admin {
     private function get_initial_post_id(): int {
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only admin page context.
         return isset( $_GET['post_id'] ) ? absint( wp_unslash( $_GET['post_id'] ) ) : 0;
+    }
+
+    /**
+     * Returns the model currently used for text generation when known.
+     *
+     * @param array<string,mixed> $settings Current AI builder settings response.
+     * @return string
+     */
+    private function get_current_text_model( array $settings ): string {
+        $override_model = $this->sanitize_model_label( $settings['overrideModel'] ?? '' );
+        if ( '' !== $override_model ) {
+            return $override_model;
+        }
+
+        $models = $this->get_preferred_ai_models( 'WordPress\\AI\\get_preferred_models_for_text_generation' );
+
+        return $models[0] ?? '';
+    }
+
+    /**
+     * Returns the model currently used for image generation when available.
+     *
+     * @return string
+     */
+    private function get_current_image_model(): string {
+        $models = $this->get_preferred_ai_models( 'WordPress\\AI\\get_preferred_image_models' );
+
+        return $models[0] ?? '';
+    }
+
+    /**
+     * Returns sanitized preferred model names from the WordPress AI client.
+     *
+     * @param string $function Fully-qualified function name.
+     * @return array<int,string>
+     */
+    private function get_preferred_ai_models( string $function ): array {
+        if ( ! function_exists( $function ) ) {
+            return array();
+        }
+
+        $models = call_user_func( $function );
+        if ( ! is_array( $models ) ) {
+            return array();
+        }
+
+        $model_names = array();
+        foreach ( $models as $model ) {
+            if ( ! is_scalar( $model ) ) {
+                continue;
+            }
+
+            $model = $this->sanitize_model_label( $model );
+            if ( '' !== $model ) {
+                $model_names[] = $model;
+            }
+        }
+
+        return array_values( array_unique( $model_names ) );
+    }
+
+    /**
+     * Sanitizes a model label for display.
+     *
+     * @param mixed $model Raw model label.
+     * @return string
+     */
+    private function sanitize_model_label( $model ): string {
+        $model = is_scalar( $model ) ? trim( (string) $model ) : '';
+
+        return function_exists( 'sanitize_text_field' )
+            ? sanitize_text_field( $model )
+            : $model;
     }
 
     /**
