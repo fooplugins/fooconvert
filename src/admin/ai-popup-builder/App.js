@@ -1149,7 +1149,7 @@ export const App = () => {
 				imageGenerationAvailable: aiImageGenerationAvailable,
 				limit: 5,
 			} ),
-		[ draft, selectedBlockNameSet ]
+		[ draft, selectedBlockNameSet, aiImageGenerationAvailable ]
 	);
 	const blockSourceCounts = useMemo(
 		() =>
