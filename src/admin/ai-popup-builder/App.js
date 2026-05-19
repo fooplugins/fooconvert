@@ -58,6 +58,7 @@ import {
 	normalizeLoadedPopupResponse,
 } from './initial-popup-support';
 import { isPlainObject } from './serializer-support';
+import { buildCleanBuilderUrl } from './navigation-support';
 import { normalizePopupType, serializeDraftToMarkup } from './serializer';
 import { streamChatRequest } from './stream-support';
 import { config, debugTabAvailable, rootClass } from './config';
@@ -1091,6 +1092,9 @@ export const App = () => {
 			savedPopup?.postId &&
 			( savedPopup?.previewUrl || savedPopup?.editUrl )
 	);
+	const canStartNewChat = messages.some(
+		( message ) => message?.role === 'assistant'
+	);
 	const conversionRationale = Array.isArray( draft?.conversion_rationale )
 		? draft.conversion_rationale.filter( Boolean )
 		: [];
@@ -1891,6 +1895,25 @@ export const App = () => {
 	const handleSubmit = async ( event ) => {
 		event.preventDefault();
 		await sendPrompt( input );
+	};
+
+	const handleStartNewChat = () => {
+		if ( typeof window === 'undefined' || ! window.location ) {
+			return;
+		}
+
+		const nextUrl = buildCleanBuilderUrl( window.location.href );
+
+		try {
+			if ( new URL( nextUrl ).href === window.location.href ) {
+				window.location.reload();
+				return;
+			}
+		} catch {
+			// Fall through to assigning the fallback builder URL.
+		}
+
+		window.location.assign( nextUrl );
 	};
 
 	const copyMarkup = async () => {
@@ -3999,6 +4022,23 @@ export const App = () => {
 																			  ) }
 																	</Button>
 																</Fragment>
+															) }
+															{ canStartNewChat && (
+																<Button
+																	variant="secondary"
+																	type="button"
+																	onClick={
+																		handleStartNewChat
+																	}
+																	disabled={
+																		chatIsBusy
+																	}
+																>
+																	{ __(
+																		'Start New Chat',
+																		'fooconvert'
+																	) }
+																</Button>
 															) }
 															<Button
 																variant="primary"
