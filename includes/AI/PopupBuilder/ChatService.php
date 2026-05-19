@@ -147,6 +147,10 @@ class ChatService {
                     );
 
                     $result = $this->generate_prompt_result( $prompt, $stream_callbacks, $settings );
+                    if ( is_wp_error( $result ) ) {
+                        $result = $this->normalize_ai_generation_error( $result );
+                    }
+
                     if ( ! is_wp_error( $result ) ) {
                         break;
                     }
@@ -270,7 +274,11 @@ class ChatService {
             || ! is_callable( $stream_callbacks['on_assistant_delta'] )
             || ! Config::supports_streaming()
         ) {
-            return $prompt->generate_text_result();
+            try {
+                return $prompt->generate_text_result();
+            } catch ( \Throwable $error ) {
+                return $this->get_ai_generation_exception_error( $error );
+            }
         }
 
         $stream_args = array(
@@ -304,10 +312,122 @@ class ChatService {
             $stream_args['request_timeout'] = $this->sanitize_ai_timeout( $settings['timeout'] ?? $this->get_default_ai_timeout() );
         }
 
-        return wp_ai_client_stream(
-            $prompt,
-            $stream_args
-        )->generate_text_result();
+        try {
+            return wp_ai_client_stream(
+                $prompt,
+                $stream_args
+            )->generate_text_result();
+        } catch ( \Throwable $error ) {
+            return $this->get_ai_generation_exception_error( $error );
+        }
+    }
+
+    /**
+     * Normalizes AI provider failures into popup-builder errors.
+     *
+     * @param WP_Error $error Provider error.
+     * @return WP_Error
+     */
+    private function normalize_ai_generation_error( WP_Error $error ): WP_Error {
+        if ( ! $this->is_missing_output_error_message( $error->get_error_message() ) ) {
+            return $error;
+        }
+
+        return $this->get_missing_output_error(
+            $error->get_error_message(),
+            $error->get_error_code(),
+            $error->get_error_data()
+        );
+    }
+
+    /**
+     * Converts thrown AI provider exceptions into popup-builder errors.
+     *
+     * @param \Throwable $error Provider exception.
+     * @return WP_Error
+     */
+    private function get_ai_generation_exception_error( \Throwable $error ): WP_Error {
+        $message = $error->getMessage();
+
+        if ( $this->is_missing_output_error_message( $message ) ) {
+            return $this->get_missing_output_error(
+                $message,
+                $error->getCode() ? (string) $error->getCode() : 'ai_client_exception',
+                array(
+                    'exception_class' => get_class( $error ),
+                )
+            );
+        }
+
+        return new WP_Error(
+            'fooconvert_ai_popup_builder_ai_client_exception',
+            sprintf(
+                /* translators: %s: provider exception message. */
+                __( 'The AI provider request failed before the popup builder received a response. Provider error: %s', 'fooconvert' ),
+                $message
+            ),
+            array(
+                'status'                 => 500,
+                'provider_error_message' => $message,
+                'exception_class'        => get_class( $error ),
+            )
+        );
+    }
+
+    /**
+     * Returns whether an AI provider message is a missing-output failure.
+     *
+     * @param string $message Provider message.
+     * @return bool
+     */
+    private function is_missing_output_error_message( string $message ): bool {
+        return 1 === preg_match( '/Unexpected\s+.+?\s+API response:\s+Missing the "output" key\.?/i', $message );
+    }
+
+    /**
+     * Builds a clearer error for provider responses that fail before returning output.
+     *
+     * @param string $provider_message Original provider message.
+     * @param string $provider_code Original provider code.
+     * @param mixed  $provider_data Original provider error data.
+     * @return WP_Error
+     */
+    private function get_missing_output_error( string $provider_message, string $provider_code = '', $provider_data = array() ): WP_Error {
+        $provider = $this->extract_provider_name_from_missing_output_error( $provider_message );
+
+        return new WP_Error(
+            'fooconvert_ai_popup_builder_no_output',
+            sprintf(
+                /* translators: %s: original provider error message. */
+                __( 'The AI connector did not return any model output. This often happens when the connected provider account has no remaining credits or quota, or when the provider returns a failed API payload. Check the AI connector account, billing, and quota details, then try again. Original provider error: %s', 'fooconvert' ),
+                $provider_message
+            ),
+            array(
+                'status'                 => 502,
+                'provider'               => $provider,
+                'provider_error_code'    => $provider_code,
+                'provider_error_message' => $provider_message,
+                'provider_error_data'    => $provider_data,
+                'likely_causes'          => array(
+                    'provider_account_quota_or_credits_exhausted',
+                    'provider_api_failed_before_output',
+                ),
+            )
+        );
+    }
+
+    /**
+     * Extracts a provider label from a missing-output error message.
+     *
+     * @param string $message Provider message.
+     * @return string
+     */
+    private function extract_provider_name_from_missing_output_error( string $message ): string {
+        if ( 1 !== preg_match( '/Unexpected\s+(.+?)\s+API response:\s+Missing the "output" key\.?/i', $message, $matches ) ) {
+            return '';
+        }
+
+        return sanitize_key( $matches[1] ?? '' );
     }
 
     /**

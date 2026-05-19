@@ -227,6 +227,25 @@ namespace {
         public function generate_text_result() {
             $call_count = (int) ( $GLOBALS['fc_popup_builder_generate_count'] ?? 0 );
             $GLOBALS['fc_popup_builder_generate_count'] = $call_count + 1;
+            $mode = (string) ( $GLOBALS['fc_popup_builder_prompt_mode'] ?? '' );
+
+            if ( 'openai_missing_output_error' === $mode ) {
+                return new WP_Error(
+                    'ai_client_error',
+                    'Unexpected OpenAI API response: Missing the "output" key.'
+                );
+            }
+
+            if ( 'anthropic_missing_output_error' === $mode ) {
+                return new WP_Error(
+                    'ai_client_error',
+                    'Unexpected Anthropic API response: Missing the "output" key.'
+                );
+            }
+
+            if ( 'openai_missing_output_exception' === $mode ) {
+                throw new \RuntimeException( 'Unexpected OpenAI API response: Missing the "output" key.' );
+            }
 
             if ( 0 === $call_count && ! empty( $GLOBALS['fc_popup_builder_prompt_calls'][ $this->index ]['temperature'] ) ) {
                 return new WP_Error(
@@ -417,6 +436,80 @@ namespace {
         'Disabled unsupported AI parameter: temperature',
         $response['activity_log'][2]['label'] ?? '',
         'The activity log should explain that the unsupported parameter was disabled.'
+    );
+
+    $GLOBALS['fc_popup_builder_prompt_mode']    = 'openai_missing_output_error';
+    $GLOBALS['fc_popup_builder_generate_count'] = 0;
+    $GLOBALS['fc_popup_builder_prompt_calls']   = array();
+
+    $openai_error = $reflection->invoke( $builder, $request_payload );
+
+    Assertions::true(
+        $openai_error instanceof WP_Error,
+        'Missing-output provider errors should be returned as WP_Error instances.'
+    );
+
+    Assertions::same(
+        'fooconvert_ai_popup_builder_no_output',
+        $openai_error->get_error_code(),
+        'Missing-output provider errors should use a generic popup-builder error code.'
+    );
+
+    Assertions::true(
+        false !== strpos( $openai_error->get_error_message(), 'no remaining credits or quota' ),
+        'Missing-output provider errors should explain the likely quota or credits issue.'
+    );
+
+    Assertions::true(
+        false !== strpos( $openai_error->get_error_message(), 'The AI connector did not return any model output.' ),
+        'Missing-output provider errors should use a provider-generic user-facing message.'
+    );
+
+    Assertions::same(
+        'Unexpected OpenAI API response: Missing the "output" key.',
+        $openai_error->get_error_data()['provider_error_message'] ?? '',
+        'Missing-output errors should preserve the original provider message in error data.'
+    );
+
+    Assertions::same(
+        'openai',
+        $openai_error->get_error_data()['provider'] ?? '',
+        'Missing-output errors should preserve the detected provider name in error data.'
+    );
+
+    $GLOBALS['fc_popup_builder_prompt_mode']    = 'anthropic_missing_output_error';
+    $GLOBALS['fc_popup_builder_generate_count'] = 0;
+    $GLOBALS['fc_popup_builder_prompt_calls']   = array();
+
+    $anthropic_error = $reflection->invoke( $builder, $request_payload );
+
+    Assertions::same(
+        'fooconvert_ai_popup_builder_no_output',
+        $anthropic_error->get_error_code(),
+        'Non-OpenAI missing-output provider errors should use the same generic popup-builder error code.'
+    );
+
+    Assertions::same(
+        'anthropic',
+        $anthropic_error->get_error_data()['provider'] ?? '',
+        'Non-OpenAI missing-output provider errors should preserve the detected provider name in error data.'
+    );
+
+    Assertions::true(
+        false === strpos( $anthropic_error->get_error_message(), 'OpenAI connector' ),
+        'Non-OpenAI missing-output provider errors should not show OpenAI-specific user-facing copy.'
+    );
+
+    $GLOBALS['fc_popup_builder_prompt_mode']    = 'openai_missing_output_exception';
+    $GLOBALS['fc_popup_builder_generate_count'] = 0;
+    $GLOBALS['fc_popup_builder_prompt_calls']   = array();
+
+    $openai_exception = $reflection->invoke( $builder, $request_payload );
+
+    Assertions::same(
+        'fooconvert_ai_popup_builder_no_output',
+        $openai_exception->get_error_code(),
+        'Thrown missing-output exceptions should be normalized to the same popup-builder error.'
     );
 
     fwrite( STDOUT, "ai-popup-settings-retry: ok\n" );
