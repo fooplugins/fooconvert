@@ -4,7 +4,7 @@ Tags: ai-popup, popup-builder, popups, flyout, announcement-bar
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 7.0
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -264,6 +264,11 @@ No, FooConvert is optimized for performance and has minimal impact on your websi
 The source code for this plugin is available publicly on GitHub [here](https://github.com/fooplugins/fooconvert).
 
 == Changelog ==
+
+= 2.1.3 =
+* Date Updated : 19 May 2026
+* Fixed : Improved AI Popup Builder recovery for malformed nested JSON responses from AI models.
+* Updated : Added parser context to invalid JSON retries and debug errors so malformed AI responses are easier to correct.
 
 = 2.1.2 =
 * Date Updated : 18 May 2026
