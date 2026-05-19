@@ -260,6 +260,112 @@ describe( 'AI popup builder serializer support', () => {
 		).toBe( '18px' );
 	} );
 
+	it( 'strips template background images while preserving generated or gradient draft backgrounds', () => {
+		const templatesBySlug = {
+			popup__newsletter_subscribe: {
+				attributes: {
+					content: {
+						styles: {
+							color: {
+								text: '#111827',
+							},
+							background: {
+								backgroundImage: {
+									url: 'https://example.test/template-background.jpg',
+								},
+								backgroundAttachment: 'scroll',
+								backgroundPosition: '50% 50%',
+								backgroundSize: 'cover',
+							},
+						},
+					},
+				},
+			},
+		};
+		const gradientAttributes = buildRootAttributes(
+			{
+				popup_type: 'popup',
+				template_slug: 'popup__newsletter_subscribe',
+				root_attributes: {
+					content: {
+						styles: {
+							color: {
+								background:
+									'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%)',
+							},
+						},
+					},
+				},
+			},
+			templatesBySlug
+		);
+
+		expect(
+			gradientAttributes.content.styles.background.backgroundImage
+		).toBeUndefined();
+		expect(
+			gradientAttributes.content.styles.background.backgroundSize
+		).toBeUndefined();
+		expect( gradientAttributes.content.styles.color.background ).toBe(
+			'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%)'
+		);
+
+		const templateGradientAttributes = buildRootAttributes(
+			{
+				popup_type: 'popup',
+				template_slug: 'popup__gradient',
+				root_attributes: {},
+			},
+			{
+				popup__gradient: {
+					attributes: {
+						content: {
+							styles: {
+								background: {
+									backgroundImage:
+										'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%)',
+								},
+							},
+						},
+					},
+				},
+			}
+		);
+
+		expect(
+			templateGradientAttributes.content.styles.background
+				.backgroundImage
+		).toBe( 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%)' );
+
+		const generatedAttributes = buildRootAttributes(
+			{
+				popup_type: 'popup',
+				template_slug: 'popup__newsletter_subscribe',
+				root_attributes: {
+					content: {
+						styles: {
+							background: {
+								backgroundImage: {
+									id: 84,
+									url: 'https://example.test/generated-background.jpg',
+								},
+								backgroundSize: 'cover',
+							},
+						},
+					},
+				},
+			},
+			templatesBySlug
+		);
+
+		expect(
+			generatedAttributes.content.styles.background.backgroundImage.url
+		).toBe( 'https://example.test/generated-background.jpg' );
+		expect(
+			generatedAttributes.content.styles.background.backgroundSize
+		).toBe( 'cover' );
+	} );
+
 	it( 'keeps generated close buttons inside content margins and rounded corners', () => {
 		const marginAttributes = buildRootAttributes(
 			{

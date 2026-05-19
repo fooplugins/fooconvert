@@ -223,6 +223,56 @@ namespace {
         'Injected popup backgrounds should default to cover sizing for popup content.'
     );
 
+    Assertions::false(
+        PopupMedia::popup_draft_has_background(
+            array(
+                'popup_type'     => FOOCONVERT_POPUP_TYPE_POPUP,
+                'template_slug'  => 'popup__newsletter_subscribe',
+                'root_attributes' => array(),
+            )
+        ),
+        'Template background images should not count as an AI popup draft background.'
+    );
+
+    Assertions::false(
+        PopupMedia::popup_draft_has_background(
+            array(
+                'popup_type'      => FOOCONVERT_POPUP_TYPE_POPUP,
+                'root_attributes' => array(
+                    'content' => array(
+                        'styles' => array(
+                            'background' => array(
+                                'backgroundImage' => 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%)',
+                            ),
+                        ),
+                    ),
+                ),
+            )
+        ),
+        'CSS gradient backgrounds should not block generated popup background images.'
+    );
+
+    Assertions::true(
+        PopupMedia::popup_draft_has_background(
+            array(
+                'popup_type'      => FOOCONVERT_POPUP_TYPE_POPUP,
+                'template_slug'   => 'popup__newsletter_subscribe',
+                'root_attributes' => array(
+                    'content' => array(
+                        'styles' => array(
+                            'background' => array(
+                                'backgroundImage' => array(
+                                    'url' => 'https://example.test/generated-background.jpg',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            )
+        ),
+        'Generated draft background images should count even when a template is used as a structural reference.'
+    );
+
     Assertions::true(
         true === PopupMedia::delete_generated_image( 77 ),
         'Generated popup media should be deletable from the builder media panel.'

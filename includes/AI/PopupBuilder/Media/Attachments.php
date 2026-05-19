@@ -899,7 +899,10 @@ class Attachments {
     }
 
     /**
-     * Returns whether the popup draft already has a background image configured.
+     * Returns whether the popup draft itself has a background image configured.
+     *
+     * Template images are structural preview assets for the template library, not
+     * generated draft backgrounds.
      *
      * @param array<string,mixed> $popup_draft Popup draft.
      * @return bool
@@ -907,18 +910,7 @@ class Attachments {
     public static function popup_draft_has_background( array $popup_draft ): bool {
         $draft = PopupBlueprint::sanitize_popup_draft( $popup_draft );
 
-        if ( self::root_attributes_have_background( $draft['root_attributes'] ?? array() ) ) {
-            return true;
-        }
-
-        $template_slug = isset( $draft['template_slug'] ) ? (string) $draft['template_slug'] : '';
-        if ( '' === $template_slug ) {
-            return false;
-        }
-
-        $template = Catalog::get_template_by_slug( $template_slug );
-
-        return is_array( $template ) && self::root_attributes_have_background( $template['attributes'] ?? array() );
+        return self::root_attributes_have_background( $draft['root_attributes'] ?? array() );
     }
 
     /**
@@ -1430,8 +1422,9 @@ class Attachments {
 
         if ( is_string( $background_image ) ) {
             $value = trim( $background_image );
+            $lower_value = strtolower( $value );
 
-            return '' !== $value && 'none' !== strtolower( $value );
+            return '' !== $value && 'none' !== $lower_value && false === strpos( $lower_value, 'gradient(' );
         }
 
         return false;

@@ -118,6 +118,48 @@ const deepMerge = ( base, overrides ) => {
 	return merged;
 };
 
+const hasBackgroundImageValue = ( backgroundImage ) => {
+	if ( isPlainObject( backgroundImage ) ) {
+		const id = Number( backgroundImage?.id );
+		return (
+			( typeof backgroundImage?.url === 'string' &&
+				backgroundImage.url.trim().length > 0 ) ||
+			( Number.isFinite( id ) && id > 0 )
+		);
+	}
+
+	if ( typeof backgroundImage === 'string' ) {
+		const value = backgroundImage.trim().toLowerCase();
+		return (
+			value.length > 0 &&
+			value !== 'none' &&
+			! value.includes( 'gradient(' )
+		);
+	}
+
+	return false;
+};
+
+const withoutTemplateBackgroundImage = ( attributes ) => {
+	const nextAttributes = cloneDeep( attributes );
+	const background = nextAttributes?.content?.styles?.background;
+
+	if (
+		! isPlainObject( background ) ||
+		! hasBackgroundImageValue( background.backgroundImage )
+	) {
+		return nextAttributes;
+	}
+
+	delete background.backgroundImage;
+	delete background.backgroundAttachment;
+	delete background.backgroundPosition;
+	delete background.backgroundRepeat;
+	delete background.backgroundSize;
+
+	return nextAttributes;
+};
+
 const CLOSE_BUTTON_ROUNDED_CONTENT_MARGIN = '10px';
 const boxUnitSides = [ 'top', 'right', 'bottom', 'left' ];
 
@@ -650,7 +692,10 @@ export const buildRootAttributes = ( draft, templatesBySlug = {} ) => {
 	let rootAttributes = deepMerge( {}, getDefaultRootAttributes( popupType ) );
 
 	if ( template?.attributes ) {
-		rootAttributes = deepMerge( rootAttributes, template.attributes );
+		rootAttributes = deepMerge(
+			rootAttributes,
+			withoutTemplateBackgroundImage( template.attributes )
+		);
 	}
 
 	if ( isPlainObject( draft?.root_attributes ) ) {

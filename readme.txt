@@ -273,6 +273,7 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 = 2.1.4 =
 * Date Updated : 19 May 2026
 * Fixed : Brand Context section Save buttons now persist edits for overview, palette, typography, and controls.
+* Fixed : AI Popup Builder drafts now prefer generated background images and gradient backgrounds instead of reusing template background images.
 
 = 2.1.3 =
 * Date Updated : 19 May 2026
