@@ -1,6 +1,6 @@
-=== FooConvert - Popup Builder for Block Editor ===
+=== FooConvert - AI Popup Builder for Block Editor ===
 Contributors: fooplugins, bradvin, steveush
-Tags: flyout, popups, popup, announcement-bar, promo-bar
+Tags: ai-popup, popup-builder, popups, flyout, announcement-bar
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 7.0
@@ -40,7 +40,7 @@ It includes free templates, built-in popup blocks, display rules, open triggers,
 
 = AI Popup Builder =
 
-Start with a simple prompt and let FooConvert create an editable popup draft for you. It can help with campaign ideas, copy, layout, images, and brand fit, so you can launch faster without starting from a blank canvas.
+Start with a simple prompt and let FooConvert's AI Popup Builder create an editable popup draft for you. It can help with campaign ideas, copy, layout, images, and brand fit, so you can launch faster without starting from a blank canvas.
 The AI tools require WordPress 7 or newer and a configured WordPress AI connector.
 
 - Create bars, flyouts, and overlays from natural-language prompts.
