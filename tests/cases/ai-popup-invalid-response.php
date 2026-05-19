@@ -384,6 +384,66 @@ namespace {
         'Decoder should complete a response that is only missing structural closing braces.'
     );
 
+    $broken_countdown_payload = <<<'JSON'
+{"assistant_message":"Created a compact product-launch bar blueprint.","clarifying_question":"","suggested_prompts":[],"media_items":[],"popup_draft":{"title":"New Product Launch Bar","popup_type":"bar","goal":"Announce a new product launch and drive visitors to the launch page.","audience":"Website visitors interested in WordPress plugins.","offer":"New product launch announcement with launch-deadline urgency.","template_slug":"bar__special_offer","trigger":{},"root_attributes":{},"content_blocks":[{"name":"core/group","attributes":{},"inner_blocks":[{"name":"fc/countdown","attributes":{"uniqueId":"launch-bar-countdown","settings":{"endDate":"2026-05-26T23:59:59+00:00"},"segment":{"styles":{"color":{"background":"#00000066","text":"#ffffff"}},"digits":{"styles":{"color":{"text":"#ffffff"}}}}},{"name":"core/buttons","attributes":{},"inner_blocks":[{"name":"core/button","attributes":{"text":"See What's New","url":"#launch"},"inner_blocks":[]}]}]}],"conversion_rationale":["Compact countdown bar."],"notes":["Replace #launch."]}}
+JSON;
+    $decoded_countdown_repair_details = ResponseParser::decode_json_response_with_metadata( $broken_countdown_payload );
+    $decoded_countdown_repair = $decoded_countdown_repair_details['response'];
+
+    Assertions::same(
+        'inserted_missing_property_object_closer',
+        $decoded_countdown_repair_details['repair_type'],
+        'Decoder should repair a missing object closer before a nested block attribute sibling such as countdown digits.'
+    );
+
+    Assertions::same(
+        'launch-bar-countdown',
+        $decoded_countdown_repair['popup_draft']['content_blocks'][0]['inner_blocks'][0]['attributes']['uniqueId'] ?? '',
+        'Repaired countdown payloads should decode to the original countdown block.'
+    );
+
+    Assertions::true(
+        isset( $decoded_countdown_repair['popup_draft']['content_blocks'][0]['inner_blocks'][0]['attributes']['digits'] ),
+        'The countdown digits attribute should remain a sibling of segment after repair.'
+    );
+
+    Assertions::false(
+        isset( $decoded_countdown_repair['popup_draft']['content_blocks'][0]['inner_blocks'][0]['attributes']['segment']['digits'] ),
+        'The repair should not leave countdown digits nested inside segment.'
+    );
+
+    Assertions::same(
+        null,
+        ResponseParser::validate_decoded_popup_response( $decoded_countdown_repair, $decoded_countdown_repair_details['decoded_payload'] ),
+        'A repaired countdown response should satisfy the popup response contract.'
+    );
+
+    $broken_countdown_error = ResponseParser::get_invalid_popup_response_error( $broken_countdown_payload );
+
+    Assertions::true(
+        false !== strpos( $broken_countdown_error->get_error_data()['parser_context'] ?? '', 'Approximate JSON parser failure near character offset' ),
+        'Invalid JSON errors should expose parser failure context in error data.'
+    );
+
+    Assertions::true(
+        false !== strpos( $broken_countdown_error->get_error_data()['parser_context'] ?? '', 'core/buttons' ),
+        'Parser failure context should include nearby response text around the malformed section.'
+    );
+
+    $retry_message_reflection = new \ReflectionMethod( ChatService::class, 'get_response_format_retry_message' );
+    $retry_message_reflection->setAccessible( true );
+    $retry_message = $retry_message_reflection->invoke( $chat_service, $broken_countdown_payload, 'Malformed nested countdown block JSON.' );
+
+    Assertions::true(
+        false !== strpos( $retry_message, 'Parser context: Approximate JSON parser failure near character offset' ),
+        'Response-format retries should tell the model where the previous JSON failed.'
+    );
+
+    Assertions::true(
+        false !== strpos( $retry_message, 'core/buttons' ),
+        'Response-format retries should include a nearby snippet from the malformed response.'
+    );
+
     $direct_draft = array(
         'title'                => 'Direct Draft',
         'popup_type'           => 'bar',

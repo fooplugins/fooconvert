@@ -688,6 +688,15 @@ class ChatService {
             );
         }
 
+        $parser_context = ResponseParser::get_json_response_error_context( $payload );
+        if ( '' !== $parser_context ) {
+            $message .= ' ' . sprintf(
+                /* translators: %s: JSON parser context detail. */
+                __( 'Parser context: %s', 'fooconvert' ),
+                $parser_context
+            );
+        }
+
         $preview = DebugResponseLog::get_response_preview( $payload, 320 );
         if ( '' !== $preview ) {
             $message .= ' ' . sprintf(
