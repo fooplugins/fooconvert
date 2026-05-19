@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: FooConvert - Popup Builder for Block Editor 2.1.2\n"
+"Project-Id-Version: FooConvert - AI Popup Builder for Flyouts, Overlays & Bars 2.1.3\n"
 "Report-Msgid-Bugs-To: https://github.com/fooplugins/fooconvert/issues\n"
 "Last-Translator: FooPlugins <info@fooplugins.com>\n"
 "Language-Team: FooPlugins <info@fooplugins.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: fooconvert.php
-msgid "FooConvert - Popup Builder for Block Editor"
+msgid "FooConvert - AI Popup Builder for Flyouts, Overlays & Bars"
 msgstr ""
 
 #. Plugin URI of the plugin

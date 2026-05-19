@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: FooConvert - Popup Builder for Block Editor
+Plugin Name: FooConvert - AI Popup Builder for Flyouts, Overlays & Bars
 Description: Create bars, flyouts, and overlays in the WordPress block editor with templates, targeting, triggers, leads, and analytics.
 Version:     2.1.3
 Author:      fooplugins
