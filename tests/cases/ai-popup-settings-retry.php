@@ -49,7 +49,7 @@ namespace WordPress\AiClient\Providers\Http\DTO {
 namespace FooPlugins\FooConvert\AI {
     class Abilities {
         public static function get_allowed_abilities( bool $enable_images = false ): array {
-            return array();
+            return array( 'fooconvert/test_ability' );
         }
     }
 }
@@ -185,9 +185,11 @@ namespace {
         public function __construct() {
             $this->index = count( $GLOBALS['fc_popup_builder_prompt_calls'] ?? array() );
             $GLOBALS['fc_popup_builder_prompt_calls'][ $this->index ] = array(
-                'temperature' => false,
-                'model'       => '',
-                'timeout'     => 0,
+                'temperature'     => false,
+                'response_format' => false,
+                'tools'           => false,
+                'model'           => '',
+                'timeout'         => 0,
             );
         }
 
@@ -205,10 +207,12 @@ namespace {
         }
 
         public function using_abilities( ...$abilities ): self {
+            $GLOBALS['fc_popup_builder_prompt_calls'][ $this->index ]['tools'] = ! empty( $abilities );
             return $this;
         }
 
         public function as_json_response( ?array $schema = null ): self {
+            $GLOBALS['fc_popup_builder_prompt_calls'][ $this->index ]['response_format'] = true;
             return $this;
         }
 
@@ -245,6 +249,19 @@ namespace {
 
             if ( 'openai_missing_output_exception' === $mode ) {
                 throw new \RuntimeException( 'Unexpected OpenAI API response: Missing the "output" key.' );
+            }
+
+            if (
+                'no_models_for_optional_params' === $mode
+                && (
+                    ! empty( $GLOBALS['fc_popup_builder_prompt_calls'][ $this->index ]['response_format'] )
+                    || ! empty( $GLOBALS['fc_popup_builder_prompt_calls'][ $this->index ]['tools'] )
+                )
+            ) {
+                return new WP_Error(
+                    'prompt_invalid_argument',
+                    'No models found that support text_generation for this prompt.'
+                );
             }
 
             if ( 0 === $call_count && ! empty( $GLOBALS['fc_popup_builder_prompt_calls'][ $this->index ]['temperature'] ) ) {
@@ -323,6 +340,7 @@ namespace {
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_MODEL', 'ai_popup_builder_override_model' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL', 'ai_popup_builder_override_image_model' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_DISABLED_PARAMS', 'ai_popup_builder_disabled_params' );
+        define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OPTIMIZE_IMAGE_OUTPUT', 'ai_popup_builder_optimize_image_output' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_TIMEOUT', 'ai_popup_builder_timeout' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_MAX_TOOL_CALLS', 'ai_popup_builder_max_tool_calls' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_SELECTED_BLOCKS', 'ai_popup_builder_selected_blocks' );
@@ -438,9 +456,52 @@ namespace {
         'The activity log should explain that the unsupported parameter was disabled.'
     );
 
+    $GLOBALS['fc_popup_builder_prompt_mode']    = 'no_models_for_optional_params';
+    $GLOBALS['fc_popup_builder_generate_count'] = 0;
+    $GLOBALS['fc_popup_builder_prompt_calls']   = array();
+    $GLOBALS['fc_popup_builder_saved_settings'] = array();
+
+    $openrouter_metadata_gap_response = $reflection->invoke( $builder, $request_payload );
+
+    Assertions::true(
+        is_array( $openrouter_metadata_gap_response ),
+        'The chat response should retry after relaxing optional model-discovery requirements.'
+    );
+
+    Assertions::same(
+        3,
+        (int) ( $GLOBALS['fc_popup_builder_generate_count'] ?? 0 ),
+        'The no-model resolver error should retry once without response format and once without tools.'
+    );
+
+    Assertions::same(
+        array( true, false, false ),
+        array_column( $GLOBALS['fc_popup_builder_prompt_calls'], 'response_format' ),
+        'The response format requirement should be disabled after the first no-model resolver error.'
+    );
+
+    Assertions::same(
+        array( true, true, false ),
+        array_column( $GLOBALS['fc_popup_builder_prompt_calls'], 'tools' ),
+        'The tools requirement should be disabled after response format has already been disabled.'
+    );
+
+    Assertions::same(
+        array( 'response_format', 'tools' ),
+        $openrouter_metadata_gap_response['settings']['disabledParams'],
+        'No-model resolver retries should return the optional parameters disabled for compatibility.'
+    );
+
+    Assertions::same(
+        array( 'response_format', 'tools' ),
+        \FooPlugins\FooConvert\AI\PopupBuilder\Settings::get()['disabled_params'],
+        'No-model resolver retry parameters should be persisted to saved Disabled Params.'
+    );
+
     $GLOBALS['fc_popup_builder_prompt_mode']    = 'openai_missing_output_error';
     $GLOBALS['fc_popup_builder_generate_count'] = 0;
     $GLOBALS['fc_popup_builder_prompt_calls']   = array();
+    $GLOBALS['fc_popup_builder_saved_settings'] = array();
 
     $openai_error = $reflection->invoke( $builder, $request_payload );
 

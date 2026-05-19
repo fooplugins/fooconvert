@@ -28,6 +28,18 @@ namespace WordPress\AiClient\Providers\DTO {
 }
 
 namespace WordPress\AiClient\Providers\Models\DTO {
+    class ModelConfig {
+        private array $custom_options = array();
+
+        public function setCustomOption( string $key, $value ): void {
+            $this->custom_options[ $key ] = $value;
+        }
+
+        public function getCustomOptions(): array {
+            return $this->custom_options;
+        }
+    }
+
     class ModelMetadata {
         public const KEY_SUPPORTED_OPTIONS = 'supportedOptions';
         public const KEY_SUPPORTED_CAPABILITIES = 'supportedCapabilities';
@@ -117,6 +129,25 @@ namespace {
         }
 
         public function as_output_file_type( $file_type ): self {
+            $GLOBALS['fc_generated_image_method_order'][] = 'output_file_type';
+
+            return $this;
+        }
+
+        public function as_output_mime_type( string $mime_type ): self {
+            $GLOBALS['fc_generated_image_method_order'][] = 'output_mime_type';
+            $GLOBALS['fc_generated_image_output_mime_type'] = $mime_type;
+
+            return $this;
+        }
+
+        public function using_model_config( $model_config ): self {
+            $GLOBALS['fc_generated_image_method_order'][] = 'model_config';
+
+            if ( method_exists( $model_config, 'getCustomOptions' ) ) {
+                $GLOBALS['fc_generated_image_custom_options'] = $model_config->getCustomOptions();
+            }
+
             return $this;
         }
 
@@ -167,6 +198,7 @@ namespace {
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_MODEL', 'ai_popup_builder_override_model' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL', 'ai_popup_builder_override_image_model' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_DISABLED_PARAMS', 'ai_popup_builder_disabled_params' );
+        define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OPTIMIZE_IMAGE_OUTPUT', 'ai_popup_builder_optimize_image_output' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_TIMEOUT', 'ai_popup_builder_timeout' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_MAX_TOOL_CALLS', 'ai_popup_builder_max_tool_calls' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_SELECTED_BLOCKS', 'ai_popup_builder_selected_blocks' );
@@ -199,6 +231,47 @@ namespace {
         array( 'stub-image-model' ),
         $GLOBALS['fc_generated_image_models'] ?? array(),
         'Generating popup image data should honor the preferred image model list when available.'
+    );
+
+    Assertions::same(
+        'image/webp',
+        $GLOBALS['fc_generated_image_output_mime_type'] ?? '',
+        'Generating popup image data should request WebP output by default.'
+    );
+
+    Assertions::same(
+        array( 'output_compression' => 80 ),
+        $GLOBALS['fc_generated_image_custom_options'] ?? array(),
+        'Generating popup image data should request compressed image output by default.'
+    );
+
+    Assertions::same(
+        array( 'model_config', 'output_file_type', 'output_mime_type' ),
+        $GLOBALS['fc_generated_image_method_order'] ?? array(),
+        'Generating popup image data should apply compression before re-applying inline file output and WebP MIME settings.'
+    );
+
+    $GLOBALS['fc_generated_image_settings'] = array(
+        FOOCONVERT_SETTING_AI_POPUP_BUILDER_OPTIMIZE_IMAGE_OUTPUT => false,
+    );
+    unset(
+        $GLOBALS['fc_generated_image_method_order'],
+        $GLOBALS['fc_generated_image_output_mime_type'],
+        $GLOBALS['fc_generated_image_custom_options']
+    );
+
+    PopupMedia::generate_image_from_prompt( 'Create an unoptimized popup background.' );
+
+    Assertions::same(
+        '',
+        $GLOBALS['fc_generated_image_output_mime_type'] ?? '',
+        'Generated popup image optimization should be skipped when disabled.'
+    );
+
+    Assertions::same(
+        array(),
+        $GLOBALS['fc_generated_image_custom_options'] ?? array(),
+        'Generated popup image compression should be skipped when optimization is disabled.'
     );
 
     $GLOBALS['fc_generated_image_settings'] = array(

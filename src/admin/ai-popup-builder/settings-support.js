@@ -157,6 +157,7 @@ export const normalizeAiSettings = ( settings, blockCatalog = [] ) => {
 			typeof source?.overrideImageModel === 'string'
 				? source.overrideImageModel
 				: '',
+		optimizeImageOutput: source?.optimizeImageOutput !== false,
 		disabledParams,
 		disabledParamsText:
 			disabledParamsText.length > 0
@@ -186,6 +187,7 @@ export const buildAiSettingsPayload = ( settings, blockCatalog = [] ) => {
 	return {
 		overrideModel: normalized.overrideModel.trim(),
 		overrideImageModel: normalized.overrideImageModel.trim(),
+		optimizeImageOutput: normalized.optimizeImageOutput,
 		disabledParams: normalized.disabledParams,
 		disabledParamsText: normalized.disabledParams.join( '\n' ),
 		timeout: normalized.timeout,

@@ -100,6 +100,35 @@ class Settings {
     }
 
     /**
+     * Sanitizes a boolean setting.
+     *
+     * @param mixed $value Raw value.
+     * @param bool  $default Default value.
+     * @return bool
+     */
+    public static function sanitize_bool( $value, bool $default = false ): bool {
+        if ( is_bool( $value ) ) {
+            return $value;
+        }
+
+        if ( is_numeric( $value ) ) {
+            return 0 !== (int) $value;
+        }
+
+        if ( is_string( $value ) ) {
+            $value = strtolower( trim( $value ) );
+            if ( in_array( $value, array( '1', 'true', 'yes', 'on' ), true ) ) {
+                return true;
+            }
+            if ( in_array( $value, array( '0', 'false', 'no', 'off' ), true ) ) {
+                return false;
+            }
+        }
+
+        return $default;
+    }
+
+    /**
      * Sanitizes a timeout value.
      *
      * @param mixed $value Raw timeout.
@@ -150,15 +179,19 @@ class Settings {
             'override_image_model' => self::sanitize_model(
                 fooconvert_get_setting( FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL, '' )
             ),
-            'disabled_params'      => $disabled_params,
-            'disabled_params_text' => implode( "\n", $disabled_params ),
-            'selected_block_names' => self::sanitize_selected_block_names(
+            'disabled_params'       => $disabled_params,
+            'disabled_params_text'  => implode( "\n", $disabled_params ),
+            'optimize_image_output' => self::sanitize_bool(
+                fooconvert_get_setting( FOOCONVERT_SETTING_AI_POPUP_BUILDER_OPTIMIZE_IMAGE_OUTPUT, true ),
+                true
+            ),
+            'selected_block_names'  => self::sanitize_selected_block_names(
                 fooconvert_get_setting( FOOCONVERT_SETTING_AI_POPUP_BUILDER_SELECTED_BLOCKS, array() )
             ),
-            'timeout'              => self::sanitize_timeout(
+            'timeout'               => self::sanitize_timeout(
                 fooconvert_get_setting( FOOCONVERT_SETTING_AI_POPUP_BUILDER_TIMEOUT, self::get_default_timeout() )
             ),
-            'max_tool_calls'       => self::sanitize_max_tool_calls(
+            'max_tool_calls'        => self::sanitize_max_tool_calls(
                 fooconvert_get_setting( FOOCONVERT_SETTING_AI_POPUP_BUILDER_MAX_TOOL_CALLS, self::get_default_max_tool_calls() )
             ),
         );
@@ -178,6 +211,7 @@ class Settings {
             'overrideImageModel'  => $settings['override_image_model'],
             'disabledParams'      => $settings['disabled_params'],
             'disabledParamsText'  => $settings['disabled_params_text'],
+            'optimizeImageOutput' => $settings['optimize_image_output'],
             'timeout'             => $settings['timeout'],
             'timeoutDefault'      => self::get_default_timeout(),
             'maxToolCalls'        => $settings['max_tool_calls'],
@@ -206,19 +240,21 @@ class Settings {
         if ( null === $disabled_params ) {
             $disabled_params = $payload['disabledParamsText'] ?? $payload['disabled_params_text'] ?? $current['disabled_params'];
         }
-        $timeout              = $payload['timeout'] ?? $current['timeout'];
-        $max_tool_calls       = $payload['maxToolCalls'] ?? $payload['max_tool_calls'] ?? $current['max_tool_calls'];
-        $selected_block_names = $payload['selectedBlockNames'] ?? $payload['selected_block_names'] ?? ( $current['selected_block_names'] ?? array() );
-        $disabled_params      = self::sanitize_disabled_params( $disabled_params );
+        $timeout               = $payload['timeout'] ?? $current['timeout'];
+        $max_tool_calls        = $payload['maxToolCalls'] ?? $payload['max_tool_calls'] ?? $current['max_tool_calls'];
+        $optimize_image_output = $payload['optimizeImageOutput'] ?? $payload['optimize_image_output'] ?? $current['optimize_image_output'];
+        $selected_block_names  = $payload['selectedBlockNames'] ?? $payload['selected_block_names'] ?? ( $current['selected_block_names'] ?? array() );
+        $disabled_params       = self::sanitize_disabled_params( $disabled_params );
 
         return array(
             'override_model'       => self::sanitize_model( $override_model ),
             'override_image_model' => self::sanitize_model( $override_image_model ),
-            'disabled_params'      => $disabled_params,
-            'disabled_params_text' => implode( "\n", $disabled_params ),
-            'selected_block_names' => self::sanitize_selected_block_names( $selected_block_names ),
-            'timeout'              => self::sanitize_timeout( $timeout ),
-            'max_tool_calls'       => self::sanitize_max_tool_calls( $max_tool_calls ),
+            'disabled_params'       => $disabled_params,
+            'disabled_params_text'  => implode( "\n", $disabled_params ),
+            'optimize_image_output' => self::sanitize_bool( $optimize_image_output, true ),
+            'selected_block_names'  => self::sanitize_selected_block_names( $selected_block_names ),
+            'timeout'               => self::sanitize_timeout( $timeout ),
+            'max_tool_calls'        => self::sanitize_max_tool_calls( $max_tool_calls ),
         );
     }
 
@@ -238,6 +274,7 @@ class Settings {
         $option[ FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_MODEL ] = $settings['override_model'];
         $option[ FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL ] = $settings['override_image_model'];
         $option[ FOOCONVERT_SETTING_AI_POPUP_BUILDER_DISABLED_PARAMS ] = $settings['disabled_params_text'];
+        $option[ FOOCONVERT_SETTING_AI_POPUP_BUILDER_OPTIMIZE_IMAGE_OUTPUT ] = $settings['optimize_image_output'];
         $option[ FOOCONVERT_SETTING_AI_POPUP_BUILDER_TIMEOUT ] = $settings['timeout'];
         $option[ FOOCONVERT_SETTING_AI_POPUP_BUILDER_MAX_TOOL_CALLS ] = $settings['max_tool_calls'];
         $option[ FOOCONVERT_SETTING_AI_POPUP_BUILDER_SELECTED_BLOCKS ] = $settings['selected_block_names'];

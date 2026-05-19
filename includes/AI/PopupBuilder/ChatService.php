@@ -155,7 +155,7 @@ class ChatService {
                         break;
                     }
 
-                    $unsupported_param = $this->extract_unsupported_parameter_from_error( $result );
+                    $unsupported_param = $this->extract_unsupported_parameter_from_error( $result, $settings );
                     if ( '' === $unsupported_param || $this->is_ai_param_disabled( $settings, $unsupported_param ) || $retry_count >= 4 ) {
                         return $result;
                     }
@@ -630,10 +630,11 @@ class ChatService {
     /**
      * Extracts an unsupported request parameter from a model error.
      *
-     * @param WP_Error $error Error response.
+     * @param WP_Error            $error Error response.
+     * @param array<string,mixed> $settings AI request settings.
      * @return string
      */
-    private function extract_unsupported_parameter_from_error( WP_Error $error ): string {
+    private function extract_unsupported_parameter_from_error( WP_Error $error, array $settings = array() ): string {
         $message = $error->get_error_message();
         $patterns = array(
             '/Unsupported parameter:\s*[\'"]([^\'"]+)[\'"]/i',
@@ -645,6 +646,38 @@ class ChatService {
         foreach ( $patterns as $pattern ) {
             if ( preg_match( $pattern, $message, $matches ) ) {
                 return $this->normalize_ai_param_name( $matches[1] ?? '' );
+            }
+        }
+
+        $fallback_param = $this->extract_ai_model_support_fallback_param( $message, $settings );
+        if ( '' !== $fallback_param ) {
+            return $fallback_param;
+        }
+
+        return '';
+    }
+
+    /**
+     * Infers a retryable optional parameter when AI client model discovery fails.
+     *
+     * Some connectors expose usable text models but do not advertise support for
+     * optional schema/tool options in model metadata. The AI client rejects those
+     * prompts before sending a provider request, so the provider cannot return a
+     * parameter-specific unsupported error. Retry by relaxing the most expensive
+     * optional popup-builder requirements in a stable order.
+     *
+     * @param string              $message Error message from the AI client.
+     * @param array<string,mixed> $settings AI request settings.
+     * @return string
+     */
+    private function extract_ai_model_support_fallback_param( string $message, array $settings ): string {
+        if ( 1 !== preg_match( '/No models found(?: for provider "[^"]+")? that support text_generation for this prompt\./i', $message ) ) {
+            return '';
+        }
+
+        foreach ( array( 'response_format', 'tools' ) as $param ) {
+            if ( ! $this->is_ai_param_disabled( $settings, $param ) ) {
+                return $param;
             }
         }
 

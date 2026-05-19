@@ -692,7 +692,10 @@ const DebugResponseInspector = ( {
 				</CardHeader>
 				<CardBody>
 					<ReadOnlyTextField
-						label={ __( 'Streaming response chunks', 'fooconvert' ) }
+						label={ __(
+							'Streaming response chunks',
+							'fooconvert'
+						) }
 						value={
 							currentResponse ||
 							__(
@@ -1142,7 +1145,7 @@ export const App = () => {
 					aiSettings?.selectedBlockNames,
 					blockCatalog
 				)
-		),
+			),
 		[ aiSettings?.selectedBlockNames, blockCatalog ]
 	);
 	const suggestionPrompts = useMemo(
@@ -1669,7 +1672,10 @@ export const App = () => {
 						nonce: config?.restNonce,
 						payload: requestPayload,
 						onChunk: ( chunk ) => {
-							if ( typeof chunk !== 'string' || chunk.length === 0 ) {
+							if (
+								typeof chunk !== 'string' ||
+								chunk.length === 0
+							) {
 								return;
 							}
 
@@ -1802,6 +1808,8 @@ export const App = () => {
 									nextResponseSettings.disabledParams,
 								disabledParamsText:
 									nextResponseSettings.disabledParamsText,
+								optimizeImageOutput:
+									nextResponseSettings.optimizeImageOutput,
 								timeoutDefault:
 									nextResponseSettings.timeoutDefault,
 								maxToolCallsDefault:
@@ -1822,6 +1830,8 @@ export const App = () => {
 									nextResponseSettings.disabledParams,
 								disabledParamsText:
 									nextResponseSettings.disabledParamsText,
+								optimizeImageOutput:
+									nextResponseSettings.optimizeImageOutput,
 								timeoutDefault:
 									nextResponseSettings.timeoutDefault,
 								maxToolCallsDefault:
@@ -2488,10 +2498,7 @@ export const App = () => {
 									),
 									value:
 										currentTextModel ||
-										__(
-											'Connector default',
-											'fooconvert'
-										),
+										__( 'Connector default', 'fooconvert' ),
 								},
 								{
 									label: __(
@@ -2576,6 +2583,25 @@ export const App = () => {
 					__nextHasNoMarginBottom
 					__next40pxDefaultSize
 				/>
+				<div className={ `${ rootClass }__field-grid-span` }>
+					<CheckboxControl
+						label={ __(
+							'Optimize Generated Images',
+							'fooconvert'
+						) }
+						checked={ aiSettings?.optimizeImageOutput !== false }
+						onChange={ ( value ) =>
+							updateAiSettings( {
+								optimizeImageOutput: Boolean( value ),
+							} )
+						}
+						help={ __(
+							'Requests WebP output and compression for generated popup images. Disable this if your AI image provider rejects output_format or output_compression.',
+							'fooconvert'
+						) }
+						__nextHasNoMarginBottom
+					/>
+				</div>
 				<div className={ `${ rootClass }__field-grid-span` }>
 					<TextareaControl
 						label={ __( 'Disabled Params', 'fooconvert' ) }
@@ -4496,7 +4522,7 @@ export const App = () => {
 																						}
 																					>
 																						{ __(
-																							'Use In Popup',
+																							'Use as Background',
 																							'fooconvert'
 																						) }
 																					</Button>
@@ -4506,6 +4532,8 @@ export const App = () => {
 																							href={
 																								mediaItem.editUrl
 																							}
+																							target="_blank"
+																							rel="noopener noreferrer"
 																							icon={
 																								external
 																							}

@@ -12,11 +12,16 @@ use WordPress\AiClient\Files\DTO\File;
 use WordPress\AiClient\Files\Enums\FileTypeEnum;
 use WordPress\AiClient\Providers\DTO\ProviderMetadata;
 use WordPress\AiClient\Providers\Http\DTO\RequestOptions;
+use WordPress\AiClient\Providers\Models\DTO\ModelConfig;
 use WordPress\AiClient\Providers\Models\DTO\ModelMetadata;
 
 defined( 'ABSPATH' ) || exit;
 
 class Attachments {
+
+    private const OPTIMIZED_IMAGE_MIME_TYPE = 'image/webp';
+
+    private const OPTIMIZED_IMAGE_COMPRESSION = 80;
 
     public const META_GENERATED = '_fooconvert_ai_popup_generated';
 
@@ -657,8 +662,11 @@ class Attachments {
         $request_options->setTimeout( 90 );
 
         $prompt_builder = wp_ai_client_prompt( $prompt )
-            ->using_request_options( $request_options )
+            ->using_request_options( $request_options );
+
+        $prompt_builder = self::apply_image_output_compression_settings( $prompt_builder )
             ->as_output_file_type( FileTypeEnum::inline() );
+        $prompt_builder = self::apply_image_output_mime_type_settings( $prompt_builder );
 
         if ( ! self::is_ai_param_disabled( 'model' ) && method_exists( $prompt_builder, 'using_model_preference' ) ) {
             $settings       = self::get_ai_settings();
@@ -721,6 +729,65 @@ class Attachments {
                 $error
             );
         }
+    }
+
+    /**
+     * Applies generated-image output MIME settings when enabled.
+     *
+     * @param mixed $prompt_builder Prompt builder.
+     * @return mixed
+     */
+    private static function apply_image_output_mime_type_settings( $prompt_builder ) {
+        if ( ! self::should_optimize_image_output() ) {
+            return $prompt_builder;
+        }
+
+        if (
+            ! self::is_ai_param_disabled( 'output_format' ) &&
+            ! self::is_ai_param_disabled( 'output_mime_type' ) &&
+            is_callable( array( $prompt_builder, 'as_output_mime_type' ) )
+        ) {
+            $prompt_builder = $prompt_builder->as_output_mime_type( self::OPTIMIZED_IMAGE_MIME_TYPE );
+        }
+
+        return $prompt_builder;
+    }
+
+    /**
+     * Applies generated-image output compression settings when enabled.
+     *
+     * @param mixed $prompt_builder Prompt builder.
+     * @return mixed
+     */
+    private static function apply_image_output_compression_settings( $prompt_builder ) {
+        if (
+            ! self::should_optimize_image_output() ||
+            self::is_ai_param_disabled( 'output_compression' ) ||
+            ! class_exists( ModelConfig::class ) ||
+            ! is_callable( array( $prompt_builder, 'using_model_config' ) )
+        ) {
+            return $prompt_builder;
+        }
+
+        $model_config = new ModelConfig();
+        if ( ! method_exists( $model_config, 'setCustomOption' ) ) {
+            return $prompt_builder;
+        }
+
+        $model_config->setCustomOption( 'output_compression', self::OPTIMIZED_IMAGE_COMPRESSION );
+
+        return $prompt_builder->using_model_config( $model_config );
+    }
+
+    /**
+     * Returns whether generated image output optimization should be requested.
+     *
+     * @return bool
+     */
+    private static function should_optimize_image_output(): bool {
+        $settings = self::get_ai_settings();
+
+        return Settings::sanitize_bool( $settings['optimize_image_output'] ?? true, true );
     }
 
     /**

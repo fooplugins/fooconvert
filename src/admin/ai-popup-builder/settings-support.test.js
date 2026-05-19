@@ -53,6 +53,7 @@ describe( 'AI popup builder settings support', () => {
 						overrideModel: '  gpt-test  ',
 						overrideImageModel: '  gpt-image-test  ',
 						disabledParamsText: 'temperature',
+						optimizeImageOutput: false,
 						timeout: '20',
 						maxToolCalls: '7',
 						selectedBlockNames: [ 'fc/sign-up' ],
@@ -64,11 +65,18 @@ describe( 'AI popup builder settings support', () => {
 		).toEqual( {
 			overrideModel: 'gpt-test',
 			overrideImageModel: 'gpt-image-test',
+			optimizeImageOutput: false,
 			disabledParams: [ 'temperature' ],
 			disabledParamsText: 'temperature',
 			timeout: 20,
 			maxToolCalls: 7,
 			selectedBlockNames: [ 'fc/sign-up' ],
 		} );
+	} );
+
+	it( 'defaults generated image optimization on', () => {
+		expect(
+			normalizeAiSettings( {}, blockCatalog ).optimizeImageOutput
+		).toBe( true );
 	} );
 } );

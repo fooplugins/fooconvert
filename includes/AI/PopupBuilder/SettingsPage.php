@@ -75,6 +75,17 @@ class SettingsPage {
                     'placeholder' => "temperature\nresponse_format",
                     'desc'        => __( 'One parameter per line or comma-separated. Listed optional parameters are not sent with AI chat requests.', 'fooconvert' ),
                 ),
+                FOOCONVERT_SETTING_AI_POPUP_BUILDER_OPTIMIZE_IMAGE_OUTPUT => array(
+                    'id'                  => FOOCONVERT_SETTING_AI_POPUP_BUILDER_OPTIMIZE_IMAGE_OUTPUT,
+                    'order'               => 55,
+                    'type'                => 'checkbox',
+                    'label'               => __( 'Optimize Generated Images', 'fooconvert' ),
+                    'default'             => 'on',
+                    'desc'                => __( 'Request WebP output and compression for generated popup images. Disable this if your AI image provider rejects output_format or output_compression.', 'fooconvert' ),
+                    'before_input_render' => array( $this, 'render_checkbox_off_value' ),
+                    'value_decoder'       => array( $this, 'decode_optimize_image_output_field' ),
+                    'value_encoder'       => array( $this, 'encode_optimize_image_output_field' ),
+                ),
                 FOOCONVERT_SETTING_AI_POPUP_BUILDER_TIMEOUT => array(
                     'id'      => FOOCONVERT_SETTING_AI_POPUP_BUILDER_TIMEOUT,
                     'order'   => 30,
@@ -99,6 +110,43 @@ class SettingsPage {
         );
 
         return $settings;
+    }
+
+    /**
+     * Renders a hidden fallback so an unchecked default-on checkbox can save off.
+     *
+     * @param mixed $field FooFields field instance.
+     * @return void
+     */
+    public function render_checkbox_off_value( $field ): void {
+        if ( ! is_object( $field ) || ! isset( $field->name ) ) {
+            return;
+        }
+
+        printf(
+            '<input type="hidden" name="%s" value="off" />',
+            esc_attr( $field->name )
+        );
+    }
+
+    /**
+     * Decodes the saved optimize-image setting for the FooFields checkbox.
+     *
+     * @param mixed $value Saved value.
+     * @return string
+     */
+    public function decode_optimize_image_output_field( $value ): string {
+        return Settings::sanitize_bool( $value, true ) ? 'on' : '';
+    }
+
+    /**
+     * Encodes the posted optimize-image checkbox value for storage.
+     *
+     * @param mixed $value Posted value.
+     * @return bool
+     */
+    public function encode_optimize_image_output_field( $value ): bool {
+        return Settings::sanitize_bool( $value, true );
     }
 
     /**
@@ -132,6 +180,9 @@ class SettingsPage {
                         ),
                         'disabledParamsText' => array(
                             'type' => 'string',
+                        ),
+                        'optimizeImageOutput' => array(
+                            'type' => 'boolean',
                         ),
                         'timeout'            => array(
                             'type' => 'integer',
@@ -174,6 +225,7 @@ class SettingsPage {
                 'overrideImageModel' => $request->get_param( 'overrideImageModel' ),
                 'disabledParams'     => $request->get_param( 'disabledParams' ),
                 'disabledParamsText' => $request->get_param( 'disabledParamsText' ),
+                'optimizeImageOutput' => $request->get_param( 'optimizeImageOutput' ),
                 'timeout'            => $request->get_param( 'timeout' ),
                 'maxToolCalls'       => $request->get_param( 'maxToolCalls' ),
                 'selectedBlockNames' => $request->get_param( 'selectedBlockNames' ),
