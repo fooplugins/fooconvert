@@ -362,7 +362,7 @@ namespace {
             'messages'               => array(
                 array(
                     'role'    => 'user',
-                    'content' => 'Build a popup for a launch discount.',
+                    'content' => 'Build a popup for a launch discount. Use the Coupon block with code SAVE20 and a countdown timer. Use a warm gradient background with soft depth.',
                 ),
             ),
             'popup_draft'            => array(),
@@ -404,9 +404,9 @@ namespace {
     );
 
     Assertions::same(
-        'Build a popup for a launch discount.',
+        'Use a warm gradient background with soft depth',
         (string) ( $GLOBALS['fc_generated_background_instructions'] ?? '' ),
-        'The automatic popup background generation should use the latest user message as additional direction.'
+        'The automatic popup background generation should keep only background-specific visual direction from the latest user message.'
     );
 
     Assertions::same(

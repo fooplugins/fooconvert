@@ -424,8 +424,9 @@ class Attachments {
         $brand   = self::get_effective_brand_context( $brand );
         $content = self::build_popup_background_context( $draft, $brand );
 
-        if ( '' !== trim( $instructions ) ) {
-            $content .= "\n\n<additional-direction>" . sanitize_text_field( $instructions ) . '</additional-direction>';
+        $background_instructions = self::build_background_additional_direction( $instructions );
+        if ( '' !== $background_instructions ) {
+            $content .= "\n\n<background-additional-direction>" . $background_instructions . '</background-additional-direction>';
         }
 
         $result = self::generate_text_prompt(
@@ -445,7 +446,7 @@ class Attachments {
             );
         }
 
-        return $prompt;
+        return self::normalize_background_prompt_result( $prompt, $draft, $brand );
     }
 
     /**
@@ -1080,7 +1081,8 @@ class Attachments {
                 'This asset must function as a background behind popup copy and CTA controls, not as a standalone poster.',
                 'Use the popup goal, audience, offer, popup format, and brand context as factual grounding.',
                 'Favor brand-aligned color, restrained contrast, large calm areas, and composition that preserves legibility for nearby text.',
-                'Do not include typography, UI chrome, mockups, watermarks, logos, or embedded text in the image.',
+                'Do not describe a completed popup, modal, web page, screenshot, UI render, or template mockup.',
+                'Do not include typography, buttons, form fields, coupon codes, countdown timers, UI chrome, mockups, watermarks, logos, or embedded text in the image.',
                 'Keep any subject matter secondary and supportive so the CTA remains dominant.',
                 'Respect the requested aspect ratio guidance implied by the popup format.',
                 'Keep the prompt concise but specific enough to generate a polished, production-ready popup background.',
@@ -1141,7 +1143,7 @@ class Attachments {
      * @return string
      */
     private static function build_popup_background_context( array $draft, array $brand ): string {
-        $copy_fragments      = self::extract_copy_fragments( $draft['content_blocks'] ?? array() );
+        $copy_fragment_count = count( self::extract_copy_fragments( $draft['content_blocks'] ?? array() ) );
         $template            = Catalog::get_template_by_slug( (string) ( $draft['template_slug'] ?? '' ) );
         $popup_type_key      = (string) ( $draft['popup_type'] ?? '' );
         $popup_type          = fooconvert_get_popup_type_label( $popup_type_key );
@@ -1163,12 +1165,14 @@ class Attachments {
         );
 
         if ( is_array( $template ) ) {
-            $lines[] = 'Template: ' . self::sanitize_text( $template['title'] ?? '' );
-            $lines[] = 'Template Description: ' . self::sanitize_text( $template['description'] ?? '' );
+            $lines[] = 'Template Reference: ' . self::sanitize_text( $template['title'] ?? '' ) . ' (format context only; do not depict the template, layout, or controls).';
         }
 
-        if ( ! empty( $copy_fragments ) ) {
-            $lines[] = 'Popup Copy Signals: ' . implode( ' | ', array_slice( $copy_fragments, 0, 8 ) );
+        if ( $copy_fragment_count > 0 ) {
+            $lines[] = sprintf(
+                'Copy Placement Need: Leave quiet image area for %d popup copy or CTA element(s); do not render the wording, CTA, form controls, coupon codes, countdown timers, or buttons.',
+                min( $copy_fragment_count, 8 )
+            );
         }
 
         if ( ! empty( $popup_guidance['best_for'] ) ) {
@@ -1181,10 +1185,144 @@ class Attachments {
             $lines[] = '</brand>';
         }
 
-        $lines[] = 'Background Requirements: Create a background-only asset that is stylish but restrained, preserves generous negative space for headline and CTA copy, avoids embedded text, avoids UI elements, and does not compete with the conversion goal.';
+        $lines[] = 'Background Requirements: Create a background-only asset that is stylish but restrained, preserves generous negative space for headline and CTA copy, avoids embedded text, avoids UI elements, and does not compete with the conversion goal. Do not create a screenshot, rendering, or mockup of the finished popup.';
         $lines[] = '</popup-background>';
 
         return implode( "\n", array_filter( $lines ) );
+    }
+
+    /**
+     * Builds background-safe handling for optional user direction.
+     *
+     * @param string $instructions Optional additional direction.
+     * @return string
+     */
+    private static function build_background_additional_direction( string $instructions ): string {
+        $instructions = sanitize_text_field( $instructions );
+        if ( '' === trim( $instructions ) ) {
+            return '';
+        }
+
+        return implode(
+            "\n",
+            array(
+                'Use the following user direction only for background-relevant visual cues such as mood, subject matter, palette, texture, lighting, scene, or composition.',
+                'Ignore any popup layout, block, form, coupon, countdown, button, control, copywriting, CTA, or text instructions. Do not depict a popup UI or reproduce user-provided words.',
+                $instructions,
+            )
+        );
+    }
+
+    /**
+     * Normalizes the generated background image prompt.
+     *
+     * @param string              $prompt AI-generated prompt.
+     * @param array<string,mixed> $draft Popup draft.
+     * @param array<string,mixed> $brand Brand payload.
+     * @return string
+     */
+    private static function normalize_background_prompt_result( string $prompt, array $draft, array $brand ): string {
+        $prompt = sanitize_text_field( trim( $prompt ) );
+
+        if ( self::looks_like_popup_design_response( $prompt ) ) {
+            $prompt = self::build_background_fallback_prompt( $draft, $brand );
+        }
+
+        return self::enforce_background_prompt_constraints( $prompt );
+    }
+
+    /**
+     * Returns whether a background prompt response appears to be a popup design/code answer.
+     *
+     * @param string $prompt AI-generated prompt.
+     * @return bool
+     */
+    private static function looks_like_popup_design_response( string $prompt ): bool {
+        if ( strlen( $prompt ) > 1200 ) {
+            return true;
+        }
+
+        $patterns = array(
+            '/```/',
+            '/<\/?[a-z][^>]*>/i',
+            '/\b(?:html|css|javascript)\b/i',
+            '/\b(?:position|display|width|height|font-family|border-radius|box-shadow|z-index|padding|margin)\s*:/i',
+            '/(?:^|\s)--[a-z0-9-]+\s*:/i',
+            '/\b(?:ready-to-use|recommended popup copy|popup copy used|popup design|flyout design|newsletter-flyout|email placeholder)\b/i',
+            '/\b(?:eyebrow|headline|cta|trust note)\s*:/i',
+        );
+
+        foreach ( $patterns as $pattern ) {
+            if ( preg_match( $pattern, $prompt ) ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Builds a deterministic background prompt when the prompt model returns UI/code.
+     *
+     * @param array<string,mixed> $draft Popup draft.
+     * @param array<string,mixed> $brand Brand payload.
+     * @return string
+     */
+    private static function build_background_fallback_prompt( array $draft, array $brand ): string {
+        $popup_type_key    = (string) ( $draft['popup_type'] ?? '' );
+        $popup_type        = fooconvert_get_popup_type_label( $popup_type_key );
+        $aspect_ratio      = self::get_popup_background_aspect_ratio( $popup_type_key );
+        $composition       = self::get_popup_background_composition_guidance( $popup_type_key );
+        $brand             = BrandManager::sanitize_brand( $brand );
+        $brand_overview    = rtrim( self::sanitize_text( $brand['brandOverview'] ?? '' ), ". \t\n\r\0\x0B" );
+        $color_scheme      = self::sanitize_text( $brand['colorScheme'] ?? '' );
+        $palette_fragments = array();
+        $audience          = self::sanitize_text( $draft['audience'] ?? '' );
+        $inspiration       = implode(
+            '; ',
+            array_filter(
+                array(
+                    self::sanitize_text( $draft['goal'] ?? '' ),
+                    self::sanitize_text( $draft['offer'] ?? '' ),
+                )
+            )
+        );
+
+        foreach ( array( 'primary', 'secondary', 'accent', 'background' ) as $color_key ) {
+            $color = self::sanitize_text( $brand['colors'][ $color_key ] ?? '' );
+            if ( '' !== $color ) {
+                $palette_fragments[] = $color_key . ' ' . $color;
+            }
+        }
+
+        $parts = array(
+            'Create a polished ' . $aspect_ratio . ' background-only image for a marketing ' . self::sanitize_text( $popup_type ) . '.',
+            '' !== $inspiration ? 'Use the popup goal and offer as non-textual visual inspiration: ' . $inspiration . '.' : '',
+            '' !== $audience ? 'Audience context: ' . $audience . '.' : '',
+            'Composition: ' . self::sanitize_text( $composition ),
+            '' !== $brand_overview ? 'Brand feel: ' . $brand_overview . '.' : '',
+            '' !== $color_scheme ? 'Preferred color scheme: ' . $color_scheme . '.' : '',
+            ! empty( $palette_fragments ) ? 'Use brand palette cues: ' . implode( ', ', $palette_fragments ) . '.' : '',
+            'Keep contrast restrained with generous quiet space for real popup headline, form fields, and CTA controls to be overlaid later.',
+        );
+
+        return sanitize_text_field( implode( ' ', array_filter( $parts ) ) );
+    }
+
+    /**
+     * Adds non-negotiable background constraints to the generated image prompt.
+     *
+     * @param string $prompt AI-generated prompt.
+     * @return string
+     */
+    private static function enforce_background_prompt_constraints( string $prompt ): string {
+        $constraint = 'Background-only asset for a popup; no popup mockup, no UI controls, no buttons, no forms, no coupon code, no countdown timer, no typography, no lettering, no embedded text, no logo, no watermark. Leave clean negative space for real popup copy and controls to be overlaid later.';
+
+        if ( false !== stripos( $prompt, 'background-only' ) && false !== stripos( $prompt, 'no popup mockup' ) ) {
+            return $prompt;
+        }
+
+        return sanitize_text_field( trim( $prompt . ' ' . $constraint ) );
     }
 
     /**
@@ -1343,20 +1481,43 @@ class Attachments {
      * @return string
      */
     private static function build_attachment_description( string $prompt, array $generated_image ): string {
+        unset( $prompt );
+
         $provider = sanitize_text_field( (string) ( $generated_image['provider_metadata']['name'] ?? '' ) );
         $model    = sanitize_text_field( (string) ( $generated_image['model_metadata']['name'] ?? '' ) );
-        $parts    = array_filter(
-            array(
-                /* translators: %s: AI provider name. */
-                $provider ? sprintf( __( 'Generated by %s', 'fooconvert' ), $provider ) : '',
-                /* translators: %s: AI model name. */
-                $model ? sprintf( __( 'using %s', 'fooconvert' ), $model ) : '',
-                /* translators: %s: image generation prompt. */
-                $prompt ? sprintf( __( 'Prompt: %s', 'fooconvert' ), $prompt ) : '',
-            )
-        );
 
-        return sanitize_text_field( implode( '. ', $parts ) );
+        if ( '' !== $provider && '' !== $model ) {
+            return sanitize_text_field(
+                sprintf(
+                    /* translators: 1: AI provider name, 2: AI model name. */
+                    __( 'Generated by %1$s using %2$s', 'fooconvert' ),
+                    $provider,
+                    $model
+                )
+            );
+        }
+
+        if ( '' !== $provider ) {
+            return sanitize_text_field(
+                sprintf(
+                    /* translators: %s: AI provider name. */
+                    __( 'Generated by %s', 'fooconvert' ),
+                    $provider
+                )
+            );
+        }
+
+        if ( '' !== $model ) {
+            return sanitize_text_field(
+                sprintf(
+                    /* translators: %s: AI model name. */
+                    __( 'Generated using %s', 'fooconvert' ),
+                    $model
+                )
+            );
+        }
+
+        return '';
     }
 
     /**

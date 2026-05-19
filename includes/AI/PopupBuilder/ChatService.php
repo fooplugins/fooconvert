@@ -851,12 +851,15 @@ class ChatService {
         $latest_user_message = '';
         foreach ( array_reverse( $messages ) as $message ) {
             if ( 'user' === $message['role'] ) {
-                $latest_user_message = $message['content'];
+                $latest_user_message = isset( $message['content'] ) && is_scalar( $message['content'] )
+                    ? (string) $message['content']
+                    : '';
                 break;
             }
         }
 
-        $generated_background = ImageGenerator::generate_popup_background( $response['popup_draft'], $brand, $latest_user_message );
+        $background_instructions = self::extract_background_image_direction_from_message( $latest_user_message );
+        $generated_background    = ImageGenerator::generate_popup_background( $response['popup_draft'], $brand, $background_instructions );
         if ( is_wp_error( $generated_background ) || empty( $generated_background['image'] ) || ! is_array( $generated_background['image'] ) ) {
             return $response;
         }
@@ -876,6 +879,77 @@ class ChatService {
         );
 
         return $response;
+    }
+
+    /**
+     * Extracts visual background direction without forwarding the full popup brief.
+     *
+     * @param string $message Latest user message.
+     * @return string
+     */
+    private static function extract_background_image_direction_from_message( string $message ): string {
+        $message = sanitize_text_field( $message );
+        if ( '' === trim( $message ) ) {
+            return '';
+        }
+
+        $chunks = preg_split( '/(?:[.!?;]+|\R+)/', $message );
+        if ( ! is_array( $chunks ) ) {
+            return '';
+        }
+
+        $keywords = array(
+            'background',
+            'backdrop',
+            'image',
+            'photo',
+            'visual',
+            'scene',
+            'gradient',
+            'texture',
+            'pattern',
+            'color',
+            'colour',
+            'palette',
+            'brand',
+            'branded',
+            'tone',
+            'mood',
+            'light',
+            'dark',
+            'soft',
+            'calm',
+            'warm',
+            'cool',
+            'minimal',
+            'editorial',
+            'realistic',
+            'abstract',
+            'illustration',
+            'product',
+            'hero',
+        );
+
+        $directions = array();
+        foreach ( $chunks as $chunk ) {
+            $chunk = trim( sanitize_text_field( $chunk ) );
+            if ( '' === $chunk ) {
+                continue;
+            }
+
+            foreach ( $keywords as $keyword ) {
+                if ( preg_match( '/\b' . preg_quote( $keyword, '/' ) . '\b/i', $chunk ) ) {
+                    $directions[] = $chunk;
+                    break;
+                }
+            }
+        }
+
+        if ( empty( $directions ) ) {
+            return '';
+        }
+
+        return implode( '. ', array_slice( array_values( array_unique( $directions ) ), 0, 3 ) );
     }
 
     /**
