@@ -188,18 +188,65 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
                     font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
                     box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
                 }
+                .fooconvert-popup-preview-page__notice-header {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 16px;
+                    margin-bottom: 2px;
+                }
                 .fooconvert-popup-preview-page__notice strong {
                     display: block;
-                    margin-bottom: 2px;
                     font-size: 13px;
                     letter-spacing: 0.02em;
                     text-transform: uppercase;
                     opacity: 0.72;
                 }
+                .fooconvert-popup-preview-page__refresh {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 22px;
+                    height: 22px;
+                    color: #fff;
+                    opacity: 0.86;
+                    text-decoration: none;
+                }
+                .fooconvert-popup-preview-page__refresh:hover,
+                .fooconvert-popup-preview-page__refresh:focus {
+                    color: #fff;
+                    opacity: 1;
+                }
+                .fooconvert-popup-preview-page__refresh svg {
+                    display: block;
+                    width: 16px;
+                    height: 16px;
+                    fill: none;
+                    stroke: currentColor;
+                    stroke-width: 2;
+                    stroke-linecap: round;
+                    stroke-linejoin: round;
+                }
+                .fooconvert-popup-preview-page__title {
+                    margin-bottom: 6px;
+                }
+                .fooconvert-popup-preview-page__edit-link {
+                    color: #fff;
+                    font-size: 13px;
+                    font-weight: 600;
+                    text-decoration: underline;
+                    text-underline-offset: 2px;
+                }
+                .fooconvert-popup-preview-page__edit-link:hover,
+                .fooconvert-popup-preview-page__edit-link:focus {
+                    color: #fff;
+                }
             ' );
             wp_enqueue_style( 'fooconvert-popup-preview-shell' );
 
             $title = fooconvert_get_popup_title( $post );
+            $preview_url = fooconvert_popup_preview_url( $post_id );
+            $edit_url = fooconvert_admin_url_popup_edit( $post_id );
 
             status_header( 200 );
             nocache_headers();
@@ -217,8 +264,23 @@ if ( !class_exists( __NAMESPACE__ . '\FooConvert' ) ) {
             <body <?php body_class( 'fooconvert-popup-preview-page' ); ?>>
                 <?php wp_body_open(); ?>
                 <div class="fooconvert-popup-preview-page__notice">
-                    <strong><?php esc_html_e( 'Popup Preview', 'fooconvert' ); ?></strong>
-                    <?php echo esc_html( $title ); ?>
+                    <div class="fooconvert-popup-preview-page__notice-header">
+                        <strong><?php esc_html_e( 'Popup Preview', 'fooconvert' ); ?></strong>
+                        <a
+                            class="fooconvert-popup-preview-page__refresh"
+                            href="<?php echo esc_url( $preview_url ); ?>"
+                            aria-label="<?php esc_attr_e( 'Refresh', 'fooconvert' ); ?>"
+                        >
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path d="M21 12a9 9 0 1 1-2.64-6.36"></path>
+                                <path d="M21 3v6h-6"></path>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="fooconvert-popup-preview-page__title"><?php echo esc_html( $title ); ?></div>
+                    <a class="fooconvert-popup-preview-page__edit-link" href="<?php echo esc_url( $edit_url ); ?>">
+                        <?php esc_html_e( 'Edit Popup', 'fooconvert' ); ?>
+                    </a>
                 </div>
                 <?php wp_footer(); ?>
             </body>

@@ -272,6 +272,7 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 
 = 2.1.5 =
 * Date Updated : 19 May 2026
+* Updated : Popup preview notices now include a refresh action and an Edit Popup link.
 * Fixed : AI Popup Builder now shows a clearer AI connector message when no model output is returned, including likely exhausted credits or quota details.
 
 = 2.1.4 =
