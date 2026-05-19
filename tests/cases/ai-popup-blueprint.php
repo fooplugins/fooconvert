@@ -262,7 +262,7 @@ namespace {
     );
 
     $generated_block_metadata     = require dirname( __DIR__, 2 ) . '/includes/AI/PopupBuilder/Blueprint/generated-fooconvert-blocks.php';
-    $generated_pro_block_metadata = require dirname( __DIR__, 2 ) . '/pro/includes/AI/generated-fooconvert-blocks.php';
+    $generated_pro_block_metadata = require dirname( __DIR__, 2 ) . '/pro/includes/AI/PopupBuilder/Blueprint/generated-fooconvert-pro-blocks.php';
 
     Assertions::true(
         isset( $generated_block_metadata['fc/example-block'] ),
@@ -317,12 +317,13 @@ namespace {
     $block_catalog_property->setAccessible( true );
     $block_catalog_property->setValue( null, null );
 
-    add_filter(
-        'fooconvert_ai_popup_builder_block_metadata',
-        static function( array $metadata_map ) use ( $generated_pro_block_metadata ): array {
-            return array_merge( $metadata_map, $generated_pro_block_metadata );
-        }
+    Assertions::same(
+        $generated_pro_block_metadata,
+        \FooPlugins\FooConvert\Pro\AI\PopupBuilder\BlockMetadata::get_generated_metadata(),
+        'The Pro block metadata loader should read the generated Pro-only metadata file.'
     );
+
+    new \FooPlugins\FooConvert\Pro\AI\PopupBuilder\BlockMetadata();
 
     $block_catalog   = PopupBlueprint::get_block_catalog();
     $block_names     = array_column( $block_catalog, 'name' );
