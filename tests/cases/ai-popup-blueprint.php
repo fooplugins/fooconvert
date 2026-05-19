@@ -179,6 +179,7 @@ namespace {
     require_once dirname( __DIR__, 2 ) . '/includes/AI/PopupBuilder/Settings.php';
     require_once dirname( __DIR__, 2 ) . '/includes/AI/PopupBuilder/Blueprint/DraftNormalizer.php';
     require_once dirname( __DIR__, 2 ) . '/includes/AI/PopupBuilder/Media/Attachments.php';
+    require_once dirname( __DIR__, 2 ) . '/pro/includes/Init.php';
 
     $assert_strict_object_schema = static function( array $schema, string $path ) use ( &$assert_strict_object_schema ): void {
         if ( isset( $schema['properties'] ) && is_array( $schema['properties'] ) ) {
@@ -317,13 +318,16 @@ namespace {
     $block_catalog_property->setAccessible( true );
     $block_catalog_property->setValue( null, null );
 
+    $pro_init_reflection = new ReflectionClass( \FooPlugins\FooConvert\Pro\Init::class );
+    $pro_init            = $pro_init_reflection->newInstanceWithoutConstructor();
+
     Assertions::same(
-        $generated_pro_block_metadata,
-        \FooPlugins\FooConvert\Pro\AI\PopupBuilder\BlockMetadata::get_generated_metadata(),
-        'The Pro block metadata loader should read the generated Pro-only metadata file.'
+        array_merge( $generated_block_metadata, $generated_pro_block_metadata ),
+        $pro_init->filter_ai_popup_builder_block_metadata( $generated_block_metadata ),
+        'The Pro block metadata loader should merge the generated Pro-only metadata file.'
     );
 
-    new \FooPlugins\FooConvert\Pro\AI\PopupBuilder\BlockMetadata();
+    add_filter( 'fooconvert_ai_popup_builder_block_metadata', array( $pro_init, 'filter_ai_popup_builder_block_metadata' ) );
 
     $block_catalog   = PopupBlueprint::get_block_catalog();
     $block_names     = array_column( $block_catalog, 'name' );
