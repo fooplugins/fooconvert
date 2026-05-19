@@ -251,6 +251,26 @@ namespace {
                 throw new \RuntimeException( 'Unexpected OpenAI API response: Missing the "output" key.' );
             }
 
+            if ( 'openrouter_missing_choices_always_error' === $mode ) {
+                return new WP_Error(
+                    'ai_client_error',
+                    'Unexpected OpenRouter API response: Missing the "choices" key.'
+                );
+            }
+
+            if (
+                'openrouter_missing_choices_error' === $mode
+                && (
+                    ! empty( $GLOBALS['fc_popup_builder_prompt_calls'][ $this->index ]['response_format'] )
+                    || ! empty( $GLOBALS['fc_popup_builder_prompt_calls'][ $this->index ]['tools'] )
+                )
+            ) {
+                return new WP_Error(
+                    'ai_client_error',
+                    'Unexpected OpenRouter API response: Missing the "choices" key.'
+                );
+            }
+
             if (
                 'no_models_for_optional_params' === $mode
                 && (
@@ -498,6 +518,30 @@ namespace {
         'No-model resolver retry parameters should be persisted to saved Disabled Params.'
     );
 
+    $GLOBALS['fc_popup_builder_prompt_mode']    = 'openrouter_missing_choices_error';
+    $GLOBALS['fc_popup_builder_generate_count'] = 0;
+    $GLOBALS['fc_popup_builder_prompt_calls']   = array();
+    $GLOBALS['fc_popup_builder_saved_settings'] = array();
+
+    $openrouter_missing_choices_response = $reflection->invoke( $builder, $request_payload );
+
+    Assertions::true(
+        is_array( $openrouter_missing_choices_response ),
+        'OpenRouter missing-choices parser errors should retry after relaxing optional request parameters.'
+    );
+
+    Assertions::same(
+        3,
+        (int) ( $GLOBALS['fc_popup_builder_generate_count'] ?? 0 ),
+        'OpenRouter missing-choices errors should retry once without response format and once without tools.'
+    );
+
+    Assertions::same(
+        array( 'response_format', 'tools' ),
+        $openrouter_missing_choices_response['settings']['disabledParams'],
+        'OpenRouter missing-choices retries should return the optional parameters disabled for compatibility.'
+    );
+
     $GLOBALS['fc_popup_builder_prompt_mode']    = 'openai_missing_output_error';
     $GLOBALS['fc_popup_builder_generate_count'] = 0;
     $GLOBALS['fc_popup_builder_prompt_calls']   = array();
@@ -571,6 +615,27 @@ namespace {
         'fooconvert_ai_popup_builder_no_output',
         $openai_exception->get_error_code(),
         'Thrown missing-output exceptions should be normalized to the same popup-builder error.'
+    );
+
+    $GLOBALS['fc_popup_builder_prompt_mode']    = 'openrouter_missing_choices_always_error';
+    $GLOBALS['fc_popup_builder_generate_count'] = 0;
+    $GLOBALS['fc_popup_builder_prompt_calls']   = array();
+    $GLOBALS['fc_popup_builder_saved_settings'] = array(
+        FOOCONVERT_SETTING_AI_POPUP_BUILDER_DISABLED_PARAMS => "response_format\ntools",
+    );
+
+    $openrouter_choices_error = $reflection->invoke( $builder, $request_payload );
+
+    Assertions::same(
+        'fooconvert_ai_popup_builder_no_output',
+        $openrouter_choices_error->get_error_code(),
+        'OpenRouter missing-choices errors should become provider-generic no-output errors when retries are exhausted.'
+    );
+
+    Assertions::same(
+        'openrouter',
+        $openrouter_choices_error->get_error_data()['provider'] ?? '',
+        'OpenRouter missing-choices errors should preserve the detected provider name in error data.'
     );
 
     fwrite( STDOUT, "ai-popup-settings-retry: ok\n" );

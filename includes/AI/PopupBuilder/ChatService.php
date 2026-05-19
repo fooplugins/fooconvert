@@ -381,7 +381,7 @@ class ChatService {
      * @return bool
      */
     private function is_missing_output_error_message( string $message ): bool {
-        return 1 === preg_match( '/Unexpected\s+.+?\s+API response:\s+Missing the "output" key\.?/i', $message );
+        return 1 === preg_match( '/Unexpected\s+.+?\s+API response:\s+Missing the "(?:output|choices)" key\.?/i', $message );
     }
 
     /**
@@ -423,7 +423,7 @@ class ChatService {
      * @return string
      */
     private function extract_provider_name_from_missing_output_error( string $message ): string {
-        if ( 1 !== preg_match( '/Unexpected\s+(.+?)\s+API response:\s+Missing the "output" key\.?/i', $message, $matches ) ) {
+        if ( 1 !== preg_match( '/Unexpected\s+(.+?)\s+API response:\s+Missing the "(?:output|choices)" key\.?/i', $message, $matches ) ) {
             return '';
         }
 
@@ -658,20 +658,22 @@ class ChatService {
     }
 
     /**
-     * Infers a retryable optional parameter when AI client model discovery fails.
+     * Infers a retryable optional parameter when AI client model matching fails.
      *
      * Some connectors expose usable text models but do not advertise support for
-     * optional schema/tool options in model metadata. The AI client rejects those
-     * prompts before sending a provider request, so the provider cannot return a
-     * parameter-specific unsupported error. Retry by relaxing the most expensive
-     * optional popup-builder requirements in a stable order.
+     * optional schema/tool options in model metadata, or return failed payloads
+     * that the AI client cannot parse into chat choices. Retry by relaxing the
+     * most expensive optional popup-builder requirements in a stable order.
      *
      * @param string              $message Error message from the AI client.
      * @param array<string,mixed> $settings AI request settings.
      * @return string
      */
     private function extract_ai_model_support_fallback_param( string $message, array $settings ): string {
-        if ( 1 !== preg_match( '/No models found(?: for provider "[^"]+")? that support text_generation for this prompt\./i', $message ) ) {
+        $model_discovery_failed = 1 === preg_match( '/No models found(?: for provider "[^"]+")? that support text_generation for this prompt\./i', $message );
+        $missing_chat_choices   = 1 === preg_match( '/Unexpected\s+.+?\s+API response:\s+Missing the "choices" key\.?/i', $message );
+
+        if ( ! $model_discovery_failed && ! $missing_chat_choices ) {
             return '';
         }
 

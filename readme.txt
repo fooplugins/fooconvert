@@ -275,6 +275,7 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 * Updated : Popup preview notices now include a refresh action and an Edit Popup link.
 * Fixed : AI Popup Builder now shows a clearer AI connector message when no model output is returned, including likely exhausted credits or quota details.
 * Fixed : AI Popup Builder now retries OpenRouter connector requests when optional JSON schema or tool metadata prevents model selection.
+* Fixed : AI Popup Builder now recovers from OpenRouter chat responses that fail before returning choices.
 * Fixed : AI Popup Builder background image generation now avoids popup UI mockups, rejects code-like prompt responses, and keeps raw image prompts out of media attachment descriptions.
 * Updated : AI Popup Builder generated media can now be applied directly as the popup background image with cover sizing.
 * Updated : AI Popup Builder generated media edit links now open in a new browser tab.
