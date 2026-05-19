@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-19T13:32:50+00:00\n"
+"POT-Creation-Date: 2026-05-19T13:48:13+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: fooconvert\n"
@@ -2980,47 +2980,47 @@ msgid_plural "%d sales"
 msgstr[0] ""
 msgstr[1] ""
 
-#: pro/includes/AI/PopupBuilder.php:160
+#: pro/includes/AI/PopupBuilder/StarterPrompts.php:43
 msgid "Create a Black Friday exit-intent overlay for first-time shoppers offering 15% off. Use the Pro Apply Coupon block (fc/apply-coupon) with code BF15, the Countdown block (fc/countdown) set to expire tonight, and the Confetti block (fc/confetti) for a subtle celebration when the offer opens. Use a premium sale background with dark product photography, or follow my branding."
 msgstr ""
 
-#: pro/includes/AI/PopupBuilder.php:161
+#: pro/includes/AI/PopupBuilder/StarterPrompts.php:44
 msgid "Build a free-shipping flyout for active cart shoppers who are close to the threshold. Use the Pro Free Shipping Progress block (fc/free-shipping-progress) with live WooCommerce cart progress and an Apply Coupon block (fc/apply-coupon) if a shipping coupon is needed. Keep the copy helpful, show the amount left clearly, include one checkout CTA, and use a clean light background that follows my branding."
 msgstr ""
 
-#: pro/includes/AI/PopupBuilder.php:162
+#: pro/includes/AI/PopupBuilder/StarterPrompts.php:45
 msgid "Create a VIP newsletter signup overlay for returning customers. Use the FooConvert Sign Up block (fc/sign-up) as an email-only form, a Split Layout block (fc/split-layout) for copy and imagery, and the Pro Confetti block (fc/confetti) for a restrained celebration. Offer early access to subscriber-only deals, and use a polished editorial background or follow my branding."
 msgstr ""
 
-#: pro/includes/AI/PopupBuilder.php:163
+#: pro/includes/AI/PopupBuilder/StarterPrompts.php:46
 msgid "Create a compact product-launch bar for mobile visitors announcing a new collection. Use the Countdown block (fc/countdown) for launch urgency and the Pro Confetti block (fc/confetti) for the launch reveal. Keep the copy short enough for a bar, use one CTA, and use a bold background color from my branding or a high-contrast product background."
 msgstr ""
 
-#: pro/includes/AI/PopupBuilder.php:164
+#: pro/includes/AI/PopupBuilder/StarterPrompts.php:47
 msgid "Create a cart recovery overlay for shoppers who are about to leave checkout or have gone cart-idle. Use the Pro Apply Coupon block (fc/apply-coupon) with code SAVE10, the Free Shipping Progress block (fc/free-shipping-progress) when the cart is below the threshold, and the Confetti block (fc/confetti) after the incentive appears. Add reassurance about easy returns and use a subtle checkout-themed background, or follow my branding."
 msgstr ""
 
-#: pro/includes/AI/PopupBuilder.php:176
+#: pro/includes/AI/PopupBuilder/SuggestionLibrary.php:61
 msgid "Add an apply-coupon button for SAVE15."
 msgstr ""
 
-#: pro/includes/AI/PopupBuilder.php:182
+#: pro/includes/AI/PopupBuilder/SuggestionLibrary.php:67
 msgid "Add free shipping progress for cart shoppers."
 msgstr ""
 
-#: pro/includes/AI/PopupBuilder.php:188
+#: pro/includes/AI/PopupBuilder/SuggestionLibrary.php:73
 msgid "Add a restrained confetti celebration after the main action."
 msgstr ""
 
-#: pro/includes/AI/PopupBuilder.php:203
+#: pro/includes/AI/PopupBuilder/SystemInstruction.php:56
 msgid "Use fc/apply-coupon for one-click coupon offers when the user asks for coupon redemption or cart recovery."
 msgstr ""
 
-#: pro/includes/AI/PopupBuilder.php:204
+#: pro/includes/AI/PopupBuilder/SystemInstruction.php:57
 msgid "Use fc/free-shipping-progress for cart-progress and shipping-threshold campaigns."
 msgstr ""
 
-#: pro/includes/AI/PopupBuilder.php:205
+#: pro/includes/AI/PopupBuilder/SystemInstruction.php:58
 msgid "Use fc/confetti only when a celebration supports the conversion moment; keep it restrained for premium brands."
 msgstr ""
 
