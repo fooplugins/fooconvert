@@ -262,7 +262,7 @@ namespace {
     );
 
     $generated_block_metadata     = require dirname( __DIR__, 2 ) . '/includes/AI/PopupBuilder/Blueprint/generated-fooconvert-blocks.php';
-    $generated_pro_block_metadata = require dirname( __DIR__, 2 ) . '/pro/includes/AI/PopupBuilder/Blueprint/generated-fooconvert-pro-blocks.php';
+    $generated_pro_block_metadata = require dirname( __DIR__, 2 ) . '/pro/includes/AI/generated-fooconvert-blocks.php';
 
     Assertions::true(
         isset( $generated_block_metadata['fc/example-block'] ),
@@ -290,14 +290,22 @@ namespace {
 
         Assertions::true(
             isset( $generated_pro_block_metadata[ $expected_pro_block_name ] ),
-            sprintf( 'The generated PRO FooConvert block metadata file should include the PRO `%s` block.', $expected_pro_block_name )
+            sprintf( 'The generated Pro FooConvert block metadata file should include the Pro `%s` block.', $expected_pro_block_name )
         );
     }
 
     $free_block_catalog = PopupBlueprint::get_block_catalog();
     $free_block_names   = array_column( $free_block_catalog, 'name' );
 
-    foreach ( array_keys( $generated_pro_block_metadata ) as $pro_block_name ) {
+    foreach (
+        array(
+            'fc/confetti',
+            'fc/apply-coupon',
+            'fc/free-shipping-progress',
+            'fc/free-shipping-progress-content',
+            'fc/free-shipping-progress-bar',
+        ) as $pro_block_name
+    ) {
         Assertions::false(
             in_array( $pro_block_name, $free_block_names, true ),
             sprintf( 'The free AI block catalog should not include the PRO `%s` block before PRO filters run.', $pro_block_name )

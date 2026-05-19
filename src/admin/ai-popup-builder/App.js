@@ -1147,9 +1147,17 @@ export const App = () => {
 				draft,
 				selectedBlockNames: selectedBlockNameSet,
 				imageGenerationAvailable: aiImageGenerationAvailable,
+				suggestionLibrary: config?.suggestionLibrary,
+				starterPrompts: config?.starterPrompts,
 				limit: 5,
 			} ),
-		[ draft, selectedBlockNameSet, aiImageGenerationAvailable ]
+		[
+			draft,
+			selectedBlockNameSet,
+			aiImageGenerationAvailable,
+			config?.suggestionLibrary,
+			config?.starterPrompts,
+		]
 	);
 	const suggestionsHaveFollowUpContext = Boolean(
 		draft ||

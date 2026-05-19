@@ -179,8 +179,9 @@ class Admin {
         $ai_client_available = Config::has_ai_client();
         $ai_connection_ready = Config::has_valid_ai_connection();
         $settings            = Settings::to_response();
+        $edition             = $this->get_edition();
 
-        return array(
+        $config = array(
             'api'              => array(
                 'chatPath'        => '/fooconvert/v1/ai-popup-builder/chat',
                 'chatStreamPath'  => '/fooconvert/v1/ai-popup-builder/chat-stream',
@@ -205,6 +206,8 @@ class Admin {
             'blockCatalog'     => Catalog::get_block_catalog(),
             'playbook'         => Catalog::get_conversion_playbook(),
             'systemPrompt'     => PromptFactory::get_default_system_instruction_preview(),
+            'edition'          => $edition,
+            'suggestionLibrary' => SuggestionLibrary::get( $edition ),
             'mediaItems'       => PopupMedia::list_generated_images( 12 ),
             'aiClientAvailable' => $ai_client_available,
             'aiClientUpgradeUrl' => admin_url( 'update-core.php' ),
@@ -236,6 +239,68 @@ class Admin {
                     : null,
             ),
         );
+
+        $starter_prompts = $this->get_filtered_starter_prompts();
+        if ( ! empty( $starter_prompts ) ) {
+            $config['starterPrompts'] = $starter_prompts;
+        }
+
+        return $config;
+    }
+
+    /**
+     * Returns the current AI popup builder edition.
+     *
+     * @return string
+     */
+    private function get_edition(): string {
+        /**
+         * Filters the current AI popup builder edition.
+         *
+         * Extensions can switch this from "free" to a custom edition so shared
+         * popup builder config, starter prompts, and suggestions can be extended
+         * without replacing the free admin screen.
+         *
+         * @param string $edition Current builder edition.
+         */
+        $edition = apply_filters( 'fooconvert_ai_popup_builder_edition', 'free' );
+        $edition = is_string( $edition ) ? $edition : '';
+        $edition = function_exists( 'sanitize_key' )
+            ? sanitize_key( $edition )
+            : strtolower( preg_replace( '/[^a-z0-9_\-]/i', '', $edition ) ?? '' );
+
+        return '' !== $edition ? $edition : 'free';
+    }
+
+    /**
+     * Returns starter prompts supplied by extensions.
+     *
+     * @return array<int,string>
+     */
+    private function get_filtered_starter_prompts(): array {
+        /**
+         * Filters the starter prompts shown before a popup draft exists.
+         *
+         * Return an empty array to use FooConvert Free's built-in starter prompts.
+         * Change the edition with `fooconvert_ai_popup_builder_edition` when an
+         * extension wants to supply a different default set.
+         *
+         * @param array<int,string> $prompts Starter prompt strings.
+         * @param string            $edition Current builder edition.
+         */
+        $prompts = apply_filters( 'fooconvert_ai_popup_builder_starter_prompts', array(), $this->get_edition() );
+
+        return $this->normalize_starter_prompts( $prompts );
+    }
+
+    /**
+     * Normalizes starter prompt filter values for the JavaScript config.
+     *
+     * @param mixed $prompts Raw starter prompt list.
+     * @return array<int,string>
+     */
+    private function normalize_starter_prompts( $prompts ): array {
+        return SuggestionLibrary::normalize_string_list( $prompts );
     }
 
     /**

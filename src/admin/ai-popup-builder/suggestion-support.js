@@ -1,5 +1,3 @@
-import { __ } from '@wordpress/i18n';
-
 const normalizeText = ( value ) => String( value || '' ).trim();
 
 const normalizePopupType = ( value ) => {
@@ -22,169 +20,108 @@ const normalizeBlockNameSet = ( value ) => {
 	);
 };
 
-const suggestionLibrary = [
-	{
-		text: __(
-			'Create an exit-intent popup for first-time shoppers with 15% off and a confident headline.',
-			'fooconvert'
-		),
-		tags: [ 'Create', 'Popup', 'Discount' ],
+const normalizeSuggestionTags = ( value ) => {
+	const tags = Array.isArray( value ) ? value.map( normalizeText ) : [];
+
+	return tags.filter( Boolean );
+};
+
+const normalizeStringList = ( value ) =>
+	( Array.isArray( value ) ? value : [] )
+		.map( normalizeText )
+		.filter( Boolean );
+
+const normalizeSuggestionPhase = ( value, fallback = 'initial' ) => {
+	const phase = normalizeText( value );
+
+	return phase === 'edit' || phase === 'initial' ? phase : fallback;
+};
+
+const normalizeSuggestion = ( value, fallbackPhase = 'initial' ) => {
+	if ( typeof value === 'string' ) {
+		const text = normalizeText( value );
+
+		return text
+			? {
+					text,
+					tags: [ 'Create' ],
+					phase: fallbackPhase,
+			  }
+			: null;
+	}
+
+	if ( value && Object.prototype.toString.call( value ) === '[object Object]' ) {
+		const text = normalizeText( value.text );
+
+		if ( ! text ) {
+			return null;
+		}
+
+		const suggestion = {
+			text,
+			tags: normalizeSuggestionTags( value.tags ),
+			phase: normalizeSuggestionPhase( value.phase, fallbackPhase ),
+		};
+
+		[
+			'popupTypes',
+			'excludePopupTypes',
+			'requiredBlocks',
+		].forEach( ( key ) => {
+			const items = normalizeStringList( value[ key ] );
+
+			if ( items.length > 0 ) {
+				suggestion[ key ] = items;
+			}
+		} );
+
+		if ( value.requiresImageGeneration ) {
+			suggestion.requiresImageGeneration = true;
+		}
+
+		return suggestion;
+	}
+
+	return null;
+};
+
+const normalizeSuggestionList = ( value, fallbackPhase = 'initial' ) =>
+	( Array.isArray( value ) ? value : [] )
+		.map( ( item ) => normalizeSuggestion( item, fallbackPhase ) )
+		.filter( Boolean )
+		.map( ( suggestion ) => ( {
+			...suggestion,
+			tags:
+				Array.isArray( suggestion.tags ) && suggestion.tags.length > 0
+					? suggestion.tags
+					: [ 'Create' ],
+		} ) );
+
+const normalizeStarterSuggestions = ( value ) =>
+	normalizeSuggestionList( value, 'initial' ).map( ( suggestion ) => ( {
+		...suggestion,
 		phase: 'initial',
-	},
-	{
-		text: __(
-			'Build a free shipping flyout for active cart shoppers with a helpful, low-pressure tone.',
-			'fooconvert'
+	} ) );
+
+const getSuggestionLibrary = ( options = {} ) => {
+	const configuredLibrary = normalizeSuggestionList(
+		options?.suggestionLibrary
+	);
+	const starterSuggestions = normalizeStarterSuggestions(
+		options?.starterPrompts
+	);
+
+	if ( starterSuggestions.length === 0 ) {
+		return configuredLibrary;
+	}
+
+	return [
+		...starterSuggestions,
+		...configuredLibrary.filter(
+			( suggestion ) => suggestion.phase !== 'initial'
 		),
-		tags: [ 'Create', 'Flyout', 'Cart' ],
-		phase: 'initial',
-	},
-	{
-		text: __(
-			'Create a newsletter signup popup for returning readers that offers weekly tips.',
-			'fooconvert'
-		),
-		tags: [ 'Create', 'Popup', 'Signup' ],
-		phase: 'initial',
-	},
-	{
-		text: __(
-			'Create a product launch bar for mobile visitors with concise copy and one clear CTA.',
-			'fooconvert'
-		),
-		tags: [ 'Create', 'Bar', 'Launch' ],
-		phase: 'initial',
-	},
-	{
-		text: __(
-			'Create a cart recovery popup with a coupon, urgency, and a short reassurance line.',
-			'fooconvert'
-		),
-		tags: [ 'Create', 'Popup', 'Coupon' ],
-		phase: 'initial',
-	},
-	{
-		text: __(
-			'Add a countdown timer for 2 hours in the future.',
-			'fooconvert'
-		),
-		tags: [ 'Countdown', 'Urgency' ],
-		phase: 'edit',
-		requiredBlocks: [ 'fc/countdown' ],
-	},
-	{
-		text: __(
-			'Change the popup styling to use my branding.',
-			'fooconvert'
-		),
-		tags: [ 'Brand', 'Style' ],
-		phase: 'edit',
-	},
-	{
-		text: __(
-			'Change this popup to be a bar and shorten all the wording used.',
-			'fooconvert'
-		),
-		tags: [ 'Bar', 'Shorten' ],
-		phase: 'edit',
-		excludePopupTypes: [ 'bar' ],
-	},
-	{
-		text: __(
-			'Convert this popup to a flyout with a softer tone and one clear CTA.',
-			'fooconvert'
-		),
-		tags: [ 'Flyout', 'Tone' ],
-		phase: 'edit',
-		excludePopupTypes: [ 'flyout' ],
-	},
-	{
-		text: __(
-			'Make the CTA button copy more specific and urgent.',
-			'fooconvert'
-		),
-		tags: [ 'Copy', 'CTA' ],
-		phase: 'edit',
-	},
-	{
-		text: __( 'Add a coupon code block for SAVE15.', 'fooconvert' ),
-		tags: [ 'Coupon', 'Discount' ],
-		phase: 'edit',
-		requiredBlocks: [ 'fc/coupon' ],
-	},
-	{
-		text: __( 'Add an apply-coupon button for SAVE15.', 'fooconvert' ),
-		tags: [ 'Coupon', 'WooCommerce' ],
-		phase: 'edit',
-		requiredBlocks: [ 'fc/apply-coupon' ],
-	},
-	{
-		text: __(
-			'Add free shipping progress for cart shoppers.',
-			'fooconvert'
-		),
-		tags: [ 'Shipping', 'WooCommerce' ],
-		phase: 'edit',
-		requiredBlocks: [ 'fc/free-shipping-progress' ],
-	},
-	{
-		text: __(
-			'Remove extra copy and make the layout easier to scan.',
-			'fooconvert'
-		),
-		tags: [ 'Copy', 'Layout' ],
-		phase: 'edit',
-	},
-	{
-		text: __(
-			'Rewrite this for mobile visitors with shorter lines.',
-			'fooconvert'
-		),
-		tags: [ 'Mobile', 'Copy' ],
-		phase: 'edit',
-	},
-	{
-		text: __(
-			'Add social proof using a short testimonial-style paragraph.',
-			'fooconvert'
-		),
-		tags: [ 'Proof', 'Copy' ],
-		phase: 'edit',
-	},
-	{
-		text: __(
-			'Replace the offer with 10% off a first order.',
-			'fooconvert'
-		),
-		tags: [ 'Offer', 'Discount' ],
-		phase: 'edit',
-	},
-	{
-		text: __(
-			'Generate a new background image that matches this offer.',
-			'fooconvert'
-		),
-		tags: [ 'Image', 'Style' ],
-		phase: 'edit',
-		requiresImageGeneration: true,
-	},
-	{
-		text: __(
-			'Change the trigger to fire after 50% scroll.',
-			'fooconvert'
-		),
-		tags: [ 'Trigger', 'Scroll' ],
-		phase: 'edit',
-	},
-	{
-		text: __(
-			'Add urgency without making the copy sound pushy.',
-			'fooconvert'
-		),
-		tags: [ 'Urgency', 'Tone' ],
-		phase: 'edit',
-	},
-];
+	];
+};
 
 const isSuggestionValid = ( suggestion, options ) => {
 	const hasDraft = Boolean( options?.draft );
@@ -234,15 +171,17 @@ const isSuggestionValid = ( suggestion, options ) => {
 	return true;
 };
 
-export const getSuggestionPromptLibrary = () =>
-	suggestionLibrary.map( ( suggestion ) => ( { ...suggestion } ) );
+export const getSuggestionPromptLibrary = ( options = {} ) =>
+	getSuggestionLibrary( options ).map( ( suggestion ) => ( {
+		...suggestion,
+	} ) );
 
 export const getSuggestionPrompts = ( options = {} ) => {
 	const limit = Number.isFinite( Number( options?.limit ) )
 		? Math.max( 1, Math.floor( Number( options.limit ) ) )
 		: 5;
 
-	return suggestionLibrary
+	return getSuggestionLibrary( options )
 		.filter( ( suggestion ) => isSuggestionValid( suggestion, options ) )
 		.slice( 0, limit )
 		.map( ( suggestion ) => ( { ...suggestion } ) );

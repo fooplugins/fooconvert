@@ -37,6 +37,7 @@ namespace FooPlugins\FooConvert\AI\PopupBuilder\Blueprint {
 namespace {
     use FooPlugins\FooConvert\AI\PopupBuilder\ChatService;
     use FooPlugins\FooConvert\AI\PopupBuilder\DebugResponseLog;
+    use FooPlugins\FooConvert\AI\PopupBuilder\PromptFactory;
     use FooPlugins\FooConvert\AI\PopupBuilder\ResponseParser;
     use FooPlugins\FooConvert\AI\PopupBuilder\RestController as PopupBuilder;
     use FooPlugins\FooConvert\Tests\Support\Assertions;
@@ -106,12 +107,40 @@ namespace {
 
     $GLOBALS['fc_debug_enabled'] = false;
     $GLOBALS['fc_options'] = array();
+    $GLOBALS['fc_filters'] = array();
 
     function __( string $text, ?string $domain = null ): string {
         return $text;
     }
 
     function add_action( string $hook, $callback, int $priority = 10, int $accepted_args = 1 ): void {}
+
+    function add_filter( string $hook, $callback, int $priority = 10, int $accepted_args = 1 ): void {
+        $GLOBALS['fc_filters'][ $hook ][ $priority ][] = array(
+            'callback'      => $callback,
+            'accepted_args' => $accepted_args,
+        );
+    }
+
+    function apply_filters( string $hook, $value, ...$args ) {
+        if ( empty( $GLOBALS['fc_filters'][ $hook ] ) || ! is_array( $GLOBALS['fc_filters'][ $hook ] ) ) {
+            return $value;
+        }
+
+        ksort( $GLOBALS['fc_filters'][ $hook ] );
+
+        foreach ( $GLOBALS['fc_filters'][ $hook ] as $callbacks ) {
+            foreach ( $callbacks as $callback ) {
+                $accepted_args = max( 1, (int) ( $callback['accepted_args'] ?? 1 ) );
+                $value = call_user_func_array(
+                    $callback['callback'],
+                    array_slice( array_merge( array( $value ), $args ), 0, $accepted_args )
+                );
+            }
+        }
+
+        return $value;
+    }
 
     function wp_ai_client_prompt(): PopupBuilderSchemaPromptStub {
         return new PopupBuilderSchemaPromptStub();
@@ -187,9 +216,37 @@ namespace {
     );
 
     Assertions::true(
+        false !== strpos( $GLOBALS['fc_popup_builder_schema_system_instruction'] ?? '', 'Use the `fc/split-layout` block when content naturally needs two coordinated columns/panels.' )
+            && false !== strpos( $GLOBALS['fc_popup_builder_schema_system_instruction'] ?? '', 'not just because you want columns' ),
+        'The system instruction should include split-layout usage guidance.'
+    );
+
+    Assertions::true(
         false !== strpos( $GLOBALS['fc_popup_builder_schema_system_instruction'] ?? '', 'Conversion playbook JSON' )
             && false !== strpos( $GLOBALS['fc_popup_builder_schema_system_instruction'] ?? '', 'Focus on one CTA.' ),
         'The system instruction should include the conversion playbook context.'
+    );
+
+    add_filter(
+        'fooconvert_ai_popup_builder_system_instruction_context',
+        static function( array $context ): array {
+            $context['conversion_playbook'] = array(
+                'principles' => array( 'Use extended conversion guidance.' ),
+            );
+            $context['response_contract'] = 'Return a PRO-compatible popup JSON object.';
+
+            return $context;
+        },
+        10,
+        4
+    );
+
+    $extended_system_instruction = PromptFactory::build_system_instruction( false, false, array() );
+
+    Assertions::true(
+        false !== strpos( $extended_system_instruction, 'Use extended conversion guidance.' )
+            && false !== strpos( $extended_system_instruction, 'Return a PRO-compatible popup JSON object.' ),
+        'The shared prompt factory should expose filterable extension context for PRO.'
     );
 
     $error = ResponseParser::get_invalid_popup_response_error( "Here is the popup:\n{\"assistant_message\":" );

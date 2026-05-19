@@ -240,6 +240,24 @@ namespace {
         $GLOBALS['fc_ai_builder_filters'][ $hook ][] = compact( 'callback', 'priority', 'accepted_args' );
     }
 
+    function apply_filters( string $hook, $value, ...$args ) {
+        $filters = $GLOBALS['fc_ai_builder_filters'][ $hook ] ?? array();
+        usort(
+            $filters,
+            static fn( array $a, array $b ): int => ( $a['priority'] ?? 10 ) <=> ( $b['priority'] ?? 10 )
+        );
+
+        foreach ( $filters as $filter ) {
+            $accepted_args = (int) ( $filter['accepted_args'] ?? 1 );
+            $value         = call_user_func_array(
+                $filter['callback'],
+                array_slice( array_merge( array( $value ), $args ), 0, $accepted_args )
+            );
+        }
+
+        return $value;
+    }
+
     function do_action( string $hook, ...$args ): void {}
 
     function get_post_type_object( string $post_type ) {
@@ -376,6 +394,7 @@ namespace {
     }
 
     require_once dirname( __DIR__, 2 ) . '/includes/Admin/ScriptDependencies.php';
+    require_once dirname( __DIR__, 2 ) . '/includes/AI/PopupBuilder/SuggestionLibrary.php';
     require_once dirname( __DIR__, 2 ) . '/includes/AI/PopupBuilder/Admin.php';
 
     $GLOBALS['fc_ai_builder_next_hook_suffix'] = 'popups_page_fooconvert-ai-popup-builder';
@@ -433,10 +452,114 @@ namespace {
         'The AI popup builder config should expose the current preferred image model.'
     );
 
+    $suggestion_library = $config['suggestionLibrary'] ?? array();
+    $initial_suggestions = array_values(
+        array_filter(
+            $suggestion_library,
+            static fn( array $suggestion ): bool => ( $suggestion['phase'] ?? '' ) === 'initial'
+        )
+    );
+    $initial_suggestion_copy = implode( ' ', array_column( $initial_suggestions, 'text' ) );
+
+    Assertions::same(
+        16,
+        count( $suggestion_library ),
+        'The AI popup builder config should expose the free suggestion library from PHP.'
+    );
+
+    Assertions::same(
+        3,
+        count( $initial_suggestions ),
+        'The free suggestion library should include three initial starter prompts.'
+    );
+
+    Assertions::false(
+        false !== strpos( $initial_suggestion_copy, 'free-shipping flyout' ) || false !== strpos( $initial_suggestion_copy, 'cart recovery overlay' ),
+        'The free initial starter prompts should not include Pro-only free shipping or cart recovery prompts.'
+    );
+
+    Assertions::false(
+        false !== strpos( implode( ' ', array_column( $suggestion_library, 'text' ) ), 'apply-coupon button' )
+            || false !== strpos( implode( ' ', array_column( $suggestion_library, 'text' ) ), 'free shipping progress' ),
+        'The free suggestion library should not include Pro-only WooCommerce block suggestions.'
+    );
+
     Assertions::false(
         array_key_exists( 'starterPrompts', $config ),
-        'The AI popup builder config should not expose starter prompts after they move to the admin app.'
+        'The AI popup builder config should not expose starter prompts unless an extension overrides the app defaults.'
     );
+
+    add_filter(
+        'fooconvert_ai_popup_builder_suggestion_library',
+        static function( array $suggestions, string $edition ): array {
+            $GLOBALS['fc_ai_builder_suggestion_library_filter_edition'] = $edition;
+
+            return array(
+                array(
+                    'text'           => 'Filtered library edit prompt',
+                    'tags'           => array( 'Filtered' ),
+                    'phase'          => 'edit',
+                    'requiredBlocks' => array( 'fc/coupon' ),
+                ),
+            );
+        },
+        10,
+        2
+    );
+    unset( $GLOBALS['fc_ai_builder_enqueued_scripts'], $GLOBALS['fc_ai_builder_enqueued_styles'], $GLOBALS['fc_ai_builder_inline_scripts'] );
+    $builder_with_filtered_library = new AiPopupBuilder();
+    $builder_with_filtered_library->enqueue_assets( 'admin_page_fooconvert-ai-popup-builder' );
+
+    $filtered_library_config = fc_ai_builder_decode_config_script( $GLOBALS['fc_ai_builder_inline_scripts']['fooconvert-ai-popup-builder'][1]['data'] ?? '' );
+    Assertions::same(
+        'free',
+        $GLOBALS['fc_ai_builder_suggestion_library_filter_edition'] ?? '',
+        'The suggestion library filter should identify the free builder edition.'
+    );
+
+    Assertions::same(
+        array(
+            array(
+                'text'           => 'Filtered library edit prompt',
+                'tags'           => array( 'Filtered' ),
+                'phase'          => 'edit',
+                'requiredBlocks' => array( 'fc/coupon' ),
+            ),
+        ),
+        $filtered_library_config['suggestionLibrary'] ?? array(),
+        'The AI popup builder config should expose suggestion library entries supplied by the PHP filter.'
+    );
+
+    unset( $GLOBALS['fc_ai_builder_filters']['fooconvert_ai_popup_builder_suggestion_library'] );
+
+    add_filter(
+        'fooconvert_ai_popup_builder_starter_prompts',
+        static function( array $prompts, string $edition ): array {
+            $GLOBALS['fc_ai_builder_starter_prompt_filter_edition'] = $edition;
+
+            return array( 'Filtered starter prompt' );
+        },
+        10,
+        2
+    );
+    unset( $GLOBALS['fc_ai_builder_enqueued_scripts'], $GLOBALS['fc_ai_builder_enqueued_styles'], $GLOBALS['fc_ai_builder_inline_scripts'] );
+    $builder_with_filtered_starters = new AiPopupBuilder();
+    $builder_with_filtered_starters->enqueue_assets( 'admin_page_fooconvert-ai-popup-builder' );
+
+    $filtered_config = fc_ai_builder_decode_config_script( $GLOBALS['fc_ai_builder_inline_scripts']['fooconvert-ai-popup-builder'][1]['data'] ?? '' );
+    Assertions::same(
+        'free',
+        $GLOBALS['fc_ai_builder_starter_prompt_filter_edition'] ?? '',
+        'The starter prompt filter should identify the free builder edition.'
+    );
+
+    Assertions::same(
+        array( 'Filtered starter prompt' ),
+        $filtered_config['starterPrompts'] ?? array(),
+        'The AI popup builder config should expose starter prompts supplied by the filter.'
+    );
+
+    unset( $GLOBALS['fc_ai_builder_filters']['fooconvert_ai_popup_builder_starter_prompts'] );
 
     unset( $GLOBALS['fc_ai_builder_enqueued_scripts'], $GLOBALS['fc_ai_builder_enqueued_styles'], $GLOBALS['fc_ai_builder_inline_scripts'] );
     $GLOBALS['fc_ai_builder_override_model'] = 'custom-text-model';
