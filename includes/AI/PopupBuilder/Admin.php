@@ -206,6 +206,7 @@ class Admin {
             'blockCatalog'     => Catalog::get_block_catalog(),
             'playbook'         => Catalog::get_conversion_playbook(),
             'systemPrompt'     => PromptFactory::get_default_system_instruction_preview(),
+            'imageBackgroundPrompt' => PopupMedia::get_default_background_prompt_preview(),
             'edition'          => $edition,
             'suggestionLibrary' => SuggestionLibrary::get( $edition ),
             'mediaItems'       => PopupMedia::list_generated_images( 12 ),

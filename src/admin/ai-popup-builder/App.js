@@ -2596,7 +2596,7 @@ export const App = () => {
 							} )
 						}
 						help={ __(
-							'Requests WebP output and compression for generated popup images. Disable this if your AI image provider rejects output_format or output_compression.',
+							'Requests WebP output, compression, and opaque backgrounds for generated popup images. Disable this if your AI image provider rejects output_format, output_compression, or background.',
 							'fooconvert'
 						) }
 						__nextHasNoMarginBottom
@@ -3206,6 +3206,36 @@ export const App = () => {
 			);
 		}
 
+		if ( 'image-background-prompt' === contextModal ) {
+			return (
+				<Modal
+					title={ __( 'Image Background Prompt', 'fooconvert' ) }
+					onRequestClose={ () => setContextModal( '' ) }
+					className={ `${ rootClass }__context-modal` }
+					shouldCloseOnClickOutside={ true }
+				>
+					<div className={ `${ rootClass }__stack` }>
+						<p className={ `${ rootClass }__muted-copy` }>
+							{ __(
+								'Deterministic prompt used when generating popup background images.',
+								'fooconvert'
+							) }
+						</p>
+						<ReadOnlyTextField
+							label={ __(
+								'Background image prompt',
+								'fooconvert'
+							) }
+							value={ String(
+								config?.imageBackgroundPrompt || ''
+							) }
+							rows={ 14 }
+						/>
+					</div>
+				</Modal>
+			);
+		}
+
 		if ( 'abilities' === contextModal ) {
 			return (
 				<Modal
@@ -3738,6 +3768,33 @@ export const App = () => {
 														content={ truncateText(
 															String(
 																config?.systemPrompt ||
+																	''
+															),
+															140
+														) }
+													/>
+												}
+											/>
+
+											<ContextSummaryCard
+												title={ __(
+													'Image Background Prompt',
+													'fooconvert'
+												) }
+												summary={ __(
+													'Deterministic prompt for generated popup backgrounds.',
+													'fooconvert'
+												) }
+												onOpen={ () =>
+													setContextModal(
+														'image-background-prompt'
+													)
+												}
+												preview={
+													<ContextCodePreview
+														content={ truncateText(
+															String(
+																config?.imageBackgroundPrompt ||
 																	''
 															),
 															140

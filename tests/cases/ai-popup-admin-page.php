@@ -169,6 +169,10 @@ namespace FooPlugins\FooConvert\AI\PopupBuilder\Media {
         public static function can_manage_media(): bool {
             return true;
         }
+
+        public static function get_default_background_prompt_preview(): string {
+            return 'Default deterministic background prompt.';
+        }
     }
 }
 
@@ -450,6 +454,12 @@ namespace {
         'google/stub-image-model',
         $config['models']['currentImageModel'] ?? '',
         'The AI popup builder config should expose the current preferred image model.'
+    );
+
+    Assertions::same(
+        'Default deterministic background prompt.',
+        $config['imageBackgroundPrompt'] ?? '',
+        'The AI popup builder config should expose the deterministic image background prompt preview.'
     );
 
     $suggestion_library = $config['suggestionLibrary'] ?? array();

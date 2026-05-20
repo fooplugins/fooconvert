@@ -279,7 +279,7 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 * Fixed : AI Popup Builder background image generation now avoids popup UI mockups, rejects code-like prompt responses, and keeps raw image prompts out of media attachment descriptions.
 * Updated : AI Popup Builder generated media can now be applied directly as the popup background image with cover sizing.
 * Updated : AI Popup Builder generated media edit links now open in a new browser tab.
-* Added : AI Popup Builder now requests optimized WebP background images with compression by default, with a setting to disable those image output parameters for providers that reject them.
+* Added : AI Popup Builder now requests optimized opaque WebP background images with compression by default, with a setting to disable those image output parameters for providers that reject them.
 
 = 2.1.4 =
 * Date Updated : 19 May 2026

@@ -81,7 +81,7 @@ class SettingsPage {
                     'type'                => 'checkbox',
                     'label'               => __( 'Optimize Generated Images', 'fooconvert' ),
                     'default'             => 'on',
-                    'desc'                => __( 'Request WebP output and compression for generated popup images. Disable this if your AI image provider rejects output_format or output_compression.', 'fooconvert' ),
+                    'desc'                => __( 'Request WebP output, compression, and opaque backgrounds for generated popup images. Disable this if your AI image provider rejects output_format, output_compression, or background.', 'fooconvert' ),
                     'before_input_render' => array( $this, 'render_checkbox_off_value' ),
                     'value_decoder'       => array( $this, 'decode_optimize_image_output_field' ),
                     'value_encoder'       => array( $this, 'encode_optimize_image_output_field' ),

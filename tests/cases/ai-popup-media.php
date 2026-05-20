@@ -67,7 +67,31 @@ namespace {
         return $text;
     }
 
+    function esc_html__( string $text, ?string $domain = null ): string {
+        return $text;
+    }
+
+    function esc_textarea( $value ): string {
+        return htmlspecialchars( (string) $value, ENT_QUOTES, 'UTF-8' );
+    }
+
+    function add_action( string $hook, $callback, int $priority = 10, int $accepted_args = 1 ): void {
+        $GLOBALS['fc_media_actions'][ $hook ][] = compact( 'callback', 'priority', 'accepted_args' );
+    }
+
+    function add_meta_box( string $id, string $title, $callback, $screen = null, string $context = 'advanced', string $priority = 'default', $callback_args = null ): void {
+        $GLOBALS['fc_media_meta_boxes'][] = compact( 'id', 'title', 'callback', 'screen', 'context', 'priority', 'callback_args' );
+    }
+
+    function is_admin(): bool {
+        return true;
+    }
+
     function sanitize_text_field( $value ): string {
+        return trim( strip_tags( (string) $value ) );
+    }
+
+    function sanitize_textarea_field( $value ): string {
         return trim( strip_tags( (string) $value ) );
     }
 
@@ -119,6 +143,10 @@ namespace {
     }
 
     function get_post_meta( int $post_id, string $meta_key, bool $single = false ) {
+        if ( isset( $GLOBALS['fc_media_post_meta'][ $post_id ][ $meta_key ] ) ) {
+            return $GLOBALS['fc_media_post_meta'][ $post_id ][ $meta_key ];
+        }
+
         if ( 77 === $post_id && PopupMedia::META_GENERATED === $meta_key ) {
             return '1';
         }
@@ -154,6 +182,73 @@ namespace {
     require_once dirname( __DIR__, 2 ) . '/includes/AI/PopupBuilder/Settings.php';
     require_once dirname( __DIR__, 2 ) . '/includes/AI/PopupBuilder/Blueprint/DraftNormalizer.php';
     require_once dirname( __DIR__, 2 ) . '/includes/AI/PopupBuilder/Media/Attachments.php';
+
+    $media = new PopupMedia();
+
+    Assertions::true(
+        isset( $GLOBALS['fc_media_actions']['add_meta_boxes_attachment'] ),
+        'Popup media should register an attachment metabox hook in wp-admin.'
+    );
+
+    $GLOBALS['fc_media_post_meta'][77][PopupMedia::META_PROMPT] = 'Create a branded background <no text or controls>.';
+    $attachment_post = (object) array(
+        'ID'        => 77,
+        'post_type' => 'attachment',
+    );
+
+    $media->add_generation_metabox( $attachment_post );
+    $metabox = end( $GLOBALS['fc_media_meta_boxes'] );
+
+    Assertions::same(
+        'fooconvert-ai-image-generation',
+        $metabox['id'] ?? '',
+        'Generated popup media should register a dedicated image generation metabox.'
+    );
+
+    Assertions::same(
+        'AI Image Generation',
+        $metabox['title'] ?? '',
+        'Generated popup media metabox should use the expected title.'
+    );
+
+    Assertions::same(
+        'attachment',
+        $metabox['screen'] ?? '',
+        'Generated popup media metabox should be registered on attachment edit screens.'
+    );
+
+    ob_start();
+    call_user_func( $metabox['callback'], $attachment_post, array( 'args' => $metabox['callback_args'] ) );
+    $metabox_output = ob_get_clean();
+
+    Assertions::true(
+        false !== strpos( $metabox_output, 'Prompt used to generate this image.' ),
+        'Generated popup media metabox should describe the stored prompt.'
+    );
+
+    Assertions::true(
+        false !== strpos( $metabox_output, 'Create a branded background &lt;no text or controls&gt;.' ),
+        'Generated popup media metabox should render the stored prompt as escaped textarea content.'
+    );
+
+    Assertions::false(
+        false !== strpos( $metabox_output, '<no text or controls>' ),
+        'Generated popup media metabox should not render prompt HTML unescaped.'
+    );
+
+    $metabox_count = count( $GLOBALS['fc_media_meta_boxes'] );
+    $media->add_generation_metabox(
+        (object) array(
+            'ID'        => 78,
+            'post_type' => 'attachment',
+        )
+    );
+
+    Assertions::same(
+        $metabox_count,
+        count( $GLOBALS['fc_media_meta_boxes'] ),
+        'Attachments without stored AI prompts should not add the AI image generation metabox.'
+    );
 
     $draft = PopupMedia::inject_media_into_popup_draft(
         array(

@@ -240,9 +240,12 @@ namespace {
     );
 
     Assertions::same(
-        array( 'output_compression' => 80 ),
+        array(
+            'output_compression' => 80,
+            'background'         => 'opaque',
+        ),
         $GLOBALS['fc_generated_image_custom_options'] ?? array(),
-        'Generating popup image data should request compressed image output by default.'
+        'Generating popup image data should request compressed opaque image output by default.'
     );
 
     Assertions::same(
@@ -286,6 +289,34 @@ namespace {
         $GLOBALS['fc_generated_image_models'] ?? array(),
         'Generating popup image data should prefer the configured image model override when it is set.'
     );
+
+    if ( function_exists( 'imagecreatetruecolor' ) && function_exists( 'imagewebp' ) && function_exists( 'imagecreatefromstring' ) ) {
+        $source_image = imagecreatetruecolor( 2, 2 );
+        imagealphablending( $source_image, false );
+        imagesavealpha( $source_image, true );
+        $hidden_color = imagecolorallocatealpha( $source_image, 112, 96, 144, 127 );
+        imagefilledrectangle( $source_image, 0, 0, 1, 1, $hidden_color );
+
+        ob_start();
+        imagewebp( $source_image, null, 80 );
+        $transparent_webp = ob_get_clean();
+        imagedestroy( $source_image );
+
+        $reflection = new \ReflectionClass( PopupMedia::class );
+        $method     = $reflection->getMethod( 'normalize_generated_image_binary' );
+        $method->setAccessible( true );
+
+        $normalized = $method->invoke( null, $transparent_webp, 'image/webp' );
+        $image      = imagecreatefromstring( $normalized );
+        $pixel      = imagecolorsforindex( $image, imagecolorat( $image, 0, 0 ) );
+        imagedestroy( $image );
+
+        Assertions::same(
+            0,
+            (int) $pixel['alpha'],
+            'Generated WebP import should repair fully transparent alpha when RGB image data exists underneath.'
+        );
+    }
 
     echo "ai-popup-generated-image: ok\n";
 }
