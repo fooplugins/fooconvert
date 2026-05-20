@@ -72,6 +72,14 @@ namespace {
     }
 
     /**
+     * @param mixed $key
+     * @return string
+     */
+    function sanitize_key( $key ): string {
+        return strtolower( preg_replace( '/[^a-z0-9_\\-]/', '', (string) $key ) ?? '' );
+    }
+
+    /**
      * @param int $number
      * @return string
      */
@@ -86,6 +94,14 @@ namespace {
      */
     function fooconvert_get_setting( string $key, $default = false ) {
         return $default;
+    }
+
+    /**
+     * @param string $panel Dashboard panel key.
+     * @return bool
+     */
+    function fooconvert_is_dashboard_panel_hidden( string $panel ): bool {
+        return false;
     }
 
     /**

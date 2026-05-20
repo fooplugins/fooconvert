@@ -159,20 +159,18 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
                 wp_send_json_error( [ 'message' => __( 'Panel is not set.', 'fooconvert' ) ] );
             }
 
-            $hidden_panels = fooconvert_get_setting( 'hide_dashboard_panels', [] );
-            if ( !is_array( $hidden_panels ) ) {
-                $hidden_panels = array();
-            }
-
-            $hidden_panels = array_values( array_unique( array_filter( array_map( 'sanitize_key', $hidden_panels ) ) ) );
+            $hidden_panels = fooconvert_normalize_hidden_dashboard_panels( fooconvert_get_setting( 'hide_dashboard_panels', array() ) );
 
             if ( in_array( $panel, $hidden_panels, true ) ) {
                 wp_send_json_success( [ 'message' => __( 'Panel hidden.', 'fooconvert' ) ] );
             }
 
             $hidden_panels[] = $panel;
+            $hidden_panels = fooconvert_normalize_hidden_dashboard_panels( $hidden_panels );
 
-            if ( fooconvert_set_setting( 'hide_dashboard_panels', $hidden_panels ) ) {
+            fooconvert_set_setting( 'hide_dashboard_panels', $hidden_panels );
+
+            if ( fooconvert_is_dashboard_panel_hidden( $panel ) ) {
                 wp_send_json_success( [ 'message' => __( 'Panel hidden.', 'fooconvert' ) ] );
             }
 

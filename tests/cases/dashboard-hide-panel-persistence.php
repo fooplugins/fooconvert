@@ -31,6 +31,7 @@ namespace {
 
     /** @var array<string,mixed> */
     $GLOBALS['fc_options'] = array();
+    $GLOBALS['fc_update_option_result'] = false;
 
     /**
      * @param string $text
@@ -82,7 +83,7 @@ namespace {
     function update_option( string $option, $value ): bool {
         $GLOBALS['fc_options'][ $option ] = $value;
 
-        return true;
+        return (bool) $GLOBALS['fc_update_option_result'];
     }
 
     /**

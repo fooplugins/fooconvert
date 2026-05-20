@@ -106,9 +106,7 @@ if ( !class_exists( __NAMESPACE__ . '\Promotions' ) ) {
          * @since 1.0.0
          */
         public function render_addons_panel() {
-            $hidden_panels = fooconvert_get_setting( 'hide_dashboard_panels', [] );
-
-            if ( in_array( 'premium', $hidden_panels ) ) {
+            if ( fooconvert_is_dashboard_panel_hidden( 'premium' ) ) {
                 return;
             }
 

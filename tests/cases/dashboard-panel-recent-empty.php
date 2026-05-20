@@ -42,6 +42,14 @@ namespace {
     }
 
     /**
+     * @param mixed $key
+     * @return string
+     */
+    function sanitize_key( $key ): string {
+        return strtolower( preg_replace( '/[^a-z0-9_\\-]/', '', (string) $key ) ?? '' );
+    }
+
+    /**
      * @param string $url
      * @return string
      */
