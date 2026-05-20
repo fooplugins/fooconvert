@@ -255,6 +255,9 @@ if ( !class_exists( __NAMESPACE__ . '\SettingsPage' ) ) {
          * Handles sanitize callback.
          */
         function sanitize_callback( $input ) {
+            if ( !$this->is_settings_page() ) {
+                return $input;
+            }
 
             //check to see if the options were reset
             if ( isset ( $input['reset-defaults'] ) ) {
