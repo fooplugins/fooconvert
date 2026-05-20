@@ -180,6 +180,15 @@ ol.fooconvert-ordered-list li::before {
     background: #fafafa;
 }
 
+.fooconvert-recent-updated-table {
+    table-layout: fixed;
+}
+
+.fooconvert-recent-updated-table .modified {
+    width: 95px;
+    white-space: nowrap;
+}
+
 .fooconvert-top-performers-table th:nth-child(1),
 .fooconvert-top-performers-table td:nth-child(1) {
     text-align: left;
@@ -224,6 +233,36 @@ ol.fooconvert-ordered-list li::before {
 }
 
 .fooconvert-top-performers-table .fooconvert-dashboard-pill {
+    margin: 0;
+}
+
+.fooconvert-dashboard-title-cell {
+    min-width: 0;
+}
+
+.fooconvert-dashboard-title-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 0;
+}
+
+.fooconvert-dashboard-title {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.fooconvert-dashboard-title-row .fooconvert-dashboard-pill,
+.fooconvert-dashboard-title-row .fooconvert-dashboard-table-actions {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+.fooconvert-dashboard-title-row .fooconvert-dashboard-pill {
     margin: 0;
 }
 

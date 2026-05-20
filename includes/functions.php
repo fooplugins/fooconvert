@@ -125,9 +125,13 @@ function fooconvert_get_popup_editor_background() {
  */
 function fooconvert_set_setting( $key, $value ) {
     $settings = fooconvert_get_settings();
+    if ( !is_array( $settings ) ) {
+        $settings = array();
+    }
+
     $settings[$key] = $value;
 
-    update_option( FOOCONVERT_OPTION_DATA, $settings );
+    return update_option( FOOCONVERT_OPTION_DATA, $settings );
 }
 
 /**

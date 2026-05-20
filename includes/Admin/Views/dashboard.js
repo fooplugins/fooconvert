@@ -136,14 +136,16 @@ jQuery(document).ready(function ($) {
     $(document).on('click', '.fooconvert-hide-panel', function (e) {
         e.preventDefault();
         var $spinner = $('<span class="spinner is-active panel-hide-spinner"></span>'),
+            $link = $(this),
             panel = $(this).data('panel'),
             $panel = $('.fooconvert-panel[data-panel="' + panel + '"]');
 
-        $(this).hide().after($spinner);
+        $link.hide().after($spinner);
 
         $.ajax({
             url: fooconvertData.ajaxUrl,
             method: 'POST',
+            dataType: 'json',
             data: {
                 action: 'fooconvert_dashboard_task',
                 task: 'hide_panel',
@@ -152,10 +154,17 @@ jQuery(document).ready(function ($) {
             },
             success: function (response) {
                 $spinner.remove();
-                $panel.hide();
+                if (response && response.success) {
+                    $panel.hide();
+                    return;
+                }
+
+                $link.show();
+                alert(response && response.data && response.data.message ? response.data.message : 'Failed to hide panel!');
             },
             error: function () {
                 $spinner.remove();
+                $link.show();
                 alert('Failed to hide panel!');
             }
         });

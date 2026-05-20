@@ -52,17 +52,30 @@ $fooconvert_has_popups = !empty( $fooconvert_popups );
                         $fooconvert_stats_link = '<a href="' . esc_url( $fooconvert_stats_url ) . '"><i class="dashicons dashicons-chart-bar" title="' . esc_attr__( 'View Popup Stats', 'fooconvert' ) . '"></i></a>';
                         $post_type = fooconvert_get_popup_type_label( $fooconvert_popup );
                         $fooconvert_modified_time = get_post_modified_time( 'U', false, $fooconvert_popup );               // Get the Unix timestamp of the modified date
-                        $fooconvert_modified_diff = human_time_diff( $fooconvert_modified_time, current_time( 'timestamp' ) );
+                        $fooconvert_current_time = current_time( 'timestamp' );
+                        $fooconvert_modified_diff = human_time_diff( $fooconvert_modified_time, $fooconvert_current_time );
+                        $fooconvert_modified_seconds = abs( $fooconvert_current_time - $fooconvert_modified_time );
+
+                        if ( $fooconvert_modified_seconds >= MINUTE_IN_SECONDS && $fooconvert_modified_seconds < HOUR_IN_SECONDS ) {
+                            $fooconvert_modified_minutes = max( 1, (int) round( $fooconvert_modified_seconds / MINUTE_IN_SECONDS ) );
+                            $fooconvert_modified_diff = sprintf(
+                                // translators: %s: number of minutes.
+                                _n( '%s min', '%s mins', $fooconvert_modified_minutes, 'fooconvert' ),
+                                number_format_i18n( $fooconvert_modified_minutes )
+                            );
+                        }
+
                         // translators: %s: refers to the relative time since the popup was last updated.
                         $fooconvert_modified = sprintf( __( '%s ago', 'fooconvert' ), $fooconvert_modified_diff ); // Friendly time difference
 
-                        echo '<tr><td>';
-                        echo '<span>' . esc_html( $fooconvert_popup_title ) . '</span>';
+                        echo '<tr>';
+                        echo '<td class="fooconvert-dashboard-title-cell"><div class="fooconvert-dashboard-title-row">';
+                        echo '<span class="fooconvert-dashboard-title">' . esc_html( $fooconvert_popup_title ) . '</span>';
                         echo '<span class="fooconvert-dashboard-pill">' . esc_html( $post_type ) . '</span>';
                         echo '<div class="fooconvert-dashboard-table-actions">';
                         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                         echo $fooconvert_edit_link . ' ' . $fooconvert_stats_link;
-                        echo '</div>';
+                        echo '</div></div>';
                         echo '</td>';
                         echo '<td class="modified">' . esc_html( $fooconvert_modified ) . '</td>';
                         echo '</tr>';

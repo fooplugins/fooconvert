@@ -154,18 +154,29 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
          * @since 1.0.0
          */
         function hide_panel() {
-            $panel = $this->get_post_value( 'panel' );
+            $panel = sanitize_key( $this->get_post_value( 'panel' ) );
             if ( empty( $panel ) ) {
-                wp_send_json( [ 'message' => __( 'Panel is not set.', 'fooconvert' ) ] );
+                wp_send_json_error( [ 'message' => __( 'Panel is not set.', 'fooconvert' ) ] );
             }
 
             $hidden_panels = fooconvert_get_setting( 'hide_dashboard_panels', [] );
-
-            if ( !in_array( $panel, $hidden_panels ) ) {
-                $hidden_panels[$panel] = $panel;
-                fooconvert_set_setting( 'hide_dashboard_panels', $hidden_panels );
-                wp_send_json( [ 'message' => __( 'Panel hidden.', 'fooconvert' ) ] );
+            if ( !is_array( $hidden_panels ) ) {
+                $hidden_panels = array();
             }
+
+            $hidden_panels = array_values( array_unique( array_filter( array_map( 'sanitize_key', $hidden_panels ) ) ) );
+
+            if ( in_array( $panel, $hidden_panels, true ) ) {
+                wp_send_json_success( [ 'message' => __( 'Panel hidden.', 'fooconvert' ) ] );
+            }
+
+            $hidden_panels[] = $panel;
+
+            if ( fooconvert_set_setting( 'hide_dashboard_panels', $hidden_panels ) ) {
+                wp_send_json_success( [ 'message' => __( 'Panel hidden.', 'fooconvert' ) ] );
+            }
+
+            wp_send_json_error( [ 'message' => __( 'Panel could not be hidden.', 'fooconvert' ) ] );
         }
 
         /**
