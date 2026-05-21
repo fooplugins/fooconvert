@@ -122,9 +122,9 @@ namespace {
         );
 
         Assertions::same(
-            array( 'recent' ),
+            array( 'recent' => 'recent' ),
             $GLOBALS['fc_options'][ FOOCONVERT_OPTION_DATA ]['hide_dashboard_panels'] ?? null,
-            'Hiding a dashboard panel should persist the panel key to plugin settings.'
+            'Hiding a dashboard panel should persist the panel key in the checkbox list settings shape.'
         );
 
         echo "dashboard-hide-panel-persistence: ok\n";

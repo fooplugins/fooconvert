@@ -168,7 +168,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Admin\Dashboard' ) ) {
             $hidden_panels[] = $panel;
             $hidden_panels = fooconvert_normalize_hidden_dashboard_panels( $hidden_panels );
 
-            fooconvert_set_setting( 'hide_dashboard_panels', $hidden_panels );
+            fooconvert_set_setting( 'hide_dashboard_panels', array_combine( $hidden_panels, $hidden_panels ) );
 
             if ( fooconvert_is_dashboard_panel_hidden( $panel ) ) {
                 wp_send_json_success( [ 'message' => __( 'Panel hidden.', 'fooconvert' ) ] );
