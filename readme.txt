@@ -257,12 +257,14 @@ No, FooConvert is optimized for performance and has minimal impact on your websi
 
 == Screenshots ==
 
-1. Popup Editor
-2. FooConvert Dashboard
-3. Stats
-4. FooConvert Settings
-5. Template Selector
-6. Editor Settings
+1. Popup Editor - Editing an overlay popup
+2. Popup Template Selector
+3. AI Popup Builder
+4. Popup Editor - Editing a flyout
+5. AI Popup Builder - Context
+6. Popup Editor - Editing a bar
+7. FooConvert Dashboard
+8. Popup Stats Page
 
 == Repository ==
 
