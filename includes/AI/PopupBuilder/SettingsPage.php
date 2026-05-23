@@ -72,8 +72,8 @@ class SettingsPage {
                     'order'       => 50,
                     'type'        => 'textarea',
                     'label'       => __( 'Disabled Params', 'fooconvert' ),
-                    'placeholder' => "temperature\nresponse_format",
-                    'desc'        => __( 'One parameter per line or comma-separated. Listed optional parameters are not sent with AI chat requests.', 'fooconvert' ),
+                    'placeholder' => "temperature\noutput_compression",
+                    'desc'        => __( 'One optional model/provider request parameter per line or comma-separated. Required popup builder capabilities such as tools and response_format are always kept enabled.', 'fooconvert' ),
                 ),
                 FOOCONVERT_SETTING_AI_POPUP_BUILDER_OPTIMIZE_IMAGE_OUTPUT => array(
                     'id'                  => FOOCONVERT_SETTING_AI_POPUP_BUILDER_OPTIMIZE_IMAGE_OUTPUT,

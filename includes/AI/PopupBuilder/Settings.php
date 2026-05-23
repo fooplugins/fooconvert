@@ -81,7 +81,7 @@ class Settings {
         $params = array();
         foreach ( $items as $item ) {
             $param = self::normalize_param_name( is_scalar( $item ) ? (string) $item : '' );
-            if ( '' !== $param ) {
+            if ( '' !== $param && ! self::is_required_capability_param( $param ) ) {
                 $params[ $param ] = $param;
             }
         }
@@ -363,13 +363,15 @@ class Settings {
      */
     public static function get_param_aliases( string $param ): array {
         $param  = self::normalize_param_name( $param );
-        $groups = array(
-            array( 'temperature' ),
-            array( 'response_format', 'response_mime_type', 'response_schema', 'json', 'json_schema', 'output_mime_type' ),
-            array( 'tools', 'tool', 'tool_choice', 'functions', 'function_declarations', 'abilities' ),
-            array( 'model', 'models' ),
-            array( 'timeout', 'request_timeout', 'connect_timeout' ),
-            array( 'system_instruction', 'system', 'instructions' ),
+        $groups = array_merge(
+            self::get_required_capability_param_groups(),
+            array(
+                array( 'temperature' ),
+                array( 'output_mime_type' ),
+                array( 'model', 'models' ),
+                array( 'timeout', 'request_timeout', 'connect_timeout' ),
+                array( 'system_instruction', 'system', 'instructions' ),
+            )
         );
 
         foreach ( $groups as $group ) {
@@ -380,6 +382,40 @@ class Settings {
         }
 
         return array( $param );
+    }
+
+    /**
+     * Returns whether a parameter controls a required popup-builder model capability.
+     *
+     * @param string $param Parameter name.
+     * @return bool
+     */
+    public static function is_required_capability_param( string $param ): bool {
+        $param = self::normalize_param_name( $param );
+        if ( '' === $param ) {
+            return false;
+        }
+
+        foreach ( self::get_required_capability_param_groups() as $group ) {
+            $normalized_group = array_map( array( self::class, 'normalize_param_name' ), $group );
+            if ( in_array( $param, $normalized_group, true ) ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns parameter aliases that must never be disabled for text popup generation.
+     *
+     * @return array<int,array<int,string>>
+     */
+    private static function get_required_capability_param_groups(): array {
+        return array(
+            array( 'response_format', 'response_mime_type', 'response_schema', 'json', 'json_schema' ),
+            array( 'tools', 'tool', 'tool_choice', 'functions', 'function_declarations', 'abilities' ),
+        );
     }
 
     /**

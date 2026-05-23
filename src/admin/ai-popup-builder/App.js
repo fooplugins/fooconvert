@@ -2603,15 +2603,21 @@ export const App = () => {
 					<TextareaControl
 						label={ __( 'Disabled Params', 'fooconvert' ) }
 						value={ aiSettings?.disabledParamsText || '' }
-						onChange={ ( value ) =>
+						onChange={ ( value ) => {
+							const disabledParams =
+								normalizeDisabledParams( value );
+
 							updateAiSettings( {
-								disabledParamsText: value,
-								disabledParams:
-									normalizeDisabledParams( value ),
-							} )
-						}
-						placeholder={ 'temperature\nresponse_format' }
-						help={ __( 'One parameter per line.', 'fooconvert' ) }
+								disabledParamsText:
+									disabledParams.join( '\n' ),
+								disabledParams,
+							} );
+						} }
+						placeholder={ 'temperature\noutput_compression' }
+						help={ __(
+							'One optional model/provider request parameter per line. Tools and response_format stay enabled.',
+							'fooconvert'
+						) }
 						rows={ 8 }
 						__nextHasNoMarginBottom
 						__next40pxDefaultSize

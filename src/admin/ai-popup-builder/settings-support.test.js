@@ -19,9 +19,9 @@ describe( 'AI popup builder settings support', () => {
 	it( 'normalizes disabled params from text and aliases', () => {
 		expect(
 			normalizeDisabledParams(
-				'temperature, responseFormat\nresponse-format'
+				'temperature, responseFormat\nresponse-format\ntools\nfunctionDeclarations\noutputMimeType'
 			)
-		).toEqual( [ 'temperature', 'response_format' ] );
+		).toEqual( [ 'temperature', 'output_mime_type' ] );
 	} );
 
 	it( 'selects default blocks without broad WooCommerce blocks', () => {

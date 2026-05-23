@@ -98,6 +98,34 @@ namespace {
         'The settings route should accept the generated image optimization setting.'
     );
 
+    Assertions::same(
+        array( 'temperature', 'output_mime_type', 'output_compression' ),
+        \FooPlugins\FooConvert\AI\PopupBuilder\Settings::sanitize_disabled_params(
+            "temperature\nresponse_format\ntools\njson_schema\nfunction_declarations\noutput-mime-type\noutput_compression"
+        ),
+        'Disabled params should keep optional model/provider params and drop required tools/schema capabilities.'
+    );
+
+    Assertions::false(
+        \FooPlugins\FooConvert\AI\PopupBuilder\Settings::is_param_disabled(
+            array(
+                'disabled_params' => array( 'response_format', 'tools' ),
+            ),
+            'response_format'
+        ),
+        'response_format should never be treated as disabled.'
+    );
+
+    Assertions::false(
+        \FooPlugins\FooConvert\AI\PopupBuilder\Settings::is_param_disabled(
+            array(
+                'disabled_params' => array( 'response_format', 'tools' ),
+            ),
+            'tools'
+        ),
+        'tools should never be treated as disabled.'
+    );
+
     $settings_page = new AiPopupBuilderSettings();
     $settings      = $settings_page->add_settings_tab( array() );
     Assertions::same(

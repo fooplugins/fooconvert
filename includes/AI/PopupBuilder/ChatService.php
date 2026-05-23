@@ -155,7 +155,7 @@ class ChatService {
                         break;
                     }
 
-                    $unsupported_param = $this->extract_unsupported_parameter_from_error( $result, $settings );
+                    $unsupported_param = $this->extract_unsupported_parameter_from_error( $result );
                     if ( '' === $unsupported_param || $this->is_ai_param_disabled( $settings, $unsupported_param ) || $retry_count >= 4 ) {
                         return $result;
                     }
@@ -662,10 +662,9 @@ class ChatService {
      * Extracts an unsupported request parameter from a model error.
      *
      * @param WP_Error            $error Error response.
-     * @param array<string,mixed> $settings AI request settings.
      * @return string
      */
-    private function extract_unsupported_parameter_from_error( WP_Error $error, array $settings = array() ): string {
+    private function extract_unsupported_parameter_from_error( WP_Error $error ): string {
         $message = $error->get_error_message();
         $patterns = array(
             '/Unsupported parameter:\s*[\'"]([^\'"]+)[\'"]/i',
@@ -676,41 +675,9 @@ class ChatService {
 
         foreach ( $patterns as $pattern ) {
             if ( preg_match( $pattern, $message, $matches ) ) {
-                return $this->normalize_ai_param_name( $matches[1] ?? '' );
-            }
-        }
+                $param = $this->normalize_ai_param_name( $matches[1] ?? '' );
 
-        $fallback_param = $this->extract_ai_model_support_fallback_param( $message, $settings );
-        if ( '' !== $fallback_param ) {
-            return $fallback_param;
-        }
-
-        return '';
-    }
-
-    /**
-     * Infers a retryable optional parameter when AI client model matching fails.
-     *
-     * Some connectors expose usable text models but do not advertise support for
-     * optional schema/tool options in model metadata, or return failed payloads
-     * that the AI client cannot parse into chat choices. Retry by relaxing the
-     * most expensive optional popup-builder requirements in a stable order.
-     *
-     * @param string              $message Error message from the AI client.
-     * @param array<string,mixed> $settings AI request settings.
-     * @return string
-     */
-    private function extract_ai_model_support_fallback_param( string $message, array $settings ): string {
-        $model_discovery_failed = 1 === preg_match( '/No models found(?: for provider "[^"]+")? that support text_generation for this prompt\./i', $message );
-        $missing_chat_choices   = 1 === preg_match( '/Unexpected\s+.+?\s+API response:\s+Missing the "choices" key\.?/i', $message );
-
-        if ( ! $model_discovery_failed && ! $missing_chat_choices ) {
-            return '';
-        }
-
-        foreach ( array( 'response_format', 'tools' ) as $param ) {
-            if ( ! $this->is_ai_param_disabled( $settings, $param ) ) {
-                return $param;
+                return Settings::is_required_capability_param( $param ) ? '' : $param;
             }
         }
 

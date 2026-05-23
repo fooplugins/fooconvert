@@ -251,6 +251,13 @@ namespace {
                 throw new \RuntimeException( 'Unexpected OpenAI API response: Missing the "output" key.' );
             }
 
+            if ( 'unsupported_required_response_format' === $mode ) {
+                return new WP_Error(
+                    'unsupported_parameter',
+                    "Unsupported parameter: 'response_format' is not supported with this model."
+                );
+            }
+
             if ( 'openrouter_missing_choices_always_error' === $mode ) {
                 return new WP_Error(
                     'ai_client_error',
@@ -549,6 +556,36 @@ namespace {
         'The activity log should explain that the unsupported parameter was disabled.'
     );
 
+    $GLOBALS['fc_popup_builder_prompt_mode']    = 'unsupported_required_response_format';
+    $GLOBALS['fc_popup_builder_generate_count'] = 0;
+    $GLOBALS['fc_popup_builder_prompt_calls']   = array();
+    $GLOBALS['fc_popup_builder_saved_settings'] = array();
+
+    $unsupported_required_capability_response = $reflection->invoke( $builder, $request_payload );
+
+    Assertions::true(
+        $unsupported_required_capability_response instanceof WP_Error,
+        'Unsupported required schema capabilities should be returned as model errors.'
+    );
+
+    Assertions::same(
+        1,
+        (int) ( $GLOBALS['fc_popup_builder_generate_count'] ?? 0 ),
+        'Unsupported required schema capabilities should not be retried as disabled params.'
+    );
+
+    Assertions::same(
+        array( true ),
+        array_column( $GLOBALS['fc_popup_builder_prompt_calls'], 'response_format' ),
+        'The response format requirement should stay enabled when the selected model rejects it.'
+    );
+
+    Assertions::same(
+        array(),
+        \FooPlugins\FooConvert\AI\PopupBuilder\Settings::get()['disabled_params'],
+        'Unsupported required schema capabilities should not be persisted to saved Disabled Params.'
+    );
+
     $GLOBALS['fc_popup_builder_prompt_mode']    = 'no_models_for_optional_params';
     $GLOBALS['fc_popup_builder_generate_count'] = 0;
     $GLOBALS['fc_popup_builder_prompt_calls']   = array();
@@ -557,38 +594,38 @@ namespace {
     $openrouter_metadata_gap_response = $reflection->invoke( $builder, $request_payload );
 
     Assertions::true(
-        is_array( $openrouter_metadata_gap_response ),
-        'The chat response should retry after relaxing optional model-discovery requirements.'
+        $openrouter_metadata_gap_response instanceof WP_Error,
+        'Model discovery failures for tools/schema should not relax required popup-builder capabilities.'
     );
 
     Assertions::same(
-        3,
+        'prompt_invalid_argument',
+        $openrouter_metadata_gap_response->get_error_code(),
+        'The no-model resolver error should be returned so the user can choose a capable model.'
+    );
+
+    Assertions::same(
+        1,
         (int) ( $GLOBALS['fc_popup_builder_generate_count'] ?? 0 ),
-        'The no-model resolver error should retry once without response format and once without tools.'
+        'The no-model resolver error should not retry without required tools/schema capabilities.'
     );
 
     Assertions::same(
-        array( true, false, false ),
+        array( true ),
         array_column( $GLOBALS['fc_popup_builder_prompt_calls'], 'response_format' ),
-        'The response format requirement should be disabled after the first no-model resolver error.'
+        'The response format requirement should stay enabled when model discovery fails.'
     );
 
     Assertions::same(
-        array( true, true, false ),
+        array( true ),
         array_column( $GLOBALS['fc_popup_builder_prompt_calls'], 'tools' ),
-        'The tools requirement should be disabled after response format has already been disabled.'
+        'Tools should stay enabled when model discovery fails.'
     );
 
     Assertions::same(
-        array( 'response_format', 'tools' ),
-        $openrouter_metadata_gap_response['settings']['disabledParams'],
-        'No-model resolver retries should return the optional parameters disabled for compatibility.'
-    );
-
-    Assertions::same(
-        array( 'response_format', 'tools' ),
+        array(),
         \FooPlugins\FooConvert\AI\PopupBuilder\Settings::get()['disabled_params'],
-        'No-model resolver retry parameters should be persisted to saved Disabled Params.'
+        'No-model resolver errors should not persist required capabilities as disabled params.'
     );
 
     $GLOBALS['fc_popup_builder_prompt_mode']    = 'openrouter_missing_choices_error';
@@ -599,20 +636,38 @@ namespace {
     $openrouter_missing_choices_response = $reflection->invoke( $builder, $request_payload );
 
     Assertions::true(
-        is_array( $openrouter_missing_choices_response ),
-        'OpenRouter missing-choices parser errors should retry after relaxing optional request parameters.'
+        $openrouter_missing_choices_response instanceof WP_Error,
+        'OpenRouter missing-choices parser errors should be returned instead of relaxing schema/tool requirements.'
     );
 
     Assertions::same(
-        3,
+        'fooconvert_ai_popup_builder_no_output',
+        $openrouter_missing_choices_response->get_error_code(),
+        'OpenRouter missing-choices parser errors should be normalized as no-output provider failures.'
+    );
+
+    Assertions::same(
+        1,
         (int) ( $GLOBALS['fc_popup_builder_generate_count'] ?? 0 ),
-        'OpenRouter missing-choices errors should retry once without response format and once without tools.'
+        'OpenRouter missing-choices parser errors should not trigger schema/tool disable retries.'
     );
 
     Assertions::same(
-        array( 'response_format', 'tools' ),
-        $openrouter_missing_choices_response['settings']['disabledParams'],
-        'OpenRouter missing-choices retries should return the optional parameters disabled for compatibility.'
+        array( true ),
+        array_column( $GLOBALS['fc_popup_builder_prompt_calls'], 'response_format' ),
+        'OpenRouter missing-choices requests should keep the response format schema enabled.'
+    );
+
+    Assertions::same(
+        array( true ),
+        array_column( $GLOBALS['fc_popup_builder_prompt_calls'], 'tools' ),
+        'OpenRouter missing-choices requests should keep tools enabled.'
+    );
+
+    Assertions::same(
+        array(),
+        \FooPlugins\FooConvert\AI\PopupBuilder\Settings::get()['disabled_params'],
+        'OpenRouter missing-choices parser errors should not be persisted as disabled params.'
     );
 
     $GLOBALS['fc_popup_builder_prompt_mode']    = 'openai_missing_output_error';
@@ -693,16 +748,20 @@ namespace {
     $GLOBALS['fc_popup_builder_prompt_mode']    = 'openrouter_missing_choices_always_error';
     $GLOBALS['fc_popup_builder_generate_count'] = 0;
     $GLOBALS['fc_popup_builder_prompt_calls']   = array();
-    $GLOBALS['fc_popup_builder_saved_settings'] = array(
-        FOOCONVERT_SETTING_AI_POPUP_BUILDER_DISABLED_PARAMS => "response_format\ntools",
-    );
+    $GLOBALS['fc_popup_builder_saved_settings'] = array();
 
     $openrouter_choices_error = $reflection->invoke( $builder, $request_payload );
 
     Assertions::same(
         'fooconvert_ai_popup_builder_no_output',
         $openrouter_choices_error->get_error_code(),
-        'OpenRouter missing-choices errors should become provider-generic no-output errors when retries are exhausted.'
+        'OpenRouter missing-choices errors should become provider-generic no-output errors without disabling schema/tools.'
+    );
+
+    Assertions::same(
+        1,
+        (int) ( $GLOBALS['fc_popup_builder_generate_count'] ?? 0 ),
+        'OpenRouter missing-choices errors should not keep retrying with schema/tool requirements removed.'
     );
 
     Assertions::same(
