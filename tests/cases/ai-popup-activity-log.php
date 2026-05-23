@@ -511,6 +511,40 @@ namespace {
         'Raw or unsupported reasoning events should not be exposed in the chat UI.'
     );
 
+    Assertions::same(
+        'Gateway chunk',
+        $assistant_delta_reflection->invoke(
+            null,
+            new WP_AI_Client_SSE_Event(
+                'response.output_text.delta',
+                json_encode(
+                    array(
+                        'type'  => 'response.output_text.delta',
+                        'delta' => 'Gateway chunk',
+                    )
+                )
+            )
+        ),
+        'OpenAI Responses-style text deltas should stream as assistant text.'
+    );
+
+    Assertions::same(
+        '',
+        $assistant_delta_reflection->invoke(
+            null,
+            new WP_AI_Client_SSE_Event(
+                'response.output_text.done',
+                json_encode(
+                    array(
+                        'type' => 'response.output_text.done',
+                        'text' => 'Gateway full text',
+                    )
+                )
+            )
+        ),
+        'OpenAI Responses-style done events should not duplicate assistant text.'
+    );
+
     $stream_items = array();
     $reflection = new \ReflectionMethod( ChatService::class, 'build_chat_response' );
     $reflection->setAccessible( true );
