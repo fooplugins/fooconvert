@@ -135,7 +135,15 @@ class Config {
      * @return bool
      */
     public static function supports_streaming(): bool {
-        return self::has_ai_client() && function_exists( 'wp_ai_client_stream' );
+        if ( ! self::has_ai_client() || ! function_exists( 'wp_ai_client_stream' ) ) {
+            return false;
+        }
+
+        if ( function_exists( 'wp_ai_client_streaming_dependencies_available' ) && ! wp_ai_client_streaming_dependencies_available() ) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

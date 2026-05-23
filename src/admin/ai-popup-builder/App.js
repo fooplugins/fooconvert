@@ -60,7 +60,10 @@ import {
 import { isPlainObject } from './serializer-support';
 import { buildCleanBuilderUrl } from './navigation-support';
 import { normalizePopupType, serializeDraftToMarkup } from './serializer';
-import { streamChatRequest } from './stream-support';
+import {
+	appendReadableStreamDebugEvent,
+	streamChatRequest,
+} from './stream-support';
 import { config, debugTabAvailable, rootClass } from './config';
 import {
 	buildAiSettingsPayload,
@@ -1671,26 +1674,20 @@ export const App = () => {
 							'/fooconvert/v1/ai-popup-builder/chat-stream',
 						nonce: config?.restNonce,
 						payload: requestPayload,
-						onChunk: ( chunk ) => {
-							if (
-								typeof chunk !== 'string' ||
-								chunk.length === 0
-							) {
-								return;
-							}
-
-							startTransition( () => {
-								setCurrentResponse(
-									( current ) => `${ current }${ chunk }`
-								);
-							} );
-						},
 						onEvent: ( event ) => {
 							if ( ! isPlainObject( event ) ) {
 								return;
 							}
 
 							streamStarted = true;
+							startTransition( () => {
+								setCurrentResponse( ( current ) =>
+									appendReadableStreamDebugEvent(
+										current,
+										event
+									)
+								);
+							} );
 
 							if ( event.event === 'assistant_delta' ) {
 								return;

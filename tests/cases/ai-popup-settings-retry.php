@@ -295,6 +295,75 @@ namespace {
         }
     }
 
+    class PopupBuilderStreamingPromptStub {
+        private PopupBuilderPromptStub $prompt;
+        private array $stream_args;
+
+        public function __construct( PopupBuilderPromptStub $prompt, array $stream_args ) {
+            $this->prompt      = $prompt;
+            $this->stream_args = $stream_args;
+        }
+
+        public function generate_text_result() {
+            if ( 'streaming_missing_choices_with_text' !== ( $GLOBALS['fc_popup_builder_prompt_mode'] ?? '' ) ) {
+                return $this->prompt->generate_text_result();
+            }
+
+            $chunks = array(
+                '{"assistant_message":"Built from stream.","clarifying_question":"","suggested_prompts":[],"media_items":[],"popup_draft":{"title":"Stream Offer","popup_type":"popup","goal":"Recover the streamed response.","audience":"Visitors","offer":"Streamed offer","template_slug":"","trigger":{},"root_attributes":{},"content_blocks":[{"name":"core/paragraph"}],"conversion_rationale":[],"notes":[]}}',
+            );
+
+            foreach ( $chunks as $chunk ) {
+                if ( isset( $this->stream_args['on_event'] ) && is_callable( $this->stream_args['on_event'] ) ) {
+                    call_user_func(
+                        $this->stream_args['on_event'],
+                        new WP_AI_Client_SSE_Event(
+                            'message',
+                            json_encode(
+                                array(
+                                    'choices' => array(
+                                        array(
+                                            'delta' => array(
+                                                'content' => $chunk,
+                                            ),
+                                        ),
+                                    ),
+                                )
+                            )
+                        )
+                    );
+                }
+            }
+
+            return new WP_Error(
+                'wp_ai_client_stream_error',
+                'Unexpected OpenRouter API response: Missing the "choices" key.'
+            );
+        }
+    }
+
+    class WP_AI_Client_SSE_Event {
+        private string $event;
+        private string $data;
+
+        public function __construct( string $event, string $data ) {
+            $this->event = $event;
+            $this->data  = $data;
+        }
+
+        public function get_event(): string {
+            return $this->event;
+        }
+
+        public function is_done(): bool {
+            return '[DONE]' === $this->data;
+        }
+
+        public function get_json_data() {
+            return json_decode( $this->data, true );
+        }
+    }
+
     function __( string $text, ?string $domain = null ): string {
         return $text;
     }
@@ -311,6 +380,10 @@ namespace {
 
     function wp_ai_client_prompt(): PopupBuilderPromptStub {
         return new PopupBuilderPromptStub();
+    }
+
+    function wp_ai_client_stream( WP_AI_Client_Prompt_Builder $prompt, array $stream_args = array() ): PopupBuilderStreamingPromptStub {
+        return new PopupBuilderStreamingPromptStub( $prompt, $stream_args );
     }
 
     function wp_json_encode( $value, int $flags = 0 ): string {
@@ -636,6 +709,40 @@ namespace {
         'openrouter',
         $openrouter_choices_error->get_error_data()['provider'] ?? '',
         'OpenRouter missing-choices errors should preserve the detected provider name in error data.'
+    );
+
+    $GLOBALS['wp_version']                       = '7.0';
+    $GLOBALS['fc_popup_builder_prompt_mode']     = 'streaming_missing_choices_with_text';
+    $GLOBALS['fc_popup_builder_generate_count']  = 0;
+    $GLOBALS['fc_popup_builder_prompt_calls']    = array();
+    $GLOBALS['fc_popup_builder_saved_settings']  = array();
+    $streamed_assistant_deltas                   = array();
+
+    $stream_recovered_response = $reflection->invoke(
+        $builder,
+        $request_payload,
+        array(
+            'on_assistant_delta' => static function( string $delta ) use ( &$streamed_assistant_deltas ): void {
+                $streamed_assistant_deltas[] = $delta;
+            },
+        )
+    );
+
+    Assertions::true(
+        is_array( $stream_recovered_response ),
+        'Streaming missing-choices parser errors should use accumulated assistant text as a fallback result.'
+    );
+
+    Assertions::same(
+        'Built from stream.',
+        $stream_recovered_response['assistant_message'] ?? '',
+        'The streamed-text fallback should preserve the assistant JSON that arrived before the provider parser failed.'
+    );
+
+    Assertions::same(
+        1,
+        count( $streamed_assistant_deltas ),
+        'The streamed-text fallback should continue forwarding assistant deltas to the UI.'
     );
 
     fwrite( STDOUT, "ai-popup-settings-retry: ok\n" );

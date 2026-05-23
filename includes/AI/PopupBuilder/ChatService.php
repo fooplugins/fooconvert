@@ -281,7 +281,8 @@ class ChatService {
             }
         }
 
-        $stream_args = array(
+        $streamed_assistant_text = '';
+        $stream_args             = array(
             'streaming_enabled' => true,
             'payload_mutator'   => function ( array $payload ) use ( $settings ): array {
                 $normalized = Settings::restore_streaming_schema_objects( $payload );
@@ -289,7 +290,7 @@ class ChatService {
 
                 return $this->remove_disabled_params_from_payload( $payload, $settings );
             },
-            'on_event'          => function ( \WP_AI_Client_SSE_Event $event ) use ( $stream_callbacks ): void {
+            'on_event'          => function ( \WP_AI_Client_SSE_Event $event ) use ( $stream_callbacks, &$streamed_assistant_text ): void {
                 $reasoning_delta = StreamSupport::extract_reasoning_summary_delta( $event );
 
                 if (
@@ -303,6 +304,7 @@ class ChatService {
                 $delta = StreamSupport::extract_delta_text( $event );
 
                 if ( '' !== $delta ) {
+                    $streamed_assistant_text .= $delta;
                     call_user_func( $stream_callbacks['on_assistant_delta'], $delta );
                 }
             },
@@ -313,13 +315,42 @@ class ChatService {
         }
 
         try {
-            return wp_ai_client_stream(
+            $result = wp_ai_client_stream(
                 $prompt,
                 $stream_args
             )->generate_text_result();
+
+            if ( is_wp_error( $result ) ) {
+                $fallback_result = $this->get_streamed_text_fallback_result( $streamed_assistant_text, $result->get_error_message() );
+                if ( null !== $fallback_result ) {
+                    return $fallback_result;
+                }
+            }
+
+            return $result;
         } catch ( \Throwable $error ) {
+            $fallback_result = $this->get_streamed_text_fallback_result( $streamed_assistant_text, $error->getMessage() );
+            if ( null !== $fallback_result ) {
+                return $fallback_result;
+            }
+
             return $this->get_ai_generation_exception_error( $error );
         }
+    }
+
+    /**
+     * Returns a best-effort result from streamed assistant text when provider final parsing fails.
+     *
+     * @param string $streamed_text Provider-delivered assistant text.
+     * @param string $error_message Terminal provider parser error.
+     * @return StreamedTextPromptResult|null
+     */
+    private function get_streamed_text_fallback_result( string $streamed_text, string $error_message ): ?StreamedTextPromptResult {
+        if ( '' === trim( $streamed_text ) || ! $this->is_missing_output_error_message( $error_message ) ) {
+            return null;
+        }
+
+        return new StreamedTextPromptResult( $streamed_text );
     }
 
     /**
@@ -1038,4 +1069,87 @@ class ChatService {
         return $response;
     }
 
+}
+
+/**
+ * Minimal prompt-result adapter used when a streamed response has usable text but the provider parser fails.
+ */
+class StreamedTextPromptResult {
+
+    /**
+     * Streamed assistant text.
+     *
+     * @var string
+     */
+    private $text;
+
+    /**
+     * Result candidates.
+     *
+     * @var array<int,StreamedTextPromptCandidate>
+     */
+    private $candidates;
+
+    /**
+     * Constructor.
+     *
+     * @param string $text Streamed assistant text.
+     */
+    public function __construct( string $text ) {
+        $this->text       = $text;
+        $this->candidates = array( new StreamedTextPromptCandidate( $text ) );
+    }
+
+    /**
+     * Returns the generated candidates.
+     *
+     * @return array<int,StreamedTextPromptCandidate>
+     */
+    public function getCandidates(): array {
+        return $this->candidates;
+    }
+
+    /**
+     * Returns the assistant text.
+     *
+     * @return string
+     */
+    public function toText(): string {
+        return $this->text;
+    }
+}
+
+/**
+ * Minimal candidate adapter for streamed-text fallback results.
+ */
+class StreamedTextPromptCandidate {
+
+    /**
+     * Candidate message.
+     *
+     * @var object
+     */
+    private $message;
+
+    /**
+     * Constructor.
+     *
+     * @param string $text Streamed assistant text.
+     */
+    public function __construct( string $text ) {
+        $this->message = new \WordPress\AiClient\Messages\DTO\ModelMessage(
+            array(
+                new MessagePart( $text ),
+            )
+        );
+    }
+
+    /**
+     * Returns the candidate message.
+     *
+     * @return object
+     */
+    public function getMessage() {
+        return $this->message;
+    }
 }
