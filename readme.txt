@@ -275,6 +275,7 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 = 2.1.6 =
 * Date Updated : 24 May 2026
 * Added : AI Popup Builder settings now include Test actions for current text and image model overrides.
+* Updated : Updated the bundled WP AI Client streaming adapter package to 1.0.0.
 * Updated : AI Popup Builder current model detection now matches the selected blocks, schema, tools, and disabled optional parameters used by real generation requests.
 * Fixed : AI Popup Builder now forces configured text and image model overrides instead of treating them as fallback preferences.
 * Fixed : AI Popup Builder now keeps required schema and tool-calling parameters enabled while still allowing unsupported optional parameters to be disabled.

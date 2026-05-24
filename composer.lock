@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4349f9d9b334aed4389ca421ddb6f94b",
+    "content-hash": "a9dd4305d5dcb4461a73018d0f7b1262",
     "packages": [
         {
             "name": "bradvin/wp-ai-client-streaming",
-            "version": "v0.1.2",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bradvin/wp-ai-client-streaming.git",
-                "reference": "1d89ace8937333f9fb3bd2e21be9b3444e193d2c"
+                "reference": "e8fbf099f242c6ef31f894d6bf4ec001250a80e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bradvin/wp-ai-client-streaming/zipball/1d89ace8937333f9fb3bd2e21be9b3444e193d2c",
-                "reference": "1d89ace8937333f9fb3bd2e21be9b3444e193d2c",
+                "url": "https://api.github.com/repos/bradvin/wp-ai-client-streaming/zipball/e8fbf099f242c6ef31f894d6bf4ec001250a80e5",
+                "reference": "e8fbf099f242c6ef31f894d6bf4ec001250a80e5",
                 "shasum": ""
             },
             "require": {
@@ -56,7 +56,7 @@
                 "issues": "https://github.com/bradvin/wp-ai-client-streaming/issues",
                 "source": "https://github.com/bradvin/wp-ai-client-streaming"
             },
-            "time": "2026-05-13T11:45:30+00:00"
+            "time": "2026-05-24T10:08:49+00:00"
         },
         {
             "name": "composer/installers",
