@@ -993,6 +993,7 @@ export const App = () => {
 	const [ savedAiSettingsSnapshot, setSavedAiSettingsSnapshot ] =
 		useState( initialAiSettings );
 	const [ isSavingAiSettings, setSavingAiSettings ] = useState( false );
+	const [ testingAiModelType, setTestingAiModelType ] = useState( '' );
 	const [ isExtractingBrand, setExtractingBrand ] = useState( false );
 	const [ isSavingBrand, setSavingBrand ] = useState( false );
 	const [ contextModal, setContextModal ] = useState(
@@ -2095,6 +2096,61 @@ export const App = () => {
 		}
 	};
 
+	const testAiModel = async ( type ) => {
+		if ( ! aiSettings?.canManage ) {
+			return;
+		}
+
+		const model = 'image' === type ? currentImageModel : currentTextModel;
+		if ( ! model ) {
+			return;
+		}
+
+		setTestingAiModelType( type );
+		setError( '' );
+
+		try {
+			const response = await apiFetch( {
+				path:
+					config?.api?.testModelPath ||
+					'/fooconvert/v1/ai-popup-builder/settings/test-model',
+				method: 'POST',
+				data: {
+					type,
+					model,
+				},
+			} );
+
+			setStatusNotice( {
+				status: 'success',
+				message:
+					response?.message ||
+					sprintf(
+						/* translators: %s: AI model override value. */
+						__(
+							'Model test passed for "%s".',
+							'fooconvert'
+						),
+						model
+					),
+			} );
+		} catch ( exception ) {
+			setError(
+					exception?.message ||
+					sprintf(
+						/* translators: %s: AI model override value. */
+						__(
+							'Could not test "%s". Check that the connector is active and the model name is available.',
+							'fooconvert'
+						),
+						model
+					)
+			);
+		} finally {
+			setTestingAiModelType( '' );
+		}
+	};
+
 	const updateAiSettings = ( updates ) => {
 		setAiSettings( ( currentSettings ) => ( {
 			...currentSettings,
@@ -2486,26 +2542,70 @@ export const App = () => {
 				</CardHeader>
 				<CardBody>
 					<div className={ `${ rootClass }__preview-stack` }>
-						<BrandPreviewList
-							rows={ [
-								{
-									label: __(
-										'Current Text Model',
+						<div className={ `${ rootClass }__model-test-list` }>
+							<div className={ `${ rootClass }__model-test-row` }>
+								<div className={ `${ rootClass }__model-test-summary` }>
+									<span>
+										{ __(
+											'Current Text Model',
+											'fooconvert'
+										) }
+									</span>
+									<strong>
+										{ currentTextModel ||
+											__(
+												'Connector default',
+												'fooconvert'
+											) }
+									</strong>
+								</div>
+								<Button
+									variant="secondary"
+									onClick={ () => testAiModel( 'text' ) }
+									disabled={
+										Boolean( testingAiModelType ) ||
+										! currentTextModel ||
+										! aiSettings?.canManage
+									}
+									aria-label={ __(
+										'Test current text model',
 										'fooconvert'
-									),
-									value:
-										currentTextModel ||
-										__( 'Connector default', 'fooconvert' ),
-								},
-								{
-									label: __(
-										'Current Image Model',
+									) }
+								>
+									{ 'text' === testingAiModelType
+										? __( 'Testing…', 'fooconvert' )
+										: __( 'Test', 'fooconvert' ) }
+								</Button>
+							</div>
+							<div className={ `${ rootClass }__model-test-row` }>
+								<div className={ `${ rootClass }__model-test-summary` }>
+									<span>
+										{ __(
+											'Current Image Model',
+											'fooconvert'
+										) }
+									</span>
+									<strong>{ currentImageModelLabel }</strong>
+								</div>
+								<Button
+									variant="secondary"
+									onClick={ () => testAiModel( 'image' ) }
+									disabled={
+										Boolean( testingAiModelType ) ||
+										! currentImageModel ||
+										! aiSettings?.canManage
+									}
+									aria-label={ __(
+										'Test current image model',
 										'fooconvert'
-									),
-									value: currentImageModelLabel,
-								},
-							] }
-						/>
+									) }
+								>
+									{ 'image' === testingAiModelType
+										? __( 'Testing…', 'fooconvert' )
+										: __( 'Test', 'fooconvert' ) }
+								</Button>
+							</div>
+						</div>
 						{ ! aiImageGenerationAvailable && (
 							<Notice status="info" isDismissible={ false }>
 								{ __(

@@ -162,6 +162,10 @@ namespace {
         public function getProviderModel( string $provider, string $model, \WordPress\AiClient\Providers\Models\DTO\ModelConfig $config ): object {
             unset( $config );
 
+            if ( ! empty( $GLOBALS['fc_popup_builder_model_registry_fail'] ) ) {
+                throw new \RuntimeException( 'Model metadata is not registered.' );
+            }
+
             $GLOBALS['fc_popup_builder_forced_models'][] = compact( 'provider', 'model' );
 
             return (object) compact( 'provider', 'model' );
@@ -573,6 +577,31 @@ namespace {
         8,
         $response['settings']['maxToolCalls'],
         'The configured max tool-call setting should be returned in response settings.'
+    );
+
+    $GLOBALS['fc_popup_builder_model_registry_fail'] = true;
+    $GLOBALS['fc_popup_builder_prompt_mode']         = '';
+    $GLOBALS['fc_popup_builder_generate_count']      = 0;
+    $GLOBALS['fc_popup_builder_prompt_calls']        = array();
+
+    $unresolved_override_response = $reflection->invoke( $builder, $request_payload );
+    unset( $GLOBALS['fc_popup_builder_model_registry_fail'] );
+
+    Assertions::true(
+        $unresolved_override_response instanceof WP_Error,
+        'An unresolved provider/model override should be returned as an error instead of falling back to model discovery.'
+    );
+
+    Assertions::same(
+        'fooconvert_ai_popup_builder_model_override_unavailable',
+        $unresolved_override_response->get_error_code(),
+        'Unresolved provider/model overrides should use the explicit model override error code.'
+    );
+
+    Assertions::same(
+        0,
+        (int) ( $GLOBALS['fc_popup_builder_generate_count'] ?? 0 ),
+        'Unresolved provider/model overrides should fail before generating with model discovery.'
     );
 
     Assertions::same(

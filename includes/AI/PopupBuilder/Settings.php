@@ -134,13 +134,12 @@ class Settings {
     /**
      * Applies a model override to a prompt builder.
      *
-     * Overrides in provider/model format are resolved to a concrete model and
-     * forced with using_model(). Legacy values keep the previous preference
-     * behavior so saved settings without a provider do not become no-ops.
+     * Overrides must resolve to a concrete provider/model instance so the
+     * prompt uses using_model() and never falls back to discovery.
      *
      * @param mixed $prompt_builder Prompt builder instance.
      * @param mixed $override_model Raw model override.
-     * @return mixed
+     * @return mixed|\WP_Error
      */
     public static function apply_model_override( $prompt_builder, $override_model ) {
         $override_model = self::sanitize_model( $override_model );
@@ -148,36 +147,114 @@ class Settings {
             return $prompt_builder;
         }
 
-        if ( method_exists( $prompt_builder, 'using_model' ) ) {
-            $model = self::resolve_model_override( $override_model );
-            if ( null !== $model ) {
-                return $prompt_builder->using_model( $model );
-            }
+        $model_parts = self::parse_model_override( $override_model );
+        if ( empty( $model_parts ) ) {
+            return new \WP_Error(
+                'fooconvert_ai_popup_builder_invalid_model_override',
+                sprintf(
+                    /* translators: %s: AI model override value. */
+                    __( 'The AI model override "%s" must use provider/model-name format.', 'fooconvert' ),
+                    $override_model
+                ),
+                array( 'status' => 400 )
+            );
         }
 
-        if ( method_exists( $prompt_builder, 'using_model_preference' ) ) {
-            return $prompt_builder->using_model_preference( $override_model );
+        if ( ! is_callable( array( $prompt_builder, 'using_model' ) ) ) {
+            return new \WP_Error(
+                'fooconvert_ai_popup_builder_model_override_unsupported',
+                __( 'The AI client prompt builder cannot force an explicit model on this site.', 'fooconvert' ),
+                array( 'status' => 500 )
+            );
         }
 
-        return $prompt_builder;
+        $model = self::resolve_model_override( $override_model, $model_parts );
+        if ( is_wp_error( $model ) ) {
+            return $model;
+        }
+
+        try {
+            return $prompt_builder->using_model( $model );
+        } catch ( \Throwable $error ) {
+            return new \WP_Error(
+                'fooconvert_ai_popup_builder_model_override_unavailable',
+                sprintf(
+                    /* translators: 1: AI model override value, 2: error message. */
+                    __( 'The AI model override "%1$s" could not be resolved: %2$s', 'fooconvert' ),
+                    $override_model,
+                    $error->getMessage()
+                ),
+                array(
+                    'status'   => 400,
+                    'provider' => $model_parts['provider'],
+                    'model'    => $model_parts['model'],
+                )
+            );
+        }
+    }
+
+    /**
+     * Tests whether a model override can be forced on a prompt builder.
+     *
+     * @param mixed $override_model Raw model override.
+     * @return array<string,string>|\WP_Error
+     */
+    public static function test_model_override( $override_model ) {
+        $override_model = self::sanitize_model( $override_model );
+        if ( '' === $override_model ) {
+            return new \WP_Error(
+                'fooconvert_ai_popup_builder_missing_model_override',
+                __( 'Enter a provider/model-name before testing.', 'fooconvert' ),
+                array( 'status' => 400 )
+            );
+        }
+
+        if ( ! function_exists( 'wp_ai_client_prompt' ) ) {
+            return new \WP_Error(
+                'fooconvert_ai_popup_builder_model_override_unavailable',
+                __( 'The WordPress AI client prompt builder is not available on this site.', 'fooconvert' ),
+                array( 'status' => 500 )
+            );
+        }
+
+        $model_parts = self::parse_model_override( $override_model );
+        $prompt      = self::apply_model_override( wp_ai_client_prompt(), $override_model );
+
+        if ( is_wp_error( $prompt ) ) {
+            return $prompt;
+        }
+
+        return array(
+            'model'    => $override_model,
+            'provider' => $model_parts['provider'] ?? '',
+            'name'     => $model_parts['model'] ?? '',
+        );
     }
 
     /**
      * Resolves a provider/model override to an AI client model instance.
      *
      * @param string $override_model Sanitized model override.
-     * @return object|null
+     * @param array{provider:string,model:string} $model_parts Parsed model override.
+     * @return object|\WP_Error
      */
-    private static function resolve_model_override( string $override_model ): ?object {
-        $model_parts = self::parse_model_override( $override_model );
-        if ( empty( $model_parts ) || ! class_exists( '\WordPress\AiClient\AiClient' ) ) {
-            return null;
+    private static function resolve_model_override( string $override_model, array $model_parts ) {
+        if ( ! class_exists( '\WordPress\AiClient\AiClient' ) ) {
+            return new \WP_Error(
+                'fooconvert_ai_popup_builder_model_override_unavailable',
+                __( 'The WordPress AI client is not available to resolve the configured model override.', 'fooconvert' ),
+                array( 'status' => 500 )
+            );
         }
 
         try {
             $registry = \WordPress\AiClient\AiClient::defaultRegistry();
             if ( ! is_object( $registry ) || ! method_exists( $registry, 'getProviderModel' ) ) {
-                return null;
+                return new \WP_Error(
+                    'fooconvert_ai_popup_builder_model_override_unavailable',
+                    __( 'The WordPress AI client registry cannot resolve provider model overrides.', 'fooconvert' ),
+                    array( 'status' => 500 )
+                );
             }
 
             $reflection = new \ReflectionMethod( $registry, 'getProviderModel' );
@@ -187,7 +264,11 @@ class Settings {
                     ! class_exists( '\WordPress\AiClient\Providers\Models\DTO\ModelConfig' )
                     || ! method_exists( '\WordPress\AiClient\Providers\Models\DTO\ModelConfig', 'fromArray' )
                 ) {
-                    return null;
+                    return new \WP_Error(
+                        'fooconvert_ai_popup_builder_model_override_unavailable',
+                        __( 'The WordPress AI client cannot build model configuration for the configured model override.', 'fooconvert' ),
+                        array( 'status' => 500 )
+                    );
                 }
 
                 $args[] = \WordPress\AiClient\Providers\Models\DTO\ModelConfig::fromArray( array() );
@@ -195,10 +276,38 @@ class Settings {
 
             $model = $reflection->invokeArgs( $registry, $args );
 
-            return is_object( $model ) ? $model : null;
+            if ( is_object( $model ) ) {
+                return $model;
+            }
+
+            return new \WP_Error(
+                'fooconvert_ai_popup_builder_model_override_unavailable',
+                sprintf(
+                    /* translators: %s: AI model override value. */
+                    __( 'The AI model override "%s" did not resolve to a model instance.', 'fooconvert' ),
+                    $override_model
+                ),
+                array(
+                    'status'   => 400,
+                    'provider' => $model_parts['provider'],
+                    'model'    => $model_parts['model'],
+                )
+            );
         } catch ( \Throwable $error ) {
-            unset( $error );
-            return null;
+            return new \WP_Error(
+                'fooconvert_ai_popup_builder_model_override_unavailable',
+                sprintf(
+                    /* translators: 1: AI model override value, 2: error message. */
+                    __( 'The AI model override "%1$s" could not be resolved: %2$s', 'fooconvert' ),
+                    $override_model,
+                    $error->getMessage()
+                ),
+                array(
+                    'status'   => 400,
+                    'provider' => $model_parts['provider'],
+                    'model'    => $model_parts['model'],
+                )
+            );
         }
     }
 

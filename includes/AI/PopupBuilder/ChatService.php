@@ -146,6 +146,9 @@ class ChatService {
                         $force_image_generation,
                         $settings
                     );
+                    if ( is_wp_error( $prompt ) ) {
+                        return $prompt;
+                    }
 
                     $result = $this->generate_prompt_result( $prompt, $stream_callbacks, $settings );
                     if ( is_wp_error( $result ) ) {
@@ -652,9 +655,9 @@ class ChatService {
      * @param bool                           $generate_images Whether image generation is available for this turn.
      * @param bool                           $force_image_generation Whether this turn should explicitly generate a new image.
      * @param array<string,mixed>            $settings AI request settings.
-     * @return \WP_AI_Client_Prompt_Builder
+     * @return \WP_AI_Client_Prompt_Builder|WP_Error
      */
-    private function build_prompt_from_settings( array $history, array $abilities, bool $generate_images, bool $force_image_generation, array $settings ): \WP_AI_Client_Prompt_Builder {
+    private function build_prompt_from_settings( array $history, array $abilities, bool $generate_images, bool $force_image_generation, array $settings ) {
         $prompt = wp_ai_client_prompt();
         $prompt = $prompt->with_history( ...$history );
 
@@ -682,12 +685,15 @@ class ChatService {
      *
      * @param \WP_AI_Client_Prompt_Builder $prompt Prompt builder.
      * @param array<string,mixed>          $settings AI request settings.
-     * @return \WP_AI_Client_Prompt_Builder
+     * @return \WP_AI_Client_Prompt_Builder|WP_Error
      */
-    private function apply_prompt_request_settings( \WP_AI_Client_Prompt_Builder $prompt, array $settings ): \WP_AI_Client_Prompt_Builder {
+    private function apply_prompt_request_settings( \WP_AI_Client_Prompt_Builder $prompt, array $settings ) {
         $model = $this->sanitize_ai_model_name( $settings['override_model'] ?? '' );
         if ( '' !== $model && ! $this->is_ai_param_disabled( $settings, 'model' ) ) {
             $prompt = Settings::apply_model_override( $prompt, $model );
+            if ( is_wp_error( $prompt ) ) {
+                return $prompt;
+            }
         }
 
         if ( $this->is_ai_param_disabled( $settings, 'timeout' ) || ! class_exists( RequestOptions::class ) || ! method_exists( $prompt, 'using_request_options' ) ) {

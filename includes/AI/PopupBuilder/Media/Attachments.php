@@ -553,6 +553,10 @@ PROMPT;
 
         do {
             $prompt_builder = self::build_text_prompt_builder( $content, $system_instruction, $temperature );
+            if ( is_wp_error( $prompt_builder ) ) {
+                return $prompt_builder;
+            }
+
             $result         = $prompt_builder->generate_text();
 
             if ( ! is_wp_error( $result ) ) {
@@ -760,6 +764,9 @@ PROMPT;
 
             if ( '' !== $override_model ) {
                 $prompt_builder = Settings::apply_model_override( $prompt_builder, $override_model );
+                if ( is_wp_error( $prompt_builder ) ) {
+                    return $prompt_builder;
+                }
             } elseif ( method_exists( $prompt_builder, 'using_model_preference' ) && function_exists( '\WordPress\AI\get_preferred_image_models' ) ) {
                 $models = \WordPress\AI\get_preferred_image_models();
                 if ( is_array( $models ) && ! empty( $models ) ) {

@@ -461,6 +461,12 @@ namespace {
     );
 
     Assertions::same(
+        '/fooconvert/v1/ai-popup-builder/settings/test-model',
+        $config['api']['testModelPath'] ?? '',
+        'The AI popup builder config should expose the model test endpoint path.'
+    );
+
+    Assertions::same(
         'Default deterministic background prompt.',
         $config['imageBackgroundPrompt'] ?? '',
         'The AI popup builder config should expose the deterministic image background prompt preview.'

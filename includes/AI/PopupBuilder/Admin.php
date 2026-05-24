@@ -189,6 +189,7 @@ class Admin {
                 'deleteMediaPath' => '/fooconvert/v1/ai-popup-builder/media',
                 'brandPath'       => '/fooconvert/v1/brand-context',
                 'settingsPath'    => '/fooconvert/v1/ai-popup-builder/settings',
+                'testModelPath'   => '/fooconvert/v1/ai-popup-builder/settings/test-model',
                 'debugResponsesPath' => '/fooconvert/v1/ai-popup-builder/debug-responses',
                 'extractBrandPath' => '/fooconvert/v1/brand-context/extract',
                 'loadPopupPath'    => '/fooconvert/v1/ai-popup-builder/popup',

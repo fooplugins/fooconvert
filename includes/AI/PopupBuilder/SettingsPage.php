@@ -150,7 +150,7 @@ class SettingsPage {
     }
 
     /**
-     * Registers the AI popup builder settings REST route.
+     * Registers the AI popup builder settings REST routes.
      *
      * @return void
      */
@@ -192,6 +192,29 @@ class SettingsPage {
                         ),
                         'selectedBlockNames' => array(
                             'type' => 'array',
+                        ),
+                    ),
+                ),
+            )
+        );
+
+        register_rest_route(
+            'fooconvert/v1',
+            '/ai-popup-builder/settings/test-model',
+            array(
+                array(
+                    'methods'             => 'POST',
+                    'callback'            => array( $this, 'handle_test_model' ),
+                    'permission_callback' => array( $this, 'can_manage_settings' ),
+                    'args'                => array(
+                        'type'  => array(
+                            'type'     => 'string',
+                            'required' => true,
+                            'enum'     => array( 'text', 'image' ),
+                        ),
+                        'model' => array(
+                            'type'     => 'string',
+                            'required' => true,
                         ),
                     ),
                 ),
@@ -241,6 +264,76 @@ class SettingsPage {
                     )
                 ),
             )
+        );
+    }
+
+    /**
+     * Tests whether a configured current model can be forced with using_model().
+     *
+     * @param WP_REST_Request $request REST request.
+     * @return WP_REST_Response|\WP_Error
+     */
+    public function handle_test_model( WP_REST_Request $request ) {
+        $type  = 'image' === $request->get_param( 'type' ) ? 'image' : 'text';
+        $model = Settings::sanitize_model( $request->get_param( 'model' ) );
+        $test  = Settings::test_model_override( $model );
+
+        if ( is_wp_error( $test ) ) {
+            return $this->format_model_test_error( $test, $model );
+        }
+
+        return new WP_REST_Response(
+            array(
+                'success' => true,
+                'type'    => $type,
+                'model'   => $test['model'],
+                'provider' => $test['provider'],
+                'name'    => $test['name'],
+                'message' => sprintf(
+                    /* translators: %s: AI model override value. */
+                    __( 'Model test passed for "%s".', 'fooconvert' ),
+                    $test['model']
+                ),
+            )
+        );
+    }
+
+    /**
+     * Formats model test errors for the settings UI without hiding details.
+     *
+     * @param \WP_Error $error Original model test error.
+     * @param string    $model Tested model.
+     * @return \WP_Error
+     */
+    private function format_model_test_error( \WP_Error $error, string $model ): \WP_Error {
+        $code = $error->get_error_code();
+        $data = is_array( $error->get_error_data() ) ? $error->get_error_data() : array();
+        $data['details'] = $error->get_error_message();
+
+        if ( 'fooconvert_ai_popup_builder_missing_model_override' === $code ) {
+            return new \WP_Error(
+                $code,
+                __( 'Enter a provider/model-name before testing.', 'fooconvert' ),
+                $data
+            );
+        }
+
+        if ( 'fooconvert_ai_popup_builder_invalid_model_override' === $code ) {
+            return new \WP_Error(
+                $code,
+                __( 'Use provider/model-name format before testing this model.', 'fooconvert' ),
+                $data
+            );
+        }
+
+        return new \WP_Error(
+            $code,
+            sprintf(
+                /* translators: %s: AI model override value. */
+                __( 'Could not test "%s". Check that the connector is active and the model name is available.', 'fooconvert' ),
+                $model
+            ),
+            $data
         );
     }
 

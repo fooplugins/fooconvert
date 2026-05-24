@@ -101,6 +101,10 @@ namespace {
         public function getProviderModel( string $provider, string $model, \WordPress\AiClient\Providers\Models\DTO\ModelConfig $config ): object {
             unset( $config );
 
+            if ( ! empty( $GLOBALS['fc_generated_image_model_registry_fail'] ) ) {
+                throw new \RuntimeException( 'Model metadata is not registered.' );
+            }
+
             $GLOBALS['fc_generated_image_forced_models'][] = compact( 'provider', 'model' );
 
             return (object) compact( 'provider', 'model' );
@@ -340,6 +344,23 @@ namespace {
         ),
         $GLOBALS['fc_generated_image_forced_models'] ?? array(),
         'Generating popup image data should force the configured provider/model image override when it is set.'
+    );
+
+    $GLOBALS['fc_generated_image_model_registry_fail'] = true;
+    unset( $GLOBALS['fc_generated_image_forced_model'], $GLOBALS['fc_generated_image_forced_models'] );
+
+    $unresolved_image_override = PopupMedia::generate_image_from_prompt( 'Create an image with an unavailable override.' );
+    unset( $GLOBALS['fc_generated_image_model_registry_fail'] );
+
+    Assertions::true(
+        $unresolved_image_override instanceof WP_Error,
+        'An unresolved provider/model image override should return an error instead of falling back to model discovery.'
+    );
+
+    Assertions::same(
+        'fooconvert_ai_popup_builder_model_override_unavailable',
+        $unresolved_image_override->get_error_code(),
+        'Unresolved provider/model image overrides should use the explicit model override error code.'
     );
 
     if ( function_exists( 'imagecreatetruecolor' ) && function_exists( 'imagewebp' ) && function_exists( 'imagecreatefromstring' ) ) {
