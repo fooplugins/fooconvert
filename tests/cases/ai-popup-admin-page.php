@@ -93,6 +93,10 @@ namespace WordPress\AiClient\Files\Enums {
     class FileTypeEnum {}
 }
 
+namespace WordPress\AiClient\Tools\DTO {
+    class FunctionDeclaration {}
+}
+
 namespace FooPlugins\FooConvert\AI\PopupBuilder\Blueprint {
     class DraftNormalizer {
         public static function get_template_library(): array {
@@ -624,6 +628,35 @@ namespace {
         'openai/resolved-image-model',
         $resolved_model_config['models']['currentImageModel'] ?? '',
         'The AI popup builder config should expose the resolved configured image model when image preferences are unavailable.'
+    );
+
+    $text_model_config = $GLOBALS['fc_ai_builder_model_requirements']['text_generation']->model_config->data ?? array();
+    Assertions::same(
+        0.35,
+        $text_model_config['temperature'] ?? null,
+        'Text model discovery should match the temperature used by popup chat generation.'
+    );
+
+    Assertions::true(
+        isset( $text_model_config['systemInstruction'] ) && is_string( $text_model_config['systemInstruction'] ) && '' !== $text_model_config['systemInstruction'],
+        'Text model discovery should require system-instruction support like popup chat generation.'
+    );
+
+    Assertions::same(
+        'application/json',
+        $text_model_config['outputMimeType'] ?? '',
+        'Text model discovery should require JSON response-format support like popup chat generation.'
+    );
+
+    Assertions::true(
+        array_key_exists( 'outputSchema', $text_model_config ),
+        'Text model discovery should require schema output support like popup chat generation.'
+    );
+
+    Assertions::same(
+        'wpab__fooconvert__list-popup-templates',
+        $text_model_config['functionDeclarations'][0]['name'] ?? '',
+        'Text model discovery should require ability/tool support like popup chat generation.'
     );
 
     Assertions::same(
