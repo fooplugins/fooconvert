@@ -34,6 +34,7 @@ const files = ( await globby( includePatterns, {
         "**/.gitignore",
         "**/*.map",
         "**/vendor/bin/**",
+        "**/vendor/**/*.backup-*",
         "assets/media/templates/fullsize/**",
         "**/vendor/**/README.md",
         "**/vendor/**/composer.json",
