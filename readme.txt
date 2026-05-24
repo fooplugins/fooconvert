@@ -4,7 +4,7 @@ Tags: ai-popup, popup-builder, popups, flyout, announcement-bar
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 7.0
-Stable tag: 2.1.5
+Stable tag: 2.1.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -271,6 +271,15 @@ No, FooConvert is optimized for performance and has minimal impact on your websi
 The source code for this plugin is available publicly on GitHub [here](https://github.com/fooplugins/fooconvert).
 
 == Changelog ==
+
+= 2.1.6 =
+* Date Updated : 24 May 2026
+* Added : AI Popup Builder settings now include Test actions for current text and image model overrides.
+* Updated : AI Popup Builder current model detection now matches the selected blocks, schema, tools, and disabled optional parameters used by real generation requests.
+* Fixed : AI Popup Builder now forces configured text and image model overrides instead of treating them as fallback preferences.
+* Fixed : AI Popup Builder now keeps required schema and tool-calling parameters enabled while still allowing unsupported optional parameters to be disabled.
+* Fixed : AI Popup Builder now sends multi-tool responses as provider-compatible messages for OpenAI-compatible chat providers.
+* Fixed : AI Popup Builder no longer accepts shorthand popup draft responses that bypass the required response contract.
 
 = 2.1.5 =
 * Date Updated : 19 May 2026
