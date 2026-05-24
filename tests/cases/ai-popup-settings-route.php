@@ -26,6 +26,10 @@ namespace {
         return $text;
     }
 
+    function sanitize_text_field( $value ): string {
+        return trim( strip_tags( (string) $value ) );
+    }
+
     function add_action( string $hook, $callback, int $priority = 10, int $accepted_args = 1 ): void {
         $GLOBALS['fc_ai_settings_actions'][ $hook ][] = compact( 'callback', 'priority', 'accepted_args' );
     }
@@ -135,9 +139,30 @@ namespace {
     );
 
     Assertions::same(
+        'provider/model-name',
+        $settings['ai_popup_builder']['fields'][ FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_MODEL ]['placeholder'] ?? '',
+        'The text model override should show the provider/model placeholder format.'
+    );
+
+    Assertions::same(
         'Override Image Model',
         $settings['ai_popup_builder']['fields'][ FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL ]['label'] ?? '',
         'The settings tab should expose a separate image model override field.'
+    );
+
+    Assertions::same(
+        'provider/model-name',
+        $settings['ai_popup_builder']['fields'][ FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL ]['placeholder'] ?? '',
+        'The image model override should show the provider/model placeholder format.'
+    );
+
+    Assertions::same(
+        array(
+            'provider' => 'openrouter',
+            'model'    => 'qwen/qwen3.7-max',
+        ),
+        \FooPlugins\FooConvert\AI\PopupBuilder\Settings::parse_model_override( 'openrouter/qwen/qwen3.7-max' ),
+        'Model overrides should split only on the first slash so provider model IDs can contain slashes.'
     );
 
     Assertions::same(

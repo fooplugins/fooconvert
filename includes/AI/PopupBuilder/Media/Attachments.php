@@ -589,13 +589,13 @@ PROMPT;
             $prompt_builder = $prompt_builder->using_temperature( $temperature );
         }
 
-        if ( ! self::is_ai_param_disabled( 'model' ) && method_exists( $prompt_builder, 'using_model_preference' ) ) {
+        if ( ! self::is_ai_param_disabled( 'model' ) ) {
             $override_model = Settings::sanitize_model( $settings['override_model'] ?? '' );
             if ( '' !== $override_model ) {
-                return $prompt_builder->using_model_preference( $override_model );
+                return Settings::apply_model_override( $prompt_builder, $override_model );
             }
 
-            if ( function_exists( '\WordPress\AI\get_preferred_models_for_text_generation' ) ) {
+            if ( method_exists( $prompt_builder, 'using_model_preference' ) && function_exists( '\WordPress\AI\get_preferred_models_for_text_generation' ) ) {
                 $models = \WordPress\AI\get_preferred_models_for_text_generation();
                 if ( is_array( $models ) && ! empty( $models ) ) {
                     $prompt_builder = $prompt_builder->using_model_preference( ...$models );
@@ -754,13 +754,13 @@ PROMPT;
             ->as_output_file_type( FileTypeEnum::inline() );
         $prompt_builder = self::apply_image_output_mime_type_settings( $prompt_builder );
 
-        if ( ! self::is_ai_param_disabled( 'model' ) && method_exists( $prompt_builder, 'using_model_preference' ) ) {
+        if ( ! self::is_ai_param_disabled( 'model' ) ) {
             $settings       = self::get_ai_settings();
             $override_model = Settings::sanitize_model( $settings['override_image_model'] ?? '' );
 
             if ( '' !== $override_model ) {
-                $prompt_builder = $prompt_builder->using_model_preference( $override_model );
-            } elseif ( function_exists( '\WordPress\AI\get_preferred_image_models' ) ) {
+                $prompt_builder = Settings::apply_model_override( $prompt_builder, $override_model );
+            } elseif ( method_exists( $prompt_builder, 'using_model_preference' ) && function_exists( '\WordPress\AI\get_preferred_image_models' ) ) {
                 $models = \WordPress\AI\get_preferred_image_models();
                 if ( is_array( $models ) && ! empty( $models ) ) {
                     $prompt_builder = $prompt_builder->using_model_preference( ...$models );

@@ -7,6 +7,14 @@ namespace WordPress\AI {
     }
 }
 
+namespace WordPress\AiClient {
+    class AiClient {
+        public static function defaultRegistry(): object {
+            return new \PopupGeneratedImageModelRegistryStub();
+        }
+    }
+}
+
 namespace WordPress\AiClient\Files\Enums {
     class FileTypeEnum {
         public static function inline(): self {
@@ -30,6 +38,15 @@ namespace WordPress\AiClient\Providers\DTO {
 namespace WordPress\AiClient\Providers\Models\DTO {
     class ModelConfig {
         private array $custom_options = array();
+
+        public static function fromArray( array $data ): self {
+            $config = new self();
+            foreach ( $data as $key => $value ) {
+                $config->setCustomOption( (string) $key, $value );
+            }
+
+            return $config;
+        }
 
         public function setCustomOption( string $key, $value ): void {
             $this->custom_options[ $key ] = $value;
@@ -77,6 +94,16 @@ namespace {
 
         public function get_error_message(): string {
             return $this->message;
+        }
+    }
+
+    class PopupGeneratedImageModelRegistryStub {
+        public function getProviderModel( string $provider, string $model, \WordPress\AiClient\Providers\Models\DTO\ModelConfig $config ): object {
+            unset( $config );
+
+            $GLOBALS['fc_generated_image_forced_models'][] = compact( 'provider', 'model' );
+
+            return (object) compact( 'provider', 'model' );
         }
     }
 
@@ -157,6 +184,12 @@ namespace {
             return $this;
         }
 
+        public function using_model( $model ): self {
+            $GLOBALS['fc_generated_image_forced_model'] = $model;
+
+            return $this;
+        }
+
         public function generate_image_result(): PopupGeneratedImageResultStub {
             return new PopupGeneratedImageResultStub();
         }
@@ -192,6 +225,10 @@ namespace {
 
     function is_wp_error( $thing ): bool {
         return $thing instanceof WP_Error;
+    }
+
+    if ( ! defined( 'ABSPATH' ) ) {
+        define( 'ABSPATH', dirname( __DIR__, 2 ) . '/' );
     }
 
     if ( ! defined( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_MODEL' ) ) {
@@ -278,16 +315,31 @@ namespace {
     );
 
     $GLOBALS['fc_generated_image_settings'] = array(
-        FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL => 'custom-image-model',
+        FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL => 'openrouter/black-forest-labs/flux-pro',
     );
-    unset( $GLOBALS['fc_generated_image_models'] );
+    unset(
+        $GLOBALS['fc_generated_image_forced_model'],
+        $GLOBALS['fc_generated_image_forced_models'],
+        $GLOBALS['fc_generated_image_models']
+    );
 
     PopupMedia::generate_image_from_prompt( 'Create another calm branded popup background.' );
 
     Assertions::same(
-        array( 'custom-image-model' ),
+        array(),
         $GLOBALS['fc_generated_image_models'] ?? array(),
-        'Generating popup image data should prefer the configured image model override when it is set.'
+        'Provider/model image overrides should not use the model preference path.'
+    );
+
+    Assertions::same(
+        array(
+            array(
+                'provider' => 'openrouter',
+                'model'    => 'black-forest-labs/flux-pro',
+            ),
+        ),
+        $GLOBALS['fc_generated_image_forced_models'] ?? array(),
+        'Generating popup image data should force the configured provider/model image override when it is set.'
     );
 
     if ( function_exists( 'imagecreatetruecolor' ) && function_exists( 'imagewebp' ) && function_exists( 'imagecreatefromstring' ) ) {

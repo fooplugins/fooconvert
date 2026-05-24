@@ -212,27 +212,38 @@ namespace {
         }
 
         public function execute_abilities( Message $message ): Message {
+            $response_parts = array();
+
+            foreach ( $message->getParts() as $part ) {
+                if ( ! $part->getType()->isFunctionCall() || ! $part->getFunctionCall() ) {
+                    continue;
+                }
+
+                $function_call = $part->getFunctionCall();
+                $function_name = $function_call->getName();
+                $response      = false !== strpos( $function_name, 'validate-popup-blueprint' )
+                    ? array( 'valid' => true )
+                    : array(
+                        'playbook' => array(
+                            'principles' => array( 'Focus on one CTA.' ),
+                        ),
+                    );
+
+                $response_parts[] = new MessagePart(
+                    '',
+                    new MessagePartType( false, true ),
+                    null,
+                    new FunctionResponse( $function_name, $response )
+                );
+            }
+
             return new Message(
-                array(
-                    new MessagePart(
-                        '',
-                        new MessagePartType( false, true ),
-                        null,
-                        new FunctionResponse(
-                            'wpab__fooconvert__get-conversion-playbook',
-                            array(
-                                'playbook' => array(
-                                    'principles' => array( 'Focus on one CTA.' ),
-                                ),
-                            )
-                        )
-                    ),
-                )
+                $response_parts
             );
         }
 
         public static function function_name_to_ability_name( string $name ): string {
-            return 'fooconvert/get-conversion-playbook';
+            return str_replace( '__', '/', preg_replace( '/^wpab__/', '', $name ) ?? $name );
         }
     }
 
@@ -270,6 +281,25 @@ namespace {
 
     class PopupBuilderPromptStub extends WP_AI_Client_Prompt_Builder {
         public function with_history( ...$history ): self {
+            $GLOBALS['fc_popup_builder_prompt_history'][] = array_map(
+                static function( Message $message ): array {
+                    $parts                   = $message->getParts();
+                    $function_response_count = 0;
+
+                    foreach ( $parts as $part ) {
+                        if ( $part->getType()->isFunctionResponse() ) {
+                            $function_response_count++;
+                        }
+                    }
+
+                    return array(
+                        'parts'             => count( $parts ),
+                        'functionResponses' => $function_response_count,
+                    );
+                },
+                $history
+            );
+
             return $this;
         }
 
@@ -311,21 +341,36 @@ namespace {
             }
 
             if ( 0 === $call_count ) {
-                return new PopupBuilderPromptResultStub(
-                    new Message(
-                        array(
-                            new MessagePart(
-                                '',
-                                new MessagePartType( true, false ),
-                                new FunctionCall(
-                                    'wpab__fooconvert__get-conversion-playbook',
-                                    array(
-                                        'goal' => 'Grow the email list',
-                                    )
-                                )
-                            ),
+                $tool_calls = array(
+                    new MessagePart(
+                        '',
+                        new MessagePartType( true, false ),
+                        new FunctionCall(
+                            'wpab__fooconvert__get-conversion-playbook',
+                            array(
+                                'goal' => 'Grow the email list',
+                            )
                         )
                     ),
+                );
+
+                if ( ! empty( $GLOBALS['fc_popup_builder_multi_tool_response'] ) ) {
+                    $tool_calls[] = new MessagePart(
+                        '',
+                        new MessagePartType( true, false ),
+                        new FunctionCall(
+                            'wpab__fooconvert__validate-popup-blueprint',
+                            array(
+                                'draft' => array(
+                                    'title' => 'Launch Weekend Offer',
+                                ),
+                            )
+                        )
+                    );
+                }
+
+                return new PopupBuilderPromptResultStub(
+                    new Message( $tool_calls ),
                     '{}'
                 );
             }
@@ -617,6 +662,57 @@ namespace {
         $response['activity_log'],
         $stream_items,
         'Streamed activity items should match the canonical final activity log exactly.'
+    );
+
+    $GLOBALS['fc_popup_builder_prompt_count']         = 0;
+    $GLOBALS['fc_popup_builder_prompt_history']       = array();
+    $GLOBALS['fc_popup_builder_multi_tool_response']  = true;
+    $multi_tool_response = $reflection->invoke(
+        $builder,
+        array(
+            'messages'               => array(
+                array(
+                    'role'    => 'user',
+                    'content' => 'Build a popup and validate it.',
+                ),
+            ),
+            'popup_draft'            => array(),
+            'existing_media'         => array(),
+            'brand'                  => array(),
+            'generate_images'        => false,
+            'force_image_generation' => false,
+        )
+    );
+    unset( $GLOBALS['fc_popup_builder_multi_tool_response'] );
+
+    Assertions::true(
+        is_array( $multi_tool_response ),
+        'Building a popup response should succeed when a model requests multiple tools in one turn.'
+    );
+
+    $second_prompt_history = $GLOBALS['fc_popup_builder_prompt_history'][1] ?? array();
+    $function_response_messages = array_values(
+        array_filter(
+            $second_prompt_history,
+            static function( array $message ): bool {
+                return ! empty( $message['functionResponses'] );
+            }
+        )
+    );
+
+    Assertions::same(
+        array(
+            array(
+                'parts'             => 1,
+                'functionResponses' => 1,
+            ),
+            array(
+                'parts'             => 1,
+                'functionResponses' => 1,
+            ),
+        ),
+        $function_response_messages,
+        'Multiple tool responses should be split into one single-part message per function response.'
     );
 
     $GLOBALS['fc_popup_builder_prompt_count'] = 1;

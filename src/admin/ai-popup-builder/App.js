@@ -2526,7 +2526,7 @@ export const App = () => {
 						updateAiSettings( { overrideModel: value } )
 					}
 					placeholder={ __(
-						'Optional custom text model name',
+						'provider/model-name',
 						'fooconvert'
 					) }
 					__nextHasNoMarginBottom
@@ -2539,7 +2539,7 @@ export const App = () => {
 						updateAiSettings( { overrideImageModel: value } )
 					}
 					placeholder={ __(
-						'Optional custom image model name',
+						'provider/model-name',
 						'fooconvert'
 					) }
 					__nextHasNoMarginBottom

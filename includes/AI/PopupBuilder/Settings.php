@@ -100,6 +100,109 @@ class Settings {
     }
 
     /**
+     * Parses a provider/model override.
+     *
+     * Model IDs may contain additional slashes, so the first slash separates
+     * the AI provider from the provider-specific model name.
+     *
+     * @param mixed $value Raw model override.
+     * @return array{provider:string,model:string}|array{}
+     */
+    public static function parse_model_override( $value ): array {
+        $value = self::sanitize_model( $value );
+        if ( '' === $value ) {
+            return array();
+        }
+
+        $separator = strpos( $value, '/' );
+        if ( false === $separator ) {
+            return array();
+        }
+
+        $provider = trim( substr( $value, 0, $separator ) );
+        $model    = trim( substr( $value, $separator + 1 ) );
+        if ( '' === $provider || '' === $model ) {
+            return array();
+        }
+
+        return array(
+            'provider' => $provider,
+            'model'    => $model,
+        );
+    }
+
+    /**
+     * Applies a model override to a prompt builder.
+     *
+     * Overrides in provider/model format are resolved to a concrete model and
+     * forced with using_model(). Legacy values keep the previous preference
+     * behavior so saved settings without a provider do not become no-ops.
+     *
+     * @param mixed $prompt_builder Prompt builder instance.
+     * @param mixed $override_model Raw model override.
+     * @return mixed
+     */
+    public static function apply_model_override( $prompt_builder, $override_model ) {
+        $override_model = self::sanitize_model( $override_model );
+        if ( '' === $override_model ) {
+            return $prompt_builder;
+        }
+
+        if ( method_exists( $prompt_builder, 'using_model' ) ) {
+            $model = self::resolve_model_override( $override_model );
+            if ( null !== $model ) {
+                return $prompt_builder->using_model( $model );
+            }
+        }
+
+        if ( method_exists( $prompt_builder, 'using_model_preference' ) ) {
+            return $prompt_builder->using_model_preference( $override_model );
+        }
+
+        return $prompt_builder;
+    }
+
+    /**
+     * Resolves a provider/model override to an AI client model instance.
+     *
+     * @param string $override_model Sanitized model override.
+     * @return object|null
+     */
+    private static function resolve_model_override( string $override_model ): ?object {
+        $model_parts = self::parse_model_override( $override_model );
+        if ( empty( $model_parts ) || ! class_exists( '\WordPress\AiClient\AiClient' ) ) {
+            return null;
+        }
+
+        try {
+            $registry = \WordPress\AiClient\AiClient::defaultRegistry();
+            if ( ! is_object( $registry ) || ! method_exists( $registry, 'getProviderModel' ) ) {
+                return null;
+            }
+
+            $reflection = new \ReflectionMethod( $registry, 'getProviderModel' );
+            $args       = array( $model_parts['provider'], $model_parts['model'] );
+            if ( $reflection->getNumberOfParameters() >= 3 ) {
+                if (
+                    ! class_exists( '\WordPress\AiClient\Providers\Models\DTO\ModelConfig' )
+                    || ! method_exists( '\WordPress\AiClient\Providers\Models\DTO\ModelConfig', 'fromArray' )
+                ) {
+                    return null;
+                }
+
+                $args[] = \WordPress\AiClient\Providers\Models\DTO\ModelConfig::fromArray( array() );
+            }
+
+            $model = $reflection->invokeArgs( $registry, $args );
+
+            return is_object( $model ) ? $model : null;
+        } catch ( \Throwable $error ) {
+            unset( $error );
+            return null;
+        }
+    }
+
+    /**
      * Sanitizes a boolean setting.
      *
      * @param mixed $value Raw value.

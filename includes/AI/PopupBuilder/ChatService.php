@@ -12,6 +12,7 @@ use FooPlugins\FooConvert\AI\PopupBuilder\Media\DraftImages;
 use FooPlugins\FooConvert\AI\PopupBuilder\Media\ImageGenerator;
 use WP_AI_Client_Ability_Function_Resolver;
 use WP_Error;
+use WordPress\AiClient\Messages\DTO\Message;
 use WordPress\AiClient\Messages\DTO\MessagePart;
 use WordPress\AiClient\Messages\DTO\UserMessage;
 use WordPress\AiClient\Providers\Http\DTO\RequestOptions;
@@ -192,7 +193,9 @@ class ChatService {
                     $ability_response = $resolver->execute_abilities( $message );
                     $ability_results = ActivityLog::get_message_ability_results( $ability_response );
                     ActivityLog::append_items( $activity_log, $ability_results, $stream_callbacks, 'on_activity' );
-                    $history[] = $ability_response;
+                    foreach ( $this->split_function_response_message( $ability_response ) as $ability_response_message ) {
+                        $history[] = $ability_response_message;
+                    }
                     continue;
                 }
 
@@ -258,6 +261,47 @@ class ChatService {
         } finally {
             Catalog::clear_request_selected_block_names();
         }
+    }
+
+    /**
+     * Splits bundled function responses into provider-compatible messages.
+     *
+     * OpenAI-compatible chat providers require each tool response to be the
+     * only content in its message. The WordPress ability resolver may return
+     * one user message containing multiple function response parts when the
+     * model requested multiple tools in a single turn.
+     *
+     * @param Message $message Ability response message.
+     * @return array<int,Message>
+     */
+    private function split_function_response_message( Message $message ): array {
+        $parts = $message->getParts();
+        if ( count( $parts ) <= 1 ) {
+            return array( $message );
+        }
+
+        $messages       = array();
+        $buffered_parts = array();
+
+        foreach ( $parts as $part ) {
+            if ( $part->getType()->isFunctionResponse() ) {
+                if ( ! empty( $buffered_parts ) ) {
+                    $messages[]     = new UserMessage( $buffered_parts );
+                    $buffered_parts = array();
+                }
+
+                $messages[] = new UserMessage( array( $part ) );
+                continue;
+            }
+
+            $buffered_parts[] = $part;
+        }
+
+        if ( ! empty( $buffered_parts ) ) {
+            $messages[] = new UserMessage( $buffered_parts );
+        }
+
+        return empty( $messages ) ? array( $message ) : $messages;
     }
 
     /**
@@ -642,8 +686,8 @@ class ChatService {
      */
     private function apply_prompt_request_settings( \WP_AI_Client_Prompt_Builder $prompt, array $settings ): \WP_AI_Client_Prompt_Builder {
         $model = $this->sanitize_ai_model_name( $settings['override_model'] ?? '' );
-        if ( '' !== $model && ! $this->is_ai_param_disabled( $settings, 'model' ) && method_exists( $prompt, 'using_model_preference' ) ) {
-            $prompt = $prompt->using_model_preference( $model );
+        if ( '' !== $model && ! $this->is_ai_param_disabled( $settings, 'model' ) ) {
+            $prompt = Settings::apply_model_override( $prompt, $model );
         }
 
         if ( $this->is_ai_param_disabled( $settings, 'timeout' ) || ! class_exists( RequestOptions::class ) || ! method_exists( $prompt, 'using_request_options' ) ) {

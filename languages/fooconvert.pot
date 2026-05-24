@@ -2066,11 +2066,13 @@ msgstr ""
 
 #: includes/AI/PopupBuilder/SettingsPage.php:59
 #: src/admin/ai-popup-builder/App.js:2531
-msgid "Optional custom text model name"
+#: includes/AI/PopupBuilder/SettingsPage.php:67
+#: src/admin/ai-popup-builder/App.js:2544
+msgid "provider/model-name"
 msgstr ""
 
 #: includes/AI/PopupBuilder/SettingsPage.php:60
-msgid "When set, text requests ask the AI client to prefer this model."
+msgid "When set, text requests force this provider/model through the AI client."
 msgstr ""
 
 #: includes/AI/PopupBuilder/SettingsPage.php:66
@@ -2078,13 +2080,8 @@ msgstr ""
 msgid "Override Image Model"
 msgstr ""
 
-#: includes/AI/PopupBuilder/SettingsPage.php:67
-#: src/admin/ai-popup-builder/App.js:2544
-msgid "Optional custom image model name"
-msgstr ""
-
 #: includes/AI/PopupBuilder/SettingsPage.php:68
-msgid "When set, image generation requests ask the AI client to prefer this model."
+msgid "When set, image generation requests force this provider/model through the AI client."
 msgstr ""
 
 #: includes/AI/PopupBuilder/SettingsPage.php:74

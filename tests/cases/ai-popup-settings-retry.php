@@ -46,6 +46,27 @@ namespace WordPress\AiClient\Providers\Http\DTO {
     }
 }
 
+namespace WordPress\AiClient {
+    class AiClient {
+        public static function defaultRegistry(): object {
+            return new \PopupBuilderModelRegistryStub();
+        }
+    }
+}
+
+namespace WordPress\AiClient\Providers\Models\DTO {
+    class ModelConfig {
+        public array $data = array();
+
+        public static function fromArray( array $data ): self {
+            $config       = new self();
+            $config->data = $data;
+
+            return $config;
+        }
+    }
+}
+
 namespace FooPlugins\FooConvert\AI {
     class Abilities {
         public static function get_allowed_abilities( bool $enable_images = false ): array {
@@ -137,6 +158,16 @@ namespace {
         }
     }
 
+    class PopupBuilderModelRegistryStub {
+        public function getProviderModel( string $provider, string $model, \WordPress\AiClient\Providers\Models\DTO\ModelConfig $config ): object {
+            unset( $config );
+
+            $GLOBALS['fc_popup_builder_forced_models'][] = compact( 'provider', 'model' );
+
+            return (object) compact( 'provider', 'model' );
+        }
+    }
+
     class PopupBuilderPromptResultStub {
         public function getCandidates(): array {
             return array(
@@ -189,6 +220,7 @@ namespace {
                 'response_format' => false,
                 'tools'           => false,
                 'model'           => '',
+                'forced_model'    => null,
                 'timeout'         => 0,
             );
         }
@@ -218,6 +250,11 @@ namespace {
 
         public function using_model_preference( string ...$models ): self {
             $GLOBALS['fc_popup_builder_prompt_calls'][ $this->index ]['model'] = $models[0] ?? '';
+            return $this;
+        }
+
+        public function using_model( $model ): self {
+            $GLOBALS['fc_popup_builder_prompt_calls'][ $this->index ]['forced_model'] = $model;
             return $this;
         }
 
@@ -467,7 +504,7 @@ namespace {
         'generate_images'        => false,
         'force_image_generation' => false,
         'settings'               => array(
-            'override_model'  => 'custom-chat-model',
+            'override_model'  => 'openrouter/qwen/qwen3.7-max',
             'disabled_params' => array(),
             'timeout'         => 12,
             'max_tool_calls'  => 8,
@@ -500,9 +537,24 @@ namespace {
     );
 
     Assertions::same(
-        array( 'custom-chat-model', 'custom-chat-model' ),
+        array( '', '' ),
         array_column( $GLOBALS['fc_popup_builder_prompt_calls'], 'model' ),
-        'The override model should be passed into both the initial request and retry.'
+        'Provider/model overrides should not use the model preference path.'
+    );
+
+    Assertions::same(
+        array(
+            array(
+                'provider' => 'openrouter',
+                'model'    => 'qwen/qwen3.7-max',
+            ),
+            array(
+                'provider' => 'openrouter',
+                'model'    => 'qwen/qwen3.7-max',
+            ),
+        ),
+        $GLOBALS['fc_popup_builder_forced_models'] ?? array(),
+        'Provider/model overrides should force the selected model on both the initial request and retry.'
     );
 
     Assertions::same(
