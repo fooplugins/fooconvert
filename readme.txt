@@ -272,6 +272,10 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 
 == Changelog ==
 
+= 2.1.7 =
+* Date Updated : 30 June 2026
+* Fixed : Popup open and close handling now safely handles missing trigger metadata, preventing a frontend error when a popup closes without open data.
+
 = 2.1.6 =
 * Date Updated : 24 May 2026
 * Added : AI Popup Builder settings now include Test actions for current text and image model overrides.

@@ -179,13 +179,9 @@ class TriggeredElement extends PopupElement {
             this.#openTimestamp = null;
         }
 
-        let data = this.#openData;
+        let data = isPlainObject( this.#openData ) ? this.#openData : {};
         if ( isNumber( duration ) ) {
-            if ( isPlainObject( data ) ) {
-                data.duration = duration;
-            } else {
-                data = { duration };
-            }
+            data = { ...data, duration };
         }
 
         if ( this.triggerOnce && !state ) {
