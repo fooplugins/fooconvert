@@ -460,7 +460,8 @@ class ChatService {
      * @return \WP_AI_Client_Prompt_Builder
      */
     private function build_prompt_from_settings( array $history, array $abilities, bool $generate_images, bool $force_image_generation, array $settings ): \WP_AI_Client_Prompt_Builder {
-        $prompt = wp_ai_client_prompt();
+        $prompt_function = 'wp_ai_client_prompt';
+        $prompt          = $prompt_function();
         $prompt = $prompt->with_history( ...$history );
 
         if ( ! $this->is_ai_param_disabled( $settings, 'temperature' ) && method_exists( $prompt, 'using_temperature' ) ) {

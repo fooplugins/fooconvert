@@ -753,10 +753,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
 
             $table_name = self::get_events_table_name();
             $limit = max( 1, intval( $limit ) );
+            $join_sql = self::get_dashboard_popup_join_sql( 'sale_events' );
 
             $query = $wpdb->prepare(
                 "SELECT sale_events.*
-                FROM {$table_name} sale_events" . self::get_dashboard_popup_join_sql( 'sale_events' ) . "
+                FROM {$table_name} sale_events{$join_sql}
                 WHERE sale_events.event_type = %s
                 ORDER BY sale_events.timestamp DESC, sale_events.id DESC
                 LIMIT %d",
@@ -778,10 +779,11 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Query' ) ) {
 
             $table_name = self::get_events_table_name();
             $limit = max( 1, intval( $limit ) );
+            $join_sql = self::get_dashboard_popup_join_sql( 'sale_events' );
 
             $query = $wpdb->prepare(
                 "SELECT sale_events.post_id, COUNT(*) as sale_count, COALESCE(SUM(sale_events.event_value), 0) as total_sales
-                FROM {$table_name} sale_events" . self::get_dashboard_popup_join_sql( 'sale_events' ) . "
+                FROM {$table_name} sale_events{$join_sql}
                 WHERE sale_events.event_type = %s
                 GROUP BY sale_events.post_id
                 ORDER BY total_sales DESC, sale_count DESC
