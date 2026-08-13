@@ -4,6 +4,8 @@ namespace FooPlugins\FooConvert\Data;
 
 use wpdb;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * FooConvert Data Base Class
  * Contains common database functions for the plugin.

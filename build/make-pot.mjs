@@ -3,6 +3,16 @@ import { readFile, writeFile } from "node:fs/promises";
 
 const pkg = JSON.parse( await readFile( 'package.json', { encoding: 'utf8' } ) );
 const output = `languages/${ pkg.name }.pot`;
+const freeOnly = process.env.FOOCONVERT_BUILD_MODE === 'free';
+const excludedDirectories = [
+    'assets',
+    'build',
+    'dist',
+    freeOnly ? 'pro' : 'pro/assets',
+    'node_modules',
+    'vendor',
+    'tests'
+];
 const headers = {
     "Report-Msgid-Bugs-To": pkg.bugs,
     "Last-Translator": pkg.author,
@@ -10,7 +20,7 @@ const headers = {
 };
 
 console.info( `Creating '${ output }' file...` );
-exec( `wp i18n make-pot . ${ output } --exclude=assets,build,dist,pro/assets,node_modules,vendor,tests`, async ( error, stdout, stderr ) => {
+exec( `wp i18n make-pot . ${ output } --exclude=${ excludedDirectories.join( ',' ) }`, async ( error, stdout, stderr ) => {
     if ( error ) {
         console.error( 'An error occurred executing the make-pot command.', error );
         process.exitCode = 1;

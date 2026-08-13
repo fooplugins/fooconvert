@@ -5,17 +5,18 @@ import { globby } from "globby";
 
 const buildDir = dirname( fileURLToPath( import.meta.url ) );
 const rootDir = dirname( buildDir );
+const freeOnly = process.env.FOOCONVERT_BUILD_MODE === "free";
 const outputs = [
     {
         label: "free",
         sourceRoot: "src",
         outputPath: join( rootDir, "includes/AI/PopupBuilder/Blueprint/generated-fooconvert-blocks.php" ),
     },
-    {
+    ...( freeOnly ? [] : [ {
         label: "PRO",
         sourceRoot: "pro/src",
         outputPath: join( rootDir, "pro/includes/AI/PopupBuilder/Blueprint/generated-fooconvert-pro-blocks.php" ),
-    },
+    } ] ),
 ];
 
 for ( const output of outputs ) {

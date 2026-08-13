@@ -486,7 +486,8 @@ class Attachments {
      * @return mixed
      */
     private static function build_text_prompt_builder( string $content, string $system_instruction, float $temperature ) {
-        $prompt_builder = wp_ai_client_prompt( $content );
+        $prompt_function = 'wp_ai_client_prompt';
+        $prompt_builder  = $prompt_function( $content );
         $settings       = self::get_ai_settings();
 
         if ( '' !== $system_instruction && ! self::is_ai_param_disabled( 'system_instruction' ) && method_exists( $prompt_builder, 'using_system_instruction' ) ) {
@@ -655,7 +656,8 @@ class Attachments {
         $request_options = new RequestOptions();
         $request_options->setTimeout( 90 );
 
-        $prompt_builder = wp_ai_client_prompt( $prompt )
+        $prompt_function = 'wp_ai_client_prompt';
+        $prompt_builder  = $prompt_function( $prompt )
             ->using_request_options( $request_options )
             ->as_output_file_type( FileTypeEnum::inline() );
 

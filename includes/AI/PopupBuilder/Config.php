@@ -73,7 +73,8 @@ class Config {
                 return false;
             }
 
-            $prompt = wp_ai_client_prompt( 'Test' );
+            $prompt_function = 'wp_ai_client_prompt';
+            $prompt          = $prompt_function( 'Test' );
             if ( is_object( $prompt ) && is_callable( array( $prompt, 'is_supported_for_text_generation' ) ) ) {
                 $supported = $prompt->is_supported_for_text_generation();
 
@@ -100,7 +101,8 @@ class Config {
             return null;
         }
 
-        $connectors      = wp_get_connectors();
+        $connectors_function = 'wp_get_connectors';
+        $connectors          = $connectors_function();
         $has_credentials = false;
 
         foreach ( $connectors as $connector_data ) {

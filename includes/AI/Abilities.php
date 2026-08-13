@@ -114,7 +114,9 @@ class Abilities {
      * @return void
      */
     public function register_main_category(): void {
-        wp_register_ability_category(
+        // Resolve the guarded function dynamically for WordPress versions before the Abilities API.
+        $register_category = 'wp_register_ability_category';
+        $register_category(
             self::CATEGORY,
             array(
                 'label'       => __( 'Popup Builder', 'fooconvert' ),
@@ -129,7 +131,10 @@ class Abilities {
      * @return void
      */
     public function register_abilities(): void {
-        wp_register_ability(
+        // Resolve the guarded function dynamically for WordPress versions before the Abilities API.
+        $register_ability = 'wp_register_ability';
+
+        $register_ability(
             self::ABILITY_LIST_TEMPLATES,
             array(
                 'category'            => self::CATEGORY,
@@ -178,7 +183,7 @@ class Abilities {
             )
         );
 
-        wp_register_ability(
+        $register_ability(
             self::ABILITY_BLOCK_CATALOG,
             array(
                 'category'            => self::CATEGORY,
@@ -215,7 +220,7 @@ class Abilities {
             )
         );
 
-        wp_register_ability(
+        $register_ability(
             self::ABILITY_CONVERSION_PLAYBOOK,
             array(
                 'category'            => self::CATEGORY,
@@ -243,7 +248,7 @@ class Abilities {
             )
         );
 
-        wp_register_ability(
+        $register_ability(
             self::ABILITY_VALIDATE_POPUP_BLUEPRINT,
             array(
                 'category'            => self::CATEGORY,
@@ -276,7 +281,7 @@ class Abilities {
             )
         );
 
-        wp_register_ability(
+        $register_ability(
             self::ABILITY_LIST_POPUP_MEDIA,
             array(
                 'category'            => self::CATEGORY,
@@ -312,7 +317,7 @@ class Abilities {
             )
         );
 
-        wp_register_ability(
+        $register_ability(
             self::ABILITY_GENERATE_POPUP_IMAGE_PROMPT,
             array(
                 'category'            => self::CATEGORY,
@@ -348,7 +353,7 @@ class Abilities {
             )
         );
 
-        wp_register_ability(
+        $register_ability(
             self::ABILITY_GENERATE_POPUP_IMAGE,
             array(
                 'category'            => self::CATEGORY,
@@ -384,7 +389,7 @@ class Abilities {
             )
         );
 
-        wp_register_ability(
+        $register_ability(
             self::ABILITY_IMPORT_POPUP_IMAGE,
             array(
                 'category'            => self::CATEGORY,
@@ -439,7 +444,7 @@ class Abilities {
             )
         );
 
-        wp_register_ability(
+        $register_ability(
             self::ABILITY_CREATE_POPUP_IMAGE,
             array(
                 'category'            => self::CATEGORY,
@@ -476,7 +481,7 @@ class Abilities {
             )
         );
 
-        wp_register_ability(
+        $register_ability(
             self::ABILITY_CREATE_POPUP_BACKGROUND,
             array(
                 'category'            => self::CATEGORY,

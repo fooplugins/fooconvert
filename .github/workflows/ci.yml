@@ -34,7 +34,7 @@ jobs:
 
       # Install npm dependencies
       - name: Install NPM dependencies
-        run: npm install --silent --no-audit
+        run: npm install --no-audit
 
       # Extract version from package.json
       - name: Extract Version
@@ -44,9 +44,13 @@ jobs:
           echo "VERSION=${VERSION}" >> $GITHUB_ENV
           echo "::notice::Version : ${VERSION}"
 
+      # Guard both free-only packaging and clear full-build failure behavior
+      - name: Run CI packaging regressions
+        run: npm run test:ci-package
+
       # Create ZIP package
       - name: Run Build and Create ZIP
-        run: npm run package:create-zip > /dev/null
+        run: npm run package:create-zip:free
 
       # Unzip plugin package
       - name: Unzip Plugin

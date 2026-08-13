@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 $cases = array(
     __DIR__ . '/cases/display-rules-core.php',
+    __DIR__ . '/cases/data-base-direct-access.php',
     __DIR__ . '/cases/display-rules-woocommerce.php',
     __DIR__ . '/cases/admin-branding.php',
     __DIR__ . '/cases/experiments-admin-init.php',
