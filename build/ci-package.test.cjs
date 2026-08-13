@@ -50,6 +50,12 @@ test( "free-only CI mode builds and packages without the private pro submodule",
     assert.doesNotMatch( translations.stdout, new RegExp( privateSentinel ) );
 } );
 
+test( "database schema quotes the reserved conversion column for current MariaDB", () => {
+    const schema = readFileSync( join( rootDir, "includes", "Data", "Schema.php" ), "utf8" );
+    assert.match( schema, /`conversion` tinyint\(1\)/ );
+    assert.match( schema, /post_id, `conversion`/ );
+} );
+
 test( "default full package fails clearly when the private pro submodule is absent", { timeout: 30_000 }, () => {
     rmSync( join( rootDir, "dist" ), { force: true, recursive: true } );
 

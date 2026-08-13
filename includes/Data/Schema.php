@@ -101,7 +101,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
                 post_id bigint(20) unsigned NOT NULL,
                 event_type varchar(255) NOT NULL,
                 event_subtype varchar(255) DEFAULT NULL,
-                conversion tinyint(1) DEFAULT NULL,
+                `conversion` tinyint(1) DEFAULT NULL,
                 sentiment tinyint(1) DEFAULT NULL,
                 page_url text DEFAULT NULL,
                 device_type varchar(50) DEFAULT NULL,
@@ -128,7 +128,7 @@ if ( !class_exists( 'FooPlugins\FooConvert\Data\Schema' ) ) {
             parent::safe_create_index( $table_name, 'idx_popup_event_subtype', 'post_id, event_subtype' );
 
             // Support conversion-rate style queries per popup.
-            parent::safe_create_index( $table_name, 'idx_popup_conversion', 'post_id, conversion' );
+            parent::safe_create_index( $table_name, 'idx_popup_conversion', 'post_id, `conversion`' );
 
             // Support positive/negative sentiment rollups per popup.
             parent::safe_create_index( $table_name, 'idx_popup_sentiment', 'post_id, sentiment' );
