@@ -66,6 +66,7 @@ const resizeTemplates = async (sourceDir, destDir, width = 150, height = 150) =>
 
 const mediaPatterns = [ '**/*.{png,jpg,jpeg,gif,webp,svg}', '!templates/preview/**' ];
 const previewPatterns = [ '**/*.{png,jpg,jpeg,gif,webp,svg}' ];
+const freeOnly = process.env.FOOCONVERT_BUILD_MODE === "free";
 
 await resizeTemplates("./src/media/templates/fullsize", "./src/media/templates");
 
@@ -78,15 +79,17 @@ await performCopy( "./src/admin", "./assets/admin", [
 ] );
 
 await rm( "./assets/pro", { force: true, recursive: true } );
-await rm( "./pro/assets/blocks", { force: true, recursive: true } );
-await resizeTemplates("./pro/src/media/templates/fullsize", "./pro/src/media/templates");
-await performCopy( "./pro/src/media", "./pro/assets/media", mediaPatterns );
-await performCopy( "./pro/src/media/templates/preview", "./pro/assets/media/templates/preview", previewPatterns );
-await performCopy( "./pro/src", "./pro/assets", [ '**/block.json' ] );
-await performMove( "./assets", "./pro/assets", [ 'editor-pro*.*', 'frontend-pro*.*' ], false );
+if ( !freeOnly ) {
+    await rm( "./pro/assets/blocks", { force: true, recursive: true } );
+    await resizeTemplates("./pro/src/media/templates/fullsize", "./pro/src/media/templates");
+    await performCopy( "./pro/src/media", "./pro/assets/media", mediaPatterns );
+    await performCopy( "./pro/src/media/templates/preview", "./pro/assets/media/templates/preview", previewPatterns );
+    await performCopy( "./pro/src", "./pro/assets", [ '**/block.json' ] );
+    await performMove( "./assets", "./pro/assets", [ 'editor-pro*.*', 'frontend-pro*.*' ], false );
 
-const proBlockFiles = await globby( 'blocks/**/block.json', { cwd: './pro/src' } );
-for ( const file of proBlockFiles ) {
-    const directory = dirname( file );
-    await performMove( join( './assets', directory ), join( './pro/assets', directory ), [ '**/*' ] );
+    const proBlockFiles = await globby( 'blocks/**/block.json', { cwd: './pro/src' } );
+    for ( const file of proBlockFiles ) {
+        const directory = dirname( file );
+        await performMove( join( './assets', directory ), join( './pro/assets', directory ), [ '**/*' ] );
+    }
 }

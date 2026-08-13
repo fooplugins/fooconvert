@@ -6,6 +6,7 @@ const { dirname, extname, join, relative, resolve } = require( 'path' );
 const { sync: glob } = require( 'fast-glob' );
 
 const PRO_SOURCE_PATH = './pro/src';
+const freeOnly = process.env.FOOCONVERT_BUILD_MODE === 'free';
 
 const getProBlockEntries = () => {
     const sourceRoot = resolve( process.cwd(), PRO_SOURCE_PATH );
@@ -123,7 +124,7 @@ class FooConvertEntryAssetDependenciesPlugin {
 const entry = () => {
     // get the default config entries
     const blockEntries = defaultConfig.entry();
-    const proBlockEntries = getProBlockEntries();
+    const proBlockEntries = freeOnly ? {} : getProBlockEntries();
     // create our custom entry points to match the `pkg.imports` values
     const entries = {
         "editor": "./src/editor/index.js",
@@ -131,14 +132,16 @@ const entry = () => {
         "admin/ai-popup-builder/index": "./src/admin/ai-popup-builder/index.js",
         "admin/brand-context/index": "./src/admin/brand-context/index.js",
         "admin/display-rules-list/index": "./src/scripts/admin/display-rules-list/index.js",
-        "editor-pro": {
-            "import": "./pro/src/editor/index.js",
-            "dependOn": [ "editor" ]
-        },
-        "frontend-pro": {
-            "import": "./pro/src/frontend/index.js",
-            "dependOn": [ "frontend" ]
-        },
+        ...( freeOnly ? {} : {
+            "editor-pro": {
+                "import": "./pro/src/editor/index.js",
+                "dependOn": [ "editor" ]
+            },
+            "frontend-pro": {
+                "import": "./pro/src/frontend/index.js",
+                "dependOn": [ "frontend" ]
+            },
+        } ),
     };
     // iterate the default entries and add them to our new entries object
     const resolvedEntries = Object.entries( blockEntries ).reduce( ( acc, [ key, value ] ) => {

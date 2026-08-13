@@ -9,6 +9,7 @@ const rootDir = dirname( buildDir );
 const pkg = JSON.parse( await readFile( join( rootDir, "package.json" ), { encoding: "utf8" } ) );
 const archiveName = `${ pkg.name }.v${ pkg.version }.zip`;
 const archivePath = join( rootDir, "dist", archiveName );
+const freeOnly = process.env.FOOCONVERT_BUILD_MODE === "free";
 const includePatterns = [
     "composer.json",
     "fooconvert.php",
@@ -17,10 +18,12 @@ const includePatterns = [
     "assets/**/*",
     "includes/**/*",
     "languages/**/*",
+    ...( freeOnly ? [] : [
     "pro/start.php",
     "pro/assets/**/*",
     "pro/includes/**/*",
     "pro/vendor/**/*",
+    ] ),
     "vendor/**/*"
 ];
 

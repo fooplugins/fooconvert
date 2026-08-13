@@ -159,8 +159,10 @@ fooconvert/
 
 ### Build Notes
 
-- `npm run build` always produces the full build.
-- `npm run build:dev` runs the same build pipeline in development mode for easier debugging.
+- `npm run build` and `npm run package:create-zip` retain the full Pro-inclusive behavior and require the private `pro` submodule.
+- `npm run build:free` and `npm run package:create-zip:free` explicitly build/package only the public free plugin without importing, copying, or archiving `pro`.
+- Pull-request CI uses `npm run package:create-zip:free`, so fork code never receives private-submodule credentials.
+- `npm run build:dev` runs the full build pipeline in development mode for easier debugging.
 
 ### Module Aliases
 
