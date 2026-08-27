@@ -119,6 +119,13 @@
     line-height: 1.45;
 }
 
+.fc-display-rules-list__modal {
+    --fc--display-rules-control-width: 100%;
+
+    width: 640px;
+    max-width: calc(100% - 32px);
+}
+
 .fc-display-rules-list__modal-body {
     display: flex;
     flex-direction: column;

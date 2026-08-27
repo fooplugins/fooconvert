@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: FooConvert - AI Popup Builder for Flyouts, Overlays & Bars 2.1.6\n"
+"Project-Id-Version: FooConvert - AI Popup Builder for Flyouts, Overlays & Bars 2.1.8\n"
 "Report-Msgid-Bugs-To: https://github.com/fooplugins/fooconvert/issues\n"
 "Last-Translator: FooPlugins <info@fooplugins.com>\n"
 "Language-Team: FooPlugins <info@fooplugins.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-24T10:33:44+00:00\n"
+"POT-Creation-Date: 2026-08-27T16:28:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: fooconvert\n"
@@ -7412,7 +7412,7 @@ msgstr ""
 msgid "Type to choose..."
 msgstr ""
 
-#: src/editor/components/display-rules/components/locations-control/location-control/Component.js:91
+#: src/editor/components/display-rules/components/locations-control/location-control/Component.js:99
 msgid "Select type"
 msgstr ""
 
@@ -7437,7 +7437,7 @@ msgstr ""
 msgid "Invalid rules object."
 msgstr ""
 
-#: src/editor/components/entity-record-control/Component.js:112
+#: src/editor/components/entity-record-control/Component.js:127
 msgid "No results found"
 msgstr ""
 
@@ -7583,12 +7583,16 @@ msgstr ""
 msgid "Choose a popup template"
 msgstr ""
 
-#: src/editor/components/repeater-control/Component.js:54
+#: src/editor/components/repeater-control/Component.js:55
 msgid "No items."
 msgstr ""
 
-#: src/editor/components/repeater-control/Component.js:55
+#: src/editor/components/repeater-control/Component.js:56
 msgid "Add item"
+msgstr ""
+
+#: src/editor/components/repeater-control/Component.js:105
+msgid "Add"
 msgstr ""
 
 #: src/editor/components/size-control/Component.js:64

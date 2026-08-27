@@ -56,6 +56,14 @@ The AI tools require WordPress 7 or newer and a configured WordPress AI connecto
 - Generate background images for your popups.
 - Built in conversion playbook to help you create high converting popups.
 
+= AI Connector Testing =
+
+We have successfully generated popups using these WordPress AI connector provider and model combinations:
+
+- OpenAI: `gpt5.5`
+- Anthropic: `opus4.7`
+- Google: `gemini-3.5-flash`
+
 = Building Popup Content =
 
 - Use WordPress core blocks and most third-party blocks inside popup content.
@@ -271,6 +279,13 @@ No, FooConvert is optimized for performance and has minimal impact on your websi
 The source code for this plugin is available publicly on GitHub [here](https://github.com/fooplugins/fooconvert).
 
 == Changelog ==
+
+= 2.1.8 =
+* Date Updated : 27 August 2026
+* Updated : Bundled Freemius SDK to v2.13.4.
+* Updated : Documented the AI connector and model combinations tested with the AI Popup Builder.
+* Fixed : Page and post display rule search now matches titles or exact slugs and includes drafts.
+* Updated : Improved the display rules modal with full-width selectors, compact add actions, clearer help text placement, better-aligned remove actions, and relative permalink paths for selected content.
 
 = 2.1.7 =
 * Date Updated : 30 June 2026

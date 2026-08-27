@@ -72,9 +72,17 @@ const DisplayRulesLocationControl = ( {
                             className={ `${ rootClass }__entity-record-control` }
                             kind={ kind }
                             name={ name }
+                            queryArgs={ kind === 'postType' ? {
+                                status: [ 'publish', 'draft' ],
+                                search_columns: [ 'post_title' ],
+                                orderby: 'relevance'
+                            } : {} }
                             tokens={ data }
                             onChange={ tokens => changed( type, tokens ) }
                             placeholder={ placeholder }
+                            searchBySlug={ kind === 'postType' }
+                            showRelativeSlug={ kind === 'postType' }
+                            maxSuggestions={ kind === 'postType' ? 20 : 5 }
                             __next40pxDefaultSize
                         />
                     </>
