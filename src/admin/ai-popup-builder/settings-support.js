@@ -32,6 +32,27 @@ export const normalizeDisabledParamName = ( value ) =>
 		.replace( /^[_\-.]+|[_\-.]+$/g, '' )
 		.replace( /-/g, '_' );
 
+const REQUIRED_AI_CAPABILITY_PARAM_ALIASES = new Set(
+	[
+		'response_format',
+		'response_mime_type',
+		'response_schema',
+		'json',
+		'json_schema',
+		'tools',
+		'tool',
+		'tool_choice',
+		'functions',
+		'function_declarations',
+		'abilities',
+	].map( normalizeDisabledParamName )
+);
+
+export const isRequiredAiCapabilityParam = ( value ) =>
+	REQUIRED_AI_CAPABILITY_PARAM_ALIASES.has(
+		normalizeDisabledParamName( value )
+	);
+
 export const normalizeDisabledParams = ( value ) => {
 	const items = Array.isArray( value )
 		? value
@@ -41,7 +62,7 @@ export const normalizeDisabledParams = ( value ) => {
 	items.forEach( ( item ) => {
 		const param = normalizeDisabledParamName( item );
 
-		if ( param.length > 0 ) {
+		if ( param.length > 0 && ! isRequiredAiCapabilityParam( param ) ) {
 			params.add( param );
 		}
 	} );
@@ -157,11 +178,9 @@ export const normalizeAiSettings = ( settings, blockCatalog = [] ) => {
 			typeof source?.overrideImageModel === 'string'
 				? source.overrideImageModel
 				: '',
+		optimizeImageOutput: source?.optimizeImageOutput !== false,
 		disabledParams,
-		disabledParamsText:
-			disabledParamsText.length > 0
-				? disabledParamsText
-				: disabledParams.join( '\n' ),
+		disabledParamsText: disabledParams.join( '\n' ),
 		timeout:
 			Number.isFinite( timeout ) && timeout > 0
 				? Math.floor( timeout )
@@ -186,6 +205,7 @@ export const buildAiSettingsPayload = ( settings, blockCatalog = [] ) => {
 	return {
 		overrideModel: normalized.overrideModel.trim(),
 		overrideImageModel: normalized.overrideImageModel.trim(),
+		optimizeImageOutput: normalized.optimizeImageOutput,
 		disabledParams: normalized.disabledParams,
 		disabledParamsText: normalized.disabledParams.join( '\n' ),
 		timeout: normalized.timeout,

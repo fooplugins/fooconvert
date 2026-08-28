@@ -4,9 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $fooconvert_demos_created = fooconvert_get_setting( 'demo_content' ) === 'on';
-$fooconvert_hidden_panels = fooconvert_get_setting( 'hide_dashboard_panels', [] );
 
-if ( in_array( 'getting-started', $fooconvert_hidden_panels ) ) {
+if ( fooconvert_is_dashboard_panel_hidden( 'getting-started' ) ) {
     return;
 }
 ?>

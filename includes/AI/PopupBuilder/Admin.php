@@ -179,8 +179,9 @@ class Admin {
         $ai_client_available = Config::has_ai_client();
         $ai_connection_ready = Config::has_valid_ai_connection();
         $settings            = Settings::to_response();
+        $edition             = $this->get_edition();
 
-        return array(
+        $config = array(
             'api'              => array(
                 'chatPath'        => '/fooconvert/v1/ai-popup-builder/chat',
                 'chatStreamPath'  => '/fooconvert/v1/ai-popup-builder/chat-stream',
@@ -188,6 +189,7 @@ class Admin {
                 'deleteMediaPath' => '/fooconvert/v1/ai-popup-builder/media',
                 'brandPath'       => '/fooconvert/v1/brand-context',
                 'settingsPath'    => '/fooconvert/v1/ai-popup-builder/settings',
+                'testModelPath'   => '/fooconvert/v1/ai-popup-builder/settings/test-model',
                 'debugResponsesPath' => '/fooconvert/v1/ai-popup-builder/debug-responses',
                 'extractBrandPath' => '/fooconvert/v1/brand-context/extract',
                 'loadPopupPath'    => '/fooconvert/v1/ai-popup-builder/popup',
@@ -205,6 +207,9 @@ class Admin {
             'blockCatalog'     => Catalog::get_block_catalog(),
             'playbook'         => Catalog::get_conversion_playbook(),
             'systemPrompt'     => PromptFactory::get_default_system_instruction_preview(),
+            'imageBackgroundPrompt' => PopupMedia::get_default_background_prompt_preview(),
+            'edition'          => $edition,
+            'suggestionLibrary' => SuggestionLibrary::get( $edition ),
             'mediaItems'       => PopupMedia::list_generated_images( 12 ),
             'aiClientAvailable' => $ai_client_available,
             'aiClientUpgradeUrl' => admin_url( 'update-core.php' ),
@@ -236,6 +241,68 @@ class Admin {
                     : null,
             ),
         );
+
+        $starter_prompts = $this->get_filtered_starter_prompts();
+        if ( ! empty( $starter_prompts ) ) {
+            $config['starterPrompts'] = $starter_prompts;
+        }
+
+        return $config;
+    }
+
+    /**
+     * Returns the current AI popup builder edition.
+     *
+     * @return string
+     */
+    private function get_edition(): string {
+        /**
+         * Filters the current AI popup builder edition.
+         *
+         * Extensions can switch this from "free" to a custom edition so shared
+         * popup builder config, starter prompts, and suggestions can be extended
+         * without replacing the free admin screen.
+         *
+         * @param string $edition Current builder edition.
+         */
+        $edition = apply_filters( 'fooconvert_ai_popup_builder_edition', 'free' );
+        $edition = is_string( $edition ) ? $edition : '';
+        $edition = function_exists( 'sanitize_key' )
+            ? sanitize_key( $edition )
+            : strtolower( preg_replace( '/[^a-z0-9_\-]/i', '', $edition ) ?? '' );
+
+        return '' !== $edition ? $edition : 'free';
+    }
+
+    /**
+     * Returns starter prompts supplied by extensions.
+     *
+     * @return array<int,string>
+     */
+    private function get_filtered_starter_prompts(): array {
+        /**
+         * Filters the starter prompts shown before a popup draft exists.
+         *
+         * Return an empty array to use FooConvert Free's built-in starter prompts.
+         * Change the edition with `fooconvert_ai_popup_builder_edition` when an
+         * extension wants to supply a different default set.
+         *
+         * @param array<int,string> $prompts Starter prompt strings.
+         * @param string            $edition Current builder edition.
+         */
+        $prompts = apply_filters( 'fooconvert_ai_popup_builder_starter_prompts', array(), $this->get_edition() );
+
+        return $this->normalize_starter_prompts( $prompts );
+    }
+
+    /**
+     * Normalizes starter prompt filter values for the JavaScript config.
+     *
+     * @param mixed $prompts Raw starter prompt list.
+     * @return array<int,string>
+     */
+    private function normalize_starter_prompts( $prompts ): array {
+        return SuggestionLibrary::normalize_string_list( $prompts );
     }
 
     /**
@@ -262,7 +329,8 @@ class Admin {
 
         $resolved_model = $this->get_resolved_ai_model_label(
             'text',
-            'WordPress\\AI\\get_preferred_models_for_text_generation'
+            'WordPress\\AI\\get_preferred_models_for_text_generation',
+            $settings
         );
         if ( '' !== $resolved_model ) {
             return $resolved_model;
@@ -302,9 +370,10 @@ class Admin {
      *
      * @param string $capability Capability to resolve. Supports "text" and "image".
      * @param string $preference_function Fully-qualified preferred-model function name.
+     * @param array<string,mixed> $settings Current AI builder settings response.
      * @return string
      */
-    private function get_resolved_ai_model_label( string $capability, string $preference_function ): string {
+    private function get_resolved_ai_model_label( string $capability, string $preference_function, array $settings = array() ): string {
         $required_classes = array(
             'WordPress\\AiClient\\AiClient',
             'WordPress\\AiClient\\Messages\\DTO\\MessagePart',
@@ -316,6 +385,14 @@ class Admin {
 
         if ( 'image' === $capability ) {
             $required_classes[] = 'WordPress\\AiClient\\Files\\Enums\\FileTypeEnum';
+        }
+
+        if (
+            'text' === $capability &&
+            ! $this->is_ai_model_param_disabled( $settings, 'tools' ) &&
+            ( ! method_exists( Abilities::class, 'wp_api_available' ) || Abilities::wp_api_available() )
+        ) {
+            $required_classes[] = 'WordPress\\AiClient\\Tools\\DTO\\FunctionDeclaration';
         }
 
         foreach ( $required_classes as $class_name ) {
@@ -335,7 +412,7 @@ class Admin {
                 return '';
             }
 
-            $requirements = $this->create_ai_model_requirements( $capability );
+            $requirements = $this->create_ai_model_requirements( $capability, $settings );
             if ( null === $requirements ) {
                 return '';
             }
@@ -368,9 +445,10 @@ class Admin {
      * Creates model requirements matching the popup builder request type.
      *
      * @param string $capability Capability to resolve. Supports "text" and "image".
+     * @param array<string,mixed> $settings Current AI builder settings response.
      * @return object|null
      */
-    private function create_ai_model_requirements( string $capability ) {
+    private function create_ai_model_requirements( string $capability, array $settings = array() ) {
         try {
             $message_part_class   = 'WordPress\\AiClient\\Messages\\DTO\\MessagePart';
             $user_message_class   = 'WordPress\\AiClient\\Messages\\DTO\\UserMessage';
@@ -380,7 +458,7 @@ class Admin {
 
             $model_config = 'image' === $capability
                 ? $this->create_image_model_config( $model_config_class )
-                : new $model_config_class();
+                : $this->create_text_model_config( $model_config_class, $settings );
             $message      = new $user_message_class( array( new $message_part_class( 'FooConvert popup builder' ) ) );
             $method       = 'image' === $capability ? 'imageGeneration' : 'textGeneration';
 
@@ -402,6 +480,44 @@ class Admin {
     }
 
     /**
+     * Creates the text request model config used by popup generation.
+     *
+     * @param string              $model_config_class Fully-qualified ModelConfig class name.
+     * @param array<string,mixed> $settings Current AI builder settings response.
+     * @return object
+     */
+    private function create_text_model_config( string $model_config_class, array $settings ) {
+        $selected_block_names = $this->get_ai_model_selected_block_names( $settings );
+        $config              = array();
+
+        if ( ! $this->is_ai_model_param_disabled( $settings, 'temperature' ) ) {
+            $config['temperature'] = 0.35;
+        }
+
+        if ( ! $this->is_ai_model_param_disabled( $settings, 'system_instruction' ) ) {
+            $config['systemInstruction'] = PromptFactory::build_system_instruction( false, false, $selected_block_names );
+        }
+
+        if ( ! $this->is_ai_model_param_disabled( $settings, 'response_format' ) ) {
+            $config['outputMimeType'] = 'application/json';
+            $config['outputSchema']   = Schema::get_assistant_response_schema( $selected_block_names );
+        }
+
+        if ( ! $this->is_ai_model_param_disabled( $settings, 'tools' ) ) {
+            $function_declarations = $this->get_ai_model_function_declarations();
+            if ( ! empty( $function_declarations ) ) {
+                $config['functionDeclarations'] = $function_declarations;
+            }
+        }
+
+        if ( method_exists( $model_config_class, 'fromArray' ) ) {
+            return call_user_func( array( $model_config_class, 'fromArray' ), $config );
+        }
+
+        return new $model_config_class();
+    }
+
+    /**
      * Creates the image request model config used by popup image generation.
      *
      * @param string $model_config_class Fully-qualified ModelConfig class name.
@@ -416,6 +532,116 @@ class Admin {
         }
 
         return new $model_config_class();
+    }
+
+    /**
+     * Returns selected block names from the saved AI builder settings.
+     *
+     * @param array<string,mixed> $settings Current AI builder settings response.
+     * @return array<int,string>
+     */
+    private function get_ai_model_selected_block_names( array $settings ): array {
+        $selected_block_names = $settings['selectedBlockNames'] ?? $settings['selected_block_names'] ?? array();
+        if ( ! is_array( $selected_block_names ) ) {
+            return array();
+        }
+
+        return array_values(
+            array_filter(
+                array_map( 'strval', $selected_block_names ),
+                static fn( string $block_name ): bool => '' !== $block_name
+            )
+        );
+    }
+
+    /**
+     * Returns function declaration data matching the abilities used by popup generation.
+     *
+     * @return array<int,array<string,mixed>>
+     */
+    private function get_ai_model_function_declarations(): array {
+        if ( method_exists( Abilities::class, 'wp_api_available' ) && ! Abilities::wp_api_available() ) {
+            return array();
+        }
+
+        $declarations = array();
+        foreach ( Abilities::get_allowed_abilities() as $ability_name ) {
+            if ( ! is_string( $ability_name ) || '' === $ability_name ) {
+                continue;
+            }
+
+            $ability = null;
+            if ( function_exists( 'wp_get_ability' ) ) {
+                $ability = wp_get_ability( $ability_name );
+                if ( ! is_object( $ability ) ) {
+                    continue;
+                }
+            }
+
+            $declaration = array(
+                'name'        => $this->get_ai_model_ability_function_name( $ability_name ),
+                'description' => __( 'FooConvert popup builder ability.', 'fooconvert' ),
+            );
+
+            if ( is_object( $ability ) && method_exists( $ability, 'get_description' ) ) {
+                $description = $ability->get_description();
+                if ( is_string( $description ) && '' !== $description ) {
+                    $declaration['description'] = $description;
+                }
+            }
+
+            if ( is_object( $ability ) && method_exists( $ability, 'get_input_schema' ) ) {
+                $input_schema = $ability->get_input_schema();
+                if ( is_array( $input_schema ) && ! empty( $input_schema ) ) {
+                    $declaration['parameters'] = $input_schema;
+                }
+            }
+
+            $declarations[] = $declaration;
+        }
+
+        return $declarations;
+    }
+
+    /**
+     * Converts an ability name into the AI client function name.
+     *
+     * @param string $ability_name Ability name.
+     * @return string Function name.
+     */
+    private function get_ai_model_ability_function_name( string $ability_name ): string {
+        if (
+            class_exists( '\WP_AI_Client_Ability_Function_Resolver' ) &&
+            is_callable( array( '\WP_AI_Client_Ability_Function_Resolver', 'ability_name_to_function_name' ) )
+        ) {
+            return (string) call_user_func( array( '\WP_AI_Client_Ability_Function_Resolver', 'ability_name_to_function_name' ), $ability_name );
+        }
+
+        return 'wpab__' . str_replace( '/', '__', $ability_name );
+    }
+
+    /**
+     * Checks whether an AI model request parameter is disabled for the builder.
+     *
+     * @param array<string,mixed> $settings Current AI builder settings response.
+     * @param string              $param Parameter name.
+     * @return bool
+     */
+    private function is_ai_model_param_disabled( array $settings, string $param ): bool {
+        $disabled_params = $settings['disabledParams'] ?? $settings['disabled_params'] ?? array();
+
+        if ( method_exists( Settings::class, 'is_param_disabled' ) ) {
+            return Settings::is_param_disabled(
+                array(
+                    'disabled_params' => $disabled_params,
+                ),
+                $param
+            );
+        }
+
+        $disabled_params = is_array( $disabled_params ) ? $disabled_params : array();
+
+        return in_array( $param, $disabled_params, true );
     }
 
     /**

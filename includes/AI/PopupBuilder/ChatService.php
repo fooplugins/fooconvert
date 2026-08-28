@@ -12,6 +12,7 @@ use FooPlugins\FooConvert\AI\PopupBuilder\Media\DraftImages;
 use FooPlugins\FooConvert\AI\PopupBuilder\Media\ImageGenerator;
 use WP_AI_Client_Ability_Function_Resolver;
 use WP_Error;
+use WordPress\AiClient\Messages\DTO\Message;
 use WordPress\AiClient\Messages\DTO\MessagePart;
 use WordPress\AiClient\Messages\DTO\UserMessage;
 use WordPress\AiClient\Providers\Http\DTO\RequestOptions;
@@ -145,8 +146,15 @@ class ChatService {
                         $force_image_generation,
                         $settings
                     );
+                    if ( is_wp_error( $prompt ) ) {
+                        return $prompt;
+                    }
 
                     $result = $this->generate_prompt_result( $prompt, $stream_callbacks, $settings );
+                    if ( is_wp_error( $result ) ) {
+                        $result = $this->normalize_ai_generation_error( $result );
+                    }
+
                     if ( ! is_wp_error( $result ) ) {
                         break;
                     }
@@ -188,7 +196,9 @@ class ChatService {
                     $ability_response = $resolver->execute_abilities( $message );
                     $ability_results = ActivityLog::get_message_ability_results( $ability_response );
                     ActivityLog::append_items( $activity_log, $ability_results, $stream_callbacks, 'on_activity' );
-                    $history[] = $ability_response;
+                    foreach ( $this->split_function_response_message( $ability_response ) as $ability_response_message ) {
+                        $history[] = $ability_response_message;
+                    }
                     continue;
                 }
 
@@ -257,6 +267,47 @@ class ChatService {
     }
 
     /**
+     * Splits bundled function responses into provider-compatible messages.
+     *
+     * OpenAI-compatible chat providers require each tool response to be the
+     * only content in its message. The WordPress ability resolver may return
+     * one user message containing multiple function response parts when the
+     * model requested multiple tools in a single turn.
+     *
+     * @param Message $message Ability response message.
+     * @return array<int,Message>
+     */
+    private function split_function_response_message( Message $message ): array {
+        $parts = $message->getParts();
+        if ( count( $parts ) <= 1 ) {
+            return array( $message );
+        }
+
+        $messages       = array();
+        $buffered_parts = array();
+
+        foreach ( $parts as $part ) {
+            if ( $part->getType()->isFunctionResponse() ) {
+                if ( ! empty( $buffered_parts ) ) {
+                    $messages[]     = new UserMessage( $buffered_parts );
+                    $buffered_parts = array();
+                }
+
+                $messages[] = new UserMessage( array( $part ) );
+                continue;
+            }
+
+            $buffered_parts[] = $part;
+        }
+
+        if ( ! empty( $buffered_parts ) ) {
+            $messages[] = new UserMessage( $buffered_parts );
+        }
+
+        return empty( $messages ) ? array( $message ) : $messages;
+    }
+
+    /**
      * Generates one AI prompt result, optionally wrapped in the streaming adapter.
      *
      * @param \WP_AI_Client_Prompt_Builder $prompt Prompt builder.
@@ -270,10 +321,15 @@ class ChatService {
             || ! is_callable( $stream_callbacks['on_assistant_delta'] )
             || ! Config::supports_streaming()
         ) {
-            return $prompt->generate_text_result();
+            try {
+                return $prompt->generate_text_result();
+            } catch ( \Throwable $error ) {
+                return $this->get_ai_generation_exception_error( $error );
+            }
         }
 
-        $stream_args = array(
+        $streamed_assistant_text = '';
+        $stream_args             = array(
             'streaming_enabled' => true,
             'payload_mutator'   => function ( array $payload ) use ( $settings ): array {
                 $normalized = Settings::restore_streaming_schema_objects( $payload );
@@ -281,7 +337,7 @@ class ChatService {
 
                 return $this->remove_disabled_params_from_payload( $payload, $settings );
             },
-            'on_event'          => function ( \WP_AI_Client_SSE_Event $event ) use ( $stream_callbacks ): void {
+            'on_event'          => function ( \WP_AI_Client_SSE_Event $event ) use ( $stream_callbacks, &$streamed_assistant_text ): void {
                 $reasoning_delta = StreamSupport::extract_reasoning_summary_delta( $event );
 
                 if (
@@ -295,6 +351,7 @@ class ChatService {
                 $delta = StreamSupport::extract_delta_text( $event );
 
                 if ( '' !== $delta ) {
+                    $streamed_assistant_text .= $delta;
                     call_user_func( $stream_callbacks['on_assistant_delta'], $delta );
                 }
             },
@@ -304,10 +361,151 @@ class ChatService {
             $stream_args['request_timeout'] = $this->sanitize_ai_timeout( $settings['timeout'] ?? $this->get_default_ai_timeout() );
         }
 
-        return wp_ai_client_stream(
-            $prompt,
-            $stream_args
-        )->generate_text_result();
+        try {
+            $result = wp_ai_client_stream(
+                $prompt,
+                $stream_args
+            )->generate_text_result();
+
+            if ( is_wp_error( $result ) ) {
+                $fallback_result = $this->get_streamed_text_fallback_result( $streamed_assistant_text, $result->get_error_message() );
+                if ( null !== $fallback_result ) {
+                    return $fallback_result;
+                }
+            }
+
+            return $result;
+        } catch ( \Throwable $error ) {
+            $fallback_result = $this->get_streamed_text_fallback_result( $streamed_assistant_text, $error->getMessage() );
+            if ( null !== $fallback_result ) {
+                return $fallback_result;
+            }
+
+            return $this->get_ai_generation_exception_error( $error );
+        }
+    }
+
+    /**
+     * Returns a best-effort result from streamed assistant text when provider final parsing fails.
+     *
+     * @param string $streamed_text Provider-delivered assistant text.
+     * @param string $error_message Terminal provider parser error.
+     * @return StreamedTextPromptResult|null
+     */
+    private function get_streamed_text_fallback_result( string $streamed_text, string $error_message ): ?StreamedTextPromptResult {
+        if ( '' === trim( $streamed_text ) || ! $this->is_missing_output_error_message( $error_message ) ) {
+            return null;
+        }
+
+        return new StreamedTextPromptResult( $streamed_text );
+    }
+
+    /**
+     * Normalizes AI provider failures into popup-builder errors.
+     *
+     * @param WP_Error $error Provider error.
+     * @return WP_Error
+     */
+    private function normalize_ai_generation_error( WP_Error $error ): WP_Error {
+        if ( ! $this->is_missing_output_error_message( $error->get_error_message() ) ) {
+            return $error;
+        }
+
+        return $this->get_missing_output_error(
+            $error->get_error_message(),
+            $error->get_error_code(),
+            $error->get_error_data()
+        );
+    }
+
+    /**
+     * Converts thrown AI provider exceptions into popup-builder errors.
+     *
+     * @param \Throwable $error Provider exception.
+     * @return WP_Error
+     */
+    private function get_ai_generation_exception_error( \Throwable $error ): WP_Error {
+        $message = $error->getMessage();
+
+        if ( $this->is_missing_output_error_message( $message ) ) {
+            return $this->get_missing_output_error(
+                $message,
+                $error->getCode() ? (string) $error->getCode() : 'ai_client_exception',
+                array(
+                    'exception_class' => get_class( $error ),
+                )
+            );
+        }
+
+        return new WP_Error(
+            'fooconvert_ai_popup_builder_ai_client_exception',
+            sprintf(
+                /* translators: %s: provider exception message. */
+                __( 'The AI provider request failed before the popup builder received a response. Provider error: %s', 'fooconvert' ),
+                $message
+            ),
+            array(
+                'status'                 => 500,
+                'provider_error_message' => $message,
+                'exception_class'        => get_class( $error ),
+            )
+        );
+    }
+
+    /**
+     * Returns whether an AI provider message is a missing-output failure.
+     *
+     * @param string $message Provider message.
+     * @return bool
+     */
+    private function is_missing_output_error_message( string $message ): bool {
+        return 1 === preg_match( '/Unexpected\s+.+?\s+API response:\s+Missing the "(?:output|choices)" key\.?/i', $message );
+    }
+
+    /**
+     * Builds a clearer error for provider responses that fail before returning output.
+     *
+     * @param string $provider_message Original provider message.
+     * @param string $provider_code Original provider code.
+     * @param mixed  $provider_data Original provider error data.
+     * @return WP_Error
+     */
+    private function get_missing_output_error( string $provider_message, string $provider_code = '', $provider_data = array() ): WP_Error {
+        $provider = $this->extract_provider_name_from_missing_output_error( $provider_message );
+
+        return new WP_Error(
+            'fooconvert_ai_popup_builder_no_output',
+            sprintf(
+                /* translators: %s: original provider error message. */
+                __( 'The AI connector did not return any model output. This often happens when the connected provider account has no remaining credits or quota, or when the provider returns a failed API payload. Check the AI connector account, billing, and quota details, then try again. Original provider error: %s', 'fooconvert' ),
+                $provider_message
+            ),
+            array(
+                'status'                 => 502,
+                'provider'               => $provider,
+                'provider_error_code'    => $provider_code,
+                'provider_error_message' => $provider_message,
+                'provider_error_data'    => $provider_data,
+                'likely_causes'          => array(
+                    'provider_account_quota_or_credits_exhausted',
+                    'provider_api_failed_before_output',
+                ),
+            )
+        );
+    }
+
+    /**
+     * Extracts a provider label from a missing-output error message.
+     *
+     * @param string $message Provider message.
+     * @return string
+     */
+    private function extract_provider_name_from_missing_output_error( string $message ): string {
+        if ( 1 !== preg_match( '/Unexpected\s+(.+?)\s+API response:\s+Missing the "(?:output|choices)" key\.?/i', $message, $matches ) ) {
+            return '';
+        }
+
+        return sanitize_key( $matches[1] ?? '' );
     }
 
     /**
@@ -457,9 +655,9 @@ class ChatService {
      * @param bool                           $generate_images Whether image generation is available for this turn.
      * @param bool                           $force_image_generation Whether this turn should explicitly generate a new image.
      * @param array<string,mixed>            $settings AI request settings.
-     * @return \WP_AI_Client_Prompt_Builder
+     * @return \WP_AI_Client_Prompt_Builder|WP_Error
      */
-    private function build_prompt_from_settings( array $history, array $abilities, bool $generate_images, bool $force_image_generation, array $settings ): \WP_AI_Client_Prompt_Builder {
+    private function build_prompt_from_settings( array $history, array $abilities, bool $generate_images, bool $force_image_generation, array $settings ) {
         $prompt_function = 'wp_ai_client_prompt';
         $prompt          = $prompt_function();
         $prompt = $prompt->with_history( ...$history );
@@ -488,12 +686,15 @@ class ChatService {
      *
      * @param \WP_AI_Client_Prompt_Builder $prompt Prompt builder.
      * @param array<string,mixed>          $settings AI request settings.
-     * @return \WP_AI_Client_Prompt_Builder
+     * @return \WP_AI_Client_Prompt_Builder|WP_Error
      */
-    private function apply_prompt_request_settings( \WP_AI_Client_Prompt_Builder $prompt, array $settings ): \WP_AI_Client_Prompt_Builder {
+    private function apply_prompt_request_settings( \WP_AI_Client_Prompt_Builder $prompt, array $settings ) {
         $model = $this->sanitize_ai_model_name( $settings['override_model'] ?? '' );
-        if ( '' !== $model && ! $this->is_ai_param_disabled( $settings, 'model' ) && method_exists( $prompt, 'using_model_preference' ) ) {
-            $prompt = $prompt->using_model_preference( $model );
+        if ( '' !== $model && ! $this->is_ai_param_disabled( $settings, 'model' ) ) {
+            $prompt = Settings::apply_model_override( $prompt, $model );
+            if ( is_wp_error( $prompt ) ) {
+                return $prompt;
+            }
         }
 
         if ( $this->is_ai_param_disabled( $settings, 'timeout' ) || ! class_exists( RequestOptions::class ) || ! method_exists( $prompt, 'using_request_options' ) ) {
@@ -511,7 +712,7 @@ class ChatService {
     /**
      * Extracts an unsupported request parameter from a model error.
      *
-     * @param WP_Error $error Error response.
+     * @param WP_Error            $error Error response.
      * @return string
      */
     private function extract_unsupported_parameter_from_error( WP_Error $error ): string {
@@ -525,7 +726,9 @@ class ChatService {
 
         foreach ( $patterns as $pattern ) {
             if ( preg_match( $pattern, $message, $matches ) ) {
-                return $this->normalize_ai_param_name( $matches[1] ?? '' );
+                $param = $this->normalize_ai_param_name( $matches[1] ?? '' );
+
+                return Settings::is_required_capability_param( $param ) ? '' : $param;
             }
         }
 
@@ -689,6 +892,15 @@ class ChatService {
             );
         }
 
+        $parser_context = ResponseParser::get_json_response_error_context( $payload );
+        if ( '' !== $parser_context ) {
+            $message .= ' ' . sprintf(
+                /* translators: %s: JSON parser context detail. */
+                __( 'Parser context: %s', 'fooconvert' ),
+                $parser_context
+            );
+        }
+
         $preview = DebugResponseLog::get_response_preview( $payload, 320 );
         if ( '' !== $preview ) {
             $message .= ' ' . sprintf(
@@ -723,12 +935,15 @@ class ChatService {
         $latest_user_message = '';
         foreach ( array_reverse( $messages ) as $message ) {
             if ( 'user' === $message['role'] ) {
-                $latest_user_message = $message['content'];
+                $latest_user_message = isset( $message['content'] ) && is_scalar( $message['content'] )
+                    ? (string) $message['content']
+                    : '';
                 break;
             }
         }
 
-        $generated_background = ImageGenerator::generate_popup_background( $response['popup_draft'], $brand, $latest_user_message );
+        $background_instructions = self::extract_background_image_direction_from_message( $latest_user_message );
+        $generated_background    = ImageGenerator::generate_popup_background( $response['popup_draft'], $brand, $background_instructions );
         if ( is_wp_error( $generated_background ) || empty( $generated_background['image'] ) || ! is_array( $generated_background['image'] ) ) {
             return $response;
         }
@@ -748,6 +963,77 @@ class ChatService {
         );
 
         return $response;
+    }
+
+    /**
+     * Extracts visual background direction without forwarding the full popup brief.
+     *
+     * @param string $message Latest user message.
+     * @return string
+     */
+    private static function extract_background_image_direction_from_message( string $message ): string {
+        $message = sanitize_text_field( $message );
+        if ( '' === trim( $message ) ) {
+            return '';
+        }
+
+        $chunks = preg_split( '/(?:[.!?;]+|\R+)/', $message );
+        if ( ! is_array( $chunks ) ) {
+            return '';
+        }
+
+        $keywords = array(
+            'background',
+            'backdrop',
+            'image',
+            'photo',
+            'visual',
+            'scene',
+            'gradient',
+            'texture',
+            'pattern',
+            'color',
+            'colour',
+            'palette',
+            'brand',
+            'branded',
+            'tone',
+            'mood',
+            'light',
+            'dark',
+            'soft',
+            'calm',
+            'warm',
+            'cool',
+            'minimal',
+            'editorial',
+            'realistic',
+            'abstract',
+            'illustration',
+            'product',
+            'hero',
+        );
+
+        $directions = array();
+        foreach ( $chunks as $chunk ) {
+            $chunk = trim( sanitize_text_field( $chunk ) );
+            if ( '' === $chunk ) {
+                continue;
+            }
+
+            foreach ( $keywords as $keyword ) {
+                if ( preg_match( '/\b' . preg_quote( $keyword, '/' ) . '\b/i', $chunk ) ) {
+                    $directions[] = $chunk;
+                    break;
+                }
+            }
+        }
+
+        if ( empty( $directions ) ) {
+            return '';
+        }
+
+        return implode( '. ', array_slice( array_values( array_unique( $directions ) ), 0, 3 ) );
     }
 
     /**
@@ -801,4 +1087,87 @@ class ChatService {
         return $response;
     }
 
+}
+
+/**
+ * Minimal prompt-result adapter used when a streamed response has usable text but the provider parser fails.
+ */
+class StreamedTextPromptResult {
+
+    /**
+     * Streamed assistant text.
+     *
+     * @var string
+     */
+    private $text;
+
+    /**
+     * Result candidates.
+     *
+     * @var array<int,StreamedTextPromptCandidate>
+     */
+    private $candidates;
+
+    /**
+     * Constructor.
+     *
+     * @param string $text Streamed assistant text.
+     */
+    public function __construct( string $text ) {
+        $this->text       = $text;
+        $this->candidates = array( new StreamedTextPromptCandidate( $text ) );
+    }
+
+    /**
+     * Returns the generated candidates.
+     *
+     * @return array<int,StreamedTextPromptCandidate>
+     */
+    public function getCandidates(): array {
+        return $this->candidates;
+    }
+
+    /**
+     * Returns the assistant text.
+     *
+     * @return string
+     */
+    public function toText(): string {
+        return $this->text;
+    }
+}
+
+/**
+ * Minimal candidate adapter for streamed-text fallback results.
+ */
+class StreamedTextPromptCandidate {
+
+    /**
+     * Candidate message.
+     *
+     * @var object
+     */
+    private $message;
+
+    /**
+     * Constructor.
+     *
+     * @param string $text Streamed assistant text.
+     */
+    public function __construct( string $text ) {
+        $this->message = new \WordPress\AiClient\Messages\DTO\ModelMessage(
+            array(
+                new MessagePart( $text ),
+            )
+        );
+    }
+
+    /**
+     * Returns the candidate message.
+     *
+     * @return object
+     */
+    public function getMessage() {
+        return $this->message;
+    }
 }

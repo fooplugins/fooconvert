@@ -58,8 +58,12 @@ import {
 	normalizeLoadedPopupResponse,
 } from './initial-popup-support';
 import { isPlainObject } from './serializer-support';
+import { buildCleanBuilderUrl } from './navigation-support';
 import { normalizePopupType, serializeDraftToMarkup } from './serializer';
-import { streamChatRequest } from './stream-support';
+import {
+	appendReadableStreamDebugEvent,
+	streamChatRequest,
+} from './stream-support';
 import { config, debugTabAvailable, rootClass } from './config';
 import {
 	buildAiSettingsPayload,
@@ -691,7 +695,10 @@ const DebugResponseInspector = ( {
 				</CardHeader>
 				<CardBody>
 					<ReadOnlyTextField
-						label={ __( 'Streaming response chunks', 'fooconvert' ) }
+						label={ __(
+							'Streaming response chunks',
+							'fooconvert'
+						) }
 						value={
 							currentResponse ||
 							__(
@@ -986,6 +993,7 @@ export const App = () => {
 	const [ savedAiSettingsSnapshot, setSavedAiSettingsSnapshot ] =
 		useState( initialAiSettings );
 	const [ isSavingAiSettings, setSavingAiSettings ] = useState( false );
+	const [ testingAiModelType, setTestingAiModelType ] = useState( '' );
 	const [ isExtractingBrand, setExtractingBrand ] = useState( false );
 	const [ isSavingBrand, setSavingBrand ] = useState( false );
 	const [ contextModal, setContextModal ] = useState(
@@ -1091,6 +1099,9 @@ export const App = () => {
 			savedPopup?.postId &&
 			( savedPopup?.previewUrl || savedPopup?.editUrl )
 	);
+	const canStartNewChat = messages.some(
+		( message ) => message?.role === 'assistant'
+	);
 	const conversionRationale = Array.isArray( draft?.conversion_rationale )
 		? draft.conversion_rationale.filter( Boolean )
 		: [];
@@ -1138,7 +1149,7 @@ export const App = () => {
 					aiSettings?.selectedBlockNames,
 					blockCatalog
 				)
-		),
+			),
 		[ aiSettings?.selectedBlockNames, blockCatalog ]
 	);
 	const suggestionPrompts = useMemo(
@@ -1147,9 +1158,17 @@ export const App = () => {
 				draft,
 				selectedBlockNames: selectedBlockNameSet,
 				imageGenerationAvailable: aiImageGenerationAvailable,
+				suggestionLibrary: config?.suggestionLibrary,
+				starterPrompts: config?.starterPrompts,
 				limit: 5,
 			} ),
-		[ draft, selectedBlockNameSet, aiImageGenerationAvailable ]
+		[
+			draft,
+			selectedBlockNameSet,
+			aiImageGenerationAvailable,
+			config?.suggestionLibrary,
+			config?.starterPrompts,
+		]
 	);
 	const suggestionsHaveFollowUpContext = Boolean(
 		draft ||
@@ -1656,23 +1675,20 @@ export const App = () => {
 							'/fooconvert/v1/ai-popup-builder/chat-stream',
 						nonce: config?.restNonce,
 						payload: requestPayload,
-						onChunk: ( chunk ) => {
-							if ( typeof chunk !== 'string' || chunk.length === 0 ) {
-								return;
-							}
-
-							startTransition( () => {
-								setCurrentResponse(
-									( current ) => `${ current }${ chunk }`
-								);
-							} );
-						},
 						onEvent: ( event ) => {
 							if ( ! isPlainObject( event ) ) {
 								return;
 							}
 
 							streamStarted = true;
+							startTransition( () => {
+								setCurrentResponse( ( current ) =>
+									appendReadableStreamDebugEvent(
+										current,
+										event
+									)
+								);
+							} );
 
 							if ( event.event === 'assistant_delta' ) {
 								return;
@@ -1790,6 +1806,8 @@ export const App = () => {
 									nextResponseSettings.disabledParams,
 								disabledParamsText:
 									nextResponseSettings.disabledParamsText,
+								optimizeImageOutput:
+									nextResponseSettings.optimizeImageOutput,
 								timeoutDefault:
 									nextResponseSettings.timeoutDefault,
 								maxToolCallsDefault:
@@ -1810,6 +1828,8 @@ export const App = () => {
 									nextResponseSettings.disabledParams,
 								disabledParamsText:
 									nextResponseSettings.disabledParamsText,
+								optimizeImageOutput:
+									nextResponseSettings.optimizeImageOutput,
 								timeoutDefault:
 									nextResponseSettings.timeoutDefault,
 								maxToolCallsDefault:
@@ -1883,6 +1903,25 @@ export const App = () => {
 	const handleSubmit = async ( event ) => {
 		event.preventDefault();
 		await sendPrompt( input );
+	};
+
+	const handleStartNewChat = () => {
+		if ( typeof window === 'undefined' || ! window.location ) {
+			return;
+		}
+
+		const nextUrl = buildCleanBuilderUrl( window.location.href );
+
+		try {
+			if ( new URL( nextUrl ).href === window.location.href ) {
+				window.location.reload();
+				return;
+			}
+		} catch {
+			// Fall through to assigning the fallback builder URL.
+		}
+
+		window.location.assign( nextUrl );
 	};
 
 	const copyMarkup = async () => {
@@ -2054,6 +2093,61 @@ export const App = () => {
 			);
 		} finally {
 			setSavingAiSettings( false );
+		}
+	};
+
+	const testAiModel = async ( type ) => {
+		if ( ! aiSettings?.canManage ) {
+			return;
+		}
+
+		const model = 'image' === type ? currentImageModel : currentTextModel;
+		if ( ! model ) {
+			return;
+		}
+
+		setTestingAiModelType( type );
+		setError( '' );
+
+		try {
+			const response = await apiFetch( {
+				path:
+					config?.api?.testModelPath ||
+					'/fooconvert/v1/ai-popup-builder/settings/test-model',
+				method: 'POST',
+				data: {
+					type,
+					model,
+				},
+			} );
+
+			setStatusNotice( {
+				status: 'success',
+				message:
+					response?.message ||
+					sprintf(
+						/* translators: %s: AI model override value. */
+						__(
+							'Model test passed for "%s".',
+							'fooconvert'
+						),
+						model
+					),
+			} );
+		} catch ( exception ) {
+			setError(
+					exception?.message ||
+					sprintf(
+						/* translators: %s: AI model override value. */
+						__(
+							'Could not test "%s". Check that the connector is active and the model name is available.',
+							'fooconvert'
+						),
+						model
+					)
+			);
+		} finally {
+			setTestingAiModelType( '' );
 		}
 	};
 
@@ -2448,29 +2542,70 @@ export const App = () => {
 				</CardHeader>
 				<CardBody>
 					<div className={ `${ rootClass }__preview-stack` }>
-						<BrandPreviewList
-							rows={ [
-								{
-									label: __(
-										'Current Text Model',
-										'fooconvert'
-									),
-									value:
-										currentTextModel ||
-										__(
-											'Connector default',
+						<div className={ `${ rootClass }__model-test-list` }>
+							<div className={ `${ rootClass }__model-test-row` }>
+								<div className={ `${ rootClass }__model-test-summary` }>
+									<span>
+										{ __(
+											'Current Text Model',
 											'fooconvert'
-										),
-								},
-								{
-									label: __(
-										'Current Image Model',
+										) }
+									</span>
+									<strong>
+										{ currentTextModel ||
+											__(
+												'Connector default',
+												'fooconvert'
+											) }
+									</strong>
+								</div>
+								<Button
+									variant="secondary"
+									onClick={ () => testAiModel( 'text' ) }
+									disabled={
+										Boolean( testingAiModelType ) ||
+										! currentTextModel ||
+										! aiSettings?.canManage
+									}
+									aria-label={ __(
+										'Test current text model',
 										'fooconvert'
-									),
-									value: currentImageModelLabel,
-								},
-							] }
-						/>
+									) }
+								>
+									{ 'text' === testingAiModelType
+										? __( 'Testing…', 'fooconvert' )
+										: __( 'Test', 'fooconvert' ) }
+								</Button>
+							</div>
+							<div className={ `${ rootClass }__model-test-row` }>
+								<div className={ `${ rootClass }__model-test-summary` }>
+									<span>
+										{ __(
+											'Current Image Model',
+											'fooconvert'
+										) }
+									</span>
+									<strong>{ currentImageModelLabel }</strong>
+								</div>
+								<Button
+									variant="secondary"
+									onClick={ () => testAiModel( 'image' ) }
+									disabled={
+										Boolean( testingAiModelType ) ||
+										! currentImageModel ||
+										! aiSettings?.canManage
+									}
+									aria-label={ __(
+										'Test current image model',
+										'fooconvert'
+									) }
+								>
+									{ 'image' === testingAiModelType
+										? __( 'Testing…', 'fooconvert' )
+										: __( 'Test', 'fooconvert' ) }
+								</Button>
+							</div>
+						</div>
 						{ ! aiImageGenerationAvailable && (
 							<Notice status="info" isDismissible={ false }>
 								{ __(
@@ -2491,7 +2626,7 @@ export const App = () => {
 						updateAiSettings( { overrideModel: value } )
 					}
 					placeholder={ __(
-						'Optional custom text model name',
+						'provider/model-name',
 						'fooconvert'
 					) }
 					__nextHasNoMarginBottom
@@ -2504,7 +2639,7 @@ export const App = () => {
 						updateAiSettings( { overrideImageModel: value } )
 					}
 					placeholder={ __(
-						'Optional custom image model name',
+						'provider/model-name',
 						'fooconvert'
 					) }
 					__nextHasNoMarginBottom
@@ -2546,18 +2681,43 @@ export const App = () => {
 					__next40pxDefaultSize
 				/>
 				<div className={ `${ rootClass }__field-grid-span` }>
+					<CheckboxControl
+						label={ __(
+							'Optimize Generated Images',
+							'fooconvert'
+						) }
+						checked={ aiSettings?.optimizeImageOutput !== false }
+						onChange={ ( value ) =>
+							updateAiSettings( {
+								optimizeImageOutput: Boolean( value ),
+							} )
+						}
+						help={ __(
+							'Requests WebP output, compression, and opaque backgrounds for generated popup images. Disable this if your AI image provider rejects output_format, output_compression, or background.',
+							'fooconvert'
+						) }
+						__nextHasNoMarginBottom
+					/>
+				</div>
+				<div className={ `${ rootClass }__field-grid-span` }>
 					<TextareaControl
 						label={ __( 'Disabled Params', 'fooconvert' ) }
 						value={ aiSettings?.disabledParamsText || '' }
-						onChange={ ( value ) =>
+						onChange={ ( value ) => {
+							const disabledParams =
+								normalizeDisabledParams( value );
+
 							updateAiSettings( {
-								disabledParamsText: value,
-								disabledParams:
-									normalizeDisabledParams( value ),
-							} )
-						}
-						placeholder={ 'temperature\nresponse_format' }
-						help={ __( 'One parameter per line.', 'fooconvert' ) }
+								disabledParamsText:
+									disabledParams.join( '\n' ),
+								disabledParams,
+							} );
+						} }
+						placeholder={ 'temperature\noutput_compression' }
+						help={ __(
+							'One optional model/provider request parameter per line. Tools and response_format stay enabled.',
+							'fooconvert'
+						) }
 						rows={ 8 }
 						__nextHasNoMarginBottom
 						__next40pxDefaultSize
@@ -3149,6 +3309,36 @@ export const App = () => {
 			);
 		}
 
+		if ( 'image-background-prompt' === contextModal ) {
+			return (
+				<Modal
+					title={ __( 'Image Background Prompt', 'fooconvert' ) }
+					onRequestClose={ () => setContextModal( '' ) }
+					className={ `${ rootClass }__context-modal` }
+					shouldCloseOnClickOutside={ true }
+				>
+					<div className={ `${ rootClass }__stack` }>
+						<p className={ `${ rootClass }__muted-copy` }>
+							{ __(
+								'Deterministic prompt used when generating popup background images.',
+								'fooconvert'
+							) }
+						</p>
+						<ReadOnlyTextField
+							label={ __(
+								'Background image prompt',
+								'fooconvert'
+							) }
+							value={ String(
+								config?.imageBackgroundPrompt || ''
+							) }
+							rows={ 14 }
+						/>
+					</div>
+				</Modal>
+			);
+		}
+
 		if ( 'abilities' === contextModal ) {
 			return (
 				<Modal
@@ -3691,6 +3881,33 @@ export const App = () => {
 
 											<ContextSummaryCard
 												title={ __(
+													'Image Background Prompt',
+													'fooconvert'
+												) }
+												summary={ __(
+													'Deterministic prompt for generated popup backgrounds.',
+													'fooconvert'
+												) }
+												onOpen={ () =>
+													setContextModal(
+														'image-background-prompt'
+													)
+												}
+												preview={
+													<ContextCodePreview
+														content={ truncateText(
+															String(
+																config?.imageBackgroundPrompt ||
+																	''
+															),
+															140
+														) }
+													/>
+												}
+											/>
+
+											<ContextSummaryCard
+												title={ __(
 													'Abilities',
 													'fooconvert'
 												) }
@@ -3991,6 +4208,23 @@ export const App = () => {
 																			  ) }
 																	</Button>
 																</Fragment>
+															) }
+															{ canStartNewChat && (
+																<Button
+																	variant="secondary"
+																	type="button"
+																	onClick={
+																		handleStartNewChat
+																	}
+																	disabled={
+																		chatIsBusy
+																	}
+																>
+																	{ __(
+																		'Start New Chat',
+																		'fooconvert'
+																	) }
+																</Button>
 															) }
 															<Button
 																variant="primary"
@@ -4448,7 +4682,7 @@ export const App = () => {
 																						}
 																					>
 																						{ __(
-																							'Use In Popup',
+																							'Use as Background',
 																							'fooconvert'
 																						) }
 																					</Button>
@@ -4458,6 +4692,8 @@ export const App = () => {
 																							href={
 																								mediaItem.editUrl
 																							}
+																							target="_blank"
+																							rel="noopener noreferrer"
 																							icon={
 																								external
 																							}

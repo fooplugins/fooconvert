@@ -42,6 +42,16 @@ class ResponseParser {
             self::add_json_decode_attempt( $attempts, $object_payload, 'extracted_object' );
         }
 
+        foreach ( self::get_missing_object_closer_repairs( $payload ) as $repair ) {
+            self::add_json_decode_attempt( $attempts, $repair['payload'], $repair['repair_type'] );
+        }
+
+        if ( '' !== $object_payload ) {
+            foreach ( self::get_missing_object_closer_repairs( $object_payload ) as $repair ) {
+                self::add_json_decode_attempt( $attempts, $repair['payload'], $repair['repair_type'] );
+            }
+        }
+
         $completed_payload = self::complete_incomplete_json_object_payload( $payload );
         if ( '' !== $completed_payload ) {
             self::add_json_decode_attempt( $attempts, $completed_payload, 'completed_object' );
@@ -51,6 +61,10 @@ class ResponseParser {
             $completed_stripped_payload = self::complete_incomplete_json_object_payload( trim( $stripped_payload ) );
             if ( '' !== $completed_stripped_payload ) {
                 self::add_json_decode_attempt( $attempts, $completed_stripped_payload, 'completed_markdown_fence_object' );
+            }
+
+            foreach ( self::get_missing_object_closer_repairs( trim( $stripped_payload ) ) as $repair ) {
+                self::add_json_decode_attempt( $attempts, $repair['payload'], 'markdown_fence_' . $repair['repair_type'] );
             }
         }
 
@@ -66,6 +80,32 @@ class ResponseParser {
         }
 
         return $empty;
+    }
+
+    /**
+     * Returns a compact JSON parser diagnostic for retry prompts and debug logs.
+     *
+     * @param string $payload Raw model text.
+     * @return string
+     */
+    public static function get_json_response_error_context( string $payload ): string {
+        $payload = trim( $payload );
+
+        if ( '' === $payload ) {
+            return '';
+        }
+
+        $position = self::find_json_syntax_error_position( $payload );
+        if ( null === $position ) {
+            return '';
+        }
+
+        return sprintf(
+            /* translators: 1: character offset. 2: response snippet. */
+            __( 'Approximate JSON parser failure near character offset %1$d. Nearby response text: %2$s', 'fooconvert' ),
+            $position,
+            self::get_payload_context_snippet( $payload, $position )
+        );
     }
 
     /**
@@ -202,6 +242,15 @@ class ResponseParser {
             );
         }
 
+        $parser_context = self::get_json_response_error_context( $payload );
+        if ( '' !== $parser_context ) {
+            $message .= ' ' . sprintf(
+                /* translators: %s: JSON parser context detail. */
+                __( 'Parser context: %s', 'fooconvert' ),
+                $parser_context
+            );
+        }
+
         $message .= ' ' . $format_hint . ' ' . sprintf(
             /* translators: %s: comma-separated expected JSON keys. */
             __( 'Expected top-level keys: %s.', 'fooconvert' ),
@@ -226,6 +275,10 @@ class ResponseParser {
 
         if ( '' !== $problem_detail ) {
             $data['problem_detail'] = $problem_detail;
+        }
+
+        if ( '' !== $parser_context ) {
+            $data['parser_context'] = $parser_context;
         }
 
         $data['expected_top_level_keys'] = $expected_keys;
@@ -326,6 +379,149 @@ class ResponseParser {
             'payload'     => $payload,
             'repair_type' => $repair_type,
         );
+    }
+
+    /**
+     * Builds conservative repairs for objects that are missing one closer before
+     * the next nested block/property starts.
+     *
+     * @param string $payload Raw model text.
+     * @return array<int,array{payload:string,repair_type:string}>
+     */
+    private static function get_missing_object_closer_repairs( string $payload ): array {
+        $payload = trim( $payload );
+        if ( '' === $payload ) {
+            return array();
+        }
+
+        $repairs = array();
+
+        $property_repair = self::repair_missing_object_closer_before_property( $payload );
+        if ( '' !== $property_repair ) {
+            $repairs[] = array(
+                'payload'     => $property_repair,
+                'repair_type' => 'inserted_missing_property_object_closer',
+            );
+        }
+
+        $block_repair = self::repair_missing_object_closer_before_block( $payload );
+        if ( '' !== $block_repair ) {
+            $repairs[] = array(
+                'payload'     => $block_repair,
+                'repair_type' => 'inserted_missing_block_object_closer',
+            );
+        }
+
+        return $repairs;
+    }
+
+    /**
+     * Repairs a missing object closer before known block attribute sibling keys.
+     *
+     * @param string $payload Raw model text.
+     * @return string
+     */
+    private static function repair_missing_object_closer_before_property( string $payload ): string {
+        $sibling_keys = array(
+            'button',
+            'closeButton',
+            'code',
+            'content',
+            'digits',
+            'inputs',
+            'openButton',
+            'segment',
+        );
+        $pattern = '/,\s*"(' . implode( '|', array_map( 'preg_quote', $sibling_keys ) ) . ')"\s*:/';
+
+        return self::repair_missing_object_closer_at_pattern( $payload, $pattern );
+    }
+
+    /**
+     * Repairs a missing object closer before the next block object in a block array.
+     *
+     * @param string $payload Raw model text.
+     * @return string
+     */
+    private static function repair_missing_object_closer_before_block( string $payload ): string {
+        return self::repair_missing_object_closer_at_pattern( $payload, '/,\s*\{\s*"name"\s*:/' );
+    }
+
+    /**
+     * Inserts one object closer before matching offsets and accepts only valid JSON.
+     *
+     * @param string $payload Raw model text.
+     * @param string $pattern PCRE pattern where the match starts at the insertion point.
+     * @return string
+     */
+    private static function repair_missing_object_closer_at_pattern( string $payload, string $pattern ): string {
+        $match_count = preg_match_all( $pattern, $payload, $matches, PREG_OFFSET_CAPTURE );
+        if ( false === $match_count || $match_count < 1 ) {
+            return '';
+        }
+
+        foreach ( $matches[0] as $match ) {
+            $offset = isset( $match[1] ) ? (int) $match[1] : -1;
+            if ( $offset < 0 ) {
+                continue;
+            }
+
+            $candidate = substr( $payload, 0, $offset ) . '}' . substr( $payload, $offset );
+            $decoded   = json_decode( $candidate, true );
+
+            if ( is_array( $decoded ) && JSON_ERROR_NONE === json_last_error() && self::is_repaired_payload_shape_reasonable( $decoded ) ) {
+                return $candidate;
+            }
+        }
+
+        return '';
+    }
+
+    /**
+     * Rejects repairs that parse but move block attributes onto the block object.
+     *
+     * @param array<string,mixed> $decoded Decoded candidate payload.
+     * @return bool
+     */
+    private static function is_repaired_payload_shape_reasonable( array $decoded ): bool {
+        $draft = is_array( $decoded['popup_draft'] ?? null ) ? $decoded['popup_draft'] : $decoded;
+        $blocks = is_array( $draft['content_blocks'] ?? null ) ? $draft['content_blocks'] : array();
+
+        return self::are_repaired_blocks_shape_reasonable( $blocks );
+    }
+
+    /**
+     * Checks repaired content blocks for unexpected top-level keys.
+     *
+     * @param array<int,mixed> $blocks Content blocks.
+     * @return bool
+     */
+    private static function are_repaired_blocks_shape_reasonable( array $blocks ): bool {
+        $allowed_block_keys = array(
+            'attributes'   => true,
+            'inner_blocks' => true,
+            'name'         => true,
+        );
+
+        foreach ( $blocks as $block ) {
+            if ( ! is_array( $block ) ) {
+                continue;
+            }
+
+            if ( array_key_exists( 'name', $block ) ) {
+                foreach ( array_keys( $block ) as $key ) {
+                    if ( ! isset( $allowed_block_keys[ $key ] ) ) {
+                        return false;
+                    }
+                }
+            }
+
+            if ( is_array( $block['inner_blocks'] ?? null ) && ! self::are_repaired_blocks_shape_reasonable( $block['inner_blocks'] ) ) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -463,6 +659,332 @@ class ResponseParser {
         }
 
         return $candidate . implode( '', array_reverse( $stack ) );
+    }
+
+    /**
+     * Finds an approximate byte offset for the first JSON syntax issue.
+     *
+     * @param string $payload Raw model text.
+     * @return int|null
+     */
+    private static function find_json_syntax_error_position( string $payload ): ?int {
+        $index = 0;
+        $error = self::parse_json_value_for_position( $payload, $index );
+        if ( null !== $error ) {
+            return $error;
+        }
+
+        self::skip_json_whitespace( $payload, $index );
+
+        return $index < strlen( $payload ) ? $index : null;
+    }
+
+    /**
+     * Parses a JSON value only far enough to locate syntax failures.
+     *
+     * @param string $json JSON text.
+     * @param int    $index Current byte offset.
+     * @return int|null Error offset, or null when this value parses.
+     */
+    private static function parse_json_value_for_position( string $json, int &$index ): ?int {
+        self::skip_json_whitespace( $json, $index );
+
+        $length = strlen( $json );
+        if ( $index >= $length ) {
+            return $index;
+        }
+
+        $char = $json[ $index ];
+
+        if ( '{' === $char ) {
+            return self::parse_json_object_for_position( $json, $index );
+        }
+
+        if ( '[' === $char ) {
+            return self::parse_json_array_for_position( $json, $index );
+        }
+
+        if ( '"' === $char ) {
+            return self::parse_json_string_for_position( $json, $index );
+        }
+
+        if ( '-' === $char || ( $char >= '0' && $char <= '9' ) ) {
+            return self::parse_json_number_for_position( $json, $index );
+        }
+
+        foreach ( array( 'true', 'false', 'null' ) as $literal ) {
+            if ( 0 === substr_compare( $json, $literal, $index, strlen( $literal ) ) ) {
+                $index += strlen( $literal );
+                return null;
+            }
+        }
+
+        return $index;
+    }
+
+    /**
+     * Parses a JSON object only far enough to locate syntax failures.
+     *
+     * @param string $json JSON text.
+     * @param int    $index Current byte offset.
+     * @return int|null Error offset, or null when this object parses.
+     */
+    private static function parse_json_object_for_position( string $json, int &$index ): ?int {
+        $length = strlen( $json );
+        $index++;
+        self::skip_json_whitespace( $json, $index );
+
+        if ( $index < $length && '}' === $json[ $index ] ) {
+            $index++;
+            return null;
+        }
+
+        while ( $index < $length ) {
+            if ( '"' !== $json[ $index ] ) {
+                return $index;
+            }
+
+            $error = self::parse_json_string_for_position( $json, $index );
+            if ( null !== $error ) {
+                return $error;
+            }
+
+            self::skip_json_whitespace( $json, $index );
+            if ( $index >= $length || ':' !== $json[ $index ] ) {
+                return $index;
+            }
+
+            $index++;
+            $error = self::parse_json_value_for_position( $json, $index );
+            if ( null !== $error ) {
+                return $error;
+            }
+
+            self::skip_json_whitespace( $json, $index );
+            if ( $index >= $length ) {
+                return $index;
+            }
+
+            if ( '}' === $json[ $index ] ) {
+                $index++;
+                return null;
+            }
+
+            if ( ',' !== $json[ $index ] ) {
+                return $index;
+            }
+
+            $index++;
+            self::skip_json_whitespace( $json, $index );
+        }
+
+        return $index;
+    }
+
+    /**
+     * Parses a JSON array only far enough to locate syntax failures.
+     *
+     * @param string $json JSON text.
+     * @param int    $index Current byte offset.
+     * @return int|null Error offset, or null when this array parses.
+     */
+    private static function parse_json_array_for_position( string $json, int &$index ): ?int {
+        $length = strlen( $json );
+        $index++;
+        self::skip_json_whitespace( $json, $index );
+
+        if ( $index < $length && ']' === $json[ $index ] ) {
+            $index++;
+            return null;
+        }
+
+        while ( $index < $length ) {
+            $error = self::parse_json_value_for_position( $json, $index );
+            if ( null !== $error ) {
+                return $error;
+            }
+
+            self::skip_json_whitespace( $json, $index );
+            if ( $index >= $length ) {
+                return $index;
+            }
+
+            if ( ']' === $json[ $index ] ) {
+                $index++;
+                return null;
+            }
+
+            if ( ',' !== $json[ $index ] ) {
+                return $index;
+            }
+
+            $index++;
+            self::skip_json_whitespace( $json, $index );
+        }
+
+        return $index;
+    }
+
+    /**
+     * Parses a JSON string only far enough to locate syntax failures.
+     *
+     * @param string $json JSON text.
+     * @param int    $index Current byte offset.
+     * @return int|null Error offset, or null when this string parses.
+     */
+    private static function parse_json_string_for_position( string $json, int &$index ): ?int {
+        $length = strlen( $json );
+        $index++;
+
+        while ( $index < $length ) {
+            $char = $json[ $index ];
+
+            if ( '"' === $char ) {
+                $index++;
+                return null;
+            }
+
+            if ( '\\' !== $char ) {
+                if ( ord( $char ) < 32 ) {
+                    return $index;
+                }
+
+                $index++;
+                continue;
+            }
+
+            $index++;
+            if ( $index >= $length ) {
+                return $index;
+            }
+
+            $escaped = $json[ $index ];
+            if ( false === strpos( '"\\/bfnrtu', $escaped ) ) {
+                return $index;
+            }
+
+            if ( 'u' === $escaped ) {
+                for ( $offset = 1; $offset <= 4; $offset++ ) {
+                    if ( $index + $offset >= $length || ! ctype_xdigit( $json[ $index + $offset ] ) ) {
+                        return min( $length, $index + $offset );
+                    }
+                }
+
+                $index += 5;
+                continue;
+            }
+
+            $index++;
+        }
+
+        return $index;
+    }
+
+    /**
+     * Parses a JSON number only far enough to locate syntax failures.
+     *
+     * @param string $json JSON text.
+     * @param int    $index Current byte offset.
+     * @return int|null Error offset, or null when this number parses.
+     */
+    private static function parse_json_number_for_position( string $json, int &$index ): ?int {
+        $length = strlen( $json );
+
+        if ( $index < $length && '-' === $json[ $index ] ) {
+            $index++;
+        }
+
+        if ( $index >= $length ) {
+            return $index;
+        }
+
+        if ( '0' === $json[ $index ] ) {
+            $index++;
+        } elseif ( $json[ $index ] >= '1' && $json[ $index ] <= '9' ) {
+            while ( $index < $length && $json[ $index ] >= '0' && $json[ $index ] <= '9' ) {
+                $index++;
+            }
+        } else {
+            return $index;
+        }
+
+        if ( $index < $length && '.' === $json[ $index ] ) {
+            $index++;
+            if ( $index >= $length || $json[ $index ] < '0' || $json[ $index ] > '9' ) {
+                return $index;
+            }
+
+            while ( $index < $length && $json[ $index ] >= '0' && $json[ $index ] <= '9' ) {
+                $index++;
+            }
+        }
+
+        if ( $index < $length && ( 'e' === $json[ $index ] || 'E' === $json[ $index ] ) ) {
+            $index++;
+            if ( $index < $length && ( '+' === $json[ $index ] || '-' === $json[ $index ] ) ) {
+                $index++;
+            }
+
+            if ( $index >= $length || $json[ $index ] < '0' || $json[ $index ] > '9' ) {
+                return $index;
+            }
+
+            while ( $index < $length && $json[ $index ] >= '0' && $json[ $index ] <= '9' ) {
+                $index++;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Advances over JSON whitespace.
+     *
+     * @param string $json JSON text.
+     * @param int    $index Current byte offset.
+     * @return void
+     */
+    private static function skip_json_whitespace( string $json, int &$index ): void {
+        $length = strlen( $json );
+
+        while ( $index < $length ) {
+            $char = $json[ $index ];
+            if ( ' ' !== $char && "\n" !== $char && "\r" !== $char && "\t" !== $char ) {
+                return;
+            }
+
+            $index++;
+        }
+    }
+
+    /**
+     * Builds a compact response snippet around a byte offset.
+     *
+     * @param string $payload Raw model text.
+     * @param int    $position Byte offset.
+     * @return string
+     */
+    private static function get_payload_context_snippet( string $payload, int $position ): string {
+        $radius = 90;
+        $length = strlen( $payload );
+        $start  = max( 0, $position - $radius );
+        $end    = min( $length, $position + $radius );
+        $snippet = substr( $payload, $start, $end - $start );
+        $snippet = preg_replace( '/\s+/', ' ', $snippet );
+
+        if ( ! is_string( $snippet ) ) {
+            $snippet = '';
+        }
+
+        if ( $start > 0 ) {
+            $snippet = '...' . $snippet;
+        }
+
+        if ( $end < $length ) {
+            $snippet .= '...';
+        }
+
+        return $snippet;
     }
 
     /**

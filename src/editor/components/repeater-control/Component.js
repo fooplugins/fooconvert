@@ -1,6 +1,5 @@
 import { BaseControl, Button } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import { plus } from "@wordpress/icons";
 import classNames from "classnames";
 import { isArray } from "@steveush/utils";
 
@@ -30,6 +29,8 @@ const rootClass = 'fc--repeater-control';
  * @typedef RepeaterControlProps
  * @property {T[]} items
  * @property {RepeaterControlItemRenderer<T>} itemRenderer
+ * @property {string} [label]
+ * @property {string} [help]
  * @property {string} [className]
  * @property {( items: T[] ) => void} onChange
  * @property {() => T} onRequestNewItem
@@ -83,14 +84,31 @@ const RepeaterControl = ( {
     return (
         <BaseControl
             className={ classNames( rootClass, className, { 'is-empty': isEmpty } ) }
-            help={ help }
             __nextHasNoMarginBottom
         >
-            { label && (
-                <BaseControl.VisualLabel className={ `${ rootClass }__label` }>
-                    { label }
-                </BaseControl.VisualLabel>
-            ) }
+            <div className={ `${ rootClass }__header` }>
+                <div className={ `${ rootClass }__title-row` }>
+                    { label && (
+                        <BaseControl.VisualLabel className={ `${ rootClass }__label` }>
+                            { label }
+                        </BaseControl.VisualLabel>
+                    ) }
+                    <Button
+                        className={ `${ rootClass }__add-button` }
+                        variant="secondary"
+                        size="small"
+                        onClick={ addNewItem }
+                        label={ addItemLabel }
+                        title={ addItemLabel }
+                        aria-label={ addItemLabel }
+                    >
+                        { __( 'Add', 'fooconvert' ) }
+                    </Button>
+                </div>
+                { help && (
+                    <p className={ `${ rootClass }__help` }>{ help }</p>
+                ) }
+            </div>
             <div className={ `${ rootClass }__container` }>
                 <div className={ `${ rootClass }__items` }>
                     { isEmpty && (
@@ -109,17 +127,6 @@ const RepeaterControl = ( {
                             onRequestRemove: () => onRequestRemove( index )
                         } );
                     } ) }
-                </div>
-                <div className={ `${ rootClass }__controls` }>
-                    <Button
-                        className={ `${ rootClass }__add-button` }
-                        variant="secondary"
-                        onClick={ addNewItem }
-                        icon={ plus }
-                        label={ addItemLabel }
-                        title={ addItemLabel }
-                        aria-label={ addItemLabel }
-                    />
                 </div>
             </div>
         </BaseControl>

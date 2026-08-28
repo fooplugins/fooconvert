@@ -1,11 +1,20 @@
 import { FormTokenField } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { useEntityRecords } from "@wordpress/core-data";
-import { useCallback, useEffect, useMemo, useState } from "@wordpress/element";
-import { isNumber, isPlainObject, isString } from "@steveush/utils";
+import { useState } from "@wordpress/element";
+import { isString } from "@steveush/utils";
 
 import "./Component.scss";
-import { createEntityRecordToken, parseEntityRecordToken, stringifyEntityRecordToken } from "./utils";
+import {
+    createEntityRecordToken,
+    getRelativeSlug,
+    makeSearchArgs,
+    makeSelectedRecordArgs,
+    makeSlugSearchArgs,
+    parseEntityRecordToken,
+    stringifyEntityRecordSuggestion,
+    stringifyEntityRecordToken
+} from "./utils";
 import classnames from "classnames";
 import { Icon, border } from "@wordpress/icons";
 import useDebounce from "../../hooks/useDebounce";
@@ -17,9 +26,12 @@ import useDebounce from "../../hooks/useDebounce";
  * @returns {EntityRecordToken[]}
  */
 const jsonToTokenReducer = ( tokens, json ) => {
+    if ( typeof json === 'object' ) {
+        json = json?.value;
+    }
     const token = parseEntityRecordToken( json );
     if ( token !== null ) {
-        tokens.push( token );
+        tokens.push( { id: token.id, label: token.label } );
     }
     return tokens;
 };
@@ -38,17 +50,27 @@ const tokenToJsonReducer = ( strings, token ) => {
     return strings;
 };
 
-const searchReducer = ( strings, token, search ) => {
-    if ( isString( search, true ) ) {
-        const match = token?.label?.toLocaleLowerCase()?.includes( search.toLocaleLowerCase() ) ?? false;
-        if ( match ) {
-            const json = stringifyEntityRecordToken( token );
-            if ( json !== null ) {
-                strings.push( json );
-            }
-        }
+const recordToSuggestionReducer = ( strings, record, kind, name, search ) => {
+    const token = createEntityRecordToken( kind, name, record );
+    const suggestion = stringifyEntityRecordSuggestion( token, search );
+    if ( suggestion !== null ) {
+        strings.push( suggestion );
     }
     return strings;
+};
+
+const mergeRecords = ( ...recordSets ) => {
+    const records = new Map();
+    recordSets.forEach( recordSet => {
+        if ( Array.isArray( recordSet ) ) {
+            recordSet.forEach( record => {
+                if ( record?.id !== undefined && !records.has( record.id ) ) {
+                    records.set( record.id, record );
+                }
+            } );
+        }
+    } );
+    return Array.from( records.values() );
 };
 
 /**
@@ -72,17 +94,6 @@ const renderItem = ( { item } ) => {
     );
 };
 
-const makeSearchArgs = ( queryArgs, search, minChars, perPage ) => {
-    const args = isPlainObject( queryArgs ) ? { ...queryArgs } : {};
-    if ( isString( search ) && search.length >= minChars ) {
-        args.search = search;
-    }
-    if ( isNumber( perPage ) ) {
-        args.per_page = perPage;
-    }
-    return args;
-};
-
 const rootClass = 'fc--entity-record-control';
 
 /**
@@ -95,6 +106,8 @@ const rootClass = 'fc--entity-record-control';
  * @param {string} [placeholder] - Optional. The placeholder text for the component. Defaults to an empty string.
  * @param {number} [minSearchChars] - Optional. The minimum number of characters to be entered before a search query is performed. Defaults to `2`.
  * @param {number} [maxSuggestions] - Optional. The maximum number of suggestions to return per query. Defaults to `5`.
+ * @param {boolean} [searchBySlug] - Optional. Also query the entity's exact slug. Defaults to `false`.
+ * @param {boolean} [showRelativeSlug] - Optional. Show the relative permalink below selected record titles. Defaults to `false`.
  * @param {string} [emptyResult]
  * @param {boolean} [__next40pxDefaultSize]
  * @param {string} [className] - Optional. A space delimited string of class names to add to the component.
@@ -109,6 +122,8 @@ const EntityRecordControl = ( {
                                   onChange,
                                   minSearchChars = 2,
                                   maxSuggestions = 5,
+                                  searchBySlug = false,
+                                  showRelativeSlug = false,
                                   emptyResult = __( 'No results found', 'fooconvert' ),
                                   __next40pxDefaultSize = true,
                                   className
@@ -116,7 +131,26 @@ const EntityRecordControl = ( {
 
     const [ search, setSearch ] = useState( '' );
 
-    const value = tokens.reduce( tokenToJsonReducer, [] );
+    const serializedValue = tokens.reduce( tokenToJsonReducer, [] );
+    const selectedIds = tokens.map( token => token?.id ).filter( id => id !== undefined );
+    const selectedRecordArgs = makeSelectedRecordArgs( queryArgs, selectedIds );
+    const selectedRecordQuery = useEntityRecords( kind, name, selectedRecordArgs, {
+        enabled: showRelativeSlug === true && selectedIds.length > 0
+    } );
+    const relativeSlugs = new Map();
+    if ( Array.isArray( selectedRecordQuery.records ) ) {
+        selectedRecordQuery.records.forEach( record => {
+            const relativeSlug = getRelativeSlug( record );
+            if ( relativeSlug !== '' ) {
+                relativeSlugs.set( record.id, relativeSlug );
+            }
+        } );
+    }
+    const value = serializedValue.map( json => {
+        const token = parseEntityRecordToken( json );
+        const relativeSlug = relativeSlugs.get( token?.id );
+        return relativeSlug ? { value: json, title: relativeSlug } : json;
+    } );
 
     const tokensChanged = tokens => {
         onChange( tokens.reduce( jsonToTokenReducer, [] ) );
@@ -131,16 +165,27 @@ const EntityRecordControl = ( {
 
     let suggestions = [];
     const searchArgs = makeSearchArgs( queryArgs, search, minSearchChars, maxSuggestions );
-    const options = { enabled: isString( searchArgs?.search ) };
-    const query = useEntityRecords( kind, name, searchArgs, options );
-    if ( query.hasResolved && Array.isArray( query.records ) ) {
-        suggestions = query.records.reduce( ( acc, record ) => {
-            const token = createEntityRecordToken( kind, name, record );
-            return searchReducer( acc, token, searchArgs?.search );
-        }, [] );
+    const searchOptions = { enabled: isString( searchArgs?.search ) };
+    const searchQuery = useEntityRecords( kind, name, searchArgs, searchOptions );
+
+    const slugSearchArgs = makeSlugSearchArgs( queryArgs, search, minSearchChars, maxSuggestions );
+    const slugSearchOptions = {
+        enabled: searchBySlug === true && Array.isArray( slugSearchArgs?.slug )
+    };
+    const slugSearchQuery = useEntityRecords( kind, name, slugSearchArgs, slugSearchOptions );
+
+    const hasResolved = searchQuery.hasResolved
+        && ( !slugSearchOptions.enabled || slugSearchQuery.hasResolved );
+    if ( hasResolved ) {
+        const records = mergeRecords( slugSearchQuery.records, searchQuery.records );
+        suggestions = records.reduce(
+            ( acc, record ) => recordToSuggestionReducer( acc, record, kind, name, search ),
+            []
+        );
     }
-    const isResolving = query.isResolving;
-    const noResults = options.enabled && query.hasResolved && suggestions.length === 0;
+    const isResolving = searchQuery.isResolving
+        || ( slugSearchOptions.enabled && slugSearchQuery.isResolving );
+    const noResults = searchOptions.enabled && hasResolved && suggestions.length === 0;
 
     return (
         <div className={ classnames( rootClass, className, {

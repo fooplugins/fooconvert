@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
 import {
+	appendReadableStreamDebugEvent,
 	buildRestApiUrl,
 	createEventStreamParser,
 	streamChatRequest,
@@ -64,6 +65,51 @@ describe( 'AI popup builder stream support', () => {
 				event: 'note',
 				data: 'first line\nsecond line',
 			} )
+		);
+	} );
+
+	it( 'formats stream events into a readable debug transcript', () => {
+		let transcript = '';
+
+		transcript = appendReadableStreamDebugEvent( transcript, {
+			event: 'activity',
+			data: {
+				type: 'status',
+				label: 'Preparing popup context',
+				summary: 'Packing context.',
+			},
+		} );
+		transcript = appendReadableStreamDebugEvent( transcript, {
+			event: 'assistant_delta',
+			data: {
+				content: 'Hel',
+			},
+		} );
+		transcript = appendReadableStreamDebugEvent( transcript, {
+			event: 'assistant_delta',
+			data: {
+				content: 'lo',
+			},
+		} );
+		transcript = appendReadableStreamDebugEvent( transcript, {
+			event: 'activity',
+			data: {
+				type: 'tool_call',
+				label: 'generate_popup',
+				summary: 'Creating a popup draft.',
+			},
+		} );
+
+		expect( transcript ).toBe(
+			'event: activity\n' +
+				'type: status\n' +
+				'label: Preparing popup context\n' +
+				'summary: Packing context.\n\n' +
+				'Hello\n\n' +
+				'event: activity\n' +
+				'type: tool_call\n' +
+				'label: generate_popup\n' +
+				'summary: Creating a popup draft.\n\n'
 		);
 	} );
 

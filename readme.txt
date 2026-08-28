@@ -1,6 +1,6 @@
-=== FooConvert - Popup Builder for Block Editor ===
+=== FooConvert - AI Popup Builder for Flyouts, Overlays & Bars ===
 Contributors: fooplugins, bradvin, steveush
-Tags: flyout, popups, popup, announcement-bar, promo-bar
+Tags: ai-popup, popup-builder, popups, flyout, announcement-bar
 Requires at least: 6.5
 Requires PHP: 7.4
 Tested up to: 7.1
@@ -8,12 +8,16 @@ Stable tag: 2.1.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Build popups, flyouts, and announcement bars in the WordPress block editor. Free popup templates, AI drafts, targeting rules, and lead capture.
+Use AI to build popups, flyouts, and announcement bars that match your brand. Free popup templates, triggers, targeting rules, and lead capture.
 
 == Description ==
 
-FooConvert lets you create bars, flyouts, and overlay popups directly in the WordPress block editor.
-It includes free templates, built-in popup blocks, display rules, open triggers, lead capture, popup analytics, styling controls, and AI-assisted campaign drafts for building campaigns without leaving wp-admin.
+FooConvert lets you build stunning popups using natural language with our AI Popup Builder.
+It uses your brand colors and styling as context, so popups match your website look and feel.
+Alternatively, you can create bars, flyouts, and overlay popups from one of our templates. Or from scratch.
+Don't like the templates? Ask AI to edit it to your liking.
+All popups are block-based and you edit them directly in the WordPress block editor.
+FooConvert also includes built-in popup blocks, display rules, open triggers, lead capture, popup analytics and styling controls.
 
 [Read the FooConvert documentation](https://fooplugins.com/documentation/fooconvert/)
 
@@ -21,16 +25,16 @@ It includes free templates, built-in popup blocks, display rules, open triggers,
 
 = What FooConvert Includes =
 
-- Create bars, flyouts, and overlay popups with the block editor
-- AI Popup Builder and Brand Context tools for WordPress 7+ sites with a configured WordPress AI connector
-- 15 bundled popup templates
-- Sign Up, Countdown, and Coupon blocks
-- Support for WordPress core blocks, embeds, and shortcodes inside popup content
-- Display rules for locations, exclusions, and user targeting
-- Triggers for page load, timers, scroll depth, exit intent, and element interactions
-- Leads capture with CSV export
-- Popup stats with daily activity charts
-- Google Fonts support and popup styling controls
+- Create bars, flyouts, and overlay popups with the block editor.
+- AI Popup Builder and Brand Context tools for WordPress 7+ sites.
+- 15 bundled popup templates.
+- Sign Up, Countdown, and Coupon blocks.
+- Support for WordPress core blocks, embeds, and shortcodes inside popup content.
+- Display rules for locations, exclusions, and user targeting.
+- Triggers for page load, timers, scroll depth, exit intent, and element interactions.
+- Leads capture with CSV export.
+- Popup stats with daily activity charts.
+- Google Fonts support and popup styling controls.
 
 = Popup Types =
 
@@ -40,16 +44,25 @@ It includes free templates, built-in popup blocks, display rules, open triggers,
 
 = AI Popup Builder =
 
-Start with a simple prompt and let FooConvert create an editable popup draft for you. It can help with campaign ideas, copy, layout, images, and brand fit, so you can launch faster without starting from a blank canvas.
+Start with a simple prompt and let FooConvert's AI Popup Builder create a high converting popup that matches your website brand.
+It can help with campaign ideas, copy, layout, images, and brand fit, so you can launch faster without starting from a blank canvas.
 The AI tools require WordPress 7 or newer and a configured WordPress AI connector.
 
 - Create bars, flyouts, and overlays from natural-language prompts.
-- Use starter prompts for common campaigns like discounts, free shipping, newsletters, and launch offers.
-- Save generated campaigns as draft popups and keep editing them in the block editor.
-- Match popup colors, fonts, spacing, and button styles to your brand.
-- Reuse saved Brand Context across generated campaigns.
-- Generate or reuse matching popup images and backgrounds when image generation is enabled.
-- Preview the popup and review the conversion strategy before publishing.
+- Use one of our starter prompts for common campaigns to get your going faster.
+- Edit existing popups using natural language to save time.
+- Match popup colors, fonts, spacing, and button styles to your website brand.
+- Reuse your Brand Context across all your popups.
+- Generate background images for your popups.
+- Built in conversion playbook to help you create high converting popups.
+
+= AI Connector Testing =
+
+We have successfully generated popups using these WordPress AI connector provider and model combinations:
+
+- OpenAI: `gpt5.5`
+- Anthropic: `opus4.7`
+- Google: `gemini-3.5-flash`
 
 = Building Popup Content =
 
@@ -252,18 +265,62 @@ No, FooConvert is optimized for performance and has minimal impact on your websi
 
 == Screenshots ==
 
-1. Popup Editor
-2. FooConvert Dashboard
-3. Stats
-4. FooConvert Settings
-5. Template Selector
-6. Editor Settings
+1. Popup Editor - Editing an overlay popup
+2. Popup Template Selector
+3. AI Popup Builder
+4. Popup Editor - Editing a flyout
+5. AI Popup Builder - Context
+6. Popup Editor - Editing a bar
+7. FooConvert Dashboard
+8. Popup Stats Page
 
 == Repository ==
 
 The source code for this plugin is available publicly on GitHub [here](https://github.com/fooplugins/fooconvert).
 
 == Changelog ==
+
+= 2.1.8 =
+* Date Updated : 27 August 2026
+* Updated : Bundled Freemius SDK to v2.13.4.
+* Updated : Documented the AI connector and model combinations tested with the AI Popup Builder.
+* Fixed : Page and post display rule search now matches titles or exact slugs and includes drafts.
+* Updated : Improved the display rules modal with full-width selectors, compact add actions, clearer help text placement, better-aligned remove actions, and relative permalink paths for selected content.
+
+= 2.1.7 =
+* Date Updated : 30 June 2026
+* Fixed : Popup open and close handling now safely handles missing trigger metadata, preventing a frontend error when a popup closes without open data.
+
+= 2.1.6 =
+* Date Updated : 24 May 2026
+* Added : AI Popup Builder settings now include Test actions for current text and image model overrides.
+* Updated : Updated the bundled WP AI Client streaming adapter package to 1.0.0.
+* Updated : AI Popup Builder current model detection now matches the selected blocks, schema, tools, and disabled optional parameters used by real generation requests.
+* Fixed : AI Popup Builder now forces configured text and image model overrides instead of treating them as fallback preferences.
+* Fixed : AI Popup Builder now keeps required schema and tool-calling parameters enabled while still allowing unsupported optional parameters to be disabled.
+* Fixed : AI Popup Builder now sends multi-tool responses as provider-compatible messages for OpenAI-compatible chat providers.
+* Fixed : AI Popup Builder no longer accepts shorthand popup draft responses that bypass the required response contract.
+
+= 2.1.5 =
+* Date Updated : 19 May 2026
+* Updated : Popup preview notices now include a refresh action and an Edit Popup link.
+* Fixed : AI Popup Builder now shows a clearer AI connector message when no model output is returned, including likely exhausted credits or quota details.
+* Fixed : AI Popup Builder now retries OpenRouter connector requests when optional JSON schema or tool metadata prevents model selection.
+* Fixed : AI Popup Builder now recovers from OpenRouter chat responses that fail before returning choices.
+* Fixed : AI Popup Builder background image generation now avoids popup UI mockups, rejects code-like prompt responses, and keeps raw image prompts out of media attachment descriptions.
+* Updated : AI Popup Builder generated media can now be applied directly as the popup background image with cover sizing.
+* Updated : AI Popup Builder generated media edit links now open in a new browser tab.
+* Added : AI Popup Builder now requests optimized opaque WebP background images with compression by default, with a setting to disable those image output parameters for providers that reject them.
+
+= 2.1.4 =
+* Date Updated : 19 May 2026
+* Fixed : Brand Context section Save buttons now persist edits for overview, palette, typography, and controls.
+* Fixed : AI Popup Builder drafts now prefer generated background images and gradient backgrounds instead of reusing template background images.
+
+= 2.1.3 =
+* Date Updated : 19 May 2026
+* Fixed : Improved AI Popup Builder recovery for malformed nested JSON responses from AI models.
+* Updated : Added parser context to invalid JSON retries and debug errors so malformed AI responses are easier to correct.
 
 = 2.1.2 =
 * Date Updated : 18 May 2026

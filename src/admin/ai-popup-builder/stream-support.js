@@ -32,6 +32,85 @@ const parseEventData = ( rawData ) => {
 	}
 };
 
+const stringifyDebugField = ( value ) => {
+	if ( typeof value === 'string' ) {
+		return value.trim();
+	}
+
+	if ( typeof value === 'number' || typeof value === 'boolean' ) {
+		return String( value );
+	}
+
+	return '';
+};
+
+const appendDebugBlock = ( currentValue, block ) => {
+	const current = typeof currentValue === 'string' ? currentValue : '';
+
+	if ( block.length === 0 ) {
+		return current;
+	}
+
+	let separator = '';
+
+	if ( current.length > 0 && ! current.endsWith( '\n\n' ) ) {
+		separator = current.endsWith( '\n' ) ? '\n' : '\n\n';
+	}
+
+	return `${ current }${ separator }${ block }\n\n`;
+};
+
+export const appendReadableStreamDebugEvent = ( currentValue, event ) => {
+	const current = typeof currentValue === 'string' ? currentValue : '';
+
+	if ( event?.event === 'assistant_delta' ) {
+		const content =
+			typeof event?.data?.content === 'string'
+				? event.data.content
+				: '';
+
+		return `${ current }${ content }`;
+	}
+
+	if ( event?.event === 'activity' ) {
+		const data =
+			event?.data && typeof event.data === 'object' ? event.data : {};
+		const lines = [ 'event: activity' ];
+		const type = stringifyDebugField( data.type );
+		const label = stringifyDebugField( data.label );
+		const summary = stringifyDebugField( data.summary );
+
+		if ( type.length > 0 ) {
+			lines.push( `type: ${ type }` );
+		}
+
+		if ( label.length > 0 ) {
+			lines.push( `label: ${ label }` );
+		}
+
+		if ( summary.length > 0 ) {
+			lines.push( `summary: ${ summary }` );
+		}
+
+		return appendDebugBlock( current, lines.join( '\n' ) );
+	}
+
+	if ( event?.event === 'error' ) {
+		const message =
+			stringifyDebugField( event?.data?.message ) ||
+			stringifyDebugField( event?.rawData );
+
+		return appendDebugBlock(
+			current,
+			[ 'event: error', message ? `message: ${ message }` : '' ]
+				.filter( Boolean )
+				.join( '\n' )
+		);
+	}
+
+	return current;
+};
+
 export const createEventStreamParser = ( onEvent ) => {
 	let buffer = '';
 	let currentEvent = 'message';

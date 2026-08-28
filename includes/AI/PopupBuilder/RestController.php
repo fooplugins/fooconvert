@@ -354,6 +354,7 @@ class RestController {
                 array(
                     'message' => $response->get_error_message(),
                     'code'    => $response->get_error_code(),
+                    'data'    => $response->get_error_data(),
                 )
             );
             $this->send_stream_event( 'done', array( 'ok' => false ) );

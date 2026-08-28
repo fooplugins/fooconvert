@@ -83,7 +83,7 @@ namespace {
                 );
             }
 
-            return 'Brand-aligned popup background prompt';
+            return $GLOBALS['fc_background_prompt_result'] ?? 'Brand-aligned popup background prompt';
         }
     }
 
@@ -243,104 +243,143 @@ namespace {
                 ),
             ),
         ),
-        'Keep the center calm for the offer copy.'
-    );
-
-    Assertions::same(
-        'Brand-aligned popup background prompt',
-        $prompt,
-        'Generating a popup background prompt should return the AI-generated prompt text.'
-    );
-
-    $captured_content = (string) ( $GLOBALS['fc_background_prompt_content'] ?? '' );
-    $captured_system_instruction = (string) ( $GLOBALS['fc_background_prompt_system_instruction'] ?? '' );
-
-    Assertions::true(
-        false !== stripos( $captured_content, 'Premium outdoor skincare brand with a calm, modern editorial feel.' ),
-        'The popup background prompt context should include the brand overview.'
+        'Keep the center calm.'
     );
 
     Assertions::true(
-        false !== stripos( $captured_content, '#FF7A00' ) && false !== stripos( $captured_content, '#1A4D3E' ),
-        'The popup background prompt context should include the brand palette.'
+        0 === strpos( $prompt, 'Create a polished 3:4 vertical flyout background-only image' ),
+        'Generating a popup background prompt should use the deterministic background prompt builder.'
     );
 
     Assertions::true(
-        false !== stripos( $captured_content, 'Fraunces' ) && false !== stripos( $captured_content, 'Inter' ),
-        'The popup background prompt context should include typography direction from the brand.'
-    );
-
-    Assertions::true(
-        false !== stripos( $captured_content, 'Primary CTA Style' ) && false !== stripos( $captured_content, '999px' ),
-        'The popup background prompt context should include CTA styling so the background stays supportive.'
-    );
-
-    Assertions::true(
-        false !== stripos( $captured_content, '3:4 vertical flyout' ),
-        'The popup background prompt context should include popup-format aspect ratio guidance.'
-    );
-
-    Assertions::true(
-        false !== stripos( $captured_content, 'Keep the center calm for the offer copy.' ),
-        'The popup background prompt context should append additional direction.'
-    );
-
-    Assertions::true(
-        false !== stripos( $captured_system_instruction, 'background behind popup copy and CTA' ),
-        'The popup background system instruction should emphasize text-safe background generation.'
-    );
-
-    Assertions::same(
-        0.85,
-        $GLOBALS['fc_background_prompt_calls'][0]['temperature'] ?? null,
-        'The popup background prompt should use its default temperature when the parameter has not been disabled.'
-    );
-
-    $GLOBALS['fc_background_prompt_calls'] = array();
-    $GLOBALS['fc_background_prompt_generate_count'] = 0;
-    $GLOBALS['fc_background_prompt_fail_temperature_once'] = true;
-    $GLOBALS['fc_background_prompt_options'] = array();
-
-    $retry_prompt = PopupMedia::generate_prompt_for_background(
-        array(
-            'title'      => 'Launch Offer',
-            'popup_type' => FOOCONVERT_POPUP_TYPE_POPUP,
-            'goal'       => 'Drive launch sales',
-            'audience'   => 'Returning customers',
-            'offer'      => '15% off',
-        ),
-        array(),
-        ''
-    );
-
-    Assertions::same(
-        'Brand-aligned popup background prompt',
-        $retry_prompt,
-        'Background prompt generation should retry after disabling a rejected optional temperature parameter.'
-    );
-
-    Assertions::same(
-        2,
-        (int) ( $GLOBALS['fc_background_prompt_generate_count'] ?? 0 ),
-        'The unsupported temperature response should trigger one retry.'
-    );
-
-    Assertions::same(
-        0.85,
-        $GLOBALS['fc_background_prompt_calls'][0]['temperature'] ?? null,
-        'The initial background prompt attempt should include temperature.'
+        false !== stripos( $prompt, 'Rules you MUST follow:' )
+            && false !== stripos( $prompt, 'No text, no numbers, no coupon codes, no logos, no UI elements, no buttons, no forms, no devices, no people, no faces, no hands, no watermarks, no embedded typography, no cluttered center, no dark center, no harsh shadows, no distracting product labels, no busy patterns, no overly saturated colors.' )
+            && false === stripos( $prompt, '<popup-background-rules>' ),
+        'Generating a popup background prompt should include the strict popup background rules heading.'
     );
 
     Assertions::false(
-        ! empty( $GLOBALS['fc_background_prompt_calls'][1]['temperature'] ),
-        'The retried background prompt should omit the auto-disabled temperature parameter.'
+        false !== strpos( $prompt, '{aspect_ratio}' )
+            || false !== strpos( $prompt, '{popup_type}' )
+            || false !== strpos( $prompt, '{color_scheme_line}' )
+            || false !== strpos( $prompt, '{palette_line}' )
+            || false !== strpos( $prompt, '{composition}' )
+            || false !== strpos( $prompt, '{additional_visual_direction_line}' ),
+        'Generating a popup background prompt should substitute every prompt template placeholder.'
     );
 
-    $settings = Settings::get();
+    Assertions::true(
+        false !== stripos( $prompt, '#FF7A00' ) && false !== stripos( $prompt, '#1A4D3E' ),
+        'The popup background prompt should include brand palette cues.'
+    );
+
+    Assertions::true(
+        false !== stripos( $prompt, '3:4 vertical flyout' ),
+        'The popup background prompt should include popup-format aspect ratio guidance.'
+    );
+
+    Assertions::true(
+        false !== stripos( $prompt, 'Keep the center calm.' ),
+        'The popup background prompt should append explicit visual direction.'
+    );
+
+    Assertions::false(
+        false !== stripos( $prompt, 'Premium outdoor skincare brand with a calm, modern editorial feel.' )
+            || false !== stripos( $prompt, 'Fraunces' )
+            || false !== stripos( $prompt, 'Inter' )
+            || false !== stripos( $prompt, 'Primary CTA Style' )
+            || false !== stripos( $prompt, '999px' )
+            || false !== stripos( $prompt, 'Grow the email list' )
+            || false !== stripos( $prompt, 'First-time shoppers' )
+            || false !== stripos( $prompt, '10% off the first order' )
+            || false !== stripos( $prompt, 'Join for 10% off' )
+            || false !== stripos( $prompt, 'Get My Welcome Offer' )
+            || false !== stripos( $prompt, 'headline' )
+            || false !== stripos( $prompt, 'form controls' )
+            || false !== stripos( $prompt, 'CTA treatment' )
+            || false !== stripos( $prompt, 'Visual style:' ),
+        'The popup background prompt should not include campaign context, brand prose, typography, CTA styling, popup copy, or leading visual-style language.'
+    );
+
     Assertions::same(
-        array( 'temperature' ),
-        $settings['disabled_params'] ?? array(),
-        'The unsupported background prompt parameter should be persisted to disabled AI params.'
+        0,
+        count( $GLOBALS['fc_background_prompt_calls'] ?? array() ),
+        'Generating a popup background prompt should not call a text model.'
+    );
+
+    $GLOBALS['fc_background_prompt_result'] = 'Below is a ready-to-use newsletter signup flyout design matching your brand. ```html <div class="newsletter-flyout"><button>Send me the guide</button></div> ``` ```css .newsletter-flyout { position: fixed; font-family: Inter; border-radius: 18px; } ``` Recommended popup copy used: CTA: Send me the guide';
+    $deterministic_prompt = PopupMedia::generate_prompt_for_background(
+        array(
+            'title'       => 'Newsletter Guide',
+            'popup_type'  => FOOCONVERT_POPUP_TYPE_FLYOUT,
+            'goal'        => 'Grow the email list',
+            'audience'    => 'Website readers',
+            'offer'       => 'Practical website guide',
+            'content_blocks' => array(
+                array(
+                    'name'       => 'core/button',
+                    'attributes' => array(
+                        'text' => 'Send me the guide',
+                    ),
+                ),
+            ),
+        ),
+        array(
+            'brandOverview' => 'Clean software education brand.',
+            'colorScheme'   => 'light',
+            'colors'        => array(
+                'primary'    => '#7D4EFF',
+                'background' => '#FFFFFF',
+            ),
+        ),
+        ''
+    );
+    unset( $GLOBALS['fc_background_prompt_result'] );
+
+    Assertions::true(
+        false !== stripos( $deterministic_prompt, 'background-only image' )
+            && false !== stripos( $deterministic_prompt, '3:4 vertical flyout' ),
+        'Background prompts should always be deterministic instead of using generated prompt text or fallback repair.'
+    );
+
+    Assertions::false(
+        false !== stripos( $deterministic_prompt, 'newsletter-flyout' )
+            || false !== stripos( $deterministic_prompt, '```' )
+            || 1 === preg_match( '/\bposition\s*:/i', $deterministic_prompt )
+            || false !== stripos( $deterministic_prompt, 'Send me the guide' )
+            || false !== stripos( $deterministic_prompt, 'Grow the email list' )
+            || false !== stripos( $deterministic_prompt, 'Website readers' )
+            || false !== stripos( $deterministic_prompt, 'Practical website guide' )
+            || false !== stripos( $deterministic_prompt, 'Clean software education brand' ),
+        'Deterministic background prompts should not retain generated HTML, CSS, class names, CTA copy, campaign details, or brand overview text.'
+    );
+
+    Assertions::true(
+        strlen( $deterministic_prompt ) < 900,
+        'Deterministic background prompts should stay short enough to avoid over-specifying popup context.'
+    );
+
+    $description_method = new \ReflectionMethod( PopupMedia::class, 'build_attachment_description' );
+    $description_method->setAccessible( true );
+    $description = $description_method->invoke(
+        null,
+        'Below is a ready-to-use popup design with HTML and CSS.',
+        array(
+            'provider_metadata' => array( 'name' => 'OpenAI' ),
+            'model_metadata'    => array( 'name' => 'gpt-image-1' ),
+        )
+    );
+
+    Assertions::same(
+        'Generated by OpenAI using gpt-image-1',
+        $description,
+        'Generated image attachment descriptions should summarize provider metadata without embedding the prompt.'
+    );
+
+    Assertions::false(
+        false !== stripos( $description, 'Prompt:' )
+            || false !== stripos( $description, 'Below is' ),
+        'Generated image attachment descriptions should not include raw prompt text.'
     );
 
     echo "ai-popup-background: ok\n";

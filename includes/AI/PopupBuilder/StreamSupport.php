@@ -22,6 +22,15 @@ class StreamSupport {
             return '';
         }
 
+        $event_type = self::get_event_type( $event, $payload );
+        if ( 'response.output_text.done' === $event_type ) {
+            return '';
+        }
+
+        if ( 'response.output_text.delta' === $event_type ) {
+            return self::normalize_text_value( $payload['delta'] ?? '' );
+        }
+
         if ( self::is_reasoning_summary_event( $event, $payload ) ) {
             return '';
         }

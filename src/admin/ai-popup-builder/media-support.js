@@ -1,5 +1,10 @@
 import { cloneDeep, isPlainObject } from './serializer-support';
 
+const getMediaId = ( value ) => {
+	const id = Number( value );
+	return Number.isFinite( id ) && id > 0 ? id : 0;
+};
+
 const matchesMediaItem = ( block, mediaItem ) => {
 	if (
 		block?.name !== 'core/image' ||
@@ -9,15 +14,10 @@ const matchesMediaItem = ( block, mediaItem ) => {
 		return false;
 	}
 
-	const blockId = Number( block.attributes.id );
-	const mediaId = Number( mediaItem.id );
+	const blockId = getMediaId( block.attributes.id );
+	const mediaId = getMediaId( mediaItem.id );
 
-	if (
-		Number.isFinite( blockId ) &&
-		blockId > 0 &&
-		Number.isFinite( mediaId ) &&
-		mediaId > 0
-	) {
+	if ( blockId > 0 && mediaId > 0 ) {
 		return blockId === mediaId;
 	}
 
@@ -28,53 +28,22 @@ const matchesMediaItem = ( block, mediaItem ) => {
 	);
 };
 
-const buildImageBlock = ( mediaItem ) => ( {
-	name: 'core/image',
-	attributes: {
-		id: Number.isFinite( Number( mediaItem?.id ) )
-			? Number( mediaItem.id )
-			: undefined,
+const buildBackgroundImage = ( mediaItem ) => {
+	const backgroundImage = {
 		url: typeof mediaItem?.url === 'string' ? mediaItem.url : '',
-		alt: typeof mediaItem?.alt === 'string' ? mediaItem.alt : '',
-		title: typeof mediaItem?.title === 'string' ? mediaItem.title : '',
-	},
-	inner_blocks: [],
-} );
+		source: 'file',
+	};
+	const id = getMediaId( mediaItem?.id );
 
-const replaceFirstImageBlock = ( blocks, imageBlock ) => {
-	for ( let index = 0; index < blocks.length; index += 1 ) {
-		const block = blocks[ index ];
-
-		if ( ! isPlainObject( block ) ) {
-			continue;
-		}
-
-		if ( block.name === 'core/image' ) {
-			blocks[ index ] = imageBlock;
-			return true;
-		}
-
-		if (
-			Array.isArray( block.inner_blocks ) &&
-			replaceFirstImageBlock( block.inner_blocks, imageBlock )
-		) {
-			return true;
-		}
+	if ( id > 0 ) {
+		backgroundImage.id = id;
 	}
 
-	return false;
-};
-
-const getImageInsertIndex = ( blocks ) => {
-	const actionIndex = blocks.findIndex( ( block ) =>
-		[ 'fc/sign-up', 'core/buttons', 'core/button' ].includes( block?.name )
-	);
-
-	if ( actionIndex >= 0 ) {
-		return actionIndex;
+	if ( typeof mediaItem?.title === 'string' && mediaItem.title.length > 0 ) {
+		backgroundImage.title = mediaItem.title;
 	}
 
-	return Math.min( 2, blocks.length );
+	return backgroundImage;
 };
 
 const removeMatchingImageBlocks = ( blocks, mediaItem ) => {
@@ -101,6 +70,25 @@ const removeMatchingImageBlocks = ( blocks, mediaItem ) => {
 	}, [] );
 };
 
+const backgroundImageMatchesMediaItem = ( backgroundImage, mediaItem ) => {
+	if ( ! isPlainObject( backgroundImage ) || ! isPlainObject( mediaItem ) ) {
+		return false;
+	}
+
+	const backgroundId = getMediaId( backgroundImage.id );
+	const mediaId = getMediaId( mediaItem.id );
+
+	if ( backgroundId > 0 && mediaId > 0 ) {
+		return backgroundId === mediaId;
+	}
+
+	return (
+		typeof backgroundImage.url === 'string' &&
+		typeof mediaItem.url === 'string' &&
+		backgroundImage.url === mediaItem.url
+	);
+};
+
 export const applyMediaItemToDraft = ( draft, mediaItem ) => {
 	if (
 		! isPlainObject( draft ) ||
@@ -112,20 +100,29 @@ export const applyMediaItemToDraft = ( draft, mediaItem ) => {
 	}
 
 	const nextDraft = cloneDeep( draft );
-	nextDraft.content_blocks = Array.isArray( nextDraft.content_blocks )
-		? nextDraft.content_blocks
-		: [];
+	nextDraft.root_attributes = isPlainObject( nextDraft.root_attributes )
+		? nextDraft.root_attributes
+		: {};
+	nextDraft.root_attributes.content = isPlainObject(
+		nextDraft.root_attributes.content
+	)
+		? nextDraft.root_attributes.content
+		: {};
+	nextDraft.root_attributes.content.styles = isPlainObject(
+		nextDraft.root_attributes.content.styles
+	)
+		? nextDraft.root_attributes.content.styles
+		: {};
+	nextDraft.root_attributes.content.styles.background = isPlainObject(
+		nextDraft.root_attributes.content.styles.background
+	)
+		? nextDraft.root_attributes.content.styles.background
+		: {};
+	nextDraft.root_attributes.content.styles.background.backgroundImage =
+		buildBackgroundImage( mediaItem );
+	nextDraft.root_attributes.content.styles.background.backgroundSize =
+		'cover';
 
-	const imageBlock = buildImageBlock( mediaItem );
-	if ( replaceFirstImageBlock( nextDraft.content_blocks, imageBlock ) ) {
-		return nextDraft;
-	}
-
-	nextDraft.content_blocks.splice(
-		getImageInsertIndex( nextDraft.content_blocks ),
-		0,
-		imageBlock
-	);
 	return nextDraft;
 };
 
@@ -138,6 +135,17 @@ export const removeMediaItemFromDraft = ( draft, mediaItem ) => {
 	nextDraft.content_blocks = Array.isArray( nextDraft.content_blocks )
 		? removeMatchingImageBlocks( nextDraft.content_blocks, mediaItem )
 		: [];
+
+	const background =
+		nextDraft.root_attributes?.content?.styles?.background || null;
+
+	if (
+		isPlainObject( background ) &&
+		backgroundImageMatchesMediaItem( background.backgroundImage, mediaItem )
+	) {
+		delete background.backgroundImage;
+		delete background.backgroundSize;
+	}
 
 	return nextDraft;
 };

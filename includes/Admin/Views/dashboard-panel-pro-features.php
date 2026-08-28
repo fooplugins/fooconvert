@@ -3,9 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$fooconvert_hidden_panels = fooconvert_get_setting( 'hide_dashboard_panels', [] );
-
-if ( in_array( 'pro-features', $fooconvert_hidden_panels ) ) {
+if ( fooconvert_is_dashboard_panel_hidden( 'pro-features' ) ) {
     return;
 }
 ?>

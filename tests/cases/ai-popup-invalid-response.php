@@ -37,6 +37,7 @@ namespace FooPlugins\FooConvert\AI\PopupBuilder\Blueprint {
 namespace {
     use FooPlugins\FooConvert\AI\PopupBuilder\ChatService;
     use FooPlugins\FooConvert\AI\PopupBuilder\DebugResponseLog;
+    use FooPlugins\FooConvert\AI\PopupBuilder\PromptFactory;
     use FooPlugins\FooConvert\AI\PopupBuilder\ResponseParser;
     use FooPlugins\FooConvert\AI\PopupBuilder\RestController as PopupBuilder;
     use FooPlugins\FooConvert\Tests\Support\Assertions;
@@ -106,12 +107,40 @@ namespace {
 
     $GLOBALS['fc_debug_enabled'] = false;
     $GLOBALS['fc_options'] = array();
+    $GLOBALS['fc_filters'] = array();
 
     function __( string $text, ?string $domain = null ): string {
         return $text;
     }
 
     function add_action( string $hook, $callback, int $priority = 10, int $accepted_args = 1 ): void {}
+
+    function add_filter( string $hook, $callback, int $priority = 10, int $accepted_args = 1 ): void {
+        $GLOBALS['fc_filters'][ $hook ][ $priority ][] = array(
+            'callback'      => $callback,
+            'accepted_args' => $accepted_args,
+        );
+    }
+
+    function apply_filters( string $hook, $value, ...$args ) {
+        if ( empty( $GLOBALS['fc_filters'][ $hook ] ) || ! is_array( $GLOBALS['fc_filters'][ $hook ] ) ) {
+            return $value;
+        }
+
+        ksort( $GLOBALS['fc_filters'][ $hook ] );
+
+        foreach ( $GLOBALS['fc_filters'][ $hook ] as $callbacks ) {
+            foreach ( $callbacks as $callback ) {
+                $accepted_args = max( 1, (int) ( $callback['accepted_args'] ?? 1 ) );
+                $value = call_user_func_array(
+                    $callback['callback'],
+                    array_slice( array_merge( array( $value ), $args ), 0, $accepted_args )
+                );
+            }
+        }
+
+        return $value;
+    }
 
     function wp_ai_client_prompt(): PopupBuilderSchemaPromptStub {
         return new PopupBuilderSchemaPromptStub();
@@ -187,9 +216,37 @@ namespace {
     );
 
     Assertions::true(
+        false !== strpos( $GLOBALS['fc_popup_builder_schema_system_instruction'] ?? '', 'Use the `fc/split-layout` block when content naturally needs two coordinated columns/panels.' )
+            && false !== strpos( $GLOBALS['fc_popup_builder_schema_system_instruction'] ?? '', 'not just because you want columns' ),
+        'The system instruction should include split-layout usage guidance.'
+    );
+
+    Assertions::true(
         false !== strpos( $GLOBALS['fc_popup_builder_schema_system_instruction'] ?? '', 'Conversion playbook JSON' )
             && false !== strpos( $GLOBALS['fc_popup_builder_schema_system_instruction'] ?? '', 'Focus on one CTA.' ),
         'The system instruction should include the conversion playbook context.'
+    );
+
+    add_filter(
+        'fooconvert_ai_popup_builder_system_instruction_context',
+        static function( array $context ): array {
+            $context['conversion_playbook'] = array(
+                'principles' => array( 'Use extended conversion guidance.' ),
+            );
+            $context['response_contract'] = 'Return a PRO-compatible popup JSON object.';
+
+            return $context;
+        },
+        10,
+        4
+    );
+
+    $extended_system_instruction = PromptFactory::build_system_instruction( false, false, array() );
+
+    Assertions::true(
+        false !== strpos( $extended_system_instruction, 'Use extended conversion guidance.' )
+            && false !== strpos( $extended_system_instruction, 'Return a PRO-compatible popup JSON object.' ),
+        'The shared prompt factory should expose filterable extension context for PRO.'
     );
 
     $error = ResponseParser::get_invalid_popup_response_error( "Here is the popup:\n{\"assistant_message\":" );
@@ -325,6 +382,66 @@ namespace {
         'What offer should this promote?',
         $decoded_completed_response['clarifying_question'] ?? '',
         'Decoder should complete a response that is only missing structural closing braces.'
+    );
+
+    $broken_countdown_payload = <<<'JSON'
+{"assistant_message":"Created a compact product-launch bar blueprint.","clarifying_question":"","suggested_prompts":[],"media_items":[],"popup_draft":{"title":"New Product Launch Bar","popup_type":"bar","goal":"Announce a new product launch and drive visitors to the launch page.","audience":"Website visitors interested in WordPress plugins.","offer":"New product launch announcement with launch-deadline urgency.","template_slug":"bar__special_offer","trigger":{},"root_attributes":{},"content_blocks":[{"name":"core/group","attributes":{},"inner_blocks":[{"name":"fc/countdown","attributes":{"uniqueId":"launch-bar-countdown","settings":{"endDate":"2026-05-26T23:59:59+00:00"},"segment":{"styles":{"color":{"background":"#00000066","text":"#ffffff"}},"digits":{"styles":{"color":{"text":"#ffffff"}}}}},{"name":"core/buttons","attributes":{},"inner_blocks":[{"name":"core/button","attributes":{"text":"See What's New","url":"#launch"},"inner_blocks":[]}]}]}],"conversion_rationale":["Compact countdown bar."],"notes":["Replace #launch."]}}
+JSON;
+    $decoded_countdown_repair_details = ResponseParser::decode_json_response_with_metadata( $broken_countdown_payload );
+    $decoded_countdown_repair = $decoded_countdown_repair_details['response'];
+
+    Assertions::same(
+        'inserted_missing_property_object_closer',
+        $decoded_countdown_repair_details['repair_type'],
+        'Decoder should repair a missing object closer before a nested block attribute sibling such as countdown digits.'
+    );
+
+    Assertions::same(
+        'launch-bar-countdown',
+        $decoded_countdown_repair['popup_draft']['content_blocks'][0]['inner_blocks'][0]['attributes']['uniqueId'] ?? '',
+        'Repaired countdown payloads should decode to the original countdown block.'
+    );
+
+    Assertions::true(
+        isset( $decoded_countdown_repair['popup_draft']['content_blocks'][0]['inner_blocks'][0]['attributes']['digits'] ),
+        'The countdown digits attribute should remain a sibling of segment after repair.'
+    );
+
+    Assertions::false(
+        isset( $decoded_countdown_repair['popup_draft']['content_blocks'][0]['inner_blocks'][0]['attributes']['segment']['digits'] ),
+        'The repair should not leave countdown digits nested inside segment.'
+    );
+
+    Assertions::same(
+        null,
+        ResponseParser::validate_decoded_popup_response( $decoded_countdown_repair, $decoded_countdown_repair_details['decoded_payload'] ),
+        'A repaired countdown response should satisfy the popup response contract.'
+    );
+
+    $broken_countdown_error = ResponseParser::get_invalid_popup_response_error( $broken_countdown_payload );
+
+    Assertions::true(
+        false !== strpos( $broken_countdown_error->get_error_data()['parser_context'] ?? '', 'Approximate JSON parser failure near character offset' ),
+        'Invalid JSON errors should expose parser failure context in error data.'
+    );
+
+    Assertions::true(
+        false !== strpos( $broken_countdown_error->get_error_data()['parser_context'] ?? '', 'core/buttons' ),
+        'Parser failure context should include nearby response text around the malformed section.'
+    );
+
+    $retry_message_reflection = new \ReflectionMethod( ChatService::class, 'get_response_format_retry_message' );
+    $retry_message_reflection->setAccessible( true );
+    $retry_message = $retry_message_reflection->invoke( $chat_service, $broken_countdown_payload, 'Malformed nested countdown block JSON.' );
+
+    Assertions::true(
+        false !== strpos( $retry_message, 'Parser context: Approximate JSON parser failure near character offset' ),
+        'Response-format retries should tell the model where the previous JSON failed.'
+    );
+
+    Assertions::true(
+        false !== strpos( $retry_message, 'core/buttons' ),
+        'Response-format retries should include a nearby snippet from the malformed response.'
     );
 
     $direct_draft = array(

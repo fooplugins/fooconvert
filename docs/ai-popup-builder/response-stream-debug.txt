@@ -1,0 +1,4256 @@
+event: activity
+data: {"type":"status","label":"Preparing popup context","summary":"Packing the current brand, draft, media, and conversation into the request."}
+
+event: activity
+data: {"type":"status","label":"Calling AI model","summary":"The model may request template, block, validation, or media tools before it answers."}
+
+event: assistant_delta
+data: {"content":"<think>"}
+
+event: assistant_delta
+data: {"content":"\n"}
+
+event: assistant_delta
+data: {"content":"Okay"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" let"}
+
+event: assistant_delta
+data: {"content":"'s"}
+
+event: assistant_delta
+data: {"content":" tackle"}
+
+event: assistant_delta
+data: {"content":" this"}
+
+event: assistant_delta
+data: {"content":" request"}
+
+event: assistant_delta
+data: {"content":" step"}
+
+event: assistant_delta
+data: {"content":" by"}
+
+event: assistant_delta
+data: {"content":" step"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" The"}
+
+event: assistant_delta
+data: {"content":" user"}
+
+event: assistant_delta
+data: {"content":" wants"}
+
+event: assistant_delta
+data: {"content":" an"}
+
+event: assistant_delta
+data: {"content":" exit"}
+
+event: assistant_delta
+data: {"content":"-int"}
+
+event: assistant_delta
+data: {"content":"ent"}
+
+event: assistant_delta
+data: {"content":" overlay"}
+
+event: assistant_delta
+data: {"content":" popup"}
+
+event: assistant_delta
+data: {"content":" for"}
+
+event: assistant_delta
+data: {"content":" first"}
+
+event: assistant_delta
+data: {"content":"-time"}
+
+event: assistant_delta
+data: {"content":" shoppers"}
+
+event: assistant_delta
+data: {"content":" offering"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":"%"}
+
+event: assistant_delta
+data: {"content":" off"}
+
+event: assistant_delta
+data: {"content":" with"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" coupon"}
+
+event: assistant_delta
+data: {"content":" code"}
+
+event: assistant_delta
+data: {"content":" W"}
+
+event: assistant_delta
+data: {"content":"ELCOME"}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":" and"}
+
+event: assistant_delta
+data: {"content":" a"}
+
+event: assistant_delta
+data: {"content":" countdown"}
+
+event: assistant_delta
+data: {"content":" set"}
+
+event: assistant_delta
+data: {"content":" to"}
+
+event: assistant_delta
+data: {"content":" expire"}
+
+event: assistant_delta
+data: {"content":" in"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":"2"}
+
+event: assistant_delta
+data: {"content":" hours"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" They"}
+
+event: assistant_delta
+data: {"content":" also"}
+
+event: assistant_delta
+data: {"content":" specified"}
+
+event: assistant_delta
+data: {"content":" a"}
+
+event: assistant_delta
+data: {"content":" confident"}
+
+event: assistant_delta
+data: {"content":" headline"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" a"}
+
+event: assistant_delta
+data: {"content":" reass"}
+
+event: assistant_delta
+data: {"content":"urance"}
+
+event: assistant_delta
+data: {"content":" line"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" and"}
+
+event: assistant_delta
+data: {"content":" a"}
+
+event: assistant_delta
+data: {"content":" clear"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"Shop"}
+
+event: assistant_delta
+data: {"content":" Now"}
+
+event: assistant_delta
+data: {"content":"\""}
+
+event: assistant_delta
+data: {"content":" C"}
+
+event: assistant_delta
+data: {"content":"TA"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" The"}
+
+event: assistant_delta
+data: {"content":" background"}
+
+event: assistant_delta
+data: {"content":" should"}
+
+event: assistant_delta
+data: {"content":" have"}
+
+event: assistant_delta
+data: {"content":" a"}
+
+event: assistant_delta
+data: {"content":" warm"}
+
+event: assistant_delta
+data: {"content":" gradient"}
+
+event: assistant_delta
+data: {"content":" with"}
+
+event: assistant_delta
+data: {"content":" soft"}
+
+event: assistant_delta
+data: {"content":" depth"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" following"}
+
+event: assistant_delta
+data: {"content":" their"}
+
+event: assistant_delta
+data: {"content":" brand"}
+
+event: assistant_delta
+data: {"content":" styles"}
+
+event: assistant_delta
+data: {"content":".\n\n"}
+
+event: assistant_delta
+data: {"content":"First"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" I"}
+
+event: assistant_delta
+data: {"content":" need"}
+
+event: assistant_delta
+data: {"content":" to"}
+
+event: assistant_delta
+data: {"content":" check"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" provided"}
+
+event: assistant_delta
+data: {"content":" media"}
+
+event: assistant_delta
+data: {"content":" JSON"}
+
+event: assistant_delta
+data: {"content":" to"}
+
+event: assistant_delta
+data: {"content":" find"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" appropriate"}
+
+event: assistant_delta
+data: {"content":" background"}
+
+event: assistant_delta
+data: {"content":" image"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" The"}
+
+event: assistant_delta
+data: {"content":" user"}
+
+event: assistant_delta
+data: {"content":" mentioned"}
+
+event: assistant_delta
+data: {"content":" using"}
+
+event: assistant_delta
+data: {"content":" a"}
+
+event: assistant_delta
+data: {"content":" warm"}
+
+event: assistant_delta
+data: {"content":" gradient"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" so"}
+
+event: assistant_delta
+data: {"content":" looking"}
+
+event: assistant_delta
+data: {"content":" through"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" media"}
+
+event: assistant_delta
+data: {"content":" items"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" I"}
+
+event: assistant_delta
+data: {"content":" see"}
+
+event: assistant_delta
+data: {"content":" entries"}
+
+event: assistant_delta
+data: {"content":" like"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"first"}
+
+event: assistant_delta
+data: {"content":"-time"}
+
+event: assistant_delta
+data: {"content":"-sh"}
+
+event: assistant_delta
+data: {"content":"opper"}
+
+event: assistant_delta
+data: {"content":"-ex"}
+
+event: assistant_delta
+data: {"content":"it"}
+
+event: assistant_delta
+data: {"content":"-off"}
+
+event: assistant_delta
+data: {"content":"er"}
+
+event: assistant_delta
+data: {"content":"-"}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":"-off"}
+
+event: assistant_delta
+data: {"content":"-background"}
+
+event: assistant_delta
+data: {"content":"-"}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":".web"}
+
+event: assistant_delta
+data: {"content":"p"}
+
+event: assistant_delta
+data: {"content":"\""}
+
+event: assistant_delta
+data: {"content":" and"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"first"}
+
+event: assistant_delta
+data: {"content":"-time"}
+
+event: assistant_delta
+data: {"content":"-sh"}
+
+event: assistant_delta
+data: {"content":"opper"}
+
+event: assistant_delta
+data: {"content":"-ex"}
+
+event: assistant_delta
+data: {"content":"it"}
+
+event: assistant_delta
+data: {"content":"-off"}
+
+event: assistant_delta
+data: {"content":"er"}
+
+event: assistant_delta
+data: {"content":"-"}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":"-off"}
+
+event: assistant_delta
+data: {"content":"-background"}
+
+event: assistant_delta
+data: {"content":".web"}
+
+event: assistant_delta
+data: {"content":"p"}
+
+event: assistant_delta
+data: {"content":"\""}
+
+event: assistant_delta
+data: {"content":" which"}
+
+event: assistant_delta
+data: {"content":" have"}
+
+event: assistant_delta
+data: {"content":" descriptions"}
+
+event: assistant_delta
+data: {"content":" mentioning"}
+
+event: assistant_delta
+data: {"content":" warm"}
+
+event: assistant_delta
+data: {"content":" gradients"}
+
+event: assistant_delta
+data: {"content":" and"}
+
+event: assistant_delta
+data: {"content":" brand"}
+
+event: assistant_delta
+data: {"content":" colors"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" The"}
+
+event: assistant_delta
+data: {"content":" brand"}
+
+event: assistant_delta
+data: {"content":" context"}
+
+event: assistant_delta
+data: {"content":" specifies"}
+
+event: assistant_delta
+data: {"content":" a"}
+
+event: assistant_delta
+data: {"content":" dark"}
+
+event: assistant_delta
+data: {"content":" color"}
+
+event: assistant_delta
+data: {"content":" scheme"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" but"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" media"}
+
+event: assistant_delta
+data: {"content":" items"}
+
+event: assistant_delta
+data: {"content":" for"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" first"}
+
+event: assistant_delta
+data: {"content":"-time"}
+
+event: assistant_delta
+data: {"content":" shopper"}
+
+event: assistant_delta
+data: {"content":" offer"}
+
+event: assistant_delta
+data: {"content":" have"}
+
+event: assistant_delta
+data: {"content":" light"}
+
+event: assistant_delta
+data: {"content":" backgrounds"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" Wait"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" brand"}
+
+event: assistant_delta
+data: {"content":" context"}
+
+event: assistant_delta
+data: {"content":" says"}
+
+event: assistant_delta
+data: {"content":" color"}
+
+event: assistant_delta
+data: {"content":"Scheme"}
+
+event: assistant_delta
+data: {"content":" is"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"dark"}
+
+event: assistant_delta
+data: {"content":",\""}
+
+event: assistant_delta
+data: {"content":" but"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" media"}
+
+event: assistant_delta
+data: {"content":" items"}
+
+event: assistant_delta
+data: {"content":" for"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" first"}
+
+event: assistant_delta
+data: {"content":"-time"}
+
+event: assistant_delta
+data: {"content":" shopper"}
+
+event: assistant_delta
+data: {"content":" have"}
+
+event: assistant_delta
+data: {"content":" light"}
+
+event: assistant_delta
+data: {"content":" backgrounds"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" Hmm"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" maybe"}
+
+event: assistant_delta
+data: {"content":" there"}
+
+event: assistant_delta
+data: {"content":"'s"}
+
+event: assistant_delta
+data: {"content":" a"}
+
+event: assistant_delta
+data: {"content":" discrepancy"}
+
+event: assistant_delta
+data: {"content":" here"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" The"}
+
+event: assistant_delta
+data: {"content":" user"}
+
+event: assistant_delta
+data: {"content":" might"}
+
+event: assistant_delta
+data: {"content":" have"}
+
+event: assistant_delta
+data: {"content":" intended"}
+
+event: assistant_delta
+data: {"content":" a"}
+
+event: assistant_delta
+data: {"content":" warm"}
+
+event: assistant_delta
+data: {"content":" gradient"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" so"}
+
+event: assistant_delta
+data: {"content":" perhaps"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" light"}
+
+event: assistant_delta
+data: {"content":" background"}
+
+event: assistant_delta
+data: {"content":" with"}
+
+event: assistant_delta
+data: {"content":" purple"}
+
+event: assistant_delta
+data: {"content":" accents"}
+
+event: assistant_delta
+data: {"content":" is"}
+
+event: assistant_delta
+data: {"content":" acceptable"}
+
+event: assistant_delta
+data: {"content":" even"}
+
+event: assistant_delta
+data: {"content":" if"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" overall"}
+
+event: assistant_delta
+data: {"content":" brand"}
+
+event: assistant_delta
+data: {"content":" is"}
+
+event: assistant_delta
+data: {"content":" dark"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" Alternatively"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" maybe"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" brand"}
+
+event: assistant_delta
+data: {"content":" context"}
+
+event: assistant_delta
+data: {"content":" was"}
+
+event: assistant_delta
+data: {"content":" mis"}
+
+event: assistant_delta
+data: {"content":"read"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" Let"}
+
+event: assistant_delta
+data: {"content":" me"}
+
+event: assistant_delta
+data: {"content":" check"}
+
+event: assistant_delta
+data: {"content":" again"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" The"}
+
+event: assistant_delta
+data: {"content":" brand"}
+
+event: assistant_delta
+data: {"content":" context"}
+
+event: assistant_delta
+data: {"content":"'s"}
+
+event: assistant_delta
+data: {"content":" color"}
+
+event: assistant_delta
+data: {"content":"Scheme"}
+
+event: assistant_delta
+data: {"content":" is"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"dark"}
+
+event: assistant_delta
+data: {"content":",\""}
+
+event: assistant_delta
+data: {"content":" but"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" colors"}
+
+event: assistant_delta
+data: {"content":" include"}
+
+event: assistant_delta
+data: {"content":" a"}
+
+event: assistant_delta
+data: {"content":" white"}
+
+event: assistant_delta
+data: {"content":" background"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" The"}
+
+event: assistant_delta
+data: {"content":" media"}
+
+event: assistant_delta
+data: {"content":" items"}
+
+event: assistant_delta
+data: {"content":" for"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" first"}
+
+event: assistant_delta
+data: {"content":"-time"}
+
+event: assistant_delta
+data: {"content":" shopper"}
+
+event: assistant_delta
+data: {"content":" exit"}
+
+event: assistant_delta
+data: {"content":" offer"}
+
+event: assistant_delta
+data: {"content":" have"}
+
+event: assistant_delta
+data: {"content":" light"}
+
+event: assistant_delta
+data: {"content":" backgrounds"}
+
+event: assistant_delta
+data: {"content":" with"}
+
+event: assistant_delta
+data: {"content":" purple"}
+
+event: assistant_delta
+data: {"content":" gradients"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" That"}
+
+event: assistant_delta
+data: {"content":" seems"}
+
+event: assistant_delta
+data: {"content":" to"}
+
+event: assistant_delta
+data: {"content":" align"}
+
+event: assistant_delta
+data: {"content":" with"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" brand"}
+
+event: assistant_delta
+data: {"content":"'s"}
+
+event: assistant_delta
+data: {"content":" primary"}
+
+event: assistant_delta
+data: {"content":" color"}
+
+event: assistant_delta
+data: {"content":" #"}
+
+event: assistant_delta
+data: {"content":"7"}
+
+event: assistant_delta
+data: {"content":"D"}
+
+event: assistant_delta
+data: {"content":"4"}
+
+event: assistant_delta
+data: {"content":"EFF"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" So"}
+
+event: assistant_delta
+data: {"content":" I"}
+
+event: assistant_delta
+data: {"content":"'ll"}
+
+event: assistant_delta
+data: {"content":" proceed"}
+
+event: assistant_delta
+data: {"content":" with"}
+
+event: assistant_delta
+data: {"content":" those"}
+
+event: assistant_delta
+data: {"content":".\n\n"}
+
+event: assistant_delta
+data: {"content":"Next"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" popup"}
+
+event: assistant_delta
+data: {"content":" needs"}
+
+event: assistant_delta
+data: {"content":" a"}
+
+event: assistant_delta
+data: {"content":" confident"}
+
+event: assistant_delta
+data: {"content":" headline"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" The"}
+
+event: assistant_delta
+data: {"content":" user"}
+
+event: assistant_delta
+data: {"content":" example"}
+
+event: assistant_delta
+data: {"content":" might"}
+
+event: assistant_delta
+data: {"content":" use"}
+
+event: assistant_delta
+data: {"content":" something"}
+
+event: assistant_delta
+data: {"content":" like"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":"%"}
+
+event: assistant_delta
+data: {"content":" Off"}
+
+event: assistant_delta
+data: {"content":" Your"}
+
+event: assistant_delta
+data: {"content":" First"}
+
+event: assistant_delta
+data: {"content":" Order"}
+
+event: assistant_delta
+data: {"content":"!\""}
+
+event: assistant_delta
+data: {"content":" Then"}
+
+event: assistant_delta
+data: {"content":" a"}
+
+event: assistant_delta
+data: {"content":" reass"}
+
+event: assistant_delta
+data: {"content":"urance"}
+
+event: assistant_delta
+data: {"content":" line"}
+
+event: assistant_delta
+data: {"content":" like"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"Limited"}
+
+event: assistant_delta
+data: {"content":" time"}
+
+event: assistant_delta
+data: {"content":" offer"}
+
+event: assistant_delta
+data: {"content":" \u2013"}
+
+event: assistant_delta
+data: {"content":" expires"}
+
+event: assistant_delta
+data: {"content":" in"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":"2"}
+
+event: assistant_delta
+data: {"content":" hours"}
+
+event: assistant_delta
+data: {"content":"!\""}
+
+event: assistant_delta
+data: {"content":" The"}
+
+event: assistant_delta
+data: {"content":" C"}
+
+event: assistant_delta
+data: {"content":"TA"}
+
+event: assistant_delta
+data: {"content":" should"}
+
+event: assistant_delta
+data: {"content":" be"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"Shop"}
+
+event: assistant_delta
+data: {"content":" Now"}
+
+event: assistant_delta
+data: {"content":"\""}
+
+event: assistant_delta
+data: {"content":" using"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" primary"}
+
+event: assistant_delta
+data: {"content":" button"}
+
+event: assistant_delta
+data: {"content":" style"}
+
+event: assistant_delta
+data: {"content":" from"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" brand"}
+
+event: assistant_delta
+data: {"content":" components"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" The"}
+
+event: assistant_delta
+data: {"content":" countdown"}
+
+event: assistant_delta
+data: {"content":" block"}
+
+event: assistant_delta
+data: {"content":" needs"}
+
+event: assistant_delta
+data: {"content":" to"}
+
+event: assistant_delta
+data: {"content":" be"}
+
+event: assistant_delta
+data: {"content":" set"}
+
+event: assistant_delta
+data: {"content":" for"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":"2"}
+
+event: assistant_delta
+data: {"content":" hours"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" The"}
+
+event: assistant_delta
+data: {"content":" Coupon"}
+
+event: assistant_delta
+data: {"content":" block"}
+
+event: assistant_delta
+data: {"content":" should"}
+
+event: assistant_delta
+data: {"content":" display"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" code"}
+
+event: assistant_delta
+data: {"content":" W"}
+
+event: assistant_delta
+data: {"content":"ELCOME"}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":".\n\n"}
+
+event: assistant_delta
+data: {"content":"Looking"}
+
+event: assistant_delta
+data: {"content":" at"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" media"}
+
+event: assistant_delta
+data: {"content":" items"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" ID"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":"3"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"2"}
+
+event: assistant_delta
+data: {"content":"4"}
+
+event: assistant_delta
+data: {"content":" and"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":"3"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"4"}
+
+event: assistant_delta
+data: {"content":" are"}
+
+event: assistant_delta
+data: {"content":" relevant"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" ID"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":"3"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"2"}
+
+event: assistant_delta
+data: {"content":"4"}
+
+event: assistant_delta
+data: {"content":"'s"}
+
+event: assistant_delta
+data: {"content":" description"}
+
+event: assistant_delta
+data: {"content":" mentions"}
+
+event: assistant_delta
+data: {"content":" a"}
+
+event: assistant_delta
+data: {"content":" warm"}
+
+event: assistant_delta
+data: {"content":" gradient"}
+
+event: assistant_delta
+data: {"content":" background"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" which"}
+
+event: assistant_delta
+data: {"content":" matches"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" user"}
+
+event: assistant_delta
+data: {"content":"'s"}
+
+event: assistant_delta
+data: {"content":" request"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" The"}
+
+event: assistant_delta
+data: {"content":" popup"}
+
+event: assistant_delta
+data: {"content":"_type"}
+
+event: assistant_delta
+data: {"content":" is"}
+
+event: assistant_delta
+data: {"content":" overlay"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" which"}
+
+event: assistant_delta
+data: {"content":" is"}
+
+event: assistant_delta
+data: {"content":" correct"}
+
+event: assistant_delta
+data: {"content":" for"}
+
+event: assistant_delta
+data: {"content":" an"}
+
+event: assistant_delta
+data: {"content":" exit"}
+
+event: assistant_delta
+data: {"content":"-int"}
+
+event: assistant_delta
+data: {"content":"ent"}
+
+event: assistant_delta
+data: {"content":" overlay"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" The"}
+
+event: assistant_delta
+data: {"content":" URL"}
+
+event: assistant_delta
+data: {"content":" for"}
+
+event: assistant_delta
+data: {"content":" that"}
+
+event: assistant_delta
+data: {"content":" media"}
+
+event: assistant_delta
+data: {"content":" item"}
+
+event: assistant_delta
+data: {"content":" is"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"http"}
+
+event: assistant_delta
+data: {"content":":\/\/"}
+
+event: assistant_delta
+data: {"content":"localhost"}
+
+event: assistant_delta
+data: {"content":":"}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"3"}
+
+event: assistant_delta
+data: {"content":"\/wp"}
+
+event: assistant_delta
+data: {"content":"-content"}
+
+event: assistant_delta
+data: {"content":"\/uploads"}
+
+event: assistant_delta
+data: {"content":"\/"}
+
+event: assistant_delta
+data: {"content":"2"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"2"}
+
+event: assistant_delta
+data: {"content":"6"}
+
+event: assistant_delta
+data: {"content":"\/"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":"\/"}
+
+event: assistant_delta
+data: {"content":"first"}
+
+event: assistant_delta
+data: {"content":"-time"}
+
+event: assistant_delta
+data: {"content":"-sh"}
+
+event: assistant_delta
+data: {"content":"opper"}
+
+event: assistant_delta
+data: {"content":"-ex"}
+
+event: assistant_delta
+data: {"content":"it"}
+
+event: assistant_delta
+data: {"content":"-off"}
+
+event: assistant_delta
+data: {"content":"er"}
+
+event: assistant_delta
+data: {"content":"-"}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":"-off"}
+
+event: assistant_delta
+data: {"content":"-background"}
+
+event: assistant_delta
+data: {"content":"-"}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":".web"}
+
+event: assistant_delta
+data: {"content":"p"}
+
+event: assistant_delta
+data: {"content":"\".\n\n"}
+
+event: assistant_delta
+data: {"content":"Now"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" struct"}
+
+event: assistant_delta
+data: {"content":"uring"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" popup"}
+
+event: assistant_delta
+data: {"content":"_draft"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" The"}
+
+event: assistant_delta
+data: {"content":" title"}
+
+event: assistant_delta
+data: {"content":" should"}
+
+event: assistant_delta
+data: {"content":" be"}
+
+event: assistant_delta
+data: {"content":" something"}
+
+event: assistant_delta
+data: {"content":" like"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"First"}
+
+event: assistant_delta
+data: {"content":"-Time"}
+
+event: assistant_delta
+data: {"content":" Shop"}
+
+event: assistant_delta
+data: {"content":"per"}
+
+event: assistant_delta
+data: {"content":" Exclusive"}
+
+event: assistant_delta
+data: {"content":" Offer"}
+
+event: assistant_delta
+data: {"content":"\"."}
+
+event: assistant_delta
+data: {"content":" The"}
+
+event: assistant_delta
+data: {"content":" popup"}
+
+event: assistant_delta
+data: {"content":"_type"}
+
+event: assistant_delta
+data: {"content":" is"}
+
+event: assistant_delta
+data: {"content":" overlay"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" Goal"}
+
+event: assistant_delta
+data: {"content":" is"}
+
+event: assistant_delta
+data: {"content":" to"}
+
+event: assistant_delta
+data: {"content":" encourage"}
+
+event: assistant_delta
+data: {"content":" first"}
+
+event: assistant_delta
+data: {"content":" purchase"}
+
+event: assistant_delta
+data: {"content":" with"}
+
+event: assistant_delta
+data: {"content":" a"}
+
+event: assistant_delta
+data: {"content":" discount"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" Audience"}
+
+event: assistant_delta
+data: {"content":" is"}
+
+event: assistant_delta
+data: {"content":" first"}
+
+event: assistant_delta
+data: {"content":"-time"}
+
+event: assistant_delta
+data: {"content":" shoppers"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" Offer"}
+
+event: assistant_delta
+data: {"content":" is"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":"%"}
+
+event: assistant_delta
+data: {"content":" off"}
+
+event: assistant_delta
+data: {"content":" with"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" code"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" Template"}
+
+event: assistant_delta
+data: {"content":" slug"}
+
+event: assistant_delta
+data: {"content":" might"}
+
+event: assistant_delta
+data: {"content":" be"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"exit"}
+
+event: assistant_delta
+data: {"content":"-int"}
+
+event: assistant_delta
+data: {"content":"ent"}
+
+event: assistant_delta
+data: {"content":"-overlay"}
+
+event: assistant_delta
+data: {"content":"\"."}
+
+event: assistant_delta
+data: {"content":" Trigger"}
+
+event: assistant_delta
+data: {"content":" is"}
+
+event: assistant_delta
+data: {"content":" exit"}
+
+event: assistant_delta
+data: {"content":" intent"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" Root"}
+
+event: assistant_delta
+data: {"content":" attributes"}
+
+event: assistant_delta
+data: {"content":" would"}
+
+event: assistant_delta
+data: {"content":" include"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" background"}
+
+event: assistant_delta
+data: {"content":" image"}
+
+event: assistant_delta
+data: {"content":" and"}
+
+event: assistant_delta
+data: {"content":" brand"}
+
+event: assistant_delta
+data: {"content":" colors"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" Content"}
+
+event: assistant_delta
+data: {"content":" blocks"}
+
+event: assistant_delta
+data: {"content":" need"}
+
+event: assistant_delta
+data: {"content":" to"}
+
+event: assistant_delta
+data: {"content":" include"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" Coupon"}
+
+event: assistant_delta
+data: {"content":" block"}
+
+event: assistant_delta
+data: {"content":" with"}
+
+event: assistant_delta
+data: {"content":" W"}
+
+event: assistant_delta
+data: {"content":"ELCOME"}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":" and"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" Countdown"}
+
+event: assistant_delta
+data: {"content":" block"}
+
+event: assistant_delta
+data: {"content":" for"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":"2"}
+
+event: assistant_delta
+data: {"content":" hours"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" The"}
+
+event: assistant_delta
+data: {"content":" conversion"}
+
+event: assistant_delta
+data: {"content":" rationale"}
+
+event: assistant_delta
+data: {"content":" would"}
+
+event: assistant_delta
+data: {"content":" be"}
+
+event: assistant_delta
+data: {"content":" urgency"}
+
+event: assistant_delta
+data: {"content":" and"}
+
+event: assistant_delta
+data: {"content":" exclus"}
+
+event: assistant_delta
+data: {"content":"ivity"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" Notes"}
+
+event: assistant_delta
+data: {"content":" might"}
+
+event: assistant_delta
+data: {"content":" mention"}
+
+event: assistant_delta
+data: {"content":" using"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" brand"}
+
+event: assistant_delta
+data: {"content":"'s"}
+
+event: assistant_delta
+data: {"content":" primary"}
+
+event: assistant_delta
+data: {"content":" color"}
+
+event: assistant_delta
+data: {"content":" for"}
+
+event: assistant_delta
+data: {"content":" buttons"}
+
+event: assistant_delta
+data: {"content":".\n\n"}
+
+event: assistant_delta
+data: {"content":"I"}
+
+event: assistant_delta
+data: {"content":" need"}
+
+event: assistant_delta
+data: {"content":" to"}
+
+event: assistant_delta
+data: {"content":" ensure"}
+
+event: assistant_delta
+data: {"content":" all"}
+
+event: assistant_delta
+data: {"content":" required"}
+
+event: assistant_delta
+data: {"content":" keys"}
+
+event: assistant_delta
+data: {"content":" are"}
+
+event: assistant_delta
+data: {"content":" present"}
+
+event: assistant_delta
+data: {"content":" in"}
+
+event: assistant_delta
+data: {"content":" popup"}
+
+event: assistant_delta
+data: {"content":"_draft"}
+
+event: assistant_delta
+data: {"content":":"}
+
+event: assistant_delta
+data: {"content":" title"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" popup"}
+
+event: assistant_delta
+data: {"content":"_type"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" goal"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" audience"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" offer"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" template"}
+
+event: assistant_delta
+data: {"content":"_slug"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" trigger"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" root"}
+
+event: assistant_delta
+data: {"content":"_attributes"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" content"}
+
+event: assistant_delta
+data: {"content":"_blocks"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" conversion"}
+
+event: assistant_delta
+data: {"content":"_r"}
+
+event: assistant_delta
+data: {"content":"ationale"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" notes"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" The"}
+
+event: assistant_delta
+data: {"content":" content"}
+
+event: assistant_delta
+data: {"content":"_blocks"}
+
+event: assistant_delta
+data: {"content":" should"}
+
+event: assistant_delta
+data: {"content":" have"}
+
+event: assistant_delta
+data: {"content":" at"}
+
+event: assistant_delta
+data: {"content":" least"}
+
+event: assistant_delta
+data: {"content":" one"}
+
+event: assistant_delta
+data: {"content":" block"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" so"}
+
+event: assistant_delta
+data: {"content":" including"}
+
+event: assistant_delta
+data: {"content":" both"}
+
+event: assistant_delta
+data: {"content":" Coupon"}
+
+event: assistant_delta
+data: {"content":" and"}
+
+event: assistant_delta
+data: {"content":" Countdown"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" The"}
+
+event: assistant_delta
+data: {"content":" root"}
+
+event: assistant_delta
+data: {"content":"_attributes"}
+
+event: assistant_delta
+data: {"content":" should"}
+
+event: assistant_delta
+data: {"content":" reference"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" media"}
+
+event: assistant_delta
+data: {"content":" item"}
+
+event: assistant_delta
+data: {"content":"'s"}
+
+event: assistant_delta
+data: {"content":" URL"}
+
+event: assistant_delta
+data: {"content":" and"}
+
+event: assistant_delta
+data: {"content":" apply"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" brand"}
+
+event: assistant_delta
+data: {"content":"'s"}
+
+event: assistant_delta
+data: {"content":" color"}
+
+event: assistant_delta
+data: {"content":" scheme"}
+
+event: assistant_delta
+data: {"content":".\n\n"}
+
+event: assistant_delta
+data: {"content":"Wait"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" brand"}
+
+event: assistant_delta
+data: {"content":"'s"}
+
+event: assistant_delta
+data: {"content":" color"}
+
+event: assistant_delta
+data: {"content":"Scheme"}
+
+event: assistant_delta
+data: {"content":" is"}
+
+event: assistant_delta
+data: {"content":" dark"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" but"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" media"}
+
+event: assistant_delta
+data: {"content":" item"}
+
+event: assistant_delta
+data: {"content":" uses"}
+
+event: assistant_delta
+data: {"content":" a"}
+
+event: assistant_delta
+data: {"content":" light"}
+
+event: assistant_delta
+data: {"content":" background"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" However"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" brand"}
+
+event: assistant_delta
+data: {"content":"'s"}
+
+event: assistant_delta
+data: {"content":" colors"}
+
+event: assistant_delta
+data: {"content":" include"}
+
+event: assistant_delta
+data: {"content":" a"}
+
+event: assistant_delta
+data: {"content":" white"}
+
+event: assistant_delta
+data: {"content":" background"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" Maybe"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" dark"}
+
+event: assistant_delta
+data: {"content":" color"}
+
+event: assistant_delta
+data: {"content":"Scheme"}
+
+event: assistant_delta
+data: {"content":" refers"}
+
+event: assistant_delta
+data: {"content":" to"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" overall"}
+
+event: assistant_delta
+data: {"content":" brand"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" but"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" popup"}
+
+event: assistant_delta
+data: {"content":" uses"}
+
+event: assistant_delta
+data: {"content":" a"}
+
+event: assistant_delta
+data: {"content":" light"}
+
+event: assistant_delta
+data: {"content":" background"}
+
+event: assistant_delta
+data: {"content":" with"}
+
+event: assistant_delta
+data: {"content":" dark"}
+
+event: assistant_delta
+data: {"content":" text"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" That"}
+
+event: assistant_delta
+data: {"content":" should"}
+
+event: assistant_delta
+data: {"content":" be"}
+
+event: assistant_delta
+data: {"content":" okay"}
+
+event: assistant_delta
+data: {"content":" as"}
+
+event: assistant_delta
+data: {"content":" long"}
+
+event: assistant_delta
+data: {"content":" as"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" text"}
+
+event: assistant_delta
+data: {"content":" colors"}
+
+event: assistant_delta
+data: {"content":" are"}
+
+event: assistant_delta
+data: {"content":" set"}
+
+event: assistant_delta
+data: {"content":" appropriately"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" The"}
+
+event: assistant_delta
+data: {"content":" text"}
+
+event: assistant_delta
+data: {"content":"Primary"}
+
+event: assistant_delta
+data: {"content":" is"}
+
+event: assistant_delta
+data: {"content":" #"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" which"}
+
+event: assistant_delta
+data: {"content":" is"}
+
+event: assistant_delta
+data: {"content":" black"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" so"}
+
+event: assistant_delta
+data: {"content":" that"}
+
+event: assistant_delta
+data: {"content":" works"}
+
+event: assistant_delta
+data: {"content":" with"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" white"}
+
+event: assistant_delta
+data: {"content":" background"}
+
+event: assistant_delta
+data: {"content":".\n\n"}
+
+event: assistant_delta
+data: {"content":"Putting"}
+
+event: assistant_delta
+data: {"content":" it"}
+
+event: assistant_delta
+data: {"content":" all"}
+
+event: assistant_delta
+data: {"content":" together"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" JSON"}
+
+event: assistant_delta
+data: {"content":" object"}
+
+event: assistant_delta
+data: {"content":" will"}
+
+event: assistant_delta
+data: {"content":" have"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" assistant"}
+
+event: assistant_delta
+data: {"content":"_message"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" clar"}
+
+event: assistant_delta
+data: {"content":"ifying"}
+
+event: assistant_delta
+data: {"content":"_question"}
+
+event: assistant_delta
+data: {"content":" ("}
+
+event: assistant_delta
+data: {"content":"if"}
+
+event: assistant_delta
+data: {"content":" needed"}
+
+event: assistant_delta
+data: {"content":"),"}
+
+event: assistant_delta
+data: {"content":" suggested"}
+
+event: assistant_delta
+data: {"content":"_prom"}
+
+event: assistant_delta
+data: {"content":"pts"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" media"}
+
+event: assistant_delta
+data: {"content":"_items"}
+
+event: assistant_delta
+data: {"content":" ("}
+
+event: assistant_delta
+data: {"content":"the"}
+
+event: assistant_delta
+data: {"content":" selected"}
+
+event: assistant_delta
+data: {"content":" background"}
+
+event: assistant_delta
+data: {"content":"),"}
+
+event: assistant_delta
+data: {"content":" and"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" popup"}
+
+event: assistant_delta
+data: {"content":"_draft"}
+
+event: assistant_delta
+data: {"content":" with"}
+
+event: assistant_delta
+data: {"content":" all"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" necessary"}
+
+event: assistant_delta
+data: {"content":" keys"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" Since"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" user"}
+
+event: assistant_delta
+data: {"content":" provided"}
+
+event: assistant_delta
+data: {"content":" enough"}
+
+event: assistant_delta
+data: {"content":" information"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" clar"}
+
+event: assistant_delta
+data: {"content":"ifying"}
+
+event: assistant_delta
+data: {"content":"_question"}
+
+event: assistant_delta
+data: {"content":" can"}
+
+event: assistant_delta
+data: {"content":" be"}
+
+event: assistant_delta
+data: {"content":" empty"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" and"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" popup"}
+
+event: assistant_delta
+data: {"content":"_draft"}
+
+event: assistant_delta
+data: {"content":" is"}
+
+event: assistant_delta
+data: {"content":" built"}
+
+event: assistant_delta
+data: {"content":" based"}
+
+event: assistant_delta
+data: {"content":" on"}
+
+event: assistant_delta
+data: {"content":" the"}
+
+event: assistant_delta
+data: {"content":" given"}
+
+event: assistant_delta
+data: {"content":" data"}
+
+event: assistant_delta
+data: {"content":".\n"}
+
+event: assistant_delta
+data: {"content":"<\/think>"}
+
+event: assistant_delta
+data: {"content":"\n\n"}
+
+event: assistant_delta
+data: {"content":"{\n"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"assistant"}
+
+event: assistant_delta
+data: {"content":"_message"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"Exit"}
+
+event: assistant_delta
+data: {"content":"-int"}
+
+event: assistant_delta
+data: {"content":"ent"}
+
+event: assistant_delta
+data: {"content":" overlay"}
+
+event: assistant_delta
+data: {"content":" popup"}
+
+event: assistant_delta
+data: {"content":" created"}
+
+event: assistant_delta
+data: {"content":" with"}
+
+event: assistant_delta
+data: {"content":" warm"}
+
+event: assistant_delta
+data: {"content":" gradient"}
+
+event: assistant_delta
+data: {"content":" background"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":"%"}
+
+event: assistant_delta
+data: {"content":" off"}
+
+event: assistant_delta
+data: {"content":" coupon"}
+
+event: assistant_delta
+data: {"content":","}
+
+event: assistant_delta
+data: {"content":" and"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":"2"}
+
+event: assistant_delta
+data: {"content":"-hour"}
+
+event: assistant_delta
+data: {"content":" countdown"}
+
+event: assistant_delta
+data: {"content":" as"}
+
+event: assistant_delta
+data: {"content":" requested"}
+
+event: assistant_delta
+data: {"content":".\",\n"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"clar"}
+
+event: assistant_delta
+data: {"content":"ifying"}
+
+event: assistant_delta
+data: {"content":"_question"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \"\",\n"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"s"}
+
+event: assistant_delta
+data: {"content":"uggested"}
+
+event: assistant_delta
+data: {"content":"_prom"}
+
+event: assistant_delta
+data: {"content":"pts"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" [],\n"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"media"}
+
+event: assistant_delta
+data: {"content":"_items"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" [\n"}
+
+event: assistant_delta
+data: {"content":"   "}
+
+event: assistant_delta
+data: {"content":" {\n"}
+
+event: assistant_delta
+data: {"content":"     "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"id"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":"3"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"2"}
+
+event: assistant_delta
+data: {"content":"4"}
+
+event: assistant_delta
+data: {"content":",\n"}
+
+event: assistant_delta
+data: {"content":"     "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"url"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"http"}
+
+event: assistant_delta
+data: {"content":":\/\/"}
+
+event: assistant_delta
+data: {"content":"localhost"}
+
+event: assistant_delta
+data: {"content":":"}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"3"}
+
+event: assistant_delta
+data: {"content":"\/wp"}
+
+event: assistant_delta
+data: {"content":"-content"}
+
+event: assistant_delta
+data: {"content":"\/uploads"}
+
+event: assistant_delta
+data: {"content":"\/"}
+
+event: assistant_delta
+data: {"content":"2"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"2"}
+
+event: assistant_delta
+data: {"content":"6"}
+
+event: assistant_delta
+data: {"content":"\/"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":"\/"}
+
+event: assistant_delta
+data: {"content":"first"}
+
+event: assistant_delta
+data: {"content":"-time"}
+
+event: assistant_delta
+data: {"content":"-sh"}
+
+event: assistant_delta
+data: {"content":"opper"}
+
+event: assistant_delta
+data: {"content":"-ex"}
+
+event: assistant_delta
+data: {"content":"it"}
+
+event: assistant_delta
+data: {"content":"-off"}
+
+event: assistant_delta
+data: {"content":"er"}
+
+event: assistant_delta
+data: {"content":"-"}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":"-off"}
+
+event: assistant_delta
+data: {"content":"-background"}
+
+event: assistant_delta
+data: {"content":"-"}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":".web"}
+
+event: assistant_delta
+data: {"content":"p"}
+
+event: assistant_delta
+data: {"content":"\"\n"}
+
+event: assistant_delta
+data: {"content":"   "}
+
+event: assistant_delta
+data: {"content":" }\n"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":" ],\n"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"popup"}
+
+event: assistant_delta
+data: {"content":"_draft"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" {\n"}
+
+event: assistant_delta
+data: {"content":"   "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"title"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"First"}
+
+event: assistant_delta
+data: {"content":"-Time"}
+
+event: assistant_delta
+data: {"content":" Shop"}
+
+event: assistant_delta
+data: {"content":"per"}
+
+event: assistant_delta
+data: {"content":" Exclusive"}
+
+event: assistant_delta
+data: {"content":" Offer"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"   "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"popup"}
+
+event: assistant_delta
+data: {"content":"_type"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"overlay"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"   "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"goal"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"Enc"}
+
+event: assistant_delta
+data: {"content":"ourage"}
+
+event: assistant_delta
+data: {"content":" first"}
+
+event: assistant_delta
+data: {"content":" purchase"}
+
+event: assistant_delta
+data: {"content":" with"}
+
+event: assistant_delta
+data: {"content":" time"}
+
+event: assistant_delta
+data: {"content":"-sensitive"}
+
+event: assistant_delta
+data: {"content":" discount"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"   "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"aud"}
+
+event: assistant_delta
+data: {"content":"ience"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"First"}
+
+event: assistant_delta
+data: {"content":"-time"}
+
+event: assistant_delta
+data: {"content":" shoppers"}
+
+event: assistant_delta
+data: {"content":" showing"}
+
+event: assistant_delta
+data: {"content":" exit"}
+
+event: assistant_delta
+data: {"content":" intent"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"   "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"offer"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":"%"}
+
+event: assistant_delta
+data: {"content":" off"}
+
+event: assistant_delta
+data: {"content":" first"}
+
+event: assistant_delta
+data: {"content":" order"}
+
+event: assistant_delta
+data: {"content":" ("}
+
+event: assistant_delta
+data: {"content":"code"}
+
+event: assistant_delta
+data: {"content":":"}
+
+event: assistant_delta
+data: {"content":" W"}
+
+event: assistant_delta
+data: {"content":"ELCOME"}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":")"}
+
+event: assistant_delta
+data: {"content":" -"}
+
+event: assistant_delta
+data: {"content":" expires"}
+
+event: assistant_delta
+data: {"content":" in"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":"2"}
+
+event: assistant_delta
+data: {"content":" hours"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"   "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"template"}
+
+event: assistant_delta
+data: {"content":"_slug"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"exit"}
+
+event: assistant_delta
+data: {"content":"-int"}
+
+event: assistant_delta
+data: {"content":"ent"}
+
+event: assistant_delta
+data: {"content":"-overlay"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"   "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"trigger"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"exit"}
+
+event: assistant_delta
+data: {"content":"_intent"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"   "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"root"}
+
+event: assistant_delta
+data: {"content":"_attributes"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" {\n"}
+
+event: assistant_delta
+data: {"content":"     "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"background"}
+
+event: assistant_delta
+data: {"content":"_image"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"http"}
+
+event: assistant_delta
+data: {"content":":\/\/"}
+
+event: assistant_delta
+data: {"content":"localhost"}
+
+event: assistant_delta
+data: {"content":":"}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"3"}
+
+event: assistant_delta
+data: {"content":"\/wp"}
+
+event: assistant_delta
+data: {"content":"-content"}
+
+event: assistant_delta
+data: {"content":"\/uploads"}
+
+event: assistant_delta
+data: {"content":"\/"}
+
+event: assistant_delta
+data: {"content":"2"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"2"}
+
+event: assistant_delta
+data: {"content":"6"}
+
+event: assistant_delta
+data: {"content":"\/"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":"\/"}
+
+event: assistant_delta
+data: {"content":"first"}
+
+event: assistant_delta
+data: {"content":"-time"}
+
+event: assistant_delta
+data: {"content":"-sh"}
+
+event: assistant_delta
+data: {"content":"opper"}
+
+event: assistant_delta
+data: {"content":"-ex"}
+
+event: assistant_delta
+data: {"content":"it"}
+
+event: assistant_delta
+data: {"content":"-off"}
+
+event: assistant_delta
+data: {"content":"er"}
+
+event: assistant_delta
+data: {"content":"-"}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":"-off"}
+
+event: assistant_delta
+data: {"content":"-background"}
+
+event: assistant_delta
+data: {"content":"-"}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":".web"}
+
+event: assistant_delta
+data: {"content":"p"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"     "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"background"}
+
+event: assistant_delta
+data: {"content":"_color"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \"#"}
+
+event: assistant_delta
+data: {"content":"FFFFFF"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"     "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"color"}
+
+event: assistant_delta
+data: {"content":"_scheme"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"dark"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"     "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"font"}
+
+event: assistant_delta
+data: {"content":"_family"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"Plus"}
+
+event: assistant_delta
+data: {"content":" Jakarta"}
+
+event: assistant_delta
+data: {"content":" Sans"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"     "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"primary"}
+
+event: assistant_delta
+data: {"content":"_color"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \"#"}
+
+event: assistant_delta
+data: {"content":"7"}
+
+event: assistant_delta
+data: {"content":"D"}
+
+event: assistant_delta
+data: {"content":"4"}
+
+event: assistant_delta
+data: {"content":"EFF"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"     "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"text"}
+
+event: assistant_delta
+data: {"content":"_color"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \"#"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"0"}
+
+event: assistant_delta
+data: {"content":"\"\n"}
+
+event: assistant_delta
+data: {"content":"   "}
+
+event: assistant_delta
+data: {"content":" },\n"}
+
+event: assistant_delta
+data: {"content":"   "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"content"}
+
+event: assistant_delta
+data: {"content":"_blocks"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" [\n"}
+
+event: assistant_delta
+data: {"content":"     "}
+
+event: assistant_delta
+data: {"content":" {\n"}
+
+event: assistant_delta
+data: {"content":"       "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"type"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"coupon"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"       "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"attributes"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" {\n"}
+
+event: assistant_delta
+data: {"content":"         "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"code"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"W"}
+
+event: assistant_delta
+data: {"content":"ELCOME"}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"         "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"label"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":"%"}
+
+event: assistant_delta
+data: {"content":" OFF"}
+
+event: assistant_delta
+data: {"content":" YOUR"}
+
+event: assistant_delta
+data: {"content":" FIRST"}
+
+event: assistant_delta
+data: {"content":" ORDER"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"         "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"description"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"Limited"}
+
+event: assistant_delta
+data: {"content":" time"}
+
+event: assistant_delta
+data: {"content":" offer"}
+
+event: assistant_delta
+data: {"content":" \u2013"}
+
+event: assistant_delta
+data: {"content":" expires"}
+
+event: assistant_delta
+data: {"content":" in"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":"2"}
+
+event: assistant_delta
+data: {"content":" hours"}
+
+event: assistant_delta
+data: {"content":"!\"\n"}
+
+event: assistant_delta
+data: {"content":"       "}
+
+event: assistant_delta
+data: {"content":" }\n"}
+
+event: assistant_delta
+data: {"content":"     "}
+
+event: assistant_delta
+data: {"content":" },\n"}
+
+event: assistant_delta
+data: {"content":"     "}
+
+event: assistant_delta
+data: {"content":" {\n"}
+
+event: assistant_delta
+data: {"content":"       "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"type"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"count"}
+
+event: assistant_delta
+data: {"content":"down"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"       "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"attributes"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" {\n"}
+
+event: assistant_delta
+data: {"content":"         "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"time"}
+
+event: assistant_delta
+data: {"content":"_limit"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"2"}
+
+event: assistant_delta
+data: {"content":"h"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"         "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"label"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"Offer"}
+
+event: assistant_delta
+data: {"content":" expires"}
+
+event: assistant_delta
+data: {"content":" in"}
+
+event: assistant_delta
+data: {"content":"\"\n"}
+
+event: assistant_delta
+data: {"content":"       "}
+
+event: assistant_delta
+data: {"content":" }\n"}
+
+event: assistant_delta
+data: {"content":"     "}
+
+event: assistant_delta
+data: {"content":" },\n"}
+
+event: assistant_delta
+data: {"content":"     "}
+
+event: assistant_delta
+data: {"content":" {\n"}
+
+event: assistant_delta
+data: {"content":"       "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"type"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"cta"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"       "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"attributes"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" {\n"}
+
+event: assistant_delta
+data: {"content":"         "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"text"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"Shop"}
+
+event: assistant_delta
+data: {"content":" Now"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"         "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"button"}
+
+event: assistant_delta
+data: {"content":"_style"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"primary"}
+
+event: assistant_delta
+data: {"content":"\",\n"}
+
+event: assistant_delta
+data: {"content":"         "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"alignment"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"center"}
+
+event: assistant_delta
+data: {"content":"\"\n"}
+
+event: assistant_delta
+data: {"content":"       "}
+
+event: assistant_delta
+data: {"content":" }\n"}
+
+event: assistant_delta
+data: {"content":"     "}
+
+event: assistant_delta
+data: {"content":" }\n"}
+
+event: assistant_delta
+data: {"content":"   "}
+
+event: assistant_delta
+data: {"content":" ],\n"}
+
+event: assistant_delta
+data: {"content":"   "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"conversion"}
+
+event: assistant_delta
+data: {"content":"_r"}
+
+event: assistant_delta
+data: {"content":"ationale"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"U"}
+
+event: assistant_delta
+data: {"content":"rg"}
+
+event: assistant_delta
+data: {"content":"ency"}
+
+event: assistant_delta
+data: {"content":" ("}
+
+event: assistant_delta
+data: {"content":"2"}
+
+event: assistant_delta
+data: {"content":"-hour"}
+
+event: assistant_delta
+data: {"content":" countdown"}
+
+event: assistant_delta
+data: {"content":")"}
+
+event: assistant_delta
+data: {"content":" +"}
+
+event: assistant_delta
+data: {"content":" exclus"}
+
+event: assistant_delta
+data: {"content":"ivity"}
+
+event: assistant_delta
+data: {"content":" ("}
+
+event: assistant_delta
+data: {"content":"first"}
+
+event: assistant_delta
+data: {"content":"-time"}
+
+event: assistant_delta
+data: {"content":" shopper"}
+
+event: assistant_delta
+data: {"content":" offer"}
+
+event: assistant_delta
+data: {"content":")"}
+
+event: assistant_delta
+data: {"content":" +"}
+
+event: assistant_delta
+data: {"content":" clear"}
+
+event: assistant_delta
+data: {"content":" value"}
+
+event: assistant_delta
+data: {"content":" proposition"}
+
+event: assistant_delta
+data: {"content":" ("}
+
+event: assistant_delta
+data: {"content":"1"}
+
+event: assistant_delta
+data: {"content":"5"}
+
+event: assistant_delta
+data: {"content":"%"}
+
+event: assistant_delta
+data: {"content":" off"}
+
+event: assistant_delta
+data: {"content":")\",\n"}
+
+event: assistant_delta
+data: {"content":"   "}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"notes"}
+
+event: assistant_delta
+data: {"content":"\":"}
+
+event: assistant_delta
+data: {"content":" \""}
+
+event: assistant_delta
+data: {"content":"Uses"}
+
+event: assistant_delta
+data: {"content":" brand"}
+
+event: assistant_delta
+data: {"content":"'s"}
+
+event: assistant_delta
+data: {"content":" primary"}
+
+event: assistant_delta
+data: {"content":" purple"}
+
+event: assistant_delta
+data: {"content":" (#"}
+
+event: assistant_delta
+data: {"content":"7"}
+
+event: assistant_delta
+data: {"content":"D"}
+
+event: assistant_delta
+data: {"content":"4"}
+
+event: assistant_delta
+data: {"content":"EFF"}
+
+event: assistant_delta
+data: {"content":")"}
+
+event: assistant_delta
+data: {"content":" for"}
+
+event: assistant_delta
+data: {"content":" C"}
+
+event: assistant_delta
+data: {"content":"TA"}
+
+event: assistant_delta
+data: {"content":" buttons"}
+
+event: assistant_delta
+data: {"content":" and"}
+
+event: assistant_delta
+data: {"content":" accents"}
+
+event: assistant_delta
+data: {"content":"."}
+
+event: assistant_delta
+data: {"content":" Warm"}
+
+event: assistant_delta
+data: {"content":" gradient"}
+
+event: assistant_delta
+data: {"content":" background"}
+
+event: assistant_delta
+data: {"content":" align"}
+
+event: assistant_delta
+data: {"content":"s"}
+
+event: assistant_delta
+data: {"content":" with"}
+
+event: assistant_delta
+data: {"content":" brand"}
+
+event: assistant_delta
+data: {"content":"'s"}
+
+event: assistant_delta
+data: {"content":" light"}
+
+event: assistant_delta
+data: {"content":"-themed"}
+
+event: assistant_delta
+data: {"content":" first"}
+
+event: assistant_delta
+data: {"content":"-time"}
+
+event: assistant_delta
+data: {"content":" shopper"}
+
+event: assistant_delta
+data: {"content":" exit"}
+
+event: assistant_delta
+data: {"content":" offer"}
+
+event: assistant_delta
+data: {"content":" visuals"}
+
+event: assistant_delta
+data: {"content":".\"\n"}
+
+event: assistant_delta
+data: {"content":" "}
+
+event: assistant_delta
+data: {"content":" }\n"}
+
+event: assistant_delta
+data: {"content":"}"}
+
+event: error
+data: {"message":"The AI connector did not return any model output. This often happens when the connected provider account has no remaining credits or quota, or when the provider returns a failed API payload. Check the AI connector account, billing, and quota details, then try again. Original provider error: Unexpected Vercel AI Gateway API response: Missing the \"choices\" key.","code":"fooconvert_ai_popup_builder_no_output","data":{"status":502,"provider":"vercelaigateway","provider_error_code":"prompt_builder_error","provider_error_message":"Unexpected Vercel AI Gateway API response: Missing the \"choices\" key.","provider_error_data":{"status":500,"exception_class":"WordPress\\AiClient\\Providers\\Http\\Exception\\ResponseException"},"likely_causes":["provider_account_quota_or_credits_exhausted","provider_api_failed_before_output"]}}
+
+event: done
+data: {"ok":false}

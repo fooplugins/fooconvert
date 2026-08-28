@@ -81,7 +81,7 @@ class Settings {
         $params = array();
         foreach ( $items as $item ) {
             $param = self::normalize_param_name( is_scalar( $item ) ? (string) $item : '' );
-            if ( '' !== $param ) {
+            if ( '' !== $param && ! self::is_required_capability_param( $param ) ) {
                 $params[ $param ] = $param;
             }
         }
@@ -97,6 +97,247 @@ class Settings {
      */
     public static function sanitize_model( $value ): string {
         return is_string( $value ) ? sanitize_text_field( $value ) : '';
+    }
+
+    /**
+     * Parses a provider/model override.
+     *
+     * Model IDs may contain additional slashes, so the first slash separates
+     * the AI provider from the provider-specific model name.
+     *
+     * @param mixed $value Raw model override.
+     * @return array{provider:string,model:string}|array{}
+     */
+    public static function parse_model_override( $value ): array {
+        $value = self::sanitize_model( $value );
+        if ( '' === $value ) {
+            return array();
+        }
+
+        $separator = strpos( $value, '/' );
+        if ( false === $separator ) {
+            return array();
+        }
+
+        $provider = trim( substr( $value, 0, $separator ) );
+        $model    = trim( substr( $value, $separator + 1 ) );
+        if ( '' === $provider || '' === $model ) {
+            return array();
+        }
+
+        return array(
+            'provider' => $provider,
+            'model'    => $model,
+        );
+    }
+
+    /**
+     * Applies a model override to a prompt builder.
+     *
+     * Overrides must resolve to a concrete provider/model instance so the
+     * prompt uses using_model() and never falls back to discovery.
+     *
+     * @param mixed $prompt_builder Prompt builder instance.
+     * @param mixed $override_model Raw model override.
+     * @return mixed|\WP_Error
+     */
+    public static function apply_model_override( $prompt_builder, $override_model ) {
+        $override_model = self::sanitize_model( $override_model );
+        if ( '' === $override_model ) {
+            return $prompt_builder;
+        }
+
+        $model_parts = self::parse_model_override( $override_model );
+        if ( empty( $model_parts ) ) {
+            return new \WP_Error(
+                'fooconvert_ai_popup_builder_invalid_model_override',
+                sprintf(
+                    /* translators: %s: AI model override value. */
+                    __( 'The AI model override "%s" must use provider/model-name format.', 'fooconvert' ),
+                    $override_model
+                ),
+                array( 'status' => 400 )
+            );
+        }
+
+        if ( ! is_callable( array( $prompt_builder, 'using_model' ) ) ) {
+            return new \WP_Error(
+                'fooconvert_ai_popup_builder_model_override_unsupported',
+                __( 'The AI client prompt builder cannot force an explicit model on this site.', 'fooconvert' ),
+                array( 'status' => 500 )
+            );
+        }
+
+        $model = self::resolve_model_override( $override_model, $model_parts );
+        if ( is_wp_error( $model ) ) {
+            return $model;
+        }
+
+        try {
+            return $prompt_builder->using_model( $model );
+        } catch ( \Throwable $error ) {
+            return new \WP_Error(
+                'fooconvert_ai_popup_builder_model_override_unavailable',
+                sprintf(
+                    /* translators: 1: AI model override value, 2: error message. */
+                    __( 'The AI model override "%1$s" could not be resolved: %2$s', 'fooconvert' ),
+                    $override_model,
+                    $error->getMessage()
+                ),
+                array(
+                    'status'   => 400,
+                    'provider' => $model_parts['provider'],
+                    'model'    => $model_parts['model'],
+                )
+            );
+        }
+    }
+
+    /**
+     * Tests whether a model override can be forced on a prompt builder.
+     *
+     * @param mixed $override_model Raw model override.
+     * @return array<string,string>|\WP_Error
+     */
+    public static function test_model_override( $override_model ) {
+        $override_model = self::sanitize_model( $override_model );
+        if ( '' === $override_model ) {
+            return new \WP_Error(
+                'fooconvert_ai_popup_builder_missing_model_override',
+                __( 'Enter a provider/model-name before testing.', 'fooconvert' ),
+                array( 'status' => 400 )
+            );
+        }
+
+        if ( ! function_exists( 'wp_ai_client_prompt' ) ) {
+            return new \WP_Error(
+                'fooconvert_ai_popup_builder_model_override_unavailable',
+                __( 'The WordPress AI client prompt builder is not available on this site.', 'fooconvert' ),
+                array( 'status' => 500 )
+            );
+        }
+
+        $model_parts = self::parse_model_override( $override_model );
+        $prompt      = self::apply_model_override( wp_ai_client_prompt(), $override_model );
+
+        if ( is_wp_error( $prompt ) ) {
+            return $prompt;
+        }
+
+        return array(
+            'model'    => $override_model,
+            'provider' => $model_parts['provider'] ?? '',
+            'name'     => $model_parts['model'] ?? '',
+        );
+    }
+
+    /**
+     * Resolves a provider/model override to an AI client model instance.
+     *
+     * @param string $override_model Sanitized model override.
+     * @param array{provider:string,model:string} $model_parts Parsed model override.
+     * @return object|\WP_Error
+     */
+    private static function resolve_model_override( string $override_model, array $model_parts ) {
+        if ( ! class_exists( '\WordPress\AiClient\AiClient' ) ) {
+            return new \WP_Error(
+                'fooconvert_ai_popup_builder_model_override_unavailable',
+                __( 'The WordPress AI client is not available to resolve the configured model override.', 'fooconvert' ),
+                array( 'status' => 500 )
+            );
+        }
+
+        try {
+            $registry = \WordPress\AiClient\AiClient::defaultRegistry();
+            if ( ! is_object( $registry ) || ! method_exists( $registry, 'getProviderModel' ) ) {
+                return new \WP_Error(
+                    'fooconvert_ai_popup_builder_model_override_unavailable',
+                    __( 'The WordPress AI client registry cannot resolve provider model overrides.', 'fooconvert' ),
+                    array( 'status' => 500 )
+                );
+            }
+
+            $reflection = new \ReflectionMethod( $registry, 'getProviderModel' );
+            $args       = array( $model_parts['provider'], $model_parts['model'] );
+            if ( $reflection->getNumberOfParameters() >= 3 ) {
+                if (
+                    ! class_exists( '\WordPress\AiClient\Providers\Models\DTO\ModelConfig' )
+                    || ! method_exists( '\WordPress\AiClient\Providers\Models\DTO\ModelConfig', 'fromArray' )
+                ) {
+                    return new \WP_Error(
+                        'fooconvert_ai_popup_builder_model_override_unavailable',
+                        __( 'The WordPress AI client cannot build model configuration for the configured model override.', 'fooconvert' ),
+                        array( 'status' => 500 )
+                    );
+                }
+
+                $args[] = \WordPress\AiClient\Providers\Models\DTO\ModelConfig::fromArray( array() );
+            }
+
+            $model = $reflection->invokeArgs( $registry, $args );
+
+            if ( is_object( $model ) ) {
+                return $model;
+            }
+
+            return new \WP_Error(
+                'fooconvert_ai_popup_builder_model_override_unavailable',
+                sprintf(
+                    /* translators: %s: AI model override value. */
+                    __( 'The AI model override "%s" did not resolve to a model instance.', 'fooconvert' ),
+                    $override_model
+                ),
+                array(
+                    'status'   => 400,
+                    'provider' => $model_parts['provider'],
+                    'model'    => $model_parts['model'],
+                )
+            );
+        } catch ( \Throwable $error ) {
+            return new \WP_Error(
+                'fooconvert_ai_popup_builder_model_override_unavailable',
+                sprintf(
+                    /* translators: 1: AI model override value, 2: error message. */
+                    __( 'The AI model override "%1$s" could not be resolved: %2$s', 'fooconvert' ),
+                    $override_model,
+                    $error->getMessage()
+                ),
+                array(
+                    'status'   => 400,
+                    'provider' => $model_parts['provider'],
+                    'model'    => $model_parts['model'],
+                )
+            );
+        }
+    }
+
+    /**
+     * Sanitizes a boolean setting.
+     *
+     * @param mixed $value Raw value.
+     * @param bool  $default Default value.
+     * @return bool
+     */
+    public static function sanitize_bool( $value, bool $default = false ): bool {
+        if ( is_bool( $value ) ) {
+            return $value;
+        }
+
+        if ( is_numeric( $value ) ) {
+            return 0 !== (int) $value;
+        }
+
+        if ( is_string( $value ) ) {
+            $value = strtolower( trim( $value ) );
+            if ( in_array( $value, array( '1', 'true', 'yes', 'on' ), true ) ) {
+                return true;
+            }
+            if ( in_array( $value, array( '0', 'false', 'no', 'off' ), true ) ) {
+                return false;
+            }
+        }
+
+        return $default;
     }
 
     /**
@@ -150,15 +391,19 @@ class Settings {
             'override_image_model' => self::sanitize_model(
                 fooconvert_get_setting( FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL, '' )
             ),
-            'disabled_params'      => $disabled_params,
-            'disabled_params_text' => implode( "\n", $disabled_params ),
-            'selected_block_names' => self::sanitize_selected_block_names(
+            'disabled_params'       => $disabled_params,
+            'disabled_params_text'  => implode( "\n", $disabled_params ),
+            'optimize_image_output' => self::sanitize_bool(
+                fooconvert_get_setting( FOOCONVERT_SETTING_AI_POPUP_BUILDER_OPTIMIZE_IMAGE_OUTPUT, true ),
+                true
+            ),
+            'selected_block_names'  => self::sanitize_selected_block_names(
                 fooconvert_get_setting( FOOCONVERT_SETTING_AI_POPUP_BUILDER_SELECTED_BLOCKS, array() )
             ),
-            'timeout'              => self::sanitize_timeout(
+            'timeout'               => self::sanitize_timeout(
                 fooconvert_get_setting( FOOCONVERT_SETTING_AI_POPUP_BUILDER_TIMEOUT, self::get_default_timeout() )
             ),
-            'max_tool_calls'       => self::sanitize_max_tool_calls(
+            'max_tool_calls'        => self::sanitize_max_tool_calls(
                 fooconvert_get_setting( FOOCONVERT_SETTING_AI_POPUP_BUILDER_MAX_TOOL_CALLS, self::get_default_max_tool_calls() )
             ),
         );
@@ -178,6 +423,7 @@ class Settings {
             'overrideImageModel'  => $settings['override_image_model'],
             'disabledParams'      => $settings['disabled_params'],
             'disabledParamsText'  => $settings['disabled_params_text'],
+            'optimizeImageOutput' => $settings['optimize_image_output'],
             'timeout'             => $settings['timeout'],
             'timeoutDefault'      => self::get_default_timeout(),
             'maxToolCalls'        => $settings['max_tool_calls'],
@@ -206,19 +452,21 @@ class Settings {
         if ( null === $disabled_params ) {
             $disabled_params = $payload['disabledParamsText'] ?? $payload['disabled_params_text'] ?? $current['disabled_params'];
         }
-        $timeout              = $payload['timeout'] ?? $current['timeout'];
-        $max_tool_calls       = $payload['maxToolCalls'] ?? $payload['max_tool_calls'] ?? $current['max_tool_calls'];
-        $selected_block_names = $payload['selectedBlockNames'] ?? $payload['selected_block_names'] ?? ( $current['selected_block_names'] ?? array() );
-        $disabled_params      = self::sanitize_disabled_params( $disabled_params );
+        $timeout               = $payload['timeout'] ?? $current['timeout'];
+        $max_tool_calls        = $payload['maxToolCalls'] ?? $payload['max_tool_calls'] ?? $current['max_tool_calls'];
+        $optimize_image_output = $payload['optimizeImageOutput'] ?? $payload['optimize_image_output'] ?? $current['optimize_image_output'];
+        $selected_block_names  = $payload['selectedBlockNames'] ?? $payload['selected_block_names'] ?? ( $current['selected_block_names'] ?? array() );
+        $disabled_params       = self::sanitize_disabled_params( $disabled_params );
 
         return array(
             'override_model'       => self::sanitize_model( $override_model ),
             'override_image_model' => self::sanitize_model( $override_image_model ),
-            'disabled_params'      => $disabled_params,
-            'disabled_params_text' => implode( "\n", $disabled_params ),
-            'selected_block_names' => self::sanitize_selected_block_names( $selected_block_names ),
-            'timeout'              => self::sanitize_timeout( $timeout ),
-            'max_tool_calls'       => self::sanitize_max_tool_calls( $max_tool_calls ),
+            'disabled_params'       => $disabled_params,
+            'disabled_params_text'  => implode( "\n", $disabled_params ),
+            'optimize_image_output' => self::sanitize_bool( $optimize_image_output, true ),
+            'selected_block_names'  => self::sanitize_selected_block_names( $selected_block_names ),
+            'timeout'               => self::sanitize_timeout( $timeout ),
+            'max_tool_calls'        => self::sanitize_max_tool_calls( $max_tool_calls ),
         );
     }
 
@@ -238,6 +486,7 @@ class Settings {
         $option[ FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_MODEL ] = $settings['override_model'];
         $option[ FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL ] = $settings['override_image_model'];
         $option[ FOOCONVERT_SETTING_AI_POPUP_BUILDER_DISABLED_PARAMS ] = $settings['disabled_params_text'];
+        $option[ FOOCONVERT_SETTING_AI_POPUP_BUILDER_OPTIMIZE_IMAGE_OUTPUT ] = $settings['optimize_image_output'];
         $option[ FOOCONVERT_SETTING_AI_POPUP_BUILDER_TIMEOUT ] = $settings['timeout'];
         $option[ FOOCONVERT_SETTING_AI_POPUP_BUILDER_MAX_TOOL_CALLS ] = $settings['max_tool_calls'];
         $option[ FOOCONVERT_SETTING_AI_POPUP_BUILDER_SELECTED_BLOCKS ] = $settings['selected_block_names'];
@@ -326,13 +575,15 @@ class Settings {
      */
     public static function get_param_aliases( string $param ): array {
         $param  = self::normalize_param_name( $param );
-        $groups = array(
-            array( 'temperature' ),
-            array( 'response_format', 'response_mime_type', 'response_schema', 'json', 'json_schema', 'output_mime_type' ),
-            array( 'tools', 'tool', 'tool_choice', 'functions', 'function_declarations', 'abilities' ),
-            array( 'model', 'models' ),
-            array( 'timeout', 'request_timeout', 'connect_timeout' ),
-            array( 'system_instruction', 'system', 'instructions' ),
+        $groups = array_merge(
+            self::get_required_capability_param_groups(),
+            array(
+                array( 'temperature' ),
+                array( 'output_mime_type' ),
+                array( 'model', 'models' ),
+                array( 'timeout', 'request_timeout', 'connect_timeout' ),
+                array( 'system_instruction', 'system', 'instructions' ),
+            )
         );
 
         foreach ( $groups as $group ) {
@@ -343,6 +594,40 @@ class Settings {
         }
 
         return array( $param );
+    }
+
+    /**
+     * Returns whether a parameter controls a required popup-builder model capability.
+     *
+     * @param string $param Parameter name.
+     * @return bool
+     */
+    public static function is_required_capability_param( string $param ): bool {
+        $param = self::normalize_param_name( $param );
+        if ( '' === $param ) {
+            return false;
+        }
+
+        foreach ( self::get_required_capability_param_groups() as $group ) {
+            $normalized_group = array_map( array( self::class, 'normalize_param_name' ), $group );
+            if ( in_array( $param, $normalized_group, true ) ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns parameter aliases that must never be disabled for text popup generation.
+     *
+     * @return array<int,array<int,string>>
+     */
+    private static function get_required_capability_param_groups(): array {
+        return array(
+            array( 'response_format', 'response_mime_type', 'response_schema', 'json', 'json_schema' ),
+            array( 'tools', 'tool', 'tool_choice', 'functions', 'function_declarations', 'abilities' ),
+        );
     }
 
     /**

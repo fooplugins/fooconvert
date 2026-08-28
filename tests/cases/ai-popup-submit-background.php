@@ -344,6 +344,7 @@ namespace {
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_MODEL', 'ai_popup_builder_override_model' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OVERRIDE_IMAGE_MODEL', 'ai_popup_builder_override_image_model' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_DISABLED_PARAMS', 'ai_popup_builder_disabled_params' );
+        define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_OPTIMIZE_IMAGE_OUTPUT', 'ai_popup_builder_optimize_image_output' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_TIMEOUT', 'ai_popup_builder_timeout' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_MAX_TOOL_CALLS', 'ai_popup_builder_max_tool_calls' );
         define( 'FOOCONVERT_SETTING_AI_POPUP_BUILDER_SELECTED_BLOCKS', 'ai_popup_builder_selected_blocks' );
@@ -362,7 +363,7 @@ namespace {
             'messages'               => array(
                 array(
                     'role'    => 'user',
-                    'content' => 'Build a popup for a launch discount.',
+                    'content' => 'Build a popup for a launch discount. Use the Coupon block with code SAVE20 and a countdown timer. Use a warm gradient background with soft depth.',
                 ),
             ),
             'popup_draft'            => array(),
@@ -404,9 +405,9 @@ namespace {
     );
 
     Assertions::same(
-        'Build a popup for a launch discount.',
+        'Use a warm gradient background with soft depth',
         (string) ( $GLOBALS['fc_generated_background_instructions'] ?? '' ),
-        'The automatic popup background generation should use the latest user message as additional direction.'
+        'The automatic popup background generation should keep only background-specific visual direction from the latest user message.'
     );
 
     Assertions::same(

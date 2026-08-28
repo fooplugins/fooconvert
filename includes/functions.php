@@ -125,9 +125,52 @@ function fooconvert_get_popup_editor_background() {
  */
 function fooconvert_set_setting( $key, $value ) {
     $settings = fooconvert_get_settings();
+    if ( !is_array( $settings ) ) {
+        $settings = array();
+    }
+
     $settings[$key] = $value;
 
-    update_option( FOOCONVERT_OPTION_DATA, $settings );
+    return update_option( FOOCONVERT_OPTION_DATA, $settings );
+}
+
+/**
+ * Normalizes the hidden dashboard panels setting to a list of panel keys.
+ *
+ * @param mixed $hidden_panels Stored hidden panel setting.
+ * @return string[]
+ */
+function fooconvert_normalize_hidden_dashboard_panels( $hidden_panels ) {
+    if ( !is_array( $hidden_panels ) ) {
+        return array();
+    }
+
+    $panels = array();
+    foreach ( $hidden_panels as $key => $value ) {
+        if ( is_string( $key ) && !is_numeric( $key ) ) {
+            $panels[] = $key;
+        }
+
+        if ( is_scalar( $value ) ) {
+            $panels[] = (string) $value;
+        }
+    }
+
+    return array_values( array_unique( array_filter( array_map( 'sanitize_key', $panels ) ) ) );
+}
+
+/**
+ * Checks if a dashboard panel is hidden.
+ *
+ * @param string $panel Dashboard panel key.
+ * @return bool
+ */
+function fooconvert_is_dashboard_panel_hidden( $panel ) {
+    return in_array(
+        sanitize_key( $panel ),
+        fooconvert_normalize_hidden_dashboard_panels( fooconvert_get_setting( 'hide_dashboard_panels', array() ) ),
+        true
+    );
 }
 
 /**

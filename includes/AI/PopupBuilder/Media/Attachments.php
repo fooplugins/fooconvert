@@ -12,11 +12,36 @@ use WordPress\AiClient\Files\DTO\File;
 use WordPress\AiClient\Files\Enums\FileTypeEnum;
 use WordPress\AiClient\Providers\DTO\ProviderMetadata;
 use WordPress\AiClient\Providers\Http\DTO\RequestOptions;
+use WordPress\AiClient\Providers\Models\DTO\ModelConfig;
 use WordPress\AiClient\Providers\Models\DTO\ModelMetadata;
 
 defined( 'ABSPATH' ) || exit;
 
 class Attachments {
+
+    private const OPTIMIZED_IMAGE_MIME_TYPE = 'image/webp';
+
+    private const OPTIMIZED_IMAGE_COMPRESSION = 80;
+
+    private const OPTIMIZED_IMAGE_BACKGROUND = 'opaque';
+
+    private const BACKGROUND_IMAGE_PROMPT_TEMPLATE = <<<'PROMPT'
+Create a polished {aspect_ratio} background-only image for a marketing {popup_type} popup canvas.
+
+{color_scheme_line}
+
+{palette_line}
+
+Composition: {composition}
+
+Keep a large uncluttered negative-space area for overlaid popup content; keep visual detail near edges or corners.
+
+{additional_visual_direction_line}
+
+Rules you MUST follow:
+
+No text, no numbers, no coupon codes, no logos, no UI elements, no buttons, no forms, no devices, no people, no faces, no hands, no watermarks, no embedded typography, no cluttered center, no dark center, no harsh shadows, no distracting product labels, no busy patterns, no overly saturated colors.
+PROMPT;
 
     public const META_GENERATED = '_fooconvert_ai_popup_generated';
 
@@ -49,6 +74,10 @@ class Attachments {
      */
     public function __construct() {
         add_action( 'init', array( $this, 'register_attachment_meta' ) );
+
+        if ( is_admin() ) {
+            add_action( 'add_meta_boxes_attachment', array( $this, 'add_generation_metabox' ) );
+        }
     }
 
     /**
@@ -75,7 +104,7 @@ class Attachments {
                 'type'              => 'string',
                 'single'            => true,
                 'show_in_rest'      => false,
-                'sanitize_callback' => 'sanitize_text_field',
+                'sanitize_callback' => 'sanitize_textarea_field',
             )
         );
 
@@ -100,6 +129,84 @@ class Attachments {
                 'sanitize_callback' => 'sanitize_text_field',
             )
         );
+    }
+
+    /**
+     * Registers the AI image generation metabox for generated attachments.
+     *
+     * @param mixed $post Attachment post object.
+     * @return void
+     */
+    public function add_generation_metabox( $post ): void {
+        $attachment_id = isset( $post->ID ) ? absint( $post->ID ) : 0;
+        if ( $attachment_id <= 0 || 'attachment' !== ( $post->post_type ?? '' ) ) {
+            return;
+        }
+
+        $prompt = self::get_generation_prompt( $attachment_id );
+        if ( '' === $prompt ) {
+            return;
+        }
+
+        add_meta_box(
+            'fooconvert-ai-image-generation',
+            __( 'AI Image Generation', 'fooconvert' ),
+            array( $this, 'render_generation_metabox' ),
+            'attachment',
+            'normal',
+            'default',
+            array(
+                'prompt' => $prompt,
+            )
+        );
+    }
+
+    /**
+     * Renders the AI image generation metabox.
+     *
+     * @param mixed               $post Attachment post object.
+     * @param array<string,mixed> $metabox Metabox context.
+     * @return void
+     */
+    public function render_generation_metabox( $post, array $metabox = array() ): void {
+        $attachment_id = isset( $post->ID ) ? absint( $post->ID ) : 0;
+        $prompt        = isset( $metabox['args']['prompt'] ) ? (string) $metabox['args']['prompt'] : self::get_generation_prompt( $attachment_id );
+
+        if ( '' === $prompt ) {
+            echo '<p>' . esc_html__( 'No AI generation prompt was stored for this attachment.', 'fooconvert' ) . '</p>';
+            return;
+        }
+
+        echo '<p class="description">' . esc_html__( 'Prompt used to generate this image.', 'fooconvert' ) . '</p>';
+        echo '<textarea class="large-text code" rows="10" readonly="readonly">' . esc_textarea( $prompt ) . '</textarea>';
+    }
+
+    /**
+     * Returns the stored prompt used to generate an attachment.
+     *
+     * @param int $attachment_id Attachment ID.
+     * @return string
+     */
+    private static function get_generation_prompt( int $attachment_id ): string {
+        if ( $attachment_id <= 0 ) {
+            return '';
+        }
+
+        return trim( (string) get_post_meta( $attachment_id, self::META_PROMPT, true ) );
+    }
+
+    /**
+     * Sanitizes stored generation prompts while preserving textarea-style formatting.
+     *
+     * @param mixed $prompt Prompt value.
+     * @return string
+     */
+    private static function sanitize_generation_prompt( $prompt ): string {
+        if ( function_exists( 'sanitize_textarea_field' ) ) {
+            return sanitize_textarea_field( (string) $prompt );
+        }
+
+        return sanitize_text_field( (string) $prompt );
     }
 
     /**
@@ -354,7 +461,7 @@ class Attachments {
             'title'       => sanitize_text_field( $attachment->post_title ),
             'description' => sanitize_text_field( $attachment->post_content ),
             'alt'         => sanitize_text_field( (string) get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ) ),
-            'prompt'      => sanitize_text_field( (string) get_post_meta( $attachment_id, self::META_PROMPT, true ) ),
+            'prompt'      => self::sanitize_generation_prompt( get_post_meta( $attachment_id, self::META_PROMPT, true ) ),
             'popupType'   => fooconvert_normalize_popup_type( get_post_meta( $attachment_id, self::META_POPUP_TYPE, true ) ),
             'width'       => is_array( $metadata ) ? absint( $metadata['width'] ?? 0 ) : 0,
             'height'      => is_array( $metadata ) ? absint( $metadata['height'] ?? 0 ) : 0,
@@ -405,47 +512,32 @@ class Attachments {
     }
 
     /**
-     * Generates a background-specific image prompt from popup and brand context.
+     * Builds a background-specific image prompt from popup format and brand colors.
      *
      * @param array<string,mixed> $popup_draft Popup draft.
      * @param array<string,mixed> $brand Brand payload.
      * @param string              $instructions Optional additional direction.
-     * @return string|WP_Error
+     * @return string
      */
-    public static function generate_prompt_for_background( array $popup_draft, array $brand = array(), string $instructions = '' ) {
-        if ( ! function_exists( 'wp_ai_client_prompt' ) ) {
-            return new WP_Error(
-                'fooconvert_ai_popup_media_unavailable',
-                __( 'The WordPress AI client is not available for popup background prompts.', 'fooconvert' )
-            );
-        }
-
+    public static function generate_prompt_for_background( array $popup_draft, array $brand = array(), string $instructions = '' ): string {
         $draft   = PopupBlueprint::sanitize_popup_draft( $popup_draft );
         $brand   = self::get_effective_brand_context( $brand );
-        $content = self::build_popup_background_context( $draft, $brand );
 
-        if ( '' !== trim( $instructions ) ) {
-            $content .= "\n\n<additional-direction>" . sanitize_text_field( $instructions ) . '</additional-direction>';
-        }
+        return self::build_background_image_prompt( $draft, $brand, $instructions );
+    }
 
-        $result = self::generate_text_prompt(
-            $content,
-            self::get_background_prompt_system_instruction(),
-            0.85
+    /**
+     * Returns the default popup background image prompt preview shown in the builder UI.
+     *
+     * @return string
+     */
+    public static function get_default_background_prompt_preview(): string {
+        return self::generate_prompt_for_background(
+            array(
+                'popup_type' => FOOCONVERT_POPUP_TYPE_POPUP,
+            ),
+            BrandManager::get_default_brand()
         );
-        if ( is_wp_error( $result ) ) {
-            return $result;
-        }
-
-        $prompt = sanitize_text_field( trim( (string) $result ) );
-        if ( '' === $prompt ) {
-            return new WP_Error(
-                'fooconvert_ai_popup_media_empty_prompt',
-                __( 'The AI client did not return a popup background prompt.', 'fooconvert' )
-            );
-        }
-
-        return $prompt;
     }
 
     /**
@@ -461,6 +553,10 @@ class Attachments {
 
         do {
             $prompt_builder = self::build_text_prompt_builder( $content, $system_instruction, $temperature );
+            if ( is_wp_error( $prompt_builder ) ) {
+                return $prompt_builder;
+            }
+
             $result         = $prompt_builder->generate_text();
 
             if ( ! is_wp_error( $result ) ) {
@@ -498,13 +594,13 @@ class Attachments {
             $prompt_builder = $prompt_builder->using_temperature( $temperature );
         }
 
-        if ( ! self::is_ai_param_disabled( 'model' ) && method_exists( $prompt_builder, 'using_model_preference' ) ) {
+        if ( ! self::is_ai_param_disabled( 'model' ) ) {
             $override_model = Settings::sanitize_model( $settings['override_model'] ?? '' );
             if ( '' !== $override_model ) {
-                return $prompt_builder->using_model_preference( $override_model );
+                return Settings::apply_model_override( $prompt_builder, $override_model );
             }
 
-            if ( function_exists( '\WordPress\AI\get_preferred_models_for_text_generation' ) ) {
+            if ( method_exists( $prompt_builder, 'using_model_preference' ) && function_exists( '\WordPress\AI\get_preferred_models_for_text_generation' ) ) {
                 $models = \WordPress\AI\get_preferred_models_for_text_generation();
                 if ( is_array( $models ) && ! empty( $models ) ) {
                     $prompt_builder = $prompt_builder->using_model_preference( ...$models );
@@ -658,16 +754,22 @@ class Attachments {
 
         $prompt_function = 'wp_ai_client_prompt';
         $prompt_builder  = $prompt_function( $prompt )
-            ->using_request_options( $request_options )
-            ->as_output_file_type( FileTypeEnum::inline() );
+            ->using_request_options( $request_options );
 
-        if ( ! self::is_ai_param_disabled( 'model' ) && method_exists( $prompt_builder, 'using_model_preference' ) ) {
+        $prompt_builder = self::apply_image_output_compression_settings( $prompt_builder )
+            ->as_output_file_type( FileTypeEnum::inline() );
+        $prompt_builder = self::apply_image_output_mime_type_settings( $prompt_builder );
+
+        if ( ! self::is_ai_param_disabled( 'model' ) ) {
             $settings       = self::get_ai_settings();
             $override_model = Settings::sanitize_model( $settings['override_image_model'] ?? '' );
 
             if ( '' !== $override_model ) {
-                $prompt_builder = $prompt_builder->using_model_preference( $override_model );
-            } elseif ( function_exists( '\WordPress\AI\get_preferred_image_models' ) ) {
+                $prompt_builder = Settings::apply_model_override( $prompt_builder, $override_model );
+                if ( is_wp_error( $prompt_builder ) ) {
+                    return $prompt_builder;
+                }
+            } elseif ( method_exists( $prompt_builder, 'using_model_preference' ) && function_exists( '\WordPress\AI\get_preferred_image_models' ) ) {
                 $models = \WordPress\AI\get_preferred_image_models();
                 if ( is_array( $models ) && ! empty( $models ) ) {
                     $prompt_builder = $prompt_builder->using_model_preference( ...$models );
@@ -722,6 +824,70 @@ class Attachments {
                 $error
             );
         }
+    }
+
+    /**
+     * Applies generated-image output MIME settings when enabled.
+     *
+     * @param mixed $prompt_builder Prompt builder.
+     * @return mixed
+     */
+    private static function apply_image_output_mime_type_settings( $prompt_builder ) {
+        if ( ! self::should_optimize_image_output() ) {
+            return $prompt_builder;
+        }
+
+        if (
+            ! self::is_ai_param_disabled( 'output_format' ) &&
+            ! self::is_ai_param_disabled( 'output_mime_type' ) &&
+            is_callable( array( $prompt_builder, 'as_output_mime_type' ) )
+        ) {
+            $prompt_builder = $prompt_builder->as_output_mime_type( self::OPTIMIZED_IMAGE_MIME_TYPE );
+        }
+
+        return $prompt_builder;
+    }
+
+    /**
+     * Applies generated-image output compression settings when enabled.
+     *
+     * @param mixed $prompt_builder Prompt builder.
+     * @return mixed
+     */
+    private static function apply_image_output_compression_settings( $prompt_builder ) {
+        if (
+            ! self::should_optimize_image_output() ||
+            ! class_exists( ModelConfig::class ) ||
+            ! is_callable( array( $prompt_builder, 'using_model_config' ) )
+        ) {
+            return $prompt_builder;
+        }
+
+        $model_config = new ModelConfig();
+        if ( ! method_exists( $model_config, 'setCustomOption' ) ) {
+            return $prompt_builder;
+        }
+
+        if ( ! self::is_ai_param_disabled( 'output_compression' ) ) {
+            $model_config->setCustomOption( 'output_compression', self::OPTIMIZED_IMAGE_COMPRESSION );
+        }
+
+        if ( ! self::is_ai_param_disabled( 'background' ) ) {
+            $model_config->setCustomOption( 'background', self::OPTIMIZED_IMAGE_BACKGROUND );
+        }
+
+        return $prompt_builder->using_model_config( $model_config );
+    }
+
+    /**
+     * Returns whether generated image output optimization should be requested.
+     *
+     * @return bool
+     */
+    private static function should_optimize_image_output(): bool {
+        $settings = self::get_ai_settings();
+
+        return Settings::sanitize_bool( $settings['optimize_image_output'] ?? true, true );
     }
 
     /**
@@ -795,7 +961,7 @@ class Attachments {
         $attachment_id = absint( $imported['id'] ?? 0 );
         if ( $attachment_id > 0 ) {
             update_post_meta( $attachment_id, self::META_GENERATED, 1 );
-            update_post_meta( $attachment_id, self::META_PROMPT, sanitize_text_field( (string) $args['prompt'] ) );
+            update_post_meta( $attachment_id, self::META_PROMPT, self::sanitize_generation_prompt( $args['prompt'] ) );
             update_post_meta( $attachment_id, self::META_POPUP_TYPE, fooconvert_normalize_popup_type( $args['popup_type'] ) );
             update_post_meta( $attachment_id, self::META_SOURCE, sanitize_text_field( (string) $args['source'] ) );
         }
@@ -901,7 +1067,10 @@ class Attachments {
     }
 
     /**
-     * Returns whether the popup draft already has a background image configured.
+     * Returns whether the popup draft itself has a background image configured.
+     *
+     * Template images are structural preview assets for the template library, not
+     * generated draft backgrounds.
      *
      * @param array<string,mixed> $popup_draft Popup draft.
      * @return bool
@@ -909,18 +1078,7 @@ class Attachments {
     public static function popup_draft_has_background( array $popup_draft ): bool {
         $draft = PopupBlueprint::sanitize_popup_draft( $popup_draft );
 
-        if ( self::root_attributes_have_background( $draft['root_attributes'] ?? array() ) ) {
-            return true;
-        }
-
-        $template_slug = isset( $draft['template_slug'] ) ? (string) $draft['template_slug'] : '';
-        if ( '' === $template_slug ) {
-            return false;
-        }
-
-        $template = Catalog::get_template_by_slug( $template_slug );
-
-        return is_array( $template ) && self::root_attributes_have_background( $template['attributes'] ?? array() );
+        return self::root_attributes_have_background( $draft['root_attributes'] ?? array() );
     }
 
     /**
@@ -1077,28 +1235,6 @@ class Attachments {
     }
 
     /**
-     * Returns the prompt-generation system instruction for popup backgrounds.
-     *
-     * @return string
-     */
-    private static function get_background_prompt_system_instruction(): string {
-        return implode(
-            "\n",
-            array(
-                'You generate a single image-generation prompt for a marketing popup background.',
-                'Output only the final prompt text with no commentary.',
-                'This asset must function as a background behind popup copy and CTA controls, not as a standalone poster.',
-                'Use the popup goal, audience, offer, popup format, and brand context as factual grounding.',
-                'Favor brand-aligned color, restrained contrast, large calm areas, and composition that preserves legibility for nearby text.',
-                'Do not include typography, UI chrome, mockups, watermarks, logos, or embedded text in the image.',
-                'Keep any subject matter secondary and supportive so the CTA remains dominant.',
-                'Respect the requested aspect ratio guidance implied by the popup format.',
-                'Keep the prompt concise but specific enough to generate a polished, production-ready popup background.',
-            )
-        );
-    }
-
-    /**
      * Builds the textual context used to generate popup image prompts.
      *
      * @param array<string,mixed> $draft Popup draft.
@@ -1144,57 +1280,43 @@ class Attachments {
     }
 
     /**
-     * Builds the textual context used to generate popup background prompts.
+     * Builds the deterministic prompt used directly for popup background images.
      *
      * @param array<string,mixed> $draft Popup draft.
      * @param array<string,mixed> $brand Brand payload.
+     * @param string              $instructions Optional additional visual direction.
      * @return string
      */
-    private static function build_popup_background_context( array $draft, array $brand ): string {
-        $copy_fragments      = self::extract_copy_fragments( $draft['content_blocks'] ?? array() );
-        $template            = Catalog::get_template_by_slug( (string) ( $draft['template_slug'] ?? '' ) );
-        $popup_type_key      = (string) ( $draft['popup_type'] ?? '' );
-        $popup_type          = fooconvert_get_popup_type_label( $popup_type_key );
-        $popup_ratio         = self::get_popup_background_aspect_ratio( $popup_type_key );
-        $popup_composition   = self::get_popup_background_composition_guidance( $popup_type_key );
-        $playbook            = Catalog::get_conversion_playbook();
-        $popup_guidance      = $playbook['popup_types'][ $popup_type_key ] ?? array();
-        $brand_context_lines = self::build_background_brand_context_lines( $brand );
+    private static function build_background_image_prompt( array $draft, array $brand, string $instructions = '' ): string {
+        $popup_type_key    = (string) ( $draft['popup_type'] ?? '' );
+        $popup_type        = fooconvert_get_popup_type_label( $popup_type_key );
+        $aspect_ratio      = self::get_popup_background_aspect_ratio( $popup_type_key );
+        $composition       = self::get_popup_background_composition_guidance( $popup_type_key );
+        $brand             = BrandManager::sanitize_brand( $brand );
+        $color_scheme      = self::sanitize_text( $brand['colorScheme'] ?? '' );
+        $palette_fragments = array();
 
-        $lines = array(
-            '<popup-background>',
-            'Title: ' . self::sanitize_text( $draft['title'] ?? '' ),
-            'Popup Type: ' . self::sanitize_text( $popup_type ),
-            'Target Aspect Ratio: ' . self::sanitize_text( $popup_ratio ),
-            'Goal: ' . self::sanitize_text( $draft['goal'] ?? '' ),
-            'Audience: ' . self::sanitize_text( $draft['audience'] ?? '' ),
-            'Offer: ' . self::sanitize_text( $draft['offer'] ?? '' ),
-            'Composition Guidance: ' . self::sanitize_text( $popup_composition ),
+        foreach ( array( 'primary', 'secondary', 'accent', 'background' ) as $color_key ) {
+            $color = self::sanitize_text( $brand['colors'][ $color_key ] ?? '' );
+            if ( '' !== $color ) {
+                $palette_fragments[] = $color_key . ' ' . $color;
+            }
+        }
+
+        $visual_direction = sanitize_text_field( $instructions );
+        $prompt           = strtr(
+            self::BACKGROUND_IMAGE_PROMPT_TEMPLATE,
+            array(
+                '{aspect_ratio}'                    => self::sanitize_text( $aspect_ratio ),
+                '{popup_type}'                      => self::sanitize_text( $popup_type ),
+                '{color_scheme_line}'               => '' !== $color_scheme ? 'Color scheme: ' . $color_scheme . '.' : '',
+                '{palette_line}'                    => ! empty( $palette_fragments ) ? 'Palette cues: ' . implode( ', ', $palette_fragments ) . '.' : '',
+                '{composition}'                     => self::sanitize_text( $composition ),
+                '{additional_visual_direction_line}' => '' !== trim( $visual_direction ) ? 'Additional visual direction, only for mood, palette, lighting, texture, or composition: ' . $visual_direction : '',
+            )
         );
 
-        if ( is_array( $template ) ) {
-            $lines[] = 'Template: ' . self::sanitize_text( $template['title'] ?? '' );
-            $lines[] = 'Template Description: ' . self::sanitize_text( $template['description'] ?? '' );
-        }
-
-        if ( ! empty( $copy_fragments ) ) {
-            $lines[] = 'Popup Copy Signals: ' . implode( ' | ', array_slice( $copy_fragments, 0, 8 ) );
-        }
-
-        if ( ! empty( $popup_guidance['best_for'] ) ) {
-            $lines[] = 'Popup Format Guidance: ' . self::sanitize_text( $popup_guidance['best_for'] );
-        }
-
-        if ( ! empty( $brand_context_lines ) ) {
-            $lines[] = '<brand>';
-            $lines   = array_merge( $lines, $brand_context_lines );
-            $lines[] = '</brand>';
-        }
-
-        $lines[] = 'Background Requirements: Create a background-only asset that is stylish but restrained, preserves generous negative space for headline and CTA copy, avoids embedded text, avoids UI elements, and does not compete with the conversion goal.';
-        $lines[] = '</popup-background>';
-
-        return implode( "\n", array_filter( $lines ) );
+        return trim( (string) preg_replace( "/\n{3,}/", "\n\n", $prompt ) );
     }
 
     /**
@@ -1353,20 +1475,43 @@ class Attachments {
      * @return string
      */
     private static function build_attachment_description( string $prompt, array $generated_image ): string {
+        unset( $prompt );
+
         $provider = sanitize_text_field( (string) ( $generated_image['provider_metadata']['name'] ?? '' ) );
         $model    = sanitize_text_field( (string) ( $generated_image['model_metadata']['name'] ?? '' ) );
-        $parts    = array_filter(
-            array(
-                /* translators: %s: AI provider name. */
-                $provider ? sprintf( __( 'Generated by %s', 'fooconvert' ), $provider ) : '',
-                /* translators: %s: AI model name. */
-                $model ? sprintf( __( 'using %s', 'fooconvert' ), $model ) : '',
-                /* translators: %s: image generation prompt. */
-                $prompt ? sprintf( __( 'Prompt: %s', 'fooconvert' ), $prompt ) : '',
-            )
-        );
 
-        return sanitize_text_field( implode( '. ', $parts ) );
+        if ( '' !== $provider && '' !== $model ) {
+            return sanitize_text_field(
+                sprintf(
+                    /* translators: 1: AI provider name, 2: AI model name. */
+                    __( 'Generated by %1$s using %2$s', 'fooconvert' ),
+                    $provider,
+                    $model
+                )
+            );
+        }
+
+        if ( '' !== $provider ) {
+            return sanitize_text_field(
+                sprintf(
+                    /* translators: %s: AI provider name. */
+                    __( 'Generated by %s', 'fooconvert' ),
+                    $provider
+                )
+            );
+        }
+
+        if ( '' !== $model ) {
+            return sanitize_text_field(
+                sprintf(
+                    /* translators: %s: AI model name. */
+                    __( 'Generated using %s', 'fooconvert' ),
+                    $model
+                )
+            );
+        }
+
+        return '';
     }
 
     /**
@@ -1397,13 +1542,13 @@ class Attachments {
     private static function get_popup_background_composition_guidance( string $popup_type ): string {
         switch ( fooconvert_normalize_popup_type( $popup_type ) ) {
             case FOOCONVERT_POPUP_TYPE_BAR:
-                return 'Keep the composition panoramic and restrained with edge detail only so a compact horizontal CTA remains readable.';
+                return 'Keep the composition panoramic and restrained with edge detail only and a broad quiet center area.';
             case FOOCONVERT_POPUP_TYPE_FLYOUT:
-                return 'Favor a vertical composition with soft focal weight near the top or bottom and a large calm zone for stacked copy and form controls.';
+                return 'Favor a vertical composition with soft focal weight near the top or bottom and a large calm open area.';
             case FOOCONVERT_POPUP_TYPE_POPUP:
             case FOOCONVERT_POPUP_TYPE_OVERLAY:
             default:
-                return 'Favor a wide composition with a clear quiet region for headline, support copy, and CTA treatment.';
+                return 'Favor a wide composition with a clear quiet region and subtle edge detail.';
         }
     }
 
@@ -1432,8 +1577,9 @@ class Attachments {
 
         if ( is_string( $background_image ) ) {
             $value = trim( $background_image );
+            $lower_value = strtolower( $value );
 
-            return '' !== $value && 'none' !== strtolower( $value );
+            return '' !== $value && 'none' !== $lower_value && false === strpos( $lower_value, 'gradient(' );
         }
 
         return false;
@@ -1464,32 +1610,17 @@ class Attachments {
      * @return bool
      */
     private static function brand_has_prompt_context( array $brand ): bool {
-        if ( '' !== trim( (string) ( $brand['brandOverview'] ?? '' ) ) ) {
+        if ( '' !== trim( (string) ( $brand['colorScheme'] ?? '' ) ) ) {
             return true;
         }
 
-        foreach ( array( 'primary', 'secondary', 'accent', 'background', 'textPrimary', 'textSecondary' ) as $color_key ) {
+        foreach ( array( 'primary', 'secondary', 'accent', 'background' ) as $color_key ) {
             if ( '' !== trim( (string) ( $brand['colors'][ $color_key ] ?? '' ) ) ) {
                 return true;
             }
         }
 
-        foreach ( array( 'primary', 'heading' ) as $font_key ) {
-            if ( '' !== trim( (string) ( $brand['typography']['fontFamilies'][ $font_key ] ?? '' ) ) ) {
-                return true;
-            }
-        }
-
-        foreach ( array( 'buttonPrimary', 'buttonSecondary' ) as $button_key ) {
-            foreach ( array( 'background', 'textColor', 'borderColor', 'borderRadius' ) as $setting_key ) {
-                if ( '' !== trim( (string) ( $brand['components'][ $button_key ][ $setting_key ] ?? '' ) ) ) {
-                    return true;
-                }
-            }
-        }
-
-        return absint( $brand['spacing']['baseUnit'] ?? 0 ) > 0
-            || '' !== trim( (string) ( $brand['spacing']['borderRadius'] ?? '' ) );
+        return false;
     }
 
     /**
@@ -1511,72 +1642,19 @@ class Attachments {
                 'secondary ' . self::sanitize_text( $brand['colors']['secondary'] ?? '' ),
                 'accent ' . self::sanitize_text( $brand['colors']['accent'] ?? '' ),
                 'background ' . self::sanitize_text( $brand['colors']['background'] ?? '' ),
-                'text ' . self::sanitize_text( $brand['colors']['textPrimary'] ?? '' ),
-                'textSecondary ' . self::sanitize_text( $brand['colors']['textSecondary'] ?? '' ),
             )
         );
 
-        $lines = array(
-            'Brand Overview: ' . self::sanitize_text( $brand['brandOverview'] ?? '' ),
-            'Preferred Color Scheme: ' . self::sanitize_text( $brand['colorScheme'] ?? '' ),
-        );
+        $lines        = array();
+        $color_scheme = self::sanitize_text( $brand['colorScheme'] ?? '' );
+
+        if ( '' !== $color_scheme ) {
+            $lines[] = 'Color Scheme: ' . $color_scheme;
+        }
 
         if ( ! empty( $palette ) ) {
-            $lines[] = 'Brand Palette: ' . implode( ' | ', $palette );
+            $lines[] = 'Palette Cues: ' . implode( ' | ', $palette );
         }
-
-        $typography = array_filter(
-            array(
-                'Primary font ' . self::sanitize_text( $brand['typography']['fontFamilies']['primary'] ?? '' ),
-                'Heading font ' . self::sanitize_text( $brand['typography']['fontFamilies']['heading'] ?? '' ),
-                'Body size ' . self::sanitize_text( $brand['typography']['fontSizes']['body']['value'] ?? '' ),
-                'Heading size ' . self::sanitize_text( $brand['typography']['fontSizes']['h1']['value'] ?? '' ),
-            )
-        );
-
-        if ( ! empty( $typography ) ) {
-            $lines[] = 'Typography Direction: ' . implode( ' | ', $typography );
-        }
-
-        $shape_language = array_filter(
-            array(
-                absint( $brand['spacing']['baseUnit'] ?? 0 ) > 0 ? 'Base spacing unit ' . absint( $brand['spacing']['baseUnit'] ?? 0 ) . 'px' : '',
-                '' !== trim( (string) ( $brand['spacing']['borderRadius'] ?? '' ) )
-                    ? 'Default border radius ' . self::sanitize_text( $brand['spacing']['borderRadius'] ?? '' )
-                    : '',
-            )
-        );
-
-        if ( ! empty( $shape_language ) ) {
-            $lines[] = 'Spacing and Shape: ' . implode( ' | ', $shape_language );
-        }
-
-        $button_primary = array_filter(
-            array(
-                'background ' . self::sanitize_text( $brand['components']['buttonPrimary']['background'] ?? '' ),
-                'text ' . self::sanitize_text( $brand['components']['buttonPrimary']['textColor'] ?? '' ),
-                'radius ' . self::sanitize_text( $brand['components']['buttonPrimary']['borderRadius'] ?? '' ),
-            )
-        );
-
-        if ( ! empty( $button_primary ) ) {
-            $lines[] = 'Primary CTA Style: ' . implode( ' | ', $button_primary );
-        }
-
-        $button_secondary = array_filter(
-            array(
-                'background ' . self::sanitize_text( $brand['components']['buttonSecondary']['background'] ?? '' ),
-                'text ' . self::sanitize_text( $brand['components']['buttonSecondary']['textColor'] ?? '' ),
-                'border ' . self::sanitize_text( $brand['components']['buttonSecondary']['borderColor'] ?? '' ),
-                'radius ' . self::sanitize_text( $brand['components']['buttonSecondary']['borderRadius'] ?? '' ),
-            )
-        );
-
-        if ( ! empty( $button_secondary ) ) {
-            $lines[] = 'Secondary CTA Style: ' . implode( ' | ', $button_secondary );
-        }
-
-        $lines[] = 'Brand Requirement: The background should feel on-brand and must not reduce the contrast or prominence of the popup CTA treatment.';
 
         return array_values( array_filter( $lines ) );
     }
@@ -1619,6 +1697,8 @@ class Attachments {
             );
         }
 
+        $decoded_data = self::normalize_generated_image_binary( $decoded_data, (string) $args['mime_type'] );
+
         $bytes_written = file_put_contents( $temp_file, $decoded_data ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_file_put_contents
         if ( false === $bytes_written ) {
             wp_delete_file( $temp_file );
@@ -1660,6 +1740,94 @@ class Attachments {
         return array(
             'id' => absint( $attachment_id ),
         );
+    }
+
+    /**
+     * Normalizes generated image binary before importing it into the media library.
+     *
+     * Some image providers can return WebP data with valid RGB pixels hidden behind
+     * a fully transparent alpha channel. WordPress then generates blank transparent
+     * subsizes, which looks like a corrupt generated background.
+     *
+     * @param string $decoded_data Decoded image binary.
+     * @param string $mime_type MIME type reported by the provider.
+     * @return string
+     */
+    private static function normalize_generated_image_binary( string $decoded_data, string $mime_type ): string {
+        if ( 'image/webp' !== strtolower( trim( $mime_type ) ) ) {
+            return $decoded_data;
+        }
+
+        if (
+            ! function_exists( 'imagecreatefromstring' ) ||
+            ! function_exists( 'imagefilter' ) ||
+            ! function_exists( 'imagewebp' ) ||
+            ! defined( 'IMG_FILTER_COLORIZE' )
+        ) {
+            return $decoded_data;
+        }
+
+        $image = @imagecreatefromstring( $decoded_data );
+        if ( false === $image ) {
+            return $decoded_data;
+        }
+
+        if ( ! self::image_has_hidden_rgb_behind_transparent_alpha( $image ) ) {
+            imagedestroy( $image );
+            return $decoded_data;
+        }
+
+        imagefilter( $image, IMG_FILTER_COLORIZE, 0, 0, 0, -127 );
+
+        ob_start();
+        $encoded = imagewebp( $image, null, self::OPTIMIZED_IMAGE_COMPRESSION );
+        $output  = ob_get_clean();
+        imagedestroy( $image );
+
+        return ( true === $encoded && is_string( $output ) && '' !== $output ) ? $output : $decoded_data;
+    }
+
+    /**
+     * Returns whether a GD image appears fully transparent while retaining RGB data.
+     *
+     * @param mixed $image GD image resource or object.
+     * @return bool
+     */
+    private static function image_has_hidden_rgb_behind_transparent_alpha( $image ): bool {
+        $width  = imagesx( $image );
+        $height = imagesy( $image );
+
+        if ( $width <= 0 || $height <= 0 ) {
+            return false;
+        }
+
+        $step_x  = max( 1, (int) floor( $width / 16 ) );
+        $step_y  = max( 1, (int) floor( $height / 16 ) );
+        $checked = 0;
+        $has_rgb = false;
+
+        for ( $y = 0; $y < $height; $y += $step_y ) {
+            for ( $x = 0; $x < $width; $x += $step_x ) {
+                $rgba  = imagecolorsforindex( $image, imagecolorat( $image, $x, $y ) );
+                $alpha = isset( $rgba['alpha'] ) ? (int) $rgba['alpha'] : 0;
+
+                if ( $alpha < 127 ) {
+                    return false;
+                }
+
+                if (
+                    0 !== (int) ( $rgba['red'] ?? 0 ) ||
+                    0 !== (int) ( $rgba['green'] ?? 0 ) ||
+                    0 !== (int) ( $rgba['blue'] ?? 0 )
+                ) {
+                    $has_rgb = true;
+                }
+
+                ++$checked;
+            }
+        }
+
+        return $checked > 0 && $has_rgb;
     }
 
     /**

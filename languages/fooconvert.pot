@@ -2,21 +2,21 @@
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: FooConvert - Popup Builder for Block Editor 2.1.2\n"
+"Project-Id-Version: FooConvert - AI Popup Builder for Flyouts, Overlays & Bars 2.1.8\n"
 "Report-Msgid-Bugs-To: https://github.com/fooplugins/fooconvert/issues\n"
 "Last-Translator: FooPlugins <info@fooplugins.com>\n"
 "Language-Team: FooPlugins <info@fooplugins.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-18T19:35:29+00:00\n"
+"POT-Creation-Date: 2026-08-27T16:28:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: fooconvert\n"
 
 #. Plugin Name of the plugin
 #: fooconvert.php
-msgid "FooConvert - Popup Builder for Block Editor"
+msgid "FooConvert - AI Popup Builder for Flyouts, Overlays & Bars"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -41,8 +41,8 @@ msgstr ""
 
 #: includes/Admin/BrandContext.php:33
 #: includes/Admin/BrandContext.php:41
-#: src/admin/ai-popup-builder/App.js:2607
-#: src/admin/brand-context/components.js:1061
+#: src/admin/ai-popup-builder/App.js:2767
+#: src/admin/brand-context/components.js:1099
 msgid "Brand Context"
 msgstr ""
 
@@ -80,30 +80,35 @@ msgstr ""
 msgid "Panel is not set."
 msgstr ""
 
-#: includes/Admin/Dashboard.php:167
+#: includes/Admin/Dashboard.php:165
+#: includes/Admin/Dashboard.php:174
 msgid "Panel hidden."
 msgstr ""
 
-#: includes/Admin/Dashboard.php:189
+#: includes/Admin/Dashboard.php:177
+msgid "Panel could not be hidden."
+msgstr ""
+
+#: includes/Admin/Dashboard.php:198
 msgid "No popups created!"
 msgstr ""
 
 #. Translators: %d refers to the number of demo popups created.
-#: includes/Admin/Dashboard.php:192
+#: includes/Admin/Dashboard.php:201
 #, php-format
 msgid "%d demo popups created successfully!"
 msgstr ""
 
-#: includes/Admin/Dashboard.php:210
+#: includes/Admin/Dashboard.php:219
 msgid "All demo popups deleted!"
 msgstr ""
 
-#: includes/Admin/Dashboard.php:261
+#: includes/Admin/Dashboard.php:270
 #: includes/Admin/Views/dashboard.php:9
 msgid "Popup Dashboard"
 msgstr ""
 
-#: includes/Admin/Dashboard.php:262
+#: includes/Admin/Dashboard.php:271
 msgid "Dashboard"
 msgstr ""
 
@@ -160,7 +165,7 @@ msgid "Choose Popup Type"
 msgstr ""
 
 #: includes/Admin/Init.php:151
-#: includes/functions.php:245
+#: includes/functions.php:288
 #: pro/src/blocks/free-shipping-progress/editor/blocks/bar/editor/Edit.js:196
 #: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:208
 #: src/editor/components/popup-type/components/template-picker/Component.js:19
@@ -173,7 +178,7 @@ msgid "Create a top or bottom bar with triggers, display rules, and templates."
 msgstr ""
 
 #: includes/Admin/Init.php:155
-#: includes/functions.php:247
+#: includes/functions.php:290
 #: src/editor/components/popup-type/components/template-picker/Component.js:24
 #: src/editor/hooks/usePostTypeLabels.js:17
 msgid "Flyout"
@@ -184,7 +189,7 @@ msgid "Create a side flyout with template variations and the usual popup control
 msgstr ""
 
 #: includes/Admin/Init.php:159
-#: includes/functions.php:249
+#: includes/functions.php:292
 #: src/editor/components/popup-type/components/template-picker/Component.js:29
 #: src/editor/hooks/usePostTypeLabels.js:21
 msgid "Overlay"
@@ -207,7 +212,7 @@ msgstr ""
 #: includes/AI/PopupBuilder/Admin.php:46
 #: includes/AI/PopupBuilder/Admin.php:47
 #: includes/AI/PopupBuilder/SettingsPage.php:50
-#: src/admin/ai-popup-builder/App.js:3291
+#: src/admin/ai-popup-builder/App.js:3481
 #: src/editor/components/popup-type/components/template-picker/Component.js:57
 msgid "AI Popup Builder"
 msgstr ""
@@ -250,10 +255,10 @@ msgid "Name"
 msgstr ""
 
 #: includes/Admin/LeadsTable.php:56
-#: includes/AI/PopupBuilder/Media/Attachments.php:1276
+#: includes/AI/PopupBuilder/Media/Attachments.php:1398
 #: includes/PostType.php:55
 #: pro/includes/Analytics/Sales.php:271
-#: src/admin/ai-popup-builder/App.js:3498
+#: src/admin/ai-popup-builder/App.js:3688
 #: src/editor/components/experiment-panel/Component.js:19
 #: src/editor/components/experiment-panel/Component.js:27
 #: src/scripts/admin/display-rules-list/index.js:148
@@ -269,8 +274,8 @@ msgid "Date Added"
 msgstr ""
 
 #: includes/Admin/LeadsTable.php:154
-#: src/admin/ai-popup-builder/App.js:2338
-#: src/admin/ai-popup-builder/App.js:4494
+#: src/admin/ai-popup-builder/App.js:2432
+#: src/admin/ai-popup-builder/App.js:4730
 msgid "Delete"
 msgstr ""
 
@@ -278,146 +283,146 @@ msgstr ""
 msgid "Export"
 msgstr ""
 
-#: includes/Admin/Promotions.php:131
+#: includes/Admin/Promotions.php:129
 #: includes/Admin/Settings.php:56
 msgid "Premium Addons"
 msgstr ""
 
-#: includes/Admin/Promotions.php:142
-#: includes/Admin/Views/dashboard-panel-getting-started.php:18
-#: includes/Admin/Views/dashboard-panel-help.php:17
-#: includes/Admin/Views/dashboard-panel-pro-features.php:17
-#: includes/Admin/Views/dashboard-panel-recent.php:29
+#: includes/Admin/Promotions.php:140
+#: includes/Admin/Views/dashboard-panel-getting-started.php:17
+#: includes/Admin/Views/dashboard-panel-help.php:15
+#: includes/Admin/Views/dashboard-panel-pro-features.php:15
+#: includes/Admin/Views/dashboard-panel-recent.php:27
 #: pro/includes/Admin/Views/dashboard-panel-sales.php:17
 #: pro/includes/Experiments/Admin/Views/dashboard-panel-experiments.php:17
 msgid "Hide Panel"
 msgstr ""
 
-#: includes/Admin/Promotions.php:196
+#: includes/Admin/Promotions.php:194
 msgid "Buy Now!"
 msgstr ""
 
-#: includes/Admin/Promotions.php:220
+#: includes/Admin/Promotions.php:218
 #: pro/includes/Analytics/Metrics.php:48
 msgid "Total Clicks"
 msgstr ""
 
-#: includes/Admin/Promotions.php:222
+#: includes/Admin/Promotions.php:220
 msgid "Total number of clicks made."
 msgstr ""
 
-#: includes/Admin/Promotions.php:228
+#: includes/Admin/Promotions.php:226
 #: pro/includes/Analytics/Metrics.php:56
 msgid "Click Through Rate"
 msgstr ""
 
-#: includes/Admin/Promotions.php:230
+#: includes/Admin/Promotions.php:228
 #: pro/includes/Analytics/Metrics.php:58
 msgid "Click Through Rate for the popup."
 msgstr ""
 
-#: includes/Admin/Promotions.php:236
+#: includes/Admin/Promotions.php:234
 #: pro/includes/Analytics/Metrics.php:64
 msgid "Total Conversions"
 msgstr ""
 
-#: includes/Admin/Promotions.php:238
+#: includes/Admin/Promotions.php:236
 msgid "Total number of successul conversions made."
 msgstr ""
 
-#: includes/Admin/Promotions.php:244
+#: includes/Admin/Promotions.php:242
 #: pro/includes/Analytics/Metrics.php:72
 #: pro/includes/Analytics/Metrics.php:485
 msgid "Conversion Rate"
 msgstr ""
 
-#: includes/Admin/Promotions.php:246
+#: includes/Admin/Promotions.php:244
 msgid "Conversion Rate."
 msgstr ""
 
-#: includes/Admin/Promotions.php:252
+#: includes/Admin/Promotions.php:250
 #: pro/includes/Analytics/Metrics.php:80
 #: pro/includes/Analytics/Metrics.php:449
 msgid "Engagement Rate"
 msgstr ""
 
-#: includes/Admin/Promotions.php:254
+#: includes/Admin/Promotions.php:252
 msgid "Engagement Rate."
 msgstr ""
 
-#: includes/Admin/Promotions.php:260
+#: includes/Admin/Promotions.php:258
 #: pro/includes/Analytics/Metrics.php:88
 msgid "Positive Engagements"
 msgstr ""
 
-#: includes/Admin/Promotions.php:262
+#: includes/Admin/Promotions.php:260
 msgid "Total number of positive engagements (like clicks)."
 msgstr ""
 
-#: includes/Admin/Promotions.php:268
+#: includes/Admin/Promotions.php:266
 #: pro/includes/Analytics/Metrics.php:96
 msgid "Negative Engagements"
 msgstr ""
 
-#: includes/Admin/Promotions.php:270
+#: includes/Admin/Promotions.php:268
 msgid "Total number of negative engagements (like dismissals)."
 msgstr ""
 
-#: includes/Admin/Promotions.php:276
+#: includes/Admin/Promotions.php:274
 #: pro/includes/Analytics/Metrics.php:104
 msgid "Overall Sentiment"
 msgstr ""
 
-#: includes/Admin/Promotions.php:278
+#: includes/Admin/Promotions.php:276
 msgid "Overall sentiment which ranges from very negative to very positive. It can also be unknown if there are no engagements, or neutral."
 msgstr ""
 
-#: includes/Admin/Promotions.php:286
+#: includes/Admin/Promotions.php:284
 msgid "These advanced metrics are available in PRO."
 msgstr ""
 
-#: includes/Admin/Promotions.php:287
+#: includes/Admin/Promotions.php:285
 #: includes/Admin/Views/dashboard-top-performers.php:18
 msgid "Upgrade to PRO"
 msgstr ""
 
-#: includes/Admin/Promotions.php:301
+#: includes/Admin/Promotions.php:299
 msgid "engagement rate (PRO)"
 msgstr ""
 
-#: includes/Admin/Promotions.php:303
+#: includes/Admin/Promotions.php:301
 msgid "Top performers by engagement rate is only available in PRO."
 msgstr ""
 
-#: includes/Admin/Promotions.php:307
+#: includes/Admin/Promotions.php:305
 msgid "clicks (PRO)"
 msgstr ""
 
-#: includes/Admin/Promotions.php:309
+#: includes/Admin/Promotions.php:307
 msgid "Top performers by clicks is only available in PRO."
 msgstr ""
 
-#: includes/Admin/Promotions.php:313
+#: includes/Admin/Promotions.php:311
 msgid "click rate (PRO)"
 msgstr ""
 
-#: includes/Admin/Promotions.php:315
+#: includes/Admin/Promotions.php:313
 msgid "Top performers by click rate is only available in PRO."
 msgstr ""
 
-#: includes/Admin/Promotions.php:319
+#: includes/Admin/Promotions.php:317
 msgid "conversions (PRO)"
 msgstr ""
 
-#: includes/Admin/Promotions.php:321
+#: includes/Admin/Promotions.php:319
 msgid "Top performers by conversions is only available in PRO."
 msgstr ""
 
-#: includes/Admin/Promotions.php:325
+#: includes/Admin/Promotions.php:323
 msgid "conversion rate (PRO)"
 msgstr ""
 
-#: includes/Admin/Promotions.php:327
+#: includes/Admin/Promotions.php:325
 msgid "Top performers by conversion rate is only available in PRO."
 msgstr ""
 
@@ -443,7 +448,7 @@ msgid "Help"
 msgstr ""
 
 #: includes/Admin/Settings.php:55
-#: includes/Admin/Views/dashboard-panel-pro-features.php:14
+#: includes/Admin/Views/dashboard-panel-pro-features.php:12
 msgid "PRO Features"
 msgstr ""
 
@@ -678,7 +683,7 @@ msgstr ""
 #: includes/Admin/Settings.php:345
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:86
 #: pro/src/blocks/apply-coupon/editor/EditSettings.js:262
-#: src/admin/ai-popup-builder/App.js:177
+#: src/admin/ai-popup-builder/App.js:181
 #: src/blocks/countdown/editor/components/container/EditSettings.js:76
 #: src/blocks/countdown/editor/EditSettings.js:26
 #: src/blocks/coupon/editor/components/container/EditSettings.js:68
@@ -696,13 +701,13 @@ msgid "Events"
 msgstr ""
 
 #: includes/Admin/Stats.php:91
-#: includes/functions.php:567
+#: includes/functions.php:610
 #: pro/includes/Experiments/Admin/Init.php:896
 msgid "Views"
 msgstr ""
 
 #: includes/Admin/Stats.php:99
-#: includes/functions.php:559
+#: includes/functions.php:602
 msgid "Engagements"
 msgstr ""
 
@@ -889,154 +894,163 @@ msgstr ""
 msgid "Smart exit offer themed overlay."
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:15
+#: includes/Admin/Views/dashboard-panel-getting-started.php:14
 msgid "Getting Started with Popups!"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:26
+#: includes/Admin/Views/dashboard-panel-getting-started.php:25
 msgid "The easiest way to get started is by creating demo content, which will create 7 draft popups: 2 bars, 3 flyouts, and 2 overlays."
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:27
+#: includes/Admin/Views/dashboard-panel-getting-started.php:26
 msgid "It's also the best way to see the top performers in action!"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:31
+#: includes/Admin/Views/dashboard-panel-getting-started.php:30
 msgid "Create Demo Content"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:36
+#: includes/Admin/Views/dashboard-panel-getting-started.php:35
 msgid "Do not worry"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:37
+#: includes/Admin/Views/dashboard-panel-getting-started.php:36
 msgid "the demo content will NOT be visible to your site visitors :)"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:43
+#: includes/Admin/Views/dashboard-panel-getting-started.php:42
 msgid "Awesome, you have already created the demo content!"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:47
+#: includes/Admin/Views/dashboard-panel-getting-started.php:46
 msgid "Delete Demo Content"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:52
+#: includes/Admin/Views/dashboard-panel-getting-started.php:51
 msgid "Deleting the demo content will also delete all stats."
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:57
+#: includes/Admin/Views/dashboard-panel-getting-started.php:56
 #: pro/includes/WooCommerce/Triggers.php:277
 msgid "OR"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:59
+#: includes/Admin/Views/dashboard-panel-getting-started.php:58
 msgid "Create your own unique popup by following these simple steps:"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:64
+#: includes/Admin/Views/dashboard-panel-getting-started.php:63
 msgid "Create a new popup!"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:67
+#: includes/Admin/Views/dashboard-panel-getting-started.php:66
 msgid "Select a pre-made template."
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:70
+#: includes/Admin/Views/dashboard-panel-getting-started.php:69
 msgid "Customize the look and feel &amp; update the content!"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:73
+#: includes/Admin/Views/dashboard-panel-getting-started.php:72
 msgid "Set the Display Rules."
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:74
+#: includes/Admin/Views/dashboard-panel-getting-started.php:73
 msgid "e.g. \"Entire Site\" or \"Front Page\""
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:77
+#: includes/Admin/Views/dashboard-panel-getting-started.php:76
 msgid "Select an Open Trigger."
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:78
+#: includes/Admin/Views/dashboard-panel-getting-started.php:77
 msgid "e.g. on scroll or exit intent"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-getting-started.php:81
+#: includes/Admin/Views/dashboard-panel-getting-started.php:80
 msgid "Publish and you're done!"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-help.php:14
+#: includes/Admin/Views/dashboard-panel-help.php:12
 msgid "Need Help? We're here for you!"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-help.php:26
+#: includes/Admin/Views/dashboard-panel-help.php:24
 msgid "Visit the FooConvert homepage"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-help.php:31
+#: includes/Admin/Views/dashboard-panel-help.php:29
 msgid "Read documentation"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-help.php:36
+#: includes/Admin/Views/dashboard-panel-help.php:34
 msgid "Get Support"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-pro-features.php:23
+#: includes/Admin/Views/dashboard-panel-pro-features.php:21
 msgid "Unlock these PRO features:"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-pro-features.php:31
+#: includes/Admin/Views/dashboard-panel-pro-features.php:29
 msgid "Read more"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-pro-features.php:40
+#: includes/Admin/Views/dashboard-panel-pro-features.php:38
 msgid "Upgrade to PRO and Supercharge Your Conversions!"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-pro-features.php:43
+#: includes/Admin/Views/dashboard-panel-pro-features.php:41
 msgid "View PRO Pricing"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-pro-features.php:46
+#: includes/Admin/Views/dashboard-panel-pro-features.php:44
 msgid "Start a Free Trial"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-recent.php:26
+#: includes/Admin/Views/dashboard-panel-recent.php:24
 msgid "Recently Updated"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-recent.php:50
+#: includes/Admin/Views/dashboard-panel-recent.php:48
 #: includes/Admin/Views/dashboard-top-performers.php:41
 #: includes/PostType.php:58
-#: src/admin/ai-popup-builder/App.js:3984
+#: includes/Preview.php:217
+#: src/admin/ai-popup-builder/App.js:4201
 msgid "Edit Popup"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-recent.php:52
+#: includes/Admin/Views/dashboard-panel-recent.php:50
 #: includes/Admin/Views/dashboard-top-performers.php:43
 msgid "View Popup Stats"
 msgstr ""
 
+#. translators: %s: number of minutes.
+#: includes/Admin/Views/dashboard-panel-recent.php:61
+#, php-format
+msgid "%s min"
+msgid_plural "%s mins"
+msgstr[0] ""
+msgstr[1] ""
+
 #. translators: %s: refers to the relative time since the popup was last updated.
-#: includes/Admin/Views/dashboard-panel-recent.php:57
+#: includes/Admin/Views/dashboard-panel-recent.php:67
 #, php-format
 msgid "%s ago"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-recent.php:75
+#: includes/Admin/Views/dashboard-panel-recent.php:86
 msgid "No popups yet. Create a bar, flyout, or overlay to get started."
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-recent.php:82
+#: includes/Admin/Views/dashboard-panel-recent.php:93
 msgid "Add New Bar"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-recent.php:85
+#: includes/Admin/Views/dashboard-panel-recent.php:96
 msgid "Add New Flyout"
 msgstr ""
 
-#: includes/Admin/Views/dashboard-panel-recent.php:88
+#: includes/Admin/Views/dashboard-panel-recent.php:99
 msgid "Add New Overlay"
 msgstr ""
 
@@ -1121,8 +1135,8 @@ msgstr ""
 #: includes/Admin/Views/popup-stats.php:9
 #: pro/includes/Analytics/Sales.php:322
 #: pro/includes/Analytics/Sales.php:345
-#: src/admin/ai-popup-builder/App.js:795
-#: src/admin/ai-popup-builder/App.js:822
+#: src/admin/ai-popup-builder/App.js:802
+#: src/admin/ai-popup-builder/App.js:829
 msgid "Unknown"
 msgstr ""
 
@@ -1435,20 +1449,24 @@ msgstr ""
 msgid "Completed"
 msgstr ""
 
-#: includes/AI/PopupBuilder/Admin.php:211
-#: includes/AI/PopupBuilder/RestController.php:785
-#: includes/AI/PopupBuilder/RestController.php:798
-#: src/admin/ai-popup-builder/App.js:107
+#: includes/AI/PopupBuilder/Admin.php:216
+#: includes/AI/PopupBuilder/RestController.php:786
+#: includes/AI/PopupBuilder/RestController.php:799
+#: src/admin/ai-popup-builder/App.js:111
 msgid "WP 7.0 is required for this feature to work"
 msgstr ""
 
-#: includes/AI/PopupBuilder/Admin.php:214
-#: src/admin/ai-popup-builder/App.js:116
+#: includes/AI/PopupBuilder/Admin.php:219
+#: src/admin/ai-popup-builder/App.js:120
 msgid "AI Popup Builder chat needs a valid WordPress AI connector before it can generate popups. Go to Settings > Connectors to add or verify a connector, then reload this page."
 msgstr ""
 
+#: includes/AI/PopupBuilder/Admin.php:583
+msgid "FooConvert popup builder ability."
+msgstr ""
+
 #: includes/AI/PopupBuilder/Blueprint/DraftNormalizer.php:305
-#: src/admin/brand-context/components.js:720
+#: src/admin/brand-context/components.js:756
 msgid "Heading"
 msgstr ""
 
@@ -1636,33 +1654,52 @@ msgstr ""
 msgid "The structured popup blueprint. Omit or use null when asking a clarifying question."
 msgstr ""
 
-#: includes/AI/PopupBuilder/ChatService.php:177
+#: includes/AI/PopupBuilder/ChatService.php:185
 msgid "The AI client returned no candidates."
 msgstr ""
 
-#: includes/AI/PopupBuilder/ChatService.php:681
+#. translators: %s: provider exception message.
+#: includes/AI/PopupBuilder/ChatService.php:444
+#, php-format
+msgid "The AI provider request failed before the popup builder received a response. Provider error: %s"
+msgstr ""
+
+#. translators: %s: original provider error message.
+#: includes/AI/PopupBuilder/ChatService.php:480
+#, php-format
+msgid "The AI connector did not return any model output. This often happens when the connected provider account has no remaining credits or quota, or when the provider returns a failed API payload. Check the AI connector account, billing, and quota details, then try again. Original provider error: %s"
+msgstr ""
+
+#: includes/AI/PopupBuilder/ChatService.php:884
 msgid "The previous response cannot be used by the popup builder."
 msgstr ""
 
 #. translators: %s: AI response shape detail.
-#: includes/AI/PopupBuilder/ChatService.php:686
-#: includes/AI/PopupBuilder/ResponseParser.php:200
-#: includes/AI/PopupBuilder/ResponseParser.php:541
+#: includes/AI/PopupBuilder/ChatService.php:889
+#: includes/AI/PopupBuilder/ResponseParser.php:240
+#: includes/AI/PopupBuilder/ResponseParser.php:1063
 #, php-format
 msgid "Problem detail: %s"
 msgstr ""
 
+#. translators: %s: JSON parser context detail.
+#: includes/AI/PopupBuilder/ChatService.php:898
+#: includes/AI/PopupBuilder/ResponseParser.php:249
+#, php-format
+msgid "Parser context: %s"
+msgstr ""
+
 #. translators: %s: clipped AI response preview.
-#: includes/AI/PopupBuilder/ChatService.php:695
+#: includes/AI/PopupBuilder/ChatService.php:907
 #, php-format
 msgid "Previous response preview: %s"
 msgstr ""
 
-#: includes/AI/PopupBuilder/ChatService.php:743
+#: includes/AI/PopupBuilder/ChatService.php:958
 msgid "I also generated a popup background and applied it to the draft."
 msgstr ""
 
-#: includes/AI/PopupBuilder/ChatService.php:794
+#: includes/AI/PopupBuilder/ChatService.php:1080
 msgid "I also generated a popup image and wired it into the draft."
 msgstr ""
 
@@ -1670,354 +1707,496 @@ msgstr ""
 msgid "The AI response JSON was repaired and accepted."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:376
+#: includes/AI/PopupBuilder/default-suggestion-library.php:12
+msgid "Create an exit-intent overlay popup for first-time shoppers offering 15% off. Use the free Coupon block with code WELCOME15 and the Countdown block set to expire in 2 hours. Add a confident headline, one reassurance line, and a clear shop-now CTA. Use a warm gradient background with soft depth, or follow my branding if brand styles are available."
+msgstr ""
+
+#: includes/AI/PopupBuilder/default-suggestion-library.php:17
+msgid "Create a newsletter signup flyout for readers that offers weekly tips and a practical downloadable guide. Use the Sign Up block as an email-only form with friendly placeholders and button copy like \"Send me the guide\". Use a light background gradient following my branding."
+msgstr ""
+
+#: includes/AI/PopupBuilder/default-suggestion-library.php:22
+msgid "Create a compact product-launch bar for visitors announcing a new product launch. Use the Countdown block for launch urgency, concise headline copy, and one clear CTA. Keep the layout short enough for a bar and use a dark high-contrast gradient background from my brand profile if available."
+msgstr ""
+
+#: includes/AI/PopupBuilder/default-suggestion-library.php:27
+msgid "Add a countdown timer for 2 hours in the future."
+msgstr ""
+
+#: includes/AI/PopupBuilder/default-suggestion-library.php:33
+msgid "Change the popup styling to use my branding."
+msgstr ""
+
+#: includes/AI/PopupBuilder/default-suggestion-library.php:38
+msgid "Change this popup to be a bar and shorten all the wording used."
+msgstr ""
+
+#: includes/AI/PopupBuilder/default-suggestion-library.php:44
+msgid "Convert this popup to a flyout with a softer tone and one clear CTA."
+msgstr ""
+
+#: includes/AI/PopupBuilder/default-suggestion-library.php:50
+msgid "Make the CTA button copy more specific and urgent."
+msgstr ""
+
+#: includes/AI/PopupBuilder/default-suggestion-library.php:55
+msgid "Add a coupon code block for SAVE15."
+msgstr ""
+
+#: includes/AI/PopupBuilder/default-suggestion-library.php:61
+msgid "Remove extra copy and make the layout easier to scan."
+msgstr ""
+
+#: includes/AI/PopupBuilder/default-suggestion-library.php:66
+msgid "Rewrite this for mobile visitors with shorter lines."
+msgstr ""
+
+#: includes/AI/PopupBuilder/default-suggestion-library.php:71
+msgid "Add social proof using a short testimonial-style paragraph."
+msgstr ""
+
+#: includes/AI/PopupBuilder/default-suggestion-library.php:76
+msgid "Replace the offer with 10% off a first order."
+msgstr ""
+
+#: includes/AI/PopupBuilder/default-suggestion-library.php:81
+msgid "Generate a new background image that matches this offer."
+msgstr ""
+
+#: includes/AI/PopupBuilder/default-suggestion-library.php:87
+msgid "Change the trigger to fire after 50% scroll."
+msgstr ""
+
+#: includes/AI/PopupBuilder/default-suggestion-library.php:92
+msgid "Add urgency without making the copy sound pushy."
+msgstr ""
+
+#: includes/AI/PopupBuilder/Media/Attachments.php:153
+msgid "AI Image Generation"
+msgstr ""
+
+#: includes/AI/PopupBuilder/Media/Attachments.php:176
+msgid "No AI generation prompt was stored for this attachment."
+msgstr ""
+
+#: includes/AI/PopupBuilder/Media/Attachments.php:180
+msgid "Prompt used to generate this image."
+msgstr ""
+
+#: includes/AI/PopupBuilder/Media/Attachments.php:483
 msgid "The WordPress AI client is not available for popup image prompts."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:400
+#: includes/AI/PopupBuilder/Media/Attachments.php:507
 msgid "The AI client did not return an image prompt."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:419
-msgid "The WordPress AI client is not available for popup background prompts."
-msgstr ""
-
-#: includes/AI/PopupBuilder/Media/Attachments.php:444
-msgid "The AI client did not return a popup background prompt."
-msgstr ""
-
-#: includes/AI/PopupBuilder/Media/Attachments.php:651
+#: includes/AI/PopupBuilder/Media/Attachments.php:747
 msgid "The WordPress AI client is not available for popup image generation."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:682
+#: includes/AI/PopupBuilder/Media/Attachments.php:784
 msgid "The popup reference image is not valid base64 image data."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:699
-#: includes/AI/PopupBuilder/Media/Attachments.php:719
+#: includes/AI/PopupBuilder/Media/Attachments.php:801
+#: includes/AI/PopupBuilder/Media/Attachments.php:821
 msgid "No image data was generated for the popup."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:736
+#: includes/AI/PopupBuilder/Media/Attachments.php:902
 msgid "You do not have permission to import popup images."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:759
+#: includes/AI/PopupBuilder/Media/Attachments.php:925
 msgid "The popup image data is not valid base64."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:766
+#: includes/AI/PopupBuilder/Media/Attachments.php:932
 msgid "The popup image data is not a valid image."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:774
+#: includes/AI/PopupBuilder/Media/Attachments.php:940
 msgid "No popup image data was found to import."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:935
+#: includes/AI/PopupBuilder/Media/Attachments.php:1093
 msgid "The generated popup image could not be found."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:943
+#: includes/AI/PopupBuilder/Media/Attachments.php:1101
 msgid "You do not have permission to delete this popup image."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:951
+#: includes/AI/PopupBuilder/Media/Attachments.php:1109
 msgid "Only popup-builder generated images can be deleted from this panel."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:960
+#: includes/AI/PopupBuilder/Media/Attachments.php:1118
 msgid "The generated popup image could not be deleted."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:1253
+#: includes/AI/PopupBuilder/Media/Attachments.php:1375
 msgid "Popup Visual"
 msgstr ""
 
 #. translators: %s: popup title or offer
-#: includes/AI/PopupBuilder/Media/Attachments.php:1258
+#: includes/AI/PopupBuilder/Media/Attachments.php:1380
 #, php-format
 msgid "%s Image"
 msgstr ""
 
 #. translators: %s: popup title or offer
-#: includes/AI/PopupBuilder/Media/Attachments.php:1281
+#: includes/AI/PopupBuilder/Media/Attachments.php:1403
 #, php-format
 msgid "%s Background"
 msgstr ""
 
 #. translators: 1: offer text, 2: audience
-#: includes/AI/PopupBuilder/Media/Attachments.php:1299
+#: includes/AI/PopupBuilder/Media/Attachments.php:1421
 #, php-format
 msgid "%1$s visual for %2$s"
 msgstr ""
 
 #. translators: %s: popup offer
-#: includes/AI/PopupBuilder/Media/Attachments.php:1308
+#: includes/AI/PopupBuilder/Media/Attachments.php:1430
 #, php-format
 msgid "%s popup visual"
 msgstr ""
 
 #. translators: 1: offer text, 2: audience
-#: includes/AI/PopupBuilder/Media/Attachments.php:1329
+#: includes/AI/PopupBuilder/Media/Attachments.php:1451
 #, php-format
 msgid "%1$s popup background for %2$s"
 msgstr ""
 
 #. translators: %s: popup offer
-#: includes/AI/PopupBuilder/Media/Attachments.php:1338
+#: includes/AI/PopupBuilder/Media/Attachments.php:1460
 #, php-format
 msgid "%s popup background"
 msgstr ""
 
+#. translators: 1: AI provider name, 2: AI model name.
+#: includes/AI/PopupBuilder/Media/Attachments.php:1485
+#, php-format
+msgid "Generated by %1$s using %2$s"
+msgstr ""
+
 #. translators: %s: AI provider name.
-#: includes/AI/PopupBuilder/Media/Attachments.php:1359
+#: includes/AI/PopupBuilder/Media/Attachments.php:1496
 #, php-format
 msgid "Generated by %s"
 msgstr ""
 
 #. translators: %s: AI model name.
-#: includes/AI/PopupBuilder/Media/Attachments.php:1361
+#: includes/AI/PopupBuilder/Media/Attachments.php:1506
 #, php-format
-msgid "using %s"
+msgid "Generated using %s"
 msgstr ""
 
-#. translators: %s: image generation prompt.
-#: includes/AI/PopupBuilder/Media/Attachments.php:1363
-#, php-format
-msgid "Prompt: %s"
-msgstr ""
-
-#: includes/AI/PopupBuilder/Media/Attachments.php:1599
+#: includes/AI/PopupBuilder/Media/Attachments.php:1677
 msgid "The popup image is larger than the maximum allowed upload size."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:1608
+#: includes/AI/PopupBuilder/Media/Attachments.php:1686
 msgid "The popup image could not be decoded from base64."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:1616
+#: includes/AI/PopupBuilder/Media/Attachments.php:1694
 msgid "A temporary file could not be created for the popup image."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:1625
+#: includes/AI/PopupBuilder/Media/Attachments.php:1705
 msgid "The popup image could not be written to a temporary file."
 msgstr ""
 
-#: includes/AI/PopupBuilder/ResponseParser.php:127
+#. translators: 1: character offset. 2: response snippet.
+#: includes/AI/PopupBuilder/ResponseParser.php:105
+#, php-format
+msgid "Approximate JSON parser failure near character offset %1$d. Nearby response text: %2$s"
+msgstr ""
+
+#: includes/AI/PopupBuilder/ResponseParser.php:167
 msgid "The response did not include popup_draft and did not ask a clarifying_question, so there is no popup to preview or show in Popup Details."
 msgstr ""
 
-#: includes/AI/PopupBuilder/ResponseParser.php:130
+#: includes/AI/PopupBuilder/ResponseParser.php:170
 msgid "popup_draft must be a JSON object or null."
 msgstr ""
 
 #. translators: %s: comma-separated missing popup draft keys.
-#: includes/AI/PopupBuilder/ResponseParser.php:140
+#: includes/AI/PopupBuilder/ResponseParser.php:180
 #, php-format
 msgid "Missing popup_draft keys: %s."
 msgstr ""
 
-#: includes/AI/PopupBuilder/ResponseParser.php:146
+#: includes/AI/PopupBuilder/ResponseParser.php:186
 msgid "popup_draft.popup_type is required so the builder knows whether to render a bar, flyout, or popup."
 msgstr ""
 
-#: includes/AI/PopupBuilder/ResponseParser.php:150
+#: includes/AI/PopupBuilder/ResponseParser.php:190
 msgid "popup_draft.content_blocks must contain at least one supported block; otherwise the preview and Popup Details tabs are empty."
 msgstr ""
 
 #. translators: 1: response keys. 2: popup draft keys.
-#: includes/AI/PopupBuilder/ResponseParser.php:169
+#: includes/AI/PopupBuilder/ResponseParser.php:209
 #, php-format
 msgid "Final response format requirement: return only one valid JSON object with these top-level keys: %1$s. Do not return an empty object. If you can build a popup, popup_draft must be a complete object containing these keys: %2$s, and popup_draft.content_blocks must contain at least one supported block. If you truly cannot build a popup, set popup_draft to null and put one specific question in clarifying_question. The first non-whitespace character must be `{`. Do not include Markdown headings, bullet lists, explanations, or fenced code outside the JSON object."
 msgstr ""
 
-#: includes/AI/PopupBuilder/ResponseParser.php:186
+#: includes/AI/PopupBuilder/ResponseParser.php:226
 msgid "Expected a single JSON object with no Markdown or prose outside it."
 msgstr ""
 
-#: includes/AI/PopupBuilder/ResponseParser.php:187
+#: includes/AI/PopupBuilder/ResponseParser.php:227
 msgid "The AI returned an invalid popup response."
 msgstr ""
 
 #. translators: %s: JSON parser error detail.
-#: includes/AI/PopupBuilder/ResponseParser.php:192
+#: includes/AI/PopupBuilder/ResponseParser.php:232
 #, php-format
 msgid "JSON parse detail: %s"
 msgstr ""
 
 #. translators: %s: comma-separated expected JSON keys.
-#: includes/AI/PopupBuilder/ResponseParser.php:207
-#: includes/AI/PopupBuilder/ResponseParser.php:556
+#: includes/AI/PopupBuilder/ResponseParser.php:256
+#: includes/AI/PopupBuilder/ResponseParser.php:1078
 #, php-format
 msgid "Expected top-level keys: %s."
 msgstr ""
 
 #. translators: %s: clipped AI response preview.
-#: includes/AI/PopupBuilder/ResponseParser.php:214
-#: includes/AI/PopupBuilder/ResponseParser.php:563
+#: includes/AI/PopupBuilder/ResponseParser.php:263
+#: includes/AI/PopupBuilder/ResponseParser.php:1085
 #, php-format
 msgid "Response preview: %s"
 msgstr ""
 
-#: includes/AI/PopupBuilder/ResponseParser.php:259
+#: includes/AI/PopupBuilder/ResponseParser.php:312
 msgid "The response was wrapped in Markdown fences, but the fenced content was not a valid JSON object."
 msgstr ""
 
-#: includes/AI/PopupBuilder/ResponseParser.php:263
+#: includes/AI/PopupBuilder/ResponseParser.php:316
 msgid "The response appears to be Markdown or prose instead of the required machine-readable JSON object."
 msgstr ""
 
-#: includes/AI/PopupBuilder/ResponseParser.php:269
+#: includes/AI/PopupBuilder/ResponseParser.php:322
 msgid "The response started as a JSON object but could not be parsed. It may contain trailing prose, invalid quoting, unescaped line breaks, or truncated JSON."
 msgstr ""
 
-#: includes/AI/PopupBuilder/ResponseParser.php:273
+#: includes/AI/PopupBuilder/ResponseParser.php:326
 msgid "The response starts with a JSON array, but the builder requires one JSON object."
 msgstr ""
 
 #. translators: %s: first non-whitespace character in the AI response.
-#: includes/AI/PopupBuilder/ResponseParser.php:278
+#: includes/AI/PopupBuilder/ResponseParser.php:331
 #, php-format
 msgid "The response starts with \"%s\" instead of \"{\"."
 msgstr ""
 
 #. translators: %d: current maximum tool-call rounds.
-#: includes/AI/PopupBuilder/ResponseParser.php:296
+#: includes/AI/PopupBuilder/ResponseParser.php:349
 #, php-format
 msgid "The AI popup builder reached its tool-call limit before completing the popup. Current limit: %d. Increase the Max Tool Calls setting near Timeout in AI Popup Builder settings if this model needs more tool calls for complex prompts."
 msgstr ""
 
-#: includes/AI/PopupBuilder/ResponseParser.php:536
+#: includes/AI/PopupBuilder/ResponseParser.php:1058
 msgid "The AI returned valid JSON, but it was not a usable popup builder response."
 msgstr ""
 
 #. translators: %s: comma-separated missing response keys.
-#: includes/AI/PopupBuilder/ResponseParser.php:549
+#: includes/AI/PopupBuilder/ResponseParser.php:1071
 #, php-format
 msgid "Missing top-level keys: %s."
 msgstr ""
 
-#: includes/AI/PopupBuilder/ResponseParser.php:600
+#: includes/AI/PopupBuilder/ResponseParser.php:1122
 msgid "The response body was empty."
 msgstr ""
 
 #. translators: %s: JSON parser error after removing Markdown fences.
-#: includes/AI/PopupBuilder/ResponseParser.php:624
+#: includes/AI/PopupBuilder/ResponseParser.php:1146
 #, php-format
 msgid "After removing Markdown fences: %s"
 msgstr ""
 
-#: includes/AI/PopupBuilder/RestController.php:381
+#: includes/AI/PopupBuilder/RestController.php:382
 msgid "The popup could not be found."
 msgstr ""
 
-#: includes/AI/PopupBuilder/RestController.php:389
+#: includes/AI/PopupBuilder/RestController.php:390
 msgid "You do not have permission to edit this popup with AI."
 msgstr ""
 
-#: includes/AI/PopupBuilder/RestController.php:400
+#: includes/AI/PopupBuilder/RestController.php:401
 msgid "This popup could not be loaded into the AI builder safely."
 msgstr ""
 
 #. translators: %s is a comma-separated list of unsupported block names.
-#: includes/AI/PopupBuilder/RestController.php:403
+#: includes/AI/PopupBuilder/RestController.php:404
 #, php-format
 msgid "This popup uses blocks the AI builder cannot safely edit yet: %s."
 msgstr ""
 
-#: includes/AI/PopupBuilder/RestController.php:457
+#: includes/AI/PopupBuilder/RestController.php:458
 msgid "A valid popup type is required."
 msgstr ""
 
-#: includes/AI/PopupBuilder/RestController.php:465
+#: includes/AI/PopupBuilder/RestController.php:466
 msgid "Popup block HTML is required before saving."
 msgstr ""
 
-#: includes/AI/PopupBuilder/RestController.php:476
+#: includes/AI/PopupBuilder/RestController.php:477
 msgid "The generated block HTML does not match the selected popup type."
 msgstr ""
 
-#: includes/AI/PopupBuilder/RestController.php:488
+#: includes/AI/PopupBuilder/RestController.php:489
 msgid "The popup draft could not be found."
 msgstr ""
 
-#: includes/AI/PopupBuilder/RestController.php:496
+#: includes/AI/PopupBuilder/RestController.php:497
 msgid "You do not have permission to update this popup draft."
 msgstr ""
 
 #. translators: %s: popup type label
-#: includes/AI/PopupBuilder/RestController.php:509
+#: includes/AI/PopupBuilder/RestController.php:510
 #, php-format
 msgid "AI %s Draft"
 msgstr ""
 
-#: includes/AI/PopupBuilder/RestController.php:716
+#: includes/AI/PopupBuilder/RestController.php:717
 msgid "At least one user message is required."
 msgstr ""
 
-#: includes/AI/PopupBuilder/RestController.php:811
+#: includes/AI/PopupBuilder/RestController.php:812
 msgid "A valid WordPress AI connector is required before chat-based popup generation can run."
 msgstr ""
 
-#: includes/AI/PopupBuilder/RestController.php:824
+#: includes/AI/PopupBuilder/RestController.php:825
 msgid "Streaming chat is not available on this site."
 msgstr ""
 
+#. translators: %s: AI model override value.
+#: includes/AI/PopupBuilder/Settings.php:156
+#, php-format
+msgid "The AI model override \"%s\" must use provider/model-name format."
+msgstr ""
+
+#: includes/AI/PopupBuilder/Settings.php:166
+msgid "The AI client prompt builder cannot force an explicit model on this site."
+msgstr ""
+
+#. translators: 1: AI model override value, 2: error message.
+#: includes/AI/PopupBuilder/Settings.php:183
+#: includes/AI/PopupBuilder/Settings.php:301
+#, php-format
+msgid "The AI model override \"%1$s\" could not be resolved: %2$s"
+msgstr ""
+
+#: includes/AI/PopupBuilder/Settings.php:207
+#: includes/AI/PopupBuilder/SettingsPage.php:316
+msgid "Enter a provider/model-name before testing."
+msgstr ""
+
+#: includes/AI/PopupBuilder/Settings.php:215
+msgid "The WordPress AI client prompt builder is not available on this site."
+msgstr ""
+
+#: includes/AI/PopupBuilder/Settings.php:245
+msgid "The WordPress AI client is not available to resolve the configured model override."
+msgstr ""
+
+#: includes/AI/PopupBuilder/Settings.php:255
+msgid "The WordPress AI client registry cannot resolve provider model overrides."
+msgstr ""
+
+#: includes/AI/PopupBuilder/Settings.php:269
+msgid "The WordPress AI client cannot build model configuration for the configured model override."
+msgstr ""
+
+#. translators: %s: AI model override value.
+#: includes/AI/PopupBuilder/Settings.php:287
+#, php-format
+msgid "The AI model override \"%s\" did not resolve to a model instance."
+msgstr ""
+
 #: includes/AI/PopupBuilder/SettingsPage.php:58
-#: src/admin/ai-popup-builder/App.js:2488
+#: src/admin/ai-popup-builder/App.js:2623
 msgid "Override Text Model"
 msgstr ""
 
 #: includes/AI/PopupBuilder/SettingsPage.php:59
-#: src/admin/ai-popup-builder/App.js:2493
-msgid "Optional custom text model name"
+#: includes/AI/PopupBuilder/SettingsPage.php:67
+#: src/admin/ai-popup-builder/App.js:2628
+#: src/admin/ai-popup-builder/App.js:2641
+msgid "provider/model-name"
 msgstr ""
 
 #: includes/AI/PopupBuilder/SettingsPage.php:60
-msgid "When set, text requests ask the AI client to prefer this model."
+msgid "When set, text requests force this provider/model through the AI client."
 msgstr ""
 
 #: includes/AI/PopupBuilder/SettingsPage.php:66
-#: src/admin/ai-popup-builder/App.js:2501
+#: src/admin/ai-popup-builder/App.js:2636
 msgid "Override Image Model"
 msgstr ""
 
-#: includes/AI/PopupBuilder/SettingsPage.php:67
-#: src/admin/ai-popup-builder/App.js:2506
-msgid "Optional custom image model name"
-msgstr ""
-
 #: includes/AI/PopupBuilder/SettingsPage.php:68
-msgid "When set, image generation requests ask the AI client to prefer this model."
+msgid "When set, image generation requests force this provider/model through the AI client."
 msgstr ""
 
 #: includes/AI/PopupBuilder/SettingsPage.php:74
-#: src/admin/ai-popup-builder/App.js:2550
+#: src/admin/ai-popup-builder/App.js:2704
 msgid "Disabled Params"
 msgstr ""
 
 #: includes/AI/PopupBuilder/SettingsPage.php:76
-msgid "One parameter per line or comma-separated. Listed optional parameters are not sent with AI chat requests."
+msgid "One optional model/provider request parameter per line or comma-separated. Required popup builder capabilities such as tools and response_format are always kept enabled."
 msgstr ""
 
 #: includes/AI/PopupBuilder/SettingsPage.php:82
-#: src/admin/ai-popup-builder/App.js:2514
+#: src/admin/ai-popup-builder/App.js:2685
+msgid "Optimize Generated Images"
+msgstr ""
+
+#: includes/AI/PopupBuilder/SettingsPage.php:84
+msgid "Request WebP output, compression, and opaque backgrounds for generated popup images. Disable this if your AI image provider rejects output_format, output_compression, or background."
+msgstr ""
+
+#: includes/AI/PopupBuilder/SettingsPage.php:93
+#: src/admin/ai-popup-builder/App.js:2649
 msgid "Timeout"
 msgstr ""
 
-#: includes/AI/PopupBuilder/SettingsPage.php:86
+#: includes/AI/PopupBuilder/SettingsPage.php:97
 msgid "Maximum time in seconds to wait for an AI chat response."
 msgstr ""
 
-#: includes/AI/PopupBuilder/SettingsPage.php:92
-#: src/admin/ai-popup-builder/App.js:2529
+#: includes/AI/PopupBuilder/SettingsPage.php:103
+#: src/admin/ai-popup-builder/App.js:2664
 msgid "Max Tool Calls"
 msgstr ""
 
-#: includes/AI/PopupBuilder/SettingsPage.php:96
+#: includes/AI/PopupBuilder/SettingsPage.php:107
 msgid "Maximum number of AI tool-call rounds allowed while building one popup response. Increase this if complex prompts stop with the tool-call limit error."
+msgstr ""
+
+#. translators: %s: AI model override value.
+#: includes/AI/PopupBuilder/SettingsPage.php:294
+#: src/admin/ai-popup-builder/App.js:2130
+#, php-format,js-format
+msgid "Model test passed for \"%s\"."
+msgstr ""
+
+#: includes/AI/PopupBuilder/SettingsPage.php:324
+msgid "Use provider/model-name format before testing this model."
+msgstr ""
+
+#. translators: %s: AI model override value.
+#: includes/AI/PopupBuilder/SettingsPage.php:333
+#: src/admin/ai-popup-builder/App.js:2142
+#, php-format,js-format
+msgid "Could not test \"%s\". Check that the connector is active and the model name is available."
 msgstr ""
 
 #: includes/Blocks/Countdown.php:85
@@ -2050,7 +2229,7 @@ msgid "Seconds"
 msgstr ""
 
 #: includes/Blocks/Coupon.php:94
-#: src/admin/ai-popup-builder/App.js:4293
+#: src/admin/ai-popup-builder/App.js:4527
 #: src/blocks/coupon/editor/Edit.js:24
 #: src/editor/icons/default/index.js:45
 msgid "Copy"
@@ -2248,7 +2427,7 @@ msgid "Newsletter"
 msgstr ""
 
 #: includes/Components/VariationPicker.php:76
-#: src/admin/ai-popup-builder/App.js:1042
+#: src/admin/ai-popup-builder/App.js:1050
 #: src/editor/plugins/ai-builder/Plugin.js:94
 msgid "Offer"
 msgstr ""
@@ -2284,9 +2463,9 @@ msgstr ""
 #: includes/DisplayRules.php:349
 #: includes/DisplayRules.php:351
 #: includes/DisplayRules.php:371
-#: src/admin/ai-popup-builder/App.js:1039
-#: src/admin/ai-popup-builder/App.js:1043
-#: src/admin/ai-popup-builder/App.js:3422
+#: src/admin/ai-popup-builder/App.js:1047
+#: src/admin/ai-popup-builder/App.js:1051
+#: src/admin/ai-popup-builder/App.js:3612
 #: src/admin/brand-context/components.js:169
 #: src/editor/components/date-time-control/Component.js:17
 #: src/editor/components/display-rules/components/post-status-info/Component.js:45
@@ -2473,108 +2652,90 @@ msgstr ""
 msgid "%1$s Included fonts already available for bundled templates: %2$s."
 msgstr ""
 
-#: includes/FooConvert.php:159
-msgid "You are not allowed to preview this popup."
-msgstr ""
-
-#: includes/FooConvert.php:166
-msgid "Popup preview not found."
-msgstr ""
-
-#. translators: %s: popup title shown in the preview page title.
-#: includes/FooConvert.php:213
-#, php-format
-msgid "Preview: %s"
-msgstr ""
-
-#: includes/FooConvert.php:220
-msgid "Popup Preview"
-msgstr ""
-
-#: includes/FooConvert.php:559
+#: includes/FooConvert.php:437
 msgid "Popup Blocks (FooConvert)"
 msgstr ""
 
-#: includes/functions.php:558
+#: includes/functions.php:601
 msgid "engagements"
 msgstr ""
 
-#: includes/functions.php:560
+#: includes/functions.php:603
 msgid "Total number of engagements"
 msgstr ""
 
-#: includes/functions.php:566
+#: includes/functions.php:609
 #: pro/includes/WooCommerce/Triggers.php:287
 msgid "views"
 msgstr ""
 
-#: includes/functions.php:568
+#: includes/functions.php:611
 msgid "Total number of views"
 msgstr ""
 
-#: includes/functions.php:608
+#: includes/functions.php:651
 msgid "ago"
 msgstr ""
 
-#: includes/functions.php:636
+#: includes/functions.php:679
 msgid "Never"
 msgstr ""
 
-#: includes/functions.php:738
+#: includes/functions.php:781
 #: pro/includes/Experiments/Admin/Init.php:417
 #: pro/includes/Experiments/Admin/Init.php:418
 msgid "A/B Testing"
 msgstr ""
 
-#: includes/functions.php:739
+#: includes/functions.php:782
 msgid "Test popup ideas, split traffic, compare goal rates, and let FooConvert Pro apply a winner automatically."
 msgstr ""
 
-#: includes/functions.php:743
+#: includes/functions.php:786
 msgid "Sales Revenue Attribution"
 msgstr ""
 
-#: includes/functions.php:744
+#: includes/functions.php:787
 msgid "Connect popup engagement to WooCommerce orders and report attributed revenue, order counts, recent sales, and top revenue popups."
 msgstr ""
 
-#: includes/functions.php:748
+#: includes/functions.php:791
 msgid "Store-Focused Popup Blocks"
 msgstr ""
 
-#: includes/functions.php:749
+#: includes/functions.php:792
 msgid "Add Apply Coupon, Free Shipping Progress, and Confetti blocks for ecommerce offers, cart incentives, and sales campaigns."
 msgstr ""
 
-#: includes/functions.php:753
+#: includes/functions.php:796
 msgid "WooCommerce Display Rules"
 msgstr ""
 
-#: includes/functions.php:754
+#: includes/functions.php:797
 msgid "Target shop, cart, checkout, account, product, product category, and product tag pages with store-aware campaign rules."
 msgstr ""
 
-#: includes/functions.php:758
+#: includes/functions.php:801
 msgid "WooCommerce Triggers"
 msgstr ""
 
-#: includes/functions.php:759
+#: includes/functions.php:802
 msgid "React to cart changes, coupon activity, checkout behavior, payment failures, and high-intent product browsing."
 msgstr ""
 
-#: includes/functions.php:763
+#: includes/functions.php:806
 msgid "Lead Automation Integrations"
 msgstr ""
 
-#: includes/functions.php:764
+#: includes/functions.php:807
 msgid "Send captured leads to Mailchimp, MailPoet, Brevo, Zapier, Make, n8n, or custom webhook workflows."
 msgstr ""
 
-#: includes/functions.php:768
+#: includes/functions.php:811
 msgid "Advanced Analytics + Retention"
 msgstr ""
 
-#: includes/functions.php:769
+#: includes/functions.php:812
 msgid "Track clicks, conversions, engagement, attributed sales, visitor behavior, week-over-week changes, and longer configurable retention."
 msgstr ""
 
@@ -2630,7 +2791,7 @@ msgstr ""
 
 #: includes/PostType.php:54
 #: includes/PostType.php:64
-#: src/admin/ai-popup-builder/App.js:2876
+#: src/admin/ai-popup-builder/App.js:3036
 msgid "Popups"
 msgstr ""
 
@@ -2663,14 +2824,37 @@ msgid "No Popups found in Trash"
 msgstr ""
 
 #: includes/PostType.php:151
-#: src/admin/ai-popup-builder/App.js:791
-#: src/admin/ai-popup-builder/App.js:1031
+#: src/admin/ai-popup-builder/App.js:798
+#: src/admin/ai-popup-builder/App.js:1039
 #: src/editor/plugins/ai-builder/Plugin.js:74
 msgid "Type"
 msgstr ""
 
 #: includes/PostType.php:202
 msgid "All Types"
+msgstr ""
+
+#: includes/Preview.php:94
+msgid "You are not allowed to preview this popup."
+msgstr ""
+
+#: includes/Preview.php:101
+msgid "Popup preview not found."
+msgstr ""
+
+#. translators: %s: popup title shown in the preview page title.
+#: includes/Preview.php:195
+#, php-format
+msgid "Preview: %s"
+msgstr ""
+
+#: includes/Preview.php:203
+msgid "Popup Preview"
+msgstr ""
+
+#: includes/Preview.php:207
+#: src/admin/ai-popup-builder/App.js:669
+msgid "Refresh"
 msgstr ""
 
 #. translators: %1$s = Plugin name; %2$s = Minimum PHP version; %3$s = Current PHP version
@@ -3187,8 +3371,8 @@ msgid "FOMO"
 msgstr ""
 
 #: pro/includes/DisplayRules/WooCommerce.php:35
-#: src/admin/ai-popup-builder/App.js:2696
-#: src/admin/ai-popup-builder/App.js:3505
+#: src/admin/ai-popup-builder/App.js:2856
+#: src/admin/ai-popup-builder/App.js:3695
 msgid "WooCommerce"
 msgstr ""
 
@@ -3257,7 +3441,7 @@ msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:68
 #: pro/includes/Experiments/Admin/Init.php:175
-#: src/admin/ai-popup-builder/App.js:1038
+#: src/admin/ai-popup-builder/App.js:1046
 #: src/editor/plugins/ai-builder/Plugin.js:82
 msgid "Goal"
 msgstr ""
@@ -3331,7 +3515,7 @@ msgstr ""
 
 #: pro/includes/Experiments/Admin/ConfigMetabox.php:149
 #: pro/includes/Experiments/Admin/Init.php:1289
-#: src/admin/ai-popup-builder/App.js:1312
+#: src/admin/ai-popup-builder/App.js:1331
 msgid "Draft"
 msgstr ""
 
@@ -3761,7 +3945,7 @@ msgid "Automated rule matched"
 msgstr ""
 
 #: pro/includes/Experiments/Admin/Init.php:1417
-#: src/admin/ai-popup-builder/App.js:622
+#: src/admin/ai-popup-builder/App.js:626
 msgid "Unknown time"
 msgstr ""
 
@@ -4766,9 +4950,9 @@ msgstr ""
 #: pro/src/blocks/free-shipping-progress/editor/blocks/bar/editor/Edit.js:96
 #: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:257
 #: pro/src/editor/components/popup-background-generator/config.js:510
-#: src/admin/ai-popup-builder/App.js:1114
-#: src/admin/brand-context/components.js:355
-#: src/admin/brand-context/components.js:613
+#: src/admin/ai-popup-builder/App.js:1125
+#: src/admin/brand-context/components.js:385
+#: src/admin/brand-context/components.js:647
 #: src/blocks/countdown/editor/components/container/EditStyles.js:19
 #: src/blocks/countdown/editor/components/segment/EditStyles.js:26
 #: src/blocks/coupon/editor/components/code/EditStyles.js:29
@@ -4876,8 +5060,8 @@ msgid "Shown once the cart subtotal meets or exceeds the free shipping threshold
 msgstr ""
 
 #: pro/src/blocks/free-shipping-progress/editor/EditSettings.js:39
-#: src/admin/ai-popup-builder/App.js:3173
-#: src/admin/ai-popup-builder/App.js:3721
+#: src/admin/ai-popup-builder/App.js:3363
+#: src/admin/ai-popup-builder/App.js:3938
 msgid "Unavailable"
 msgstr ""
 
@@ -4999,7 +5183,7 @@ msgid "Reset"
 msgstr ""
 
 #: pro/src/editor/components/popup-background-generator/Component.js:369
-#: src/admin/ai-popup-builder/App.js:2209
+#: src/admin/ai-popup-builder/App.js:2303
 #: src/scripts/admin/display-rules-list/index.js:343
 msgid "Cancel"
 msgstr ""
@@ -5071,7 +5255,7 @@ msgid "+ Add color"
 msgstr ""
 
 #: pro/src/editor/components/popup-background-generator/Component.js:579
-#: src/admin/brand-context/components.js:847
+#: src/admin/brand-context/components.js:883
 msgid "Controls"
 msgstr ""
 
@@ -5314,925 +5498,965 @@ msgstr ""
 msgid "Set the threshold amount used by the free shipping progress block."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:127
+#: src/admin/ai-popup-builder/App.js:131
 msgid "Open Settings > Connectors"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:128
+#: src/admin/ai-popup-builder/App.js:132
 msgid "Upgrade WordPress"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:161
+#: src/admin/ai-popup-builder/App.js:165
 msgid "Chat"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:165
+#: src/admin/ai-popup-builder/App.js:169
 msgid "Context"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:169
-#: src/admin/ai-popup-builder/App.js:4078
+#: src/admin/ai-popup-builder/App.js:173
+#: src/admin/ai-popup-builder/App.js:4312
 msgid "Popup Details"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:173
-#: src/admin/ai-popup-builder/App.js:1318
-#: src/admin/ai-popup-builder/App.js:4325
+#: src/admin/ai-popup-builder/App.js:177
+#: src/admin/ai-popup-builder/App.js:1337
+#: src/admin/ai-popup-builder/App.js:4559
 msgid "Media"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:184
+#: src/admin/ai-popup-builder/App.js:188
 msgid "Debug"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:228
+#: src/admin/ai-popup-builder/App.js:232
 msgid "Thinking"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:248
-#: src/admin/ai-popup-builder/App.js:285
+#: src/admin/ai-popup-builder/App.js:252
+#: src/admin/ai-popup-builder/App.js:289
 msgid "Popup Assistant"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:249
+#: src/admin/ai-popup-builder/App.js:253
 msgid "You"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:297
+#: src/admin/ai-popup-builder/App.js:301
 msgid "Preparing response"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:321
+#: src/admin/ai-popup-builder/App.js:325
 #: src/editor/plugins/ai-builder/Plugin.js:132
 msgid "Conversion score"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:330
+#: src/admin/ai-popup-builder/App.js:334
 #: src/editor/plugins/ai-builder/Plugin.js:170
 msgid "Strengths"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:340
+#: src/admin/ai-popup-builder/App.js:344
 #: src/editor/plugins/ai-builder/Plugin.js:174
 msgid "Watchouts"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:350
+#: src/admin/ai-popup-builder/App.js:354
 #: src/editor/plugins/ai-builder/Plugin.js:178
 msgid "Suggestions"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:387
+#: src/admin/ai-popup-builder/App.js:391
 msgid "Best for:"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:388
+#: src/admin/ai-popup-builder/App.js:392
 msgid "Watchouts:"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:389
+#: src/admin/ai-popup-builder/App.js:393
 msgid "Length:"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:390
+#: src/admin/ai-popup-builder/App.js:394
 msgid "Exit intent:"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:424
+#: src/admin/ai-popup-builder/App.js:428
 msgid "Before:"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:430
+#: src/admin/ai-popup-builder/App.js:434
 msgid "After:"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:445
+#: src/admin/ai-popup-builder/App.js:449
 #: src/popups/shared/editor/components/view-state-controls/index.js:61
 msgid "Open"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:512
+#: src/admin/ai-popup-builder/App.js:516
 msgid "No context available yet."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:543
+#: src/admin/ai-popup-builder/App.js:547
 msgid "Activity"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:547
+#: src/admin/ai-popup-builder/App.js:551
 msgid "1 event"
 msgstr ""
 
 #. translators: %d is the number of activity events.
-#: src/admin/ai-popup-builder/App.js:550
+#: src/admin/ai-popup-builder/App.js:554
 #, js-format
 msgid "%d events"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:570
+#: src/admin/ai-popup-builder/App.js:574
 msgid "tool result"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:596
+#: src/admin/ai-popup-builder/App.js:600
 msgid "Working"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:606
+#: src/admin/ai-popup-builder/App.js:610
 msgid "Result:"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:649
+#: src/admin/ai-popup-builder/App.js:653
 msgid "AI Response Debug"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:651
+#: src/admin/ai-popup-builder/App.js:655
 msgid "Raw invalid or repaired responses for troubleshooting."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:664
+#: src/admin/ai-popup-builder/App.js:668
 msgid "Loading…"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:665
-msgid "Refresh"
-msgstr ""
-
-#: src/admin/ai-popup-builder/App.js:676
+#: src/admin/ai-popup-builder/App.js:680
 msgid "Clearing…"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:677
+#: src/admin/ai-popup-builder/App.js:681
 msgid "Clear Responses"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:690
+#: src/admin/ai-popup-builder/App.js:694
 msgid "Current Response"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:694
+#: src/admin/ai-popup-builder/App.js:698
 msgid "Streaming response chunks"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:697
+#: src/admin/ai-popup-builder/App.js:704
 msgid "Send a chat request to watch response chunks stream here."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:713
+#: src/admin/ai-popup-builder/App.js:720
 msgid "Loading stored invalid responses…"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:725
+#: src/admin/ai-popup-builder/App.js:732
 msgid "No invalid AI popup builder responses have been stored yet."
 msgstr ""
 
 #. translators: %d is the response number in the debug list.
-#: src/admin/ai-popup-builder/App.js:755
+#: src/admin/ai-popup-builder/App.js:762
 #, js-format
 msgid "Stored response #%d"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:775
+#: src/admin/ai-popup-builder/App.js:782
 msgid "Retried"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:776
+#: src/admin/ai-popup-builder/App.js:783
 msgid "Returned error"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:805
+#: src/admin/ai-popup-builder/App.js:812
 msgid "Attempt"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:818
+#: src/admin/ai-popup-builder/App.js:825
 msgid "Error"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:832
+#: src/admin/ai-popup-builder/App.js:839
 msgid "Length"
 msgstr ""
 
 #. translators: %d is the response length in bytes.
-#: src/admin/ai-popup-builder/App.js:837
+#: src/admin/ai-popup-builder/App.js:844
 #, js-format
 msgid "%d bytes"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:847
+#: src/admin/ai-popup-builder/App.js:854
 msgid "(truncated)"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:859
+#: src/admin/ai-popup-builder/App.js:866
 msgid "Repair"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:873
+#: src/admin/ai-popup-builder/App.js:880
 msgid "Latest user message"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:883
+#: src/admin/ai-popup-builder/App.js:890
 msgid "Error message"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:892
+#: src/admin/ai-popup-builder/App.js:899
 msgid "Raw AI response"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:902
+#: src/admin/ai-popup-builder/App.js:909
 msgid "Repaired AI response"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:912
+#: src/admin/ai-popup-builder/App.js:919
 msgid "Error data"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1046
+#: src/admin/ai-popup-builder/App.js:1054
 msgid "Action"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1050
+#: src/admin/ai-popup-builder/App.js:1058
 #: src/editor/components/open-trigger-component/Component.js:670
 msgid "Trigger"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1102
-#: src/admin/brand-context/components.js:343
-#: src/admin/brand-context/components.js:589
-#: src/admin/brand-context/components.js:713
+#: src/admin/ai-popup-builder/App.js:1113
+#: src/admin/brand-context/components.js:373
+#: src/admin/brand-context/components.js:623
+#: src/admin/brand-context/components.js:749
 msgid "Primary"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1106
-#: src/admin/brand-context/components.js:347
-#: src/admin/brand-context/components.js:597
+#: src/admin/ai-popup-builder/App.js:1117
+#: src/admin/brand-context/components.js:377
+#: src/admin/brand-context/components.js:631
 msgid "Secondary"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1110
-#: src/admin/brand-context/components.js:351
-#: src/admin/brand-context/components.js:605
+#: src/admin/ai-popup-builder/App.js:1121
+#: src/admin/brand-context/components.js:381
+#: src/admin/brand-context/components.js:639
 msgid "Accent"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1118
-#: src/admin/brand-context/components.js:359
-#: src/admin/brand-context/components.js:621
+#: src/admin/ai-popup-builder/App.js:1129
+#: src/admin/brand-context/components.js:389
+#: src/admin/brand-context/components.js:655
 msgid "Primary text"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1122
-#: src/admin/brand-context/components.js:363
-#: src/admin/brand-context/components.js:629
+#: src/admin/ai-popup-builder/App.js:1133
+#: src/admin/brand-context/components.js:393
+#: src/admin/brand-context/components.js:663
 msgid "Secondary text"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1160
+#: src/admin/ai-popup-builder/App.js:1179
 msgid "Use these to refine the current popup or continue from the latest response."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1164
+#: src/admin/ai-popup-builder/App.js:1183
 msgid "Use these as a starting point, then refine the popup in chat."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1299
-#: src/admin/ai-popup-builder/App.js:2460
+#: src/admin/ai-popup-builder/App.js:1318
+#: src/admin/ai-popup-builder/App.js:2556
 msgid "Connector default"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1300
+#: src/admin/ai-popup-builder/App.js:1319
 msgid "None available"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1304
+#: src/admin/ai-popup-builder/App.js:1323
 msgid "Messages"
 msgstr ""
 
 #. translators: %d is the number of conversation turns.
-#: src/admin/ai-popup-builder/App.js:1307
+#: src/admin/ai-popup-builder/App.js:1326
 #, js-format
 msgid "%d turns"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1314
+#: src/admin/ai-popup-builder/App.js:1333
 #: src/editor/components/variation-picker/Component.js:602
 msgid "Included"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1315
+#: src/admin/ai-popup-builder/App.js:1334
 msgid "None yet"
 msgstr ""
 
 #. translators: %d is the number of generated media items.
-#: src/admin/ai-popup-builder/App.js:1321
+#: src/admin/ai-popup-builder/App.js:1340
 #, js-format
 msgid "%d items"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1326
-#: src/admin/ai-popup-builder/App.js:3395
+#: src/admin/ai-popup-builder/App.js:1345
+#: src/admin/ai-popup-builder/App.js:3585
 msgid "Brand"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1327
+#: src/admin/ai-popup-builder/App.js:1346
 msgid "Always attached separately"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1360
-#: src/admin/ai-popup-builder/App.js:1393
+#: src/admin/ai-popup-builder/App.js:1379
+#: src/admin/ai-popup-builder/App.js:1412
 msgid "The saved popup could not be loaded into the AI builder."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1383
+#: src/admin/ai-popup-builder/App.js:1402
 msgid "Popup loaded. Ask AI for changes and they will update this popup."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1470
+#: src/admin/ai-popup-builder/App.js:1489
 msgid "Starter brand profile extracted."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1479
+#: src/admin/ai-popup-builder/App.js:1498
 msgid "Brand extraction failed. You can fill in the brand details manually and save them."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1523
+#: src/admin/ai-popup-builder/App.js:1542
 msgid "The popup draft could not be serialized into blocks."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1568
+#: src/admin/ai-popup-builder/App.js:1587
 msgid "Popup updated automatically. Preview or edit it whenever you want."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1572
+#: src/admin/ai-popup-builder/App.js:1591
 msgid "Draft popup created automatically. Preview it or open it in the editor."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1582
+#: src/admin/ai-popup-builder/App.js:1601
 msgid "The popup draft could not be saved."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1739
+#: src/admin/ai-popup-builder/App.js:1755
 msgid "I prepared a popup direction for you."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1855
+#: src/admin/ai-popup-builder/App.js:1875
 msgid "The AI popup builder could not complete that request."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1897
+#: src/admin/ai-popup-builder/App.js:1936
 msgid "Popup block HTML copied to the clipboard."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1904
+#: src/admin/ai-popup-builder/App.js:1943
 msgid "Could not copy the block HTML to the clipboard."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1917
+#: src/admin/ai-popup-builder/App.js:1956
 #: src/admin/brand-context/index.js:96
 msgid "Enter a remote URL before starting remote brand extraction."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1953
+#: src/admin/ai-popup-builder/App.js:1992
 #: src/admin/brand-context/index.js:133
 msgid "Remote brand extraction completed. The extracted values are ready to review and save."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1957
+#: src/admin/ai-popup-builder/App.js:1996
 #: src/admin/brand-context/index.js:137
 msgid "Brand extraction completed. The extracted values are ready to review and save."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1968
+#: src/admin/ai-popup-builder/App.js:2007
 #: src/admin/brand-context/index.js:148
 msgid "Brand extraction failed."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:1996
+#: src/admin/ai-popup-builder/App.js:2035
 msgid "Brand saved for reuse. The AI builder will now use it as the main styling source."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2007
+#: src/admin/ai-popup-builder/App.js:2046
 msgid "The brand profile could not be saved."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2041
+#: src/admin/ai-popup-builder/App.js:2080
 msgid "AI Popup Builder settings saved."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2050
+#: src/admin/ai-popup-builder/App.js:2089
 msgid "The AI Popup Builder settings could not be saved."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2185
+#: src/admin/ai-popup-builder/App.js:2279
 msgid "The stored AI responses could not be loaded."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2205
+#: src/admin/ai-popup-builder/App.js:2299
 msgid "Confirm action"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2207
+#: src/admin/ai-popup-builder/App.js:2301
 msgid "Confirm"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2234
+#: src/admin/ai-popup-builder/App.js:2328
 msgid "Clear all stored invalid AI popup builder responses?"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2239
+#: src/admin/ai-popup-builder/App.js:2333
 msgid "Clear"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2265
+#: src/admin/ai-popup-builder/App.js:2359
 msgid "Stored invalid AI responses cleared."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2274
+#: src/admin/ai-popup-builder/App.js:2368
 msgid "The stored AI responses could not be cleared."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2292
+#: src/admin/ai-popup-builder/App.js:2386
 msgid "Generate a new popup image that fits this popup and incorporate it into the draft."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2333
+#: src/admin/ai-popup-builder/App.js:2427
 msgid "Delete this generated image from the media library?"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2380
+#: src/admin/ai-popup-builder/App.js:2474
 msgid "The generated image could not be deleted."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2418
+#: src/admin/ai-popup-builder/App.js:2512
 msgid "Configure a valid WordPress AI connector before sending requests."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2423
+#: src/admin/ai-popup-builder/App.js:2517
 msgid "Loading the saved popup before chat starts."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2428
+#: src/admin/ai-popup-builder/App.js:2522
 msgid "Brand extraction is still running. Wait for it to finish before sending the next request."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2438
+#: src/admin/ai-popup-builder/App.js:2532
 msgid "You can view settings but cannot save defaults."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2447
+#: src/admin/ai-popup-builder/App.js:2541
 msgid "Current Models"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2454
+#: src/admin/ai-popup-builder/App.js:2549
 msgid "Current Text Model"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2466
+#: src/admin/ai-popup-builder/App.js:2570
+msgid "Test current text model"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2576
+#: src/admin/ai-popup-builder/App.js:2604
+msgid "Testing…"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2577
+#: src/admin/ai-popup-builder/App.js:2605
+msgid "Test"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2583
 msgid "Current Image Model"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2476
+#: src/admin/ai-popup-builder/App.js:2598
+msgid "Test current image model"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2611
 msgid "No image generation model is available."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2524
+#: src/admin/ai-popup-builder/App.js:2659
 msgid "Maximum seconds to wait."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2541
+#: src/admin/ai-popup-builder/App.js:2676
 msgid "Increase this if complex prompts stop with the tool-call limit error."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2560
-msgid "One parameter per line."
+#: src/admin/ai-popup-builder/App.js:2695
+msgid "Requests WebP output, compression, and opaque backgrounds for generated popup images. Disable this if your AI image provider rejects output_format, output_compression, or background."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2579
-#: src/admin/ai-popup-builder/App.js:2744
-#: src/admin/brand-context/components.js:441
+#: src/admin/ai-popup-builder/App.js:2717
+msgid "One optional model/provider request parameter per line. Tools and response_format stay enabled."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:2739
+#: src/admin/ai-popup-builder/App.js:2904
+#: src/admin/brand-context/components.js:283
+#: src/admin/brand-context/components.js:471
 msgid "Saving…"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2580
+#: src/admin/ai-popup-builder/App.js:2740
 msgid "Save Settings"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2625
+#: src/admin/ai-popup-builder/App.js:2785
 msgid "Supported Blocks"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2632
+#: src/admin/ai-popup-builder/App.js:2792
 msgid "Choose blocks the builder may use."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2639
+#: src/admin/ai-popup-builder/App.js:2799
 msgid "You can inspect blocks but cannot save defaults."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2655
-#: src/admin/ai-popup-builder/App.js:2864
-#: src/admin/ai-popup-builder/App.js:3484
-#: src/admin/ai-popup-builder/App.js:3539
+#: src/admin/ai-popup-builder/App.js:2815
+#: src/admin/ai-popup-builder/App.js:3024
+#: src/admin/ai-popup-builder/App.js:3674
+#: src/admin/ai-popup-builder/App.js:3729
 msgid "Total"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2667
-#: src/admin/ai-popup-builder/App.js:3491
+#: src/admin/ai-popup-builder/App.js:2827
+#: src/admin/ai-popup-builder/App.js:3681
 msgid "Core"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2680
+#: src/admin/ai-popup-builder/App.js:2840
 #: src/admin/ai-popup-builder/serializer.js:44
 msgid "Popup Blocks"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2713
+#: src/admin/ai-popup-builder/App.js:2873
 msgid "Select visible"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2725
+#: src/admin/ai-popup-builder/App.js:2885
 msgid "Clear visible"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2732
+#: src/admin/ai-popup-builder/App.js:2892
 msgid "Reset defaults"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2745
+#: src/admin/ai-popup-builder/App.js:2905
 msgid "Save selection"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2820
+#: src/admin/ai-popup-builder/App.js:2980
 msgid "No blocks in this filter"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2826
+#: src/admin/ai-popup-builder/App.js:2986
 msgid "Try another filter."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2842
+#: src/admin/ai-popup-builder/App.js:3002
 msgid "Structural Templates"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2849
-#: src/admin/ai-popup-builder/App.js:3522
+#: src/admin/ai-popup-builder/App.js:3009
+#: src/admin/ai-popup-builder/App.js:3712
 msgid "Optional layout starting points."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2888
-#: src/admin/ai-popup-builder/App.js:3558
+#: src/admin/ai-popup-builder/App.js:3048
+#: src/admin/ai-popup-builder/App.js:3748
 #: src/editor/hooks/usePostTypeLabels.js:16
 msgid "Flyouts"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2900
-#: src/admin/ai-popup-builder/App.js:3548
+#: src/admin/ai-popup-builder/App.js:3060
+#: src/admin/ai-popup-builder/App.js:3738
 #: src/editor/hooks/usePostTypeLabels.js:12
 msgid "Bars"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2956
+#: src/admin/ai-popup-builder/App.js:3116
 msgid "No templates in this filter"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2962
+#: src/admin/ai-popup-builder/App.js:3122
 msgid "Try another type."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2978
+#: src/admin/ai-popup-builder/App.js:3138
 msgid "Conversion Playbook"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2985
-#: src/admin/ai-popup-builder/App.js:3588
+#: src/admin/ai-popup-builder/App.js:3145
+#: src/admin/ai-popup-builder/App.js:3778
 msgid "Conversion guidance available to the builder."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:2992
-#: src/admin/ai-popup-builder/App.js:3604
+#: src/admin/ai-popup-builder/App.js:3152
+#: src/admin/ai-popup-builder/App.js:3794
 msgid "Principles"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3005
-#: src/admin/ai-popup-builder/App.js:3613
+#: src/admin/ai-popup-builder/App.js:3165
+#: src/admin/ai-popup-builder/App.js:3803
 msgid "Avoid"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3020
+#: src/admin/ai-popup-builder/App.js:3180
 msgid "Popup Types"
 msgstr ""
 
 #. translators: %s is a conversion playbook field label.
-#: src/admin/ai-popup-builder/App.js:3049
+#: src/admin/ai-popup-builder/App.js:3209
 #, js-format
 msgid "%s:"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3069
+#: src/admin/ai-popup-builder/App.js:3229
 msgid "Copy Tactics"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3083
+#: src/admin/ai-popup-builder/App.js:3243
 msgid "Proof Hierarchy"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3098
+#: src/admin/ai-popup-builder/App.js:3258
 msgid "Ranked proof types"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3110
-#: src/admin/ai-popup-builder/App.js:3651
+#: src/admin/ai-popup-builder/App.js:3270
+#: src/admin/ai-popup-builder/App.js:3841
 msgid "Examples"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3127
-#: src/admin/ai-popup-builder/App.js:3666
+#: src/admin/ai-popup-builder/App.js:3287
+#: src/admin/ai-popup-builder/App.js:3856
 msgid "System Prompt"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3134
+#: src/admin/ai-popup-builder/App.js:3294
 msgid "Default instructions for generated popups."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3140
+#: src/admin/ai-popup-builder/App.js:3300
 msgid "Builder system instruction"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3155
-#: src/admin/ai-popup-builder/App.js:3693
+#: src/admin/ai-popup-builder/App.js:3315
+#: src/admin/ai-popup-builder/App.js:3883
+msgid "Image Background Prompt"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3322
+msgid "Deterministic prompt used when generating popup background images."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3328
+msgid "Background image prompt"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3345
+#: src/admin/ai-popup-builder/App.js:3910
 msgid "Abilities"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3162
-#: src/admin/ai-popup-builder/App.js:3697
+#: src/admin/ai-popup-builder/App.js:3352
+#: src/admin/ai-popup-builder/App.js:3914
 msgid "Tools available during generation."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3170
+#: src/admin/ai-popup-builder/App.js:3360
 msgid "Abilities API"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3172
+#: src/admin/ai-popup-builder/App.js:3362
 msgid "Available"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3176
+#: src/admin/ai-popup-builder/App.js:3366
 msgid "Allowed tools"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3199
+#: src/admin/ai-popup-builder/App.js:3389
 msgid "Current Request Context"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3206
-#: src/admin/ai-popup-builder/App.js:3743
+#: src/admin/ai-popup-builder/App.js:3396
+#: src/admin/ai-popup-builder/App.js:3960
 msgid "Data sent with the next chat message."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3213
+#: src/admin/ai-popup-builder/App.js:3403
 msgid "Conversation"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3222
+#: src/admin/ai-popup-builder/App.js:3412
 msgid "No messages yet."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3227
+#: src/admin/ai-popup-builder/App.js:3417
 msgid "Current popup draft JSON"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3234
+#: src/admin/ai-popup-builder/App.js:3424
 msgid "No popup draft yet."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3239
+#: src/admin/ai-popup-builder/App.js:3429
 msgid "Current media JSON"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3243
+#: src/admin/ai-popup-builder/App.js:3433
 msgid "No generated media yet."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3293
+#: src/admin/ai-popup-builder/App.js:3483
 msgid "Create a draft popup from your brand, offer, audience, and trigger."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3305
+#: src/admin/ai-popup-builder/App.js:3495
 msgid "Loading popup…"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3308
+#: src/admin/ai-popup-builder/App.js:3498
 msgid "Saving popup…"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3309
+#: src/admin/ai-popup-builder/App.js:3499
 msgid "Saving draft…"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3311
+#: src/admin/ai-popup-builder/App.js:3501
 msgid "Popup ready for preview and editing."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3315
+#: src/admin/ai-popup-builder/App.js:3505
 msgid "Draft ready for preview and editing."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3378
+#: src/admin/ai-popup-builder/App.js:3568
 msgid "AI Context"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3384
+#: src/admin/ai-popup-builder/App.js:3574
 msgid "Review what the builder can use."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3399
+#: src/admin/ai-popup-builder/App.js:3589
 msgid "Brand details sent with each request."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3413
+#: src/admin/ai-popup-builder/App.js:3603
 msgid "Overview"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3465
+#: src/admin/ai-popup-builder/App.js:3655
 msgid "Blocks"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3469
+#: src/admin/ai-popup-builder/App.js:3659
 msgid "Blocks the builder may use."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3518
+#: src/admin/ai-popup-builder/App.js:3708
 msgid "Templates"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3568
+#: src/admin/ai-popup-builder/App.js:3758
 #: src/editor/hooks/usePostTypeLabels.js:20
 msgid "Overlays"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3584
+#: src/admin/ai-popup-builder/App.js:3774
 msgid "Playbook"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3622
+#: src/admin/ai-popup-builder/App.js:3812
 msgid "Popup types"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3633
+#: src/admin/ai-popup-builder/App.js:3823
 msgid "Copy tactics"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3642
+#: src/admin/ai-popup-builder/App.js:3832
 msgid "Proof hierarchy"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3670
+#: src/admin/ai-popup-builder/App.js:3860
 msgid "Default builder instructions."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3713
+#: src/admin/ai-popup-builder/App.js:3887
+msgid "Deterministic prompt for generated popup backgrounds."
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:3930
 msgid "Tools"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3739
+#: src/admin/ai-popup-builder/App.js:3956
 msgid "Current Request"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3780
+#: src/admin/ai-popup-builder/App.js:3997
 msgid "Chat Builder"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3788
+#: src/admin/ai-popup-builder/App.js:4005
 msgid "Include the goal, audience, offer, popup type, trigger, and tone."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3806
+#: src/admin/ai-popup-builder/App.js:4023
 msgid "Start with a clear popup brief or choose a suggestion from the sidebar."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3853
+#: src/admin/ai-popup-builder/App.js:4070
 msgid "Describe the popup you want"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3888
+#: src/admin/ai-popup-builder/App.js:4105
 msgid "Generate AI Images"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3905
+#: src/admin/ai-popup-builder/App.js:4122
 msgid "Requires media upload permission and image support."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3962
+#: src/admin/ai-popup-builder/App.js:4179
 msgid "Open Preview"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:3988
+#: src/admin/ai-popup-builder/App.js:4205
 msgid "Edit Draft"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4006
+#: src/admin/ai-popup-builder/App.js:4223
+msgid "Start New Chat"
+msgstr ""
+
+#: src/admin/ai-popup-builder/App.js:4240
 #: src/editor/icons/default/index.js:52
 msgid "Send"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4020
+#: src/admin/ai-popup-builder/App.js:4254
 msgid "Prompt Suggestions"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4084
+#: src/admin/ai-popup-builder/App.js:4318
 msgid "Review the saved draft, strategy, and generated HTML."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4097
+#: src/admin/ai-popup-builder/App.js:4331
 msgid "Generate a popup in Chat first."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4109
+#: src/admin/ai-popup-builder/App.js:4343
 msgid "Strategy Summary"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4117
+#: src/admin/ai-popup-builder/App.js:4351
 msgid "Draft title"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4135
+#: src/admin/ai-popup-builder/App.js:4369
 msgid "Title changes sync on blur."
 msgstr ""
 
 #. translators: %s is the template title used as a structural guide.
-#: src/admin/ai-popup-builder/App.js:4179
+#: src/admin/ai-popup-builder/App.js:4413
 #, js-format
 msgid "Structural template guide: %s"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4196
+#: src/admin/ai-popup-builder/App.js:4430
 msgid "Conversion Checklist"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4213
+#: src/admin/ai-popup-builder/App.js:4447
 msgid "Validation appears after scoring."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4225
+#: src/admin/ai-popup-builder/App.js:4459
 msgid "AI Guidance"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4233
+#: src/admin/ai-popup-builder/App.js:4467
 msgid "Why this should convert"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4242
+#: src/admin/ai-popup-builder/App.js:4476
 msgid "Implementation notes"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4258
+#: src/admin/ai-popup-builder/App.js:4492
 msgid "Ask the AI to explain or refine the strategy."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4275
+#: src/admin/ai-popup-builder/App.js:4509
 msgid "Popup HTML"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4331
+#: src/admin/ai-popup-builder/App.js:4565
 msgid "Generate images for the current popup draft."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4351
+#: src/admin/ai-popup-builder/App.js:4585
 msgid "Generate Image"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4364
+#: src/admin/ai-popup-builder/App.js:4598
 msgid "New image direction"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4374
+#: src/admin/ai-popup-builder/App.js:4608
 msgid "Describe the next popup image."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4423
+#: src/admin/ai-popup-builder/App.js:4657
 msgid "Generated popup image"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4450
-msgid "Use In Popup"
+#: src/admin/ai-popup-builder/App.js:4684
+msgid "Use as Background"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4465
-#: src/admin/brand-context/components.js:281
+#: src/admin/ai-popup-builder/App.js:4701
+#: src/admin/brand-context/components.js:286
 msgid "Edit"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4490
+#: src/admin/ai-popup-builder/App.js:4726
 msgid "Deleting…"
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4510
+#: src/admin/ai-popup-builder/App.js:4746
 msgid "Generate an image or let chat create one."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4514
+#: src/admin/ai-popup-builder/App.js:4750
 msgid "Generate a popup draft first."
 msgstr ""
 
-#: src/admin/ai-popup-builder/App.js:4525
+#: src/admin/ai-popup-builder/App.js:4761
 msgid "This account cannot upload media."
 msgstr ""
 
@@ -6261,86 +6485,6 @@ msgstr ""
 #: src/editor/components/variation-picker/Component.js:853
 #: src/editor/icons/default/index.js:43
 msgid "Close"
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:27
-msgid "Create an exit-intent popup for first-time shoppers with 15% off and a confident headline."
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:35
-msgid "Build a free shipping flyout for active cart shoppers with a helpful, low-pressure tone."
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:43
-msgid "Create a newsletter signup popup for returning readers that offers weekly tips."
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:51
-msgid "Create a product launch bar for mobile visitors with concise copy and one clear CTA."
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:59
-msgid "Create a cart recovery popup with a coupon, urgency, and a short reassurance line."
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:67
-msgid "Add a countdown timer for 2 hours in the future."
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:76
-msgid "Change the popup styling to use my branding."
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:84
-msgid "Change this popup to be a bar and shorten all the wording used."
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:93
-msgid "Convert this popup to a flyout with a softer tone and one clear CTA."
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:102
-msgid "Make the CTA button copy more specific and urgent."
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:110
-msgid "Add a coupon code block for SAVE15."
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:116
-msgid "Add an apply-coupon button for SAVE15."
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:122
-msgid "Add free shipping progress for cart shoppers."
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:131
-msgid "Remove extra copy and make the layout easier to scan."
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:139
-msgid "Rewrite this for mobile visitors with shorter lines."
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:147
-msgid "Add social proof using a short testimonial-style paragraph."
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:155
-msgid "Replace the offer with 10% off a first order."
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:163
-msgid "Generate a new background image that matches this offer."
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:172
-msgid "Change the trigger to fire after 50% scroll."
-msgstr ""
-
-#: src/admin/ai-popup-builder/suggestion-support.js:180
-msgid "Add urgency without making the copy sound pushy."
 msgstr ""
 
 #: src/admin/ai-popup-builder/summary-support.js:39
@@ -6432,189 +6576,189 @@ msgid "Product high intent"
 msgstr ""
 
 #: src/admin/brand-context/components.js:185
-#: src/admin/brand-context/components.js:652
+#: src/admin/brand-context/components.js:686
 msgid "Dark"
 msgstr ""
 
 #: src/admin/brand-context/components.js:185
-#: src/admin/brand-context/components.js:648
+#: src/admin/brand-context/components.js:682
 #: src/editor/components/font-appearance-control/Component.js:20
 msgid "Light"
 msgstr ""
 
-#: src/admin/brand-context/components.js:280
+#: src/admin/brand-context/components.js:285
 #: src/scripts/admin/display-rules-list/index.js:351
 msgid "Save"
 msgstr ""
 
-#: src/admin/brand-context/components.js:384
+#: src/admin/brand-context/components.js:414
 msgid "Brand context gives popup tools shared colors, typography, spacing, and button styling for generated and assisted experiences."
 msgstr ""
 
-#: src/admin/brand-context/components.js:421
-#: src/admin/brand-context/components.js:477
+#: src/admin/brand-context/components.js:451
+#: src/admin/brand-context/components.js:507
 msgid "Extracting…"
 msgstr ""
 
-#: src/admin/brand-context/components.js:422
+#: src/admin/brand-context/components.js:452
 msgid "Extract Current Site"
 msgstr ""
 
-#: src/admin/brand-context/components.js:432
+#: src/admin/brand-context/components.js:462
 msgid "Hide Remote URL"
 msgstr ""
 
-#: src/admin/brand-context/components.js:433
+#: src/admin/brand-context/components.js:463
 msgid "Extract Remote URL"
 msgstr ""
 
-#: src/admin/brand-context/components.js:442
+#: src/admin/brand-context/components.js:472
 msgid "Save Brand"
 msgstr ""
 
-#: src/admin/brand-context/components.js:457
+#: src/admin/brand-context/components.js:487
 msgid "Remote URL"
 msgstr ""
 
-#: src/admin/brand-context/components.js:478
+#: src/admin/brand-context/components.js:508
 msgid "Run Remote Extract"
 msgstr ""
 
-#: src/admin/brand-context/components.js:486
+#: src/admin/brand-context/components.js:516
 msgid "Optional. Use this when you want to extract brand details from another live URL instead of the current site."
 msgstr ""
 
-#: src/admin/brand-context/components.js:499
-#: src/admin/brand-context/components.js:523
+#: src/admin/brand-context/components.js:529
+#: src/admin/brand-context/components.js:555
 msgid "Brand Overview"
 msgstr ""
 
-#: src/admin/brand-context/components.js:512
+#: src/admin/brand-context/components.js:544
 msgid "Add a short brand overview so generated popups have tone and positioning context."
 msgstr ""
 
-#: src/admin/brand-context/components.js:528
+#: src/admin/brand-context/components.js:560
 msgid "This starts from the site tagline on first run and gives generated popups tone and positioning context."
 msgstr ""
 
-#: src/admin/brand-context/components.js:541
+#: src/admin/brand-context/components.js:573
 msgid "Palette"
 msgstr ""
 
-#: src/admin/brand-context/components.js:555
+#: src/admin/brand-context/components.js:589
 msgid "scheme"
 msgstr ""
 
-#: src/admin/brand-context/components.js:578
+#: src/admin/brand-context/components.js:612
 msgid "Extract or set the core brand colors to guide popup styling."
 msgstr ""
 
-#: src/admin/brand-context/components.js:641
+#: src/admin/brand-context/components.js:675
 msgid "Color scheme"
 msgstr ""
 
-#: src/admin/brand-context/components.js:664
+#: src/admin/brand-context/components.js:698
 #: src/editor/components/typography-tools-panel/Component.js:118
 msgid "Typography"
 msgstr ""
 
-#: src/admin/brand-context/components.js:687
+#: src/admin/brand-context/components.js:723
 msgid "Headline Sample"
 msgstr ""
 
-#: src/admin/brand-context/components.js:703
+#: src/admin/brand-context/components.js:739
 msgid "Body copy sample for popup descriptions, proof points, and CTA support text."
 msgstr ""
 
-#: src/admin/brand-context/components.js:727
-#: src/admin/brand-context/components.js:785
+#: src/admin/brand-context/components.js:763
+#: src/admin/brand-context/components.js:821
 msgid "H1 size"
 msgstr ""
 
-#: src/admin/brand-context/components.js:734
-#: src/admin/brand-context/components.js:799
+#: src/admin/brand-context/components.js:770
+#: src/admin/brand-context/components.js:835
 msgid "Body size"
 msgstr ""
 
-#: src/admin/brand-context/components.js:741
+#: src/admin/brand-context/components.js:777
 msgid "Weights"
 msgstr ""
 
-#: src/admin/brand-context/components.js:757
+#: src/admin/brand-context/components.js:793
 msgid "Primary font family"
 msgstr ""
 
-#: src/admin/brand-context/components.js:771
+#: src/admin/brand-context/components.js:807
 msgid "Heading font family"
 msgstr ""
 
-#: src/admin/brand-context/components.js:813
+#: src/admin/brand-context/components.js:849
 msgid "Regular weight"
 msgstr ""
 
-#: src/admin/brand-context/components.js:828
+#: src/admin/brand-context/components.js:864
 msgid "Bold weight"
 msgstr ""
 
-#: src/admin/brand-context/components.js:859
+#: src/admin/brand-context/components.js:897
 msgid "Primary CTA"
 msgstr ""
 
-#: src/admin/brand-context/components.js:865
+#: src/admin/brand-context/components.js:903
 msgid "Secondary CTA"
 msgstr ""
 
-#: src/admin/brand-context/components.js:872
+#: src/admin/brand-context/components.js:910
 msgid "Base unit"
 msgstr ""
 
-#: src/admin/brand-context/components.js:878
+#: src/admin/brand-context/components.js:916
 #: src/editor/components/border-tools-panel/Component.js:95
 #: src/editor/components/border-tools-panel/Component.js:100
 msgid "Radius"
 msgstr ""
 
-#: src/admin/brand-context/components.js:884
+#: src/admin/brand-context/components.js:922
 msgid "Primary button"
 msgstr ""
 
-#: src/admin/brand-context/components.js:894
+#: src/admin/brand-context/components.js:932
 msgid "Secondary border"
 msgstr ""
 
-#: src/admin/brand-context/components.js:910
+#: src/admin/brand-context/components.js:948
 msgid "Base spacing unit"
 msgstr ""
 
-#: src/admin/brand-context/components.js:920
+#: src/admin/brand-context/components.js:958
 msgid "Global border radius"
 msgstr ""
 
-#: src/admin/brand-context/components.js:933
+#: src/admin/brand-context/components.js:971
 msgid "Primary button background"
 msgstr ""
 
-#: src/admin/brand-context/components.js:950
+#: src/admin/brand-context/components.js:988
 msgid "Primary button text"
 msgstr ""
 
-#: src/admin/brand-context/components.js:963
+#: src/admin/brand-context/components.js:1001
 msgid "Primary button radius"
 msgstr ""
 
-#: src/admin/brand-context/components.js:982
+#: src/admin/brand-context/components.js:1020
 msgid "Secondary button background"
 msgstr ""
 
-#: src/admin/brand-context/components.js:999
+#: src/admin/brand-context/components.js:1037
 msgid "Secondary button text"
 msgstr ""
 
-#: src/admin/brand-context/components.js:1016
+#: src/admin/brand-context/components.js:1054
 msgid "Secondary button border"
 msgstr ""
 
-#: src/admin/brand-context/components.js:1032
+#: src/admin/brand-context/components.js:1070
 msgid "Secondary button radius"
 msgstr ""
 
@@ -7268,7 +7412,7 @@ msgstr ""
 msgid "Type to choose..."
 msgstr ""
 
-#: src/editor/components/display-rules/components/locations-control/location-control/Component.js:91
+#: src/editor/components/display-rules/components/locations-control/location-control/Component.js:99
 msgid "Select type"
 msgstr ""
 
@@ -7293,7 +7437,7 @@ msgstr ""
 msgid "Invalid rules object."
 msgstr ""
 
-#: src/editor/components/entity-record-control/Component.js:112
+#: src/editor/components/entity-record-control/Component.js:127
 msgid "No results found"
 msgstr ""
 
@@ -7439,12 +7583,16 @@ msgstr ""
 msgid "Choose a popup template"
 msgstr ""
 
-#: src/editor/components/repeater-control/Component.js:54
+#: src/editor/components/repeater-control/Component.js:55
 msgid "No items."
 msgstr ""
 
-#: src/editor/components/repeater-control/Component.js:55
+#: src/editor/components/repeater-control/Component.js:56
 msgid "Add item"
+msgstr ""
+
+#: src/editor/components/repeater-control/Component.js:105
+msgid "Add"
 msgstr ""
 
 #: src/editor/components/size-control/Component.js:64

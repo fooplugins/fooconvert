@@ -179,6 +179,7 @@ namespace {
     require_once dirname( __DIR__, 2 ) . '/includes/AI/PopupBuilder/Settings.php';
     require_once dirname( __DIR__, 2 ) . '/includes/AI/PopupBuilder/Blueprint/DraftNormalizer.php';
     require_once dirname( __DIR__, 2 ) . '/includes/AI/PopupBuilder/Media/Attachments.php';
+    require_once dirname( __DIR__, 2 ) . '/pro/includes/Init.php';
 
     $assert_strict_object_schema = static function( array $schema, string $path ) use ( &$assert_strict_object_schema ): void {
         if ( isset( $schema['properties'] ) && is_array( $schema['properties'] ) ) {
@@ -290,14 +291,22 @@ namespace {
 
         Assertions::true(
             isset( $generated_pro_block_metadata[ $expected_pro_block_name ] ),
-            sprintf( 'The generated PRO FooConvert block metadata file should include the PRO `%s` block.', $expected_pro_block_name )
+            sprintf( 'The generated Pro FooConvert block metadata file should include the Pro `%s` block.', $expected_pro_block_name )
         );
     }
 
     $free_block_catalog = PopupBlueprint::get_block_catalog();
     $free_block_names   = array_column( $free_block_catalog, 'name' );
 
-    foreach ( array_keys( $generated_pro_block_metadata ) as $pro_block_name ) {
+    foreach (
+        array(
+            'fc/confetti',
+            'fc/apply-coupon',
+            'fc/free-shipping-progress',
+            'fc/free-shipping-progress-content',
+            'fc/free-shipping-progress-bar',
+        ) as $pro_block_name
+    ) {
         Assertions::false(
             in_array( $pro_block_name, $free_block_names, true ),
             sprintf( 'The free AI block catalog should not include the PRO `%s` block before PRO filters run.', $pro_block_name )
@@ -309,12 +318,16 @@ namespace {
     $block_catalog_property->setAccessible( true );
     $block_catalog_property->setValue( null, null );
 
-    add_filter(
-        'fooconvert_ai_popup_builder_block_metadata',
-        static function( array $metadata_map ) use ( $generated_pro_block_metadata ): array {
-            return array_merge( $metadata_map, $generated_pro_block_metadata );
-        }
+    $pro_init_reflection = new ReflectionClass( \FooPlugins\FooConvert\Pro\Init::class );
+    $pro_init            = $pro_init_reflection->newInstanceWithoutConstructor();
+
+    Assertions::same(
+        array_merge( $generated_block_metadata, $generated_pro_block_metadata ),
+        $pro_init->filter_ai_popup_builder_block_metadata( $generated_block_metadata ),
+        'The Pro block metadata loader should merge the generated Pro-only metadata file.'
     );
+
+    add_filter( 'fooconvert_ai_popup_builder_block_metadata', array( $pro_init, 'filter_ai_popup_builder_block_metadata' ) );
 
     $block_catalog   = PopupBlueprint::get_block_catalog();
     $block_names     = array_column( $block_catalog, 'name' );

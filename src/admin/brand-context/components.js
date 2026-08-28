@@ -258,6 +258,8 @@ const BrandSectionCard = ( {
 	title,
 	isEditing,
 	onToggle,
+	onSave,
+	isSaving = false,
 	preview,
 	children,
 	rootClass,
@@ -274,11 +276,14 @@ const BrandSectionCard = ( {
 				</FlexBlock>
 				<Button
 					variant={ isEditing ? 'primary' : 'secondary' }
-					onClick={ onToggle }
+					onClick={ isEditing && onSave ? onSave : onToggle }
+					disabled={ isEditing && isSaving }
 				>
-					{ isEditing
-						? __( 'Save', 'fooconvert' )
-						: __( 'Edit', 'fooconvert' ) }
+					{ isEditing && isSaving
+						? __( 'Saving…', 'fooconvert' )
+						: isEditing
+						  ? __( 'Save', 'fooconvert' )
+						  : __( 'Edit', 'fooconvert' ) }
 				</Button>
 			</Flex>
 		</CardHeader>
@@ -320,6 +325,13 @@ export const BrandContextEditor = ( {
 		} ) );
 	};
 
+	const closeBrandSection = ( section ) => {
+		setEditingBrandSections( ( currentSections ) => ( {
+			...currentSections,
+			[ section ]: false,
+		} ) );
+	};
+
 	const handleExtractBrand = async ( mode = 'local' ) => {
 		const remoteUrl = String( remoteBrandUrl || '' ).trim();
 		const completed = await onExtractBrand?.( mode, remoteUrl );
@@ -330,12 +342,30 @@ export const BrandContextEditor = ( {
 		}
 	};
 
-	const handleSaveBrand = async () => {
+	const handleSaveBrand = async ( section = '' ) => {
+		const sectionName = typeof section === 'string' ? section : '';
+
+		if ( ! brandIsDirty ) {
+			if ( sectionName ) {
+				closeBrandSection( sectionName );
+			} else {
+				setEditingBrandSections( createBrandSectionState() );
+			}
+
+			return true;
+		}
+
 		const completed = await onSaveBrand?.();
 
 		if ( completed ) {
-			setEditingBrandSections( createBrandSectionState() );
+			if ( sectionName ) {
+				closeBrandSection( sectionName );
+			} else {
+				setEditingBrandSections( createBrandSectionState() );
+			}
 		}
+
+		return Boolean( completed );
 	};
 
 	const brandPalette = [
@@ -434,7 +464,7 @@ export const BrandContextEditor = ( {
 					</Button>
 					<Button
 						variant="primary"
-						onClick={ handleSaveBrand }
+						onClick={ () => handleSaveBrand() }
 						disabled={ isSavingBrand || ! brandIsDirty }
 					>
 						{ isSavingBrand
@@ -499,6 +529,8 @@ export const BrandContextEditor = ( {
 					title={ __( 'Brand Overview', 'fooconvert' ) }
 					isEditing={ !! editingBrandSections?.overview }
 					onToggle={ () => toggleBrandSection( 'overview' ) }
+					onSave={ () => handleSaveBrand( 'overview' ) }
+					isSaving={ isSavingBrand }
 					preview={
 						<div className={ `${ rootClass }__preview-stack` }>
 							<div
@@ -541,6 +573,8 @@ export const BrandContextEditor = ( {
 					title={ __( 'Palette', 'fooconvert' ) }
 					isEditing={ !! editingBrandSections?.palette }
 					onToggle={ () => toggleBrandSection( 'palette' ) }
+					onSave={ () => handleSaveBrand( 'palette' ) }
+					isSaving={ isSavingBrand }
 					preview={
 						brandPalette.length > 0 ? (
 							<div className={ `${ rootClass }__preview-stack` }>
@@ -664,6 +698,8 @@ export const BrandContextEditor = ( {
 					title={ __( 'Typography', 'fooconvert' ) }
 					isEditing={ !! editingBrandSections?.typography }
 					onToggle={ () => toggleBrandSection( 'typography' ) }
+					onSave={ () => handleSaveBrand( 'typography' ) }
+					isSaving={ isSavingBrand }
 					preview={
 						<div className={ `${ rootClass }__preview-stack` }>
 							<div className={ `${ rootClass }__type-specimen` }>
@@ -847,6 +883,8 @@ export const BrandContextEditor = ( {
 					title={ __( 'Controls', 'fooconvert' ) }
 					isEditing={ !! editingBrandSections?.controls }
 					onToggle={ () => toggleBrandSection( 'controls' ) }
+					onSave={ () => handleSaveBrand( 'controls' ) }
+					isSaving={ isSavingBrand }
 					preview={
 						<div className={ `${ rootClass }__preview-stack` }>
 							<div

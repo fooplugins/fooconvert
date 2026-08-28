@@ -97,6 +97,8 @@ class PromptFactory {
      * @return string
      */
     private static function compose_system_instruction( bool $generate_images, bool $force_image_generation, array $selected_block_names = array() ): string {
+        $context = self::get_system_instruction_context( $selected_block_names, $generate_images, $force_image_generation );
+
         $instructions = array(
             'You are a popup strategist and builder.',
             'Your job is to turn natural-language requests into high-converting popup drafts.',
@@ -109,8 +111,10 @@ class PromptFactory {
             'Suggested follow-up prompts must be small edits to the generated popup, not alternate popup strategies or fresh popup briefs.',
             'Use the extracted brand context as the main source of truth for colors, typography, spacing, and visual tone.',
             'Templates are optional structural references only. Do not let a template override the brand styling direction.',
+            'When using a template_slug, do not reuse the template background image. Prefer a generated content background image when image generation is available; otherwise use a branded CSS gradient in root_attributes.content.styles.color.background and leave root_attributes.content.styles.background.backgroundImage empty.',
             'Use supported core, popup, and WooCommerce content blocks only. Do not invent unsupported block names.',
             'Favor scannable popup structures: headline, support copy, proof or benefit stack, and CTA.',
+            "Use the `fc/split-layout` block when content naturally needs two coordinated columns/panels.\nGood uses:\n- Text plus an action area, like copy on one side and coupon/form/button on the other.\n- Product/offer details paired with an image, preview, or control.\n- A compact campaign layout where one side should stay fixed-width and the other should flex.\n- When vertical alignment and consistent spacing between two panels matter.\nAvoid it when:\n- Content is just a simple stack.\n- You need more than two unrelated sections.\n- The layout would be clearer as separate blocks/groups.\n- Mobile ordering would become confusing.\nRule of thumb: use `fc/split-layout` when the two sides are part of the same message or workflow, not just because you want columns.",
             'Bars should stay compact. Flyouts should stay narrow. Popups can carry more detail, but still keep them focused.',
             'Use real FooConvert trigger events from the response contract for popup_draft.trigger. Do not use display locations such as cart page, checkout page, or product page as trigger names.',
             'For simple requests you may use trigger.type shortcuts: immediate, delay, exit_intent, scroll_percent. For other triggers, set trigger.type or trigger.event to the event identifier and put event-specific settings in trigger.where.',
@@ -129,27 +133,90 @@ class PromptFactory {
             $instructions[] = 'Do not generate new popup images unless the user explicitly asks for imagery later.';
         }
 
-        $conversion_playbook = self::get_conversion_playbook_system_context();
+        $conversion_playbook = self::get_conversion_playbook_system_context( $context );
         if ( '' !== $conversion_playbook ) {
             $instructions[] = $conversion_playbook;
         }
 
-        $instructions[] = Schema::get_assistant_response_contract( $selected_block_names );
+        $instructions[] = self::get_assistant_response_contract_system_context( $selected_block_names, $context );
 
         return implode( "\n", $instructions );
     }
 
     /**
+     * Returns filterable system instruction context.
+     *
+     * @param array<int,string> $selected_block_names Selected block names.
+     * @param bool              $generate_images Whether image generation is available for this turn.
+     * @param bool              $force_image_generation Whether this turn should explicitly generate a new image.
+     * @return array<string,mixed>
+     */
+    private static function get_system_instruction_context( array $selected_block_names, bool $generate_images, bool $force_image_generation ): array {
+        $context = array(
+            'conversion_playbook' => class_exists( Catalog::class ) ? Catalog::get_conversion_playbook() : array(),
+            'response_contract'   => class_exists( Schema::class ) ? Schema::get_assistant_response_contract( $selected_block_names ) : '',
+        );
+
+        if ( function_exists( 'apply_filters' ) ) {
+            /**
+             * Filters the popup builder system instruction context.
+             *
+             * This allows extensions to supply a different conversion playbook or
+             * response contract while keeping the shared FooConvert prompt text.
+             *
+             * @param array<string,mixed> $context System instruction context.
+             * @param array<int,string>   $selected_block_names Selected block names.
+             * @param bool                $generate_images Whether image generation is available for this turn.
+             * @param bool                $force_image_generation Whether this turn should explicitly generate a new image.
+             */
+            $filtered_context = apply_filters(
+                'fooconvert_ai_popup_builder_system_instruction_context',
+                $context,
+                $selected_block_names,
+                $generate_images,
+                $force_image_generation
+            );
+
+            if ( is_array( $filtered_context ) ) {
+                $context = array_merge( $context, $filtered_context );
+            }
+        }
+
+        return $context;
+    }
+
+    /**
      * Returns the conversion playbook as compact system-prompt context.
      *
+     * @param array<string,mixed> $context Prompt context.
      * @return string
      */
-    private static function get_conversion_playbook_system_context(): string {
-        $playbook = wp_json_encode( Catalog::get_conversion_playbook(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
+    private static function get_conversion_playbook_system_context( array $context = array() ): string {
+        $playbook_data = array_key_exists( 'conversion_playbook', $context ) ? $context['conversion_playbook'] : Catalog::get_conversion_playbook();
+        if ( ! is_array( $playbook_data ) || empty( $playbook_data ) ) {
+            return '';
+        }
+
+        $playbook = wp_json_encode( $playbook_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
         if ( ! is_string( $playbook ) || '' === $playbook ) {
             return '';
         }
 
         return "Conversion playbook JSON:\n" . $playbook;
+    }
+
+    /**
+     * Returns the response contract system-prompt context.
+     *
+     * @param array<int,string>   $selected_block_names Selected block names.
+     * @param array<string,mixed> $context Prompt context.
+     * @return string
+     */
+    private static function get_assistant_response_contract_system_context( array $selected_block_names, array $context = array() ): string {
+        if ( isset( $context['response_contract'] ) && is_string( $context['response_contract'] ) && '' !== $context['response_contract'] ) {
+            return $context['response_contract'];
+        }
+
+        return class_exists( Schema::class ) ? Schema::get_assistant_response_contract( $selected_block_names ) : '';
     }
 }
