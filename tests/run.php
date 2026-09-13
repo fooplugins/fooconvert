@@ -51,6 +51,7 @@ $cases = array(
     __DIR__ . '/cases/pro-admin-templates.php',
     __DIR__ . '/cases/pro-dashboard-sales-trash-filter.php',
     __DIR__ . '/cases/sales-attribution-woocommerce.php',
+    __DIR__ . '/cases/mariadb-reserved-conversion-sql.php',
     __DIR__ . '/cases/stats-row-actions.php',
     __DIR__ . '/cases/fonts-frontend-enqueue.php',
     __DIR__ . '/cases/pro-leads-brevo-integration.php',
