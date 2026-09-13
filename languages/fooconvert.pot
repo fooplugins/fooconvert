@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: FooConvert - AI Popup Builder for Flyouts, Overlays & Bars 2.1.8\n"
+"Project-Id-Version: FooConvert - AI Popup Builder for Flyouts, Overlays & Bars 2.1.9\n"
 "Report-Msgid-Bugs-To: https://github.com/fooplugins/fooconvert/issues\n"
 "Last-Translator: FooPlugins <info@fooplugins.com>\n"
 "Language-Team: FooPlugins <info@fooplugins.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-27T16:28:27+00:00\n"
+"POT-Creation-Date: 2026-09-13T17:28:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: fooconvert\n"
@@ -255,7 +255,7 @@ msgid "Name"
 msgstr ""
 
 #: includes/Admin/LeadsTable.php:56
-#: includes/AI/PopupBuilder/Media/Attachments.php:1398
+#: includes/AI/PopupBuilder/Media/Attachments.php:1400
 #: includes/PostType.php:55
 #: pro/includes/Analytics/Sales.php:271
 #: src/admin/ai-popup-builder/App.js:3688
@@ -1214,119 +1214,119 @@ msgstr ""
 msgid "%s Activity"
 msgstr ""
 
-#: includes/AI/Abilities.php:120
+#: includes/AI/Abilities.php:122
 msgid "Popup Builder"
 msgstr ""
 
-#: includes/AI/Abilities.php:121
+#: includes/AI/Abilities.php:123
 msgid "Popup strategy, template context, and validation tools for AI-assisted popup creation."
 msgstr ""
 
-#: includes/AI/Abilities.php:136
+#: includes/AI/Abilities.php:141
 msgid "List Popup Templates"
 msgstr ""
 
-#: includes/AI/Abilities.php:137
+#: includes/AI/Abilities.php:142
 msgid "List bundled popup, flyout, and bar templates. Use `template_slug` to inspect one template in detail, or `popup_type` to narrow the list."
 msgstr ""
 
-#: includes/AI/Abilities.php:185
+#: includes/AI/Abilities.php:190
 msgid "Get Block Catalog"
 msgstr ""
 
-#: includes/AI/Abilities.php:186
+#: includes/AI/Abilities.php:191
 msgid "Return the supported content blocks and nesting rules for AI-generated popup content."
 msgstr ""
 
-#: includes/AI/Abilities.php:222
+#: includes/AI/Abilities.php:227
 msgid "Get Conversion Playbook"
 msgstr ""
 
-#: includes/AI/Abilities.php:223
+#: includes/AI/Abilities.php:228
 msgid "Return popup conversion best practices, popup type guidance, and copywriting tactics."
 msgstr ""
 
-#: includes/AI/Abilities.php:250
+#: includes/AI/Abilities.php:255
 msgid "Validate Popup Blueprint"
 msgstr ""
 
-#: includes/AI/Abilities.php:251
+#: includes/AI/Abilities.php:256
 msgid "Evaluate a structured popup draft for conversion fundamentals, CTA focus, and popup-type fit."
 msgstr ""
 
-#: includes/AI/Abilities.php:283
+#: includes/AI/Abilities.php:288
 msgid "List Popup Media"
 msgstr ""
 
-#: includes/AI/Abilities.php:284
+#: includes/AI/Abilities.php:289
 msgid "Return recently generated popup images for the current builder user."
 msgstr ""
 
-#: includes/AI/Abilities.php:319
+#: includes/AI/Abilities.php:324
 msgid "Generate Popup Image Prompt"
 msgstr ""
 
-#: includes/AI/Abilities.php:320
+#: includes/AI/Abilities.php:325
 msgid "Create an image-generation prompt tailored to the current popup draft and offer."
 msgstr ""
 
-#: includes/AI/Abilities.php:355
+#: includes/AI/Abilities.php:360
 msgid "Generate Popup Image"
 msgstr ""
 
-#: includes/AI/Abilities.php:356
+#: includes/AI/Abilities.php:361
 msgid "Generate raw popup image data from an image prompt."
 msgstr ""
 
-#: includes/AI/Abilities.php:391
+#: includes/AI/Abilities.php:396
 msgid "Import Popup Image"
 msgstr ""
 
-#: includes/AI/Abilities.php:392
+#: includes/AI/Abilities.php:397
 msgid "Import generated popup image data into the media library and return a reusable attachment payload."
 msgstr ""
 
-#: includes/AI/Abilities.php:446
+#: includes/AI/Abilities.php:451
 msgid "Create Popup Image"
 msgstr ""
 
-#: includes/AI/Abilities.php:447
+#: includes/AI/Abilities.php:452
 msgid "Generate and import a conversion-oriented popup image in one step. Prefer this when the popup needs a ready-to-use visual asset."
 msgstr ""
 
-#: includes/AI/Abilities.php:483
+#: includes/AI/Abilities.php:488
 msgid "Create Popup Background"
 msgstr ""
 
-#: includes/AI/Abilities.php:484
+#: includes/AI/Abilities.php:489
 msgid "Generate and import a brand-aligned popup background image that stays supportive of popup copy and CTA treatment."
 msgstr ""
 
-#: includes/AI/Abilities.php:545
+#: includes/AI/Abilities.php:550
 msgid "You do not have permission to generate popup images."
 msgstr ""
 
-#: includes/AI/Abilities.php:650
+#: includes/AI/Abilities.php:655
 msgid "A popup_draft object is required for validation."
 msgstr ""
 
-#: includes/AI/Abilities.php:685
+#: includes/AI/Abilities.php:690
 msgid "A popup_draft object is required to generate a popup image prompt."
 msgstr ""
 
-#: includes/AI/Abilities.php:716
+#: includes/AI/Abilities.php:721
 msgid "An image prompt is required to generate popup media."
 msgstr ""
 
-#: includes/AI/Abilities.php:747
+#: includes/AI/Abilities.php:752
 msgid "Base64 popup image data is required for import."
 msgstr ""
 
-#: includes/AI/Abilities.php:785
+#: includes/AI/Abilities.php:790
 msgid "A popup_draft object is required to create a popup image."
 msgstr ""
 
-#: includes/AI/Abilities.php:809
+#: includes/AI/Abilities.php:814
 msgid "A popup_draft object is required to create a popup background."
 msgstr ""
 
@@ -1670,12 +1670,12 @@ msgstr ""
 msgid "The AI connector did not return any model output. This often happens when the connected provider account has no remaining credits or quota, or when the provider returns a failed API payload. Check the AI connector account, billing, and quota details, then try again. Original provider error: %s"
 msgstr ""
 
-#: includes/AI/PopupBuilder/ChatService.php:884
+#: includes/AI/PopupBuilder/ChatService.php:885
 msgid "The previous response cannot be used by the popup builder."
 msgstr ""
 
 #. translators: %s: AI response shape detail.
-#: includes/AI/PopupBuilder/ChatService.php:889
+#: includes/AI/PopupBuilder/ChatService.php:890
 #: includes/AI/PopupBuilder/ResponseParser.php:240
 #: includes/AI/PopupBuilder/ResponseParser.php:1063
 #, php-format
@@ -1683,23 +1683,23 @@ msgid "Problem detail: %s"
 msgstr ""
 
 #. translators: %s: JSON parser context detail.
-#: includes/AI/PopupBuilder/ChatService.php:898
+#: includes/AI/PopupBuilder/ChatService.php:899
 #: includes/AI/PopupBuilder/ResponseParser.php:249
 #, php-format
 msgid "Parser context: %s"
 msgstr ""
 
 #. translators: %s: clipped AI response preview.
-#: includes/AI/PopupBuilder/ChatService.php:907
+#: includes/AI/PopupBuilder/ChatService.php:908
 #, php-format
 msgid "Previous response preview: %s"
 msgstr ""
 
-#: includes/AI/PopupBuilder/ChatService.php:958
+#: includes/AI/PopupBuilder/ChatService.php:959
 msgid "I also generated a popup background and applied it to the draft."
 msgstr ""
 
-#: includes/AI/PopupBuilder/ChatService.php:1080
+#: includes/AI/PopupBuilder/ChatService.php:1081
 msgid "I also generated a popup image and wired it into the draft."
 msgstr ""
 
@@ -1791,122 +1791,122 @@ msgstr ""
 msgid "The AI client did not return an image prompt."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:747
+#: includes/AI/PopupBuilder/Media/Attachments.php:748
 msgid "The WordPress AI client is not available for popup image generation."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:784
+#: includes/AI/PopupBuilder/Media/Attachments.php:786
 msgid "The popup reference image is not valid base64 image data."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:801
-#: includes/AI/PopupBuilder/Media/Attachments.php:821
+#: includes/AI/PopupBuilder/Media/Attachments.php:803
+#: includes/AI/PopupBuilder/Media/Attachments.php:823
 msgid "No image data was generated for the popup."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:902
+#: includes/AI/PopupBuilder/Media/Attachments.php:904
 msgid "You do not have permission to import popup images."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:925
+#: includes/AI/PopupBuilder/Media/Attachments.php:927
 msgid "The popup image data is not valid base64."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:932
+#: includes/AI/PopupBuilder/Media/Attachments.php:934
 msgid "The popup image data is not a valid image."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:940
+#: includes/AI/PopupBuilder/Media/Attachments.php:942
 msgid "No popup image data was found to import."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:1093
+#: includes/AI/PopupBuilder/Media/Attachments.php:1095
 msgid "The generated popup image could not be found."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:1101
+#: includes/AI/PopupBuilder/Media/Attachments.php:1103
 msgid "You do not have permission to delete this popup image."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:1109
+#: includes/AI/PopupBuilder/Media/Attachments.php:1111
 msgid "Only popup-builder generated images can be deleted from this panel."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:1118
+#: includes/AI/PopupBuilder/Media/Attachments.php:1120
 msgid "The generated popup image could not be deleted."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:1375
+#: includes/AI/PopupBuilder/Media/Attachments.php:1377
 msgid "Popup Visual"
 msgstr ""
 
 #. translators: %s: popup title or offer
-#: includes/AI/PopupBuilder/Media/Attachments.php:1380
+#: includes/AI/PopupBuilder/Media/Attachments.php:1382
 #, php-format
 msgid "%s Image"
 msgstr ""
 
 #. translators: %s: popup title or offer
-#: includes/AI/PopupBuilder/Media/Attachments.php:1403
+#: includes/AI/PopupBuilder/Media/Attachments.php:1405
 #, php-format
 msgid "%s Background"
 msgstr ""
 
 #. translators: 1: offer text, 2: audience
-#: includes/AI/PopupBuilder/Media/Attachments.php:1421
+#: includes/AI/PopupBuilder/Media/Attachments.php:1423
 #, php-format
 msgid "%1$s visual for %2$s"
 msgstr ""
 
 #. translators: %s: popup offer
-#: includes/AI/PopupBuilder/Media/Attachments.php:1430
+#: includes/AI/PopupBuilder/Media/Attachments.php:1432
 #, php-format
 msgid "%s popup visual"
 msgstr ""
 
 #. translators: 1: offer text, 2: audience
-#: includes/AI/PopupBuilder/Media/Attachments.php:1451
+#: includes/AI/PopupBuilder/Media/Attachments.php:1453
 #, php-format
 msgid "%1$s popup background for %2$s"
 msgstr ""
 
 #. translators: %s: popup offer
-#: includes/AI/PopupBuilder/Media/Attachments.php:1460
+#: includes/AI/PopupBuilder/Media/Attachments.php:1462
 #, php-format
 msgid "%s popup background"
 msgstr ""
 
 #. translators: 1: AI provider name, 2: AI model name.
-#: includes/AI/PopupBuilder/Media/Attachments.php:1485
+#: includes/AI/PopupBuilder/Media/Attachments.php:1487
 #, php-format
 msgid "Generated by %1$s using %2$s"
 msgstr ""
 
 #. translators: %s: AI provider name.
-#: includes/AI/PopupBuilder/Media/Attachments.php:1496
+#: includes/AI/PopupBuilder/Media/Attachments.php:1498
 #, php-format
 msgid "Generated by %s"
 msgstr ""
 
 #. translators: %s: AI model name.
-#: includes/AI/PopupBuilder/Media/Attachments.php:1506
+#: includes/AI/PopupBuilder/Media/Attachments.php:1508
 #, php-format
 msgid "Generated using %s"
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:1677
+#: includes/AI/PopupBuilder/Media/Attachments.php:1679
 msgid "The popup image is larger than the maximum allowed upload size."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:1686
+#: includes/AI/PopupBuilder/Media/Attachments.php:1688
 msgid "The popup image could not be decoded from base64."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:1694
+#: includes/AI/PopupBuilder/Media/Attachments.php:1696
 msgid "A temporary file could not be created for the popup image."
 msgstr ""
 
-#: includes/AI/PopupBuilder/Media/Attachments.php:1705
+#: includes/AI/PopupBuilder/Media/Attachments.php:1707
 msgid "The popup image could not be written to a temporary file."
 msgstr ""
 
