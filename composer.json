@@ -1,4 +1,28 @@
 {
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "freemius/wordpress-sdk",
+                "description": "Freemius WordPress SDK",
+                "license": "GPL-3.0-only",
+                "require": {
+                    "php": ">=5.6"
+                },
+                "autoload": {
+                    "files": [
+                        "start.php"
+                    ]
+                },
+                "version": "2.13.5",
+                "dist": {
+                    "type": "zip",
+                    "url": "/Users/brad/Local Sites/foo/app/public/wp-content/plugins/freemius-sdk/wordpress-sdk-2.13.5-composer.zip",
+                    "shasum": "85f0bb41cff8b8f507d081d8d39fff483c26c891"
+                }
+            }
+        }
+    ],
     "name": "fooplugins/fooconvert",
     "description": "Turning clicks into conversions, visitors into customers – the ultimate catalyst for online success!",
     "type": "wordpress-plugin",
@@ -29,7 +53,7 @@
     "require": {
         "php": ">=7.4",
         "composer/installers": "v1.12.0",
-        "freemius/wordpress-sdk": "2.13.4",
+        "freemius/wordpress-sdk": "2.13.5",
         "bradvin/wp-ai-client-streaming": "^1.0"
     }
 }

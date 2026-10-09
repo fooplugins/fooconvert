@@ -280,6 +280,9 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 
 == Changelog ==
 
+= 2.1.10 =
+* Update : updated to Freemius SDK v2.13.5
+
 = 2.1.9 =
 * Date Updated : 13 September 2026
 * Fixed : Pro popup conversion analytics and experiment results now work with MariaDB 12.3, where CONVERSION is a reserved SQL word.
