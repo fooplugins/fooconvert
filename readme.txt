@@ -281,7 +281,8 @@ The source code for this plugin is available publicly on GitHub [here](https://g
 == Changelog ==
 
 = 2.1.10 =
-* Update : updated to Freemius SDK v2.13.5
+* Date Updated : 12 October 2026
+* Update : updated to Freemius SDK v2.13.5 (includes security fixes)
 
 = 2.1.9 =
 * Date Updated : 13 September 2026
