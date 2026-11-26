@@ -3,7 +3,7 @@ Contributors: fooplugins, bradvin, steveush
 Tags: ai-popup, popup-builder, popups, flyout, announcement-bar
 Requires at least: 6.5
 Requires PHP: 7.4
-Tested up to: 7.1
+Tested up to: 7.2
 Stable tag: 2.1.9
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
